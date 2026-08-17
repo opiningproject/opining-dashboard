@@ -562,38 +562,34 @@ select.input {
     box-shadow: none;
     background: transparent;
   }
+  /* Titelsecties krijgen exact de page-head-behandeling van de gewone
+     pagina's: icoon + titel op de paginaondergrond, geen aparte balk. */
   .set-nav__head {
-    display: flex; align-items: center; gap: 10px;
-    height: 56px;
-    margin: 0 -8px;
-    padding: 0 16px;
-    background: var(--bg-surface);
-    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+    padding: 18px 8px 14px;
   }
-  .set-nav__gear { width: 22px; height: 22px; color: var(--text-strong); }
-  .set-nav__title { font-size: 18px; font-weight: 650; letter-spacing: -.01em; color: var(--text-strong); }
+  .set-nav__gear { width: 24px; height: 24px; color: var(--text-strong); }
+  .set-nav__title { font-size: 21px; font-weight: 650; letter-spacing: -.015em; color: var(--text-strong); }
 
-  .store { margin: 0 -8px 8px; padding: 14px 16px; background: var(--bg-surface); border-bottom: 1px solid var(--border); }
+  .store { padding: 4px 8px 14px; }
 
-  .overlay__close { top: 8px; right: 10px; }
+  .overlay__close { top: 14px; right: 10px; }
 
   /* Niveau 1: de lijst. Niveau 2: de pagina met terug-knop. */
   [data-settings-view="list"] .set-main { display: none; }
   [data-settings-view="page"] .set-nav  { display: none; }
 
-  .set-main { padding: 0 16px 96px; }
+  .set-main { padding: 16px 16px 96px; }
+  /* Terug is een gewone tekstlink boven de titel, geen balk. */
   .set-back {
-    display: flex; align-items: center; justify-content: flex-start; gap: 6px;
-    height: 56px;
-    /* button = shrink-to-fit, dus expliciet doortrekken over de padding heen */
-    width: calc(100% + 32px);
-    margin: 0 -16px 16px;
-    padding: 0 12px;
-    font-size: 17px; font-weight: 600;
-    color: var(--text-strong);
-    background: var(--bg-surface);
-    border-bottom: 1px solid var(--border);
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-bottom: 10px;
+    padding: 4px 6px 4px 0;
+    font-size: var(--fs-md); font-weight: 500;
+    color: var(--text-muted);
   }
+  .set-back:hover { color: var(--text-strong); }
+  .set-back .icon { width: 18px; height: 18px; }
   .set-main .page-head { margin-bottom: 16px; }
 
   .savebar { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px 16px; }
