@@ -34,6 +34,9 @@
 
   var mqMobile = window.matchMedia("(max-width: 900px)");
   var lastFocus = null;
+  /* Zolang Settings actief staat draagt de sidebar die markering; hiermee
+     weten we naar welk paginaitem we terug moeten bij het sluiten. */
+  var lastPageItem = sidebar.querySelector(".nav__list .nav__item.is-active");
 
   /* ========================================================================
      1. MOBIELE DRAWER
@@ -99,7 +102,11 @@
     if (!item) return;
     e.preventDefault();
     activate(item, sidebar);
+    lastPageItem = item;
     showPage(item.dataset.page, item.dataset.title, item.dataset.icon);
+    /* Vanuit de drawer bovenop de overlay: die moet weg, anders kies je een
+       pagina die je niet te zien krijgt. */
+    if (root.dataset.settings === "open") closeSettings();
     if (mqMobile.matches) setDrawer(false);
   });
 
@@ -126,10 +133,20 @@
   }
 
   function openSettings() {
+    /* Staat hij al open, dan kom je hier via de drawer: die klap je dicht en
+       je houdt de settingspagina waar je was. */
+    if (root.dataset.settings === "open") { setDrawer(false); return; }
+
     lastFocus = document.activeElement;
     root.dataset.settings = "open";
+    /* Settings neemt de markering in de sidebar over van de pagina. */
+    lastPageItem = sidebar.querySelector(".nav__list .nav__item.is-active") || lastPageItem;
+    activate(btnSettings, sidebar);
     root.dataset.settingsView = "list";
     if (mqMobile.matches) clearSetActive(); else ensureSetActive();
+    /* Heropenen terwijl hij nog dichtglijdt: de sluit-animatie moet weg,
+       anders blijft die de openings-animatie overrulen. */
+    stopCloseAnim();
     overlay.hidden = false;
     document.body.style.overflow = "hidden";
     setDrawer(false);
@@ -140,9 +157,40 @@
     target.focus({ preventScroll: true });
   }
 
-  function closeSettings() {
-    root.dataset.settings = "closed";
+  /* Verbergen mag pas als de overlay is uitgegleden. De savebar zit erbinnen
+     en animeert ook, dus alleen op de overlay zelf luisteren. */
+  var closeTimer = null;
+
+  function stopCloseAnim() {
+    if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+    overlay.removeEventListener("animationend", onCloseEnd);
+    delete overlay.dataset.closing;
+  }
+
+  function onCloseEnd(e) {
+    if (e.target !== overlay) return;
+    finishClose();
+  }
+
+  function finishClose() {
+    stopCloseAnim();
     overlay.hidden = true;
+  }
+
+  function closeSettings() {
+    if (overlay.hidden || "closing" in overlay.dataset) return;
+
+    root.dataset.settings = "closed";
+    /* Markering terug naar de pagina die eronder ligt. Klik je vanuit de
+       drawer een ándere pagina aan, dan heeft die handler lastPageItem al
+       bijgewerkt en zetten we dus die. */
+    if (lastPageItem) activate(lastPageItem, sidebar);
+    overlay.dataset.closing = "";
+    overlay.addEventListener("animationend", onCloseEnd);
+    /* Op een achtergrondtab bevriest de animatie en komt animationend nooit.
+       Zonder vangnet blijft de overlay dan voorgoed openstaan. */
+    closeTimer = setTimeout(finishClose, 400);
+
     document.body.style.overflow = "";
     hideSavebar();
     if (lastFocus) lastFocus.focus({ preventScroll: true });
@@ -205,8 +253,9 @@
      ======================================================================== */
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
-      if (root.dataset.settings === "open") { closeSettings(); return; }
+      /* Bovenste laag eerst: de drawer kan over de overlay heen liggen. */
       if (root.dataset.drawer === "open") { setDrawer(false); return; }
+      if (root.dataset.settings === "open") { closeSettings(); return; }
     }
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
       e.preventDefault();

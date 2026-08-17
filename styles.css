@@ -34,7 +34,9 @@
   --gray-900: #12161c;
 
   /* Semantic */
-  --bg-app:      var(--gray-0);
+  /* Zelfde grijs als de settings-overlay: kaarten en topbar (--bg-surface)
+     steken daar wit tegen af. */
+  --bg-app:      var(--gray-50);
   --bg-surface:  var(--gray-0);
   --bg-hover:    var(--gray-100);
   --bg-active:   var(--gray-100);
@@ -321,13 +323,16 @@ legend { padding: 0; }
 .step__meta  { margin-top: 4px; font-size: var(--fs-md); color: var(--text-muted); }
 .step .btn { margin-top: 14px; }
 
+/* Stond als grijs vlak op een witte pagina; nu de pagina zelf grijs is heeft
+   hij een eigen vlak nodig, net als .card. Gedempte tekst houdt 'm secundair. */
 .note {
   display: flex; align-items: center; gap: 10px;
   padding: 16px 18px;
+  border: 1px solid var(--border);
   border-radius: var(--r-lg);
-  background: var(--gray-50);
+  background: var(--bg-surface);
   font-size: var(--fs-md);
-  color: var(--text);
+  color: var(--text-muted);
 }
 .note .icon { color: var(--text-muted); }
 
@@ -447,9 +452,16 @@ select.input {
   display: block;
   overflow-y: auto;
   background: var(--bg-overlay);
-  animation: overlay-in 200ms var(--ease);
+  animation: overlay-in 300ms var(--ease);
 }
-@keyframes overlay-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* De overlay staat vastgezet onder de header, dus 100% van de eigen hoogte
+   parkeert 'm precies onder de onderrand van het scherm. */
+@keyframes overlay-in { from { transform: translateY(100%); } to { transform: none; } }
+
+/* Sluiten glijdt dezelfde weg terug. app.js §3 zet data-closing en wacht op
+   animationend voordat het hidden mag — anders knipt de overlay meteen weg. */
+.overlay[data-closing] { animation: overlay-out 260ms var(--ease) forwards; }
+@keyframes overlay-out { from { transform: none; } to { transform: translateY(100%); } }
 
 .overlay__close { position: absolute; top: 14px; right: 18px; z-index: 2; }
 
@@ -545,6 +557,11 @@ select.input {
     transition: transform 240ms var(--ease);
   }
   [data-drawer="open"] .sidebar { transform: none; }
+
+  /* Met de settings-overlay open moet de drawer eroverheen kunnen schuiven.
+     Alleen hier: op desktop hoort de sidebar juist ónder de overlay te blijven. */
+  [data-settings="open"] .sidebar { z-index: calc(var(--z-overlay) + 2); }
+  [data-settings="open"] .scrim   { z-index: calc(var(--z-overlay) + 1); }
 
   .scrim {
     position: fixed;
