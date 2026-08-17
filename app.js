@@ -51,12 +51,8 @@
     try { localStorage.setItem("opining:sidebar", root.dataset.sidebar); } catch (e) {}
   }
 
-  /* Dezelfde knop heeft twee betekenissen: rail-toggle op desktop,
-     drawer sluiten op mobiel. Het label moet dat volgen. */
   function syncCollapseLabel() {
-    var label = mqMobile.matches
-      ? "Close menu"
-      : (root.dataset.sidebar === "collapsed" ? "Expand sidebar" : "Collapse sidebar");
+    var label = root.dataset.sidebar === "collapsed" ? "Expand sidebar" : "Collapse sidebar";
     btnCollapse.setAttribute("aria-label", label);
     btnCollapse.setAttribute("title", label);
   }
@@ -66,9 +62,9 @@
     if (stored === "collapsed") setCollapsed(true);
   } catch (e) {}
 
+  /* Deze knop bestaat alleen op desktop; onder 900px neemt de topbar-knop
+     het over (zie .icon-btn.topbar__burger in styles.css). */
   btnCollapse.addEventListener("click", function () {
-    /* Op mobiel fungeert dezelfde knop als "drawer sluiten". */
-    if (mqMobile.matches) { setDrawer(false); return; }
     setCollapsed(root.dataset.sidebar !== "collapsed");
   });
 

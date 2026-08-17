@@ -18,10 +18,10 @@
    1. TOKENS — pas hier aan, nergens anders
    ========================================================================== */
 :root {
-  /* Brand */
-  --accent:            #1173c0;
-  --accent-hover:      #0e63a6;
-  --accent-soft:       #e8f2fb;
+  /* Brand — afgeleid van het logoblauw */
+  --accent:            #0172af;
+  --accent-hover:      #015c8c;
+  --accent-soft:       #e6f1f8;
 
   /* Neutrals */
   --gray-0:   #ffffff;
@@ -211,13 +211,11 @@ legend { padding: 0; }
 }
 
 .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.brand__mark { display: grid; place-items: center; width: 30px; height: 30px; flex: 0 0 auto; color: var(--accent); }
-.brand__glyph { width: 28px; height: 28px; }
-.brand__name {
-  font-size: 19px; font-weight: 650; letter-spacing: -.015em;
-  color: var(--text-strong);
-  white-space: nowrap;
-}
+/* Merkteken is inline SVG met fill:currentColor → volgt het accent-token. */
+.brand__mark { width: 20px; height: 20px; flex: 0 0 auto; color: var(--accent); }
+/* Beide crops komen uit dezelfde lockup en zijn even hoog uitgesneden,
+   dus gelijke render-hoogte = originele logoverhouding. */
+.brand__word { width: auto; height: 32px; flex: 0 0 auto; }
 .collapse-btn { margin-left: auto; }
 
 .panel__foot {
@@ -295,7 +293,10 @@ legend { padding: 0; }
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border);
 }
-.topbar__burger { display: none; }
+/* Er is altijd precies één collapse/menu-knop zichtbaar:
+   desktop = de knop in de sidebar-header, mobiel = deze in de topbar.
+   Selector met .icon-btn erbij, anders wint de latere .icon-btn-regel. */
+.icon-btn.topbar__burger { display: none; }
 .topbar__actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
 
 .search { position: relative; width: min(360px, 42vw); }
@@ -587,10 +588,15 @@ select.input {
   inset: 0;
   margin: auto;
   opacity: 0;
+  /* Dekt het logo af terwijl het uitfadet ... */
   background: var(--bg-sidebar);
 }
+/* ... maar de hover-grijs van .icon-btn moet daar wél overheen. */
+[data-sidebar="collapsed"] .collapse-btn:hover { background: var(--bg-hover); }
+/* :has(:focus-visible) i.p.v. :focus-within — anders blijft het logo verborgen
+   zolang de knop na een muisklik focus houdt. */
 [data-sidebar="collapsed"] .panel__head:hover .brand,
-[data-sidebar="collapsed"] .panel__head:focus-within .brand { opacity: 0; }
+[data-sidebar="collapsed"] .panel__head:has(.collapse-btn:focus-visible) .brand { opacity: 0; }
 [data-sidebar="collapsed"] .panel__head:hover .collapse-btn,
 [data-sidebar="collapsed"] .collapse-btn:focus-visible { opacity: 1; }
 
@@ -623,9 +629,11 @@ select.input {
   [data-sidebar="collapsed"] .panel__head { justify-content: flex-start; padding: 0 16px; }
   [data-sidebar="collapsed"] .nav__item { justify-content: flex-start; padding-left: 12px; padding-right: 12px; }
 
-  /* In drawer-modus is er geen rail: de knop staat gewoon rechts en sluit de drawer */
+  /* In drawer-modus bestaat de rail niet → de sidebar-knop verdwijnt en de
+     topbar-knop neemt het over. Sluiten kan met de scrim, Esc of een nav-klik. */
+  .collapse-btn { display: none; }
+  .icon-btn.topbar__burger { display: grid; }
   [data-sidebar="collapsed"] .brand { opacity: 1; }
-  [data-sidebar="collapsed"] .collapse-btn { position: static; margin-left: auto; opacity: 1; }
 
   .scrim {
     position: fixed; inset: 0;
@@ -635,7 +643,6 @@ select.input {
   }
   @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
-  .topbar__burger { display: grid; }
   .topbar { padding: 0 14px; gap: 8px; }
   .content { padding: 24px 16px 110px; }
   .card { padding: 18px 16px 20px; }
