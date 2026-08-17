@@ -36,10 +36,29 @@
   /* ========================================================================
      1. SIDEBAR COLLAPSE
      ======================================================================== */
+  var tipItems = sidebar.querySelectorAll(".nav__item[data-tip]");
+
   function setCollapsed(collapsed) {
     root.dataset.sidebar = collapsed ? "collapsed" : "expanded";
-    btnCollapse.setAttribute("aria-label", collapsed ? "Expand sidebar" : "Collapse sidebar");
+
+    /* In de rail zie je alleen iconen → naam als native tooltip. */
+    tipItems.forEach(function (el) {
+      if (collapsed && !mqMobile.matches) el.setAttribute("title", el.dataset.tip);
+      else el.removeAttribute("title");
+    });
+
+    syncCollapseLabel();
     try { localStorage.setItem("opining:sidebar", root.dataset.sidebar); } catch (e) {}
+  }
+
+  /* Dezelfde knop heeft twee betekenissen: rail-toggle op desktop,
+     drawer sluiten op mobiel. Het label moet dat volgen. */
+  function syncCollapseLabel() {
+    var label = mqMobile.matches
+      ? "Close menu"
+      : (root.dataset.sidebar === "collapsed" ? "Expand sidebar" : "Collapse sidebar");
+    btnCollapse.setAttribute("aria-label", label);
+    btnCollapse.setAttribute("title", label);
   }
 
   try {
@@ -63,17 +82,26 @@
     if (open) {
       var first = sidebar.querySelector('.panel[data-active="true"] .nav__item') ||
                   sidebar.querySelector(".nav__item");
-      if (first) first.focus();
+      if (first) first.focus({ preventScroll: true });
     }
   }
 
   btnDrawer.addEventListener("click", function () { setDrawer(root.dataset.drawer !== "open"); });
   scrim.addEventListener("click", function () { setDrawer(false); });
-  mqMobile.addEventListener("change", function (e) { if (!e.matches) setDrawer(false); });
+  mqMobile.addEventListener("change", function (e) {
+    if (!e.matches) setDrawer(false);
+    setCollapsed(root.dataset.sidebar === "collapsed");
+  });
 
   /* ========================================================================
      3. PANEL-WISSEL: main ⇄ settings
      ======================================================================== */
+  /* De sidebar is een overflow:hidden venster op een dubbelbrede track.
+     Focus op een element in het weggeschoven panel laat de browser die
+     container horizontaal meescrollen — dat zet de hele nav scheef.
+     Daarom: alle focus() met preventScroll én deze harde terugzet. */
+  sidebar.addEventListener("scroll", function () { sidebar.scrollLeft = 0; });
+
   function setPanel(name) {
     root.dataset.nav = name;
 
@@ -99,7 +127,7 @@
     /* Open het settings-item dat als laatste actief was (default: General). */
     var active = panelSet.querySelector(".nav__item.is-active") || panelSet.querySelector(".nav__item");
     showPage(active.dataset.page, active.dataset.title, active.dataset.icon);
-    btnBack.focus();
+    btnBack.focus({ preventScroll: true });
   }
 
   function closeSettings() {
@@ -109,7 +137,7 @@
 
     /* Terug naar exact de pagina waar de gebruiker vandaan kwam. */
     showPage(lastMain.page, lastMain.title, lastMain.icon);
-    btnSettings.focus();
+    btnSettings.focus({ preventScroll: true });
   }
 
   btnSettings.addEventListener("click", openSettings);
@@ -201,4 +229,5 @@
 
   /* Init */
   setPanel("main");
+  syncCollapseLabel();
 })();

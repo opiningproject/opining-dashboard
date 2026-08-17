@@ -104,6 +104,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Author-styles met display:flex/grid winnen van de UA-regel voor [hidden].
+   Deze regel houdt het hidden-attribuut betrouwbaar als schakelaar. */
+[hidden] { display: none !important; }
+
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
@@ -229,6 +233,7 @@ legend { padding: 0; }
   min-height: 0;
   padding: 4px 14px 16px;
   overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: var(--gray-300) transparent;
@@ -275,21 +280,9 @@ legend { padding: 0; }
 
 .nav__item--settings { color: var(--text-strong); }
 
-/* Tooltip — alleen in collapsed state (zie §10) */
-.nav__item[data-tip]::after {
-  content: attr(data-tip);
-  position: absolute; left: calc(100% + 12px); top: 50%;
-  transform: translateY(-50%);
-  z-index: 5;
-  padding: 6px 10px;
-  border-radius: var(--r-sm);
-  background: var(--gray-900); color: #fff;
-  font-size: var(--fs-sm); font-weight: 500;
-  white-space: nowrap;
-  box-shadow: var(--shadow-md);
-  opacity: 0; pointer-events: none;
-  transition: opacity var(--dur) var(--ease);
-}
+/* Labels in de rail: geen CSS-tooltip. De sidebar heeft overflow:hidden nodig
+   voor de panel-track, dus een pseudo-element zou toch worden afgekapt.
+   app.js zet in rail-modus het title-attribuut op de nav-items. */
 
 /* ==========================================================================
    6. TOPBAR
@@ -581,13 +574,25 @@ select.input {
 [data-sidebar="collapsed"] .collapsible-text,
 [data-sidebar="collapsed"] .nav__count { display: none; }
 
-[data-sidebar="collapsed"] .panel__head { justify-content: center; padding: 0 10px; }
+[data-sidebar="collapsed"] .panel__head { position: relative; justify-content: center; padding: 0 10px; }
 [data-sidebar="collapsed"] .nav,
 [data-sidebar="collapsed"] .panel__foot { padding-left: 12px; padding-right: 12px; }
 [data-sidebar="collapsed"] .nav__item { justify-content: center; padding-left: 0; padding-right: 0; }
 
-[data-sidebar="collapsed"] .nav__item[data-tip]:hover::after,
-[data-sidebar="collapsed"] .nav__item[data-tip]:focus-visible::after { opacity: 1; }
+/* In de rail wisselt het logo bij hover/focus naar de uitklap-knop.
+   De knop blijft in de tab-volgorde (opacity i.p.v. display). */
+[data-sidebar="collapsed"] .brand { transition: opacity var(--dur) var(--ease); }
+[data-sidebar="collapsed"] .collapse-btn {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  opacity: 0;
+  background: var(--bg-sidebar);
+}
+[data-sidebar="collapsed"] .panel__head:hover .brand,
+[data-sidebar="collapsed"] .panel__head:focus-within .brand { opacity: 0; }
+[data-sidebar="collapsed"] .panel__head:hover .collapse-btn,
+[data-sidebar="collapsed"] .collapse-btn:focus-visible { opacity: 1; }
 
 /* ==========================================================================
    11. RESPONSIVE — sidebar wordt off-canvas drawer
@@ -617,10 +622,10 @@ select.input {
   [data-sidebar="collapsed"] .nav__count { display: revert; }
   [data-sidebar="collapsed"] .panel__head { justify-content: flex-start; padding: 0 16px; }
   [data-sidebar="collapsed"] .nav__item { justify-content: flex-start; padding-left: 12px; padding-right: 12px; }
-  .nav__item[data-tip]::after { content: none; }
 
-  /* Collapse-knop heeft geen betekenis in drawer-modus → wordt sluitknop */
-  .collapse-btn { transform: rotate(180deg); }
+  /* In drawer-modus is er geen rail: de knop staat gewoon rechts en sluit de drawer */
+  [data-sidebar="collapsed"] .brand { opacity: 1; }
+  [data-sidebar="collapsed"] .collapse-btn { position: static; margin-left: auto; opacity: 1; }
 
   .scrim {
     position: fixed; inset: 0;
