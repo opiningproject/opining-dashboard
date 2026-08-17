@@ -118,9 +118,12 @@ legend { padding: 0; }
   flex: 0 0 auto;
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.7;
+  stroke-width: 1.72;
   stroke-linecap: round;
   stroke-linejoin: round;
+  /* Knockout-kleur voor iconen die vormen over elkaar leggen (i-marketing).
+     Moet gelijk zijn aan de achtergrond waarop het icoon staat, niet wit. */
+  --icon-halo: var(--bg-surface);
 }
 .sprite { display: none; }
 
@@ -261,9 +264,9 @@ legend { padding: 0; }
 }
 .nav__item .icon { color: var(--text-muted); transition: color var(--dur) var(--ease); }
 .nav__item:hover { background: var(--bg-hover); }
-.nav__item:hover .icon { color: var(--text); }
+.nav__item:hover .icon { color: var(--text); --icon-halo: var(--bg-hover); }
 .nav__item.is-active { background: var(--bg-active); font-weight: 600; }
-.nav__item.is-active .icon { color: var(--accent); }
+.nav__item.is-active .icon { color: var(--accent); --icon-halo: var(--bg-active); }
 
 .nav__count {
   margin-left: auto;
@@ -289,8 +292,10 @@ legend { padding: 0; }
 .content__inner { max-width: var(--content-max); margin-inline: auto; }
 
 .page-head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
-.page-head__icon { width: 24px; height: 24px; color: var(--text-strong); }
-.page-head h1, .page-head h2 { font-size: 21px; font-weight: 650; letter-spacing: -.015em; color: var(--text-strong); }
+/* Groter weergegeven dan 20px, dus de stroke terugschalen: 1.72 * 20/24,
+   anders rendert dezelfde lijn hier als 2.06px. */
+.page-head__icon { width: 24px; height: 24px; stroke-width: 1.433; color: var(--text-strong); }
+.page-head h1, .page-head h2 { font-size: 18px; font-weight: 500; letter-spacing: -.015em; color: var(--text-strong); }
 
 .view { display: flex; flex-direction: column; gap: 20px; }
 
@@ -301,10 +306,10 @@ legend { padding: 0; }
   background: var(--bg-surface);
 }
 .card__headrow { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.card__title { font-size: var(--fs-lg); font-weight: 650; letter-spacing: -.01em; color: var(--text-strong); }
+.card__title { font-size: 18px; font-weight: 500; letter-spacing: -.01em; color: var(--text-strong); }
 .card__sub   { margin-top: 4px; font-size: var(--fs-md); color: var(--text-muted); }
 .card--empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 56px 24px; text-align: center; }
-.empty__icon { width: 30px; height: 30px; color: var(--text-muted); margin-bottom: 4px; }
+.empty__icon { width: 30px; height: 30px; stroke-width: 1.147; color: var(--text-muted); margin-bottom: 4px; }
 
 .tasks { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: var(--fs-md); color: var(--text); }
 .tasks__ring {
@@ -501,7 +506,9 @@ select.input {
 /* Settings-links staan ruimer dan de hoofdnav en dragen een chevron als
    drill-in-hint. */
 .set-nav .nav__item { padding: 13px 12px; font-size: 15px; gap: 13px; }
-.set-nav .nav__item .icon { width: 21px; height: 21px; }
+/* Op 20px, gelijk aan de rest: op 21px zou dezelfde stroke-width als 1,78px
+   uitkomen in plaats van 1,72px. */
+.set-nav .nav__item .icon { width: 20px; height: 20px; }
 .nav__chev { margin-left: auto; width: 19px; height: 19px; color: var(--border-strong); }
 .nav__item:hover .nav__chev { color: var(--text-muted); }
 .nav__item.is-active .nav__chev { color: var(--text-muted); }
@@ -594,9 +601,21 @@ select.input {
     padding: 18px 8px 14px;
   }
   .set-nav__gear { width: 24px; height: 24px; color: var(--text-strong); }
-  .set-nav__title { font-size: 21px; font-weight: 650; letter-spacing: -.015em; color: var(--text-strong); }
+  .set-nav__title { font-size: 18px; font-weight: 500; letter-spacing: -.015em; color: var(--text-strong); }
 
   .store { padding: 4px 8px 14px; }
+
+  /* De tabs in één wit vlak, zoals de .rows-lijsten elders: geen losse pillen
+     maar rijen met haarlijnen ertussen. overflow houdt hover en is-active
+     binnen de ronding. */
+  .set-nav .nav__list {
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    background: var(--bg-surface);
+    overflow: hidden;
+  }
+  .set-nav .nav__item { border-radius: 0; }
+  .set-nav li + li .nav__item { border-top: 1px solid var(--border); }
 
   .overlay__close { top: 14px; right: 10px; }
 
@@ -624,7 +643,8 @@ select.input {
 
 @media (max-width: 560px) {
   .search__kbd { display: none; }
-  .page-head h1, .page-head h2 { font-size: 19px; }
+  /* Titels zijn nu overal 18px; de verkleining hier bestond alleen om de
+     oude 21px op smalle schermen te temperen. */
 }
 
 @media (prefers-reduced-motion: reduce) {
