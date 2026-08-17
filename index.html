@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-sidebar="expanded" data-nav="main" data-drawer="closed">
+<html lang="en" data-drawer="closed" data-settings="closed" data-settings-view="list">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,11 +8,10 @@
 </head>
 <body>
 
-  <a class="skip-link" href="#view">Skip to content</a>
+  <a class="skip-link" href="#content">Skip to content</a>
 
   <!-- ============================================================
        ICON SPRITE — 24×24 grid, stroke = currentColor.
-       Nieuwe iconen: voeg een <symbol id="i-naam"> toe.
        ============================================================ -->
   <svg class="sprite" aria-hidden="true" focusable="false">
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 10.5 12 3.5l8.5 7M5.8 9.6V20h12.4V9.6M9.8 20v-5.6h4.4V20"/></symbol>
@@ -26,7 +25,6 @@
     <symbol id="i-finance" viewBox="0 0 24 24"><path d="M3.4 9.6 12 4.4l8.6 5.2M5.8 10v7.6M10 10v7.6M14 10v7.6M18.2 10v7.6M3.4 20.4h17.2"/></symbol>
     <symbol id="i-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.1"/><path d="M19.2 14.3a1.5 1.5 0 0 0 .3 1.65l.05.05a1.8 1.8 0 1 1-2.55 2.55l-.05-.05a1.5 1.5 0 0 0-1.65-.3 1.5 1.5 0 0 0-.9 1.37v.14a1.8 1.8 0 1 1-3.6 0v-.07a1.5 1.5 0 0 0-.98-1.37 1.5 1.5 0 0 0-1.65.3l-.05.05A1.8 1.8 0 1 1 5.05 16.3l.05-.05a1.5 1.5 0 0 0 .3-1.65 1.5 1.5 0 0 0-1.37-.9h-.14a1.8 1.8 0 1 1 0-3.6h.07a1.5 1.5 0 0 0 1.37-.98 1.5 1.5 0 0 0-.3-1.65l-.05-.05A1.8 1.8 0 1 1 7.53 4.87l.05.05a1.5 1.5 0 0 0 1.65.3h.07a1.5 1.5 0 0 0 .9-1.37v-.14a1.8 1.8 0 1 1 3.6 0v.07a1.5 1.5 0 0 0 .9 1.37 1.5 1.5 0 0 0 1.65-.3l.05-.05a1.8 1.8 0 1 1 2.55 2.55l-.05.05a1.5 1.5 0 0 0-.3 1.65v.07a1.5 1.5 0 0 0 1.37.9h.14a1.8 1.8 0 1 1 0 3.6h-.07a1.5 1.5 0 0 0-1.37.9Z"/></symbol>
 
-    <!-- Settings sub-nav -->
     <symbol id="i-store" viewBox="0 0 24 24"><path d="M3.6 9.4h16.8L18.9 4.4H5.1zM5.5 9.4v9.4a1.2 1.2 0 0 0 1.2 1.2h10.6a1.2 1.2 0 0 0 1.2-1.2V9.4"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.2V12l3.2 1.9"/></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 20.8s6.6-5.4 6.6-10.3a6.6 6.6 0 1 0-13.2 0c0 4.9 6.6 10.3 6.6 10.3Z"/><circle cx="12" cy="10.2" r="2.4"/></symbol>
@@ -38,15 +36,11 @@
     <symbol id="i-policies" viewBox="0 0 24 24"><path d="M12 3.4 19 6v5.2c0 4.7-3.1 8-7 9.4-3.9-1.4-7-4.7-7-9.4V6z"/><path d="m9.2 11.9 2 2 3.6-3.7"/></symbol>
     <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8.9a6 6 0 1 0-12 0c0 5.7-2.4 7.1-2.4 7.1h16.8S18 14.6 18 8.9M13.7 19.4a2 2 0 0 1-3.4 0"/></symbol>
 
-    <!-- UI -->
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.7-3.7"/></symbol>
-    <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="4.4" width="18" height="15.2" rx="2.4"/><path d="M9.6 4.4v15.2"/></symbol>
+    <symbol id="i-burger" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
     <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m14.5 5.5-7 6.5 7 6.5"/></symbol>
     <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9.5 5.5 7 6.5-7 6.5"/></symbol>
-    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6"/></symbol>
-    <symbol id="i-burger" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
-    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol>
     <symbol id="i-user-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="10" r="2.7"/><path d="M6.6 18.6a6 6 0 0 1 10.8 0"/></symbol>
     <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.6 18h4.8M10.2 20.8h3.6M12 3.4a5.4 5.4 0 0 1 3.2 9.7c-.6.5-1 1.2-1 2H9.8c0-.8-.4-1.5-1-2A5.4 5.4 0 0 1 12 3.4Z"/></symbol>
@@ -56,244 +50,240 @@
   <div class="app">
 
     <!-- ============================================================
-         SIDEBAR — bevat twee panelen op één horizontale track:
-         [1] hoofdnavigatie  [2] settings-navigatie
-         Wisselen gebeurt via <html data-nav="main|settings">
+         TOPBAR — full width, blijft altijd staan. Alles eronder
+         (sidebar, content, settings-overlay) scrollt of wisselt.
          ============================================================ -->
-    <aside class="sidebar" id="sidebar" aria-label="Sidebar">
-      <div class="sidebar__track">
+    <header class="topbar">
+      <button class="icon-btn topbar__burger" type="button" id="drawer-toggle"
+              aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+        <svg class="icon" aria-hidden="true"><use href="#i-burger"/></svg>
+      </button>
 
-        <!-- ---------- PANEL 1: hoofdnavigatie ---------- -->
-        <div class="panel" id="panel-main">
-          <header class="panel__head">
-            <a class="brand" href="#" aria-label="Opining home">
-              <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 7.03226C9.25659 7.03226 7.03247 9.25641 7.03247 12C7.03247 14.7436 9.25653 16.9677 12 16.9678C13.5112 16.9678 14.8648 16.2927 15.7758 15.228L20.5305 20.4405C20.2906 20.6831 20.0403 20.9154 19.7806 21.1369L15.2885 16.2123L18.6694 21.9783C18.3511 22.1915 18.022 22.3898 17.6831 22.5724L14.6103 17.3317L16.5508 23.1079C16.1386 23.277 15.7149 23.4238 15.2812 23.5467L13.645 18.6762L14.2328 23.7935C13.7556 23.8833 13.2684 23.9449 12.773 23.9764L12.2574 19.4875L11.8511 24C11.3102 23.9934 10.7781 23.9511 10.2568 23.8752L10.6092 19.961L9.42448 23.7238C8.85637 23.5995 8.3033 23.4351 7.76842 23.2334L8.76644 20.0635L7.1106 22.9628C6.54249 22.709 5.9977 22.4124 5.48037 22.077L6.78778 19.7878L5.03312 21.7724C4.49365 21.3871 3.9874 20.9582 3.51955 20.4909L4.93709 18.8875L3.19764 20.1566C2.71928 19.6406 2.28571 19.0824 1.90317 18.4883L2.954 17.7216L1.76406 18.2669C0.645162 16.443 5.59274e-06 14.2971 0 12.0005C5.59274e-06 5.37283 5.3726 0 12 0V7.03226ZM22.0512 18.5585C21.8876 18.8087 21.715 19.0525 21.5337 19.2893L15.8061 15.1922C15.9979 14.9639 16.1694 14.718 16.318 14.4574L22.0512 18.5585ZM23.1567 16.4283C23.0619 16.6667 22.9598 16.9015 22.8505 17.1321L16.4069 14.2946C16.5246 14.0689 16.6256 13.833 16.708 13.5885L23.1567 16.4283ZM23.8234 14.0629C23.7869 14.2739 23.7448 14.483 23.6974 14.69L16.7912 13.3162C16.8471 13.1123 16.8903 12.9031 16.92 12.6896L23.8234 14.0629ZM23.9967 11.7166C23.9989 11.811 24 11.9056 24 12.0005C24 12.0659 23.9995 12.1312 23.9984 12.1963H16.9637C16.9662 12.1312 16.9675 12.0658 16.9675 12C16.9675 11.9049 16.9648 11.8104 16.9595 11.7166H23.9967ZM23.7133 9.38097C23.7433 9.51593 23.771 9.65178 23.7965 9.78836L16.8968 11.1608C16.8735 11.0233 16.8444 10.8876 16.81 10.7541L23.7133 9.38097ZM22.9778 7.14658C23.0339 7.27315 23.0878 7.40078 23.1396 7.52964L16.6398 10.222C16.59 10.0921 16.5349 9.96476 16.4747 9.84032L22.9778 7.14658ZM21.8189 5.10006C21.8987 5.21332 21.9765 5.32809 22.0524 5.44414L16.2038 9.35228C16.1296 9.23482 16.0508 9.12067 15.9673 9.01015L21.8189 5.10006ZM20.2845 3.31874C20.3847 3.41443 20.4833 3.51181 20.5803 3.6109L15.607 8.58436C15.5116 8.48374 15.4121 8.38704 15.3088 8.29465L20.2845 3.31874ZM18.5021 1.91263C18.6186 1.98788 18.7338 2.06509 18.8474 2.14422L14.9386 7.99442C14.827 7.91248 14.712 7.83502 14.5936 7.76242L18.5021 1.91263ZM16.4117 0.836975C16.5407 0.888021 16.6686 0.941222 16.7955 0.996569L14.1026 7.49793C13.9775 7.43943 13.8495 7.38596 13.719 7.3378L16.4117 0.836975ZM14.1508 0.192258C14.2875 0.217001 14.4234 0.244026 14.5586 0.273367L13.1859 7.17471C13.0521 7.14194 12.9161 7.11465 12.7783 7.09295L14.1508 0.192258Z"/></svg>
-            </a>
-            <button class="icon-btn icon-btn--sm collapse-btn" type="button" id="collapse-toggle"
-                    aria-label="Collapse sidebar" title="Collapse sidebar  ( [ )">
-              <svg class="icon" aria-hidden="true"><use href="#i-panel"/></svg>
-            </button>
-          </header>
+      <a class="brand" href="#" aria-label="Opining home">
+        <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 7.03226C9.25659 7.03226 7.03247 9.25641 7.03247 12C7.03247 14.7436 9.25653 16.9677 12 16.9678C13.5112 16.9678 14.8648 16.2927 15.7758 15.228L20.5305 20.4405C20.2906 20.6831 20.0403 20.9154 19.7806 21.1369L15.2885 16.2123L18.6694 21.9783C18.3511 22.1915 18.022 22.3898 17.6831 22.5724L14.6103 17.3317L16.5508 23.1079C16.1386 23.277 15.7149 23.4238 15.2812 23.5467L13.645 18.6762L14.2328 23.7935C13.7556 23.8833 13.2684 23.9449 12.773 23.9764L12.2574 19.4875L11.8511 24C11.3102 23.9934 10.7781 23.9511 10.2568 23.8752L10.6092 19.961L9.42448 23.7238C8.85637 23.5995 8.3033 23.4351 7.76842 23.2334L8.76644 20.0635L7.1106 22.9628C6.54249 22.709 5.9977 22.4124 5.48037 22.077L6.78778 19.7878L5.03312 21.7724C4.49365 21.3871 3.9874 20.9582 3.51955 20.4909L4.93709 18.8875L3.19764 20.1566C2.71928 19.6406 2.28571 19.0824 1.90317 18.4883L2.954 17.7216L1.76406 18.2669C0.645162 16.443 5.59274e-06 14.2971 0 12.0005C5.59274e-06 5.37283 5.3726 0 12 0V7.03226ZM22.0512 18.5585C21.8876 18.8087 21.715 19.0525 21.5337 19.2893L15.8061 15.1922C15.9979 14.9639 16.1694 14.718 16.318 14.4574L22.0512 18.5585ZM23.1567 16.4283C23.0619 16.6667 22.9598 16.9015 22.8505 17.1321L16.4069 14.2946C16.5246 14.0689 16.6256 13.833 16.708 13.5885L23.1567 16.4283ZM23.8234 14.0629C23.7869 14.2739 23.7448 14.483 23.6974 14.69L16.7912 13.3162C16.8471 13.1123 16.8903 12.9031 16.92 12.6896L23.8234 14.0629ZM23.9967 11.7166C23.9989 11.811 24 11.9056 24 12.0005C24 12.0659 23.9995 12.1312 23.9984 12.1963H16.9637C16.9662 12.1312 16.9675 12.0658 16.9675 12C16.9675 11.9049 16.9648 11.8104 16.9595 11.7166H23.9967ZM23.7133 9.38097C23.7433 9.51593 23.771 9.65178 23.7965 9.78836L16.8968 11.1608C16.8735 11.0233 16.8444 10.8876 16.81 10.7541L23.7133 9.38097ZM22.9778 7.14658C23.0339 7.27315 23.0878 7.40078 23.1396 7.52964L16.6398 10.222C16.59 10.0921 16.5349 9.96476 16.4747 9.84032L22.9778 7.14658ZM21.8189 5.10006C21.8987 5.21332 21.9765 5.32809 22.0524 5.44414L16.2038 9.35228C16.1296 9.23482 16.0508 9.12067 15.9673 9.01015L21.8189 5.10006ZM20.2845 3.31874C20.3847 3.41443 20.4833 3.51181 20.5803 3.6109L15.607 8.58436C15.5116 8.48374 15.4121 8.38704 15.3088 8.29465L20.2845 3.31874ZM18.5021 1.91263C18.6186 1.98788 18.7338 2.06509 18.8474 2.14422L14.9386 7.99442C14.827 7.91248 14.712 7.83502 14.5936 7.76242L18.5021 1.91263ZM16.4117 0.836975C16.5407 0.888021 16.6686 0.941222 16.7955 0.996569L14.1026 7.49793C13.9775 7.43943 13.8495 7.38596 13.719 7.3378L16.4117 0.836975ZM14.1508 0.192258C14.2875 0.217001 14.4234 0.244026 14.5586 0.273367L13.1859 7.17471C13.0521 7.14194 12.9161 7.11465 12.7783 7.09295L14.1508 0.192258Z"/></svg>
+      </a>
 
-          <nav class="nav" aria-label="Main">
-            <ul class="nav__list">
-              <li><a class="nav__item is-active" href="#" data-page="dashboard" data-title="Dashboard" data-icon="i-home" aria-current="page" data-tip="Dashboard">
-                <svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span class="collapsible-text">Dashboard</span></a></li>
-
-              <li><a class="nav__item" href="#" data-page="orders" data-title="Orders" data-icon="i-orders" data-tip="Orders">
-                <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg><span class="collapsible-text">Orders</span><span class="nav__count">12</span></a></li>
-
-              <li><a class="nav__item" href="#" data-page="menu" data-title="Menu" data-icon="i-menu-item" data-tip="Menu">
-                <svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><span class="collapsible-text">Menu</span></a></li>
-
-              <li><a class="nav__item" href="#" data-page="analytics" data-title="Analytics" data-icon="i-analytics" data-tip="Analytics">
-                <svg class="icon" aria-hidden="true"><use href="#i-analytics"/></svg><span class="collapsible-text">Analytics</span></a></li>
-
-              <li><a class="nav__item" href="#" data-page="marketing" data-title="Marketing" data-icon="i-marketing" data-tip="Marketing">
-                <svg class="icon" aria-hidden="true"><use href="#i-marketing"/></svg><span class="collapsible-text">Marketing</span></a></li>
-
-              <li><a class="nav__item" href="#" data-page="customers" data-title="Customers" data-icon="i-customers" data-tip="Customers">
-                <svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg><span class="collapsible-text">Customers</span></a></li>
-
-              <li><a class="nav__item" href="#" data-page="deliverers" data-title="Deliverers" data-icon="i-deliverers" data-tip="Deliverers">
-                <svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg><span class="collapsible-text">Deliverers</span></a></li>
-
-              <li><a class="nav__item" href="#" data-page="online-store" data-title="Online Store" data-icon="i-store-online" data-tip="Online Store">
-                <svg class="icon" aria-hidden="true"><use href="#i-store-online"/></svg><span class="collapsible-text">Online Store</span></a></li>
-
-              <li><a class="nav__item" href="#" data-page="finance" data-title="Finance" data-icon="i-finance" data-tip="Finance">
-                <svg class="icon" aria-hidden="true"><use href="#i-finance"/></svg><span class="collapsible-text">Finance</span></a></li>
-            </ul>
-          </nav>
-
-          <footer class="panel__foot">
-            <button class="nav__item nav__item--settings" type="button" id="open-settings" data-tip="Settings">
-              <svg class="icon" aria-hidden="true"><use href="#i-cog"/></svg>
-              <span class="collapsible-text">Settings</span>
-            </button>
-          </footer>
-        </div>
-
-        <!-- ---------- PANEL 2: settings-navigatie ---------- -->
-        <div class="panel" id="panel-settings">
-          <header class="panel__head panel__head--settings">
-            <button class="icon-btn icon-btn--sm" type="button" id="close-settings"
-                    aria-label="Back to Dashboard" title="Back  ( Esc )">
-              <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>
-            </button>
-            <h2 class="panel__title">Settings</h2>
-          </header>
-
-          <nav class="nav" aria-label="Settings">
-            <ul class="nav__list">
-              <li><a class="nav__item is-active" href="#" data-page="settings-general" data-title="General" data-icon="i-store" aria-current="page">
-                <svg class="icon" aria-hidden="true"><use href="#i-store"/></svg><span>General</span></a></li>
-              <li><a class="nav__item" href="#" data-page="settings-hours" data-title="Opening Hours" data-icon="i-clock">
-                <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>Opening Hours</span></a></li>
-              <li><a class="nav__item" href="#" data-page="settings-zones" data-title="Delivery zones" data-icon="i-pin">
-                <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>Delivery zones</span></a></li>
-              <li><a class="nav__item" href="#" data-page="settings-payments" data-title="Payments" data-icon="i-card">
-                <svg class="icon" aria-hidden="true"><use href="#i-card"/></svg><span>Payments</span></a></li>
-              <li><a class="nav__item" href="#" data-page="settings-domain" data-title="Domain" data-icon="i-domain">
-                <svg class="icon" aria-hidden="true"><use href="#i-domain"/></svg><span>Domain</span></a></li>
-              <li><a class="nav__item" href="#" data-page="settings-language" data-title="Store Language" data-icon="i-globe">
-                <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span>Store Language</span></a></li>
-              <li><a class="nav__item" href="#" data-page="settings-plan" data-title="Plan" data-icon="i-plan">
-                <svg class="icon" aria-hidden="true"><use href="#i-plan"/></svg><span>Plan</span></a></li>
-              <li><a class="nav__item" href="#" data-page="settings-billing" data-title="Billing" data-icon="i-billing">
-                <svg class="icon" aria-hidden="true"><use href="#i-billing"/></svg><span>Billing</span></a></li>
-              <li><a class="nav__item" href="#" data-page="settings-policies" data-title="Policies" data-icon="i-policies">
-                <svg class="icon" aria-hidden="true"><use href="#i-policies"/></svg><span>Policies</span></a></li>
-              <li><a class="nav__item" href="#" data-page="settings-notifications" data-title="Notifications" data-icon="i-bell">
-                <svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Notifications</span></a></li>
-            </ul>
-          </nav>
-        </div>
-
+      <div class="search">
+        <svg class="icon search__icon" aria-hidden="true"><use href="#i-search"/></svg>
+        <input type="search" id="global-search" placeholder="Search" aria-label="Search" />
+        <kbd class="search__kbd">⌘K</kbd>
       </div>
-    </aside>
 
-    <div class="scrim" id="scrim" hidden></div>
+      <div class="topbar__actions">
+        <button class="icon-btn" type="button" aria-label="Account">
+          <svg class="icon" aria-hidden="true"><use href="#i-user-circle"/></svg>
+        </button>
+      </div>
+    </header>
 
     <!-- ============================================================
-         MAIN
+         BODY — sidebar + content, onder de vaste header
          ============================================================ -->
-    <div class="main">
+    <div class="body">
 
-      <header class="topbar">
-        <!-- Eén knop voor twee toestanden: burger als de drawer dicht is,
-             kruisje als hij open staat (zie [data-drawer] in styles.css). -->
-        <button class="icon-btn topbar__burger" type="button" id="drawer-toggle"
-                aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
-          <svg class="icon burger__open" aria-hidden="true"><use href="#i-burger"/></svg>
-          <svg class="icon burger__close" aria-hidden="true"><use href="#i-close"/></svg>
-        </button>
+      <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <nav class="nav">
+          <ul class="nav__list">
+            <li><a class="nav__item is-active" href="#" data-page="dashboard" data-title="Dashboard" data-icon="i-home" aria-current="page">
+              <svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span>Dashboard</span></a></li>
+            <li><a class="nav__item" href="#" data-page="orders" data-title="Orders" data-icon="i-orders">
+              <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg><span>Orders</span><span class="nav__count">12</span></a></li>
+            <li><a class="nav__item" href="#" data-page="menu" data-title="Menu" data-icon="i-menu-item">
+              <svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><span>Menu</span></a></li>
+            <li><a class="nav__item" href="#" data-page="analytics" data-title="Analytics" data-icon="i-analytics">
+              <svg class="icon" aria-hidden="true"><use href="#i-analytics"/></svg><span>Analytics</span></a></li>
+            <li><a class="nav__item" href="#" data-page="marketing" data-title="Marketing" data-icon="i-marketing">
+              <svg class="icon" aria-hidden="true"><use href="#i-marketing"/></svg><span>Marketing</span></a></li>
+            <li><a class="nav__item" href="#" data-page="customers" data-title="Customers" data-icon="i-customers">
+              <svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg><span>Customers</span></a></li>
+            <li><a class="nav__item" href="#" data-page="deliverers" data-title="Deliverers" data-icon="i-deliverers">
+              <svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg><span>Deliverers</span></a></li>
+            <li><a class="nav__item" href="#" data-page="online-store" data-title="Online Store" data-icon="i-store-online">
+              <svg class="icon" aria-hidden="true"><use href="#i-store-online"/></svg><span>Online Store</span></a></li>
+            <li><a class="nav__item" href="#" data-page="finance" data-title="Finance" data-icon="i-finance">
+              <svg class="icon" aria-hidden="true"><use href="#i-finance"/></svg><span>Finance</span></a></li>
+          </ul>
+        </nav>
 
-        <div class="search">
-          <svg class="icon search__icon" aria-hidden="true"><use href="#i-search"/></svg>
-          <input type="search" id="global-search" placeholder="Search" aria-label="Search" />
-          <kbd class="search__kbd">⌘K</kbd>
-        </div>
-
-        <div class="topbar__actions">
-          <button class="icon-btn" type="button" aria-label="Account">
-            <svg class="icon" aria-hidden="true"><use href="#i-user-circle"/></svg>
+        <footer class="sidebar__foot">
+          <button class="nav__item" type="button" id="open-settings">
+            <svg class="icon" aria-hidden="true"><use href="#i-cog"/></svg><span>Settings</span>
           </button>
-        </div>
-      </header>
+        </footer>
+      </aside>
 
-      <div class="content">
+      <div class="scrim" id="scrim" hidden></div>
+
+      <main class="content" id="content">
         <div class="content__inner">
-
           <div class="page-head">
             <svg class="icon page-head__icon" id="page-icon" aria-hidden="true"><use href="#i-home"/></svg>
             <h1 id="page-title">Dashboard</h1>
           </div>
 
-          <div id="view">
-
-            <!-- ---------- VIEW: dashboard ---------- -->
-            <section class="view" data-view="dashboard">
-              <div class="card">
-                <p class="tasks"><span class="tasks__ring" aria-hidden="true"></span>1 of 5 tasks completed</p>
-                <h2 class="card__title">Setup guide</h2>
-                <p class="card__sub">Use this guide to get your store up and running</p>
-
-                <ol class="steps">
-                  <li class="step is-open">
-                    <span class="step__dot step__dot--done" aria-hidden="true"><svg class="icon" ><use href="#i-check"/></svg></span>
-                    <div class="step__body">
-                      <p class="step__title">Customize your domain name</p>
-                      <p class="step__meta">d2w1hd-rw.myopining.com</p>
-                      <button class="btn btn--primary btn--pill" type="button">Name Store</button>
-                    </div>
-                  </li>
-                  <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Customize your store</p></li>
-                  <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Manage your openingtimes and order moments</p></li>
-                  <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Set up payments</p></li>
-                  <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Add first delivery area</p></li>
-                </ol>
-              </div>
-
-              <p class="note">
-                <svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>
-                New insights and guides will appear here as we learn more about your store
-              </p>
-            </section>
-
-            <!-- ---------- VIEW: settings › general ---------- -->
-            <section class="view" data-view="settings-general" hidden>
-              <div class="card">
-                <h2 class="card__title">Store details</h2>
-                <div class="rows">
-                  <button class="row" type="button">
-                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-store"/></svg>
-                    <span class="row__text"><span class="row__title">Opining</span><span class="row__meta">info@restaurantname.nl · +31614522453</span></span>
-                    <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-                  </button>
-                  <button class="row" type="button">
-                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-pin"/></svg>
-                    <span class="row__text"><span class="row__title">Store Address</span><span class="row__meta">The Netherlands</span></span>
-                    <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-                  </button>
-                </div>
-              </div>
-
-              <div class="card">
-                <h2 class="card__title">Order settings</h2>
-                <div class="field">
-                  <label class="label" for="order-prefix">Order ID Prefix</label>
-                  <input class="input" id="order-prefix" type="text" value="#" />
-                  <p class="hint">Your order ID will appear as #1001, #1002, #1003, …</p>
-                </div>
-                <div class="field-row">
-                  <div class="field">
-                    <label class="label" for="prep-delivery">Delivery prep time</label>
-                    <select class="input" id="prep-delivery"><option>45 min</option><option>30 min</option><option>60 min</option></select>
+          <section class="view" data-view="dashboard">
+            <div class="card">
+              <p class="tasks"><span class="tasks__ring" aria-hidden="true"></span>1 of 5 tasks completed</p>
+              <h2 class="card__title">Setup guide</h2>
+              <p class="card__sub">Use this guide to get your store up and running</p>
+              <ol class="steps">
+                <li class="step is-open">
+                  <span class="step__dot step__dot--done" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>
+                  <div class="step__body">
+                    <p class="step__title">Customize your domain name</p>
+                    <p class="step__meta">d2w1hd-rw.myopining.com</p>
+                    <button class="btn btn--primary btn--pill" type="button">Name Store</button>
                   </div>
-                  <div class="field">
-                    <label class="label" for="prep-collection">Collection prep time</label>
-                    <select class="input" id="prep-collection"><option>20 min</option><option>15 min</option><option>30 min</option></select>
-                  </div>
-                </div>
-              </div>
+                </li>
+                <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Customize your store</p></li>
+                <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Manage your openingtimes and order moments</p></li>
+                <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Set up payments</p></li>
+                <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Add first delivery area</p></li>
+              </ol>
+            </div>
+            <p class="note"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>New insights and guides will appear here as we learn more about your store</p>
+          </section>
 
-              <div class="card">
-                <div class="card__headrow">
-                  <h2 class="card__title">Pre-order availability</h2>
-                  <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Enable pre-orders</span></label>
-                </div>
-                <p class="alert"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>When your store is open at night times (00:00 – 06:00), this counts as same-day</p>
-                <fieldset class="choices">
-                  <legend class="sr-only">Pre-order window</legend>
-                  <label class="choice"><input type="radio" name="preorder" /><span>Only same-day</span></label>
-                  <label class="choice"><input type="radio" name="preorder" /><span>Pre-order for next day</span></label>
-                  <label class="choice"><input type="radio" name="preorder" checked /><span>2 days</span></label>
-                  <label class="choice"><input type="radio" name="preorder" /><span>3 days</span></label>
-                </fieldset>
-              </div>
-            </section>
+          <section class="view" data-view="generic" hidden>
+            <div class="card card--empty">
+              <svg class="icon empty__icon" id="empty-icon" aria-hidden="true"><use href="#i-home"/></svg>
+              <h2 class="card__title" id="empty-title">Page</h2>
+              <p class="card__sub">Deze view is nog niet uitgewerkt — de navigatie eromheen werkt wel.</p>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
 
-            <!-- ---------- VIEW: generieke placeholder ---------- -->
-            <section class="view" data-view="generic" hidden>
-              <div class="card card--empty">
-                <svg class="icon empty__icon" id="empty-icon" aria-hidden="true"><use href="#i-home"/></svg>
-                <h2 class="card__title" id="empty-title">Page</h2>
-                <p class="card__sub">Deze view is nog niet uitgewerkt — de navigatie eromheen werkt wel.</p>
-              </div>
-            </section>
+  <!-- ============================================================
+       SETTINGS OVERLAY — legt zich over sidebar + content, onder de
+       header. Desktop: nav-kolom + inhoud naast elkaar.
+       Mobiel: eerst de lijst, dan de pagina (data-settings-view).
+       ============================================================ -->
+  <div class="overlay" id="settings-overlay" role="dialog" aria-modal="true" aria-label="Settings" hidden>
 
+    <button class="icon-btn overlay__close" type="button" id="settings-close" aria-label="Close settings">
+      <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
+
+    <div class="overlay__inner">
+
+      <aside class="set-nav" aria-label="Settings sections">
+        <header class="set-nav__head">
+          <svg class="icon set-nav__gear" aria-hidden="true"><use href="#i-cog"/></svg>
+          <h2 class="set-nav__title">Settings</h2>
+        </header>
+
+        <div class="store">
+          <span class="store__mark" aria-hidden="true">O</span>
+          <span class="store__text">
+            <span class="store__name">Opining</span>
+            <span class="store__domain">d2w1hd-rw.myopining.com</span>
+          </span>
+        </div>
+
+        <ul class="nav__list">
+          <li><a class="nav__item is-active" href="#" data-set="general" data-title="General" data-icon="i-store" aria-current="page">
+            <svg class="icon" aria-hidden="true"><use href="#i-store"/></svg><span>General</span></a></li>
+          <li><a class="nav__item" href="#" data-set="hours" data-title="Opening Hours" data-icon="i-clock">
+            <svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span>Opening Hours</span></a></li>
+          <li><a class="nav__item" href="#" data-set="zones" data-title="Delivery zones" data-icon="i-pin">
+            <svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span>Delivery zones</span></a></li>
+          <li><a class="nav__item" href="#" data-set="payments" data-title="Payments" data-icon="i-card">
+            <svg class="icon" aria-hidden="true"><use href="#i-card"/></svg><span>Payments</span></a></li>
+          <li><a class="nav__item" href="#" data-set="domain" data-title="Domain" data-icon="i-domain">
+            <svg class="icon" aria-hidden="true"><use href="#i-domain"/></svg><span>Domain</span></a></li>
+          <li><a class="nav__item" href="#" data-set="language" data-title="Store Language" data-icon="i-globe">
+            <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span>Store Language</span></a></li>
+          <li><a class="nav__item" href="#" data-set="plan" data-title="Plan" data-icon="i-plan">
+            <svg class="icon" aria-hidden="true"><use href="#i-plan"/></svg><span>Plan</span></a></li>
+          <li><a class="nav__item" href="#" data-set="billing" data-title="Billing" data-icon="i-billing">
+            <svg class="icon" aria-hidden="true"><use href="#i-billing"/></svg><span>Billing</span></a></li>
+          <li><a class="nav__item" href="#" data-set="policies" data-title="Policies" data-icon="i-policies">
+            <svg class="icon" aria-hidden="true"><use href="#i-policies"/></svg><span>Policies</span></a></li>
+          <li><a class="nav__item" href="#" data-set="notifications" data-title="Notifications" data-icon="i-bell">
+            <svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Notifications</span></a></li>
+        </ul>
+      </aside>
+
+      <section class="set-main">
+        <button class="set-back" type="button" id="settings-back">
+          <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>Settings
+        </button>
+
+        <div class="page-head">
+          <svg class="icon page-head__icon" id="set-icon" aria-hidden="true"><use href="#i-store"/></svg>
+          <h2 id="set-title">General</h2>
+        </div>
+
+        <section class="view" data-set-view="general">
+          <div class="card">
+            <h3 class="card__title">Store details</h3>
+            <div class="rows">
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-store"/></svg>
+                <span class="row__text"><span class="row__title">Opining</span><span class="row__meta">info@restaurantname.nl · +31614522453</span></span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-pin"/></svg>
+                <span class="row__text"><span class="row__title">Store Address</span><span class="row__meta">The Netherlands</span></span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Sticky save bar — alleen zichtbaar binnen settings bij wijzigingen -->
-      <div class="savebar" id="savebar" hidden>
-        <p class="savebar__text"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Unsaved changes</p>
-        <div class="savebar__actions">
-          <button class="btn btn--ghost btn--pill" type="button" data-save="discard">Discard</button>
-          <button class="btn btn--primary btn--pill" type="button" data-save="save">Save changes</button>
-        </div>
+          <div class="card">
+            <h3 class="card__title">Order settings</h3>
+            <div class="field">
+              <label class="label" for="order-prefix">Order ID Prefix</label>
+              <input class="input" id="order-prefix" type="text" value="#" />
+              <p class="hint">Your order ID will appear as #1001, #1002, #1003, …</p>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label class="label" for="prep-delivery">Delivery prep time</label>
+                <select class="input" id="prep-delivery"><option>45 min</option><option>30 min</option><option>60 min</option></select>
+              </div>
+              <div class="field">
+                <label class="label" for="prep-collection">Collection prep time</label>
+                <select class="input" id="prep-collection"><option>20 min</option><option>15 min</option><option>30 min</option></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card__headrow">
+              <h3 class="card__title">Pre-order availability</h3>
+              <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Enable pre-orders</span></label>
+            </div>
+            <p class="alert"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>When your store is open at night times (00:00 – 06:00), this counts as same-day</p>
+            <fieldset class="choices">
+              <legend class="sr-only">Pre-order window</legend>
+              <label class="choice"><input type="radio" name="preorder" /><span>Only same-day</span></label>
+              <label class="choice"><input type="radio" name="preorder" /><span>Pre-order for next day</span></label>
+              <label class="choice"><input type="radio" name="preorder" checked /><span>2 days</span></label>
+              <label class="choice"><input type="radio" name="preorder" /><span>3 days</span></label>
+            </fieldset>
+          </div>
+        </section>
+
+        <section class="view" data-set-view="generic" hidden>
+          <div class="card card--empty">
+            <svg class="icon empty__icon" id="set-empty-icon" aria-hidden="true"><use href="#i-store"/></svg>
+            <h3 class="card__title" id="set-empty-title">Page</h3>
+            <p class="card__sub">Deze settings-pagina is nog niet uitgewerkt.</p>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <div class="savebar" id="savebar" hidden>
+      <p class="savebar__text"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Unsaved changes</p>
+      <div class="savebar__actions">
+        <button class="btn btn--ghost btn--pill" type="button" data-save>Discard</button>
+        <button class="btn btn--primary btn--pill" type="button" data-save>Save changes</button>
       </div>
     </div>
   </div>
