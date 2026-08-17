@@ -196,13 +196,17 @@ legend { padding: 0; }
 }
 
 /* Panel header ------------------------------------------------------------ */
+/* padding-left = nav-padding (14) + nav__item-padding (12), zodat het
+   merkteken exact boven de kolom nav-iconen uitlijnt. */
 .panel__head {
   display: flex; align-items: center; gap: 10px;
   height: var(--topbar-h);
   flex: 0 0 auto;
-  padding: 0 16px;
+  padding: 0 16px 0 26px;
 }
-.panel__head--settings { gap: 6px; padding-left: 10px; }
+/* 19px = icoonkolom (36) minus halve knopbreedte (17), zodat de chevron
+   op dezelfde as staat als het logo en de nav-iconen. */
+.panel__head--settings { gap: 6px; padding-left: 19px; }
 .panel__title {
   font-size: var(--fs-lg);
   font-weight: 650;
@@ -213,9 +217,6 @@ legend { padding: 0; }
 .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
 /* Merkteken is inline SVG met fill:currentColor → volgt het accent-token. */
 .brand__mark { width: 20px; height: 20px; flex: 0 0 auto; color: var(--accent); }
-/* Beide crops komen uit dezelfde lockup en zijn even hoog uitgesneden,
-   dus gelijke render-hoogte = originele logoverhouding. */
-.brand__word { width: auto; height: 32px; flex: 0 0 auto; }
 .collapse-btn { margin-left: auto; }
 
 .panel__foot {
@@ -297,6 +298,7 @@ legend { padding: 0; }
    desktop = de knop in de sidebar-header, mobiel = deze in de topbar.
    Selector met .icon-btn erbij, anders wint de latere .icon-btn-regel. */
 .icon-btn.topbar__burger { display: none; }
+.burger__open, .burger__close { display: none; }
 .topbar__actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
 
 .search { position: relative; width: min(360px, 42vw); }
@@ -612,21 +614,36 @@ select.input {
   .app,
   [data-sidebar="collapsed"] .app { grid-template-columns: minmax(0, 1fr); }
 
+  /* Drawer op volledige breedte. De bovenste band ter hoogte van de topbar
+     blijft vrij: daar staat de close-knop, boven het logo resp. de
+     terug-knop van settings. */
   .sidebar {
     position: fixed;
     inset: 0 auto 0 0;
-    width: min(304px, 86vw);
-    border-right: 1px solid var(--border);
-    box-shadow: var(--shadow-lg);
+    width: 100vw;
+    padding-top: var(--topbar-h);
+    border-right: 0;
     transform: translateX(-102%);
     transition: transform 260ms var(--ease);
   }
   [data-drawer="open"] .sidebar { transform: none; }
 
+  /* Burger blijft exact op zijn topbar-plek staan, maar moet bij een open
+     drawer bovenop liggen — daarom fixed in plaats van in-flow. */
+  .icon-btn.topbar__burger .burger__open { display: block; }
+  [data-drawer="open"] .topbar__burger {
+    position: fixed;
+    top: calc((var(--topbar-h) - 40px) / 2);
+    left: 14px;
+    z-index: calc(var(--z-sidebar) + 1);
+  }
+  [data-drawer="open"] .topbar__burger .burger__open  { display: none; }
+  [data-drawer="open"] .topbar__burger .burger__close { display: block; }
+
   /* In de drawer altijd de volledige labels tonen */
   [data-sidebar="collapsed"] .collapsible-text,
   [data-sidebar="collapsed"] .nav__count { display: revert; }
-  [data-sidebar="collapsed"] .panel__head { justify-content: flex-start; padding: 0 16px; }
+  [data-sidebar="collapsed"] .panel__head { justify-content: flex-start; padding: 0 16px 0 26px; }
   [data-sidebar="collapsed"] .nav__item { justify-content: flex-start; padding-left: 12px; padding-right: 12px; }
 
   /* In drawer-modus bestaat de rail niet → de sidebar-knop verdwijnt en de

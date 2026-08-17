@@ -74,6 +74,7 @@
   function setDrawer(open) {
     root.dataset.drawer = open ? "open" : "closed";
     btnDrawer.setAttribute("aria-expanded", String(open));
+    btnDrawer.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     scrim.hidden = !open;
     if (open) {
       var first = sidebar.querySelector('.panel[data-active="true"] .nav__item') ||
