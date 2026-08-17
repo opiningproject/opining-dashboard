@@ -486,6 +486,14 @@ select.input {
 .store__name { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
 .store__domain { font-size: var(--fs-sm); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+/* Settings-links staan ruimer dan de hoofdnav en dragen een chevron als
+   drill-in-hint. */
+.set-nav .nav__item { padding: 13px 12px; font-size: 15px; gap: 13px; }
+.set-nav .nav__item .icon { width: 21px; height: 21px; }
+.nav__chev { margin-left: auto; width: 19px; height: 19px; color: var(--border-strong); }
+.nav__item:hover .nav__chev { color: var(--text-muted); }
+.nav__item.is-active .nav__chev { color: var(--text-muted); }
+
 .set-main { min-width: 0; }
 .set-back { display: none; }
 
