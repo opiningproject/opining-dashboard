@@ -51,7 +51,13 @@
 
   btnDrawer.addEventListener("click", function () { setDrawer(root.dataset.drawer !== "open"); });
   scrim.addEventListener("click", function () { setDrawer(false); });
-  mqMobile.addEventListener("change", function (e) { if (!e.matches) setDrawer(false); });
+  mqMobile.addEventListener("change", function (e) {
+    if (!e.matches) {
+      setDrawer(false);
+      /* Naar desktop: daar mag de inhoudskolom niet zonder actief item staan. */
+      if (root.dataset.settings === "open") ensureSetActive();
+    }
+  });
 
   /* ========================================================================
      2. HOOFDNAVIGATIE
@@ -102,10 +108,28 @@
      Desktop: nav-kolom en inhoud staan naast elkaar.
      Mobiel: eerst de lijst, na een keuze de pagina met terug-knop.
      ======================================================================== */
+  /* Op mobiel is de lijst een eigen scherm: zolang je niets hebt gekozen
+     hoort er niets gemarkeerd te staan. Op desktop staat de inhoud er altijd
+     naast, dus daar moet juist altijd één item actief zijn. */
+  function clearSetActive() {
+    setNav.querySelectorAll(".nav__item").forEach(function (el) {
+      el.classList.remove("is-active");
+      el.removeAttribute("aria-current");
+    });
+  }
+
+  function ensureSetActive() {
+    if (setNav.querySelector(".nav__item.is-active")) return;
+    var first = setNav.querySelector(".nav__item");
+    activate(first, setNav);
+    showSetPage(first.dataset.set, first.dataset.title, first.dataset.icon);
+  }
+
   function openSettings() {
     lastFocus = document.activeElement;
     root.dataset.settings = "open";
     root.dataset.settingsView = "list";
+    if (mqMobile.matches) clearSetActive(); else ensureSetActive();
     overlay.hidden = false;
     document.body.style.overflow = "hidden";
     setDrawer(false);
@@ -149,6 +173,7 @@
   /* Terug-knop bestaat alleen op mobiel: van de pagina terug naar de lijst. */
   btnSetBack.addEventListener("click", function () {
     root.dataset.settingsView = "list";
+    clearSetActive();
     hideSavebar();
     overlay.scrollTop = 0;
   });
