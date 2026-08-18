@@ -76,6 +76,8 @@
     <symbol id="i-chargeback" viewBox="0 0 24 24"><rect x="3.4" y="6" width="17.2" height="13" rx="2"/><path d="M14.4 12.5H8.6M11 9.9l-2.6 2.6L11 15.1"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M13.4 4.6h6v6M19.4 4.6 11.6 12.4M17.4 14v4.4a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 18.4V8.2a1.6 1.6 0 0 1 1.6-1.6H10"/></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.8 11.2 12 15.4l4.2-4.2M4.6 19.4h14.8"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8.6 8.4-4 3.6 4 3.6M15.4 8.4l4 3.6-4 3.6M13.4 5.4l-2.8 13.2"/></symbol>
+    <symbol id="i-return" viewBox="0 0 24 24"><path d="M4.4 8.6h11a4.6 4.6 0 0 1 0 9.2H7.4M4.4 8.6 8 5M4.4 8.6 8 12.2"/></symbol>
     <symbol id="i-dots-v" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="10" cy="4.7" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="10" cy="15.3" r="1.15"/></symbol>
     <symbol id="i-eye" viewBox="0 0 20 20"><path d="M2.4 10S5.3 4.8 10 4.8 17.6 10 17.6 10 14.7 15.2 10 15.2 2.4 10 2.4 10Z"/><circle cx="10" cy="10" r="2.5"/></symbol>
     <symbol id="i-palette" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><circle cx="10" cy="6.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="6.6" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="13.4" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="10" cy="13" r="1.05" fill="currentColor" stroke="none"/></symbol>
@@ -1218,8 +1220,6 @@
             <svg class="icon" aria-hidden="true"><use href="#i-domain"/></svg><span>Domain</span><svg class="icon nav__chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></a></li>
           <li><a class="nav__item" href="#" data-set="language" data-title="Store Language" data-icon="i-globe">
             <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><span>Store Language</span><svg class="icon nav__chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></a></li>
-          <li><a class="nav__item" href="#" data-set="plan" data-title="Plan" data-icon="i-plan">
-            <svg class="icon" aria-hidden="true"><use href="#i-plan"/></svg><span>Plan</span><svg class="icon nav__chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></a></li>
           <li><a class="nav__item" href="#" data-set="billing" data-title="Billing" data-icon="i-billing">
             <svg class="icon" aria-hidden="true"><use href="#i-billing"/></svg><span>Billing</span><svg class="icon nav__chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></a></li>
           <li><a class="nav__item" href="#" data-set="policies" data-title="Policies" data-icon="i-policies">
@@ -1261,6 +1261,11 @@
             </select>
             <button class="btn btn--primary btn--pill page-head__action" type="button">
               <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>New domain
+            </button>
+          </div>
+          <div class="page-head__tools" data-set-tools="language" hidden>
+            <button class="btn btn--primary btn--pill page-head__action" type="button">
+              <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Add language
             </button>
           </div>
         </div>
@@ -1978,6 +1983,183 @@
           </div>
         </section>
 
+        <!-- ---------- SETTINGS: notifications ---------- -->
+        <section class="view" data-set-view="notifications" hidden>
+          <div class="card">
+            <h3 class="card__title">Sender email</h3>
+            <p class="card__sub">The email your store uses to send and receive messages with your customers.</p>
+            <div class="field">
+              <label class="sr-only" for="sender-email">Sender email</label>
+              <span class="tfield tfield--badge">
+                <input class="input" id="sender-email" type="email" value="info@opinings.com" />
+                <span class="badge badge--muted tfield__badge">Unverified</span>
+              </span>
+              <p class="hint">Confirm you have access to this email. <button class="link link--btn" type="button">Resend verification</button></p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="rows">
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-customers"/></svg>
+                <span class="row__text"><span class="row__title">Customer notifications</span><span class="row__meta">Notify customers about order and account events</span></span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-deliverers"/></svg>
+                <span class="row__text"><span class="row__title">Staff notifications</span><span class="row__meta">Notify staff members about new order events</span></span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-orders"/></svg>
+                <span class="row__text"><span class="row__title">Delivery notifications</span><span class="row__meta">Notify your deliverers when an order is ready to go out</span></span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="rows">
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-code"/></svg>
+                <span class="row__text"><span class="row__title">Webhooks</span><span class="row__meta">Send JSON notifications about store events to a URL</span></span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS: policies ---------- -->
+        <section class="view" data-set-view="policies" hidden>
+          <div class="card card--flush">
+            <div class="card__pad">
+              <h3 class="card__title">Return and cancellation rules</h3>
+              <p class="card__sub">Set the conditions and fees for return and cancellation requests.</p>
+              <div class="rows">
+                <button class="row" type="button">
+                  <span class="row__text"><span class="row__title">Default rules</span></span>
+                  <span class="facts">
+                    <span class="fact"><svg class="icon" aria-hidden="true"><use href="#i-return"/></svg>14-day returns</span>
+                    <span class="fact"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>Cancel until fulfilled</span>
+                  </span>
+                  <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                </button>
+              </div>
+              <button class="addrow" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add rule
+              </button>
+            </div>
+            <p class="card__foot">Rules are used by self-serve returns and cancellations in your online store.</p>
+          </div>
+
+          <div class="card">
+            <div class="card__headrow">
+              <h3 class="card__title">Written policies</h3>
+              <button class="icon-btn" type="button" aria-label="Policy actions"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+            </div>
+            <p class="card__sub">Linked in the footer of checkout, and available to add to your online store menu.</p>
+            <div class="rows">
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-return"/></svg>
+                <span class="row__text"><span class="row__title">Return and refund policy</span></span>
+                <span class="badge badge--draft">Review policy</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-lock"/></svg>
+                <span class="row__text"><span class="row__title">Privacy policy</span></span>
+                <span class="badge badge--active">Automated</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-policies"/></svg>
+                <span class="row__text"><span class="row__title">Terms of service</span></span>
+                <span class="badge badge--muted">No policy set</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-deliverers"/></svg>
+                <span class="row__text"><span class="row__title">Delivery policy</span></span>
+                <span class="badge badge--muted">No policy set</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-card"/></svg>
+                <span class="row__text"><span class="row__title">Contact information</span></span>
+                <span class="badge badge--pending">Required</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <button class="row" type="button">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-plan"/></svg>
+                <span class="row__text"><span class="row__title">Legal notice</span></span>
+                <span class="badge badge--muted">No policy set</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS: store language ---------- -->
+        <section class="view" data-set-view="language" hidden>
+          <div class="card card--flush">
+            <div class="card__pad">
+              <h3 class="card__title">Languages</h3>
+              <p class="card__sub">Adding translations lets customers order in their own language.</p>
+            </div>
+
+            <div class="table-wrap">
+              <table class="table table--stack">
+                <thead>
+                  <tr>
+                    <th>Language</th>
+                    <th>Status</th>
+                    <th>Domains</th>
+                    <th><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="cell"><span class="cell__title">Dutch</span><span class="cell__meta">Default</span></span></td>
+                    <td data-label="Status"><span class="badge badge--active">Published</span></td>
+                    <td data-label="Domains">
+                      <label class="sr-only" for="lang-nl-domains">Domains for Dutch</label>
+                      <select class="input input--bare" id="lang-nl-domains">
+                        <option>1 domain</option>
+                        <option>All domains</option>
+                      </select>
+                    </td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Dutch"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="cell"><span class="cell__title">English</span><span class="cell__meta">Translated by you</span></span></td>
+                    <td data-label="Status"><span class="badge badge--muted">Draft</span></td>
+                    <td data-label="Domains">
+                      <label class="sr-only" for="lang-en-domains">Domains for English</label>
+                      <select class="input input--bare" id="lang-en-domains">
+                        <option>No domains</option>
+                        <option>1 domain</option>
+                      </select>
+                    </td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for English"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="card__pad">
+              <p class="note" id="lang-tip">
+                <svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>
+                Add German for customers near the border.
+                <button class="icon-btn note__close" type="button" aria-label="Dismiss this suggestion" data-dismiss="lang-tip">
+                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+              </p>
+            </div>
+          </div>
+
+          <p class="card__foot card__foot--plain">The language of this dashboard is set per account, not per store.</p>
+        </section>
+
         <section class="view" data-set-view="billing" hidden>
           <div class="card card--flush">
             <div class="card__pad">
@@ -1991,7 +2173,7 @@
                 <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add payment method
               </button>
             </div>
-            <p class="card__foot">To make changes to your plan, <a class="link" href="#">visit plan settings</a></p>
+            <p class="card__foot">Your payment method is charged on the first of each month.</p>
           </div>
 
           <div class="card card--flush">
@@ -2030,6 +2212,12 @@
                 </tbody>
               </table>
             </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Cancellation</h3>
+            <p class="card__sub">Cancelling stops your subscription at the end of the current billing period. Your store goes offline, and your order history stays available for export for 90 days.</p>
+            <button class="btn btn--danger btn--pill card__action" type="button">Cancel plan</button>
           </div>
         </section>
 

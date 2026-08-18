@@ -231,12 +231,16 @@
       markUnsaved("Loyalty");
     });
 
-    /* Sluiten van de vaste-regelmelding. */
-    loyaltyView.addEventListener("click", function (e) {
-      var knop = e.target.closest("[data-dismiss]");
-      if (knop) document.getElementById(knop.dataset.dismiss).hidden = true;
-    });
   }
+
+  /* Wegklikbare meldingen, waar ze ook staan: de knop noemt het id van het
+     blok dat moet verdwijnen. */
+  document.addEventListener("click", function (e) {
+    var knop = e.target.closest("[data-dismiss]");
+    if (!knop) return;
+    var doel = document.getElementById(knop.dataset.dismiss);
+    if (doel) doel.hidden = true;
+  });
 
   /* ---- Productenlijst: groepen klappen los van elkaar open ---------------- */
   var productPanel = document.querySelector('[data-view="products"] .panel');

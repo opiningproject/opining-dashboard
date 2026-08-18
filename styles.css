@@ -1292,6 +1292,52 @@ select.input {
 .choice__control { margin-top: 10px; }
 .choice__control:disabled { background: var(--gray-50); color: var(--text-muted); cursor: not-allowed; }
 
+/* ==========================================================================
+   8l. NOTIFICATIONS / POLICIES / LANGUAGE
+   ========================================================================== */
+
+/* Rode actie voor iets onomkeerbaars. Ghost-vorm: de knop hoort op te vallen
+   door zijn kleur, niet door zijn gewicht. */
+.btn--danger { border: 1px solid var(--danger); background: var(--bg-surface); color: var(--danger); }
+.btn--danger:hover { background: #fdf1f0; }
+.card__action { margin-top: 18px; }
+
+/* Statuslabel in een invoerveld, rechts uitgelijnd. */
+.tfield--badge { display: flex; align-items: center; width: 100%; }
+.tfield--badge .input { padding-right: 108px; }
+.tfield__badge { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
+
+/* Link die een knop is: zelfde uiterlijk, maar wel bedienbaar met toetsenbord
+   en niet aanklikbaar als navigatie. */
+.link--btn { font: inherit; color: var(--text-strong); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Kerngegevens naast een rij, vóór de chevron. */
+.facts { display: flex; align-items: center; gap: 20px; margin-left: auto; }
+.fact { display: flex; align-items: center; gap: 8px; font-size: var(--fs-md); color: var(--text); }
+.fact .icon { width: 17px; height: 17px; color: var(--text-muted); }
+
+/* Voetregel van een kaart: rustiger vlak, losgetrokken van de inhoud. */
+/* Sluitknop in een note-balk. */
+.note__close { margin-left: auto; width: 30px; height: 30px; }
+.note__close .icon { width: 16px; height: 16px; }
+
+.card__foot--plain { padding: 0 2px; background: none; border: 0; color: var(--text-muted); font-size: var(--fs-md); }
+
+/* Select zonder kader, voor gebruik binnen een tabelcel. */
+.input--bare {
+  width: auto; height: 32px;
+  padding-left: 0; padding-right: 24px;
+  border-color: transparent;
+  background-color: transparent;
+  background-position: right 2px center;
+  color: var(--text);
+}
+.input--bare:hover { border-color: var(--border-strong); padding-left: 10px; background-position: right 8px center; }
+
+/* Rij met een badge vlak voor de chevron. */
+.row > .badge { margin-left: auto; }
+.row > .badge + .row__caret { margin-left: 14px; }
+
 
 /* ==========================================================================
    10. RESPONSIVE
@@ -1304,6 +1350,10 @@ select.input {
 /* Tablet & mobiel: sidebar wordt een smalle drawer onder de header, zodat
    je hem met een tik naast de drawer weer wegklikt. */
 @media (max-width: 900px) {
+  /* Kerngegevens onder de titel in plaats van ernaast. */
+  .row:has(.facts) { flex-wrap: wrap; }
+  .facts { width: 100%; margin-left: 0; gap: 14px; flex-wrap: wrap; }
+  .card__action { width: 100%; }
   /* Op smalle schermen vullen de wizardknoppen de regel. */
   .wiz__foot .btn { flex: 1 1 auto; }
   .wiz__head { gap: 12px; }
