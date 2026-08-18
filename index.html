@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-drawer="closed" data-settings="closed" data-settings-view="list" data-savebar="closed">
+<html lang="en" data-drawer="closed" data-settings="closed" data-settings-view="list" data-savebar="closed" data-search="closed">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -725,6 +725,23 @@
       </section>
     </div>
 
+  </div>
+
+  <!-- Zoekpaneel: opent zodra je de zoekbalk aantikt. Blijft onder de header
+       zodat het veld zelf bruikbaar blijft; de scrim dimt de rest. -->
+  <div class="search-scrim" id="search-scrim" hidden></div>
+  <div class="searchpanel" id="search-panel" role="dialog" aria-label="Search" hidden>
+    <div class="chips">
+      <button class="chip" type="button">Orders</button>
+      <button class="chip" type="button">Products</button>
+      <button class="chip" type="button">Customers</button>
+      <button class="chip" type="button">Deliverers</button>
+      <button class="chip" type="button">Settings</button>
+    </div>
+    <div class="searchpanel__empty">
+      <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+      <p>Find anything in Opining</p>
+    </div>
   </div>
 
   <!-- Korte bevestiging na een actie. Staat buiten .app omdat hij zwevend

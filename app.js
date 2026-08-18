@@ -7,7 +7,8 @@
      4. Save bar
      5. Setup-guide               → accordeon op het dashboard
      6. Toast                     → bevestiging na opslaan
-     7. Toetsenbord
+     7. Zoekpaneel                → <html data-search>
+     8. Toetsenbord
    In een SPA vervang je §2 en §3 door de router; de rest blijft 1-op-1.
    ========================================================================== */
 (function () {
@@ -51,7 +52,12 @@
     /* Focus naar de drawer zelf, niet naar het eerste item: iOS Safari ziet
        een programmatische focus als 'zichtbaar' en tekent dan een ring om
        Dashboard die de gebruiker nooit heeft opgeroepen. */
-    if (open) sidebar.focus({ preventScroll: true });
+    if (open) {
+      /* De burger zit boven de scrim, dus vanaf hier kun je de drawer openen
+         terwijl het zoekpaneel nog openstaat. */
+      closeSearch();
+      sidebar.focus({ preventScroll: true });
+    }
   }
 
   btnDrawer.addEventListener("click", function () { setDrawer(root.dataset.drawer !== "open"); });
@@ -250,6 +256,7 @@
        je houdt de settingspagina waar je was. */
     if (root.dataset.settings === "open") { setDrawer(false); return; }
 
+    closeSearch();
     lastFocus = document.activeElement;
     root.dataset.settings = "open";
     /* Settings neemt de markering in de sidebar over van de pagina. */
@@ -432,11 +439,47 @@
   document.getElementById("toast-close").addEventListener("click", hideToast);
 
   /* ========================================================================
-     7. TOETSENBORD
+     7. ZOEKPANEEL — opent zodra de zoekbalk focus krijgt
+     ======================================================================== */
+  var searchInput = document.getElementById("global-search");
+  var searchPanel = document.getElementById("search-panel");
+  var searchScrim = document.getElementById("search-scrim");
+
+  function setSearch(open) {
+    root.dataset.search = open ? "open" : "closed";
+    searchPanel.hidden = !open;
+    searchScrim.hidden = !open;
+  }
+
+  function closeSearch() {
+    if (root.dataset.search !== "open") return;
+    setSearch(false);
+    searchInput.blur();
+  }
+
+  searchInput.addEventListener("focus", function () { setSearch(true); });
+
+  /* Niet op blur sluiten: een chip aantikken haalt de focus uit het veld en
+     zou het paneel dan onder je handen wegklappen. De scrim en Escape zijn
+     de uitgang. */
+  searchScrim.addEventListener("click", closeSearch);
+
+  searchPanel.addEventListener("click", function (e) {
+    var chip = e.target.closest(".chip");
+    if (!chip) return;
+    var stondAan = chip.classList.contains("is-active");
+    searchPanel.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("is-active"); });
+    if (!stondAan) chip.classList.add("is-active");
+  });
+
+  /* ========================================================================
+     8. TOETSENBORD
      ======================================================================== */
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
-      /* Bovenste laag eerst: de drawer kan over de overlay heen liggen. */
+      /* Bovenste laag eerst: het zoekpaneel ligt over alles, en de drawer
+         kan over de settings-overlay heen liggen. */
+      if (root.dataset.search === "open") { closeSearch(); return; }
       if (root.dataset.drawer === "open") { setDrawer(false); return; }
       if (root.dataset.settings === "open") { closeSettings(); return; }
     }
