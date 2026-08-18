@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-drawer="closed" data-settings="closed" data-settings-view="list">
+<html lang="en" data-drawer="closed" data-settings="closed" data-settings-view="list" data-savebar="closed">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -60,6 +60,11 @@
     <symbol id="i-policies" viewBox="0 304 20 20"><path d="M5 306.565H12C14.3196 306.565 16.2002 308.446 16.2002 310.766V320.236C16.2001 320.899 15.6627 321.437 15 321.437H5C4.3373 321.437 3.79987 320.899 3.7998 320.236V307.766C3.79981 307.103 4.33726 306.565 5 306.565Z"/><path d="M12.2891 306.565C14.446 306.566 16.1943 308.315 16.1943 310.472C16.1942 311.069 15.7099 311.554 15.1123 311.554H12.4062C11.7435 311.554 11.2061 311.016 11.2061 310.354V307.648C11.2061 307.051 11.6913 306.565 12.2891 306.565Z"/><path d="M6.68281 314.024H8.37693"/><path d="M6.68281 316.493H10.8475"/></symbol>
     <symbol id="i-bell" viewBox="0 342 20 20"><path d="M11.8953 357.127C11.927 357.266 11.9436 357.411 11.9436 357.559C11.9436 358.631 11.0748 359.5 10.0031 359.5C8.93132 359.5 8.0625 358.631 8.0625 357.559C8.0625 357.425 8.07606 357.295 8.10193 357.168"/><path d="M8.61719 347.199V345.807C8.61719 345.088 9.20555 344.5 9.92465 344.5H10.0718C10.7909 344.5 11.3792 345.088 11.3792 345.807V347.199"/><path d="M14.0458 351.007V351.007C14.0455 348.772 12.2336 346.96 9.99856 346.96C7.76352 346.96 5.95165 348.772 5.95165 351.007C5.95165 356.213 4.16406 357.129 4.16406 357.129H15.8333C15.8333 357.129 14.0458 356.213 14.0458 351.007Z"/></symbol>
 
+    <!-- Op het 20-raster, net als de sidebar- en settings-sets. -->
+    <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4.2v11.6M4.2 10h11.6"/></symbol>
+    <symbol id="i-drag" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="7.6" cy="5" r="1.15"/><circle cx="12.4" cy="5" r="1.15"/><circle cx="7.6" cy="10" r="1.15"/><circle cx="12.4" cy="10" r="1.15"/><circle cx="7.6" cy="15" r="1.15"/><circle cx="12.4" cy="15" r="1.15"/></symbol>
+    <symbol id="i-image" viewBox="0 0 20 20"><rect x="2.9" y="3.9" width="14.2" height="12.2" rx="2.2"/><circle cx="7.5" cy="8.1" r="1.3"/><path d="M3.5 13.8 7.3 10.5l2.9 2.5 2.5-2.1 3.8 3.2"/></symbol>
+
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.7-3.7"/></symbol>
     <symbol id="i-burger" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
     <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m14.5 5.5-7 6.5 7 6.5"/></symbol>
@@ -87,10 +92,20 @@
         <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 7.03226C9.25659 7.03226 7.03247 9.25641 7.03247 12C7.03247 14.7436 9.25653 16.9677 12 16.9678C13.5112 16.9678 14.8648 16.2927 15.7758 15.228L20.5305 20.4405C20.2906 20.6831 20.0403 20.9154 19.7806 21.1369L15.2885 16.2123L18.6694 21.9783C18.3511 22.1915 18.022 22.3898 17.6831 22.5724L14.6103 17.3317L16.5508 23.1079C16.1386 23.277 15.7149 23.4238 15.2812 23.5467L13.645 18.6762L14.2328 23.7935C13.7556 23.8833 13.2684 23.9449 12.773 23.9764L12.2574 19.4875L11.8511 24C11.3102 23.9934 10.7781 23.9511 10.2568 23.8752L10.6092 19.961L9.42448 23.7238C8.85637 23.5995 8.3033 23.4351 7.76842 23.2334L8.76644 20.0635L7.1106 22.9628C6.54249 22.709 5.9977 22.4124 5.48037 22.077L6.78778 19.7878L5.03312 21.7724C4.49365 21.3871 3.9874 20.9582 3.51955 20.4909L4.93709 18.8875L3.19764 20.1566C2.71928 19.6406 2.28571 19.0824 1.90317 18.4883L2.954 17.7216L1.76406 18.2669C0.645162 16.443 5.59274e-06 14.2971 0 12.0005C5.59274e-06 5.37283 5.3726 0 12 0V7.03226ZM22.0512 18.5585C21.8876 18.8087 21.715 19.0525 21.5337 19.2893L15.8061 15.1922C15.9979 14.9639 16.1694 14.718 16.318 14.4574L22.0512 18.5585ZM23.1567 16.4283C23.0619 16.6667 22.9598 16.9015 22.8505 17.1321L16.4069 14.2946C16.5246 14.0689 16.6256 13.833 16.708 13.5885L23.1567 16.4283ZM23.8234 14.0629C23.7869 14.2739 23.7448 14.483 23.6974 14.69L16.7912 13.3162C16.8471 13.1123 16.8903 12.9031 16.92 12.6896L23.8234 14.0629ZM23.9967 11.7166C23.9989 11.811 24 11.9056 24 12.0005C24 12.0659 23.9995 12.1312 23.9984 12.1963H16.9637C16.9662 12.1312 16.9675 12.0658 16.9675 12C16.9675 11.9049 16.9648 11.8104 16.9595 11.7166H23.9967ZM23.7133 9.38097C23.7433 9.51593 23.771 9.65178 23.7965 9.78836L16.8968 11.1608C16.8735 11.0233 16.8444 10.8876 16.81 10.7541L23.7133 9.38097ZM22.9778 7.14658C23.0339 7.27315 23.0878 7.40078 23.1396 7.52964L16.6398 10.222C16.59 10.0921 16.5349 9.96476 16.4747 9.84032L22.9778 7.14658ZM21.8189 5.10006C21.8987 5.21332 21.9765 5.32809 22.0524 5.44414L16.2038 9.35228C16.1296 9.23482 16.0508 9.12067 15.9673 9.01015L21.8189 5.10006ZM20.2845 3.31874C20.3847 3.41443 20.4833 3.51181 20.5803 3.6109L15.607 8.58436C15.5116 8.48374 15.4121 8.38704 15.3088 8.29465L20.2845 3.31874ZM18.5021 1.91263C18.6186 1.98788 18.7338 2.06509 18.8474 2.14422L14.9386 7.99442C14.827 7.91248 14.712 7.83502 14.5936 7.76242L18.5021 1.91263ZM16.4117 0.836975C16.5407 0.888021 16.6686 0.941222 16.7955 0.996569L14.1026 7.49793C13.9775 7.43943 13.8495 7.38596 13.719 7.3378L16.4117 0.836975ZM14.1508 0.192258C14.2875 0.217001 14.4234 0.244026 14.5586 0.273367L13.1859 7.17471C13.0521 7.14194 12.9161 7.11465 12.7783 7.09295L14.1508 0.192258Z"/></svg>
       </a>
 
+      <!-- Zoekbalk en savebar delen dezelfde plek in het midden van de header:
+           zodra er iets te bewaren valt neemt de savebar het over. -->
       <div class="search">
         <svg class="icon search__icon" aria-hidden="true"><use href="#i-search"/></svg>
         <input type="search" id="global-search" placeholder="Search" aria-label="Search" />
         <kbd class="search__kbd">⌘K</kbd>
+      </div>
+
+      <div class="savebar" id="savebar" hidden>
+        <p class="savebar__text"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Unsaved changes</p>
+        <div class="savebar__actions">
+          <button class="btn btn--ghost" type="button" data-save="discard">Discard</button>
+          <button class="btn btn--primary" type="button" data-save="save">Save</button>
+        </div>
       </div>
 
       <div class="topbar__actions">
@@ -112,8 +127,21 @@
               <svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span>Dashboard</span></a></li>
             <li><a class="nav__item" href="#" data-page="orders" data-title="Orders" data-icon="i-orders">
               <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg><span>Orders</span><span class="nav__count">12</span></a></li>
-            <li><a class="nav__item" href="#" data-page="menu" data-title="Menu" data-icon="i-menu-item">
-              <svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><span>Menu</span></a></li>
+            <!-- Menu klapt uit naar drie subpagina's. De ouder is een knop, geen
+                 link: hij navigeert niet zelf maar opent de groep en zet
+                 Products aan (app.js §2). -->
+            <li class="nav__group" id="menu-group">
+              <button class="nav__item nav__parent" type="button" id="menu-toggle"
+                      aria-expanded="false" aria-controls="menu-sub">
+                <svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><span>Menu</span>
+                <svg class="icon nav__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <ul class="nav__sub" id="menu-sub">
+                <li><a class="nav__item nav__sub-item" href="#" data-page="products" data-title="Products" data-icon="i-menu-item"><span>Products</span></a></li>
+                <li><a class="nav__item nav__sub-item" href="#" data-page="choices" data-title="Choices Menu" data-icon="i-menu-item"><span>Choices Menu</span></a></li>
+                <li><a class="nav__item nav__sub-item" href="#" data-page="categories" data-title="Categories" data-icon="i-menu-item"><span>Categories</span></a></li>
+              </ul>
+            </li>
             <li><a class="nav__item" href="#" data-page="analytics" data-title="Analytics" data-icon="i-analytics">
               <svg class="icon" aria-hidden="true"><use href="#i-analytics"/></svg><span>Analytics</span></a></li>
             <li><a class="nav__item" href="#" data-page="marketing" data-title="Marketing" data-icon="i-marketing">
@@ -140,9 +168,14 @@
 
       <main class="content" id="content">
         <div class="content__inner">
+          <!-- De actieknop hoort bij de pagina, niet bij de view: app.js §2
+               zet label en zichtbaarheid per pagina. -->
           <div class="page-head">
             <svg class="icon page-head__icon" id="page-icon" aria-hidden="true"><use href="#i-home"/></svg>
             <h1 id="page-title">Dashboard</h1>
+            <button class="btn btn--primary page-head__action" type="button" id="page-action" hidden>
+              <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span id="page-action-label"></span>
+            </button>
           </div>
 
           <section class="view" data-view="dashboard">
@@ -150,22 +183,220 @@
               <p class="tasks"><span class="tasks__ring" aria-hidden="true"></span>1 of 5 tasks completed</p>
               <h2 class="card__title">Setup guide</h2>
               <p class="card__sub">Use this guide to get your store up and running</p>
+              <!-- Elke stap heeft dezelfde opbouw: bolletje, titel als knop en
+                   een paneel dat alleen bij .is-open zichtbaar is. De titel is
+                   een <button> zodat de stap ook met tab en enter te openen is;
+                   app.js §5 doet het omklappen. -->
               <ol class="steps">
                 <li class="step is-open">
                   <span class="step__dot step__dot--done" aria-hidden="true"><svg class="icon"><use href="#i-check"/></svg></span>
                   <div class="step__body">
-                    <p class="step__title">Customize your domain name</p>
-                    <p class="step__meta">d2w1hd-rw.myopining.com</p>
-                    <button class="btn btn--primary btn--pill" type="button">Name Store</button>
+                    <button class="step__title" type="button" aria-expanded="true">Customize your domain name</button>
+                    <div class="step__panel"><div class="step__panel-inner">
+                      <p class="step__meta">d2w1hd-rw.myopining.com</p>
+                      <button class="btn btn--primary btn--pill" type="button">Name Store</button>
+                    </div></div>
                   </div>
                 </li>
-                <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Customize your store</p></li>
-                <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Manage your openingtimes and order moments</p></li>
-                <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Set up payments</p></li>
-                <li class="step"><span class="step__dot" aria-hidden="true"></span><p class="step__title">Add first delivery area</p></li>
+                <li class="step">
+                  <span class="step__dot" aria-hidden="true"></span>
+                  <div class="step__body">
+                    <button class="step__title" type="button" aria-expanded="false">Customize your store</button>
+                    <div class="step__panel"><div class="step__panel-inner">
+                      <p class="step__meta">Theme, colours and logo</p>
+                      <button class="btn btn--primary btn--pill" type="button">Customize</button>
+                    </div></div>
+                  </div>
+                </li>
+                <li class="step">
+                  <span class="step__dot" aria-hidden="true"></span>
+                  <div class="step__body">
+                    <button class="step__title" type="button" aria-expanded="false">Manage your openingtimes and order moments</button>
+                    <div class="step__panel"><div class="step__panel-inner">
+                      <p class="step__meta">No opening hours set yet</p>
+                      <button class="btn btn--primary btn--pill" type="button">Set hours</button>
+                    </div></div>
+                  </div>
+                </li>
+                <li class="step">
+                  <span class="step__dot" aria-hidden="true"></span>
+                  <div class="step__body">
+                    <button class="step__title" type="button" aria-expanded="false">Set up payments</button>
+                    <div class="step__panel"><div class="step__panel-inner">
+                      <p class="step__meta">No payment provider connected</p>
+                      <button class="btn btn--primary btn--pill" type="button">Set up payments</button>
+                    </div></div>
+                  </div>
+                </li>
+                <li class="step">
+                  <span class="step__dot" aria-hidden="true"></span>
+                  <div class="step__body">
+                    <button class="step__title" type="button" aria-expanded="false">Add first delivery area</button>
+                    <div class="step__panel"><div class="step__panel-inner">
+                      <p class="step__meta">No delivery areas yet</p>
+                      <button class="btn btn--primary btn--pill" type="button">Add area</button>
+                    </div></div>
+                  </div>
+                </li>
               </ol>
             </div>
             <p class="note"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>New insights and guides will appear here as we learn more about your store</p>
+          </section>
+
+          <!-- ====================================================
+               PRODUCTS — gegroepeerd per categorie, groepen klappen
+               open zoals de setup-guide (app.js §5).
+               ==================================================== -->
+          <section class="view" data-view="products" hidden>
+            <div class="alert">
+              <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>
+              <p>Changes to product order are applied immediately and reflected on your website. You can manage the categorie order on the categories page.</p>
+            </div>
+
+            <div class="panel">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All</button>
+                  <button class="tab" type="button">Active</button>
+                  <button class="tab" type="button">Draft</button>
+                  <button class="tab" type="button">Discount</button>
+                </div>
+                <button class="icon-btn panel__filter" type="button" aria-label="Search and filter">
+                  <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+                </button>
+              </div>
+
+              <div class="group is-open">
+                <button class="group__head" type="button" aria-expanded="true">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">Protein Beverages</span>
+                  <span class="group__count">5 products</span>
+                </button>
+                <div class="group__panel"><ul class="group__list">
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Pistachio Velvet Latte</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"></span>
+                  </li>
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">White Chocolate</span>
+                    <span class="badge badge--draft">Draft</span>
+                    <span class="prod__tip"><button class="tip" type="button" aria-label="Suggestion"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></button></span>
+                  </li>
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Green Special</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"><button class="tip" type="button" aria-label="Suggestion"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></button></span>
+                  </li>
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Iced Protein Matcha</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"><button class="tip" type="button" aria-label="Suggestion"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></button></span>
+                  </li>
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Vanille Protein Matcha</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"></span>
+                  </li>
+                </ul></div>
+              </div>
+
+              <div class="group is-open">
+                <button class="group__head" type="button" aria-expanded="true">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">Sandwiches</span>
+                  <span class="group__count">4 products</span>
+                </button>
+                <div class="group__panel"><ul class="group__list">
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Mozarella Sandwich</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"><button class="tip" type="button" aria-label="Suggestion"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></button></span>
+                  </li>
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Mozzarella Sandwich with Pesto</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"><button class="tip" type="button" aria-label="Suggestion"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg></button></span>
+                  </li>
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Tomato &amp; Mozzarella Sandwich with bacon and more</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"></span>
+                  </li>
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Chicken Sandwich</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"></span>
+                  </li>
+                </ul></div>
+              </div>
+
+              <div class="group">
+                <button class="group__head" type="button" aria-expanded="false">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">Hot Coffee</span>
+                  <span class="group__count">2 products</span>
+                </button>
+                <div class="group__panel"><ul class="group__list">
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Cappuccino</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"></span>
+                  </li>
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Flat White</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"></span>
+                  </li>
+                </ul></div>
+              </div>
+
+              <div class="group">
+                <button class="group__head" type="button" aria-expanded="false">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">Cold Coffee</span>
+                  <span class="group__count">2 products</span>
+                </button>
+                <div class="group__panel"><ul class="group__list">
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Iced Latte</span>
+                    <span class="badge badge--active">Active</span>
+                    <span class="prod__tip"></span>
+                  </li>
+                  <li class="prod">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
+                    <span class="prod__name">Cold Brew</span>
+                    <span class="badge badge--draft">Draft</span>
+                    <span class="prod__tip"></span>
+                  </li>
+                </ul></div>
+              </div>
+            </div>
           </section>
 
           <section class="view" data-view="generic" hidden>
@@ -303,13 +534,15 @@
       </section>
     </div>
 
-    <div class="savebar" id="savebar" hidden>
-      <p class="savebar__text"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Unsaved changes</p>
-      <div class="savebar__actions">
-        <button class="btn btn--ghost btn--pill" type="button" data-save>Discard</button>
-        <button class="btn btn--primary btn--pill" type="button" data-save>Save changes</button>
-      </div>
-    </div>
+  </div>
+
+  <!-- Korte bevestiging na een actie. Staat buiten .app omdat hij zwevend
+       over alles heen hoort, ook over de settings-overlay. -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+    <span class="toast__text" id="toast-text"></span>
+    <button class="toast__close" type="button" id="toast-close" aria-label="Dismiss">
+      <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
   </div>
 
   <script src="app.js"></script>

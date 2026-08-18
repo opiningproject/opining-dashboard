@@ -66,7 +66,7 @@
   /* Layout */
   --sidebar-w:   264px;
   --drawer-w:    296px;
-  --topbar-h:    64px;
+  --topbar-h:    56px;
   --content-max: 900px;
   --overlay-max: 1120px;
   --set-nav-w:   290px;
@@ -84,6 +84,7 @@
   --z-sidebar: 40;
   --z-scrim:   35;
   --z-overlay: 45;
+  --z-toast:   60;
 }
 
 /* ==========================================================================
@@ -173,7 +174,9 @@ legend { padding: 0; }
 .brand { display: flex; align-items: center; flex: 0 0 auto; }
 .brand__mark { width: 24px; height: 24px; color: var(--accent); }
 
-.search { position: relative; margin-inline: auto; width: min(440px, 40vw); }
+.search { position: relative; margin-inline: auto; width: 640px; }
+/* Savebar deelt de plek in het midden van de header met de zoekbalk. */
+[data-savebar="open"] .search { display: none; }
 .search__icon {
   position: absolute; left: 12px; top: 50%;
   transform: translateY(-50%);
@@ -183,7 +186,7 @@ legend { padding: 0; }
 }
 .search input {
   width: 100%;
-  height: 38px;
+  height: 36px;
   padding: 0 46px 0 38px;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
@@ -292,9 +295,8 @@ legend { padding: 0; }
 .content__inner { max-width: var(--content-max); margin-inline: auto; }
 
 .page-head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
-/* Groter weergegeven dan 20px, dus de stroke terugschalen: 1.72 * 20/24,
-   anders rendert dezelfde lijn hier als 2.06px. */
-.page-head__icon { width: 24px; height: 24px; stroke-width: 1.433; color: var(--text-strong); }
+/* Zelfde 20px als de sidebar, dus ook zonder stroke-correctie meteen 1.72px. */
+.page-head__icon { width: 20px; height: 20px; color: var(--text-strong); }
 .page-head h1, .page-head h2 { font-size: 18px; font-weight: 500; letter-spacing: -.015em; color: var(--text-strong); }
 
 .view { display: flex; flex-direction: column; gap: 20px; }
@@ -319,14 +321,43 @@ legend { padding: 0; }
   -webkit-mask: radial-gradient(circle, transparent 42%, #000 44%);
 }
 .steps { margin-top: 18px; display: flex; flex-direction: column; gap: 2px; }
-.step { display: flex; align-items: flex-start; gap: 14px; padding: 13px 16px; border-radius: var(--r-md); }
-.step.is-open { background: var(--gray-50); padding-bottom: 20px; }
+.step { position: relative; display: flex; align-items: flex-start; gap: 14px; padding: 16px; border-radius: var(--r-md); transition: background var(--dur) var(--ease); }
+.step.is-open { background: var(--gray-50); }
+.step:not(.is-open):hover { background: var(--gray-25); }
 .step__dot { width: 20px; height: 20px; flex: 0 0 auto; margin-top: 1px; border: 1.6px dashed var(--border-strong); border-radius: var(--r-full); }
 .step__dot--done { display: grid; place-items: center; border: 0; background: var(--accent); color: #fff; }
 .step__dot--done .icon { width: 12px; height: 12px; stroke-width: 3; }
-.step__title { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.step__title { padding: 0; text-align: left; font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+/* De titelknop rekt zijn klikvlak op tot de hele rij, zodat je overal kunt
+   klikken zonder de <li> zelf interactief te hoeven maken. */
+.step__title::after { content: ""; position: absolute; inset: 0; border-radius: var(--r-md); }
+.step__title:focus-visible { outline: none; }
+.step__title:focus-visible::after { outline: 2px solid var(--accent); outline-offset: -2px; }
+/* Uitklappen via grid-rijen 0fr -> 1fr: dat animeert de echte hoogte, zonder
+   een max-height te moeten raden die bij langere inhoud afkapt. De binnenlaag
+   doet het clippen, want een grid-item knipt zijn eigen inhoud niet af. */
+.step__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 240ms var(--ease);
+}
+.step.is-open .step__panel { grid-template-rows: 1fr; }
+.step__panel-inner {
+  overflow: hidden;
+  opacity: 0;
+  /* Dichtgeklapt is de knop nog 0px hoog maar wel focusbaar; visibility haalt
+     hem uit de tabvolgorde en wacht met omslaan tot het inklappen klaar is. */
+  visibility: hidden;
+  transition: opacity 240ms var(--ease), visibility 0s linear 240ms;
+}
+.step.is-open .step__panel-inner {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 240ms var(--ease), visibility 0s;
+}
 .step__meta  { margin-top: 4px; font-size: var(--fs-md); color: var(--text-muted); }
-.step .btn { margin-top: 14px; }
+/* Boven het klikvlak, anders vangt dat de knop af. */
+.step .btn { position: relative; z-index: 1; margin-top: 14px; }
 
 /* Stond als grijs vlak op een witte pagina; nu de pagina zelf grijs is heeft
    hij een eigen vlak nodig, net als .card. Gedempte tekst houdt 'm secundair. */
@@ -468,7 +499,18 @@ select.input {
 .overlay[data-closing] { animation: overlay-out 260ms var(--ease) forwards; }
 @keyframes overlay-out { from { transform: none; } to { transform: translateY(100%); } }
 
-.overlay__close { position: absolute; top: 14px; right: 18px; z-index: 2; }
+/* Sticky in plaats van absolute: de overlay is zelf de scroller, dus absoluut
+   zou meescrollen. Blijft in de flow staan (auto links duwt hem rechts) en de
+   negatieve ondermarge haalt zijn eigen hoogte er weer af, zodat de inhoud
+   niet omlaag schuift. */
+.overlay__close {
+  position: sticky;
+  top: 14px;
+  z-index: 2;
+  margin: 14px 18px -54px auto;
+  background: var(--gray-100);
+}
+.overlay__close:hover { background: var(--gray-150); }
 
 .overlay__inner {
   display: grid;
@@ -509,7 +551,9 @@ select.input {
 /* Op 20px, gelijk aan de rest: op 21px zou dezelfde stroke-width als 1,78px
    uitkomen in plaats van 1,72px. */
 .set-nav .nav__item .icon { width: 20px; height: 20px; }
-.nav__chev { margin-left: auto; width: 19px; height: 19px; color: var(--border-strong); }
+/* Alleen zinvol op mobiel, waar de lijst naar een eigen scherm doorklikt.
+   Op desktop staat de inhoud er al naast, dus daar geen chevron. */
+.nav__chev { display: none; margin-left: auto; width: 19px; height: 19px; color: var(--border-strong); }
 .nav__item:hover .nav__chev { color: var(--text-muted); }
 .nav__item.is-active .nav__chev { color: var(--text-muted); }
 
@@ -519,27 +563,171 @@ select.input {
 /* ==========================================================================
    8. SAVE BAR
    ========================================================================== */
+/* Zit in de header op de plek van de zoekbalk, dus exact hetzelfde vak:
+   640 breed, 36 hoog. Zie ook [data-savebar] bij .search. */
 .savebar {
-  position: fixed; left: 0; right: 0; bottom: 0;
-  z-index: 3;
-  display: flex; align-items: center; gap: 16px;
-  padding: 14px 24px;
-  background: var(--bg-surface);
-  border-top: 1px solid var(--border);
-  box-shadow: 0 -6px 20px -12px rgba(18, 22, 28, .3);
-  animation: savebar-in 220ms var(--ease);
+  display: flex; align-items: center; gap: 12px;
+  margin-inline: auto;
+  width: 640px;
+  height: 36px;
+  /* Zichtbaar 4 rondom en 8 links; de 1px rand telt mee, dus staat hier 3 en 7.
+     Zo blijft 36 - 2 rand - 6 padding over: precies de 28 van de knoppen. */
+  padding: 3px 3px 3px 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--gray-50);
+  animation: savebar-in 200ms var(--ease);
 }
-@keyframes savebar-in { from { transform: translateY(100%); } to { transform: none; } }
-.savebar__text { display: flex; align-items: center; gap: 10px; font-size: var(--fs-md); color: var(--text); }
-.savebar__text .icon { color: var(--text-muted); }
-.savebar__actions { display: flex; gap: 10px; margin-left: auto; }
+@keyframes savebar-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.savebar__text {
+  display: flex; align-items: center; gap: 8px;
+  min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font-size: var(--fs-md); color: var(--text);
+}
+.savebar__text .icon { width: 18px; height: 18px; color: var(--text-muted); }
+.savebar__actions { display: flex; gap: 4px; margin-left: auto; flex: 0 0 auto; }
+/* 36 balk min 2x4 padding laat exact 28 over; de radius loopt concentrisch
+   mee met de balk (10 buiten, 4 padding, dus 6 binnen) in plaats van rond. */
+.savebar .btn { height: 28px; padding: 0 12px; border-radius: calc(var(--r-md) - 4px); font-size: var(--fs-sm); }
 
 /* ==========================================================================
-   9. RESPONSIVE
+   8b. MENU-SECTIE — uitklapbare sidebargroep + productenlijst
+   ========================================================================== */
+.nav__group { display: block; }
+.nav__caret {
+  margin-left: auto; width: 16px; height: 16px;
+  color: var(--text-muted);
+  transition: transform var(--dur) var(--ease);
+}
+[aria-expanded="true"] > .nav__caret { transform: rotate(90deg); }
+/* De ouder blijft gemarkeerd zolang je op een van zijn subpagina's staat,
+   maar zonder het vlak van .is-active: dat hoort bij het gekozen item. */
+.nav__parent.is-section { font-weight: 600; }
+.nav__parent.is-section .icon:first-child { color: var(--accent); }
+
+.nav__sub { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
+.nav__group.is-open .nav__sub { grid-template-rows: 1fr; }
+.nav__sub > li:first-child { margin-top: 2px; }
+.nav__sub { overflow: hidden; }
+/* Uitgelijnd op de tekst van de ouder: 12 padding + 20 icoon + 12 gap. */
+.nav__sub-item { padding-left: 44px; font-weight: 500; color: var(--text-muted); }
+.nav__sub-item.is-active { color: var(--text-strong); }
+
+.page-head__action { margin-left: auto; height: 36px; padding: 0 16px; font-size: var(--fs-md); }
+.page-head__action .icon { width: 18px; height: 18px; }
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+.panel__head { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.panel__filter { width: 36px; height: 36px; margin-left: auto; border: 1px solid var(--border); border-radius: var(--r-full); }
+
+.tabs { display: flex; align-items: center; gap: 4px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 0 0 auto;
+  padding: 7px 14px;
+  border-radius: var(--r-full);
+  font-size: var(--fs-md); font-weight: 500;
+  color: var(--text-muted);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.tab:hover { background: var(--gray-50); color: var(--text); }
+.tab.is-active { background: var(--gray-100); color: var(--text-strong); }
+
+.group + .group { border-top: 1px solid var(--border); }
+.group__head {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--gray-50);
+  text-align: left;
+  transition: background var(--dur) var(--ease);
+}
+.group__head:hover { background: var(--gray-100); }
+.group__caret { width: 16px; height: 16px; color: var(--text-muted); transition: transform var(--dur) var(--ease); }
+.group.is-open .group__caret { transform: rotate(90deg); }
+.group__name { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
+.group__count { margin-left: auto; font-size: var(--fs-md); color: var(--text-muted); }
+
+/* Zelfde uitklaptruc als de setup-guide: grid-rijen animeren de echte hoogte. */
+.group__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 240ms var(--ease); }
+.group.is-open .group__panel { grid-template-rows: 1fr; }
+.group__list { overflow: hidden; }
+.group__list > li { border-top: 1px solid var(--border); }
+
+.prod { display: flex; align-items: center; gap: 14px; padding: 10px 16px; transition: background var(--dur) var(--ease); }
+.prod:hover { background: var(--gray-25); }
+.prod__handle { display: grid; place-items: center; flex: 0 0 auto; color: var(--border-strong); cursor: grab; }
+.prod__thumb {
+  display: grid; place-items: center;
+  width: 44px; height: 44px; flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--gray-25);
+  color: var(--border-strong);
+}
+.prod__name { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); }
+/* Vaste kolom, ook als er geen tip is: anders schuiven de badges per rij. */
+.prod__tip { display: grid; place-items: center; width: 28px; flex: 0 0 auto; margin-left: 24px; }
+.prod .badge { margin-left: auto; }
+.tip { display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--r-sm); color: var(--warning-fg); }
+.tip:hover { background: var(--warning-bg); }
+.tip .icon { width: 18px; height: 18px; }
+
+.badge {
+  flex: 0 0 auto;
+  padding: 3px 10px;
+  border-radius: var(--r-full);
+  font-size: var(--fs-sm); font-weight: 500;
+}
+.badge--active { background: #e3f5ec; color: var(--success); }
+.badge--draft  { background: #e4eefb; color: #1f5fa8; }
+
+/* ==========================================================================
+   9. TOAST
+   Zwevende bevestiging onderaan; app.js §6 vult de tekst en ruimt hem op.
+   ========================================================================== */
+.toast {
+  position: fixed;
+  left: 50%; bottom: 24px;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  display: flex; align-items: center; gap: 8px;
+  max-width: min(420px, calc(100vw - 32px));
+  /* Zelfde opzet als de savebar: 4 rondom, wat meer links, knop concentrisch. */
+  padding: 4px 4px 4px 14px;
+  border-radius: var(--r-md);
+  background: var(--gray-900);
+  color: #fff;
+  box-shadow: var(--shadow-lg);
+  animation: toast-in 200ms var(--ease);
+}
+/* transform is één property, dus het centreren moet in beide keyframes mee. */
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+.toast__text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-md); font-weight: 500; }
+.toast__close {
+  display: grid; place-items: center;
+  width: 28px; height: 28px; flex: 0 0 auto;
+  border-radius: calc(var(--r-md) - 4px);
+  color: rgba(255, 255, 255, .7);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.toast__close:hover { background: rgba(255, 255, 255, .14); color: #fff; }
+.toast__close .icon { width: 16px; height: 16px; }
+
+/* ==========================================================================
+   10. RESPONSIVE
    ========================================================================== */
 @media (max-width: 1080px) {
   :root { --sidebar-w: 240px; --set-nav-w: 250px; }
-  .search { width: min(340px, 34vw); }
+  /* 640px past hier nog; onder 900px nemen de mobiele regels het over. */
 }
 
 /* Tablet & mobiel: sidebar wordt een smalle drawer onder de header, zodat
@@ -604,6 +792,7 @@ select.input {
   .set-nav__title { font-size: 18px; font-weight: 500; letter-spacing: -.015em; color: var(--text-strong); }
 
   .store { padding: 4px 8px 14px; }
+  .nav__chev { display: block; }
 
   /* De tabs in één wit vlak, zoals de .rows-lijsten elders: geen losse pillen
      maar rijen met haarlijnen ertussen. overflow houdt hover en is-active
@@ -627,7 +816,7 @@ select.input {
   /* Terug is een gewone tekstlink boven de titel, geen balk. */
   .set-back {
     display: inline-flex; align-items: center; gap: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     padding: 4px 6px 4px 0;
     font-size: var(--fs-md); font-weight: 500;
     color: var(--text-muted);
@@ -636,9 +825,11 @@ select.input {
   .set-back .icon { width: 18px; height: 18px; }
   .set-main .page-head { margin-bottom: 16px; }
 
-  .savebar { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px 16px; }
-  .savebar__actions { margin-left: 0; }
-  .savebar__actions .btn { flex: 1; }
+  /* Zelfde balk en knopmaten als op desktop; alleen de vaste 640px vervalt,
+     want die ruimte is er niet. De tekst mag inkorten voor de knoppen. */
+  .savebar { width: auto; flex: 1 1 auto; margin-inline: 0; min-width: 0; }
+  .savebar__text { min-width: 0; overflow: hidden; white-space: nowrap; }
+  .savebar__actions { margin-left: auto; flex: 0 0 auto; }
 }
 
 @media (max-width: 560px) {

@@ -5,7 +5,9 @@
      2. Hoofdnavigatie            → welke view staat aan
      3. Settings-overlay          → <html data-settings> + data-settings-view
      4. Save bar
-     5. Toetsenbord
+     5. Setup-guide               → accordeon op het dashboard
+     6. Toast                     → bevestiging na opslaan
+     7. Toetsenbord
    In een SPA vervang je §2 en §3 door de router; de rest blijft 1-op-1.
    ========================================================================== */
 (function () {
@@ -94,8 +96,79 @@
       document.getElementById("empty-title").textContent = title;
       swapIcon(document.getElementById("empty-icon"), icon);
     }
+    syncPageAction(page);
     document.getElementById("content").scrollTop = 0;
   }
+
+  /* ---- Productenlijst: groepen klappen los van elkaar open ---------------- */
+  var productPanel = document.querySelector('[data-view="products"] .panel');
+
+  if (productPanel) {
+    productPanel.addEventListener("click", function (e) {
+      var kop = e.target.closest(".group__head");
+      if (kop) {
+        var groep = kop.closest(".group");
+        var open = !groep.classList.contains("is-open");
+        groep.classList.toggle("is-open", open);
+        kop.setAttribute("aria-expanded", String(open));
+        return;
+      }
+      var tab = e.target.closest(".tab");
+      if (tab) {
+        productPanel.querySelectorAll(".tab").forEach(function (t) { t.classList.remove("is-active"); });
+        tab.classList.add("is-active");
+      }
+    });
+  }
+
+  /* ---- Menu-groep: ouder navigeert niet zelf, maar opent en kiest Products -- */
+  var menuGroup  = document.getElementById("menu-group");
+  var menuToggle = document.getElementById("menu-toggle");
+  var pageAction = document.getElementById("page-action");
+  var pageActionLabel = document.getElementById("page-action-label");
+
+  var PAGINA_ACTIES = {
+    products:   "Add product",
+    choices:    "Add new",
+    categories: "Add categorie"
+  };
+
+  function syncPageAction(page) {
+    var label = PAGINA_ACTIES[page];
+    pageAction.hidden = !label;
+    if (label) pageActionLabel.textContent = label;
+  }
+
+  /* De ouder houdt zijn markering zolang je op een van zijn subpagina's staat.
+     Aparte klasse, want activate() wist juist alle is-active in de sidebar. */
+  function syncSection() {
+    menuToggle.classList.toggle("is-section", !!menuGroup.querySelector(".nav__sub-item.is-active"));
+  }
+
+  function setMenuGroup(open) {
+    menuGroup.classList.toggle("is-open", open);
+    menuToggle.setAttribute("aria-expanded", String(open));
+  }
+
+  function gaNaar(item) {
+    activate(item, sidebar);
+    lastPageItem = item;
+    showPage(item.dataset.page, item.dataset.title, item.dataset.icon);
+  }
+
+  menuToggle.addEventListener("click", function () {
+    /* Sta je buiten de groep, dan is Menu een sprong naar Products — ook als
+       de groep toevallig nog opengeklapt stond. Sta je er al in, dan klapt hij
+       alleen open of dicht. Navigeren gebeurt niet via .click() op het
+       subitem: dat zou op mobiel de drawer meteen weer dichtslaan. */
+    if (!menuGroup.querySelector(".nav__sub-item.is-active")) {
+      setMenuGroup(true);
+      gaNaar(menuGroup.querySelector(".nav__sub-item"));
+      syncSection();
+      return;
+    }
+    setMenuGroup(!menuGroup.classList.contains("is-open"));
+  });
 
   sidebar.addEventListener("click", function (e) {
     var item = e.target.closest(".nav__item[data-page]");
@@ -104,6 +177,8 @@
     activate(item, sidebar);
     lastPageItem = item;
     showPage(item.dataset.page, item.dataset.title, item.dataset.icon);
+    /* Buiten de groep klikken laat de markering van Menu los. */
+    syncSection();
     /* Vanuit de drawer bovenop de overlay: die moet weg, anders kies je een
        pagina die je niet te zien krijgt. */
     if (root.dataset.settings === "open") closeSettings();
@@ -239,17 +314,82 @@
   /* ========================================================================
      4. SAVE BAR — verschijnt zodra er iets wijzigt in de overlay
      ======================================================================== */
-  function showSavebar() { if (root.dataset.settings === "open") savebar.hidden = false; }
-  function hideSavebar() { savebar.hidden = true; }
+  /* De savebar deelt zijn plek in de header met de zoekbalk; de schakelaar op
+     <html> bepaalt wie er staat (zie [data-savebar] in de CSS). */
+  function setSavebar(open) {
+    savebar.hidden = !open;
+    root.dataset.savebar = open ? "open" : "closed";
+  }
+  function showSavebar() { if (root.dataset.settings === "open") setSavebar(true); }
+  function hideSavebar() { setSavebar(false); }
 
   overlay.addEventListener("change", showSavebar);
   overlay.addEventListener("input", showSavebar);
   savebar.addEventListener("click", function (e) {
-    if (e.target.closest("[data-save]")) hideSavebar();
+    var actie = e.target.closest("[data-save]");
+    if (!actie) return;
+    hideSavebar();
+    /* De melding benoemt wat er bewaard is; de settings-kop weet dat al. */
+    if (actie.dataset.save === "save") showToast(setTitle.textContent + " saved");
   });
 
   /* ========================================================================
-     5. TOETSENBORD
+     5. SETUP-GUIDE — accordeon: er staat er hooguit één open
+     ======================================================================== */
+  var steps = document.querySelector(".steps");
+
+  if (steps) {
+    steps.addEventListener("click", function (e) {
+      var title = e.target.closest(".step__title");
+      if (!title) return;
+
+      var step = title.closest(".step");
+      var wasOpen = step.classList.contains("is-open");
+
+      steps.querySelectorAll(".step").forEach(function (el) {
+        el.classList.remove("is-open");
+        el.querySelector(".step__title").setAttribute("aria-expanded", "false");
+      });
+
+      /* Nogmaals op de open stap klikken klapt hem weer dicht. */
+      if (!wasOpen) {
+        step.classList.add("is-open");
+        title.setAttribute("aria-expanded", "true");
+      }
+    });
+  }
+
+  /* ========================================================================
+     6. TOAST — korte bevestiging, verdwijnt vanzelf
+     ======================================================================== */
+  var toast     = document.getElementById("toast");
+  var toastText = document.getElementById("toast-text");
+  var toastTimer = null;
+
+  function showToast(bericht) {
+    toastText.textContent = bericht;
+    toast.hidden = false;
+
+    /* Staat er al een melding, dan moet de animatie opnieuw beginnen; anders
+       verschijnt de nieuwe tekst zonder dat er iets lijkt te gebeuren. */
+    toast.style.animation = "none";
+    void toast.offsetWidth;
+    toast.style.animation = "";
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(hideToast, 4000);
+  }
+
+  function hideToast() {
+    clearTimeout(toastTimer);
+    toastTimer = null;
+    toast.hidden = true;
+  }
+
+  document.getElementById("toast-close").addEventListener("click", hideToast);
+
+  /* ========================================================================
+     7. TOETSENBORD
      ======================================================================== */
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
