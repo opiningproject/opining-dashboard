@@ -99,6 +99,7 @@
     <symbol id="i-user-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="10" r="2.7"/><path d="M6.6 18.6a6 6 0 0 1 10.8 0"/></symbol>
     <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.6 18h4.8M10.2 20.8h3.6M12 3.4a5.4 5.4 0 0 1 3.2 9.7c-.6.5-1 1.2-1 2H9.8c0-.8-.4-1.5-1-2A5.4 5.4 0 0 1 12 3.4Z"/></symbol>
     <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4.2 21 19.4H3zM12 10v4M12 16.6h.01"/></symbol>
+    <symbol id="i-unsaved" viewBox="0 0 16 16"><path style="stroke-width:1.2" d="M2 5.51172C2 3.30258 3.79086 1.51172 6 1.51172H10C12.2091 1.51172 14 3.30258 14 5.51172V9.41876C14 11.1258 12.6141 12.5085 10.907 12.5045C9.73828 12.5017 8.66403 13.168 8.13888 14.2122C8.08166 14.3259 7.91839 14.327 7.8609 14.2133C7.33382 13.1715 6.26398 12.5117 5.09642 12.5117C3.38631 12.5117 2 11.1254 2 9.4153V5.51172Z"/><circle cx="8" cy="10" r="1" style="fill:currentColor;stroke:none"/><rect x="7" y="4" width="2" height="4" rx="1" style="fill:currentColor;stroke:none"/></symbol>
     <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.6v5M12 16.2h.01"/></symbol>
     <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/></symbol>
     <symbol id="i-caret" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5" fill="none"/></symbol>
@@ -129,7 +130,7 @@
       </div>
 
       <div class="savebar" id="savebar" hidden>
-        <p class="savebar__text"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Unsaved changes</p>
+        <p class="savebar__text"><svg class="icon" aria-hidden="true"><use href="#i-unsaved"/></svg>Unsaved changes</p>
         <div class="savebar__actions">
           <button class="btn btn--ghost" type="button" data-save="discard">Discard</button>
           <button class="btn btn--primary" type="button" data-save="save">Save</button>
