@@ -48,10 +48,10 @@
     btnDrawer.setAttribute("aria-expanded", String(open));
     btnDrawer.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     scrim.hidden = !open;
-    if (open) {
-      var first = sidebar.querySelector(".nav__item");
-      if (first) first.focus({ preventScroll: true });
-    }
+    /* Focus naar de drawer zelf, niet naar het eerste item: iOS Safari ziet
+       een programmatische focus als 'zichtbaar' en tekent dan een ring om
+       Dashboard die de gebruiker nooit heeft opgeroepen. */
+    if (open) sidebar.focus({ preventScroll: true });
   }
 
   btnDrawer.addEventListener("click", function () { setDrawer(root.dataset.drawer !== "open"); });
@@ -264,10 +264,10 @@
     document.body.style.overflow = "hidden";
     setDrawer(false);
 
-    /* Op desktop staat de inhoud er meteen naast; op mobiel toont de lijst
-       zich eerst, dus dan is de lijst het logische focuspunt. */
-    var target = mqMobile.matches ? setNav.querySelector(".nav__item") : btnSetClose;
-    target.focus({ preventScroll: true });
+    /* De dialoog zelf krijgt de focus, niet een knop of lijstitem erin: dat
+       verplaatst de focus wel netjes naar de overlay, maar zonder een ring om
+       iets waar de gebruiker niet naartoe is genavigeerd. */
+    overlay.focus({ preventScroll: true });
   }
 
   /* Verbergen mag pas als de overlay is uitgegleden. De savebar zit erbinnen

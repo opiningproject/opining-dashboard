@@ -135,6 +135,10 @@ legend { padding: 0; }
 }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
+/* Containers die alleen programmatisch focus krijgen (drawer, dialoog) horen
+   nooit een ring te tonen; die is bedoeld voor waar je zelf naartoe navigeert. */
+.sidebar:focus, .sidebar:focus-visible,
+.overlay:focus, .overlay:focus-visible { outline: none; }
 
 .skip-link {
   position: fixed; top: 8px; left: 8px; z-index: 100;
