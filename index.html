@@ -67,6 +67,9 @@
     <symbol id="i-dots" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="4.7" cy="10" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="15.3" cy="10" r="1.15"/></symbol>
     <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3.2" y="4" width="17.6" height="4.6" rx="1.3"/><path d="M5.2 8.6v10.2a1.3 1.3 0 0 0 1.3 1.3h11a1.3 1.3 0 0 0 1.3-1.3V8.6M9.9 12.3h4.2"/></symbol>
     <symbol id="i-loyalty" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.4l1.55 3.05L16.6 12l-3.05 1.55L12 16.6l-1.55-3.05L7.4 12l3.05-1.55z"/></symbol>
+    <symbol id="i-discount" viewBox="0 0 24 24"><path d="M12.7 3.2H5.5a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l6.9 6.9a2 2 0 0 0 2.8 0l6.5-6.5a2 2 0 0 0 0-2.8l-6.9-6.9a2 2 0 0 0-1.4-.6Z"/><path d="m9.3 12.6 4-4"/><circle cx="9.2" cy="8.6" r=".9"/><circle cx="13.3" cy="12.7" r=".9"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3.4 8.6V6.4a1.4 1.4 0 0 1 1.4-1.4h14.4a1.4 1.4 0 0 1 1.4 1.4v2.2a2.6 2.6 0 0 0 0 5.2v3.8a1.4 1.4 0 0 1-1.4 1.4H4.8a1.4 1.4 0 0 1-1.4-1.4v-3.8a2.6 2.6 0 0 0 0-5.2Z"/><path d="M14 8.4v1.8M14 13.8v1.8"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.2" y="5.2" width="17.6" height="13.6" rx="2"/><path d="m3.9 6.6 8.1 6 8.1-6"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.6" y="10.4" width="14.8" height="9.4" rx="2"/><path d="M8.3 10.4V7.7a3.7 3.7 0 0 1 7.4 0v2.7"/></symbol>
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 11.1v5.1M12 7.8h.01"/></symbol>
     <symbol id="i-coin" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="8.8"/><path d="M12 6.9l1.45 2.85 2.85 1.45-2.85 1.45L12 15.5l-1.45-2.85L7.7 11.2l2.85-1.45z" fill="#fff"/></symbol>
@@ -182,10 +185,10 @@
                 <svg class="icon" aria-hidden="true"><use href="#i-marketing"/></svg><span>Marketing</span>
               </button>
               <div class="nav__sub" id="marketing-sub"><ul class="nav__sub-list">
-                <li><a class="nav__item nav__sub-item" href="#" data-page="discounts" data-title="Discounts" data-icon="i-marketing"><span>Discounts</span></a></li>
-                <li><a class="nav__item nav__sub-item" href="#" data-page="vouchers" data-title="Vouchers" data-icon="i-marketing"><span>Vouchers</span></a></li>
+                <li><a class="nav__item nav__sub-item" href="#" data-page="discounts" data-title="Discounts" data-icon="i-discount"><span>Discounts</span></a></li>
+                <li><a class="nav__item nav__sub-item" href="#" data-page="vouchers" data-title="Vouchers" data-icon="i-ticket"><span>Vouchers</span></a></li>
                 <li><a class="nav__item nav__sub-item" href="#" data-page="loyalty" data-title="Loyalty" data-icon="i-loyalty"><span>Loyalty</span></a></li>
-                <li><a class="nav__item nav__sub-item" href="#" data-page="email-campaigns" data-title="Email campaigns" data-icon="i-marketing"><span>Email campaigns</span></a></li>
+                <li><a class="nav__item nav__sub-item" href="#" data-page="email-campaigns" data-title="Email campaigns" data-icon="i-mail"><span>Email campaigns</span></a></li>
               </ul></div>
             </li>
             <li><a class="nav__item" href="#" data-page="customers" data-title="Customers" data-icon="i-customers">
@@ -213,6 +216,12 @@
           <!-- De actieknop hoort bij de pagina, niet bij de view: app.js §2
                zet label en zichtbaarheid per pagina. -->
           <div class="page-head">
+            <!-- Zelfde kruimelpad als in settings: binnen een aanmaakscherm
+                 dimt het pagina-icoon en leidt het terug naar de lijst. -->
+            <button class="crumb" type="button" id="page-crumb" hidden>
+              <svg class="icon page-head__icon" id="page-crumb-icon" aria-hidden="true"><use href="#i-home"/></svg>
+              <svg class="icon crumb__sep" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+            </button>
             <svg class="icon page-head__icon" id="page-icon" aria-hidden="true"><use href="#i-home"/></svg>
             <h1 id="page-title">Dashboard</h1>
             <button class="btn btn--primary page-head__action" type="button" id="page-action" hidden>
@@ -230,6 +239,18 @@
               <button class="btn btn--primary btn--pill page-head__action" type="button">
                 Manage orders
                 <svg class="icon" aria-hidden="true"><use href="#i-caret"/></svg>
+              </button>
+            </div>
+            <div class="page-head__tools" data-tools="analytics" hidden>
+              <label class="sr-only" for="ana-range">Date range</label>
+              <select class="input" id="ana-range">
+                <option>Last 14 days</option>
+                <option>Last 30 days</option>
+                <option>This month</option>
+                <option>Last quarter</option>
+              </select>
+              <button class="btn btn--ghost btn--pill page-head__action" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
               </button>
             </div>
             <div class="page-head__tools" data-tools="archive" hidden>
@@ -892,6 +913,629 @@
             </div>
           </section>
 
+          <!-- ---------- VIEW: discounts ---------- -->
+          <section class="view" data-view="discounts" hidden>
+            <ul class="stats">
+              <li class="stat"><p class="stat__label">Active discounts</p><p class="stat__value">4</p><p class="stat__delta">1 scheduled</p></li>
+              <li class="stat"><p class="stat__label">Used this month</p><p class="stat__value">745</p><p class="stat__delta is-up">+18,2%</p></li>
+              <li class="stat"><p class="stat__label">Discounted revenue</p><p class="stat__value">&euro; 6.180</p><p class="stat__delta">14% of total</p></li>
+              <li class="stat"><p class="stat__label">Average discount</p><p class="stat__value">&euro; 2,35</p><p class="stat__delta is-down">&minus;0,4%</p></li>
+            </ul>
+
+            <div class="panel">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All <span class="tab__count">6</span></button>
+                  <button class="tab" type="button">Active <span class="tab__count">4</span></button>
+                  <button class="tab" type="button">Scheduled <span class="tab__count">1</span></button>
+                  <button class="tab" type="button">Expired <span class="tab__count">1</span></button>
+                </div>
+                <div class="panel__tools">
+                  <button class="icon-btn" type="button" aria-label="Search discounts">
+                    <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+                  <button class="icon-btn" type="button" aria-label="Filter discounts">
+                    <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table class="table table--list">
+                  <thead>
+                    <tr><th>Discount</th><th>Value</th><th>Applies to</th><th>Used</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">Welcome offer</span><span class="cell__meta">Code WELCOME10</span></span></td>
+                      <td>10% off</td>
+                      <td>All products</td>
+                      <td>128</td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Welcome offer"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">Pizza Tuesday</span><span class="cell__meta">Automatic &middot; no code</span></span></td>
+                      <td>20% off</td>
+                      <td>Category: Pizza</td>
+                      <td>64</td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Pizza Tuesday"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">Family deal</span><span class="cell__meta">Code FAMILY5</span></span></td>
+                      <td>&euro; 5,00 off</td>
+                      <td>Orders from &euro; 35</td>
+                      <td>41</td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Family deal"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">Free delivery week</span><span class="cell__meta">Code FREEDEL</span></span></td>
+                      <td>Free delivery</td>
+                      <td>All products</td>
+                      <td>210</td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Free delivery week"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">Autumn menu</span><span class="cell__meta">Code AUTUMN15</span></span></td>
+                      <td>15% off</td>
+                      <td>6 selected products</td>
+                      <td>0</td>
+                      <td><span class="badge badge--draft">Scheduled</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Autumn menu"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">Summer special</span><span class="cell__meta">Code SUMMER15</span></span></td>
+                      <td>15% off</td>
+                      <td>Category: Drinks</td>
+                      <td>302</td>
+                      <td><span class="badge badge--muted">Expired</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Summer special"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: discount aanmaken ---------- -->
+          <section class="view" data-view="discount-new" hidden>
+            <div class="card">
+              <fieldset class="choices choices--rich">
+                <legend class="card__title">Discount type</legend>
+                <label class="choice choice--rich">
+                  <input type="radio" name="disc-type" value="percentage" checked />
+                  <span class="choice__body">
+                    <span class="choice__title">Percentage off</span>
+                    <span class="choice__desc">Takes a share off the product price. The most common choice.</span>
+                  </span>
+                </label>
+                <label class="choice choice--rich">
+                  <input type="radio" name="disc-type" value="amount" />
+                  <span class="choice__body">
+                    <span class="choice__title">Fixed amount off</span>
+                    <span class="choice__desc">Takes a set amount off the order total.</span>
+                  </span>
+                </label>
+                <label class="choice choice--rich">
+                  <input type="radio" name="disc-type" value="delivery" />
+                  <span class="choice__body">
+                    <span class="choice__title">Free delivery</span>
+                    <span class="choice__desc">Drops the delivery fee. Zones with their own free-delivery threshold keep theirs.</span>
+                  </span>
+                </label>
+              </fieldset>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Details</h2>
+              <div class="field">
+                <label class="label" for="disc-name">Internal name</label>
+                <input class="input" id="disc-name" type="text" placeholder="Welcome offer" />
+                <p class="hint">Only you see this. Customers see the code below.</p>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="disc-value">Percentage off</label>
+                  <span class="affix affix--post"><input class="input" id="disc-value" type="number" value="10" min="1" max="100" /><span class="affix__sym" aria-hidden="true">%</span></span>
+                </div>
+                <div class="field">
+                  <label class="label" for="disc-code">Discount code</label>
+                  <div class="withbtn">
+                    <input class="input" id="disc-code" type="text" value="WELCOME10" />
+                    <button class="btn btn--ghost btn--sm" type="button" id="disc-generate">Generate</button>
+                  </div>
+                </div>
+              </div>
+              <label class="choice choice--plain">
+                <input type="checkbox" id="disc-auto" />
+                <span>Apply automatically, without a code</span>
+              </label>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Applies to</h2>
+              <fieldset class="choices">
+                <legend class="sr-only">Which products this discount applies to</legend>
+                <label class="choice"><input type="radio" name="disc-scope" checked /><span>All products</span></label>
+                <label class="choice"><input type="radio" name="disc-scope" /><span>Specific categories</span></label>
+                <label class="choice"><input type="radio" name="disc-scope" /><span>Specific products</span></label>
+              </fieldset>
+              <div class="field">
+                <label class="label" for="disc-pick">Categories</label>
+                <select class="input" id="disc-pick" disabled>
+                  <option>Pizza</option><option>Drinks</option><option>Desserts</option>
+                </select>
+                <p class="hint">Pick a scope above to choose which ones.</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Conditions</h2>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="disc-min">Minimum order value</label>
+                  <span class="affix affix--pre"><span class="affix__sym" aria-hidden="true">&euro;</span><input class="input" id="disc-min" type="number" placeholder="0,00" step="0.01" /></span>
+                </div>
+                <div class="field">
+                  <label class="label" for="disc-limit">Total usage limit</label>
+                  <input class="input" id="disc-limit" type="number" placeholder="Unlimited" />
+                </div>
+              </div>
+              <label class="choice choice--plain">
+                <input type="checkbox" id="disc-once" checked />
+                <span>Limit to one use per customer</span>
+              </label>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Active dates</h2>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="disc-start">Starts</label>
+                  <input class="input" id="disc-start" type="date" />
+                </div>
+                <div class="field">
+                  <label class="label" for="disc-end">Ends</label>
+                  <input class="input" id="disc-end" type="date" />
+                  <p class="hint">Leave empty to keep it running.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="formfoot">
+              <button class="btn btn--ghost btn--pill" type="button" data-back-view>Discard</button>
+              <button class="btn btn--primary btn--pill" type="button" data-created="Discount created">Create discount</button>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: vouchers ---------- -->
+          <section class="view" data-view="vouchers" hidden>
+            <ul class="stats">
+              <li class="stat"><p class="stat__label">Active vouchers</p><p class="stat__value">38</p><p class="stat__delta is-up">+6 this month</p></li>
+              <li class="stat"><p class="stat__label">Outstanding value</p><p class="stat__value">&euro; 1.145</p><p class="stat__delta">Not yet redeemed</p></li>
+              <li class="stat"><p class="stat__label">Redeemed this month</p><p class="stat__value">&euro; 420</p><p class="stat__delta is-up">+12,5%</p></li>
+              <li class="stat"><p class="stat__label">Expiring within 30 days</p><p class="stat__value">5</p><p class="stat__delta">&euro; 130 total</p></li>
+            </ul>
+
+            <div class="panel">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">Active <span class="tab__count">38</span></button>
+                  <button class="tab" type="button">Redeemed</button>
+                  <button class="tab" type="button">Expired</button>
+                </div>
+                <div class="panel__tools">
+                  <button class="icon-btn" type="button" aria-label="Search vouchers">
+                    <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+                  <button class="icon-btn" type="button" aria-label="Filter vouchers">
+                    <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table class="table table--list">
+                  <thead>
+                    <tr><th>Code</th><th>Remaining</th><th>Issued to</th><th>Expires</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title mono">GIFT-4M2X-90KP</span><span class="cell__meta">Issued 2 Aug</span></span></td>
+                      <td><span class="cell"><span class="cell__title">&euro; 50,00</span><span class="cell__meta">of &euro; 50,00</span></span></td>
+                      <td>thomas@example.com</td>
+                      <td>2 Aug 2027</td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for voucher GIFT-4M2X-90KP"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title mono">GIFT-7QW1-33BE</span><span class="cell__meta">Issued 28 Jul</span></span></td>
+                      <td><span class="cell"><span class="cell__title">&euro; 12,50</span><span class="cell__meta">of &euro; 25,00</span></span></td>
+                      <td>Counter sale</td>
+                      <td>28 Jul 2027</td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for voucher GIFT-7QW1-33BE"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title mono">GIFT-8HD2-51AA</span><span class="cell__meta">Issued 14 Jul</span></span></td>
+                      <td><span class="cell"><span class="cell__title">&euro; 0,00</span><span class="cell__meta">of &euro; 20,00</span></span></td>
+                      <td>lisa@example.com</td>
+                      <td>14 Jul 2027</td>
+                      <td><span class="badge badge--muted">Redeemed</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for voucher GIFT-8HD2-51AA"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title mono">GIFT-2KP9-77XZ</span><span class="cell__meta">Issued 9 Sep</span></span></td>
+                      <td><span class="cell"><span class="cell__title">&euro; 25,00</span><span class="cell__meta">of &euro; 25,00</span></span></td>
+                      <td>Counter sale</td>
+                      <td>9 Sep 2026</td>
+                      <td><span class="badge badge--pending">Expires soon</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for voucher GIFT-2KP9-77XZ"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: voucher aanmaken ---------- -->
+          <section class="view" data-view="voucher-new" hidden>
+            <div class="card">
+              <h2 class="card__title">Value</h2>
+              <p class="card__sub">The amount the customer can spend. Partial use keeps the remainder on the voucher.</p>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="vou-amount">Amount</label>
+                  <span class="affix affix--pre"><span class="affix__sym" aria-hidden="true">&euro;</span><input class="input" id="vou-amount" type="number" value="25.00" step="0.01" /></span>
+                </div>
+                <div class="field">
+                  <label class="label" for="vou-count">How many to create</label>
+                  <input class="input" id="vou-count" type="number" value="1" min="1" />
+                  <p class="hint">Each gets its own code.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Code</h2>
+              <div class="field">
+                <label class="label" for="vou-code">Voucher code</label>
+                <div class="withbtn">
+                  <input class="input mono" id="vou-code" type="text" value="GIFT-2KP9-77XZ" />
+                  <button class="btn btn--ghost btn--sm" type="button" id="vou-generate">Generate</button>
+                </div>
+                <p class="hint">Generated codes avoid characters that are easy to misread.</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Delivery</h2>
+              <fieldset class="choices">
+                <legend class="sr-only">How to hand over the voucher</legend>
+                <label class="choice"><input type="radio" name="vou-send" checked /><span>Print or hand over at the counter</span></label>
+                <label class="choice"><input type="radio" name="vou-send" /><span>Email it to the customer</span></label>
+              </fieldset>
+              <div class="field">
+                <label class="label" for="vou-email">Customer email</label>
+                <input class="input" id="vou-email" type="email" placeholder="name@example.com" disabled />
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Expiry</h2>
+              <div class="field">
+                <label class="label" for="vou-expires">Valid until</label>
+                <input class="input" id="vou-expires" type="date" />
+                <p class="hint">Dutch law requires gift vouchers to stay valid for at least two years.</p>
+              </div>
+            </div>
+
+            <div class="formfoot">
+              <button class="btn btn--ghost btn--pill" type="button" data-back-view>Discard</button>
+              <button class="btn btn--primary btn--pill" type="button" data-created="Voucher created">Create voucher</button>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: email campaigns ---------- -->
+          <section class="view" data-view="email-campaigns" hidden>
+            <ul class="stats">
+              <li class="stat"><p class="stat__label">Subscribers</p><p class="stat__value">1.284</p><p class="stat__delta is-up">+96 this month</p></li>
+              <li class="stat"><p class="stat__label">Sent this month</p><p class="stat__value">3</p><p class="stat__delta">3.842 emails</p></li>
+              <li class="stat"><p class="stat__label">Average open rate</p><p class="stat__value">38,4%</p><p class="stat__delta is-up">+2,1pp</p></li>
+              <li class="stat"><p class="stat__label">Average click rate</p><p class="stat__value">6,2%</p><p class="stat__delta is-down">&minus;0,3pp</p></li>
+            </ul>
+
+            <div class="panel">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All <span class="tab__count">5</span></button>
+                  <button class="tab" type="button">Sent <span class="tab__count">3</span></button>
+                  <button class="tab" type="button">Scheduled <span class="tab__count">1</span></button>
+                  <button class="tab" type="button">Draft <span class="tab__count">1</span></button>
+                </div>
+                <div class="panel__tools">
+                  <button class="icon-btn" type="button" aria-label="Search campaigns">
+                    <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+                  <button class="icon-btn" type="button" aria-label="Filter campaigns">
+                    <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table class="table table--list">
+                  <thead>
+                    <tr><th>Campaign</th><th>Audience</th><th>Sent</th><th>Opened</th><th>Clicked</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">New autumn menu is live</span><span class="cell__meta">Sent 12 Aug, 11:00</span></span></td>
+                      <td>All customers</td>
+                      <td>1.284</td>
+                      <td>41,2%</td>
+                      <td>7,8%</td>
+                      <td><span class="badge badge--active">Sent</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for New autumn menu is live"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">Free delivery this weekend</span><span class="cell__meta">Sent 2 Aug, 16:30</span></span></td>
+                      <td>Returning customers</td>
+                      <td>541</td>
+                      <td>44,7%</td>
+                      <td>9,1%</td>
+                      <td><span class="badge badge--active">Sent</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Free delivery this weekend"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">We missed you &mdash; 10% off</span><span class="cell__meta">Sent 21 Jul, 09:00</span></span></td>
+                      <td>Inactive 90+ days</td>
+                      <td>2.017</td>
+                      <td>29,3%</td>
+                      <td>4,4%</td>
+                      <td><span class="badge badge--active">Sent</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for We missed you"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">Opening hours during the holidays</span><span class="cell__meta">Goes out 20 Dec, 10:00</span></span></td>
+                      <td>All customers</td>
+                      <td>&mdash;</td>
+                      <td>&mdash;</td>
+                      <td>&mdash;</td>
+                      <td><span class="badge badge--draft">Scheduled</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Opening hours during the holidays"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">Untitled campaign</span><span class="cell__meta">Edited 3 days ago</span></span></td>
+                      <td>&mdash;</td>
+                      <td>&mdash;</td>
+                      <td>&mdash;</td>
+                      <td>&mdash;</td>
+                      <td><span class="badge badge--muted">Draft</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Untitled campaign"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: campagne opstellen ---------- -->
+          <section class="view" data-view="campaign-new" hidden>
+            <div class="card">
+              <h2 class="card__title">Audience</h2>
+              <div class="field">
+                <label class="label" for="camp-audience">Send to</label>
+                <select class="input" id="camp-audience">
+                  <option value="1284">All customers</option>
+                  <option value="541">Returning customers</option>
+                  <option value="96">New this month</option>
+                  <option value="2017">Inactive for 90+ days</option>
+                </select>
+              </div>
+              <p class="note">
+                <svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>
+                This email reaches <b id="camp-count">1.284</b> customers who opted in to marketing email.
+              </p>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Content</h2>
+              <div class="field">
+                <label class="label" for="camp-subject">Subject</label>
+                <input class="input" id="camp-subject" type="text" placeholder="New autumn menu is live" maxlength="90" />
+              </div>
+              <div class="field">
+                <label class="label" for="camp-preview">Preview text</label>
+                <input class="input" id="camp-preview" type="text" placeholder="The line inboxes show under the subject" maxlength="120" />
+              </div>
+              <div class="field">
+                <label class="label" for="camp-body">Message</label>
+                <textarea class="input" id="camp-body" rows="8" placeholder="Hi there,&#10;&#10;We just added six new dishes to the menu…"></textarea>
+                <p class="hint">Your store name, logo and an unsubscribe link are added automatically.</p>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">When to send</h2>
+              <fieldset class="choices">
+                <legend class="sr-only">Sending moment</legend>
+                <label class="choice"><input type="radio" name="camp-when" checked /><span>Send now</span></label>
+                <label class="choice"><input type="radio" name="camp-when" /><span>Schedule for later</span></label>
+              </fieldset>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="camp-date">Date</label>
+                  <input class="input" id="camp-date" type="date" disabled />
+                </div>
+                <div class="field">
+                  <label class="label" for="camp-time">Time</label>
+                  <input class="input time" id="camp-time" type="time" value="10:00" disabled />
+                </div>
+              </div>
+            </div>
+
+            <div class="formfoot">
+              <button class="btn btn--ghost btn--pill" type="button" data-back-view>Discard</button>
+              <button class="btn btn--soft btn--pill" type="button" data-created="Test email sent to you">Send test email</button>
+              <button class="btn btn--primary btn--pill" type="button" data-created="Campaign sent">Send to <span id="camp-count-btn">1.284</span> customers</button>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: analytics ---------- -->
+          <section class="view" data-view="analytics" hidden>
+            <ul class="stats">
+              <li class="stat"><p class="stat__label">Revenue</p><p class="stat__value">&euro; 16.350</p><p class="stat__delta is-up">+9,4% vs. previous 14 days</p></li>
+              <li class="stat"><p class="stat__label">Orders</p><p class="stat__value">574</p><p class="stat__delta is-up">+6,1%</p></li>
+              <li class="stat"><p class="stat__label">Average order value</p><p class="stat__value">&euro; 28,48</p><p class="stat__delta is-up">+3,1%</p></li>
+              <li class="stat"><p class="stat__label">Repeat rate</p><p class="stat__value">42%</p><p class="stat__delta is-down">&minus;1,2pp</p></li>
+            </ul>
+
+            <div class="card">
+              <div class="card__headrow">
+                <div>
+                  <h2 class="card__title">Revenue per day</h2>
+                  <p class="card__sub">Last 14 days, split by how the order was collected.</p>
+                </div>
+                <ul class="legend">
+                  <li class="legend__item"><span class="legend__dot legend__dot--del" aria-hidden="true"></span>Delivery</li>
+                  <li class="legend__item"><span class="legend__dot legend__dot--take" aria-hidden="true"></span>Takeaway</li>
+                </ul>
+              </div>
+
+              <div class="chart">
+                <div class="chart__plot">
+                  <div class="chart__grid" aria-hidden="true">
+                    <span data-v="&euro; 2.400" style="bottom:100%"></span>
+                    <span data-v="&euro; 1.600" style="bottom:66.7%"></span>
+                    <span data-v="&euro; 800" style="bottom:33.3%"></span>
+                    <span data-v="&euro; 0" style="bottom:0"></span>
+                  </div>
+                  <ol class="chart__bars">
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:32.5%"></span><span class="cbar__seg cbar__seg--take" style="height:11.3%"></span></span>
+                      <span class="cbar__x">4</span>
+                      <span class="cbar__tip"><b>Mon 4 Aug &middot; &euro; 1.050</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 780</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 270</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:26.7%"></span><span class="cbar__seg cbar__seg--take" style="height:8.8%"></span></span>
+                      <span class="cbar__x">5</span>
+                      <span class="cbar__tip"><b>Tue 5 Aug &middot; &euro; 850</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 640</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 210</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:30%"></span><span class="cbar__seg cbar__seg--take" style="height:10.4%"></span></span>
+                      <span class="cbar__x">6</span>
+                      <span class="cbar__tip"><b>Wed 6 Aug &middot; &euro; 970</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 720</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 250</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:37.9%"></span><span class="cbar__seg cbar__seg--take" style="height:12.5%"></span></span>
+                      <span class="cbar__x">7</span>
+                      <span class="cbar__tip"><b>Thu 7 Aug &middot; &euro; 1.210</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 910</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 300</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:55.8%"></span><span class="cbar__seg cbar__seg--take" style="height:19.2%"></span></span>
+                      <span class="cbar__x">8</span>
+                      <span class="cbar__tip"><b>Fri 8 Aug &middot; &euro; 1.800</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 1.340</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 460</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:63.3%"></span><span class="cbar__seg cbar__seg--take" style="height:21.7%"></span></span>
+                      <span class="cbar__x">9</span>
+                      <span class="cbar__tip"><b>Sat 9 Aug &middot; &euro; 2.040</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 1.520</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 520</span></span>
+                    </li>
+                    <li class="cbar cbar--closed" tabindex="0">
+                      <span class="cbar__stack"></span>
+                      <span class="cbar__x">10</span>
+                      <span class="cbar__tip"><b>Sun 10 Aug</b><span>Closed</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:33.8%"></span><span class="cbar__seg cbar__seg--take" style="height:10.8%"></span></span>
+                      <span class="cbar__x">11</span>
+                      <span class="cbar__tip"><b>Mon 11 Aug &middot; &euro; 1.070</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 810</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 260</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:29.2%"></span><span class="cbar__seg cbar__seg--take" style="height:10%"></span></span>
+                      <span class="cbar__x">12</span>
+                      <span class="cbar__tip"><b>Tue 12 Aug &middot; &euro; 940</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 700</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 240</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:31.7%"></span><span class="cbar__seg cbar__seg--take" style="height:11.7%"></span></span>
+                      <span class="cbar__x">13</span>
+                      <span class="cbar__tip"><b>Wed 13 Aug &middot; &euro; 1.040</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 760</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 280</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:40.8%"></span><span class="cbar__seg cbar__seg--take" style="height:13.8%"></span></span>
+                      <span class="cbar__x">14</span>
+                      <span class="cbar__tip"><b>Thu 14 Aug &middot; &euro; 1.310</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 980</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 330</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:58.8%"></span><span class="cbar__seg cbar__seg--take" style="height:20.8%"></span></span>
+                      <span class="cbar__x">15</span>
+                      <span class="cbar__tip"><b>Fri 15 Aug &middot; &euro; 1.910</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 1.410</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 500</span></span>
+                    </li>
+                    <li class="cbar" tabindex="0">
+                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:66.7%"></span><span class="cbar__seg cbar__seg--take" style="height:23.3%"></span></span>
+                      <span class="cbar__x">16</span>
+                      <span class="cbar__tip"><b>Sat 16 Aug &middot; &euro; 2.160</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 1.600</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 560</span></span>
+                    </li>
+                    <li class="cbar cbar--closed" tabindex="0">
+                      <span class="cbar__stack"></span>
+                      <span class="cbar__x">17</span>
+                      <span class="cbar__tip"><b>Sun 17 Aug</b><span>Closed</span></span>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+
+              <details class="tableview">
+                <summary>Show as table</summary>
+                <div class="table-wrap">
+                  <table class="table">
+                    <thead><tr><th>Day</th><th>Delivery</th><th>Takeaway</th><th>Total</th></tr></thead>
+                    <tbody>
+                      <tr><td>Mon 4 Aug</td><td>&euro; 780</td><td>&euro; 270</td><td>&euro; 1.050</td></tr>
+                      <tr><td>Tue 5 Aug</td><td>&euro; 640</td><td>&euro; 210</td><td>&euro; 850</td></tr>
+                      <tr><td>Wed 6 Aug</td><td>&euro; 720</td><td>&euro; 250</td><td>&euro; 970</td></tr>
+                      <tr><td>Thu 7 Aug</td><td>&euro; 910</td><td>&euro; 300</td><td>&euro; 1.210</td></tr>
+                      <tr><td>Fri 8 Aug</td><td>&euro; 1.340</td><td>&euro; 460</td><td>&euro; 1.800</td></tr>
+                      <tr><td>Sat 9 Aug</td><td>&euro; 1.520</td><td>&euro; 520</td><td>&euro; 2.040</td></tr>
+                      <tr><td>Sun 10 Aug</td><td colspan="3">Closed</td></tr>
+                      <tr><td>Mon 11 Aug</td><td>&euro; 810</td><td>&euro; 260</td><td>&euro; 1.070</td></tr>
+                      <tr><td>Tue 12 Aug</td><td>&euro; 700</td><td>&euro; 240</td><td>&euro; 940</td></tr>
+                      <tr><td>Wed 13 Aug</td><td>&euro; 760</td><td>&euro; 280</td><td>&euro; 1.040</td></tr>
+                      <tr><td>Thu 14 Aug</td><td>&euro; 980</td><td>&euro; 330</td><td>&euro; 1.310</td></tr>
+                      <tr><td>Fri 15 Aug</td><td>&euro; 1.410</td><td>&euro; 500</td><td>&euro; 1.910</td></tr>
+                      <tr><td>Sat 16 Aug</td><td>&euro; 1.600</td><td>&euro; 560</td><td>&euro; 2.160</td></tr>
+                      <tr><td>Sun 17 Aug</td><td colspan="3">Closed</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </div>
+
+            <div class="grid2">
+              <div class="card">
+                <h2 class="card__title">Best selling products</h2>
+                <p class="card__sub">By number of orders, last 14 days.</p>
+                <ol class="hbars">
+                  <li class="hbar"><span class="hbar__name">Margherita</span><span class="hbar__track"><span class="hbar__fill" style="width:100%"></span></span><span class="hbar__val">184</span></li>
+                  <li class="hbar"><span class="hbar__name">Pepperoni</span><span class="hbar__track"><span class="hbar__fill" style="width:84.8%"></span></span><span class="hbar__val">156</span></li>
+                  <li class="hbar"><span class="hbar__name">Tiramisu</span><span class="hbar__track"><span class="hbar__fill" style="width:53.3%"></span></span><span class="hbar__val">98</span></li>
+                  <li class="hbar"><span class="hbar__name">Cola 1,5L</span><span class="hbar__track"><span class="hbar__fill" style="width:47.3%"></span></span><span class="hbar__val">87</span></li>
+                  <li class="hbar"><span class="hbar__name">Garlic bread</span><span class="hbar__track"><span class="hbar__fill" style="width:39.1%"></span></span><span class="hbar__val">72</span></li>
+                </ol>
+              </div>
+
+              <div class="card">
+                <h2 class="card__title">Busiest hours</h2>
+                <p class="card__sub">Share of orders per hour, averaged over the period.</p>
+                <ol class="hbars">
+                  <li class="hbar"><span class="hbar__name">17:00</span><span class="hbar__track"><span class="hbar__fill" style="width:34%"></span></span><span class="hbar__val">8%</span></li>
+                  <li class="hbar"><span class="hbar__name">18:00</span><span class="hbar__track"><span class="hbar__fill" style="width:79%"></span></span><span class="hbar__val">19%</span></li>
+                  <li class="hbar"><span class="hbar__name">19:00</span><span class="hbar__track"><span class="hbar__fill" style="width:100%"></span></span><span class="hbar__val">24%</span></li>
+                  <li class="hbar"><span class="hbar__name">20:00</span><span class="hbar__track"><span class="hbar__fill" style="width:75%"></span></span><span class="hbar__val">18%</span></li>
+                  <li class="hbar"><span class="hbar__name">21:00</span><span class="hbar__track"><span class="hbar__fill" style="width:46%"></span></span><span class="hbar__val">11%</span></li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
           <section class="view" data-view="products" hidden>
             <div class="alert">
               <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>
@@ -1237,9 +1881,9 @@
         <div class="page-head">
           <!-- Binnen een subpagina wordt het pagina-icoon het kruimelpad terug:
                gedimd icoon, chevron, en daarachter de naam van de subpagina. -->
-          <button class="set-crumb" type="button" id="set-crumb" hidden>
+          <button class="crumb" type="button" id="set-crumb" hidden>
             <svg class="icon page-head__icon" id="set-crumb-icon" aria-hidden="true"><use href="#i-store"/></svg>
-            <svg class="icon set-crumb__sep" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+            <svg class="icon crumb__sep" aria-hidden="true"><use href="#i-chevron-right"/></svg>
           </button>
           <svg class="icon page-head__icon" id="set-icon" aria-hidden="true"><use href="#i-store"/></svg>
           <div class="page-head__text">

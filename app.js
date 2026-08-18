@@ -41,6 +41,7 @@
      weten we naar welk paginaitem we terug moeten bij het sluiten. */
   var lastPageItem = sidebar.querySelector(".nav__list .nav__item.is-active");
   var ordersGroup = document.getElementById("orders-group");
+  var pageCrumb   = document.getElementById("page-crumb");
 
   /* ========================================================================
      1. MOBIELE DRAWER
@@ -88,6 +89,10 @@
   function showPage(page, title, icon) {
     pageTitle.textContent = title;
     swapIcon(pageIcon, icon);
+    /* Een gewone paginawissel verlaat altijd een eventueel aanmaakscherm. */
+    pageCrumb.hidden = true;
+    pageIcon.removeAttribute("hidden");
+    pageOuder = { page: page, title: title, icon: icon };
 
     var found = false;
     views.forEach(function (v) {
@@ -108,6 +113,107 @@
        beide staat. Anders dan Menu navigeert de ouder hier wél zelf. */
     ordersGroup.classList.toggle("is-open", page === "orders" || page === "archive");
     document.getElementById("content").scrollTop = 0;
+  }
+
+  /* ---- Aanmaakschermen: een niveau dieper binnen een hoofdpagina ----------
+     Zelfde patroon als in settings — het pagina-icoon wordt het kruimelpad
+     terug naar de lijst. De view eronder is een gewone [data-view]. */
+  var pageCrumbIcon = document.getElementById("page-crumb-icon");
+  var pageOuder = null;
+
+  function openPageSub(view, titel) {
+    var terug = pageOuder;
+    views.forEach(function (v) { v.hidden = v.dataset.view !== view; });
+    swapIcon(pageCrumbIcon, terug.icon);
+    pageCrumb.hidden = false;
+    pageIcon.setAttribute("hidden", "");
+    pageTitle.textContent = titel;
+    pageAction.hidden = true;
+    syncPageTools(null);
+    document.getElementById("content").scrollTop = 0;
+    pageOuder = terug;          /* showPage heeft hem niet overschreven */
+  }
+
+  function backToList() { showPage(pageOuder.page, pageOuder.title, pageOuder.icon); }
+
+  /* Op document-niveau: de openende knop staat vaak in de paginakop, buiten
+     de content. data-open-view botst niet met het data-sub van settings. */
+  document.addEventListener("click", function (e) {
+    var open = e.target.closest("[data-open-view]");
+    if (open) { openPageSub(open.dataset.openView, open.dataset.viewTitle); return; }
+
+    if (e.target.closest("[data-back-view]")) { backToList(); return; }
+
+    var klaar = e.target.closest("[data-created]");
+    if (klaar) { backToList(); showToast(klaar.dataset.created); }
+  });
+
+  pageCrumb.addEventListener("click", backToList);
+
+  /* ---- Marketing-formulieren --------------------------------------------- */
+  /* Codes zonder 0/O/1/I/L: die worden aan de balie stelselmatig verkeerd
+     overgeschreven. */
+  var CODE_TEKENS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+
+  function codeBlok(lengte, teller) {
+    var uit = "";
+    for (var i = 0; i < lengte; i++) uit += CODE_TEKENS[(teller * 7 + i * 13 + uit.length * 3) % CODE_TEKENS.length];
+    return uit;
+  }
+
+  var codeTeller = 0;
+
+  var discGen = document.getElementById("disc-generate");
+  if (discGen) {
+    discGen.addEventListener("click", function () {
+      codeTeller++;
+      document.getElementById("disc-code").value = codeBlok(8, codeTeller);
+    });
+    /* Automatisch toepassen betekent: geen code om in te voeren. */
+    document.getElementById("disc-auto").addEventListener("change", function (e) {
+      var veld = document.getElementById("disc-code");
+      veld.disabled = e.target.checked;
+      discGen.disabled = e.target.checked;
+    });
+    /* Het keuzeveld hoort bij "specifieke categorieën of producten". */
+    document.querySelectorAll('input[name="disc-scope"]').forEach(function (radio, i) {
+      radio.addEventListener("change", function () {
+        document.getElementById("disc-pick").disabled = i === 0;
+      });
+    });
+  }
+
+  var vouGen = document.getElementById("vou-generate");
+  if (vouGen) {
+    vouGen.addEventListener("click", function () {
+      codeTeller++;
+      document.getElementById("vou-code").value =
+        "GIFT-" + codeBlok(4, codeTeller) + "-" + codeBlok(4, codeTeller + 5);
+    });
+    document.querySelectorAll('input[name="vou-send"]').forEach(function (radio, i) {
+      radio.addEventListener("change", function () {
+        document.getElementById("vou-email").disabled = i === 0;
+      });
+    });
+  }
+
+  var campAudience = document.getElementById("camp-audience");
+  if (campAudience) {
+    /* Het aantal ontvangers staat op twee plekken; die mogen niet uiteenlopen. */
+    function syncOntvangers() {
+      var n = Number(campAudience.value).toLocaleString("nl-NL");
+      document.getElementById("camp-count").textContent = n;
+      document.getElementById("camp-count-btn").textContent = n;
+    }
+    campAudience.addEventListener("change", syncOntvangers);
+    syncOntvangers();
+
+    document.querySelectorAll('input[name="camp-when"]').forEach(function (radio, i) {
+      radio.addEventListener("change", function () {
+        document.getElementById("camp-date").disabled = i === 0;
+        document.getElementById("camp-time").disabled = i === 0;
+      });
+    });
   }
 
   /* ---- Online Store: sectienavigatie binnen de pagina -------------------- */
@@ -278,6 +384,9 @@
     choices:        { label: "Add new",       icon: "i-plus", zacht: false },
     categories:     { label: "Add categorie", icon: "i-plus", zacht: false },
     deliverers:     { label: "Add deliverer", icon: "i-plus", zacht: false },
+    discounts:      { label: "Create discount", icon: "i-plus", zacht: false, opent: "discount-new" },
+    vouchers:       { label: "Create voucher",  icon: "i-plus", zacht: false, opent: "voucher-new" },
+    "email-campaigns": { label: "New campaign", icon: "i-plus", zacht: false, opent: "campaign-new" },
     "online-store": { label: "View store",    icon: "i-eye",  zacht: true }
   };
 
@@ -304,6 +413,15 @@
     if (!actie) return;
     pageActionLabel.textContent = actie.label;
     pageActionIcon.setAttribute("href", "#" + actie.icon);
+    /* Acties die een aanmaakscherm openen dragen dat scherm mee; de
+       gedelegeerde handler in §2 pikt data-open-view op. */
+    if (actie.opent) {
+      pageAction.dataset.openView = actie.opent;
+      pageAction.dataset.viewTitle = actie.label;
+    } else {
+      delete pageAction.dataset.openView;
+      delete pageAction.dataset.viewTitle;
+    }
     pageAction.classList.toggle("btn--soft", actie.zacht);
     pageAction.classList.toggle("btn--primary", !actie.zacht);
   }

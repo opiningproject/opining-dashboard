@@ -110,7 +110,7 @@ body {
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
-input, select { font: inherit; color: inherit; }
+input, select, textarea { font: inherit; color: inherit; }
 fieldset { border: 0; }
 legend { padding: 0; }
 
@@ -1146,10 +1146,10 @@ select.input {
 
 /* Kruimelpad in de settings-kop: gedimd pagina-icoon dat terugleidt,
    met een chevron naar de naam van de subpagina. */
-.set-crumb { display: flex; align-items: center; gap: 10px; padding: 2px; border-radius: var(--r-sm); }
-.set-crumb .page-head__icon { color: var(--text-muted); transition: color var(--dur) var(--ease); }
-.set-crumb:hover .page-head__icon { color: var(--text-strong); }
-.set-crumb__sep { width: 15px; height: 15px; color: var(--border-strong); }
+.crumb { display: flex; align-items: center; gap: 10px; padding: 2px; border-radius: var(--r-sm); }
+.crumb .page-head__icon { color: var(--text-muted); transition: color var(--dur) var(--ease); }
+.crumb:hover .page-head__icon { color: var(--text-strong); }
+.crumb__sep { width: 15px; height: 15px; color: var(--border-strong); }
 
 /* Vijf kolommen in de smallere settings-kolom: iets krappere celruimte,
    en de minimum-tekst mag afbreken in plaats van de tabel op te rekken. */
@@ -1338,6 +1338,146 @@ select.input {
 .row > .badge { margin-left: auto; }
 .row > .badge + .row__caret { margin-left: 14px; }
 
+/* ==========================================================================
+   8k. MARKETING-FORMULIEREN
+   ========================================================================== */
+
+/* Voet van een aanmaakscherm: bevestigen rechts, weggooien links ernaast. */
+/* Lijsten met veel kolommen: krappere celruimte, en de omschrijvende
+   kolommen mogen afbreken zodat de tabel binnen de kaart blijft. */
+.table--list th, .table--list td { padding-left: 12px; padding-right: 12px; }
+.table--list th:first-child, .table--list td:first-child { padding-left: 20px; }
+.table--list th:last-child,  .table--list td:last-child  { padding-right: 20px; }
+.table--list td:nth-child(3) { white-space: normal; }
+.table--list .cell__title { white-space: normal; }
+
+.formfoot { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+
+/* Veld met een knop ernaast (code genereren). */
+/* Invoerveld met een teken erin: valuta ervoor, eenheid erachter. */
+.affix { position: relative; display: flex; align-items: center; }
+.affix__sym { position: absolute; font-size: var(--fs-md); color: var(--text-muted); pointer-events: none; }
+.affix--pre  .affix__sym { left: 13px; }
+.affix--pre  .input { padding-left: 32px; }
+.affix--post .affix__sym { right: 13px; }
+.affix--post .input { padding-right: 32px; }
+
+.withbtn { display: flex; align-items: center; gap: 10px; }
+.withbtn .input { min-width: 0; }
+
+/* Selectievakje op één regel, zonder de radio-opmaak van .choice. */
+.choice--plain { margin-top: 14px; padding: 0; }
+.choice--plain input {
+  appearance: none;
+  width: 20px; height: 20px; flex: 0 0 auto;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.choice--plain input:checked {
+  border-color: var(--accent);
+  background: var(--accent)
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='m5 12.5 4.5 4.5L19 7'/></svg>") center / 13px no-repeat;
+}
+.choice--plain input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Codes lezen beter in een vaste breedte. */
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .01em; }
+
+textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: vertical; }
+
+/* ==========================================================================
+   8l. ANALYTICS — grafieken
+   Twee series, gevalideerd tegen de CVD- en contrastdrempels:
+   #0172af / #ce7514 haalt ΔE 22,6 (protan) en beide boven 3:1 op wit.
+   ========================================================================== */
+:root {
+  --series-delivery: #0172af;
+  --series-takeaway: #ce7514;
+}
+
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+
+/* Legenda hoort er altijd bij vanaf twee series; kleur alleen is geen
+   identificatie. */
+.legend { display: flex; align-items: center; gap: 18px; flex: 0 0 auto; }
+.legend__item { display: flex; align-items: center; gap: 8px; font-size: var(--fs-sm); color: var(--text); }
+.legend__dot { width: 10px; height: 10px; flex: 0 0 auto; border-radius: 3px; }
+.legend__dot--del  { background: var(--series-delivery); }
+.legend__dot--take { background: var(--series-takeaway); }
+
+.chart { margin-top: 22px; padding-left: 52px; }
+.chart__plot { position: relative; height: 236px; }
+
+/* Raster blijft terugtredend: dunne lijnen, gedempt label. */
+.chart__grid { position: absolute; inset: 0 0 24px 0; }
+.chart__grid span { position: absolute; left: 0; right: 0; border-top: 1px solid var(--border); }
+.chart__grid span::before {
+  content: attr(data-v);
+  position: absolute; right: calc(100% + 10px); top: -8px;
+  font-size: var(--fs-xs); color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.chart__bars { position: relative; z-index: 1; display: flex; align-items: flex-end; gap: 7px; height: 100%; }
+.cbar { position: relative; flex: 1 1 0; height: 100%; display: flex; flex-direction: column; min-width: 0; }
+.cbar__stack {
+  /* column-reverse: de eerste serie uit de legenda staat onderaan. */
+  display: flex; flex-direction: column-reverse; justify-content: flex-start;
+  height: calc(100% - 24px);
+  /* 2px lucht tussen de segmenten, zodat de deling zichtbaar blijft. */
+  gap: 2px;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+}
+.cbar__seg--del  { background: var(--series-delivery); }
+.cbar__seg--take { background: var(--series-takeaway); }
+.cbar__x { height: 24px; display: grid; place-items: center; font-size: var(--fs-xs); color: var(--text-muted); }
+.cbar--closed .cbar__stack { border-bottom: 2px solid var(--border-strong); }
+
+.cbar:hover .cbar__stack, .cbar:focus-visible .cbar__stack { filter: brightness(1.08); }
+.cbar:focus-visible { outline: none; }
+.cbar:focus-visible .cbar__x { color: var(--text-strong); font-weight: 600; }
+
+/* Tooltip: benoemt de dag en beide series, want de hoogte alleen zegt niets
+   over de precieze bedragen. */
+.cbar__tip {
+  position: absolute; bottom: calc(100% - 18px); left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  background: var(--gray-900); color: #fff;
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  box-shadow: var(--shadow-md);
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--dur) var(--ease);
+}
+.cbar__tip span { display: flex; align-items: center; gap: 8px; }
+.cbar:hover .cbar__tip, .cbar:focus-visible .cbar__tip { opacity: 1; }
+/* Aan de randen zou de tooltip buiten de kaart vallen. */
+.cbar:first-child .cbar__tip  { left: 0; transform: none; }
+.cbar:nth-last-child(-n+3) .cbar__tip { left: auto; right: 0; transform: none; }
+
+.tableview { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 6px; }
+.tableview summary {
+  padding: 10px 2px;
+  font-size: var(--fs-sm); font-weight: 500;
+  color: var(--accent);
+  cursor: pointer;
+}
+.tableview .table th, .tableview .table td { padding-left: 0; }
+
+/* Horizontale staven: één serie, dus één tint en een label per staaf. */
+.hbars { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
+.hbar { display: grid; grid-template-columns: 96px minmax(0, 1fr) 46px; align-items: center; gap: 12px; }
+.hbar__name { font-size: var(--fs-md); color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hbar__track { height: 10px; border-radius: var(--r-full); background: var(--gray-100); }
+.hbar__fill { display: block; height: 100%; border-radius: var(--r-full); background: var(--series-delivery); }
+.hbar__val { font-size: var(--fs-sm); color: var(--text-muted); text-align: right; font-variant-numeric: tabular-nums; }
+
 
 /* ==========================================================================
    10. RESPONSIVE
@@ -1350,6 +1490,22 @@ select.input {
 /* Tablet & mobiel: sidebar wordt een smalle drawer onder de header, zodat
    je hem met een tik naast de drawer weer wegklikt. */
 @media (max-width: 900px) {
+  /* Lijstpaginas onder marketing: koppen weg, rij wordt een blok met
+     de naam boven en de kerncijfers eronder. */
+  .table--list, .table--list tbody, .table--list tr, .table--list td { display: block; width: 100%; }
+  .table--list thead { display: none; }
+  .table--list tr { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 14px 16px; border-top: 1px solid var(--border); }
+  .table--list td { width: auto; padding: 0; border: 0; white-space: normal; font-size: var(--fs-sm); color: var(--text-muted); }
+  .table--list td:first-child { flex: 1 1 100%; font-size: var(--fs-md); }
+  .table--list td:last-child { margin-left: auto; }
+  /* Analytics: twee kaarten naast elkaar past niet meer. */
+  .grid2 { grid-template-columns: minmax(0, 1fr); }
+  .chart { padding-left: 44px; }
+  .chart__plot { height: 190px; }
+  .chart__bars { gap: 4px; }
+  .hbar { grid-template-columns: 84px minmax(0, 1fr) 42px; gap: 10px; }
+  /* Legenda onder de titel in plaats van ernaast. */
+  .card__headrow { flex-wrap: wrap; }
   /* Kerngegevens onder de titel in plaats van ernaast. */
   .row:has(.facts) { flex-wrap: wrap; }
   .facts { width: 100%; margin-left: 0; gap: 14px; flex-wrap: wrap; }
