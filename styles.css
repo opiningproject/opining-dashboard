@@ -93,6 +93,11 @@
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
 html, body { height: 100%; }
+/* Zonder eigen achtergrond op html neemt het canvas die van body over,
+   en iOS kleurt de statusbalk naar dat canvas — vandaar grijs. Wit op
+   html laat de balk aansluiten op de topbar; body houdt zijn eigen
+   grijs, dat toch de hele viewport vult. */
+html { background: var(--bg-surface); }
 
 body {
   font-family: var(--font);
