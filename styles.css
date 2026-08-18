@@ -540,17 +540,17 @@ select.input {
 }
 .set-nav__head { display: none; }
 
-.store { display: flex; align-items: center; gap: 11px; padding: 10px 10px 14px; }
-.store__mark {
+.shop { display: flex; align-items: center; gap: 11px; padding: 10px 10px 14px; }
+.shop__mark {
   display: grid; place-items: center;
   width: 34px; height: 34px; flex: 0 0 auto;
   border-radius: var(--r-md);
   background: var(--accent); color: #fff;
   font-size: var(--fs-md); font-weight: 700;
 }
-.store__text { display: flex; flex-direction: column; min-width: 0; }
-.store__name { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
-.store__domain { font-size: var(--fs-sm); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shop__text { display: flex; flex-direction: column; min-width: 0; }
+.shop__name { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
+.shop__domain { font-size: var(--fs-sm); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* Settings-links staan ruimer dan de hoofdnav en dragen een chevron als
    drill-in-hint. */
@@ -973,7 +973,7 @@ select.input {
   .set-nav__gear { width: 24px; height: 24px; color: var(--text-strong); }
   .set-nav__title { font-size: 18px; font-weight: 500; letter-spacing: -.015em; color: var(--text-strong); }
 
-  .store { padding: 4px 8px 14px; }
+  .shop { padding: 4px 8px 14px; }
   .nav__chev { display: block; }
 
   /* De tabs in één wit vlak, zoals de .rows-lijsten elders: geen losse pillen
