@@ -66,6 +66,10 @@
     <symbol id="i-sort" viewBox="0 0 20 20"><path d="M6.3 4.6v10.8M3.7 12.8l2.6 2.6 2.6-2.6M13.7 15.4V4.6M11.1 7.2l2.6-2.6 2.6 2.6"/></symbol>
     <symbol id="i-dots" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="4.7" cy="10" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="15.3" cy="10" r="1.15"/></symbol>
     <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3.2" y="4" width="17.6" height="4.6" rx="1.3"/><path d="M5.2 8.6v10.2a1.3 1.3 0 0 0 1.3 1.3h11a1.3 1.3 0 0 0 1.3-1.3V8.6M9.9 12.3h4.2"/></symbol>
+    <symbol id="i-loyalty" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.4l1.55 3.05L16.6 12l-3.05 1.55L12 16.6l-1.55-3.05L7.4 12l3.05-1.55z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.6" y="10.4" width="14.8" height="9.4" rx="2"/><path d="M8.3 10.4V7.7a3.7 3.7 0 0 1 7.4 0v2.7"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 11.1v5.1M12 7.8h.01"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="8.8"/><path d="M12 6.9l1.45 2.85 2.85 1.45-2.85 1.45L12 15.5l-1.45-2.85L7.7 11.2l2.85-1.45z" fill="#fff"/></symbol>
     <symbol id="i-dots-v" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="10" cy="4.7" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="10" cy="15.3" r="1.15"/></symbol>
     <symbol id="i-eye" viewBox="0 0 20 20"><path d="M2.4 10S5.3 4.8 10 4.8 17.6 10 17.6 10 14.7 15.2 10 15.2 2.4 10 2.4 10Z"/><circle cx="10" cy="10" r="2.5"/></symbol>
     <symbol id="i-palette" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><circle cx="10" cy="6.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="6.6" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="13.4" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="10" cy="13" r="1.05" fill="currentColor" stroke="none"/></symbol>
@@ -148,7 +152,7 @@
             <!-- Menu klapt uit naar drie subpagina's. De ouder is een knop, geen
                  link: hij navigeert niet zelf maar opent de groep en zet
                  Products aan (app.js §2). -->
-            <li class="nav__group" id="menu-group">
+            <li class="nav__group" data-toggle id="menu-group">
               <button class="nav__item nav__parent" type="button" id="menu-toggle"
                       aria-expanded="false" aria-controls="menu-sub">
                 <svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><span>Menu</span>
@@ -164,8 +168,18 @@
             </li>
             <li><a class="nav__item" href="#" data-page="analytics" data-title="Analytics" data-icon="i-analytics">
               <svg class="icon" aria-hidden="true"><use href="#i-analytics"/></svg><span>Analytics</span></a></li>
-            <li><a class="nav__item" href="#" data-page="marketing" data-title="Marketing" data-icon="i-marketing">
-              <svg class="icon" aria-hidden="true"><use href="#i-marketing"/></svg><span>Marketing</span></a></li>
+            <li class="nav__group" data-toggle id="marketing-group">
+              <button class="nav__item nav__parent" type="button" id="marketing-toggle"
+                      aria-expanded="false" aria-controls="marketing-sub">
+                <svg class="icon" aria-hidden="true"><use href="#i-marketing"/></svg><span>Marketing</span>
+              </button>
+              <div class="nav__sub" id="marketing-sub"><ul class="nav__sub-list">
+                <li><a class="nav__item nav__sub-item" href="#" data-page="discounts" data-title="Discounts" data-icon="i-marketing"><span>Discounts</span></a></li>
+                <li><a class="nav__item nav__sub-item" href="#" data-page="vouchers" data-title="Vouchers" data-icon="i-marketing"><span>Vouchers</span></a></li>
+                <li><a class="nav__item nav__sub-item" href="#" data-page="loyalty" data-title="Loyalty" data-icon="i-loyalty"><span>Loyalty</span></a></li>
+                <li><a class="nav__item nav__sub-item" href="#" data-page="email-campaigns" data-title="Email campaigns" data-icon="i-marketing"><span>Email campaigns</span></a></li>
+              </ul></div>
+            </li>
             <li><a class="nav__item" href="#" data-page="customers" data-title="Customers" data-icon="i-customers">
               <svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg><span>Customers</span></a></li>
             <li><a class="nav__item" href="#" data-page="deliverers" data-title="Deliverers" data-icon="i-deliverers">
@@ -221,6 +235,9 @@
                 Manage orders
                 <svg class="icon" aria-hidden="true"><use href="#i-caret"/></svg>
               </button>
+            </div>
+            <div class="page-head__tools" data-tools="loyalty" hidden>
+              <span class="chip chip--info"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>Always active</span>
             </div>
           </div>
 
@@ -469,6 +486,81 @@
                   <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
                 <p class="pager__count"><b>1&ndash;10</b> of 12</p>
               </nav>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: loyalty ---------- -->
+          <section class="view" data-view="loyalty" hidden>
+
+            <div class="notice notice--locked" id="loyalty-rule">
+              <p class="notice__bar">
+                <svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>
+                Customer automatically earns 1 point per 0,01 EUR spend. Always starts with 0 points.
+                <button class="icon-btn notice__close" type="button" aria-label="Dismiss this rule"
+                        data-dismiss="loyalty-rule">
+                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+              </p>
+              <div class="notice__body">
+                This rule is <b>fixed</b> to keep the loyalty program <b>simple and predictable.</b>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Points redemption value</h2>
+              <p class="card__sub">How much of the order value should points be worth?</p>
+
+              <fieldset class="choices choices--valued">
+                <legend class="sr-only">Points redemption value</legend>
+                <label class="choice">
+                  <input type="radio" name="redemption" value="3" />
+                  <span class="choice__value">3%</span>
+                  <span>Low reward, High Margin</span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="redemption" value="5" />
+                  <span class="choice__value">5%</span>
+                  <span>Standard Reward</span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="redemption" value="10" checked />
+                  <span class="choice__value">10%</span>
+                  <span>Generous Reward</span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="redemption" value="15" />
+                  <span class="choice__value">15%</span>
+                  <span>High Reward</span>
+                </label>
+              </fieldset>
+
+              <p class="hint hint--spaced">Customers receive this % back as a discount when redeeming points.</p>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title"><span id="loyalty-pct">10%</span> Preview</h2>
+              <p class="card__sub">This overview shows the number of points needed per reward and the corresponding discount value.</p>
+
+              <ul class="tiles" id="loyalty-tiles">
+                <li class="tile">
+                  <p class="tile__value">&euro; 2,50</p>
+                  <p class="tile__meta">2.500 <svg class="icon tile__coin" aria-hidden="true"><use href="#i-coin"/></svg></p>
+                </li>
+                <li class="tile">
+                  <p class="tile__value">&euro; 5</p>
+                  <p class="tile__meta">5.000 <svg class="icon tile__coin" aria-hidden="true"><use href="#i-coin"/></svg></p>
+                </li>
+                <li class="tile">
+                  <p class="tile__value">&euro; 10</p>
+                  <p class="tile__meta">10.000 <svg class="icon tile__coin" aria-hidden="true"><use href="#i-coin"/></svg></p>
+                </li>
+                <li class="tile">
+                  <p class="tile__value">&euro; 15</p>
+                  <p class="tile__meta">15.000 <svg class="icon tile__coin" aria-hidden="true"><use href="#i-coin"/></svg></p>
+                </li>
+              </ul>
+
+              <p class="hint hint--spaced">We&rsquo;ve set this up for you to ensure a simple, predictable, and high-performing loyalty program.</p>
             </div>
           </section>
 

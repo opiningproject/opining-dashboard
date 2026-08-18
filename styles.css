@@ -997,6 +997,63 @@ select.input {
 .table--orders th:last-child, .table--orders td:last-child,
 .table--archive th:last-child, .table--archive td:last-child  { padding-right: 22px; }
 
+/* ==========================================================================
+   8g. LOYALTY
+   ========================================================================== */
+
+/* Vaste, niet-instelbare regel. Bruin i.p.v. rood: dit is geen fout maar een
+   grens van het systeem. */
+.notice--locked .notice__bar { background: #8a6410; }
+.notice__close {
+  margin-left: auto;
+  width: 32px; height: 32px;
+  color: rgba(255, 255, 255, .8);
+}
+.notice__close:hover { background: rgba(255, 255, 255, .16); color: #fff; }
+.notice__close .icon { width: 17px; height: 17px; }
+.notice__body b { font-weight: 600; color: var(--text-strong); }
+
+/* Keuzelijst met een waarde vóór het label. Vaste kolombreedte, anders
+   staan de omschrijvingen niet onder elkaar. */
+.choices--valued .choice { gap: 14px; }
+.choice__value {
+  flex: 0 0 auto;
+  min-width: 34px;
+  font-weight: 500;
+  color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+.hint--spaced { margin-top: 18px; }
+
+/* Vier gelijke vakken in één omrand blok; de randen ertussen zijn gedeeld. */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.tile { padding: 14px 12px; text-align: center; }
+.tile + .tile { border-left: 1px solid var(--border); }
+.tile__value { font-size: var(--fs-lg); font-weight: 600; color: var(--text-strong); }
+.tile__meta {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  margin-top: 4px;
+  font-size: var(--fs-md); color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.tile__coin { width: 15px; height: 15px; color: var(--accent); }
+
+/* Statusaanduiding naast de paginatitel — leest als label, niet als knop. */
+.chip--info {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px 8px 12px;
+  color: var(--text);
+}
+.chip--info .icon { width: 17px; height: 17px; color: var(--text-muted); }
+
 
 /* ==========================================================================
    10. RESPONSIVE
@@ -1009,6 +1066,10 @@ select.input {
 /* Tablet & mobiel: sidebar wordt een smalle drawer onder de header, zodat
    je hem met een tik naast de drawer weer wegklikt. */
 @media (max-width: 900px) {
+  /* Vier tegels naast elkaar worden te smal op mobiel. */
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile:nth-child(odd) { border-left: 0; }
+  .tile:nth-child(n+3) { border-top: 1px solid var(--border); }
   .wish { display: inline-block; }
   /* ------------------------------------------------------------------
      Orders & Archive op mobiel: geen horizontale scroll. De tabel wordt

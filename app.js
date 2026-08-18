@@ -150,6 +150,40 @@
     storeView.addEventListener("change", function () { markUnsaved("Online store"); });
   }
 
+  /* ---- Loyalty: het voorbeeld volgt het gekozen percentage ---------------- */
+  var loyaltyView = document.querySelector('[data-view="loyalty"]');
+
+  if (loyaltyView) {
+    /* Beloningen zijn vaste bedragen; alleen het benodigde puntenaantal
+       schaalt mee. 1 punt = 0,01 EUR, dus punten = bedrag / percentage. */
+    var BELONINGEN = [2.5, 5, 10, 15];
+    var pctLabel = document.getElementById("loyalty-pct");
+    var tegels   = document.getElementById("loyalty-tiles");
+
+    function toonVoorbeeld(pct) {
+      pctLabel.textContent = pct + "%";
+      tegels.querySelectorAll(".tile").forEach(function (tegel, i) {
+        var euro = BELONINGEN[i];
+        var punten = Math.round(euro / (pct / 100) * 100);
+        tegel.querySelector(".tile__value").textContent =
+          "€ " + euro.toFixed(2).replace(".00", "").replace(".", ",");
+        tegel.querySelector(".tile__meta").firstChild.nodeValue =
+          punten.toLocaleString("nl-NL") + " ";
+      });
+    }
+
+    loyaltyView.addEventListener("change", function (e) {
+      if (e.target.name === "redemption") toonVoorbeeld(Number(e.target.value));
+      markUnsaved("Loyalty");
+    });
+
+    /* Sluiten van de vaste-regelmelding. */
+    loyaltyView.addEventListener("click", function (e) {
+      var knop = e.target.closest("[data-dismiss]");
+      if (knop) document.getElementById(knop.dataset.dismiss).hidden = true;
+    });
+  }
+
   /* ---- Productenlijst: groepen klappen los van elkaar open ---------------- */
   var productPanel = document.querySelector('[data-view="products"] .panel');
 
@@ -173,9 +207,7 @@
     tab.classList.add("is-active");
   });
 
-  /* ---- Menu-groep: ouder navigeert niet zelf, maar opent en kiest Products -- */
-  var menuGroup  = document.getElementById("menu-group");
-  var menuToggle = document.getElementById("menu-toggle");
+  /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
   var pageAction = document.getElementById("page-action");
   var pageActionLabel = document.getElementById("page-action-label");
 
@@ -217,20 +249,29 @@
     pageAction.classList.toggle("btn--primary", !actie.zacht);
   }
 
+  /* Groepen waarvan de ouder alleen open- en dichtklapt: er bestaat geen
+     Menu- of Marketing-pagina, alleen subpagina's. Orders staat hier bewust
+     niet tussen — die ouder is zelf een pagina en regelt zich in showPage. */
+  var toggleGroups = [].slice.call(document.querySelectorAll(".nav__group[data-toggle]"));
+
   /* De ouder houdt zijn markering zolang je op een van zijn subpagina's staat.
      Aparte klasse, want activate() wist juist alle is-active in de sidebar. */
   function syncSection() {
-    menuToggle.classList.toggle("is-section", !!menuGroup.querySelector(".nav__sub-item.is-active"));
+    toggleGroups.forEach(function (groep) {
+      groep.querySelector(".nav__parent")
+           .classList.toggle("is-section", !!groep.querySelector(".nav__sub-item.is-active"));
+    });
   }
 
-  function setMenuGroup(open) {
-    menuGroup.classList.toggle("is-open", open);
-    menuToggle.setAttribute("aria-expanded", String(open));
+  function setGroup(groep, open) {
+    groep.classList.toggle("is-open", open);
+    groep.querySelector(".nav__parent").setAttribute("aria-expanded", String(open));
   }
 
-  /* Menu vouwt alleen open en dicht; navigeren doe je met een subitem. */
-  menuToggle.addEventListener("click", function () {
-    setMenuGroup(!menuGroup.classList.contains("is-open"));
+  toggleGroups.forEach(function (groep) {
+    groep.querySelector(".nav__parent").addEventListener("click", function () {
+      setGroup(groep, !groep.classList.contains("is-open"));
+    });
   });
 
   sidebar.addEventListener("click", function (e) {
@@ -240,9 +281,11 @@
     activate(item, sidebar);
     lastPageItem = item;
     showPage(item.dataset.page, item.dataset.title, item.dataset.icon);
-    /* Ga je naar een pagina buiten de groep, dan klapt Menu weer dicht en
+    /* Ga je naar een pagina buiten een groep, dan klapt die weer dicht en
        laat de markering los. */
-    if (!menuGroup.contains(item)) setMenuGroup(false);
+    toggleGroups.forEach(function (groep) {
+      if (!groep.contains(item)) setGroup(groep, false);
+    });
     syncSection();
     /* Vanuit de drawer bovenop de overlay: die moet weg, anders kies je een
        pagina die je niet te zien krijgt. */
