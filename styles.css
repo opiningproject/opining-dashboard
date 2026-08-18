@@ -459,6 +459,11 @@ legend { padding: 0; }
 }
 .input:hover { border-color: var(--gray-500); }
 .input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+/* Een select rekt in Safari zijn container op tot de breedte van zijn
+   langste optie. Chrome doet dat niet, dus het valt daar niet op:
+   zonder deze twee regels liep de betaal-wizard op iOS buiten beeld. */
+select { min-width: 0; max-width: 100%; }
+
 select.input {
   appearance: none;
   padding-right: 38px;
@@ -1262,9 +1267,9 @@ select.input {
 .page-head__text { min-width: 0; }
 .page-head__lead { margin-top: 2px; font-size: var(--fs-md); color: var(--text-muted); }
 
-.wiz { display: flex; flex-direction: column; gap: 20px; }
+.wiz { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
 
-.wiz__head { display: flex; align-items: center; gap: 18px; }
+.wiz__head { display: flex; align-items: center; gap: 18px; min-width: 0; }
 .wiz__count { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text-muted); }
 .wiz__count b { font-weight: 600; color: var(--text-strong); }
 
@@ -1284,18 +1289,18 @@ select.input {
   transition: width 260ms var(--ease);
 }
 
-.wiz__foot { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.wiz__foot { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex-wrap: wrap; min-width: 0; }
 
 /* Keuze met een omschrijving en soms een eigen veld eronder. De bolletjes
    staan bovenaan uitgelijnd in plaats van gecentreerd. */
-.choices--rich { display: flex; flex-direction: column; gap: 6px; }
+.choices--rich { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .choices--rich > legend { margin-bottom: 14px; }
-.choice--rich { align-items: flex-start; gap: 14px; padding: 10px 4px; }
+.choice--rich { align-items: flex-start; gap: 14px; padding: 10px 4px; min-width: 0; }
 .choice--rich input { margin-top: 2px; }
 .choice__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .choice__title { font-weight: 500; color: var(--text-strong); }
 .choice__desc { font-size: var(--fs-md); color: var(--text-muted); }
-.choice__control { margin-top: 10px; }
+.choice__control { margin-top: 10px; max-width: 100%; }
 .choice__control:disabled { background: var(--gray-50); color: var(--text-muted); cursor: not-allowed; }
 
 /* ==========================================================================
