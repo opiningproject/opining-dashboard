@@ -445,11 +445,46 @@
   var searchPanel = document.getElementById("search-panel");
   var searchScrim = document.getElementById("search-scrim");
 
+  var searchEl   = searchInput.closest(".search");
+  var searchSlot = document.getElementById("search-slot");
+  /* Waar het veld hoort te staan als het paneel dicht is. */
+  var searchHome = { ouder: searchEl.parentNode, na: searchEl.nextElementSibling };
+
   function setSearch(open) {
-    root.dataset.search = open ? "open" : "closed";
-    searchPanel.hidden = !open;
-    searchScrim.hidden = !open;
+    if (open) {
+      /* Meten vóór de verhuizing: dan staat het veld nog op zijn plek in de
+         header en levert dat de linkerrand, breedte en bovenrand van het
+         paneel. */
+      var vak = searchEl.getBoundingClientRect();
+      searchPanel.style.left  = vak.left + "px";
+      searchPanel.style.top   = vak.top + "px";
+      searchPanel.style.width = vak.width + "px";
+
+      /* Eerst de vlag, dan pas verplaatsen: het opnieuw focussen hieronder
+         vuurt weer een focus-event af, en dat moet zien dat we al open zijn. */
+      root.dataset.search = "open";
+      searchPanel.hidden = false;
+      searchScrim.hidden = false;
+      searchSlot.appendChild(searchEl);
+      /* Verplaatsen in de DOM haalt de focus weg, en daarmee op mobiel het
+         toetsenbord. */
+      searchInput.focus({ preventScroll: true });
+      return;
+    }
+    searchHome.ouder.insertBefore(searchEl, searchHome.na);
+    searchPanel.hidden = true;
+    searchScrim.hidden = true;
+    root.dataset.search = "closed";
   }
+
+  /* Kantelen verplaatst de zoekbalk, maar op mobiel vuurt resize ook als het
+     toetsenbord opkomt; dat verandert alleen de hoogte, dus daarop negeren. */
+  var laatsteBreedte = window.innerWidth;
+  window.addEventListener("resize", function () {
+    if (window.innerWidth === laatsteBreedte) return;
+    laatsteBreedte = window.innerWidth;
+    if (root.dataset.search === "open") closeSearch();
+  });
 
   function closeSearch() {
     if (root.dataset.search !== "open") return;
@@ -457,7 +492,9 @@
     searchInput.blur();
   }
 
-  searchInput.addEventListener("focus", function () { setSearch(true); });
+  searchInput.addEventListener("focus", function () {
+    if (root.dataset.search !== "open") setSearch(true);
+  });
 
   /* Niet op blur sluiten: een chip aantikken haalt de focus uit het veld en
      zou het paneel dan onder je handen wegklappen. De scrim en Escape zijn

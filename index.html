@@ -731,6 +731,10 @@
        zodat het veld zelf bruikbaar blijft; de scrim dimt de rest. -->
   <div class="search-scrim" id="search-scrim" hidden></div>
   <div class="searchpanel" id="search-panel" role="dialog" aria-label="Search" hidden>
+    <!-- Hier verhuist .search naartoe zolang het paneel open staat, zodat het
+         veld letterlijk de bovenste rij van de popup is. -->
+    <div class="searchpanel__slot" id="search-slot"></div>
+    <div class="searchpanel__body">
     <div class="chips">
       <button class="chip" type="button">Orders</button>
       <button class="chip" type="button">Products</button>
@@ -741,6 +745,7 @@
     <div class="searchpanel__empty">
       <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
       <p>Find anything in Opining</p>
+    </div>
     </div>
   </div>
 
