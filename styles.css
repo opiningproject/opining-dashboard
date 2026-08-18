@@ -972,13 +972,27 @@ select.input {
 .badge--pending { background: #fbe7d4; color: #9c4d16; }
 .badge--sched   { background: #f1e8fa; color: #6b3fa8; }
 
+/* Voet van een paneel: zelfde inspringing als de tabelcellen. */
+.panel__foot { display: flex; align-items: center; gap: 10px; padding: 14px 22px; border-top: 1px solid var(--border); }
+
+/* Paginering. De actieve richting krijgt accentkleur, de doodlopende
+   kant blijft zichtbaar maar uitgeschakeld. */
+.pager__btn { width: 38px; height: 38px; border: 1px solid var(--border); border-radius: var(--r-full); color: var(--accent); }
+.pager__btn:disabled { color: var(--gray-300); cursor: default; }
+.pager__btn:disabled:hover { background: none; }
+.pager__btn .icon { width: 17px; height: 17px; }
+.pager__count { margin-left: 6px; font-size: var(--fs-md); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.pager__count b { font-weight: 500; color: var(--text-strong); }
+
 .ta-right { text-align: right; }
 
 /* Rijen zijn hoog genoeg voor twee regels; vandaar iets meer lucht dan de
    standaardtabel. */
-.table--orders td { padding-top: 12px; padding-bottom: 12px; vertical-align: middle; }
-.table--orders th:first-child, .table--orders td:first-child { padding-left: 22px; }
-.table--orders th:last-child,  .table--orders td:last-child  { padding-right: 22px; }
+.table--orders td, .table--archive td { padding-top: 12px; padding-bottom: 12px; vertical-align: middle; }
+.table--orders th:first-child, .table--orders td:first-child,
+.table--archive th:first-child, .table--archive td:first-child { padding-left: 22px; }
+.table--orders th:last-child, .table--orders td:last-child,
+.table--archive th:last-child, .table--archive td:last-child  { padding-right: 22px; }
 
 
 /* ==========================================================================
