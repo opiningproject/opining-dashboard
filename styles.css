@@ -413,6 +413,11 @@ legend { padding: 0; }
 .btn--primary:hover { background: var(--accent-hover); }
 .btn--ghost { border: 1px solid var(--border-strong); background: var(--bg-surface); color: var(--text-strong); }
 .btn--ghost:hover { background: var(--gray-50); }
+/* Compacte variant voor knoppen binnen tabelrijen en meldingen. */
+.btn--sm { height: 32px; padding: 0 12px; font-size: var(--fs-sm); }
+.btn--sm .icon { width: 16px; height: 16px; }
+/* Ghost-knop die als actie leest in plaats van als neutrale keuze. */
+.btn--accent { color: var(--accent); }
 
 .icon-btn {
   display: grid; place-items: center;
@@ -898,6 +903,83 @@ select.input {
 }
 .toast__close:hover { background: rgba(255, 255, 255, .14); color: #fff; }
 .toast__close .icon { width: 16px; height: 16px; }
+/* ==========================================================================
+   8f. ORDERS
+   ========================================================================== */
+
+/* Paginabediening naast de titel (select + hoofdactie). */
+/* Titelregel vouwt om zodra de bediening niet meer naast de titel past. */
+.page-head { flex-wrap: wrap; row-gap: 12px; }
+.page-head__tools { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.page-head__tools .input { width: auto; min-width: 168px; height: 36px; }
+.page-head__tools .icon { width: 16px; height: 16px; }
+
+/* Melding met gekleurde kop en een actie eronder. Kop en romp zitten in
+   dezelfde kaart, zodat de rand om het geheel loopt. */
+.notice {
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+.notice__bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 22px;
+  font-size: var(--fs-lg); font-weight: 500;
+  color: #fff;
+}
+.notice--danger .notice__bar { background: var(--danger); }
+.notice__body { padding: 16px 22px 18px; }
+
+/* Aantal naast een tab-label; blijft ondergeschikt aan de naam. */
+.tab__count { margin-left: 6px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.tab.is-active .tab__count { color: var(--text); }
+
+/* Zoeken en filteren als één omrand groepje rechts in de panel-kop. */
+.panel__tools {
+  display: flex; align-items: center; gap: 2px;
+  margin-left: auto;
+  padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+}
+.panel__tools .icon-btn { width: 30px; height: 30px; border-radius: var(--r-full); }
+.panel__tools .icon { width: 17px; height: 17px; }
+
+/* Tweeregelige cel: titel met een toelichting eronder. */
+.cell { display: flex; flex-direction: column; gap: 2px; }
+.cell__title { font-weight: 500; color: var(--text-strong); }
+.cell__meta { font-size: var(--fs-sm); color: var(--text-muted); }
+
+/* Tijdkolom. Het getal draagt de nadruk, de eenheid blijft rustig. */
+.when { display: flex; align-items: center; gap: 8px; color: var(--text); }
+.when b { font-weight: 600; color: var(--text-strong); }
+.when .icon { width: 18px; height: 18px; }
+.when--late { color: var(--danger); }
+.when--late b { color: var(--danger); font-weight: 600; }
+.when--soon, .when--soon b { color: #9c4d16; }
+/* Badge onder de tijd, niet ernaast. */
+.when + .badge { display: inline-block; margin-top: 6px; }
+
+/* Bedrag met status erboven, ordernummer eronder — beide rechts uitgelijnd. */
+.pay { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.pay__line { display: flex; align-items: center; gap: 10px; }
+.pay__amount { color: var(--text); font-variant-numeric: tabular-nums; }
+
+.rowact { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+.rowact .icon-btn { width: 32px; height: 32px; }
+
+.badge--pending { background: #fbe7d4; color: #9c4d16; }
+.badge--sched   { background: #f1e8fa; color: #6b3fa8; }
+
+.ta-right { text-align: right; }
+
+/* Rijen zijn hoog genoeg voor twee regels; vandaar iets meer lucht dan de
+   standaardtabel. */
+.table--orders td { padding-top: 12px; padding-bottom: 12px; vertical-align: middle; }
+.table--orders th:first-child, .table--orders td:first-child { padding-left: 22px; }
+.table--orders th:last-child,  .table--orders td:last-child  { padding-right: 22px; }
+
 
 /* ==========================================================================
    10. RESPONSIVE
@@ -1015,6 +1097,8 @@ select.input {
 }
 
 @media (max-width: 560px) {
+  .page-head__tools { width: 100%; margin-left: 0; }
+  .page-head__tools .input { flex: 1 1 auto; min-width: 0; }
   .search__kbd { display: none; }
   /* Titels zijn nu overal 18px; de verkleining hier bestond alleen om de
      oude 21px op smalle schermen te temperen. */

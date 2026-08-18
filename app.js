@@ -40,6 +40,7 @@
   /* Zolang Settings actief staat draagt de sidebar die markering; hiermee
      weten we naar welk paginaitem we terug moeten bij het sluiten. */
   var lastPageItem = sidebar.querySelector(".nav__list .nav__item.is-active");
+  var ordersGroup = document.getElementById("orders-group");
 
   /* ========================================================================
      1. MOBIELE DRAWER
@@ -103,6 +104,9 @@
       swapIcon(document.getElementById("empty-icon"), icon);
     }
     syncPageAction(page);
+    /* Archive hangt onder Orders: de groep staat open zodra je op een van
+       beide staat. Anders dan Menu navigeert de ouder hier wél zelf. */
+    ordersGroup.classList.toggle("is-open", page === "orders" || page === "archive");
     document.getElementById("content").scrollTop = 0;
   }
 
@@ -186,7 +190,24 @@
     "online-store": { label: "View store",    icon: "i-eye",  zacht: true }
   };
 
+  /* Sommige pagina's hebben meer nodig dan één knop (Orders: een filter plus
+     een hoofdactie). Die blokken staan in de page-head en dragen data-tools. */
+  var pageTools = document.querySelectorAll("[data-tools]");
+
+  function syncPageTools(page) {
+    var eigen = false;
+    pageTools.forEach(function (el) {
+      var match = el.dataset.tools === page;
+      el.hidden = !match;
+      if (match) eigen = true;
+    });
+    return eigen;
+  }
+
   function syncPageAction(page) {
+    /* Een eigen bedieningsblok vervangt de generieke actieknop. */
+    if (syncPageTools(page)) { pageAction.hidden = true; return; }
+
     var actie = PAGINA_ACTIES[page];
     pageAction.hidden = !actie;
     if (!actie) return;
