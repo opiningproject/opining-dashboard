@@ -487,10 +487,11 @@
      terugknop. */
   var setCrumb     = document.getElementById("set-crumb");
   var setCrumbIcon = document.getElementById("set-crumb-icon");
+  var setLead      = document.getElementById("set-lead");
   var setSubs      = document.querySelectorAll("[data-set-sub]");
   var ouder        = null;   /* titel + icoon van de pagina waar we vandaan komen */
 
-  function openSetSub(sub, titel) {
+  function openSetSub(sub, titel, lead) {
     ouder = { titel: setTitle.textContent, icoon: setIcon.querySelector("use").getAttribute("href") };
 
     var open = document.querySelector("[data-set-view]:not([hidden])");
@@ -505,6 +506,9 @@
        <svg> moet je het attribuut zetten, anders gebeurt er niets. */
     setIcon.setAttribute("hidden", "");
     setTitle.textContent = titel;
+    setLead.textContent = lead || "";
+    setLead.hidden = !lead;
+    if (resetWiz) resetWiz(1);
     overlay.scrollTop = 0;
   }
 
@@ -514,6 +518,7 @@
     setCrumb.hidden = true;
     setIcon.removeAttribute("hidden");
     setTitle.textContent = ouder.titel;
+    setLead.hidden = true;
     ouder = null;
   }
 
@@ -530,9 +535,58 @@
 
   overlay.addEventListener("click", function (e) {
     var rij = e.target.closest("[data-sub]");
-    if (rij) { openSetSub(rij.dataset.sub, rij.dataset.subTitle); return; }
+    if (rij) { openSetSub(rij.dataset.sub, rij.dataset.subTitle, rij.dataset.subLead); return; }
     if (e.target.closest("#set-crumb")) backFromSub();
   });
+
+  /* ---- Stappenformulier binnen een subpagina ------------------------------
+     Eén kaart per stap; de teller en de balk volgen de actieve stap. */
+  var wiz = document.getElementById("pay-wiz");
+  /* Buiten het blok gedeclareerd zodat openSetSub het formulier kan
+     terugzetten als je de wizard opnieuw binnenkomt. */
+  var resetWiz = null;
+
+  if (wiz) {
+    var wizStappen = wiz.querySelectorAll("[data-step]");
+    var wizNu      = document.getElementById("wiz-now");
+    var wizBalk    = document.getElementById("wiz-bar");
+    var wizTrack   = wizBalk.parentNode;
+    var wizVorige  = document.getElementById("wiz-back");
+    var wizVolgende = document.getElementById("wiz-next");
+    var stap = 1;
+
+    function toonStap(n) {
+      stap = Math.min(Math.max(n, 1), wizStappen.length);
+      wizStappen.forEach(function (kaart) { kaart.hidden = Number(kaart.dataset.step) !== stap; });
+      wizNu.textContent = stap;
+      wizBalk.style.width = (stap / wizStappen.length * 100) + "%";
+      wizTrack.setAttribute("aria-valuenow", stap);
+      wizVorige.hidden = stap === 1;
+      /* Laatste stap rondt af in plaats van door te gaan. */
+      wizVolgende.textContent = stap === wizStappen.length ? "Submit for review" : "Next";
+      overlay.scrollTop = 0;
+    }
+
+    wizVorige.addEventListener("click", function () { toonStap(stap - 1); });
+    wizVolgende.addEventListener("click", function () {
+      if (stap < wizStappen.length) { toonStap(stap + 1); return; }
+      backFromSub();
+      showToast("Details submitted for review");
+    });
+
+    /* Het keuzeveld hoort bij één optie; bij de andere keuze is het niet van
+       toepassing en dus uitgeschakeld. */
+    wiz.addEventListener("change", function (e) {
+      if (e.target.name !== "entity") return;
+      wiz.querySelectorAll(".choice--rich").forEach(function (keuze) {
+        var control = keuze.querySelector(".choice__control");
+        if (control) control.disabled = !keuze.querySelector("input").checked;
+      });
+    });
+
+    resetWiz = toonStap;
+    toonStap(1);
+  }
 
   /* ========================================================================
      4. SAVE BAR — verschijnt zodra er iets wijzigt in de overlay

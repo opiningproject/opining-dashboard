@@ -1247,6 +1247,51 @@ select.input {
 .table--stack td { padding-top: 12px; padding-bottom: 12px; vertical-align: middle; }
 .table--stack td:first-child { color: var(--text-strong); }
 
+/* ==========================================================================
+   8k. STAPPENFORMULIER
+   ========================================================================== */
+
+/* Ondertitel onder een paginatitel; alleen in gebruik waar de titel alleen
+   niet genoeg uitleg geeft. */
+.page-head__text { min-width: 0; }
+.page-head__lead { margin-top: 2px; font-size: var(--fs-md); color: var(--text-muted); }
+
+.wiz { display: flex; flex-direction: column; gap: 20px; }
+
+.wiz__head { display: flex; align-items: center; gap: 18px; }
+.wiz__count { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text-muted); }
+.wiz__count b { font-weight: 600; color: var(--text-strong); }
+
+/* De balk vult de rest van de regel; de vulling groeit mee met de stap. */
+.wiz__track {
+  flex: 1 1 auto;
+  height: 6px;
+  border-radius: var(--r-full);
+  background: var(--gray-200);
+  overflow: hidden;
+}
+.wiz__track > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 260ms var(--ease);
+}
+
+.wiz__foot { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+
+/* Keuze met een omschrijving en soms een eigen veld eronder. De bolletjes
+   staan bovenaan uitgelijnd in plaats van gecentreerd. */
+.choices--rich { display: flex; flex-direction: column; gap: 6px; }
+.choices--rich > legend { margin-bottom: 14px; }
+.choice--rich { align-items: flex-start; gap: 14px; padding: 10px 4px; }
+.choice--rich input { margin-top: 2px; }
+.choice__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.choice__title { font-weight: 500; color: var(--text-strong); }
+.choice__desc { font-size: var(--fs-md); color: var(--text-muted); }
+.choice__control { margin-top: 10px; }
+.choice__control:disabled { background: var(--gray-50); color: var(--text-muted); cursor: not-allowed; }
+
 
 /* ==========================================================================
    10. RESPONSIVE
@@ -1259,6 +1304,9 @@ select.input {
 /* Tablet & mobiel: sidebar wordt een smalle drawer onder de header, zodat
    je hem met een tik naast de drawer weer wegklikt. */
 @media (max-width: 900px) {
+  /* Op smalle schermen vullen de wizardknoppen de regel. */
+  .wiz__foot .btn { flex: 1 1 auto; }
+  .wiz__head { gap: 12px; }
   /* Kengetallen twee bij twee. */
   .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* Op deze breedte is 22px nog te groot voor de langere bedragen. */

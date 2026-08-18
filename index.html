@@ -1242,7 +1242,10 @@
             <svg class="icon set-crumb__sep" aria-hidden="true"><use href="#i-chevron-right"/></svg>
           </button>
           <svg class="icon page-head__icon" id="set-icon" aria-hidden="true"><use href="#i-store"/></svg>
-          <h2 id="set-title">General</h2>
+          <div class="page-head__text">
+            <h2 id="set-title">General</h2>
+            <p class="page-head__lead" id="set-lead" hidden></p>
+          </div>
           <!-- Actieknoppen per settings-pagina; app.js toont het blok waarvan
                data-set-tools gelijk is aan de open pagina. -->
           <div class="page-head__tools" data-set-tools="zones" hidden>
@@ -1339,6 +1342,142 @@
               <label class="label" for="store-phone">Store phone</label>
               <input class="input" id="store-phone" type="tel" value="+31 6 1452 2453" />
               <p class="hint">Shown to customers when they need to reach you about an order.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS SUB: online payments onboarding ---------- -->
+        <section class="view" data-set-sub="payments-setup" hidden>
+          <div class="wiz" id="pay-wiz">
+            <div class="wiz__head">
+              <p class="wiz__count">Step <b id="wiz-now">1</b> of 5</p>
+              <div class="wiz__track" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" aria-label="Setup progress">
+                <span id="wiz-bar"></span>
+              </div>
+            </div>
+
+            <!-- Stap 1 -->
+            <div class="card" data-step="1">
+              <fieldset class="choices choices--rich">
+                <legend class="card__title">I am running my store as:</legend>
+                <label class="choice choice--rich">
+                  <input type="radio" name="entity" value="business" checked />
+                  <span class="choice__body">
+                    <span class="choice__title">A registered business</span>
+                    <span class="choice__desc">I have a business that will own this store and is registered with the government of the Netherlands.</span>
+                    <label class="sr-only" for="entity-type">Business type</label>
+                    <select class="input choice__control" id="entity-type">
+                      <option>Sole proprietorship (including individuals with KVK)</option>
+                      <option>Private limited company (BV)</option>
+                      <option>General partnership (VOF)</option>
+                      <option>Partnership (maatschap)</option>
+                    </select>
+                  </span>
+                </label>
+                <label class="choice choice--rich">
+                  <input type="radio" name="entity" value="nonprofit" />
+                  <span class="choice__body">
+                    <span class="choice__title">A non-profit</span>
+                    <span class="choice__desc">I have a non-profit entity that will own this store and is registered with the government of the Netherlands.</span>
+                  </span>
+                </label>
+              </fieldset>
+            </div>
+
+            <!-- Stap 2 -->
+            <div class="card" data-step="2" hidden>
+              <h3 class="card__title">Business details</h3>
+              <p class="card__sub">These details must match your registration with the Chamber of Commerce.</p>
+              <div class="field">
+                <label class="label" for="biz-name">Legal business name</label>
+                <input class="input" id="biz-name" type="text" placeholder="Opining B.V." />
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="biz-kvk">KVK number</label>
+                  <input class="input" id="biz-kvk" type="text" placeholder="12345678" inputmode="numeric" />
+                </div>
+                <div class="field">
+                  <label class="label" for="biz-vat">VAT number</label>
+                  <input class="input" id="biz-vat" type="text" placeholder="NL123456789B01" />
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="biz-address">Registered address</label>
+                <input class="input" id="biz-address" type="text" placeholder="Lusthofstraat 27A, 3062 WB Rotterdam" />
+              </div>
+            </div>
+
+            <!-- Stap 3 -->
+            <div class="card" data-step="3" hidden>
+              <h3 class="card__title">Payout account</h3>
+              <p class="card__sub">Where your payouts land. The account must be in the name of the business above.</p>
+              <div class="field">
+                <label class="label" for="bank-holder">Account holder</label>
+                <input class="input" id="bank-holder" type="text" placeholder="Opining B.V." />
+              </div>
+              <div class="field">
+                <label class="label" for="bank-iban">IBAN</label>
+                <input class="input" id="bank-iban" type="text" placeholder="NL91 ABNA 0417 1643 00" />
+                <p class="hint">We transfer your balance here on the payout schedule you choose later.</p>
+              </div>
+            </div>
+
+            <!-- Stap 4 -->
+            <div class="card" data-step="4" hidden>
+              <h3 class="card__title">Business representative</h3>
+              <p class="card__sub">The person authorised to act on behalf of the business. Required by law before payouts can start.</p>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="rep-first">First name</label>
+                  <input class="input" id="rep-first" type="text" placeholder="Serdar" />
+                </div>
+                <div class="field">
+                  <label class="label" for="rep-last">Last name</label>
+                  <input class="input" id="rep-last" type="text" placeholder="Orman" />
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="rep-dob">Date of birth</label>
+                <input class="input" id="rep-dob" type="date" />
+              </div>
+              <div class="field">
+                <label class="label" for="rep-role">Role</label>
+                <select class="input" id="rep-role">
+                  <option>Owner</option>
+                  <option>Director</option>
+                  <option>Authorised signatory</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Stap 5 -->
+            <div class="card" data-step="5" hidden>
+              <h3 class="card__title">Review and submit</h3>
+              <p class="card__sub">Check everything once more. You can still change these details afterwards.</p>
+              <div class="rows">
+                <div class="row row--static">
+                  <span class="row__text"><span class="row__title">Registered business</span><span class="row__meta">Sole proprietorship (including individuals with KVK)</span></span>
+                </div>
+                <div class="row row--static">
+                  <span class="row__text"><span class="row__title">Business details</span><span class="row__meta">Not filled in yet</span></span>
+                </div>
+                <div class="row row--static">
+                  <span class="row__text"><span class="row__title">Payout account</span><span class="row__meta">Not filled in yet</span></span>
+                </div>
+                <div class="row row--static">
+                  <span class="row__text"><span class="row__title">Representative</span><span class="row__meta">Not filled in yet</span></span>
+                </div>
+              </div>
+              <p class="alert alert--info">
+                <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                Verification usually takes one to two working days. You can keep taking orders in the meantime.
+              </p>
+            </div>
+
+            <div class="wiz__foot">
+              <button class="btn btn--ghost btn--pill" type="button" id="wiz-back" hidden>Back</button>
+              <button class="btn btn--primary btn--pill" type="button" id="wiz-next">Next</button>
             </div>
           </div>
         </section>
@@ -1767,7 +1906,10 @@
                   <li class="feat"><svg class="icon" aria-hidden="true"><use href="#i-analytics"/></svg>Payouts and cashflow tracking</li>
                   <li class="feat"><svg class="icon" aria-hidden="true"><use href="#i-chargeback"/></svg>Easy chargeback management</li>
                 </ul>
-                <button class="btn btn--primary btn--pill" type="button">Complete account setup</button>
+                <button class="btn btn--primary btn--pill" type="button"
+                        data-sub="payments-setup"
+                        data-sub-title="Set up online payments"
+                        data-sub-lead="Tell us about your store to start accepting payments">Complete account setup</button>
               </div>
 
               <svg class="promo__art" viewBox="0 0 200 150" role="img" aria-label="A payment card next to a phone showing a contactless payment">
