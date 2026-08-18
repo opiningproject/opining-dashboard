@@ -383,17 +383,11 @@
             </div>
 
             <div class="panel">
-              <div class="panel__head">
-                <div class="tabs">
-                  <button class="tab is-active" type="button">New <span class="tab__count">5</span></button>
-                  <button class="tab" type="button">Kitchen <span class="tab__count">5</span></button>
-                  <button class="tab" type="button">Delivering <span class="tab__count">2</span></button>
-                </div>
-                <div class="panel__tools">
-                  <button class="icon-btn" type="button" aria-label="Search orders">
-                    <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-                  <button class="icon-btn" type="button" aria-label="Filter orders">
-                    <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
+              <div class="panel__head panel__head--seg">
+                <div class="tabs tabs--seg" role="tablist">
+                  <button class="tab is-active" type="button" role="tab" aria-selected="true">New <span class="tab__count">5</span></button>
+                  <button class="tab" type="button" role="tab" aria-selected="false">Kitchen <span class="tab__count">5</span></button>
+                  <button class="tab" type="button" role="tab" aria-selected="false">Delivering <span class="tab__count">2</span></button>
                 </div>
               </div>
 
