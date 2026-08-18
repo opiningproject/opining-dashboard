@@ -756,6 +756,53 @@ select.input {
 .btn--soft:hover { background: var(--gray-150); }
 
 /* ==========================================================================
+   8d. BILLING — bedrag, voetstrip en facturentabel
+   ========================================================================== */
+/* Voor kaarten waarin een tabel of strip tot de rand doorloopt; de padding
+   verhuist dan naar .card__pad. */
+.card--flush { padding: 0; }
+.card__pad { padding: 18px 20px; }
+.card__foot {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--gray-50);
+  font-size: var(--fs-md); color: var(--text);
+}
+
+.amount { margin-top: 10px; font-size: 30px; font-weight: 600; letter-spacing: -.02em; color: var(--text-strong); }
+.amount__cur { font-size: var(--fs-md); font-weight: 500; color: var(--text-muted); }
+
+.addrow {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-size: var(--fs-md); font-weight: 500;
+  color: var(--text-strong);
+  transition: background var(--dur) var(--ease);
+}
+.addrow:hover { background: var(--gray-50); }
+.addrow .icon { color: var(--text-muted); }
+
+/* Smalle schermen: de tabel mag scrollen in plaats van de pagina te rekken. */
+.table-wrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: var(--fs-md); }
+.table th {
+  padding: 12px 20px;
+  text-align: left;
+  font-size: var(--fs-sm); font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.table td { padding: 14px 20px; border-top: 1px solid var(--border); color: var(--text); white-space: nowrap; }
+.table tbody tr { transition: background var(--dur) var(--ease); }
+.table tbody tr:hover { background: var(--gray-25); }
+
+.badge--muted { background: var(--gray-100); color: var(--text-muted); }
+
+/* ==========================================================================
    9. TOAST
    Zwevende bevestiging onderaan; app.js §6 vult de tekst en ruimt hem op.
    ========================================================================== */

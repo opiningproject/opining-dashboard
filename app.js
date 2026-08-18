@@ -146,20 +146,22 @@
   if (productPanel) {
     productPanel.addEventListener("click", function (e) {
       var kop = e.target.closest(".group__head");
-      if (kop) {
-        var groep = kop.closest(".group");
-        var open = !groep.classList.contains("is-open");
-        groep.classList.toggle("is-open", open);
-        kop.setAttribute("aria-expanded", String(open));
-        return;
-      }
-      var tab = e.target.closest(".tab");
-      if (tab) {
-        productPanel.querySelectorAll(".tab").forEach(function (t) { t.classList.remove("is-active"); });
-        tab.classList.add("is-active");
-      }
+      if (!kop) return;
+      var groep = kop.closest(".group");
+      var open = !groep.classList.contains("is-open");
+      groep.classList.toggle("is-open", open);
+      kop.setAttribute("aria-expanded", String(open));
     });
   }
+
+  /* Tabs zitten op meerdere plekken (producten, billing), dus één gedelegeerde
+     afhandeling binnen de eigen .tabs-groep. */
+  document.addEventListener("click", function (e) {
+    var tab = e.target.closest(".tab");
+    if (!tab) return;
+    tab.closest(".tabs").querySelectorAll(".tab").forEach(function (t) { t.classList.remove("is-active"); });
+    tab.classList.add("is-active");
+  });
 
   /* ---- Menu-groep: ouder navigeert niet zelf, maar opent en kiest Products -- */
   var menuGroup  = document.getElementById("menu-group");

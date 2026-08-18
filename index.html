@@ -62,6 +62,9 @@
 
     <!-- Op het 20-raster, net als de sidebar- en settings-sets. -->
     <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4.2v11.6M4.2 10h11.6"/></symbol>
+    <symbol id="i-plus-circle" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><path d="M10 6.7v6.6M6.7 10h6.6"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 20 20"><path d="M6.3 4.6v10.8M3.7 12.8l2.6 2.6 2.6-2.6M13.7 15.4V4.6M11.1 7.2l2.6-2.6 2.6 2.6"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="4.7" cy="10" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="15.3" cy="10" r="1.15"/></symbol>
     <symbol id="i-eye" viewBox="0 0 20 20"><path d="M2.4 10S5.3 4.8 10 4.8 17.6 10 17.6 10 14.7 15.2 10 15.2 2.4 10 2.4 10Z"/><circle cx="10" cy="10" r="2.5"/></symbol>
     <symbol id="i-palette" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><circle cx="10" cy="6.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="6.6" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="13.4" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="10" cy="13" r="1.05" fill="currentColor" stroke="none"/></symbol>
     <symbol id="i-layout" viewBox="0 0 20 20"><rect x="2.7" y="4.4" width="14.6" height="11.2" rx="2"/><path d="M2.7 9.2h14.6M7.6 9.2v6.4"/></symbol>
@@ -652,6 +655,63 @@
               <label class="choice"><input type="radio" name="preorder" checked /><span>2 days</span></label>
               <label class="choice"><input type="radio" name="preorder" /><span>3 days</span></label>
             </fieldset>
+          </div>
+        </section>
+
+        <!-- Twee kaarten: de komende rekening met een voetstrip, en de
+             facturenlijst met dezelfde tabs als de productenlijst. -->
+        <section class="view" data-set-view="billing" hidden>
+          <div class="card card--flush">
+            <div class="card__pad">
+              <div class="card__headrow">
+                <h3 class="card__title">Upcoming bill</h3>
+                <a class="link" href="#">View bill</a>
+              </div>
+              <p class="amount">€0.00 <span class="amount__cur">EUR</span></p>
+              <p class="card__sub">Next bill in 2 days or when your ~€60 EUR threshold is reached. You have €60 remaining.</p>
+              <button class="addrow" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add payment method
+              </button>
+            </div>
+            <p class="card__foot">To make changes to your plan, <a class="link" href="#">visit plan settings</a></p>
+          </div>
+
+          <div class="card card--flush">
+            <div class="card__pad card__headrow">
+              <h3 class="card__title">Past bills</h3>
+              <button class="icon-btn" type="button" aria-label="More actions">
+                <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+              </button>
+            </div>
+
+            <div class="panel__head">
+              <div class="tabs">
+                <button class="tab is-active" type="button">All</button>
+                <button class="tab" type="button">Paid</button>
+                <button class="tab" type="button">Unpaid</button>
+              </div>
+              <button class="icon-btn panel__filter" type="button" aria-label="Search and filter">
+                <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+              </button>
+              <button class="icon-btn panel__filter" type="button" aria-label="Sort">
+                <svg class="icon" aria-hidden="true"><use href="#i-sort"/></svg>
+              </button>
+            </div>
+
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr><th scope="col">Date</th><th scope="col">Total</th><th scope="col">Status</th><th scope="col">Actions</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Aug 17, 2026</td><td>€ 108,90</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
+                  <tr><td>Aug 13, 2026</td><td>€ 90,00</td><td><span class="badge badge--muted">Refunded</span></td><td><a class="link" href="#">View</a></td></tr>
+                  <tr><td>Jul 13, 2026</td><td>€ 87,02</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
+                  <tr><td>Jun 18, 2026</td><td>€ 18,00</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
+                  <tr><td>May 18, 2026</td><td>€ 18,00</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
 
