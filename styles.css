@@ -1542,6 +1542,39 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
 .hbar__fill { display: block; height: 100%; border-radius: var(--r-full); background: var(--series-delivery); }
 .hbar__val { font-size: var(--fs-sm); color: var(--text-muted); text-align: right; font-variant-numeric: tabular-nums; }
 
+/* ==========================================================================
+   8m. VOORTGANGSRING BIJ EEN BESTELLING
+   Overgenomen uit de POS-app zodat beide schermen hetzelfde lezen: de ring
+   loopt leeg richting de bezorgtijd, met 45 minuten als volle baan.
+   De ring staat alleen op mobiel; op desktop draagt de tijdkolom dit al.
+   ========================================================================== */
+:root {
+  --ring-urgent: #f59800;   /* < 10 min */
+  --ring-ok:     #4caf50;   /* op tijd  */
+  --ring-far:    var(--gray-300);
+  --ring-late:   var(--danger);
+}
+
+.ring { display: none; width: 56px; height: 56px; flex: 0 0 auto; }
+.ring circle { fill: none; stroke-width: 2; }
+.ring__track { stroke: var(--gray-150); }
+.ring__fill {
+  /* 2πr bij r=22. De baan begint bovenaan door de rotatie op het element. */
+  stroke-dasharray: 138.23;
+  stroke-linecap: round;
+  stroke: var(--ring-color, var(--ring-far));
+  transition: stroke-dashoffset 400ms var(--ease);
+}
+.ring--late   { --ring-color: var(--ring-late); }
+.ring--urgent { --ring-color: var(--ring-urgent); }
+.ring--ok     { --ring-color: var(--ring-ok); }
+.ring--far    { --ring-color: var(--ring-far); }
+
+.ring__value { text-anchor: middle; font-size: 14px; font-weight: 600; fill: var(--text-strong); }
+/* Een kloktijd past niet op 14px in een cirkel van 56. */
+.ring__value--sm { font-size: 11px; }
+.ring__unit  { text-anchor: middle; font-size: 9px; font-weight: 500; fill: var(--text-muted); }
+
 
 /* ==========================================================================
    10. RESPONSIVE
@@ -1671,10 +1704,33 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .table--orders td:nth-child(3),
   .table--orders td:nth-child(4) { display: none; }
 
-  /* De losse Scheduled-badge onder de tijd vervalt: die informatie zit nu
-     links in de gewenste-tijd-chip. */
+  /* De tekstuele tijd en de losse Scheduled-badge maken plaats voor de ring;
+     die draagt hetzelfde gegeven compacter, en de gewenste tijd staat links
+     al als chip onder het adres. */
+  .table--orders .when,
   .table--orders .when + .badge { display: none; }
-  .table--orders .when { justify-content: flex-end; }
+  .table--orders .ring { display: block; }
+
+  /* Elke bestelling wordt een eigen kaart op de paginaondergrond, zoals in
+     de POS-app. Het paneel eromheen valt weg, anders staat er een kader in
+     een kader. */
+  [data-view="orders"] .panel { border: 0; background: transparent; overflow: visible; }
+  [data-view="orders"] .panel__head--seg {
+    padding: 0;
+    border-bottom: 0;
+    margin-bottom: 14px;
+  }
+  [data-view="orders"] .tabs--seg { background: var(--bg-surface); }
+  .table--orders tbody { display: flex; flex-direction: column; gap: 10px; }
+  .table--orders tr {
+    border: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    background: var(--bg-surface);
+    padding: 16px;
+    gap: 16px;
+  }
+  .table--orders .cell__title { font-size: var(--fs-lg); font-weight: 600; }
 
   /* Archive heeft geen tijdkolom: bestemming links, bedrag rechts. */
   .table--archive td:nth-child(1) { flex: 1 1 auto; min-width: 0; }
