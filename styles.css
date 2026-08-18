@@ -950,6 +950,9 @@ select.input {
 .cell { display: flex; flex-direction: column; gap: 2px; }
 .cell__title { font-weight: 500; color: var(--text-strong); }
 .cell__meta { font-size: var(--fs-sm); color: var(--text-muted); }
+/* Gewenste tijd onder de bestemming. Alleen op mobiel: op desktop staat
+   die informatie al in de tijdkolom. */
+.wish { display: none; align-self: flex-start; margin-top: 6px; }
 
 /* Tijdkolom. Het getal draagt de nadruk, de eenheid blijft rustig. */
 .when { display: flex; align-items: center; gap: 8px; color: var(--text); }
@@ -1006,6 +1009,54 @@ select.input {
 /* Tablet & mobiel: sidebar wordt een smalle drawer onder de header, zodat
    je hem met een tik naast de drawer weer wegklikt. */
 @media (max-width: 900px) {
+  .wish { display: inline-block; }
+  /* ------------------------------------------------------------------
+     Orders & Archive op mobiel: geen horizontale scroll. De tabel wordt
+     een lijst van rijen; de kolomkoppen vervallen omdat elke waarde op
+     zijn plek in de rij al leesbaar is.
+     ------------------------------------------------------------------ */
+  .table--orders, .table--orders tbody, .table--orders tr, .table--orders td,
+  .table--archive, .table--archive tbody, .table--archive tr, .table--archive td {
+    display: block;
+    width: 100%;
+  }
+  .table--orders thead, .table--archive thead { display: none; }
+
+  .table--orders tr, .table--archive tr {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 16px;
+    border-top: 1px solid var(--border);
+  }
+  .table--orders td, .table--archive td {
+    width: auto;
+    padding: 0;
+    border: 0;
+    white-space: normal;
+  }
+
+  /* Bestemming links, resterende tijd rechts. */
+  .table--orders td:nth-child(2) { flex: 1 1 auto; min-width: 0; order: 1; }
+  .table--orders td:nth-child(1) { flex: 0 0 auto; margin-left: auto; order: 2; text-align: right; }
+  /* Betaling, ordernummer en de statusknop vallen weg; die staan op het
+     detailscherm. Zonder deze weglating scrollt de rij horizontaal. */
+  .table--orders td:nth-child(3),
+  .table--orders td:nth-child(4) { display: none; }
+
+  /* De losse Scheduled-badge onder de tijd vervalt: die informatie zit nu
+     links in de gewenste-tijd-chip. */
+  .table--orders .when + .badge { display: none; }
+  .table--orders .when { justify-content: flex-end; }
+
+  /* Archive heeft geen tijdkolom: bestemming links, bedrag rechts. */
+  .table--archive td:nth-child(1) { flex: 1 1 auto; min-width: 0; }
+  .table--archive td:nth-child(2) { flex: 0 0 auto; margin-left: auto; }
+  /* Ook hier vervalt de menuknop: die ruimte is nodig om het adres op
+     één regel te houden. Acties horen op het detailscherm. */
+  .table--archive td:nth-child(3) { display: none; }
+
+  .cell__title { overflow-wrap: anywhere; }
+
+  .panel__foot { padding: 14px 16px; }
   .body { grid-template-columns: minmax(0, 1fr); }
 
   .topbar { padding: 0 12px; gap: 10px; }
