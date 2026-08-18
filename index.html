@@ -70,6 +70,8 @@
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.6" y="10.4" width="14.8" height="9.4" rx="2"/><path d="M8.3 10.4V7.7a3.7 3.7 0 0 1 7.4 0v2.7"/></symbol>
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 11.1v5.1M12 7.8h.01"/></symbol>
     <symbol id="i-coin" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="8.8"/><path d="M12 6.9l1.45 2.85 2.85 1.45-2.85 1.45L12 15.5l-1.45-2.85L7.7 11.2l2.85-1.45z" fill="#fff"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.2 14.2A8.6 8.6 0 0 1 9.8 3.8a8.6 8.6 0 1 0 10.4 10.4Z"/></symbol>
+    <symbol id="i-minus-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M8.4 12h7.2"/></symbol>
     <symbol id="i-dots-v" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="10" cy="4.7" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="10" cy="15.3" r="1.15"/></symbol>
     <symbol id="i-eye" viewBox="0 0 20 20"><path d="M2.4 10S5.3 4.8 10 4.8 17.6 10 17.6 10 14.7 15.2 10 15.2 2.4 10 2.4 10Z"/><circle cx="10" cy="10" r="2.5"/></symbol>
     <symbol id="i-palette" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><circle cx="10" cy="6.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="6.6" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="13.4" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="10" cy="13" r="1.05" fill="currentColor" stroke="none"/></symbol>
@@ -967,6 +969,293 @@
 
         <!-- Twee kaarten: de komende rekening met een voetstrip, en de
              facturenlijst met dezelfde tabs als de productenlijst. -->
+        <!-- ---------- SETTINGS: opening hours ---------- -->
+        <section class="view" data-set-view="hours" hidden>
+          <p class="alert alert--info">
+            <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+            Keep this in mind. A day starts at 00:00 and ends at 23:59.
+          </p>
+
+          <div class="card card--flush">
+            <h3 class="card__title card__pad">Delivery Hours</h3>
+            <div class="hours" data-hours="delivery">
+              <div class="hrow">
+                <span class="hrow__day">Monday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Monday for delivery</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Monday delivery start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Monday delivery end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow">
+                <span class="hrow__day">Tuesday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Tuesday for delivery</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Tuesday delivery start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Tuesday delivery end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow">
+                <span class="hrow__day">Wednesday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Wednesday for delivery</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Wednesday delivery start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Wednesday delivery end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow">
+                <span class="hrow__day">Thursday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Thursday for delivery</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Thursday delivery start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Thursday delivery end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow">
+                <span class="hrow__day">Friday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Friday for delivery</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Friday delivery start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:59" aria-label="Friday delivery end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow">
+                <span class="hrow__day">Saturday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Saturday for delivery</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="00:00" aria-label="Saturday delivery start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="02:00" aria-label="Saturday delivery end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button" hidden>Add shift</button>
+                  </div>
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Saturday delivery start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Saturday delivery end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow is-off">
+                <span class="hrow__day">Sunday</span>
+                <label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Sunday for delivery</span></label>
+                <div class="shifts" hidden>
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Sunday delivery start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Sunday delivery end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card--flush">
+            <h3 class="card__title card__pad">Takeaway Hours</h3>
+            <div class="hours" data-hours="takeaway">
+              <div class="hrow">
+                <span class="hrow__day">Monday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Monday for takeaway</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Monday takeaway start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Monday takeaway end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow">
+                <span class="hrow__day">Tuesday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Tuesday for takeaway</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Tuesday takeaway start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Tuesday takeaway end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow">
+                <span class="hrow__day">Wednesday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Wednesday for takeaway</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Wednesday takeaway start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Wednesday takeaway end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow">
+                <span class="hrow__day">Thursday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Thursday for takeaway</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Thursday takeaway start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <span class="tfield tfield--error">
+                      <input class="input time" type="time" value="00:00" aria-label="Thursday takeaway end"
+                             aria-invalid="true" aria-describedby="err-thu-takeaway" />
+                      <svg class="icon tfield__flag" aria-hidden="true"><use href="#i-warning"/></svg>
+                    </span>
+                    <span class="sr-only" id="err-thu-takeaway">End time must come after the start time.</span>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow">
+                <span class="hrow__day">Friday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Friday for takeaway</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Friday takeaway start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:59" aria-label="Friday takeaway end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow">
+                <span class="hrow__day">Saturday</span>
+                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Saturday for takeaway</span></label>
+                <div class="shifts">
+                  <div class="shift">
+                    <input class="input time" type="time" value="00:00" aria-label="Saturday takeaway start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="02:00" aria-label="Saturday takeaway end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button" hidden>Add shift</button>
+                  </div>
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Saturday takeaway start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Saturday takeaway end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow is-off">
+                <span class="hrow__day">Sunday</span>
+                <label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Sunday for takeaway</span></label>
+                <div class="shifts" hidden>
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Sunday takeaway start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Sunday takeaway end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card card--flush">
+            <h3 class="card__title card__pad">Special Hours</h3>
+            <div class="hours" data-hours="special">
+              <div class="hrow is-off">
+                <span class="hrow__day">Sunday</span>
+                <label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on this holiday</span></label>
+                <div class="shifts" hidden>
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Holiday start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Holiday end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+
+              <div class="hrow is-off">
+                <span class="hrow__day">Sunday</span>
+                <label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on this holiday</span></label>
+                <div class="shifts" hidden>
+                  <div class="shift">
+                    <input class="input time" type="time" value="15:00" aria-label="Holiday start" />
+                    <span class="shift__dash" aria-hidden="true">&ndash;</span>
+                    <input class="input time" type="time" value="23:00" aria-label="Holiday end" />
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
+                    <button class="shift__add" type="button">Add shift</button>
+                  </div>
+                </div>
+                <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+              </div>
+            </div>
+            <div class="card__pad">
+              <button class="addrow" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add Holiday
+              </button>
+            </div>
+          </div>
+        </section>
+
         <section class="view" data-set-view="billing" hidden>
           <div class="card card--flush">
             <div class="card__pad">

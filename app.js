@@ -150,6 +150,60 @@
     storeView.addEventListener("change", function () { markUnsaved("Online store"); });
   }
 
+  /* ---- Openingstijden: diensten per dag, en de gesloten-stand ------------- */
+  var hoursView = document.querySelector('[data-set-view="hours"]');
+
+  if (hoursView) {
+    /* Verwijderen kan pas vanaf twee diensten, en "Add shift" hoort alleen op
+       de onderste regel — anders staat hij midden in de rij. */
+    function syncShifts(rij) {
+      var shifts = rij.querySelectorAll(".shift");
+      shifts.forEach(function (shift, i) {
+        shift.querySelector(".shift__del").hidden = shifts.length < 2;
+        shift.querySelector(".shift__add").hidden = i !== shifts.length - 1;
+      });
+    }
+
+    function setDagOpen(rij, open) {
+      rij.classList.toggle("is-off", !open);
+      rij.querySelector(".shifts").hidden = !open;
+      rij.querySelector(".closed").hidden = open;
+    }
+
+    hoursView.addEventListener("click", function (e) {
+      var rij = e.target.closest(".hrow");
+      if (!rij) return;
+
+      if (e.target.closest(".shift__add")) {
+        var laatste = rij.querySelector(".shift:last-child");
+        var kopie = laatste.cloneNode(true);
+        /* De foutstaat hoort bij die ene waarde, niet bij een nieuwe dienst. */
+        var fout = kopie.querySelector(".tfield--error");
+        if (fout) fout.replaceWith(fout.querySelector(".time"));
+        kopie.querySelectorAll(".time").forEach(function (veld) {
+          veld.removeAttribute("aria-invalid");
+          veld.removeAttribute("aria-describedby");
+        });
+        laatste.after(kopie);
+        syncShifts(rij);
+        markUnsaved("Opening hours");
+      }
+
+      if (e.target.closest(".shift__del")) {
+        if (rij.querySelectorAll(".shift").length < 2) return;
+        e.target.closest(".shift").remove();
+        syncShifts(rij);
+        markUnsaved("Opening hours");
+      }
+    });
+
+    hoursView.addEventListener("change", function (e) {
+      if (e.target.matches('.switch input')) setDagOpen(e.target.closest(".hrow"), e.target.checked);
+      markUnsaved("Opening hours");
+    });
+    hoursView.addEventListener("input", function () { markUnsaved("Opening hours"); });
+  }
+
   /* ---- Loyalty: het voorbeeld volgt het gekozen percentage ---------------- */
   var loyaltyView = document.querySelector('[data-view="loyalty"]');
 

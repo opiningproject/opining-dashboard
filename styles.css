@@ -1054,6 +1054,80 @@ select.input {
 }
 .chip--info .icon { width: 17px; height: 17px; color: var(--text-muted); }
 
+/* ==========================================================================
+   8h. OPENING HOURS
+   ========================================================================== */
+
+/* Neutrale toelichting; de gele .alert is voor waarschuwingen. */
+.alert--info { background: var(--accent-soft); color: #14567f; }
+.alert--info .icon { color: var(--accent); }
+
+.hours { border-top: 1px solid var(--border); }
+
+/* Dag, schakelaar en diensten in vaste kolommen, zodat alle tijdvelden
+   onder elkaar uitlijnen ongeacht de lengte van de dagnaam. */
+.hrow {
+  display: grid;
+  grid-template-columns: 128px 46px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  padding: 14px 20px;
+}
+.hrow + .hrow { border-top: 1px solid var(--border); }
+.hrow__day { padding-top: 11px; font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.hrow .switch { margin-top: 9px; }
+
+.shifts { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.shift { display: flex; align-items: center; gap: 12px; }
+.shift__dash { color: var(--text-muted); }
+
+/* Tijdvelden: smal, gecentreerd, zonder de klokknop van de browser — die
+   past niet in het ontwerp. Tikken opent op mobiel nog steeds de kiezer. */
+.time {
+  width: 118px;
+  height: 40px;
+  padding: 0 10px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.time::-webkit-calendar-picker-indicator { display: none; }
+.time::-webkit-inner-spin-button { display: none; }
+
+/* Veld met foutmelding: rode rand plus een vlag in het veld zelf. */
+.tfield { position: relative; display: inline-flex; }
+.tfield--error .time { border-color: var(--danger); padding-right: 30px; }
+.tfield--error .time:focus { box-shadow: 0 0 0 3px #fbeae9; }
+.tfield__flag {
+  position: absolute; right: 9px; top: 50%;
+  transform: translateY(-50%);
+  width: 17px; height: 17px;
+  color: var(--danger);
+  pointer-events: none;
+}
+
+.shift__del { width: 32px; height: 32px; color: var(--text-muted); }
+.shift__del .icon { width: 19px; height: 19px; }
+
+/* Staat rechts uitgelijnd op de laatste dienstregel. */
+.shift__add {
+  white-space: nowrap;
+  margin-left: auto;
+  padding: 6px 4px;
+  font-size: var(--fs-md); font-weight: 500;
+  color: var(--accent);
+}
+.shift__add:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.closed {
+  display: flex; align-items: center; gap: 9px;
+  padding-top: 11px;
+  font-size: var(--fs-md);
+  color: var(--text-muted);
+}
+.closed .icon { width: 17px; height: 17px; }
+
+.hours + .card__pad .addrow { margin-top: 0; }
+
 
 /* ==========================================================================
    10. RESPONSIVE
@@ -1066,6 +1140,16 @@ select.input {
 /* Tablet & mobiel: sidebar wordt een smalle drawer onder de header, zodat
    je hem met een tik naast de drawer weer wegklikt. */
 @media (max-width: 900px) {
+  /* Openingstijden: dag en schakelaar op een eigen regel, diensten
+     eronder — drie kolommen passen hier niet naast elkaar. */
+  .hrow { grid-template-columns: 1fr auto; gap: 10px 12px; padding: 14px 16px; }
+  .hrow__day { padding-top: 0; align-self: center; }
+  .hrow .switch { margin-top: 0; align-self: center; }
+  .shifts, .closed { grid-column: 1 / -1; }
+  .closed { padding-top: 0; }
+  .shift { flex-wrap: wrap; gap: 8px; }
+  .time { width: 104px; }
+  .shift__add { margin-left: 0; }
   /* Vier tegels naast elkaar worden te smal op mobiel. */
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tile:nth-child(odd) { border-left: 0; }
