@@ -1235,6 +1235,12 @@
         </button>
 
         <div class="page-head">
+          <!-- Binnen een subpagina wordt het pagina-icoon het kruimelpad terug:
+               gedimd icoon, chevron, en daarachter de naam van de subpagina. -->
+          <button class="set-crumb" type="button" id="set-crumb" hidden>
+            <svg class="icon page-head__icon" id="set-crumb-icon" aria-hidden="true"><use href="#i-store"/></svg>
+            <svg class="icon set-crumb__sep" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+          </button>
           <svg class="icon page-head__icon" id="set-icon" aria-hidden="true"><use href="#i-store"/></svg>
           <h2 id="set-title">General</h2>
           <!-- Actieknoppen per settings-pagina; app.js toont het blok waarvan
@@ -1260,12 +1266,12 @@
           <div class="card">
             <h3 class="card__title">Store details</h3>
             <div class="rows">
-              <button class="row" type="button">
+              <button class="row" type="button" data-sub="contact" data-sub-title="Store contact details">
                 <svg class="icon row__icon" aria-hidden="true"><use href="#i-store"/></svg>
                 <span class="row__text"><span class="row__title">Opining</span><span class="row__meta">info@restaurantname.nl · +31614522453</span></span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
-              <button class="row" type="button">
+              <button class="row" type="button" data-sub="address" data-sub-title="Store address">
                 <svg class="icon row__icon" aria-hidden="true"><use href="#i-pin"/></svg>
                 <span class="row__text"><span class="row__title">Store Address</span><span class="row__meta">The Netherlands</span></span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
@@ -1311,6 +1317,62 @@
         <!-- Twee kaarten: de komende rekening met een voetstrip, en de
              facturenlijst met dezelfde tabs als de productenlijst. -->
         <!-- ---------- SETTINGS: opening hours ---------- -->
+        <!-- ---------- SETTINGS SUB: store contact details ---------- -->
+        <section class="view" data-set-sub="contact" hidden>
+          <div class="card">
+            <h3 class="card__title">Store name</h3>
+            <div class="field">
+              <label class="label" for="store-name">Store name</label>
+              <input class="input" id="store-name" type="text" value="Opining" />
+              <p class="hint">Appears on your online store and on order confirmations.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Store contact details</h3>
+            <div class="field">
+              <label class="label" for="store-email">Store email</label>
+              <input class="input" id="store-email" type="email" value="info@restaurantname.nl" />
+              <p class="hint">Receives messages about your store. For the sender address, go to Notifications.</p>
+            </div>
+            <div class="field">
+              <label class="label" for="store-phone">Store phone</label>
+              <input class="input" id="store-phone" type="tel" value="+31 6 1452 2453" />
+              <p class="hint">Shown to customers when they need to reach you about an order.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS SUB: store address ---------- -->
+        <section class="view" data-set-sub="address" hidden>
+          <div class="card">
+            <h3 class="card__title">Store address</h3>
+            <p class="card__sub">Used for taxes, invoices and the delivery radius.</p>
+            <div class="field">
+              <label class="label" for="addr-street">Street and number</label>
+              <input class="input" id="addr-street" type="text" value="Lusthofstraat 27A" />
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label class="label" for="addr-zip">Postal code</label>
+                <input class="input" id="addr-zip" type="text" value="3062 WB" />
+              </div>
+              <div class="field">
+                <label class="label" for="addr-city">City</label>
+                <input class="input" id="addr-city" type="text" value="Rotterdam" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="addr-country">Country</label>
+              <select class="input" id="addr-country">
+                <option>Netherlands</option>
+                <option>Belgium</option>
+                <option>Germany</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
         <section class="view" data-set-view="hours" hidden>
           <p class="alert alert--info">
             <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>

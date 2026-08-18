@@ -460,8 +460,10 @@
   btnSettings.addEventListener("click", openSettings);
   btnSetClose.addEventListener("click", closeSettings);
 
-  /* Terug-knop bestaat alleen op mobiel: van de pagina terug naar de lijst. */
+  /* Terug-knop bestaat alleen op mobiel. Sta je in een subpagina, dan gaat die
+     eerst een niveau omhoog voordat hij naar de lijst terugkeert. */
   btnSetBack.addEventListener("click", function () {
+    if (backFromSub()) return;
     root.dataset.settingsView = "list";
     clearSetActive();
     hideSavebar();
@@ -473,9 +475,63 @@
     if (!item) return;
     e.preventDefault();
     activate(item, setNav);
+    closeSetSub();
     showSetPage(item.dataset.set, item.dataset.title, item.dataset.icon);
     root.dataset.settingsView = "page";
     hideSavebar();
+  });
+
+  /* ---- Subpagina binnen een settings-pagina ------------------------------
+     Een rij met data-sub opent een niveau dieper. De kop wordt dan een
+     kruimelpad: het pagina-icoon dimt, krijgt een chevron en fungeert als
+     terugknop. */
+  var setCrumb     = document.getElementById("set-crumb");
+  var setCrumbIcon = document.getElementById("set-crumb-icon");
+  var setSubs      = document.querySelectorAll("[data-set-sub]");
+  var ouder        = null;   /* titel + icoon van de pagina waar we vandaan komen */
+
+  function openSetSub(sub, titel) {
+    ouder = { titel: setTitle.textContent, icoon: setIcon.querySelector("use").getAttribute("href") };
+
+    var open = document.querySelector("[data-set-view]:not([hidden])");
+    if (open) open.hidden = true;
+    setSubs.forEach(function (v) { v.hidden = v.dataset.setSub !== sub; });
+
+    setCrumbIcon.querySelector("use").setAttribute("href", ouder.icoon);
+    setCrumb.setAttribute("aria-label", "Back to " + ouder.titel);
+    setCrumb.setAttribute("title", "Back to " + ouder.titel);
+    setCrumb.hidden = false;
+    /* Let op: .hidden is een eigenschap van HTMLElement, niet van SVG. Op een
+       <svg> moet je het attribuut zetten, anders gebeurt er niets. */
+    setIcon.setAttribute("hidden", "");
+    setTitle.textContent = titel;
+    overlay.scrollTop = 0;
+  }
+
+  function closeSetSub() {
+    if (!ouder) return;
+    setSubs.forEach(function (v) { v.hidden = true; });
+    setCrumb.hidden = true;
+    setIcon.removeAttribute("hidden");
+    setTitle.textContent = ouder.titel;
+    ouder = null;
+  }
+
+  /* Geeft terug of er daadwerkelijk een niveau omhoog is gegaan, zodat de
+     mobiele terug-knop weet of hij nog naar de lijst moet. */
+  function backFromSub() {
+    var terug = ouder;
+    if (!terug) return false;
+    closeSetSub();
+    var actief = setNav.querySelector(".nav__item.is-active");
+    if (actief) showSetPage(actief.dataset.set, terug.titel, actief.dataset.icon);
+    return true;
+  }
+
+  overlay.addEventListener("click", function (e) {
+    var rij = e.target.closest("[data-sub]");
+    if (rij) { openSetSub(rij.dataset.sub, rij.dataset.subTitle); return; }
+    if (e.target.closest("#set-crumb")) backFromSub();
   });
 
   /* ========================================================================
@@ -640,6 +696,8 @@
          kan over de settings-overlay heen liggen. */
       if (root.dataset.search === "open") { closeSearch(); return; }
       if (root.dataset.drawer === "open") { setDrawer(false); return; }
+      /* Binnen settings eerst een niveau omhoog, pas daarna sluiten. */
+      if (backFromSub()) return;
       if (root.dataset.settings === "open") { closeSettings(); return; }
     }
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {

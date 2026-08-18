@@ -1144,6 +1144,13 @@ select.input {
    paginaknoppen in de settings-kop moeten daar links van blijven. */
 .set-main .page-head { padding-right: 48px; }
 
+/* Kruimelpad in de settings-kop: gedimd pagina-icoon dat terugleidt,
+   met een chevron naar de naam van de subpagina. */
+.set-crumb { display: flex; align-items: center; gap: 10px; padding: 2px; border-radius: var(--r-sm); }
+.set-crumb .page-head__icon { color: var(--text-muted); transition: color var(--dur) var(--ease); }
+.set-crumb:hover .page-head__icon { color: var(--text-strong); }
+.set-crumb__sep { width: 15px; height: 15px; color: var(--border-strong); }
+
 /* Vijf kolommen in de smallere settings-kolom: iets krappere celruimte,
    en de minimum-tekst mag afbreken in plaats van de tabel op te rekken. */
 .table--zones th, .table--zones td { padding-left: 14px; padding-right: 14px; }
