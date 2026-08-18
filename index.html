@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Kleurt de systeembalk boven de pagina; gelijk aan de topbar. -->
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -915,21 +918,26 @@
           </section>
 
           <!-- ---------- VIEW: discounts ---------- -->
+          <!-- ---------- VIEW: discounts (automatisch, op items) ---------- -->
           <section class="view" data-view="discounts" hidden>
+            <p class="alert alert--info">
+              <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+              These come off the price automatically. Customers do not enter anything &mdash; for a code at checkout, use Vouchers.
+            </p>
+
             <ul class="stats">
-              <li class="stat"><p class="stat__label">Active discounts</p><p class="stat__value">4</p><p class="stat__delta">1 scheduled</p></li>
-              <li class="stat"><p class="stat__label">Used this month</p><p class="stat__value">745</p><p class="stat__delta is-up">+18,2%</p></li>
-              <li class="stat"><p class="stat__label">Discounted revenue</p><p class="stat__value">&euro; 6.180</p><p class="stat__delta">14% of total</p></li>
-              <li class="stat"><p class="stat__label">Average discount</p><p class="stat__value">&euro; 2,35</p><p class="stat__delta is-down">&minus;0,4%</p></li>
+              <li class="stat"><p class="stat__label">Running discounts</p><p class="stat__value">5</p><p class="stat__delta">1 ended this month</p></li>
+              <li class="stat"><p class="stat__label">Items discounted</p><p class="stat__value">18</p><p class="stat__delta">of 96 on the menu</p></li>
+              <li class="stat"><p class="stat__label">Discounted revenue</p><p class="stat__value">&euro; 3.420</p><p class="stat__delta">8% of total</p></li>
+              <li class="stat"><p class="stat__label">Average markdown</p><p class="stat__value">11,4%</p><p class="stat__delta is-up">+1,2pp</p></li>
             </ul>
 
             <div class="panel">
               <div class="panel__head">
                 <div class="tabs">
                   <button class="tab is-active" type="button">All <span class="tab__count">6</span></button>
-                  <button class="tab" type="button">Active <span class="tab__count">4</span></button>
-                  <button class="tab" type="button">Scheduled <span class="tab__count">1</span></button>
-                  <button class="tab" type="button">Expired <span class="tab__count">1</span></button>
+                  <button class="tab" type="button">Running <span class="tab__count">5</span></button>
+                  <button class="tab" type="button">Ended <span class="tab__count">1</span></button>
                 </div>
                 <div class="panel__tools">
                   <button class="icon-btn" type="button" aria-label="Search discounts">
@@ -942,56 +950,56 @@
               <div class="table-wrap">
                 <table class="table table--list">
                   <thead>
-                    <tr><th>Discount</th><th>Value</th><th>Applies to</th><th>Used</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+                    <tr><th>Applies to</th><th>Discount</th><th>When</th><th>Orders</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">Welcome offer</span><span class="cell__meta">Code WELCOME10</span></span></td>
-                      <td>10% off</td>
-                      <td>All products</td>
-                      <td>128</td>
-                      <td><span class="badge badge--active">Active</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Welcome offer"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="cell"><span class="cell__title">French fries</span><span class="cell__meta">Sides</span></span></td>
+                      <td><span class="cell"><span class="cell__title">10% off</span><span class="cell__meta"><span class="wasnow"><s>&euro; 3,50</s> &euro; 3,15</span></span></span></td>
+                      <td>Always</td>
+                      <td>214</td>
+                      <td><span class="badge badge--active">Running</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for French fries discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">Pizza Tuesday</span><span class="cell__meta">Automatic &middot; no code</span></span></td>
-                      <td>20% off</td>
-                      <td>Category: Pizza</td>
-                      <td>64</td>
-                      <td><span class="badge badge--active">Active</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Pizza Tuesday"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="cell"><span class="cell__title">Margherita pizza</span><span class="cell__meta">Pizza</span></span></td>
+                      <td><span class="cell"><span class="cell__title">&euro; 2,00 off</span><span class="cell__meta"><span class="wasnow"><s>&euro; 11,50</s> &euro; 9,50</span></span></span></td>
+                      <td>Always</td>
+                      <td>168</td>
+                      <td><span class="badge badge--active">Running</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Margherita pizza discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">Family deal</span><span class="cell__meta">Code FAMILY5</span></span></td>
-                      <td>&euro; 5,00 off</td>
-                      <td>Orders from &euro; 35</td>
-                      <td>41</td>
-                      <td><span class="badge badge--active">Active</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Family deal"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="cell"><span class="cell__title">Drinks</span><span class="cell__meta">Whole category &middot; 14 items</span></span></td>
+                      <td><span class="cell"><span class="cell__title">15% off</span><span class="cell__meta"><span class="cell__meta">Varies per item</span></span></span></td>
+                      <td>Mon&ndash;Thu</td>
+                      <td>96</td>
+                      <td><span class="badge badge--active">Running</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Drinks discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">Free delivery week</span><span class="cell__meta">Code FREEDEL</span></span></td>
-                      <td>Free delivery</td>
-                      <td>All products</td>
-                      <td>210</td>
-                      <td><span class="badge badge--active">Active</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Free delivery week"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="cell"><span class="cell__title">Tiramisu</span><span class="cell__meta">Desserts</span></span></td>
+                      <td><span class="cell"><span class="cell__title">&euro; 1,00 off</span><span class="cell__meta"><span class="wasnow"><s>&euro; 6,00</s> &euro; 5,00</span></span></span></td>
+                      <td>Until 31 Aug</td>
+                      <td>43</td>
+                      <td><span class="badge badge--active">Running</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Tiramisu discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">Autumn menu</span><span class="cell__meta">Code AUTUMN15</span></span></td>
-                      <td>15% off</td>
-                      <td>6 selected products</td>
-                      <td>0</td>
-                      <td><span class="badge badge--draft">Scheduled</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Autumn menu"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="cell"><span class="cell__title">Family bucket</span><span class="cell__meta">Deals</span></span></td>
+                      <td><span class="cell"><span class="cell__title">20% off</span><span class="cell__meta"><span class="wasnow"><s>&euro; 24,00</s> &euro; 19,20</span></span></span></td>
+                      <td>Tuesdays</td>
+                      <td>71</td>
+                      <td><span class="badge badge--active">Running</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Family bucket discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">Summer special</span><span class="cell__meta">Code SUMMER15</span></span></td>
-                      <td>15% off</td>
-                      <td>Category: Drinks</td>
+                      <td><span class="cell"><span class="cell__title">Cola 1,5L</span><span class="cell__meta">Drinks</span></span></td>
+                      <td><span class="cell"><span class="cell__title">5% off</span><span class="cell__meta"><span class="wasnow"><s>&euro; 3,20</s> &euro; 3,04</span></span></span></td>
+                      <td>Ended 1 Aug</td>
                       <td>302</td>
-                      <td><span class="badge badge--muted">Expired</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Summer special"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="badge badge--muted">Ended</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Cola 1,5L discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -999,107 +1007,75 @@
             </div>
           </section>
 
-          <!-- ---------- VIEW: discount aanmaken ---------- -->
+          <!-- ---------- VIEW: automatische korting aanmaken ---------- -->
           <section class="view" data-view="discount-new" hidden>
             <div class="card">
-              <fieldset class="choices choices--rich">
-                <legend class="card__title">Discount type</legend>
-                <label class="choice choice--rich">
-                  <input type="radio" name="disc-type" value="percentage" checked />
-                  <span class="choice__body">
-                    <span class="choice__title">Percentage off</span>
-                    <span class="choice__desc">Takes a share off the product price. The most common choice.</span>
-                  </span>
-                </label>
-                <label class="choice choice--rich">
-                  <input type="radio" name="disc-type" value="amount" />
-                  <span class="choice__body">
-                    <span class="choice__title">Fixed amount off</span>
-                    <span class="choice__desc">Takes a set amount off the order total.</span>
-                  </span>
-                </label>
-                <label class="choice choice--rich">
-                  <input type="radio" name="disc-type" value="delivery" />
-                  <span class="choice__body">
-                    <span class="choice__title">Free delivery</span>
-                    <span class="choice__desc">Drops the delivery fee. Zones with their own free-delivery threshold keep theirs.</span>
-                  </span>
-                </label>
-              </fieldset>
-            </div>
-
-            <div class="card">
-              <h2 class="card__title">Details</h2>
-              <div class="field">
-                <label class="label" for="disc-name">Internal name</label>
-                <input class="input" id="disc-name" type="text" placeholder="Welcome offer" />
-                <p class="hint">Only you see this. Customers see the code below.</p>
-              </div>
-              <div class="field-row">
-                <div class="field">
-                  <label class="label" for="disc-value">Percentage off</label>
-                  <span class="affix affix--post"><input class="input" id="disc-value" type="number" value="10" min="1" max="100" /><span class="affix__sym" aria-hidden="true">%</span></span>
-                </div>
-                <div class="field">
-                  <label class="label" for="disc-code">Discount code</label>
-                  <div class="withbtn">
-                    <input class="input" id="disc-code" type="text" value="WELCOME10" />
-                    <button class="btn btn--ghost btn--sm" type="button" id="disc-generate">Generate</button>
-                  </div>
-                </div>
-              </div>
-              <label class="choice choice--plain">
-                <input type="checkbox" id="disc-auto" />
-                <span>Apply automatically, without a code</span>
-              </label>
-            </div>
-
-            <div class="card">
-              <h2 class="card__title">Applies to</h2>
+              <h2 class="card__title">What gets the discount</h2>
               <fieldset class="choices">
-                <legend class="sr-only">Which products this discount applies to</legend>
-                <label class="choice"><input type="radio" name="disc-scope" checked /><span>All products</span></label>
-                <label class="choice"><input type="radio" name="disc-scope" /><span>Specific categories</span></label>
-                <label class="choice"><input type="radio" name="disc-scope" /><span>Specific products</span></label>
+                <legend class="sr-only">Scope of the discount</legend>
+                <label class="choice"><input type="radio" name="disc-scope" checked /><span>One product</span></label>
+                <label class="choice"><input type="radio" name="disc-scope" /><span>A whole category</span></label>
+                <label class="choice"><input type="radio" name="disc-scope" /><span>Several products</span></label>
               </fieldset>
               <div class="field">
-                <label class="label" for="disc-pick">Categories</label>
-                <select class="input" id="disc-pick" disabled>
-                  <option>Pizza</option><option>Drinks</option><option>Desserts</option>
+                <label class="label" for="disc-product">Product</label>
+                <select class="input" id="disc-product">
+                  <option data-price="3.50">French fries &mdash; &euro; 3,50</option>
+                  <option data-price="11.50">Margherita pizza &mdash; &euro; 11,50</option>
+                  <option data-price="6.00">Tiramisu &mdash; &euro; 6,00</option>
+                  <option data-price="3.20">Cola 1,5L &mdash; &euro; 3,20</option>
+                  <option data-price="24.00">Family bucket &mdash; &euro; 24,00</option>
                 </select>
-                <p class="hint">Pick a scope above to choose which ones.</p>
               </div>
             </div>
 
             <div class="card">
-              <h2 class="card__title">Conditions</h2>
+              <h2 class="card__title">Discount</h2>
+              <fieldset class="choices">
+                <legend class="sr-only">Type of discount</legend>
+                <label class="choice"><input type="radio" name="disc-kind" value="pct" checked /><span>Percentage off</span></label>
+                <label class="choice"><input type="radio" name="disc-kind" value="fix" /><span>Fixed amount off</span></label>
+              </fieldset>
               <div class="field-row">
                 <div class="field">
-                  <label class="label" for="disc-min">Minimum order value</label>
-                  <span class="affix affix--pre"><span class="affix__sym" aria-hidden="true">&euro;</span><input class="input" id="disc-min" type="number" placeholder="0,00" step="0.01" /></span>
+                  <label class="label" for="disc-value">Amount off</label>
+                  <span class="affix affix--post"><input class="input" id="disc-value" type="number" value="10" min="1" step="1" /><span class="affix__sym" aria-hidden="true" id="disc-unit">%</span></span>
                 </div>
                 <div class="field">
-                  <label class="label" for="disc-limit">Total usage limit</label>
-                  <input class="input" id="disc-limit" type="number" placeholder="Unlimited" />
+                  <span class="label">New price</span>
+                  <p class="pricepreview"><s id="disc-was">&euro; 3,50</s> <b id="disc-now">&euro; 3,15</b></p>
                 </div>
               </div>
-              <label class="choice choice--plain">
-                <input type="checkbox" id="disc-once" checked />
-                <span>Limit to one use per customer</span>
-              </label>
             </div>
 
             <div class="card">
-              <h2 class="card__title">Active dates</h2>
+              <h2 class="card__title">When it runs</h2>
+              <fieldset class="choices">
+                <legend class="sr-only">Schedule</legend>
+                <label class="choice"><input type="radio" name="disc-when" checked /><span>Always, until I stop it</span></label>
+                <label class="choice"><input type="radio" name="disc-when" /><span>Only on certain days</span></label>
+                <label class="choice"><input type="radio" name="disc-when" /><span>Between two dates</span></label>
+              </fieldset>
+
+              <fieldset class="days" id="disc-days" disabled>
+                <legend class="label">Days</legend>
+                <label class="day"><input type="checkbox" /><span>Mon</span></label>
+                <label class="day"><input type="checkbox" /><span>Tue</span></label>
+                <label class="day"><input type="checkbox" /><span>Wed</span></label>
+                <label class="day"><input type="checkbox" /><span>Thu</span></label>
+                <label class="day"><input type="checkbox" /><span>Fri</span></label>
+                <label class="day"><input type="checkbox" /><span>Sat</span></label>
+                <label class="day"><input type="checkbox" /><span>Sun</span></label>
+              </fieldset>
+
               <div class="field-row">
                 <div class="field">
                   <label class="label" for="disc-start">Starts</label>
-                  <input class="input" id="disc-start" type="date" />
+                  <input class="input" id="disc-start" type="date" disabled />
                 </div>
                 <div class="field">
                   <label class="label" for="disc-end">Ends</label>
-                  <input class="input" id="disc-end" type="date" />
-                  <p class="hint">Leave empty to keep it running.</p>
+                  <input class="input" id="disc-end" type="date" disabled />
                 </div>
               </div>
             </div>
@@ -1110,21 +1086,27 @@
             </div>
           </section>
 
-          <!-- ---------- VIEW: vouchers ---------- -->
+          <!-- ---------- VIEW: vouchers (kortingscodes voor de checkout) ---------- -->
           <section class="view" data-view="vouchers" hidden>
+            <p class="alert alert--info">
+              <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+              Customers type these in at checkout. For a price that drops by itself, use Discounts.
+            </p>
+
             <ul class="stats">
-              <li class="stat"><p class="stat__label">Active vouchers</p><p class="stat__value">38</p><p class="stat__delta is-up">+6 this month</p></li>
-              <li class="stat"><p class="stat__label">Outstanding value</p><p class="stat__value">&euro; 1.145</p><p class="stat__delta">Not yet redeemed</p></li>
-              <li class="stat"><p class="stat__label">Redeemed this month</p><p class="stat__value">&euro; 420</p><p class="stat__delta is-up">+12,5%</p></li>
-              <li class="stat"><p class="stat__label">Expiring within 30 days</p><p class="stat__value">5</p><p class="stat__delta">&euro; 130 total</p></li>
+              <li class="stat"><p class="stat__label">Active codes</p><p class="stat__value">3</p><p class="stat__delta">1 scheduled</p></li>
+              <li class="stat"><p class="stat__label">Redeemed this month</p><p class="stat__value">379</p><p class="stat__delta is-up">+18,2%</p></li>
+              <li class="stat"><p class="stat__label">Revenue with a code</p><p class="stat__value">&euro; 6.180</p><p class="stat__delta">14% of total</p></li>
+              <li class="stat"><p class="stat__label">Average discount</p><p class="stat__value">&euro; 2,35</p><p class="stat__delta is-down">&minus;0,4%</p></li>
             </ul>
 
             <div class="panel">
               <div class="panel__head">
                 <div class="tabs">
-                  <button class="tab is-active" type="button">Active <span class="tab__count">38</span></button>
-                  <button class="tab" type="button">Redeemed</button>
-                  <button class="tab" type="button">Expired</button>
+                  <button class="tab is-active" type="button">All <span class="tab__count">5</span></button>
+                  <button class="tab" type="button">Active <span class="tab__count">3</span></button>
+                  <button class="tab" type="button">Scheduled <span class="tab__count">1</span></button>
+                  <button class="tab" type="button">Expired <span class="tab__count">1</span></button>
                 </div>
                 <div class="panel__tools">
                   <button class="icon-btn" type="button" aria-label="Search vouchers">
@@ -1137,40 +1119,53 @@
               <div class="table-wrap">
                 <table class="table table--list">
                   <thead>
-                    <tr><th>Code</th><th>Remaining</th><th>Issued to</th><th>Expires</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+                    <tr><th>Code</th><th>Discount</th><th>Conditions</th><th>Used</th><th>Valid</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="cell"><span class="cell__title mono">GIFT-4M2X-90KP</span><span class="cell__meta">Issued 2 Aug</span></span></td>
-                      <td><span class="cell"><span class="cell__title">&euro; 50,00</span><span class="cell__meta">of &euro; 50,00</span></span></td>
-                      <td>thomas@example.com</td>
-                      <td>2 Aug 2027</td>
+                      <td><span class="cell"><span class="cell__title mono">WELCOME10</span><span class="cell__meta">Welcome offer</span></span></td>
+                      <td>10% off</td>
+                      <td>First order only</td>
+                      <td>128 <span class="cell__meta">of &infin;</span></td>
+                      <td>No end date</td>
                       <td><span class="badge badge--active">Active</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for voucher GIFT-4M2X-90KP"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for WELCOME10"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title mono">GIFT-7QW1-33BE</span><span class="cell__meta">Issued 28 Jul</span></span></td>
-                      <td><span class="cell"><span class="cell__title">&euro; 12,50</span><span class="cell__meta">of &euro; 25,00</span></span></td>
-                      <td>Counter sale</td>
-                      <td>28 Jul 2027</td>
+                      <td><span class="cell"><span class="cell__title mono">FAMILY5</span><span class="cell__meta">Family deal</span></span></td>
+                      <td>&euro; 5,00 off</td>
+                      <td>From &euro; 35,00</td>
+                      <td>41 <span class="cell__meta">of 500</span></td>
+                      <td>Until 30 Sep</td>
                       <td><span class="badge badge--active">Active</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for voucher GIFT-7QW1-33BE"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for FAMILY5"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title mono">GIFT-8HD2-51AA</span><span class="cell__meta">Issued 14 Jul</span></span></td>
-                      <td><span class="cell"><span class="cell__title">&euro; 0,00</span><span class="cell__meta">of &euro; 20,00</span></span></td>
-                      <td>lisa@example.com</td>
-                      <td>14 Jul 2027</td>
-                      <td><span class="badge badge--muted">Redeemed</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for voucher GIFT-8HD2-51AA"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="cell"><span class="cell__title mono">FREEDEL</span><span class="cell__meta">Free delivery week</span></span></td>
+                      <td>Free delivery</td>
+                      <td>From &euro; 20,00</td>
+                      <td>210 <span class="cell__meta">of 250</span></td>
+                      <td>Until 31 Aug</td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for FREEDEL"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title mono">GIFT-2KP9-77XZ</span><span class="cell__meta">Issued 9 Sep</span></span></td>
-                      <td><span class="cell"><span class="cell__title">&euro; 25,00</span><span class="cell__meta">of &euro; 25,00</span></span></td>
-                      <td>Counter sale</td>
-                      <td>9 Sep 2026</td>
-                      <td><span class="badge badge--pending">Expires soon</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for voucher GIFT-2KP9-77XZ"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="cell"><span class="cell__title mono">AUTUMN15</span><span class="cell__meta">Autumn menu</span></span></td>
+                      <td>15% off</td>
+                      <td>Drinks only</td>
+                      <td>0 <span class="cell__meta">of 300</span></td>
+                      <td>From 1 Sep</td>
+                      <td><span class="badge badge--draft">Scheduled</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for AUTUMN15"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title mono">SUMMER15</span><span class="cell__meta">Summer special</span></span></td>
+                      <td>15% off</td>
+                      <td>No minimum</td>
+                      <td>302 <span class="cell__meta">of 300</span></td>
+                      <td>Ended 31 Jul</td>
+                      <td><span class="badge badge--muted">Expired</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for SUMMER15"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1181,58 +1176,86 @@
           <!-- ---------- VIEW: voucher aanmaken ---------- -->
           <section class="view" data-view="voucher-new" hidden>
             <div class="card">
-              <h2 class="card__title">Value</h2>
-              <p class="card__sub">The amount the customer can spend. Partial use keeps the remainder on the voucher.</p>
-              <div class="field-row">
-                <div class="field">
-                  <label class="label" for="vou-amount">Amount</label>
-                  <span class="affix affix--pre"><span class="affix__sym" aria-hidden="true">&euro;</span><input class="input" id="vou-amount" type="number" value="25.00" step="0.01" /></span>
-                </div>
-                <div class="field">
-                  <label class="label" for="vou-count">How many to create</label>
-                  <input class="input" id="vou-count" type="number" value="1" min="1" />
-                  <p class="hint">Each gets its own code.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="card">
               <h2 class="card__title">Code</h2>
               <div class="field">
-                <label class="label" for="vou-code">Voucher code</label>
+                <label class="label" for="vou-code">What customers type at checkout</label>
                 <div class="withbtn">
-                  <input class="input mono" id="vou-code" type="text" value="GIFT-2KP9-77XZ" />
+                  <input class="input mono" id="vou-code" type="text" value="WELCOME10" />
                   <button class="btn btn--ghost btn--sm" type="button" id="vou-generate">Generate</button>
                 </div>
                 <p class="hint">Generated codes avoid characters that are easy to misread.</p>
               </div>
-            </div>
-
-            <div class="card">
-              <h2 class="card__title">Delivery</h2>
-              <fieldset class="choices">
-                <legend class="sr-only">How to hand over the voucher</legend>
-                <label class="choice"><input type="radio" name="vou-send" checked /><span>Print or hand over at the counter</span></label>
-                <label class="choice"><input type="radio" name="vou-send" /><span>Email it to the customer</span></label>
-              </fieldset>
               <div class="field">
-                <label class="label" for="vou-email">Customer email</label>
-                <input class="input" id="vou-email" type="email" placeholder="name@example.com" disabled />
+                <label class="label" for="vou-name">Internal name</label>
+                <input class="input" id="vou-name" type="text" placeholder="Welcome offer" />
+                <p class="hint">Only you see this, in the list and in reports.</p>
               </div>
             </div>
 
             <div class="card">
-              <h2 class="card__title">Expiry</h2>
+              <h2 class="card__title">Discount</h2>
+              <fieldset class="choices">
+                <legend class="sr-only">Type of discount</legend>
+                <label class="choice"><input type="radio" name="vou-kind" value="pct" checked /><span>Percentage off the order</span></label>
+                <label class="choice"><input type="radio" name="vou-kind" value="fix" /><span>Fixed amount off the order</span></label>
+                <label class="choice"><input type="radio" name="vou-kind" value="del" /><span>Free delivery</span></label>
+              </fieldset>
               <div class="field">
-                <label class="label" for="vou-expires">Valid until</label>
-                <input class="input" id="vou-expires" type="date" />
-                <p class="hint">Dutch law requires gift vouchers to stay valid for at least two years.</p>
+                <label class="label" for="vou-value">Amount off</label>
+                <span class="affix affix--post"><input class="input" id="vou-value" type="number" value="10" min="1" step="1" /><span class="affix__sym" aria-hidden="true" id="vou-unit">%</span></span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Conditions</h2>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="vou-min">Minimum order value</label>
+                  <span class="affix affix--pre"><span class="affix__sym" aria-hidden="true">&euro;</span><input class="input" id="vou-min" type="number" placeholder="0,00" step="0.01" /></span>
+                </div>
+                <div class="field">
+                  <label class="label" for="vou-applies">Applies to</label>
+                  <select class="input" id="vou-applies">
+                    <option>The whole order</option>
+                    <option>One category</option>
+                    <option>Selected products</option>
+                  </select>
+                </div>
+              </div>
+              <label class="choice choice--plain">
+                <input type="checkbox" id="vou-first" />
+                <span>First order only</span>
+              </label>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Limits and validity</h2>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="vou-total">Total uses</label>
+                  <input class="input" id="vou-total" type="number" placeholder="Unlimited" />
+                </div>
+                <div class="field">
+                  <label class="label" for="vou-per">Uses per customer</label>
+                  <input class="input" id="vou-per" type="number" value="1" min="1" />
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="vou-start">Valid from</label>
+                  <input class="input" id="vou-start" type="date" />
+                </div>
+                <div class="field">
+                  <label class="label" for="vou-end">Valid until</label>
+                  <input class="input" id="vou-end" type="date" />
+                  <p class="hint">Leave empty to keep it running.</p>
+                </div>
               </div>
             </div>
 
             <div class="formfoot">
               <button class="btn btn--ghost btn--pill" type="button" data-back-view>Discard</button>
-              <button class="btn btn--primary btn--pill" type="button" data-created="Voucher created">Create voucher</button>
+              <button class="btn btn--primary btn--pill" type="button" data-created="Voucher code created">Create voucher</button>
             </div>
           </section>
 

@@ -163,37 +163,69 @@
 
   var codeTeller = 0;
 
-  var discGen = document.getElementById("disc-generate");
-  if (discGen) {
-    discGen.addEventListener("click", function () {
-      codeTeller++;
-      document.getElementById("disc-code").value = codeBlok(8, codeTeller);
+  /* ---- Automatische korting: de nieuwe prijs volgt de invoer -------------- */
+  var discView = document.querySelector('[data-view="discount-new"]');
+
+  if (discView) {
+    var discProduct = document.getElementById("disc-product");
+    var discValue   = document.getElementById("disc-value");
+    var discUnit    = document.getElementById("disc-unit");
+    var discWas     = document.getElementById("disc-was");
+    var discNow     = document.getElementById("disc-now");
+
+    function euro(n) { return "€ " + n.toFixed(2).replace(".", ","); }
+
+    /* Het scherm toont de korting én de prijs die eruit volgt; die mogen niet
+       uiteenlopen, dus wordt de prijs berekend in plaats van ingetypt. */
+    function toonPrijs() {
+      var prijs = Number(discProduct.selectedOptions[0].dataset.price);
+      var soort = discView.querySelector('input[name="disc-kind"]:checked').value;
+      var waarde = Number(discValue.value) || 0;
+      var nieuw = soort === "pct" ? prijs * (1 - waarde / 100) : prijs - waarde;
+      discWas.textContent = euro(prijs);
+      discNow.textContent = euro(Math.max(nieuw, 0));
+      discUnit.textContent = soort === "pct" ? "%" : "€";
+    }
+
+    discView.addEventListener("input", toonPrijs);
+    discView.addEventListener("change", function (e) {
+      toonPrijs();
+      /* Dagen horen bij "alleen op bepaalde dagen", data bij "tussen twee
+         datums"; de rest staat uit zodat het scherm niet meer belooft dan
+         de gekozen planning waarmaakt. */
+      if (e.target.name === "disc-when") {
+        var keuze = [].indexOf.call(discView.querySelectorAll('input[name="disc-when"]'), e.target);
+        document.getElementById("disc-days").disabled = keuze !== 1;
+        document.getElementById("disc-start").disabled = keuze !== 2;
+        document.getElementById("disc-end").disabled = keuze !== 2;
+      }
+      /* Eén product kiezen kan alleen bij de eerste optie. */
+      if (e.target.name === "disc-scope") {
+        var s = [].indexOf.call(discView.querySelectorAll('input[name="disc-scope"]'), e.target);
+        discProduct.disabled = s !== 0;
+      }
     });
-    /* Automatisch toepassen betekent: geen code om in te voeren. */
-    document.getElementById("disc-auto").addEventListener("change", function (e) {
-      var veld = document.getElementById("disc-code");
-      veld.disabled = e.target.checked;
-      discGen.disabled = e.target.checked;
-    });
-    /* Het keuzeveld hoort bij "specifieke categorieën of producten". */
-    document.querySelectorAll('input[name="disc-scope"]').forEach(function (radio, i) {
-      radio.addEventListener("change", function () {
-        document.getElementById("disc-pick").disabled = i === 0;
-      });
-    });
+
+    toonPrijs();
   }
 
+  /* ---- Voucher: kortingscode voor de checkout ----------------------------- */
   var vouGen = document.getElementById("vou-generate");
+
   if (vouGen) {
     vouGen.addEventListener("click", function () {
       codeTeller++;
-      document.getElementById("vou-code").value =
-        "GIFT-" + codeBlok(4, codeTeller) + "-" + codeBlok(4, codeTeller + 5);
+      document.getElementById("vou-code").value = codeBlok(8, codeTeller);
     });
-    document.querySelectorAll('input[name="vou-send"]').forEach(function (radio, i) {
-      radio.addEventListener("change", function () {
-        document.getElementById("vou-email").disabled = i === 0;
-      });
+
+    var vouView = document.querySelector('[data-view="voucher-new"]');
+    vouView.addEventListener("change", function (e) {
+      if (e.target.name !== "vou-kind") return;
+      /* Gratis bezorging heeft geen bedrag; het veld hoort dan uit te staan. */
+      var soort = e.target.value;
+      var veld = document.getElementById("vou-value");
+      veld.disabled = soort === "del";
+      document.getElementById("vou-unit").textContent = soort === "fix" ? "€" : "%";
     });
   }
 
