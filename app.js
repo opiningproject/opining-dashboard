@@ -100,6 +100,46 @@
     document.getElementById("content").scrollTop = 0;
   }
 
+  /* ---- Online Store: sectienavigatie binnen de pagina -------------------- */
+  var storeView = document.querySelector('[data-view="online-store"]');
+  var storeNav  = storeView && storeView.querySelector(".store__nav");
+
+  if (storeNav) {
+    storeNav.addEventListener("click", function (e) {
+      var item = e.target.closest("[data-store]");
+      if (!item) return;
+      e.preventDefault();
+      activate(item, storeNav);
+      storeView.querySelectorAll("[data-store-view]").forEach(function (paneel) {
+        paneel.hidden = paneel.dataset.storeView !== item.dataset.store;
+      });
+    });
+
+    /* Merkkleur meteen doorvoeren in de voorbeeldknop. */
+    var brandInput = document.getElementById("brand-color");
+    var brandChip  = document.getElementById("brand-chip");
+    var brandBtn   = document.getElementById("brand-preview-btn");
+    brandInput.addEventListener("input", function () {
+      var kleur = brandInput.value.trim();
+      if (!/^#[0-9a-f]{3,8}$/i.test(kleur)) return;
+      brandChip.style.background = kleur;
+      brandBtn.style.background = kleur;
+    });
+
+    /* De sliders en hun getalvelden houden elkaar bij. */
+    storeView.querySelectorAll(".srow").forEach(function (rij) {
+      var range = rij.querySelector('input[type="range"]');
+      var getal = rij.querySelector('input[type="number"]');
+      if (!range || !getal) return;
+      range.addEventListener("input", function () { getal.value = range.value; });
+      getal.addEventListener("input", function () { range.value = getal.value; });
+    });
+
+    /* Wijzigen hier zet dezelfde savebar in de header aan als de settings. */
+    storeView.addEventListener("input",  function () { markUnsaved("Online store"); });
+    storeView.addEventListener("change", function () { markUnsaved("Online store"); });
+  }
+
   /* ---- Productenlijst: groepen klappen los van elkaar open ---------------- */
   var productPanel = document.querySelector('[data-view="products"] .panel');
 
@@ -127,16 +167,25 @@
   var pageAction = document.getElementById("page-action");
   var pageActionLabel = document.getElementById("page-action-label");
 
+  var pageActionIcon = document.getElementById("page-action-icon");
+
+  /* Elke lijstpagina heeft zijn eigen actie; Online Store wijkt af met een
+     zachte knop in plaats van de primaire toevoegknop. */
   var PAGINA_ACTIES = {
-    products:   "Add product",
-    choices:    "Add new",
-    categories: "Add categorie"
+    products:       { label: "Add product",   icon: "i-plus", zacht: false },
+    choices:        { label: "Add new",       icon: "i-plus", zacht: false },
+    categories:     { label: "Add categorie", icon: "i-plus", zacht: false },
+    "online-store": { label: "View store",    icon: "i-eye",  zacht: true }
   };
 
   function syncPageAction(page) {
-    var label = PAGINA_ACTIES[page];
-    pageAction.hidden = !label;
-    if (label) pageActionLabel.textContent = label;
+    var actie = PAGINA_ACTIES[page];
+    pageAction.hidden = !actie;
+    if (!actie) return;
+    pageActionLabel.textContent = actie.label;
+    pageActionIcon.setAttribute("href", "#" + actie.icon);
+    pageAction.classList.toggle("btn--soft", actie.zacht);
+    pageAction.classList.toggle("btn--primary", !actie.zacht);
   }
 
   /* De ouder houdt zijn markering zolang je op een van zijn subpagina's staat.
@@ -150,23 +199,8 @@
     menuToggle.setAttribute("aria-expanded", String(open));
   }
 
-  function gaNaar(item) {
-    activate(item, sidebar);
-    lastPageItem = item;
-    showPage(item.dataset.page, item.dataset.title, item.dataset.icon);
-  }
-
+  /* Menu vouwt alleen open en dicht; navigeren doe je met een subitem. */
   menuToggle.addEventListener("click", function () {
-    /* Sta je buiten de groep, dan is Menu een sprong naar Products — ook als
-       de groep toevallig nog opengeklapt stond. Sta je er al in, dan klapt hij
-       alleen open of dicht. Navigeren gebeurt niet via .click() op het
-       subitem: dat zou op mobiel de drawer meteen weer dichtslaan. */
-    if (!menuGroup.querySelector(".nav__sub-item.is-active")) {
-      setMenuGroup(true);
-      gaNaar(menuGroup.querySelector(".nav__sub-item"));
-      syncSection();
-      return;
-    }
     setMenuGroup(!menuGroup.classList.contains("is-open"));
   });
 
@@ -177,7 +211,9 @@
     activate(item, sidebar);
     lastPageItem = item;
     showPage(item.dataset.page, item.dataset.title, item.dataset.icon);
-    /* Buiten de groep klikken laat de markering van Menu los. */
+    /* Ga je naar een pagina buiten de groep, dan klapt Menu weer dicht en
+       laat de markering los. */
+    if (!menuGroup.contains(item)) setMenuGroup(false);
     syncSection();
     /* Vanuit de drawer bovenop de overlay: die moet weg, anders kies je een
        pagina die je niet te zien krijgt. */
@@ -320,7 +356,12 @@
     savebar.hidden = !open;
     root.dataset.savebar = open ? "open" : "closed";
   }
-  function showSavebar() { if (root.dataset.settings === "open") setSavebar(true); }
+  /* Onthoudt wat er te bewaren valt, zodat de melding na Save kan benoemen
+     waar het over ging. */
+  var saveLabel = "Changes";
+  function markUnsaved(label) { saveLabel = label; setSavebar(true); }
+
+  function showSavebar() { if (root.dataset.settings === "open") markUnsaved(setTitle.textContent); }
   function hideSavebar() { setSavebar(false); }
 
   overlay.addEventListener("change", showSavebar);
@@ -330,7 +371,7 @@
     if (!actie) return;
     hideSavebar();
     /* De melding benoemt wat er bewaard is; de settings-kop weet dat al. */
-    if (actie.dataset.save === "save") showToast(setTitle.textContent + " saved");
+    if (actie.dataset.save === "save") showToast(saveLabel + " saved");
   });
 
   /* ========================================================================

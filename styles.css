@@ -594,12 +594,6 @@ select.input {
    8b. MENU-SECTIE — uitklapbare sidebargroep + productenlijst
    ========================================================================== */
 .nav__group { display: block; }
-.nav__caret {
-  margin-left: auto; width: 16px; height: 16px;
-  color: var(--text-muted);
-  transition: transform var(--dur) var(--ease);
-}
-[aria-expanded="true"] > .nav__caret { transform: rotate(90deg); }
 /* De ouder blijft gemarkeerd zolang je op een van zijn subpagina's staat,
    maar zonder het vlak van .is-active: dat hoort bij het gekozen item. */
 .nav__parent.is-section { font-weight: 600; }
@@ -607,8 +601,15 @@ select.input {
 
 .nav__sub { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 220ms var(--ease); }
 .nav__group.is-open .nav__sub { grid-template-rows: 1fr; }
-.nav__sub > li:first-child { margin-top: 2px; }
-.nav__sub { overflow: hidden; }
+.nav__sub-list {
+  overflow: hidden;
+  /* Dichtgeklapt zijn de links 0px hoog maar nog wel te tabben; visibility
+     haalt ze uit de tabvolgorde en slaat pas om als het inklappen klaar is. */
+  visibility: hidden;
+  transition: visibility 0s linear 220ms;
+}
+.nav__group.is-open .nav__sub-list { visibility: visible; transition: visibility 0s; }
+.nav__sub-list > li:first-child { margin-top: 2px; }
 /* Uitgelijnd op de tekst van de ouder: 12 padding + 20 icoon + 12 gap. */
 .nav__sub-item { padding-left: 44px; font-weight: 500; color: var(--text-muted); }
 .nav__sub-item.is-active { color: var(--text-strong); }
@@ -686,6 +687,73 @@ select.input {
 }
 .badge--active { background: #e3f5ec; color: var(--success); }
 .badge--draft  { background: #e4eefb; color: #1f5fa8; }
+
+/* ==========================================================================
+   8c. ONLINE STORE — sectienavigatie links, paneel rechts
+   ========================================================================== */
+.store { display: grid; grid-template-columns: 262px minmax(0, 1fr); gap: 24px; align-items: start; }
+.store__nav {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--bg-surface);
+}
+.store__nav .nav__item { padding: 11px 12px; }
+.store__main > .card + .card { margin-top: 16px; }
+
+/* Label links, bediening rechts — zoals in het ontwerp. */
+.srow { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 16px; align-items: start; padding: 14px 0; }
+.srow > .label { padding-top: 8px; }
+.srow + .srow { border-top: 1px solid var(--border); }
+.rule { height: 1px; margin: 18px 0; border: 0; background: var(--border); }
+.link { color: var(--text-strong); text-decoration: underline; text-underline-offset: 3px; }
+
+.drop {
+  display: grid; place-items: center;
+  min-height: 108px;
+  padding: 16px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md);
+}
+.drop--filled { border-style: solid; border-color: var(--border); }
+.drop__logo { font-weight: 700; letter-spacing: .04em; color: var(--text-strong); }
+
+.slider { display: flex; align-items: center; gap: 16px; padding-top: 4px; }
+.slider input[type="range"] { flex: 1 1 auto; min-width: 0; accent-color: var(--accent); }
+.stepper { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+.stepper .input { width: 64px; text-align: center; }
+.stepper__unit { font-size: var(--fs-md); color: var(--text-muted); }
+
+.swatch { display: flex; align-items: center; gap: 10px; position: relative; }
+.swatch__chip { position: absolute; left: 12px; width: 16px; height: 16px; border-radius: 4px; background: var(--accent); }
+.swatch .input { padding-left: 38px; }
+
+.preview { padding: 24px; border-radius: var(--r-md); background: var(--gray-50); }
+.preview__inner {
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  padding: 28px 20px;
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  text-align: center;
+}
+/* De knop draagt de merkkleur; app.js §3b zet 'm live mee. */
+#brand-preview-btn { background: var(--accent); color: #fff; }
+
+.langs { display: flex; gap: 8px; margin-bottom: 18px; }
+.lang {
+  padding: 7px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  font-size: var(--fs-md); font-weight: 500;
+  color: var(--text);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.lang:hover { background: var(--gray-50); }
+.lang.is-active { background: var(--gray-900); border-color: var(--gray-900); color: #fff; }
+
+.btn--soft { background: var(--gray-100); color: var(--text-strong); }
+.btn--soft:hover { background: var(--gray-150); }
 
 /* ==========================================================================
    9. TOAST
@@ -766,6 +834,11 @@ select.input {
     animation: fade-in 200ms var(--ease);
   }
   @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Online Store: nav boven het paneel, en labels boven hun bediening. */
+  .store { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .srow { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 12px 0; }
+  .srow > .label { padding-top: 0; }
 
   .content { padding: 22px 16px 48px; }
   .card { padding: 18px 16px 20px; }
