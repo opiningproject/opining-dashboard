@@ -1128,6 +1128,49 @@ select.input {
 
 .hours + .card__pad .addrow { margin-top: 0; }
 
+/* ==========================================================================
+   8i. DELIVERY ZONES / PAYMENTS / DOMAIN
+   ========================================================================== */
+
+/* Postcodes mogen afbreken; alle andere tabelcellen doen dat niet. */
+.codes { display: block; max-width: 168px; white-space: normal; color: var(--text); }
+
+/* Bezorgkosten: het tarief, en daaronder de drempel waarboven het vervalt. */
+.fee { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.fee__line { display: flex; align-items: center; gap: 12px; }
+.fee__from { color: var(--text); }
+
+/* De sluitknop van de overlay zweeft rechtsboven over de inhoud heen;
+   paginaknoppen in de settings-kop moeten daar links van blijven. */
+.set-main .page-head { padding-right: 48px; }
+
+/* Vijf kolommen in de smallere settings-kolom: iets krappere celruimte,
+   en de minimum-tekst mag afbreken in plaats van de tabel op te rekken. */
+.table--zones th, .table--zones td { padding-left: 14px; padding-right: 14px; }
+.table--zones td:nth-child(3) { white-space: normal; min-width: 96px; }
+.table--zones td { padding-top: 14px; padding-bottom: 14px; vertical-align: top; }
+.table--zones td:first-child { width: 1%; padding-top: 16px; }
+.table--zones td:nth-child(3) { color: var(--text); }
+
+.table--domains td { padding-top: 14px; padding-bottom: 14px; }
+.dom { display: inline-flex; align-items: center; gap: 14px; color: var(--text-strong); }
+.dom__icon { color: var(--text-muted); }
+
+/* Wervende kaart: tekst links, illustratie rechts. De illustratie is
+   decoratief en verdwijnt als eerste bij weinig ruimte. */
+.promo { display: flex; align-items: center; gap: 32px; }
+.promo__body { flex: 1 1 auto; min-width: 0; }
+.promo__art { flex: 0 0 auto; width: 200px; height: 150px; }
+
+.feats { display: flex; flex-direction: column; gap: 14px; margin: 22px 0 26px; }
+.feat { display: flex; align-items: center; gap: 16px; font-size: var(--fs-md); color: var(--text-strong); }
+.feat .icon { color: var(--text-muted); }
+
+/* Rij zonder eigen actie: geen hover, bediening rechts. */
+.row--static { cursor: default; }
+.row--static:hover { background: none; }
+.row__switch { margin-left: auto; }
+
 
 /* ==========================================================================
    10. RESPONSIVE
@@ -1140,6 +1183,30 @@ select.input {
 /* Tablet & mobiel: sidebar wordt een smalle drawer onder de header, zodat
    je hem met een tik naast de drawer weer wegklikt. */
 @media (max-width: 900px) {
+  /* Illustratie is decoratief: die gaat als eerste weg. */
+  .promo__art { display: none; }
+  .codes { max-width: none; }
+  /* Zones en domeinen: koppen weg, rijen worden blokken. */
+  .table--zones, .table--zones tbody, .table--zones tr, .table--zones td,
+  .table--domains, .table--domains tbody, .table--domains tr, .table--domains td { display: block; width: 100%; }
+  .table--zones thead, .table--domains thead { display: none; }
+  .table--zones tr, .table--domains tr { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px 16px; border-top: 1px solid var(--border); }
+  .table--zones td, .table--domains td { width: auto; padding: 0; border: 0; white-space: normal; }
+  .table--zones td:nth-child(2) { flex: 1 1 auto; min-width: 0; font-weight: 500; color: var(--text-strong); }
+  /* Schakelaar, postcodes en menuknop op de eerste regel; minimum en
+     tarief daaronder. Zonder order zakt de knop naar een lege regel. */
+  .table--zones td:nth-child(5), .table--domains td:nth-child(3) { margin-left: auto; order: 3; }
+  .table--zones td:first-child { order: 1; }
+  .table--zones td:nth-child(2) { order: 2; }
+  .table--zones td:nth-child(3) { order: 4; }
+  .table--zones td:nth-child(4) { order: 5; }
+  /* Deze twee moeten de desktopregels hierboven overstemmen, dus met
+     dezelfde specificiteit geschreven. */
+  .table--zones td:first-child { width: auto; padding-top: 0; }
+  .table--zones td:nth-child(3) { min-width: 0; }
+  .table--zones td:nth-child(3), .table--zones td:nth-child(4) { flex: 0 0 100%; }
+  .table--domains td:first-child { flex: 1 1 auto; min-width: 0; }
+  .dom { gap: 10px; }
   /* Openingstijden: dag en schakelaar op een eigen regel, diensten
      eronder — drie kolommen passen hier niet naast elkaar. */
   .hrow { grid-template-columns: 1fr auto; gap: 10px 12px; padding: 14px 16px; }

@@ -434,9 +434,12 @@
     if (lastFocus) lastFocus.focus({ preventScroll: true });
   }
 
+  var setTools = document.querySelectorAll("[data-set-tools]");
+
   function showSetPage(page, title, icon) {
     setTitle.textContent = title;
     swapIcon(setIcon, icon);
+    setTools.forEach(function (el) { el.hidden = el.dataset.setTools !== page; });
 
     var found = false;
     setViews.forEach(function (v) {

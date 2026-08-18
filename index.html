@@ -72,6 +72,9 @@
     <symbol id="i-coin" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="8.8"/><path d="M12 6.9l1.45 2.85 2.85 1.45-2.85 1.45L12 15.5l-1.45-2.85L7.7 11.2l2.85-1.45z" fill="#fff"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.2 14.2A8.6 8.6 0 0 1 9.8 3.8a8.6 8.6 0 1 0 10.4 10.4Z"/></symbol>
     <symbol id="i-minus-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M8.4 12h7.2"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.4 8.4h13.2l-1 11a1.6 1.6 0 0 1-1.6 1.45H8a1.6 1.6 0 0 1-1.6-1.45zM8.9 8.4V6.6a3.1 3.1 0 0 1 6.2 0v1.8"/></symbol>
+    <symbol id="i-chargeback" viewBox="0 0 24 24"><rect x="3.4" y="6" width="17.2" height="13" rx="2"/><path d="M14.4 12.5H8.6M11 9.9l-2.6 2.6L11 15.1"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M13.4 4.6h6v6M19.4 4.6 11.6 12.4M17.4 14v4.4a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 18.4V8.2a1.6 1.6 0 0 1 1.6-1.6H10"/></symbol>
     <symbol id="i-dots-v" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="10" cy="4.7" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="10" cy="15.3" r="1.15"/></symbol>
     <symbol id="i-eye" viewBox="0 0 20 20"><path d="M2.4 10S5.3 4.8 10 4.8 17.6 10 17.6 10 14.7 15.2 10 15.2 2.4 10 2.4 10Z"/><circle cx="10" cy="10" r="2.5"/></symbol>
     <symbol id="i-palette" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><circle cx="10" cy="6.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="6.6" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="13.4" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="10" cy="13" r="1.05" fill="currentColor" stroke="none"/></symbol>
@@ -913,6 +916,23 @@
         <div class="page-head">
           <svg class="icon page-head__icon" id="set-icon" aria-hidden="true"><use href="#i-store"/></svg>
           <h2 id="set-title">General</h2>
+          <!-- Actieknoppen per settings-pagina; app.js toont het blok waarvan
+               data-set-tools gelijk is aan de open pagina. -->
+          <div class="page-head__tools" data-set-tools="zones" hidden>
+            <button class="btn btn--primary btn--pill page-head__action" type="button">
+              <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Add zone
+            </button>
+          </div>
+          <div class="page-head__tools" data-set-tools="domain" hidden>
+            <label class="sr-only" for="domain-connect">Connect an existing domain</label>
+            <select class="input" id="domain-connect">
+              <option>connect existing</option>
+              <option>myrestaurant.nl</option>
+            </select>
+            <button class="btn btn--primary btn--pill page-head__action" type="button">
+              <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>New domain
+            </button>
+          </div>
         </div>
 
         <section class="view" data-set-view="general">
@@ -1252,6 +1272,183 @@
               <button class="addrow" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add Holiday
               </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS: delivery zones ---------- -->
+        <section class="view" data-set-view="zones" hidden>
+          <div class="panel">
+            <div class="panel__head">
+              <div class="tabs">
+                <button class="tab" type="button">All</button>
+                <button class="tab is-active" type="button">Active</button>
+                <button class="tab" type="button">Inactive</button>
+              </div>
+              <div class="panel__tools">
+                <button class="icon-btn" type="button" aria-label="Search zones">
+                  <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+                <button class="icon-btn" type="button" aria-label="Filter zones">
+                  <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table class="table table--zones">
+                <thead>
+                  <tr>
+                    <th><span class="sr-only">Zone active</span></th>
+                    <th>Postal code(s)</th>
+                    <th>Minimum order</th>
+                    <th>Delivery fee</th>
+                    <th><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Zone 3036 active</span></label></td>
+                    <td><span class="codes">3036</span></td>
+                    <td>No minimum</td>
+                    <td><span class="fee"><span class="fee__line"><span class="badge badge--muted">Free</span></span></span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for zone 3036"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                  <tr>
+                    <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Zone 3037 active</span></label></td>
+                    <td><span class="codes">3037</span></td>
+                    <td>No minimum</td>
+                    <td><span class="fee"><span class="fee__line"><span class="badge badge--muted">&euro; 1.50</span></span></span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for zone 3037"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                  <tr>
+                    <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Zones 3038 to 3044 active</span></label></td>
+                    <td><span class="codes">3038, 3039, 3040, 3041, 3042, 3043, 3044</span></td>
+                    <td>No minimum</td>
+                    <td><span class="fee">
+                      <span class="fee__line"><span class="badge badge--muted">&euro; 1.50</span></span>
+                      <span class="fee__line"><span class="fee__from">from &euro; 50.00</span><span class="badge badge--muted">Free</span></span>
+                    </span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for zones 3038 to 3044"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                  <tr>
+                    <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Zones 3045 to 3056 active</span></label></td>
+                    <td><span class="codes">3045, 3046, 3047, 3048, 3049, 3050, 3051, 3052, 3053, 3054, 3055, 3056</span></td>
+                    <td>No minimum</td>
+                    <td><span class="fee">
+                      <span class="fee__line"><span class="badge badge--muted">&euro; 2.50</span></span>
+                      <span class="fee__line"><span class="fee__from">from &euro; 50.00</span><span class="badge badge--muted">Free</span></span>
+                    </span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for zones 3045 to 3056"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                  <tr>
+                    <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Zone 3057 active</span></label></td>
+                    <td><span class="codes">3057</span></td>
+                    <td>No minimum</td>
+                    <td><span class="fee">
+                      <span class="fee__line"><span class="badge badge--muted">&euro; 3.50</span></span>
+                      <span class="fee__line"><span class="fee__from">from &euro; 50.00</span><span class="badge badge--muted">Free</span></span>
+                    </span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for zone 3057"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                  <tr>
+                    <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Zone 3058 active</span></label></td>
+                    <td><span class="codes">3058</span></td>
+                    <td>No minimum</td>
+                    <td><span class="fee">
+                      <span class="fee__line"><span class="badge badge--muted">&euro; 4.50</span></span>
+                      <span class="fee__line"><span class="fee__from">from &euro; 50.00</span><span class="badge badge--muted">Free</span></span>
+                    </span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for zone 3058"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                  <tr>
+                    <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Zone 3059 active</span></label></td>
+                    <td><span class="codes">3059</span></td>
+                    <td>&euro; 50.00 minimum order</td>
+                    <td><span class="fee"><span class="fee__line"><span class="badge badge--muted">Free</span></span></span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for zone 3059"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS: payments ---------- -->
+        <section class="view" data-set-view="payments" hidden>
+          <div class="card">
+            <div class="promo">
+              <div class="promo__body">
+                <h3 class="card__title">Activate online payments</h3>
+                <ul class="feats">
+                  <li class="feat"><svg class="icon" aria-hidden="true"><use href="#i-card"/></svg>Competitive credit card rates</li>
+                  <li class="feat"><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg>Better checkout conversion</li>
+                  <li class="feat"><svg class="icon" aria-hidden="true"><use href="#i-analytics"/></svg>Payouts and cashflow tracking</li>
+                  <li class="feat"><svg class="icon" aria-hidden="true"><use href="#i-chargeback"/></svg>Easy chargeback management</li>
+                </ul>
+                <button class="btn btn--primary btn--pill" type="button">Complete account setup</button>
+              </div>
+
+              <svg class="promo__art" viewBox="0 0 200 150" role="img" aria-label="A payment card next to a phone showing a contactless payment">
+                <rect x="4" y="52" width="104" height="62" rx="7" fill="var(--gray-900)"/>
+                <rect x="14" y="70" width="42" height="5" rx="2.5" fill="var(--gray-500)"/>
+                <circle cx="72" cy="72" r="7" fill="var(--accent)"/>
+                <circle cx="82" cy="72" r="7" fill="var(--accent)" opacity=".55"/>
+                <g fill="var(--gray-0)" opacity=".85">
+                  <rect x="14" y="92" width="4" height="10" rx="1"/><rect x="21" y="92" width="4" height="10" rx="1"/>
+                  <rect x="28" y="92" width="4" height="10" rx="1"/><rect x="39" y="92" width="4" height="10" rx="1"/>
+                  <rect x="46" y="92" width="4" height="10" rx="1"/><rect x="53" y="92" width="4" height="10" rx="1"/>
+                  <rect x="64" y="92" width="4" height="10" rx="1"/><rect x="71" y="92" width="4" height="10" rx="1"/>
+                </g>
+                <rect x="96" y="80" width="60" height="44" rx="6" fill="var(--accent-soft)"/>
+                <rect x="104" y="26" width="76" height="112" rx="12" fill="var(--gray-900)"/>
+                <rect x="110" y="32" width="64" height="100" rx="8" fill="var(--gray-0)"/>
+                <rect x="118" y="44" width="48" height="22" rx="4" fill="var(--accent)"/>
+                <rect x="118" y="74" width="48" height="6" rx="3" fill="var(--gray-200)"/>
+                <rect x="118" y="86" width="34" height="6" rx="3" fill="var(--gray-200)"/>
+                <rect x="118" y="98" width="42" height="6" rx="3" fill="var(--gray-200)"/>
+                <g fill="none" stroke="var(--accent-soft)" stroke-width="5" stroke-linecap="round">
+                  <path d="M150 18a34 34 0 0 1 30 0"/>
+                  <path d="M156 8a48 48 0 0 1 40 0" opacity=".7"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Cash on delivery</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <span class="row__title">Cash on delivery</span>
+                <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept cash on delivery</span></label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS: domain ---------- -->
+        <section class="view" data-set-view="domain" hidden>
+          <div class="panel">
+            <div class="table-wrap">
+              <table class="table table--domains">
+                <thead>
+                  <tr>
+                    <th>Domain</th>
+                    <th>Status</th>
+                    <th><span class="sr-only">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-globe"/></svg>myrestaurant.nl</span></td>
+                    <td><span class="badge badge--active">Connected</span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for myrestaurant.nl"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-external"/></svg>498hf3.myopining.com</span></td>
+                    <td><span class="badge badge--active">Connected</span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for 498hf3.myopining.com"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
