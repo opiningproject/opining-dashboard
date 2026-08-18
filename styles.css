@@ -1171,6 +1171,75 @@ select.input {
 .row--static:hover { background: none; }
 .row__switch { margin-left: auto; }
 
+/* ==========================================================================
+   8j. CUSTOMERS / DELIVERERS / FINANCE
+   ========================================================================== */
+
+/* Kengetallenrij boven een lijst. Vier is de bovengrens: daarboven leest
+   het als een dashboard in plaats van als context bij de tabel. */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.stat {
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--bg-surface);
+}
+.stat__label { font-size: var(--fs-sm); color: var(--text-muted); }
+.stat__value {
+  margin-top: 6px;
+  font-size: 22px; font-weight: 600; letter-spacing: -.02em;
+  /* Een bedrag hoort nooit tussen het euroteken en het getal te breken. */
+  white-space: nowrap;
+  color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+}
+.stat__delta { margin-top: 4px; font-size: var(--fs-sm); color: var(--text-muted); }
+.stat__delta.is-up   { color: var(--success); }
+.stat__delta.is-down { color: var(--danger); }
+
+/* Persoon in een tabelrij: initialen, naam en een contactregel. */
+.person { display: flex; align-items: center; gap: 12px; }
+.person__avatar {
+  display: grid; place-items: center;
+  width: 36px; height: 36px; flex: 0 0 auto;
+  border-radius: var(--r-full);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: var(--fs-sm); font-weight: 600;
+  letter-spacing: .02em;
+}
+.person__text { display: flex; flex-direction: column; min-width: 0; }
+.person__name { font-weight: 500; color: var(--text-strong); }
+.person__meta { font-size: var(--fs-sm); color: var(--text-muted); }
+
+/* Saldo bovenaan Finance: beschikbaar bedrag draagt de nadruk, onderweg
+   staat ernaast als context, de uitbetaalknop rechts. */
+.balance { display: flex; align-items: center; gap: 40px; }
+.balance__main { flex: 0 0 auto; }
+.balance__side {
+  flex: 0 0 auto;
+  padding-left: 40px;
+  border-left: 1px solid var(--border);
+}
+.balance__second {
+  margin-top: 10px;
+  font-size: 20px; font-weight: 600; letter-spacing: -.015em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.balance__action { margin-left: auto; }
+
+.badge--danger { background: #fbeae9; color: var(--danger); }
+
+/* Tabellen met deze klasse worden op mobiel een lijst; zie §10. De
+   data-label op een cel wordt daar het opschrift. */
+.table--stack td { padding-top: 12px; padding-bottom: 12px; vertical-align: middle; }
+.table--stack td:first-child { color: var(--text-strong); }
+
 
 /* ==========================================================================
    10. RESPONSIVE
@@ -1183,6 +1252,29 @@ select.input {
 /* Tablet & mobiel: sidebar wordt een smalle drawer onder de header, zodat
    je hem met een tik naast de drawer weer wegklikt. */
 @media (max-width: 900px) {
+  /* Kengetallen twee bij twee. */
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Op deze breedte is 22px nog te groot voor de langere bedragen. */
+  .stat__value { font-size: 19px; }
+
+  /* Saldo onder elkaar; de scheidingslijn wordt een bovenrand. */
+  .balance { flex-direction: column; align-items: stretch; gap: 18px; }
+  .balance__side { padding: 18px 0 0; border-left: 0; border-top: 1px solid var(--border); }
+  .balance__action { margin-left: 0; }
+
+  /* Generieke tabelstapeling: kop weg, elke rij een blok. Cellen met
+     data-label krijgen dat opschrift ervoor, anders verliest een los
+     getal als 24 of 19 min zijn betekenis. */
+  .table--stack, .table--stack tbody, .table--stack tr, .table--stack td { display: block; width: 100%; }
+  .table--stack thead { display: none; }
+  .table--stack tr { position: relative; padding: 14px 16px; border-top: 1px solid var(--border); }
+  .table--stack td { width: auto; padding: 0; border: 0; white-space: normal; }
+  .table--stack td + td { margin-top: 8px; }
+  .table--stack td[data-label] { display: flex; align-items: center; gap: 8px; font-size: var(--fs-sm); }
+  .table--stack td[data-label]::before { content: attr(data-label); color: var(--text-muted); }
+  /* Menuknop terug naar de bovenhoek van het blok. */
+  .table--stack td:last-child { position: absolute; top: 12px; right: 12px; width: auto; margin-top: 0; }
+  .table--stack tr { padding-right: 56px; }
   /* Illustratie is decoratief: die gaat als eerste weg. */
   .promo__art { display: none; }
   .codes { max-width: none; }

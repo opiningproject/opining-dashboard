@@ -273,6 +273,7 @@
     products:       { label: "Add product",   icon: "i-plus", zacht: false },
     choices:        { label: "Add new",       icon: "i-plus", zacht: false },
     categories:     { label: "Add categorie", icon: "i-plus", zacht: false },
+    deliverers:     { label: "Add deliverer", icon: "i-plus", zacht: false },
     "online-store": { label: "View store",    icon: "i-eye",  zacht: true }
   };
 

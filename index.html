@@ -75,6 +75,7 @@
     <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.4 8.4h13.2l-1 11a1.6 1.6 0 0 1-1.6 1.45H8a1.6 1.6 0 0 1-1.6-1.45zM8.9 8.4V6.6a3.1 3.1 0 0 1 6.2 0v1.8"/></symbol>
     <symbol id="i-chargeback" viewBox="0 0 24 24"><rect x="3.4" y="6" width="17.2" height="13" rx="2"/><path d="M14.4 12.5H8.6M11 9.9l-2.6 2.6L11 15.1"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M13.4 4.6h6v6M19.4 4.6 11.6 12.4M17.4 14v4.4a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 18.4V8.2a1.6 1.6 0 0 1 1.6-1.6H10"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.8 11.2 12 15.4l4.2-4.2M4.6 19.4h14.8"/></symbol>
     <symbol id="i-dots-v" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="10" cy="4.7" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="10" cy="15.3" r="1.15"/></symbol>
     <symbol id="i-eye" viewBox="0 0 20 20"><path d="M2.4 10S5.3 4.8 10 4.8 17.6 10 17.6 10 14.7 15.2 10 15.2 2.4 10 2.4 10Z"/><circle cx="10" cy="10" r="2.5"/></symbol>
     <symbol id="i-palette" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><circle cx="10" cy="6.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="6.6" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="13.4" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="10" cy="13" r="1.05" fill="currentColor" stroke="none"/></symbol>
@@ -243,6 +244,29 @@
             </div>
             <div class="page-head__tools" data-tools="loyalty" hidden>
               <span class="chip chip--info"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>Always active</span>
+            </div>
+            <div class="page-head__tools" data-tools="customers" hidden>
+              <label class="sr-only" for="cust-segment">Customer segment</label>
+              <select class="input" id="cust-segment">
+                <option>All customers</option>
+                <option>Returning</option>
+                <option>New this month</option>
+              </select>
+              <button class="btn btn--ghost btn--pill page-head__action" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
+              </button>
+            </div>
+            <div class="page-head__tools" data-tools="finance" hidden>
+              <label class="sr-only" for="fin-range">Reporting period</label>
+              <select class="input" id="fin-range">
+                <option>Last 30 days</option>
+                <option>This month</option>
+                <option>This quarter</option>
+                <option>This year</option>
+              </select>
+              <button class="btn btn--ghost btn--pill page-head__action" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
+              </button>
             </div>
           </div>
 
@@ -566,6 +590,303 @@
               </ul>
 
               <p class="hint hint--spaced">We&rsquo;ve set this up for you to ensure a simple, predictable, and high-performing loyalty program.</p>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: customers ---------- -->
+          <section class="view" data-view="customers" hidden>
+            <ul class="stats">
+              <li class="stat"><p class="stat__label">Total customers</p><p class="stat__value">1.284</p><p class="stat__delta is-up">+3,1% vs. last month</p></li>
+              <li class="stat"><p class="stat__label">Returning</p><p class="stat__value">42%</p><p class="stat__delta is-up">+1,8%</p></li>
+              <li class="stat"><p class="stat__label">Average order value</p><p class="stat__value">&euro; 28,40</p><p class="stat__delta is-down">&minus;0,9%</p></li>
+              <li class="stat"><p class="stat__label">New this month</p><p class="stat__value">96</p><p class="stat__delta is-up">+12</p></li>
+            </ul>
+
+            <div class="panel">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All <span class="tab__count">1.284</span></button>
+                  <button class="tab" type="button">Returning</button>
+                  <button class="tab" type="button">New</button>
+                  <button class="tab" type="button">Inactive</button>
+                </div>
+                <div class="panel__tools">
+                  <button class="icon-btn" type="button" aria-label="Search customers"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+                  <button class="icon-btn" type="button" aria-label="Filter customers"><svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table class="table table--stack">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Orders</th>
+                      <th>Total spent</th>
+                      <th>Last order</th>
+                      <th>Points</th>
+                      <th><span class="sr-only">Actions</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">TJ</span><span class="person__text"><span class="person__name">Thomas Jefferson</span><span class="person__meta">thomas@example.nl</span></span></span></td>
+                      <td data-label="Orders">24</td>
+                      <td data-label="Total spent">&euro; 681,20</td>
+                      <td data-label="Last order">Today</td>
+                      <td data-label="Points">6.812</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Thomas Jefferson"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">SV</span><span class="person__text"><span class="person__name">Sanne de Vries</span><span class="person__meta">sanne@example.nl</span></span></span></td>
+                      <td data-label="Orders">18</td>
+                      <td data-label="Total spent">&euro; 512,75</td>
+                      <td data-label="Last order">Yesterday</td>
+                      <td data-label="Points">5.127</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Sanne de Vries"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">ME</span><span class="person__text"><span class="person__name">Mo El Amrani</span><span class="person__meta">mo@example.nl</span></span></span></td>
+                      <td data-label="Orders">12</td>
+                      <td data-label="Total spent">&euro; 348,60</td>
+                      <td data-label="Last order">3 days ago</td>
+                      <td data-label="Points">3.486</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Mo El Amrani"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">LB</span><span class="person__text"><span class="person__name">Lisa Bakker</span><span class="person__meta">lisa@example.nl</span></span></span></td>
+                      <td data-label="Orders">9</td>
+                      <td data-label="Total spent">&euro; 254,10</td>
+                      <td data-label="Last order">5 days ago</td>
+                      <td data-label="Points">2.541</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Lisa Bakker"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">KG</span><span class="person__text"><span class="person__name">Kevin Groot</span><span class="person__meta">kevin@example.nl</span></span></span></td>
+                      <td data-label="Orders">7</td>
+                      <td data-label="Total spent">&euro; 198,45</td>
+                      <td data-label="Last order">1 week ago</td>
+                      <td data-label="Points">1.984</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Kevin Groot"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">FY</span><span class="person__text"><span class="person__name">Fatima Yilmaz</span><span class="person__meta">fatima@example.nl</span></span></span></td>
+                      <td data-label="Orders">5</td>
+                      <td data-label="Total spent">&euro; 142,30</td>
+                      <td data-label="Last order">2 weeks ago</td>
+                      <td data-label="Points">1.423</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Fatima Yilmaz"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">DV</span><span class="person__text"><span class="person__name">Daan Visser</span><span class="person__meta">daan@example.nl</span></span></span></td>
+                      <td data-label="Orders">3</td>
+                      <td data-label="Total spent">&euro; 87,90</td>
+                      <td data-label="Last order">3 weeks ago</td>
+                      <td data-label="Points">879</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Daan Visser"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">IS</span><span class="person__text"><span class="person__name">Iris Smit</span><span class="person__meta">iris@example.nl</span></span></span></td>
+                      <td data-label="Orders">1</td>
+                      <td data-label="Total spent">&euro; 24,50</td>
+                      <td data-label="Last order">1 month ago</td>
+                      <td data-label="Points">245</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Iris Smit"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <nav class="panel__foot pager" aria-label="Customer pages">
+                <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+                <button class="icon-btn pager__btn" type="button" aria-label="Next page"><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+                <p class="pager__count"><b>1&ndash;8</b> of 1.284</p>
+              </nav>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: deliverers ---------- -->
+          <section class="view" data-view="deliverers" hidden>
+            <ul class="stats">
+              <li class="stat"><p class="stat__label">Available now</p><p class="stat__value">2</p><p class="stat__delta">of 5 deliverers</p></li>
+              <li class="stat"><p class="stat__label">Deliveries today</p><p class="stat__value">38</p><p class="stat__delta is-up">+6 vs. yesterday</p></li>
+              <li class="stat"><p class="stat__label">Average delivery time</p><p class="stat__value">22 min</p><p class="stat__delta is-up">&minus;3 min</p></li>
+              <li class="stat"><p class="stat__label">On time</p><p class="stat__value">94%</p><p class="stat__delta is-down">&minus;2%</p></li>
+            </ul>
+
+            <div class="panel">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All <span class="tab__count">5</span></button>
+                  <button class="tab" type="button">Available <span class="tab__count">2</span></button>
+                  <button class="tab" type="button">On delivery <span class="tab__count">2</span></button>
+                  <button class="tab" type="button">Offline <span class="tab__count">1</span></button>
+                </div>
+                <div class="panel__tools">
+                  <button class="icon-btn" type="button" aria-label="Search deliverers"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+                  <button class="icon-btn" type="button" aria-label="Filter deliverers"><svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table class="table table--stack">
+                  <thead>
+                    <tr>
+                      <th>Deliverer</th>
+                      <th>Status</th>
+                      <th>Active orders</th>
+                      <th>Today</th>
+                      <th>Average time</th>
+                      <th><span class="sr-only">Actions</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">YA</span><span class="person__text"><span class="person__name">Youssef Amrani</span><span class="person__meta">+31 6 1452 2453</span></span></span></td>
+                      <td data-label="Status"><span class="badge badge--active">Available</span></td>
+                      <td data-label="Active orders">0</td>
+                      <td data-label="Today">12</td>
+                      <td data-label="Average time">19 min</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Youssef Amrani"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">NB</span><span class="person__text"><span class="person__name">Nina Bakker</span><span class="person__meta">+31 6 2298 1174</span></span></span></td>
+                      <td data-label="Status"><span class="badge badge--pending">On delivery</span></td>
+                      <td data-label="Active orders">2</td>
+                      <td data-label="Today">9</td>
+                      <td data-label="Average time">24 min</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Nina Bakker"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">RW</span><span class="person__text"><span class="person__name">Ruben de Wit</span><span class="person__meta">+31 6 3841 5502</span></span></span></td>
+                      <td data-label="Status"><span class="badge badge--pending">On delivery</span></td>
+                      <td data-label="Active orders">1</td>
+                      <td data-label="Today">8</td>
+                      <td data-label="Average time">21 min</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Ruben de Wit"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">EP</span><span class="person__text"><span class="person__name">Emma Post</span><span class="person__meta">+31 6 5567 9930</span></span></span></td>
+                      <td data-label="Status"><span class="badge badge--active">Available</span></td>
+                      <td data-label="Active orders">0</td>
+                      <td data-label="Today">6</td>
+                      <td data-label="Average time">23 min</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Emma Post"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="person"><span class="person__avatar" aria-hidden="true">TY</span><span class="person__text"><span class="person__name">Tarik Yildiz</span><span class="person__meta">+31 6 7712 4408</span></span></span></td>
+                      <td data-label="Status"><span class="badge badge--muted">Offline</span></td>
+                      <td data-label="Active orders">0</td>
+                      <td data-label="Today">3</td>
+                      <td data-label="Average time">26 min</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Tarik Yildiz"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: finance ---------- -->
+          <section class="view" data-view="finance" hidden>
+            <div class="card balance">
+              <div class="balance__main">
+                <p class="stat__label">Available balance</p>
+                <p class="amount"><span class="amount__cur">EUR</span> 4.812,65</p>
+                <p class="card__sub">Next automatic payout on Friday 21 August</p>
+              </div>
+              <div class="balance__side">
+                <p class="stat__label">On the way</p>
+                <p class="balance__second">&euro; 1.240,00</p>
+                <p class="card__sub">Arrives 22 August</p>
+              </div>
+              <button class="btn btn--primary btn--pill balance__action" type="button">Pay out now</button>
+            </div>
+
+            <ul class="stats">
+              <li class="stat"><p class="stat__label">Gross sales</p><p class="stat__value">&euro; 18.420,50</p><p class="stat__delta is-up">+8,4% vs. last month</p></li>
+              <li class="stat"><p class="stat__label">Refunds</p><p class="stat__value">&minus;&euro; 312,00</p><p class="stat__delta is-up">&minus;1,2%</p></li>
+              <li class="stat"><p class="stat__label">Fees</p><p class="stat__value">&minus;&euro; 552,60</p><p class="stat__delta">3,0% of sales</p></li>
+              <li class="stat"><p class="stat__label">Net</p><p class="stat__value">&euro; 17.555,90</p><p class="stat__delta is-up">+8,7%</p></li>
+            </ul>
+
+            <div class="panel">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All payouts</button>
+                  <button class="tab" type="button">Paid</button>
+                  <button class="tab" type="button">In transit</button>
+                  <button class="tab" type="button">Failed</button>
+                </div>
+                <div class="panel__tools">
+                  <button class="icon-btn" type="button" aria-label="Search payouts"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
+                  <button class="icon-btn" type="button" aria-label="Filter payouts"><svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table class="table table--stack">
+                  <thead>
+                    <tr>
+                      <th>Payout</th>
+                      <th>Method</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th><span class="sr-only">Actions</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">22 Aug 2026</span><span class="cell__meta">PO-2026-0155</span></span></td>
+                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
+                      <td data-label="Amount">&euro; 1.240,00</td>
+                      <td data-label="Status"><span class="badge badge--draft">In transit</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0155"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">15 Aug 2026</span><span class="cell__meta">PO-2026-0148</span></span></td>
+                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
+                      <td data-label="Amount">&euro; 3.980,20</td>
+                      <td data-label="Status"><span class="badge badge--active">Paid</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0148"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">8 Aug 2026</span><span class="cell__meta">PO-2026-0139</span></span></td>
+                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
+                      <td data-label="Amount">&euro; 4.126,75</td>
+                      <td data-label="Status"><span class="badge badge--active">Paid</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0139"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">1 Aug 2026</span><span class="cell__meta">PO-2026-0131</span></span></td>
+                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
+                      <td data-label="Amount">&euro; 3.744,10</td>
+                      <td data-label="Status"><span class="badge badge--active">Paid</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0131"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">25 Jul 2026</span><span class="cell__meta">PO-2026-0124</span></span></td>
+                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
+                      <td data-label="Amount">&euro; 2.980,45</td>
+                      <td data-label="Status"><span class="badge badge--danger">Failed</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0124"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">18 Jul 2026</span><span class="cell__meta">PO-2026-0117</span></span></td>
+                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
+                      <td data-label="Amount">&euro; 4.310,00</td>
+                      <td data-label="Status"><span class="badge badge--active">Paid</span></td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0117"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <nav class="panel__foot pager" aria-label="Payout pages">
+                <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+                <button class="icon-btn pager__btn" type="button" aria-label="Next page"><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+                <p class="pager__count"><b>1&ndash;6</b> of 24</p>
+              </nav>
             </div>
           </section>
 
