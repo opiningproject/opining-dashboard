@@ -150,6 +150,13 @@
 
   pageCrumb.addEventListener("click", backToList);
 
+  /* ---- Bevroren kolom: rand pas tonen zodra er iets achter wegschuift ----- */
+  document.querySelectorAll(".table-wrap").forEach(function (wrap) {
+    wrap.addEventListener("scroll", function () {
+      wrap.classList.toggle("is-scrolled", wrap.scrollLeft > 0);
+    });
+  });
+
   /* ---- Zoeken binnen een paneel ------------------------------------------
      De knop rechts in de panel-kop wisselt die kop om naar een zoekveld met
      een filterknop. De tabelkop blijft staan: je zoekt in dezelfde lijst,

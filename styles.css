@@ -67,9 +67,6 @@
   --sidebar-w:   264px;
   --drawer-w:    296px;
   --topbar-h:    56px;
-  /* Wat er boven en onder een scrollend paneel staat: topbar, paginakop en
-     de onderrand van de contentkolom. */
-  --panel-reserve: 210px;
   --content-max: 900px;
   --overlay-max: 1120px;
   --set-nav-w:   290px;
@@ -1166,54 +1163,44 @@ select.input {
 .badge--sched   { background: #f1e8fa; color: #6b3fa8; }
 
 /* Voet van een paneel: zelfde inspringing als de tabelcellen. */
-/* Lange lijsten: alleen de rijen schuiven. De kolomkoppen blijven boven
-   staan en de paginering onderaan, zodat je bij het scrollen niet het
-   zicht verliest op wat een kolom betekent of waar je bent.
-   De hoogte is begrensd op wat er onder de paginakop overblijft. */
-.panel--scroll {
-  display: flex; flex-direction: column;
-  max-height: calc(100dvh - var(--panel-reserve));
-}
-.panel--scroll .table-wrap { flex: 1 1 auto; overflow: auto; }
+/* De pagina scrollt, niet de lijst. De kolomkoppen blijven in zicht en de
+   paginering hangt onderaan tot het eind van de lijst.
+
+   Let op: een wrapper met overflow-x:auto is ook verticaal een
+   scrollport (clip wordt daar door de spec hidden), en dan kan sticky
+   de contentkolom niet meer bereiken. Daarom staat de horizontale
+   scroll alleen aan waar de tabel echt te breed is: op mobiel. Het
+   paneel zelf klipt met clip in plaats van hidden, want hidden zou
+   dezelfde val opleveren. */
+.panel--scroll { overflow: clip; }
+/* Sticky op een th werkt in Chrome niet bij border-collapse: collapse; met
+   separate + border-spacing 0 blijft de opmaak gelijk. De rijscheiding zit
+   toch al op de cellen. */
+.panel--scroll .table { border-collapse: separate; border-spacing: 0; }
+.panel--scroll .table-wrap { overflow: visible; }
 .panel--scroll thead th {
   position: sticky; top: 0; z-index: 1;
-  /* De grijze kop moet de rijen eronder afdekken tijdens het schuiven. */
   background: var(--gray-50);
 }
-.panel--scroll .panel__foot { flex: 0 0 auto; }
+.panel--scroll .panel__foot {
+  position: sticky; bottom: 0; z-index: 1;
+  background: var(--bg-surface);
+}
 
-.panel__foot { display: flex; align-items: center; gap: 10px; padding: 14px 22px; border-top: 1px solid var(--border); }
-
-/* Paginering. De actieve richting krijgt accentkleur, de doodlopende
-   kant blijft zichtbaar maar uitgeschakeld. */
-.pager__btn { width: 38px; height: 38px; border: 1px solid var(--border); border-radius: var(--r-md); color: var(--accent); }
-.pager__btn:disabled { color: var(--gray-300); cursor: default; }
-.pager__btn:disabled:hover { background: none; }
-.pager__btn .icon { width: 17px; height: 17px; }
-.pager__count { margin-left: 6px; font-size: var(--fs-md); color: var(--text-muted); font-variant-numeric: tabular-nums; }
-.pager__count b { font-weight: 500; color: var(--text-strong); }
-
-.ta-right { text-align: right; }
-
-/* Rijen zijn hoog genoeg voor twee regels; vandaar iets meer lucht dan de
-   standaardtabel. */
-.table--orders td, .table--archive td { padding-top: 12px; padding-bottom: 12px; vertical-align: middle; }
-.table--orders th:first-child, .table--orders td:first-child,
-.table--archive th:first-child, .table--archive td:first-child { padding-left: 22px; }
-.table--orders th:last-child, .table--orders td:last-child,
-.table--archive th:last-child, .table--archive td:last-child  { padding-right: 22px; }
-
-/* ==========================================================================
-   8g. LOYALTY
-   ========================================================================== */
-
-/* Vaste, niet-instelbare regel. Bruin i.p.v. rood: dit is geen fout maar een
-   grens van het systeem. */
-.notice--locked .notice__bar { background: #8a6410; }
-.notice__close {
-  margin-left: auto;
-  width: 32px; height: 32px;
-  color: rgba(255, 255, 255, .8);
+/* Bevroren eerste kolom: de bestemming blijft staan terwijl de rest
+   zijwaarts schuift, anders weet je bij kolom vier niet meer welke
+   bestelling je leest. De hoekcel plakt in beide richtingen. */
+.table--orders th:first-child,
+.table--orders td:first-child {
+  position: sticky; left: 0; z-index: 2;
+  background: var(--bg-surface);
+}
+.panel--scroll .table--orders thead th:first-child { z-index: 3; background: var(--gray-50); }
+/* De rand verschijnt pas als er daadwerkelijk iets achter wegschuift. */
+.table-wrap.is-scrolled .table--orders th:first-child,
+.table-wrap.is-scrolled .table--orders td:first-child {
+  border-right: 1px solid var(--border);
+  box-shadow: 6px 0 8px -6px rgba(18, 22, 28, .16);
 }
 .notice__close:hover { background: rgba(255, 255, 255, .16); color: #fff; }
 .notice__close .icon { width: 17px; height: 17px; }
@@ -1712,6 +1699,8 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
 /* Tablet & mobiel: sidebar wordt een smalle drawer onder de header, zodat
    je hem met een tik naast de drawer weer wegklikt. */
 @media (max-width: 900px) {
+  /* Hier is de tabel breder dan het scherm; de sticky kop levert dat in. */
+  .panel--scroll .table-wrap { overflow-x: auto; }
   /* Lijstpaginas onder marketing: koppen weg, rij wordt een blok met
      de naam boven en de kerncijfers eronder. */
   .table--list, .table--list tbody, .table--list tr, .table--list td { display: block; width: 100%; }
