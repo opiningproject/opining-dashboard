@@ -662,10 +662,12 @@ select.input {
   gap: 2px;
   padding: 3px;
   border: 1px solid var(--border);
-  border-radius: var(--r-full);
+  border-radius: var(--r-md);
   overflow: visible;
 }
 .tabs--seg .tab {
+  /* 3px padding in de baan, dus de radius loopt concentrisch mee. */
+  border-radius: calc(var(--r-md) - 3px);
   flex: 1 1 0;
   display: flex; align-items: center; justify-content: center; gap: 6px;
   min-width: 0;
@@ -680,7 +682,7 @@ select.input {
 .tab {
   flex: 0 0 auto;
   padding: 7px 14px;
-  border-radius: var(--r-full);
+  border-radius: var(--r-md);
   font-size: var(--fs-md); font-weight: 500;
   color: var(--text-muted);
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
@@ -1020,7 +1022,7 @@ select.input {
   margin-left: auto;
   padding: 0 12px;
   border: 1px solid var(--border);
-  border-radius: var(--r-full);
+  border-radius: var(--r-md);
 }
 .icon--wide { width: 26px; height: 11px; }
 
@@ -1672,6 +1674,13 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .table--domains, .table--domains tbody, .table--domains tr, .table--domains td { display: block; width: 100%; }
   .table--zones thead, .table--domains thead { display: none; }
   .table--zones tr, .table--domains tr { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px 16px; border-top: 1px solid var(--border); }
+  /* De panel-kop tekent al een lijn; zonder de tabelkop ertussen legt de
+     eerste rij daar een tweede overheen, wat als één dikke rand leest. */
+  .table--list tbody tr:first-child,
+  .table--stack tbody tr:first-child,
+  .table--zones tbody tr:first-child,
+  .table--domains tbody tr:first-child { border-top: 0; }
+
   .table--zones td, .table--domains td { width: auto; padding: 0; border: 0; white-space: normal; }
   .table--zones td:nth-child(2) { flex: 1 1 auto; min-width: 0; font-weight: 500; color: var(--text-strong); }
   /* Schakelaar, postcodes en menuknop op de eerste regel; minimum en

@@ -7,7 +7,8 @@
   <meta name="theme-color" content="#ffffff" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
-  <link rel="stylesheet" href="styles.css" />
+  <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
 
@@ -847,7 +848,7 @@
                 </div>
               </div>
               <div class="table-wrap">
-                <table class="table table--stack">
+                <table class="table">
                   <thead>
                     <tr>
                       <th>Date</th>
@@ -858,40 +859,40 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">22 Aug 2026</span><span class="cell__meta">PO-2026-0155</span></span></td>
-                      <td data-label="Amount">&euro; 1.240,00</td>
-                      <td data-label="Status"><span class="badge badge--draft">In transit</span></td>
-                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0155" data-date="22 Aug 2026" data-amount="&euro; 1.240,00" data-status="In transit">View</a></td>
+                      <td>22 Aug 2026</td>
+                      <td>&euro; 1.240,00</td>
+                      <td><span class="badge badge--draft">In transit</span></td>
+                      <td><a class="link link--invoice" href="#" data-invoice="PO-2026-0155" data-date="22 Aug 2026" data-amount="&euro; 1.240,00" data-status="In transit">View</a></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">15 Aug 2026</span><span class="cell__meta">PO-2026-0148</span></span></td>
-                      <td data-label="Amount">&euro; 3.980,20</td>
-                      <td data-label="Status"><span class="badge badge--active">Paid</span></td>
-                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0148" data-date="15 Aug 2026" data-amount="&euro; 3.980,20" data-status="Paid">View</a></td>
+                      <td>15 Aug 2026</td>
+                      <td>&euro; 3.980,20</td>
+                      <td><span class="badge badge--active">Paid</span></td>
+                      <td><a class="link link--invoice" href="#" data-invoice="PO-2026-0148" data-date="15 Aug 2026" data-amount="&euro; 3.980,20" data-status="Paid">View</a></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">8 Aug 2026</span><span class="cell__meta">PO-2026-0139</span></span></td>
-                      <td data-label="Amount">&euro; 4.126,75</td>
-                      <td data-label="Status"><span class="badge badge--active">Paid</span></td>
-                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0139" data-date="8 Aug 2026" data-amount="&euro; 4.126,75" data-status="Paid">View</a></td>
+                      <td>8 Aug 2026</td>
+                      <td>&euro; 4.126,75</td>
+                      <td><span class="badge badge--active">Paid</span></td>
+                      <td><a class="link link--invoice" href="#" data-invoice="PO-2026-0139" data-date="8 Aug 2026" data-amount="&euro; 4.126,75" data-status="Paid">View</a></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">1 Aug 2026</span><span class="cell__meta">PO-2026-0131</span></span></td>
-                      <td data-label="Amount">&euro; 3.744,10</td>
-                      <td data-label="Status"><span class="badge badge--active">Paid</span></td>
-                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0131" data-date="1 Aug 2026" data-amount="&euro; 3.744,10" data-status="Paid">View</a></td>
+                      <td>1 Aug 2026</td>
+                      <td>&euro; 3.744,10</td>
+                      <td><span class="badge badge--active">Paid</span></td>
+                      <td><a class="link link--invoice" href="#" data-invoice="PO-2026-0131" data-date="1 Aug 2026" data-amount="&euro; 3.744,10" data-status="Paid">View</a></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">25 Jul 2026</span><span class="cell__meta">PO-2026-0124</span></span></td>
-                      <td data-label="Amount">&euro; 2.980,45</td>
-                      <td data-label="Status"><span class="badge badge--danger">Failed</span></td>
-                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0124" data-date="25 Jul 2026" data-amount="&euro; 2.980,45" data-status="Failed">View</a></td>
+                      <td>25 Jul 2026</td>
+                      <td>&euro; 2.980,45</td>
+                      <td><span class="badge badge--danger">Failed</span></td>
+                      <td><a class="link link--invoice" href="#" data-invoice="PO-2026-0124" data-date="25 Jul 2026" data-amount="&euro; 2.980,45" data-status="Failed">View</a></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">18 Jul 2026</span><span class="cell__meta">PO-2026-0117</span></span></td>
-                      <td data-label="Amount">&euro; 4.310,00</td>
-                      <td data-label="Status"><span class="badge badge--active">Paid</span></td>
-                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0117" data-date="18 Jul 2026" data-amount="&euro; 4.310,00" data-status="Paid">View</a></td>
+                      <td>18 Jul 2026</td>
+                      <td>&euro; 4.310,00</td>
+                      <td><span class="badge badge--active">Paid</span></td>
+                      <td><a class="link link--invoice" href="#" data-invoice="PO-2026-0117" data-date="18 Jul 2026" data-amount="&euro; 4.310,00" data-status="Paid">View</a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1592,9 +1593,22 @@
                   <button class="tab" type="button">Draft</button>
                   <button class="tab" type="button">Discount</button>
                 </div>
-                <button class="icon-btn panel__filter" type="button" aria-label="Search and filter">
-                  <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter products">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
+                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
+                <div class="psearch">
+                  <div class="psearch__top">
+                    <span class="psearch__field">
+                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                      <input type="search" placeholder="search" aria-label="Search this list" />
+                    </span>
+                    <button class="psearch__cancel" type="button">Cancel</button>
+                  </div>
+                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
+                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                  </button>
+                </div>
               </div>
 
               <div class="group is-open">
@@ -2886,12 +2900,22 @@
                 <button class="tab" type="button">Paid</button>
                 <button class="tab" type="button">Unpaid</button>
               </div>
-              <button class="icon-btn panel__filter" type="button" aria-label="Search and filter">
-                <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+              <button class="icon-btn panel__tool" type="button" aria-label="Search and filter billing">
+                <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
               </button>
-              <button class="icon-btn panel__filter" type="button" aria-label="Sort">
-                <svg class="icon" aria-hidden="true"><use href="#i-sort"/></svg>
-              </button>
+              <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
+              <div class="psearch">
+                <div class="psearch__top">
+                  <span class="psearch__field">
+                    <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                    <input type="search" placeholder="search" aria-label="Search this list" />
+                  </span>
+                  <button class="psearch__cancel" type="button">Cancel</button>
+                </div>
+                <button class="btn btn--ghost btn--sm psearch__filter" type="button">
+                  Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                </button>
+              </div>
             </div>
 
             <div class="table-wrap">
@@ -2960,6 +2984,6 @@
     </button>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>
