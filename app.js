@@ -214,12 +214,20 @@
   }
 
   function sluitFilterMenus(behalve) {
-    document.querySelectorAll(".fmenu, .fchip__menu").forEach(function (m) {
+    document.querySelectorAll(".fmenu, .fchip__menu, .sfilter__menu").forEach(function (m) {
       if (m !== behalve) m.hidden = true;
     });
-    document.querySelectorAll(".psearch__filter, .fchip__label").forEach(function (b) {
+    document.querySelectorAll(".psearch__filter, .fchip__label, .sfilter__btn").forEach(function (b) {
       b.setAttribute("aria-expanded", "false");
     });
+  }
+
+  /* De actieve inperking: bij Orders een statusfilter, elders de gekozen tab. */
+  function actieveInperking(kop) {
+    var s = kop.querySelector(".sfilter__label");
+    if (s) return s.textContent.trim();
+    var tab = kop.querySelector(".tab.is-active");
+    return tab ? tab.textContent.replace(/\s*[\d.]+\s*$/, "").trim() : "";
   }
 
   function vulFilterMenu(psearch) {
@@ -254,10 +262,9 @@
 
       /* De gekozen tab is al een filter; die blijft staan, anders zou zoeken
          stilletjes over de hele lijst gaan. "All" is geen filter. */
-      var tab = kop.querySelector(".tab.is-active");
-      if (tab && !psearch.querySelector(".fchip")) {
-        var label = tab.textContent.replace(/\s*[\d.]+\s*$/, "").trim();
-        if (!/^All\b/.test(label)) psearch.querySelector(".fadd").before(chipVanTab(label));
+      if (!psearch.querySelector(".fchip")) {
+        var label = actieveInperking(kop);
+        if (label && !/^All\b/.test(label)) psearch.querySelector(".fadd").before(chipVanTab(label));
       }
       vulFilterMenu(psearch);
       syncClearAll(psearch);
@@ -301,6 +308,31 @@
       var blok1 = alles.closest(".psearch");
       blok1.querySelectorAll(".fchip").forEach(function (c) { c.remove(); });
       syncClearAll(blok1);
+      return;
+    }
+
+    /* Statusfilter openen en kiezen. */
+    var sknop = e.target.closest(".sfilter__btn");
+    if (sknop) {
+      var sm = sknop.nextElementSibling;
+      var dichtS = sm.hidden;
+      sluitFilterMenus(dichtS ? sm : null);
+      sm.hidden = !dichtS;
+      sknop.setAttribute("aria-expanded", String(dichtS));
+      return;
+    }
+
+    var sitem = e.target.closest(".sfilter__item");
+    if (sitem) {
+      var sf = sitem.closest(".sfilter");
+      sf.querySelectorAll(".sfilter__item").forEach(function (i) {
+        i.classList.remove("is-selected");
+        i.setAttribute("aria-checked", "false");
+      });
+      sitem.classList.add("is-selected");
+      sitem.setAttribute("aria-checked", "true");
+      sf.querySelector(".sfilter__label").textContent = sitem.textContent.trim();
+      sluitFilterMenus();
       return;
     }
 

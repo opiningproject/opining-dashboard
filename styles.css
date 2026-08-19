@@ -1087,6 +1087,46 @@ select.input {
 }
 .fmenu__item:hover { background: var(--bg-hover); }
 
+/* Statusfilter: één compacte knop met een uitklapbare lijst, in plaats
+   van een rij tabs. Het vinkje zegt wat er aanstaat. */
+.sfilter { position: relative; flex: 0 0 auto; }
+.sfilter__btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 8px 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  font-size: var(--fs-md); font-weight: 500;
+  color: var(--text-strong);
+}
+.sfilter__btn:hover { background: var(--gray-50); }
+.sfilter__caret { width: 15px; height: 15px; color: var(--text-muted); }
+.sfilter__menu {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  z-index: 20;
+  min-width: 210px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-md);
+  display: flex; flex-direction: column;
+}
+.sfilter__menu[hidden] { display: none; }
+.sfilter__item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  text-align: left;
+  font-size: var(--fs-md);
+  color: var(--text-strong);
+}
+.sfilter__item:hover { background: var(--bg-hover); }
+/* Het vinkje houdt zijn ruimte, anders verspringen de labels. */
+.sfilter__check { width: 16px; height: 16px; visibility: hidden; }
+.sfilter__item.is-selected { font-weight: 600; }
+.sfilter__item.is-selected .sfilter__check { visibility: visible; }
+
 .panel__tool {
   width: auto; height: 34px;
   margin-left: auto;
@@ -1750,32 +1790,24 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
      een lijst van rijen; de kolomkoppen vervallen omdat elke waarde op
      zijn plek in de rij al leesbaar is.
      ------------------------------------------------------------------ */
-  .table--orders, .table--orders tbody, .table--orders tr, .table--orders td,
   .table--archive, .table--archive tbody, .table--archive tr, .table--archive td {
     display: block;
     width: 100%;
   }
-  .table--orders thead, .table--archive thead { display: none; }
+  .table--archive thead { display: none; }
 
-  .table--orders tr, .table--archive tr {
+  .table--archive tr {
     display: flex; align-items: center; gap: 14px;
     padding: 14px 16px;
     border-top: 1px solid var(--border);
   }
-  .table--orders td, .table--archive td {
+  .table--archive td {
     width: auto;
     padding: 0;
     border: 0;
     white-space: normal;
   }
 
-  /* Bestemming links, resterende tijd rechts. */
-  .table--orders td:nth-child(2) { flex: 1 1 auto; min-width: 0; order: 1; }
-  .table--orders td:nth-child(1) { flex: 0 0 auto; margin-left: auto; order: 2; text-align: right; }
-  /* Betaling, ordernummer en de statusknop vallen weg; die staan op het
-     detailscherm. Zonder deze weglating scrollt de rij horizontaal. */
-  .table--orders td:nth-child(3),
-  .table--orders td:nth-child(4) { display: none; }
   /* Archive heeft geen tijdkolom: bestemming links, bedrag rechts. */
   .table--archive td:nth-child(1) { flex: 1 1 auto; min-width: 0; }
   .table--archive td:nth-child(2) { flex: 0 0 auto; margin-left: auto; }

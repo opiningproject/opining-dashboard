@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=13" />
+  <link rel="stylesheet" href="styles.css?v=14" />
 </head>
 <body>
 
@@ -349,10 +349,23 @@
 
             <div class="panel">
               <div class="panel__head">
-                <div class="tabs" role="tablist">
-                  <button class="tab is-active" type="button" role="tab" aria-selected="true">New <span class="tab__count">5</span></button>
-                  <button class="tab" type="button" role="tab" aria-selected="false">Kitchen <span class="tab__count">5</span></button>
-                  <button class="tab" type="button" role="tab" aria-selected="false">Delivering <span class="tab__count">2</span></button>
+                <!-- Statusfilter in plaats van tabs: één knop die de lijst
+                     inperkt, met een vinkje bij wat er aanstaat. -->
+                <div class="sfilter">
+                  <button class="sfilter__btn" type="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="sfilter__label">All</span>
+                    <svg class="icon sfilter__caret" aria-hidden="true"><use href="#i-sort"/></svg>
+                  </button>
+                  <div class="sfilter__menu" role="menu" hidden>
+                    <button class="sfilter__item is-selected" type="button" role="menuitemradio" aria-checked="true">
+                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>All</button>
+                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
+                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>New</button>
+                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
+                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Kitchen</button>
+                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
+                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Delivering</button>
+                  </div>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
@@ -383,58 +396,58 @@
                   <thead>
                     <tr>
                       <th>Expected | wished time</th>
-                      <th>Order nr | Destination</th>
-                      <th>Payment | Order ID</th>
+                      <th>Destination</th>
+                      <th>Payment</th>
                       <th class="ta-right">Move status</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td><span class="when when--late"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg><span><b>9</b> mins late</span></span></td>
-                      <td><span class="cell"><span class="cell__title">3036 SK</span><span class="cell__meta">Tochtstraat 40</span></span></td>
-                      <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#36</span></span></td>
+                      <td>Tochtstraat 40</td>
+                      <td>&euro;73.59</td>
                       <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 36"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when when--soon"><b>2</b> mins</span></td>
-                      <td><span class="cell"><span class="cell__title">Thomas jefferson</span><span class="cell__meta">Collection order</span></span></td>
-                      <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--pending">Pending</span></span><span class="badge badge--muted">#37</span></span></td>
+                      <td>Collection order</td>
+                      <td>&euro;73.59</td>
                       <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 37"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="when when--soon"><b>2</b> mins</span><span class="badge badge--sched">Scheduled</span></td>
-                      <td><span class="cell"><span class="cell__title">3062 wb</span><span class="cell__meta">Lusthofstraat 27A</span></span></td>
-                      <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--pending">Pending</span></span><span class="badge badge--muted">#26</span></span></td>
+                      <td><span class="when when--soon"><b>2</b> mins<span class="badge badge--sched">Scheduled</span></span></td>
+                      <td>Lusthofstraat 27A</td>
+                      <td>&euro;73.59</td>
                       <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 26"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when"><b>17</b> mins</span></td>
-                      <td><span class="cell"><span class="cell__title">3035 GW</span><span class="cell__meta">1e Pijnackerstraat 120B</span></span></td>
-                      <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#38</span></span></td>
+                      <td>1e Pijnackerstraat 120B</td>
+                      <td>&euro;73.59</td>
                       <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 38"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when"><b>21</b> mins</span></td>
-                      <td><span class="cell"><span class="cell__title">3035 KH</span><span class="cell__meta">Zwaanshals 299</span></span></td>
-                      <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#39</span></span></td>
+                      <td>Zwaanshals 299</td>
+                      <td>&euro;73.59</td>
                       <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 39"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when"><b>28</b> mins</span></td>
-                      <td><span class="cell"><span class="cell__title">T4</span><span class="cell__meta">Restaurant</span></span></td>
-                      <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#40</span></span></td>
+                      <td>Restaurant</td>
+                      <td>&euro;73.59</td>
                       <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 40"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="when"><b>2</b> h <b>29</b> mins</span><span class="badge badge--sched">Scheduled</span></td>
-                      <td><span class="cell"><span class="cell__title">3036 SK</span><span class="cell__meta">Tochtstraat 40</span></span></td>
-                      <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#12</span></span></td>
+                      <td><span class="when"><b>2</b> h <b>29</b> mins<span class="badge badge--sched">Scheduled</span></span></td>
+                      <td>Tochtstraat 40</td>
+                      <td>&euro;73.59</td>
                       <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 12"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="when">Today at <b>21:30</b></span><span class="badge badge--sched">Scheduled</span></td>
-                      <td><span class="cell"><span class="cell__title">3062 wb</span><span class="cell__meta">Lusthofstraat 27A</span></span></td>
-                      <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#7</span></span></td>
+                      <td><span class="when">Today at <b>21:30</b><span class="badge badge--sched">Scheduled</span></span></td>
+                      <td>Lusthofstraat 27A</td>
+                      <td>&euro;73.59</td>
                       <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 7"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                   </tbody>
@@ -3025,6 +3038,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=13"></script>
+  <script src="app.js?v=14"></script>
 </body>
 </html>
