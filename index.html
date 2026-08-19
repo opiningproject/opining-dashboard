@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=10" />
+  <link rel="stylesheet" href="styles.css?v=11" />
 </head>
 <body>
 
@@ -2841,13 +2841,14 @@
 
         <!-- ---------- SETTINGS: store language ---------- -->
         <section class="view" data-set-view="language" hidden>
-          <div class="card card--flush">
-            <div class="card__pad">
-              <h3 class="card__title">Languages</h3>
-              <p class="card__sub">Adding translations lets customers order in their own language.</p>
-            </div>
+          <div class="card">
+            <h3 class="card__title">Languages</h3>
+            <p class="card__sub">Adding translations lets customers order in their own language.</p>
 
-            <div class="table-wrap">
+            <!-- Een paneel met een eigen titel zit in een omlijnd vak eronder,
+                 zodat de titel bij de kaart hoort en de lijst een eigen kader krijgt. -->
+            <div class="panel panel--inset">
+              <div class="table-wrap">
               <table class="table table--stack">
                 <thead>
                   <tr>
@@ -2884,9 +2885,10 @@
                   </tr>
                 </tbody>
               </table>
+              </div>
             </div>
 
-            <div class="card__pad">
+            <div class="card__after">
               <p class="note" id="lang-tip">
                 <svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>
                 Add German for customers near the border.
@@ -3023,6 +3025,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=10"></script>
+  <script src="app.js?v=11"></script>
 </body>
 </html>
