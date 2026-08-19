@@ -150,6 +150,34 @@
 
   pageCrumb.addEventListener("click", backToList);
 
+  /* ---- Zoeken binnen een paneel ------------------------------------------
+     De knop rechts in de panel-kop wisselt die kop om naar een zoekveld met
+     een filterknop. De tabelkop blijft staan: je zoekt in dezelfde lijst,
+     niet in een nieuw scherm. */
+  function sluitPaneelZoek(kop) {
+    kop.classList.remove("is-searching");
+    kop.querySelector(".psearch input").value = "";
+    kop.querySelector(".panel__tool").focus();
+  }
+
+  document.addEventListener("click", function (e) {
+    var open = e.target.closest(".panel__tool");
+    if (open) {
+      var kop = open.closest(".panel__head");
+      kop.classList.add("is-searching");
+      kop.querySelector(".psearch input").focus();
+      return;
+    }
+    var af = e.target.closest(".psearch__cancel");
+    if (af) sluitPaneelZoek(af.closest(".panel__head"));
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    var veld = e.target.closest(".psearch");
+    if (veld) sluitPaneelZoek(veld.closest(".panel__head"));
+  });
+
   /* ---- Factuur bij een uitbetaling ---------------------------------------
      De prototype-versie bouwt het document uit de rij zelf, zodat de flow
      compleet te doorlopen is. In productie vervang je dit door een href naar
