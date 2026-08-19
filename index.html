@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=16" />
 </head>
 <body>
 
@@ -236,6 +236,11 @@
             <button class="btn btn--primary page-head__action" type="button" id="page-action" hidden>
               <svg class="icon" aria-hidden="true"><use href="#i-plus" id="page-action-icon"/></svg><span id="page-action-label"></span>
             </button>
+            <div class="page-head__tools" data-tools="orders" hidden>
+              <button class="icon-btn page-head__action" type="button" aria-label="More actions for orders">
+                <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+              </button>
+            </div>
             <div class="page-head__tools" data-tools="analytics" hidden>
               <label class="sr-only" for="ana-range">Date range</label>
               <select class="input" id="ana-range">
@@ -3040,6 +3045,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=15"></script>
+  <script src="app.js?v=16"></script>
 </body>
 </html>
