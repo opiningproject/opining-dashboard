@@ -757,6 +757,9 @@ select.input {
 .srow + .srow { border-top: 1px solid var(--border); }
 .rule { height: 1px; margin: 18px 0; border: 0; background: var(--border); }
 .link { color: var(--text-strong); text-decoration: underline; text-underline-offset: 3px; }
+/* Downloadlink in een tabelrij: leest als link, niet als knop. */
+.link--invoice { color: var(--accent); font-weight: 500; }
+.link--invoice:hover { text-decoration-thickness: 2px; }
 
 .drop {
   display: grid; place-items: center;
@@ -1264,17 +1267,6 @@ select.input {
    staat ernaast als context, de uitbetaalknop rechts. */
 .balance { display: flex; align-items: center; gap: 40px; }
 .balance__main { flex: 0 0 auto; }
-.balance__side {
-  flex: 0 0 auto;
-  padding-left: 40px;
-  border-left: 1px solid var(--border);
-}
-.balance__second {
-  margin-top: 10px;
-  font-size: 20px; font-weight: 600; letter-spacing: -.015em;
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-}
 .balance__action { margin-left: auto; }
 
 .badge--danger { background: #fbeae9; color: var(--danger); }
@@ -1617,7 +1609,6 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
 
   /* Saldo onder elkaar; de scheidingslijn wordt een bovenrand. */
   .balance { flex-direction: column; align-items: stretch; gap: 18px; }
-  .balance__side { padding: 18px 0 0; border-left: 0; border-top: 1px solid var(--border); }
   .balance__action { margin-left: 0; }
 
   /* Generieke tabelstapeling: kop weg, elke rij een blok. Cellen met
@@ -1630,6 +1621,8 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .table--stack td + td { margin-top: 8px; }
   .table--stack td[data-label] { display: flex; align-items: center; gap: 8px; font-size: var(--fs-sm); }
   .table--stack td[data-label]::before { content: attr(data-label); color: var(--text-muted); }
+  /* Bij een actiecel is het opschrift ruis: de link benoemt zichzelf al. */
+  .table--stack td[data-label="Action"]::before { content: none; }
   /* Menuknop terug naar de bovenhoek van het blok. */
   .table--stack td:last-child { position: absolute; top: 12px; right: 12px; width: auto; margin-top: 0; }
   .table--stack tr { padding-right: 56px; }
@@ -1847,7 +1840,9 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
 }
 
 @media (max-width: 560px) {
-  .page-head__tools { width: 100%; margin-left: 0; }
+  /* Alleen een blok mét keuzeveld heeft een eigen regel nodig; een losse
+     knop past prima naast de titel en hoort daar ook te blijven staan. */
+  .page-head__tools:has(select) { width: 100%; margin-left: 0; }
   .page-head__tools .input { flex: 1 1 auto; min-width: 0; }
   .search__kbd { display: none; }
   /* Titels zijn nu overal 18px; de verkleining hier bestond alleen om de

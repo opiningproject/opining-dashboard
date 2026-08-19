@@ -150,6 +150,48 @@
 
   pageCrumb.addEventListener("click", backToList);
 
+  /* ---- Factuur bij een uitbetaling ---------------------------------------
+     De prototype-versie bouwt het document uit de rij zelf, zodat de flow
+     compleet te doorlopen is. In productie vervang je dit door een href naar
+     het factuur-endpoint; het download-attribuut en de bestandsnaam blijven. */
+  var finView = document.querySelector('[data-view="finance"]');
+
+  if (finView) {
+    finView.addEventListener("click", function (e) {
+      var link = e.target.closest("[data-invoice]");
+      if (!link) return;
+      e.preventDefault();
+
+      var d = link.dataset;
+      var doc = [
+        "<!doctype html><meta charset='utf-8'><title>Payout " + d.invoice + "</title>",
+        "<style>body{font:14px/1.5 system-ui,sans-serif;padding:40px;color:#12161c}",
+        "h1{font-size:20px;margin:0 0 4px}p{margin:0 0 24px;color:#767c87}",
+        "table{border-collapse:collapse;min-width:320px}",
+        "th,td{text-align:left;padding:10px 0;border-bottom:1px solid #e2e4e8}",
+        "th{color:#767c87;font-weight:500}</style>",
+        "<h1>Payout statement</h1><p>Opining &middot; " + d.invoice + "</p>",
+        "<table>",
+        "<tr><th>Date</th><td>" + d.date + "</td></tr>",
+        "<tr><th>Amount</th><td>" + d.amount + "</td></tr>",
+        "<tr><th>Status</th><td>" + d.status + "</td></tr>",
+        "<tr><th>Reference</th><td>" + d.invoice + "</td></tr>",
+        "</table>"
+      ].join("");
+
+      var url = URL.createObjectURL(new Blob([doc], { type: "text/html" }));
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "invoice-" + d.invoice + ".html";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      /* Pas vrijgeven nadat de download is gestart. */
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      showToast("Invoice " + d.invoice + " downloaded");
+    });
+  }
+
   /* ---- Marketing-formulieren --------------------------------------------- */
   /* Codes zonder 0/O/1/I/L: die worden aan de balie stelselmatig verkeerd
      overgeschreven. */

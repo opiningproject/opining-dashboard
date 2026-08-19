@@ -272,13 +272,6 @@
               </button>
             </div>
             <div class="page-head__tools" data-tools="finance" hidden>
-              <label class="sr-only" for="fin-range">Reporting period</label>
-              <select class="input" id="fin-range">
-                <option>Last 30 days</option>
-                <option>This month</option>
-                <option>This quarter</option>
-                <option>This year</option>
-              </select>
               <button class="btn btn--ghost btn--pill page-head__action" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
               </button>
@@ -791,12 +784,7 @@
                 <p class="amount"><span class="amount__cur">EUR</span> 4.812,65</p>
                 <p class="card__sub">Next automatic payout on Friday 21 August</p>
               </div>
-              <div class="balance__side">
-                <p class="stat__label">On the way</p>
-                <p class="balance__second">&euro; 1.240,00</p>
-                <p class="card__sub">Arrives 22 August</p>
-              </div>
-              <button class="btn btn--primary btn--pill balance__action" type="button">Pay out now</button>
+              <button class="btn btn--primary btn--pill balance__action" type="button">See details</button>
             </div>
 
             <div class="panel">
@@ -817,55 +805,48 @@
                 <table class="table table--stack">
                   <thead>
                     <tr>
-                      <th>Payout</th>
-                      <th>Method</th>
+                      <th>Date</th>
                       <th>Amount</th>
                       <th>Status</th>
-                      <th><span class="sr-only">Actions</span></th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td><span class="cell"><span class="cell__title">22 Aug 2026</span><span class="cell__meta">PO-2026-0155</span></span></td>
-                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
                       <td data-label="Amount">&euro; 1.240,00</td>
                       <td data-label="Status"><span class="badge badge--draft">In transit</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0155"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0155" data-date="22 Aug 2026" data-amount="&euro; 1.240,00" data-status="In transit">View</a></td>
                     </tr>
                     <tr>
                       <td><span class="cell"><span class="cell__title">15 Aug 2026</span><span class="cell__meta">PO-2026-0148</span></span></td>
-                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
                       <td data-label="Amount">&euro; 3.980,20</td>
                       <td data-label="Status"><span class="badge badge--active">Paid</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0148"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0148" data-date="15 Aug 2026" data-amount="&euro; 3.980,20" data-status="Paid">View</a></td>
                     </tr>
                     <tr>
                       <td><span class="cell"><span class="cell__title">8 Aug 2026</span><span class="cell__meta">PO-2026-0139</span></span></td>
-                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
                       <td data-label="Amount">&euro; 4.126,75</td>
                       <td data-label="Status"><span class="badge badge--active">Paid</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0139"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0139" data-date="8 Aug 2026" data-amount="&euro; 4.126,75" data-status="Paid">View</a></td>
                     </tr>
                     <tr>
                       <td><span class="cell"><span class="cell__title">1 Aug 2026</span><span class="cell__meta">PO-2026-0131</span></span></td>
-                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
                       <td data-label="Amount">&euro; 3.744,10</td>
                       <td data-label="Status"><span class="badge badge--active">Paid</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0131"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0131" data-date="1 Aug 2026" data-amount="&euro; 3.744,10" data-status="Paid">View</a></td>
                     </tr>
                     <tr>
                       <td><span class="cell"><span class="cell__title">25 Jul 2026</span><span class="cell__meta">PO-2026-0124</span></span></td>
-                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
                       <td data-label="Amount">&euro; 2.980,45</td>
                       <td data-label="Status"><span class="badge badge--danger">Failed</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0124"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0124" data-date="25 Jul 2026" data-amount="&euro; 2.980,45" data-status="Failed">View</a></td>
                     </tr>
                     <tr>
                       <td><span class="cell"><span class="cell__title">18 Jul 2026</span><span class="cell__meta">PO-2026-0117</span></span></td>
-                      <td data-label="Method">Bank &bull;&bull;&bull;&bull;4471</td>
                       <td data-label="Amount">&euro; 4.310,00</td>
                       <td data-label="Status"><span class="badge badge--active">Paid</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for payout PO-2026-0117"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td data-label="Action"><a class="link link--invoice" href="#" data-invoice="PO-2026-0117" data-date="18 Jul 2026" data-amount="&euro; 4.310,00" data-status="Paid">View</a></td>
                     </tr>
                   </tbody>
                 </table>
