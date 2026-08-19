@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
 
@@ -264,12 +264,6 @@
               <span class="chip chip--info"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>Always active</span>
             </div>
             <div class="page-head__tools" data-tools="customers" hidden>
-              <label class="sr-only" for="cust-segment">Customer segment</label>
-              <select class="input" id="cust-segment">
-                <option>All customers</option>
-                <option>Returning</option>
-                <option>New this month</option>
-              </select>
               <button class="btn btn--ghost page-head__action" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
               </button>
@@ -364,7 +358,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch">
+                <div class="psearch" data-filters="Payment,Order type">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -372,9 +366,14 @@
                     </span>
                     <button class="psearch__cancel" type="button">Cancel</button>
                   </div>
-                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                  </button>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -458,7 +457,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch">
+                <div class="psearch" data-filters="Payment,Order type,Date">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -466,9 +465,14 @@
                     </span>
                     <button class="psearch__cancel" type="button">Cancel</button>
                   </div>
-                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                  </button>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -613,12 +617,6 @@
 
           <!-- ---------- VIEW: customers ---------- -->
           <section class="view" data-view="customers" hidden>
-            <ul class="stats">
-              <li class="stat"><p class="stat__label">Total customers</p><p class="stat__value">1.284</p><p class="stat__delta is-up">+3,1% vs. last month</p></li>
-              <li class="stat"><p class="stat__label">Returning</p><p class="stat__value">42%</p><p class="stat__delta is-up">+1,8%</p></li>
-              <li class="stat"><p class="stat__label">Average order value</p><p class="stat__value">&euro; 28,40</p><p class="stat__delta is-down">&minus;0,9%</p></li>
-              <li class="stat"><p class="stat__label">New this month</p><p class="stat__value">96</p><p class="stat__delta is-up">+12</p></li>
-            </ul>
 
             <div class="panel">
               <div class="panel__head">
@@ -632,7 +630,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch">
+                <div class="psearch" data-filters="Orders,Total spent,Last order">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -640,9 +638,14 @@
                     </span>
                     <button class="psearch__cancel" type="button">Cancel</button>
                   </div>
-                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                  </button>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="table-wrap">
@@ -653,73 +656,64 @@
                       <th>Orders</th>
                       <th>Total spent</th>
                       <th>Last order</th>
-                      <th>Points</th>
                       <th><span class="sr-only">Actions</span></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="person"><span class="person__avatar" aria-hidden="true">TJ</span><span class="person__text"><span class="person__name">Thomas Jefferson</span><span class="person__meta">thomas@example.nl</span></span></span></td>
+                      <td><span class="person"><span class="person__text"><span class="person__name">Thomas Jefferson</span><span class="person__meta">thomas@example.nl</span></span></span></td>
                       <td data-label="Orders">24</td>
                       <td data-label="Total spent">&euro; 681,20</td>
                       <td data-label="Last order">Today</td>
-                      <td data-label="Points">6.812</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Thomas Jefferson"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__avatar" aria-hidden="true">SV</span><span class="person__text"><span class="person__name">Sanne de Vries</span><span class="person__meta">sanne@example.nl</span></span></span></td>
+                      <td><span class="person"><span class="person__text"><span class="person__name">Sanne de Vries</span><span class="person__meta">sanne@example.nl</span></span></span></td>
                       <td data-label="Orders">18</td>
                       <td data-label="Total spent">&euro; 512,75</td>
                       <td data-label="Last order">Yesterday</td>
-                      <td data-label="Points">5.127</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Sanne de Vries"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__avatar" aria-hidden="true">ME</span><span class="person__text"><span class="person__name">Mo El Amrani</span><span class="person__meta">mo@example.nl</span></span></span></td>
+                      <td><span class="person"><span class="person__text"><span class="person__name">Mo El Amrani</span><span class="person__meta">mo@example.nl</span></span></span></td>
                       <td data-label="Orders">12</td>
                       <td data-label="Total spent">&euro; 348,60</td>
                       <td data-label="Last order">3 days ago</td>
-                      <td data-label="Points">3.486</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Mo El Amrani"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__avatar" aria-hidden="true">LB</span><span class="person__text"><span class="person__name">Lisa Bakker</span><span class="person__meta">lisa@example.nl</span></span></span></td>
+                      <td><span class="person"><span class="person__text"><span class="person__name">Lisa Bakker</span><span class="person__meta">lisa@example.nl</span></span></span></td>
                       <td data-label="Orders">9</td>
                       <td data-label="Total spent">&euro; 254,10</td>
                       <td data-label="Last order">5 days ago</td>
-                      <td data-label="Points">2.541</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Lisa Bakker"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__avatar" aria-hidden="true">KG</span><span class="person__text"><span class="person__name">Kevin Groot</span><span class="person__meta">kevin@example.nl</span></span></span></td>
+                      <td><span class="person"><span class="person__text"><span class="person__name">Kevin Groot</span><span class="person__meta">kevin@example.nl</span></span></span></td>
                       <td data-label="Orders">7</td>
                       <td data-label="Total spent">&euro; 198,45</td>
                       <td data-label="Last order">1 week ago</td>
-                      <td data-label="Points">1.984</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Kevin Groot"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__avatar" aria-hidden="true">FY</span><span class="person__text"><span class="person__name">Fatima Yilmaz</span><span class="person__meta">fatima@example.nl</span></span></span></td>
+                      <td><span class="person"><span class="person__text"><span class="person__name">Fatima Yilmaz</span><span class="person__meta">fatima@example.nl</span></span></span></td>
                       <td data-label="Orders">5</td>
                       <td data-label="Total spent">&euro; 142,30</td>
                       <td data-label="Last order">2 weeks ago</td>
-                      <td data-label="Points">1.423</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Fatima Yilmaz"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__avatar" aria-hidden="true">DV</span><span class="person__text"><span class="person__name">Daan Visser</span><span class="person__meta">daan@example.nl</span></span></span></td>
+                      <td><span class="person"><span class="person__text"><span class="person__name">Daan Visser</span><span class="person__meta">daan@example.nl</span></span></span></td>
                       <td data-label="Orders">3</td>
                       <td data-label="Total spent">&euro; 87,90</td>
                       <td data-label="Last order">3 weeks ago</td>
-                      <td data-label="Points">879</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Daan Visser"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__avatar" aria-hidden="true">IS</span><span class="person__text"><span class="person__name">Iris Smit</span><span class="person__meta">iris@example.nl</span></span></span></td>
+                      <td><span class="person"><span class="person__text"><span class="person__name">Iris Smit</span><span class="person__meta">iris@example.nl</span></span></span></td>
                       <td data-label="Orders">1</td>
                       <td data-label="Total spent">&euro; 24,50</td>
                       <td data-label="Last order">1 month ago</td>
-                      <td data-label="Points">245</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Iris Smit"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                   </tbody>
@@ -755,7 +749,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch">
+                <div class="psearch" data-filters="Status,Zone">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -763,9 +757,14 @@
                     </span>
                     <button class="psearch__cancel" type="button">Cancel</button>
                   </div>
-                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                  </button>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="table-wrap">
@@ -850,7 +849,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch">
+                <div class="psearch" data-filters="Status,Date,Amount">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -858,9 +857,14 @@
                     </span>
                     <button class="psearch__cancel" type="button">Cancel</button>
                   </div>
-                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                  </button>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="table-wrap">
@@ -948,7 +952,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch">
+                <div class="psearch" data-filters="Discount type,Applies to,Status">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -956,9 +960,14 @@
                     </span>
                     <button class="psearch__cancel" type="button">Cancel</button>
                   </div>
-                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                  </button>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -1127,7 +1136,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch">
+                <div class="psearch" data-filters="Discount type,Conditions,Status">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -1135,9 +1144,14 @@
                     </span>
                     <button class="psearch__cancel" type="button">Cancel</button>
                   </div>
-                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                  </button>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -1305,7 +1319,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch">
+                <div class="psearch" data-filters="Audience,Status">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -1313,9 +1327,14 @@
                     </span>
                     <button class="psearch__cancel" type="button">Cancel</button>
                   </div>
-                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                  </button>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -1613,7 +1632,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch">
+                <div class="psearch" data-filters="Status,Category">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -1621,9 +1640,14 @@
                     </span>
                     <button class="psearch__cancel" type="button">Cancel</button>
                   </div>
-                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                  </button>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -2532,7 +2556,7 @@
                 <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
               </button>
               <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-              <div class="psearch">
+              <div class="psearch" data-filters="Minimum order,Delivery fee">
                 <div class="psearch__top">
                   <span class="psearch__field">
                     <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -2540,9 +2564,14 @@
                   </span>
                   <button class="psearch__cancel" type="button">Cancel</button>
                 </div>
-                <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                  Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                </button>
+                <div class="psearch__filters">
+                  <div class="fadd">
+                    <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                      Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                    </button>
+                    <div class="fmenu" role="menu" hidden></div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -2920,7 +2949,7 @@
                 <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
               </button>
               <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-              <div class="psearch">
+              <div class="psearch" data-filters="Status,Date">
                 <div class="psearch__top">
                   <span class="psearch__field">
                     <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -2928,9 +2957,14 @@
                   </span>
                   <button class="psearch__cancel" type="button">Cancel</button>
                 </div>
-                <button class="btn btn--ghost btn--sm psearch__filter" type="button">
-                  Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                </button>
+                <div class="psearch__filters">
+                  <div class="fadd">
+                    <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                      Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                    </button>
+                    <div class="fmenu" role="menu" hidden></div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -3000,6 +3034,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>

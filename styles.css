@@ -999,7 +999,47 @@ select.input {
 /* Afbreken leest als tekst, niet als tweede knop naast Add filter. */
 .psearch__cancel { flex: 0 0 auto; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
 .psearch__cancel:hover { text-decoration: underline; text-underline-offset: 3px; }
-.psearch__filter { align-self: flex-start; }
+/* Filterrij: de meegekomen tab-chip, eventuele extra filters, en de
+   knop die er meer bij zet. */
+.psearch__filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.psearch__filter { flex: 0 0 auto; }
+
+/* Een actief filter. Het kruisje eromheen hoort bij de chip, niet
+   ernaast, zodat het samen als één ding leest. */
+.fchip {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 32px; padding: 0 8px 0 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm); font-weight: 500;
+  color: var(--text-strong);
+  background: var(--bg-surface);
+}
+.fchip button { display: grid; place-items: center; width: 20px; height: 20px; border-radius: var(--r-sm); color: var(--text-muted); }
+.fchip button:hover { background: var(--bg-hover); color: var(--text-strong); }
+.fchip .icon { width: 14px; height: 14px; }
+
+.fadd { position: relative; flex: 0 0 auto; }
+.fmenu {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  z-index: 20;
+  min-width: 168px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-md);
+  display: flex; flex-direction: column;
+}
+.fmenu[hidden] { display: none; }
+.fmenu__item {
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  text-align: left;
+  font-size: var(--fs-md);
+  color: var(--text-strong);
+}
+.fmenu__item:hover { background: var(--bg-hover); }
 
 .panel__tool {
   width: auto; height: 34px;
