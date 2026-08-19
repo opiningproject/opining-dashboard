@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
 
@@ -358,7 +358,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Payment,Order type">
+                <div class="psearch" data-filters="Payment:Paid online|Cash;Order type:Delivery|Takeaway">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -373,6 +373,7 @@
                       </button>
                       <div class="fmenu" role="menu" hidden></div>
                     </div>
+                  <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
@@ -457,7 +458,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Payment,Order type,Date">
+                <div class="psearch" data-filters="Payment:Paid online|Cash;Order type:Delivery|Takeaway;Date:Today|Last 7 days|Last 30 days">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -472,6 +473,7 @@
                       </button>
                       <div class="fmenu" role="menu" hidden></div>
                     </div>
+                  <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
@@ -630,7 +632,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Orders,Total spent,Last order">
+                <div class="psearch" data-filters="Orders:1-5|6-20|20+;Total spent:Under 100|100-500|500+;Last order:This week|This month|Older">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -645,6 +647,7 @@
                       </button>
                       <div class="fmenu" role="menu" hidden></div>
                     </div>
+                  <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
@@ -749,7 +752,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status,Zone">
+                <div class="psearch" data-filters="Status:Active|Off duty;Zone:3036|3037|3038">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -764,6 +767,7 @@
                       </button>
                       <div class="fmenu" role="menu" hidden></div>
                     </div>
+                  <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
@@ -849,7 +853,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status,Date,Amount">
+                <div class="psearch" data-filters="Status:Paid|In transit|Failed;Date:Last 30 days|This quarter;Amount:Under 1.000|1.000+">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -864,6 +868,7 @@
                       </button>
                       <div class="fmenu" role="menu" hidden></div>
                     </div>
+                  <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
@@ -952,7 +957,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Discount type,Applies to,Status">
+                <div class="psearch" data-filters="Discount type:Percentage|Fixed amount;Applies to:One product|Category;Status:Running|Ended">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -967,6 +972,7 @@
                       </button>
                       <div class="fmenu" role="menu" hidden></div>
                     </div>
+                  <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
@@ -1136,7 +1142,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Discount type,Conditions,Status">
+                <div class="psearch" data-filters="Discount type:Percentage|Fixed amount|Free delivery;Conditions:Minimum order|First order only;Status:Active|Scheduled|Expired">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -1151,6 +1157,7 @@
                       </button>
                       <div class="fmenu" role="menu" hidden></div>
                     </div>
+                  <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
@@ -1319,7 +1326,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Audience,Status">
+                <div class="psearch" data-filters="Audience:All customers|Returning|Inactive;Status:Sent|Scheduled|Draft">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -1334,6 +1341,7 @@
                       </button>
                       <div class="fmenu" role="menu" hidden></div>
                     </div>
+                  <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
@@ -1632,7 +1640,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status,Category">
+                <div class="psearch" data-filters="Status:Active|Draft;Category:Pizza|Drinks|Desserts">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -1647,6 +1655,7 @@
                       </button>
                       <div class="fmenu" role="menu" hidden></div>
                     </div>
+                  <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
@@ -2556,7 +2565,7 @@
                 <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
               </button>
               <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-              <div class="psearch" data-filters="Minimum order,Delivery fee">
+              <div class="psearch" data-filters="Minimum order:No minimum|From 50,00;Delivery fee:Free|Paid">
                 <div class="psearch__top">
                   <span class="psearch__field">
                     <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -2571,6 +2580,7 @@
                     </button>
                     <div class="fmenu" role="menu" hidden></div>
                   </div>
+                <button class="fclear" type="button" hidden>Clear All</button>
                 </div>
               </div>
             </div>
@@ -2949,7 +2959,7 @@
                 <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
               </button>
               <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-              <div class="psearch" data-filters="Status,Date">
+              <div class="psearch" data-filters="Status:Paid|Refunded;Date:This year|Last year">
                 <div class="psearch__top">
                   <span class="psearch__field">
                     <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -2964,6 +2974,7 @@
                     </button>
                     <div class="fmenu" role="menu" hidden></div>
                   </div>
+                <button class="fclear" type="button" hidden>Clear All</button>
                 </div>
               </div>
             </div>
@@ -3034,6 +3045,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=5"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>

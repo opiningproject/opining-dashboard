@@ -1015,7 +1015,47 @@ select.input {
   color: var(--text-strong);
   background: var(--bg-surface);
 }
-.fchip button { display: grid; place-items: center; width: 20px; height: 20px; border-radius: var(--r-sm); color: var(--text-muted); }
+.fchip__x { display: grid; place-items: center; width: 20px; height: 20px; border-radius: var(--r-sm); color: var(--text-muted); }
+.fchip__x:hover { background: var(--bg-hover); color: var(--text-strong); }
+
+/* Toegevoegd filter: klapt zijn waarden uit in plaats van meteen te
+   verdwijnen, want de naam alleen zegt nog niet waarop je filtert. */
+.fchip--drop { position: relative; padding: 0; }
+.fchip__label {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 100%; padding: 0 10px 0 12px;
+  font: inherit; color: inherit;
+}
+.fchip__caret { width: 14px; height: 14px; color: var(--text-muted); }
+.fchip__label[aria-expanded="true"] .fchip__caret { transform: rotate(180deg); }
+.fchip__menu {
+  position: absolute; top: calc(100% + 6px); left: 0;
+  z-index: 20;
+  min-width: 170px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-md);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.fchip__menu[hidden] { display: none; }
+.fopt { display: flex; align-items: center; gap: 10px; padding: 6px 4px; font-size: var(--fs-md); font-weight: 400; color: var(--text-strong); cursor: pointer; }
+.fopt input {
+  appearance: none;
+  width: 18px; height: 18px; flex: 0 0 auto;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--r-sm);
+}
+.fopt input:checked {
+  border-color: var(--accent);
+  background: var(--accent) url("data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27white%27 stroke-width=%273%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27><path d=%27m5 12.5 4.5 4.5L19 7%27/></svg>") center / 12px no-repeat;
+}
+.fchip__clear { margin-top: 4px; align-self: flex-start; padding: 4px; font-size: var(--fs-sm); color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Alles wissen staat naast de knoppen, niet ertussen. */
+.fclear { margin-left: 4px; font-size: var(--fs-sm); font-weight: 600; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.fclear[hidden] { display: none; }
 .fchip button:hover { background: var(--bg-hover); color: var(--text-strong); }
 .fchip .icon { width: 14px; height: 14px; }
 

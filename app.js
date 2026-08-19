@@ -154,37 +154,94 @@
      De knop rechts in de panel-kop wisselt die kop om naar een zoekveld met
      een filterknop. De tabelkop blijft staan: je zoekt in dezelfde lijst,
      niet in een nieuw scherm. */
-  function maakChip(label) {
+  /* data-filters is "Naam:waarde|waarde;Naam:waarde" — één plek per paneel
+     om de filters te benoemen. */
+  function leesFilters(psearch) {
+    return (psearch.dataset.filters || "").split(";").filter(Boolean).map(function (deel) {
+      var stuk = deel.split(":");
+      return { naam: stuk[0], waarden: (stuk[1] || "").split("|").filter(Boolean) };
+    });
+  }
+
+  /* De tab die je meenam: alleen wegklikbaar, want de waarde ligt al vast. */
+  function chipVanTab(label) {
     var chip = document.createElement("span");
     chip.className = "fchip";
-    chip.textContent = label;
+    chip.append(label);
     var weg = document.createElement("button");
     weg.type = "button";
+    weg.className = "fchip__x";
     weg.setAttribute("aria-label", "Remove filter " + label);
     weg.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>';
     chip.appendChild(weg);
     return chip;
   }
 
+  /* Een toegevoegd filter klapt open met zijn waarden; je kiest er nul of meer. */
+  function chipVanFilter(filter) {
+    var chip = document.createElement("span");
+    chip.className = "fchip fchip--drop";
+
+    var knop = document.createElement("button");
+    knop.type = "button";
+    knop.className = "fchip__label";
+    knop.setAttribute("aria-expanded", "false");
+    knop.innerHTML = filter.naam + ' <svg class="icon fchip__caret" aria-hidden="true"><use href="#i-caret"/></svg>';
+
+    var menu = document.createElement("div");
+    menu.className = "fchip__menu";
+    menu.hidden = true;
+    filter.waarden.forEach(function (waarde) {
+      var optie = document.createElement("label");
+      optie.className = "fopt";
+      optie.innerHTML = '<input type="checkbox" /><span></span>';
+      optie.querySelector("span").textContent = waarde;
+      menu.appendChild(optie);
+    });
+    var leeg = document.createElement("button");
+    leeg.type = "button";
+    leeg.className = "fchip__clear";
+    leeg.textContent = "Clear";
+    menu.appendChild(leeg);
+
+    chip.append(knop, menu);
+    return chip;
+  }
+
+  /* Alles wissen hoort er alleen te staan zodra er iets te wissen valt. */
+  function syncClearAll(psearch) {
+    psearch.querySelector(".fclear").hidden = !psearch.querySelector(".fchip");
+  }
+
+  function sluitFilterMenus(behalve) {
+    document.querySelectorAll(".fmenu, .fchip__menu").forEach(function (m) {
+      if (m !== behalve) m.hidden = true;
+    });
+    document.querySelectorAll(".psearch__filter, .fchip__label").forEach(function (b) {
+      b.setAttribute("aria-expanded", "false");
+    });
+  }
+
   function vulFilterMenu(psearch) {
     var menu = psearch.querySelector(".fmenu");
     if (menu.childElementCount) return;
-    (psearch.dataset.filters || "").split(",").filter(Boolean).forEach(function (naam) {
+    leesFilters(psearch).forEach(function (filter) {
       var knop = document.createElement("button");
       knop.type = "button";
       knop.className = "fmenu__item";
       knop.setAttribute("role", "menuitem");
-      knop.textContent = naam;
+      knop.textContent = filter.naam;
       menu.appendChild(knop);
     });
   }
 
   function sluitPaneelZoek(kop) {
     kop.classList.remove("is-searching");
-    kop.querySelector(".psearch input").value = "";
+    kop.querySelector(".psearch input[type='search']").value = "";
     /* Chips horen bij deze zoekbeurt; bij afbreken vervallen ze met de rest. */
     kop.querySelectorAll(".fchip").forEach(function (c) { c.remove(); });
-    kop.querySelector(".fmenu").hidden = true;
+    sluitFilterMenus();
+    syncClearAll(kop.querySelector(".psearch"));
     kop.querySelector(".panel__tool").focus();
   }
 
@@ -195,33 +252,63 @@
       var psearch = kop.querySelector(".psearch");
       kop.classList.add("is-searching");
 
-      /* De gekozen tab is al een filter; die blijft staan als chip, anders
-         zou zoeken stilletjes over de hele lijst gaan. "All" is geen filter. */
+      /* De gekozen tab is al een filter; die blijft staan, anders zou zoeken
+         stilletjes over de hele lijst gaan. "All" is geen filter. */
       var tab = kop.querySelector(".tab.is-active");
       if (tab && !psearch.querySelector(".fchip")) {
         var label = tab.textContent.replace(/\s*[\d.]+\s*$/, "").trim();
-        if (!/^All\b/.test(label)) {
-          psearch.querySelector(".psearch__filters").prepend(maakChip(label));
-        }
+        if (!/^All\b/.test(label)) psearch.querySelector(".fadd").before(chipVanTab(label));
       }
       vulFilterMenu(psearch);
-      psearch.querySelector("input").focus();
+      syncClearAll(psearch);
+      psearch.querySelector("input[type='search']").focus();
       return;
     }
 
     var af = e.target.closest(".psearch__cancel");
     if (af) { sluitPaneelZoek(af.closest(".panel__head")); return; }
 
-    var weg = e.target.closest(".fchip button");
-    if (weg) { weg.closest(".fchip").remove(); return; }
+    var weg = e.target.closest(".fchip__x");
+    if (weg) {
+      var blok0 = weg.closest(".psearch");
+      weg.closest(".fchip").remove();
+      syncClearAll(blok0);
+      return;
+    }
+
+    /* Uitklappen van een filterchip. */
+    var label2 = e.target.closest(".fchip__label");
+    if (label2) {
+      var m2 = label2.nextElementSibling;
+      var dicht = m2.hidden;
+      sluitFilterMenus(dicht ? m2 : null);
+      m2.hidden = !dicht;
+      label2.setAttribute("aria-expanded", String(dicht));
+      return;
+    }
+
+    var leegmaken = e.target.closest(".fchip__clear");
+    if (leegmaken) {
+      var chip2 = leegmaken.closest(".fchip");
+      chip2.querySelectorAll("input").forEach(function (i) { i.checked = false; });
+      chip2.querySelector(".fchip__menu").hidden = true;
+      chip2.querySelector(".fchip__label").setAttribute("aria-expanded", "false");
+      return;
+    }
+
+    var alles = e.target.closest(".fclear");
+    if (alles) {
+      var blok1 = alles.closest(".psearch");
+      blok1.querySelectorAll(".fchip").forEach(function (c) { c.remove(); });
+      syncClearAll(blok1);
+      return;
+    }
 
     var toevoegen = e.target.closest(".psearch__filter");
     if (toevoegen) {
       var m = toevoegen.nextElementSibling;
       var wasDicht = m.hidden;
-      /* Eerst alle menu's dicht, anders blijven er twee openstaan. */
-      document.querySelectorAll(".fmenu").forEach(function (x) { x.hidden = true; });
-      document.querySelectorAll(".psearch__filter").forEach(function (b) { b.setAttribute("aria-expanded", "false"); });
+      sluitFilterMenus(wasDicht ? m : null);
       m.hidden = !wasDicht;
       toevoegen.setAttribute("aria-expanded", String(wasDicht));
       return;
@@ -230,16 +317,17 @@
     var keuze = e.target.closest(".fmenu__item");
     if (keuze) {
       var blok = keuze.closest(".psearch");
-      blok.querySelector(".fadd").before(maakChip(keuze.textContent));
-      blok.querySelector(".fmenu").hidden = true;
-      blok.querySelector(".psearch__filter").setAttribute("aria-expanded", "false");
+      var filter = leesFilters(blok).filter(function (f) { return f.naam === keuze.textContent; })[0];
+      /* Nieuwste filter vooraan, zoals in het ontwerp. */
+      blok.querySelector(".psearch__filters").prepend(chipVanFilter(filter));
+      sluitFilterMenus();
+      syncClearAll(blok);
       return;
     }
 
-    /* Klik ergens anders sluit een openstaand filtermenu. */
-    document.querySelectorAll(".fmenu").forEach(function (x) { x.hidden = true; });
+    /* Klik ergens anders sluit openstaande menu's. */
+    if (!e.target.closest(".fchip__menu")) sluitFilterMenus();
   });
-
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape") return;
     var veld = e.target.closest(".psearch");
