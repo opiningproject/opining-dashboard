@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
 
@@ -242,7 +242,7 @@
                 <option>This month</option>
                 <option>Last quarter</option>
               </select>
-              <button class="btn btn--ghost btn--pill page-head__action" type="button">
+              <button class="btn btn--ghost page-head__action" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
               </button>
             </div>
@@ -255,7 +255,7 @@
                 <option>Sort by amount</option>
                 <option>Sort by order ID</option>
               </select>
-              <button class="btn btn--primary btn--pill page-head__action" type="button">
+              <button class="btn btn--primary page-head__action" type="button">
                 Manage orders
                 <svg class="icon" aria-hidden="true"><use href="#i-caret"/></svg>
               </button>
@@ -270,12 +270,12 @@
                 <option>Returning</option>
                 <option>New this month</option>
               </select>
-              <button class="btn btn--ghost btn--pill page-head__action" type="button">
+              <button class="btn btn--ghost page-head__action" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
               </button>
             </div>
             <div class="page-head__tools" data-tools="finance" hidden>
-              <button class="btn btn--ghost btn--pill page-head__action" type="button">
+              <button class="btn btn--ghost page-head__action" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
               </button>
             </div>
@@ -297,7 +297,7 @@
                     <button class="step__title" type="button" aria-expanded="true">Customize your domain name</button>
                     <div class="step__panel"><div class="step__panel-inner">
                       <p class="step__meta">d2w1hd-rw.myopining.com</p>
-                      <button class="btn btn--primary btn--pill" type="button">Name Store</button>
+                      <button class="btn btn--primary" type="button">Name Store</button>
                     </div></div>
                   </div>
                 </li>
@@ -307,7 +307,7 @@
                     <button class="step__title" type="button" aria-expanded="false">Customize your store</button>
                     <div class="step__panel"><div class="step__panel-inner">
                       <p class="step__meta">Theme, colours and logo</p>
-                      <button class="btn btn--primary btn--pill" type="button">Customize</button>
+                      <button class="btn btn--primary" type="button">Customize</button>
                     </div></div>
                   </div>
                 </li>
@@ -317,7 +317,7 @@
                     <button class="step__title" type="button" aria-expanded="false">Manage your openingtimes and order moments</button>
                     <div class="step__panel"><div class="step__panel-inner">
                       <p class="step__meta">No opening hours set yet</p>
-                      <button class="btn btn--primary btn--pill" type="button">Set hours</button>
+                      <button class="btn btn--primary" type="button">Set hours</button>
                     </div></div>
                   </div>
                 </li>
@@ -327,7 +327,7 @@
                     <button class="step__title" type="button" aria-expanded="false">Set up payments</button>
                     <div class="step__panel"><div class="step__panel-inner">
                       <p class="step__meta">No payment provider connected</p>
-                      <button class="btn btn--primary btn--pill" type="button">Set up payments</button>
+                      <button class="btn btn--primary" type="button">Set up payments</button>
                     </div></div>
                   </div>
                 </li>
@@ -337,7 +337,7 @@
                     <button class="step__title" type="button" aria-expanded="false">Add first delivery area</button>
                     <div class="step__panel"><div class="step__panel-inner">
                       <p class="step__meta">No delivery areas yet</p>
-                      <button class="btn btn--primary btn--pill" type="button">Add area</button>
+                      <button class="btn btn--primary" type="button">Add area</button>
                     </div></div>
                   </div>
                 </li>
@@ -354,11 +354,27 @@
           <section class="view" data-view="orders" hidden>
 
             <div class="panel">
-              <div class="panel__head panel__head--seg">
-                <div class="tabs tabs--seg" role="tablist">
+              <div class="panel__head">
+                <div class="tabs" role="tablist">
                   <button class="tab is-active" type="button" role="tab" aria-selected="true">New <span class="tab__count">5</span></button>
                   <button class="tab" type="button" role="tab" aria-selected="false">Kitchen <span class="tab__count">5</span></button>
                   <button class="tab" type="button" role="tab" aria-selected="false">Delivering <span class="tab__count">2</span></button>
+                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
+                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
+                <div class="psearch">
+                  <div class="psearch__top">
+                    <span class="psearch__field">
+                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                      <input type="search" placeholder="search" aria-label="Search this list" />
+                    </span>
+                    <button class="psearch__cancel" type="button">Cancel</button>
+                  </div>
+                  <button class="btn btn--ghost btn--sm psearch__filter" type="button">
+                    Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                  </button>
                 </div>
               </div>
 
@@ -377,49 +393,49 @@
                       <td><span class="when when--late"><svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg><span><b>9</b> mins late</span></span><svg class="ring ring--late" viewBox="0 0 48 48" aria-hidden="true"><circle class="ring__track" cx="24" cy="24" r="22"/><circle class="ring__fill" cx="24" cy="24" r="22" transform="rotate(-90 24 24)" style="stroke-dashoffset:0"/><text class="ring__value" x="24" y="24">9</text><text class="ring__unit" x="24" y="35">min late</text></svg></td>
                       <td><span class="cell"><span class="cell__title">3036 SK</span><span class="cell__meta">Tochtstraat 40</span><span class="wish badge badge--muted">ASAP</span></span></td>
                       <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#36</span></span></td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--pill btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 36"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
+                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 36"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when when--soon"><b>2</b> mins</span><svg class="ring ring--urgent" viewBox="0 0 48 48" aria-hidden="true"><circle class="ring__track" cx="24" cy="24" r="22"/><circle class="ring__fill" cx="24" cy="24" r="22" transform="rotate(-90 24 24)" style="stroke-dashoffset:6.14"/><text class="ring__value" x="24" y="24">2</text><text class="ring__unit" x="24" y="35">min</text></svg></td>
                       <td><span class="cell"><span class="cell__title">Thomas jefferson</span><span class="cell__meta">Collection order</span><span class="wish badge badge--muted">ASAP</span></span></td>
                       <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--pending">Pending</span></span><span class="badge badge--muted">#37</span></span></td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--pill btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 37"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
+                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 37"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when when--soon"><b>2</b> mins</span><span class="badge badge--sched">Scheduled</span><svg class="ring ring--urgent" viewBox="0 0 48 48" aria-hidden="true"><circle class="ring__track" cx="24" cy="24" r="22"/><circle class="ring__fill" cx="24" cy="24" r="22" transform="rotate(-90 24 24)" style="stroke-dashoffset:6.14"/><text class="ring__value" x="24" y="24">2</text><text class="ring__unit" x="24" y="35">min</text></svg></td>
                       <td><span class="cell"><span class="cell__title">3062 wb</span><span class="cell__meta">Lusthofstraat 27A</span><span class="wish badge badge--sched">Scheduled</span></span></td>
                       <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--pending">Pending</span></span><span class="badge badge--muted">#26</span></span></td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--pill btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 26"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
+                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 26"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when"><b>17</b> mins</span><svg class="ring ring--ok" viewBox="0 0 48 48" aria-hidden="true"><circle class="ring__track" cx="24" cy="24" r="22"/><circle class="ring__fill" cx="24" cy="24" r="22" transform="rotate(-90 24 24)" style="stroke-dashoffset:52.22"/><text class="ring__value" x="24" y="24">17</text><text class="ring__unit" x="24" y="35">min</text></svg></td>
                       <td><span class="cell"><span class="cell__title">3035 GW</span><span class="cell__meta">1e Pijnackerstraat 120B</span><span class="wish badge badge--muted">ASAP</span></span></td>
                       <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#38</span></span></td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--pill btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 38"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
+                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 38"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when"><b>21</b> mins</span><svg class="ring ring--ok" viewBox="0 0 48 48" aria-hidden="true"><circle class="ring__track" cx="24" cy="24" r="22"/><circle class="ring__fill" cx="24" cy="24" r="22" transform="rotate(-90 24 24)" style="stroke-dashoffset:64.51"/><text class="ring__value" x="24" y="24">21</text><text class="ring__unit" x="24" y="35">min</text></svg></td>
                       <td><span class="cell"><span class="cell__title">3035 KH</span><span class="cell__meta">Zwaanshals 299</span><span class="wish badge badge--muted">ASAP</span></span></td>
                       <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#39</span></span></td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--pill btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 39"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
+                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 39"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when"><b>28</b> mins</span><svg class="ring ring--ok" viewBox="0 0 48 48" aria-hidden="true"><circle class="ring__track" cx="24" cy="24" r="22"/><circle class="ring__fill" cx="24" cy="24" r="22" transform="rotate(-90 24 24)" style="stroke-dashoffset:86.01"/><text class="ring__value" x="24" y="24">28</text><text class="ring__unit" x="24" y="35">min</text></svg></td>
                       <td><span class="cell"><span class="cell__title">T4</span><span class="cell__meta">Restaurant</span><span class="wish badge badge--muted">ASAP</span></span></td>
                       <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#40</span></span></td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--pill btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 40"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
+                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 40"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when"><b>2</b> h <b>29</b> mins</span><span class="badge badge--sched">Scheduled</span><svg class="ring ring--far" viewBox="0 0 48 48" aria-hidden="true"><circle class="ring__track" cx="24" cy="24" r="22"/><circle class="ring__fill" cx="24" cy="24" r="22" transform="rotate(-90 24 24)" style="stroke-dashoffset:138.23"/><text class="ring__value" x="24" y="24">2</text><text class="ring__unit" x="24" y="35">hour</text></svg></td>
                       <td><span class="cell"><span class="cell__title">3036 SK</span><span class="cell__meta">Tochtstraat 40</span><span class="wish badge badge--sched">Scheduled</span></span></td>
                       <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#12</span></span></td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--pill btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 12"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
+                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 12"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                     <tr>
                       <td><span class="when">Today at <b>21:30</b></span><span class="badge badge--sched">Scheduled</span><svg class="ring ring--far" viewBox="0 0 48 48" aria-hidden="true"><circle class="ring__track" cx="24" cy="24" r="22"/><circle class="ring__fill" cx="24" cy="24" r="22" transform="rotate(-90 24 24)" style="stroke-dashoffset:138.23"/><text class="ring__value ring__value--sm" x="24" y="24">21:30</text><text class="ring__unit" x="24" y="35">today</text></svg></td>
                       <td><span class="cell"><span class="cell__title">3062 wb</span><span class="cell__meta">Lusthofstraat 27A</span><span class="wish badge badge--sched">21:30</span></span></td>
                       <td><span class="pay"><span class="pay__line"><span class="pay__amount">&euro;73.59</span><span class="badge badge--muted">Paid</span></span><span class="badge badge--muted">#7</span></span></td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--pill btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 7"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
+                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 7"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -819,7 +835,7 @@
                 <p class="amount"><span class="amount__cur">EUR</span> 4.812,65</p>
                 <p class="card__sub">Next automatic payout on Friday 21 August</p>
               </div>
-              <button class="btn btn--primary btn--pill balance__action" type="button">See details</button>
+              <button class="btn btn--primary balance__action" type="button">See details</button>
             </div>
 
             <div class="panel">
@@ -1080,8 +1096,8 @@
             </div>
 
             <div class="formfoot">
-              <button class="btn btn--ghost btn--pill" type="button" data-back-view>Discard</button>
-              <button class="btn btn--primary btn--pill" type="button" data-created="Discount created">Create discount</button>
+              <button class="btn btn--ghost" type="button" data-back-view>Discard</button>
+              <button class="btn btn--primary" type="button" data-created="Discount created">Create discount</button>
             </div>
           </section>
 
@@ -1263,8 +1279,8 @@
             </div>
 
             <div class="formfoot">
-              <button class="btn btn--ghost btn--pill" type="button" data-back-view>Discard</button>
-              <button class="btn btn--primary btn--pill" type="button" data-created="Voucher code created">Create voucher</button>
+              <button class="btn btn--ghost" type="button" data-back-view>Discard</button>
+              <button class="btn btn--primary" type="button" data-created="Voucher code created">Create voucher</button>
             </div>
           </section>
 
@@ -1416,9 +1432,9 @@
             </div>
 
             <div class="formfoot">
-              <button class="btn btn--ghost btn--pill" type="button" data-back-view>Discard</button>
-              <button class="btn btn--soft btn--pill" type="button" data-created="Test email sent to you">Send test email</button>
-              <button class="btn btn--primary btn--pill" type="button" data-created="Campaign sent">Send to <span id="camp-count-btn">1.284</span> customers</button>
+              <button class="btn btn--ghost" type="button" data-back-view>Discard</button>
+              <button class="btn btn--soft" type="button" data-created="Test email sent to you">Send test email</button>
+              <button class="btn btn--primary" type="button" data-created="Campaign sent">Send to <span id="camp-count-btn">1.284</span> customers</button>
             </div>
           </section>
 
@@ -1790,7 +1806,7 @@
                   <div class="srow">
                     <span class="label">Favicon</span>
                     <div>
-                      <div class="drop"><button class="btn btn--soft btn--pill" type="button">Select</button></div>
+                      <div class="drop"><button class="btn btn--soft" type="button">Select</button></div>
                       <p class="hint">Will be scaled down to 32 x 32px</p>
                     </div>
                   </div>
@@ -1808,7 +1824,7 @@
                   <div class="preview">
                     <div class="preview__inner">
                       <p>Improve clarity and conversions<br />with darker colors</p>
-                      <button class="btn btn--pill" type="button" id="brand-preview-btn">Add to cart</button>
+                      <button class="btn" type="button" id="brand-preview-btn">Add to cart</button>
                     </div>
                   </div>
                 </div>
@@ -1816,7 +1832,7 @@
                 <div class="card" data-store-view="img1" hidden>
                   <div class="srow">
                     <span class="label">Image</span>
-                    <div class="drop"><button class="btn btn--soft btn--pill" type="button">Select</button></div>
+                    <div class="drop"><button class="btn btn--soft" type="button">Select</button></div>
                   </div>
                   <hr class="rule" />
                   <div class="langs">
@@ -1836,7 +1852,7 @@
                 <div class="card" data-store-view="img2" hidden>
                   <div class="srow">
                     <span class="label">Image</span>
-                    <div class="drop"><button class="btn btn--soft btn--pill" type="button">Select</button></div>
+                    <div class="drop"><button class="btn btn--soft" type="button">Select</button></div>
                   </div>
                   <hr class="rule" />
                   <div class="langs">
@@ -1949,7 +1965,7 @@
           <!-- Actieknoppen per settings-pagina; app.js toont het blok waarvan
                data-set-tools gelijk is aan de open pagina. -->
           <div class="page-head__tools" data-set-tools="zones" hidden>
-            <button class="btn btn--primary btn--pill page-head__action" type="button">
+            <button class="btn btn--primary page-head__action" type="button">
               <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Add zone
             </button>
           </div>
@@ -1959,12 +1975,12 @@
               <option>connect existing</option>
               <option>myrestaurant.nl</option>
             </select>
-            <button class="btn btn--primary btn--pill page-head__action" type="button">
+            <button class="btn btn--primary page-head__action" type="button">
               <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>New domain
             </button>
           </div>
           <div class="page-head__tools" data-set-tools="language" hidden>
-            <button class="btn btn--primary btn--pill page-head__action" type="button">
+            <button class="btn btn--primary page-head__action" type="button">
               <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Add language
             </button>
           </div>
@@ -2181,8 +2197,8 @@
             </div>
 
             <div class="wiz__foot">
-              <button class="btn btn--ghost btn--pill" type="button" id="wiz-back" hidden>Back</button>
-              <button class="btn btn--primary btn--pill" type="button" id="wiz-next">Next</button>
+              <button class="btn btn--ghost" type="button" id="wiz-back" hidden>Back</button>
+              <button class="btn btn--primary" type="button" id="wiz-next">Next</button>
             </div>
           </div>
         </section>
@@ -2621,7 +2637,7 @@
                   <li class="feat"><svg class="icon" aria-hidden="true"><use href="#i-analytics"/></svg>Payouts and cashflow tracking</li>
                   <li class="feat"><svg class="icon" aria-hidden="true"><use href="#i-chargeback"/></svg>Easy chargeback management</li>
                 </ul>
-                <button class="btn btn--primary btn--pill" type="button"
+                <button class="btn btn--primary" type="button"
                         data-sub="payments-setup"
                         data-sub-title="Set up online payments"
                         data-sub-lead="Tell us about your store to start accepting payments">Complete account setup</button>
@@ -2937,7 +2953,7 @@
           <div class="card">
             <h3 class="card__title">Cancellation</h3>
             <p class="card__sub">Cancelling stops your subscription at the end of the current billing period. Your store goes offline, and your order history stays available for export for 90 days.</p>
-            <button class="btn btn--danger btn--pill card__action" type="button">Cancel plan</button>
+            <button class="btn btn--danger card__action" type="button">Cancel plan</button>
           </div>
         </section>
 
@@ -2984,6 +3000,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>

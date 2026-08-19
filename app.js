@@ -464,6 +464,44 @@
     });
   }
 
+  /* ---- Producten slepen om de volgorde te bepalen ------------------------
+     Pointer-events in plaats van HTML5 drag-and-drop: dat laatste doet op
+     touch niets. De greep vangt de pointer, zodat slepen doorgaat ook als je
+     buiten de rij komt. */
+  document.addEventListener("pointerdown", function (e) {
+    var greep = e.target.closest(".prod__handle");
+    if (!greep) return;
+
+    var rij = greep.closest(".prod");
+    var lijst = rij.parentElement;
+    e.preventDefault();
+    rij.classList.add("is-dragging");
+    greep.setPointerCapture(e.pointerId);
+
+    function verplaats(ev) {
+      /* De gesleepte rij staat op pointer-events:none, dus elementFromPoint
+         geeft de rij eronder terug in plaats van zichzelf. */
+      var onder = document.elementFromPoint(ev.clientX, ev.clientY);
+      var doel = onder && onder.closest(".prod");
+      if (!doel || doel === rij || doel.parentElement !== lijst) return;
+      var vak = doel.getBoundingClientRect();
+      var bovenHelft = ev.clientY < vak.top + vak.height / 2;
+      lijst.insertBefore(rij, bovenHelft ? doel : doel.nextSibling);
+    }
+
+    function stop(ev) {
+      rij.classList.remove("is-dragging");
+      greep.releasePointerCapture(ev.pointerId);
+      greep.removeEventListener("pointermove", verplaats);
+      greep.removeEventListener("pointerup", stop);
+      greep.removeEventListener("pointercancel", stop);
+    }
+
+    greep.addEventListener("pointermove", verplaats);
+    greep.addEventListener("pointerup", stop);
+    greep.addEventListener("pointercancel", stop);
+  });
+
   /* Tabs zitten op meerdere plekken (producten, billing), dus één gedelegeerde
      afhandeling binnen de eigen .tabs-groep. */
   document.addEventListener("click", function (e) {
