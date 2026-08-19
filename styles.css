@@ -1933,7 +1933,8 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .set-nav .nav__item { border-radius: 0; }
   .set-nav li + li .nav__item { border-top: 1px solid var(--border); }
 
-  .overlay__close { top: 14px; right: 10px; }
+  /* Boven de balk en op dezelfde middenas: 8 + halve knop = halve balk. */
+  .overlay__close { top: 8px; right: 10px; z-index: 3; margin-bottom: -48px; }
 
   /* Niveau 1: de lijst. Niveau 2: de pagina met terug-knop. */
   [data-settings-view="list"] .set-main { display: none; }
@@ -1941,10 +1942,17 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
 
   .set-main { padding: 16px 16px 96px; }
   /* Terug is een gewone tekstlink boven de titel, geen balk. */
+  /* De hele regel blijft staan, niet alleen het kruisje: terug naar
+     Settings moet bereikbaar blijven hoe ver je ook doorscrollt. De
+     negatieve marges trekken de balk tot de randen van de overlay. */
   .set-back {
-    display: inline-flex; align-items: center; gap: 4px;
-    margin-bottom: 20px;
-    padding: 4px 6px 4px 0;
+    position: sticky; top: 0; z-index: 2;
+    display: flex; align-items: center; gap: 4px;
+    min-height: 56px;
+    width: calc(100% + 32px);
+    margin: -16px -16px 8px;
+    padding: 0 56px 0 16px;
+    background: var(--bg-overlay);
     font-size: var(--fs-md); font-weight: 500;
     color: var(--text-muted);
   }
