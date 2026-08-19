@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
 
@@ -2916,14 +2916,16 @@
             <p class="card__foot">Your payment method is charged on the first of each month.</p>
           </div>
 
-          <div class="card card--flush">
-            <div class="card__pad card__headrow">
+          <div class="card">
+            <div class="card__headrow">
               <h3 class="card__title">Past bills</h3>
               <button class="icon-btn" type="button" aria-label="More actions">
                 <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
               </button>
             </div>
-
+            <!-- Een paneel met een eigen titel zit in een omlijnd vak eronder,
+                 zodat de titel bij de kaart hoort en de lijst een eigen kader krijgt. -->
+            <div class="panel panel--inset">
             <div class="panel__head">
               <div class="tabs">
                 <button class="tab is-active" type="button">All</button>
@@ -2967,6 +2969,7 @@
                   <tr><td>May 18, 2026</td><td>€ 18,00</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
                 </tbody>
               </table>
+            </div>
             </div>
           </div>
 
@@ -3020,6 +3023,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
