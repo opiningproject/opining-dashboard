@@ -975,16 +975,17 @@ select.input {
 .tab__count { margin-left: 6px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .tab.is-active .tab__count { color: var(--text); }
 
-/* Zoeken en filteren als één omrand groepje rechts in de panel-kop. */
-.panel__tools {
-  display: flex; align-items: center; gap: 2px;
+/* Zoeken en filteren zitten in één glyph, dus één knop rechts in de
+   panel-kop. Het icoon is 31x13, dus breder dan hoog: vandaar een
+   eigen maatklasse in plaats van de vierkante 20 van .icon. */
+.panel__tool {
+  width: auto; height: 34px;
   margin-left: auto;
-  padding: 2px;
+  padding: 0 12px;
   border: 1px solid var(--border);
   border-radius: var(--r-full);
 }
-.panel__tools .icon-btn { width: 30px; height: 30px; border-radius: var(--r-full); }
-.panel__tools .icon { width: 17px; height: 17px; }
+.icon--wide { width: 26px; height: 11px; }
 
 /* Tweeregelige cel: titel met een toelichting eronder. */
 .cell { display: flex; flex-direction: column; gap: 2px; }

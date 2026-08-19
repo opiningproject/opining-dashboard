@@ -105,6 +105,8 @@
     <symbol id="i-unsaved" viewBox="0 0 16 16"><path style="stroke-width:1.2" d="M2 5.51172C2 3.30258 3.79086 1.51172 6 1.51172H10C12.2091 1.51172 14 3.30258 14 5.51172V9.41876C14 11.1258 12.6141 12.5085 10.907 12.5045C9.73828 12.5017 8.66403 13.168 8.13888 14.2122C8.08166 14.3259 7.91839 14.327 7.8609 14.2133C7.33382 13.1715 6.26398 12.5117 5.09642 12.5117C3.38631 12.5117 2 11.1254 2 9.4153V5.51172Z"/><circle cx="8" cy="10" r="1" style="fill:currentColor;stroke:none"/><rect x="7" y="4" width="2" height="4" rx="1" style="fill:currentColor;stroke:none"/></symbol>
     <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.6v5M12 16.2h.01"/></symbol>
     <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 7h16M7 12h10M10 17h4"/></symbol>
+    <!-- Zoeken en filteren als één glyph; 31x13-grid, dus niet vierkant. -->
+    <symbol id="i-search-filter" viewBox="0 0 31 13"><circle cx="6" cy="6" r="5.2" style="stroke-width:1.6"/><path d="M10.9504 11.8321C11.2654 12.1419 11.7761 12.1419 12.0911 11.8321C12.4061 11.5223 12.4061 11.0199 12.0911 10.7101L11.5208 11.2711L10.9504 11.8321ZM10.1094 9.88281L9.53904 10.4438L10.9504 11.8321L11.5208 11.2711L12.0911 10.7101L10.6797 9.32181L10.1094 9.88281Z" style="fill:currentColor;stroke:none"/><path d="M18 1H30" style="stroke-width:1.6"/><path d="M20.2852 6.13281L27.7137 6.13281" style="stroke-width:1.6"/><path d="M22.5664 11L25.4235 11" style="stroke-width:1.6"/></symbol>
     <symbol id="i-caret" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5" fill="none"/></symbol>
   </svg>
 
@@ -435,12 +437,10 @@
                   <button class="tab" type="button">Last 30 days</button>
                   <button class="tab" type="button">All</button>
                 </div>
-                <div class="panel__tools">
-                  <button class="icon-btn" type="button" aria-label="Search archive">
-                    <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-                  <button class="icon-btn" type="button" aria-label="Filter archive">
-                    <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
-                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter archive">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
+              </div>
               </div>
 
               <div class="table-wrap">
@@ -599,12 +599,10 @@
                   <button class="tab" type="button">New</button>
                   <button class="tab" type="button">Inactive</button>
                 </div>
-                <div class="panel__tools">
-                  <button class="icon-btn" type="button" aria-label="Search customers"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-                  <button class="icon-btn" type="button" aria-label="Filter customers"><svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
-                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter customers">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
               </div>
-
               <div class="table-wrap">
                 <table class="table table--stack">
                   <thead>
@@ -711,12 +709,10 @@
                   <button class="tab" type="button">On delivery <span class="tab__count">2</span></button>
                   <button class="tab" type="button">Offline <span class="tab__count">1</span></button>
                 </div>
-                <div class="panel__tools">
-                  <button class="icon-btn" type="button" aria-label="Search deliverers"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-                  <button class="icon-btn" type="button" aria-label="Filter deliverers"><svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
-                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter deliverers">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
               </div>
-
               <div class="table-wrap">
                 <table class="table table--stack">
                   <thead>
@@ -795,12 +791,10 @@
                   <button class="tab" type="button">In transit</button>
                   <button class="tab" type="button">Failed</button>
                 </div>
-                <div class="panel__tools">
-                  <button class="icon-btn" type="button" aria-label="Search payouts"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-                  <button class="icon-btn" type="button" aria-label="Filter payouts"><svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
-                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter payouts">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
               </div>
-
               <div class="table-wrap">
                 <table class="table table--stack">
                   <thead>
@@ -882,12 +876,10 @@
                   <button class="tab" type="button">Running <span class="tab__count">5</span></button>
                   <button class="tab" type="button">Ended <span class="tab__count">1</span></button>
                 </div>
-                <div class="panel__tools">
-                  <button class="icon-btn" type="button" aria-label="Search discounts">
-                    <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-                  <button class="icon-btn" type="button" aria-label="Filter discounts">
-                    <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
-                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter discounts">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
+              </div>
               </div>
 
               <div class="table-wrap">
@@ -1051,12 +1043,10 @@
                   <button class="tab" type="button">Scheduled <span class="tab__count">1</span></button>
                   <button class="tab" type="button">Expired <span class="tab__count">1</span></button>
                 </div>
-                <div class="panel__tools">
-                  <button class="icon-btn" type="button" aria-label="Search vouchers">
-                    <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-                  <button class="icon-btn" type="button" aria-label="Filter vouchers">
-                    <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
-                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter vouchers">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
+              </div>
               </div>
 
               <div class="table-wrap">
@@ -1219,12 +1209,10 @@
                   <button class="tab" type="button">Scheduled <span class="tab__count">1</span></button>
                   <button class="tab" type="button">Draft <span class="tab__count">1</span></button>
                 </div>
-                <div class="panel__tools">
-                  <button class="icon-btn" type="button" aria-label="Search campaigns">
-                    <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-                  <button class="icon-btn" type="button" aria-label="Filter campaigns">
-                    <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
-                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter campaigns">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
+              </div>
               </div>
 
               <div class="table-wrap">
@@ -2423,12 +2411,10 @@
                 <button class="tab is-active" type="button">Active</button>
                 <button class="tab" type="button">Inactive</button>
               </div>
-              <div class="panel__tools">
-                <button class="icon-btn" type="button" aria-label="Search zones">
-                  <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-                <button class="icon-btn" type="button" aria-label="Filter zones">
-                  <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
-              </div>
+              <button class="icon-btn panel__tool" type="button" aria-label="Search and filter zones">
+                <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+              </button>
+            </div>
             </div>
 
             <div class="table-wrap">
