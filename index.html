@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=16" />
+  <link rel="stylesheet" href="styles.css?v=17" />
 </head>
 <body>
 
@@ -354,7 +354,7 @@
           <!-- ---------- VIEW: orders ---------- -->
           <section class="view" data-view="orders" hidden>
 
-            <div class="panel">
+            <div class="panel panel--scroll">
               <div class="panel__head">
                 <!-- Statusfilter in plaats van tabs: één knop die de lijst
                      inperkt, met een vinkje bij wat er aanstaat. -->
@@ -460,12 +460,20 @@
                   </tbody>
                 </table>
               </div>
+
+              <nav class="panel__foot pager" aria-label="Order pages">
+                <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled>
+                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+                <button class="icon-btn pager__btn" type="button" aria-label="Next page">
+                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+                <p class="pager__count"><b>1&ndash;8</b> of 12</p>
+              </nav>
             </div>
           </section>
 
           <!-- ---------- VIEW: archive ---------- -->
           <section class="view" data-view="archive" hidden>
-            <div class="panel">
+            <div class="panel panel--scroll">
               <div class="panel__head">
                 <div class="tabs">
                   <button class="tab is-active" type="button">Today</button>
@@ -3045,6 +3053,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=16"></script>
+  <script src="app.js?v=17"></script>
 </body>
 </html>

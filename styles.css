@@ -67,6 +67,9 @@
   --sidebar-w:   264px;
   --drawer-w:    296px;
   --topbar-h:    56px;
+  /* Wat er boven en onder een scrollend paneel staat: topbar, paginakop en
+     de onderrand van de contentkolom. */
+  --panel-reserve: 210px;
   --content-max: 900px;
   --overlay-max: 1120px;
   --set-nav-w:   290px;
@@ -1163,6 +1166,22 @@ select.input {
 .badge--sched   { background: #f1e8fa; color: #6b3fa8; }
 
 /* Voet van een paneel: zelfde inspringing als de tabelcellen. */
+/* Lange lijsten: alleen de rijen schuiven. De kolomkoppen blijven boven
+   staan en de paginering onderaan, zodat je bij het scrollen niet het
+   zicht verliest op wat een kolom betekent of waar je bent.
+   De hoogte is begrensd op wat er onder de paginakop overblijft. */
+.panel--scroll {
+  display: flex; flex-direction: column;
+  max-height: calc(100dvh - var(--panel-reserve));
+}
+.panel--scroll .table-wrap { flex: 1 1 auto; overflow: auto; }
+.panel--scroll thead th {
+  position: sticky; top: 0; z-index: 1;
+  /* De grijze kop moet de rijen eronder afdekken tijdens het schuiven. */
+  background: var(--gray-50);
+}
+.panel--scroll .panel__foot { flex: 0 0 auto; }
+
 .panel__foot { display: flex; align-items: center; gap: 10px; padding: 14px 22px; border-top: 1px solid var(--border); }
 
 /* Paginering. De actieve richting krijgt accentkleur, de doodlopende
