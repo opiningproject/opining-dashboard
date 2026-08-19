@@ -1091,16 +1091,16 @@ select.input {
    van een rij tabs. Het vinkje zegt wat er aanstaat. */
 .sfilter { position: relative; flex: 0 0 auto; }
 .sfilter__btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 34px; padding: 0 8px 0 12px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--r-md);
-  background: var(--bg-surface);
-  font-size: var(--fs-md); font-weight: 500;
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 32px; padding: 0 6px 0 8px;
+  /* Geen rand: de knop is een keuze in de kop, geen los element. */
+  border-radius: var(--r-sm);
+  font-size: var(--fs-md); font-weight: 600;
   color: var(--text-strong);
 }
-.sfilter__btn:hover { background: var(--gray-50); }
-.sfilter__caret { width: 15px; height: 15px; color: var(--text-muted); }
+.sfilter__btn:hover { background: var(--bg-hover); }
+/* Kleine glyph op een 24-grid: zonder extra lijndikte valt hij weg. */
+.sfilter__caret { width: 18px; height: 18px; stroke-width: 2.2; color: var(--text-muted); }
 .sfilter__menu {
   position: absolute; top: calc(100% + 6px); left: 0;
   z-index: 20;
