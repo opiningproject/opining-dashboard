@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=26" />
+  <link rel="stylesheet" href="styles.css?v=27" />
 </head>
 <body>
 
@@ -103,6 +103,7 @@
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol>
     <symbol id="i-user-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="10" r="2.7"/><path d="M6.6 18.6a6 6 0 0 1 10.8 0"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M10 20.4H6.2a1.8 1.8 0 0 1-1.8-1.8V5.4a1.8 1.8 0 0 1 1.8-1.8H10M16.2 16.2 20.4 12l-4.2-4.2M20.4 12H9.6"/></symbol>
     <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.6 18h4.8M10.2 20.8h3.6M12 3.4a5.4 5.4 0 0 1 3.2 9.7c-.6.5-1 1.2-1 2H9.8c0-.8-.4-1.5-1-2A5.4 5.4 0 0 1 12 3.4Z"/></symbol>
     <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4.2 21 19.4H3zM12 10v4M12 16.6h.01"/></symbol>
     <symbol id="i-unsaved" viewBox="0 0 16 16"><path style="stroke-width:1.2" d="M2 5.51172C2 3.30258 3.79086 1.51172 6 1.51172H10C12.2091 1.51172 14 3.30258 14 5.51172V9.41876C14 11.1258 12.6141 12.5085 10.907 12.5045C9.73828 12.5017 8.66403 13.168 8.13888 14.2122C8.08166 14.3259 7.91839 14.327 7.8609 14.2133C7.33382 13.1715 6.26398 12.5117 5.09642 12.5117C3.38631 12.5117 2 11.1254 2 9.4153V5.51172Z"/><circle cx="8" cy="10" r="1" style="fill:currentColor;stroke:none"/><rect x="7" y="4" width="2" height="4" rx="1" style="fill:currentColor;stroke:none"/></symbol>
@@ -146,9 +147,22 @@
       </div>
 
       <div class="topbar__actions">
-        <button class="icon-btn" type="button" aria-label="Account">
-          <svg class="icon" aria-hidden="true"><use href="#i-user-circle"/></svg>
-        </button>
+        <!-- Accountmenu: hetzelfde uitklappatroon als het statusfilter. -->
+        <div class="umenu">
+          <button class="icon-btn umenu__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Account">
+            <svg class="icon" aria-hidden="true"><use href="#i-user-circle"/></svg>
+          </button>
+          <div class="umenu__list" role="menu" hidden>
+            <p class="umenu__head">
+              <span class="umenu__name">Serdar Orman</span>
+              <span class="umenu__mail">serdarorman74@gmail.com</span>
+            </p>
+            <button class="umenu__item" type="button" role="menuitem">
+              <svg class="icon" aria-hidden="true"><use href="#i-user-circle"/></svg>Account</button>
+            <button class="umenu__item umenu__item--out" type="button" role="menuitem">
+              <svg class="icon" aria-hidden="true"><use href="#i-logout"/></svg>Logout</button>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -1971,13 +1985,13 @@
                 <div class="card card--empty" data-store-view="faq" hidden>
                   <svg class="icon empty__icon" aria-hidden="true"><use href="#i-faq"/></svg>
                   <h2 class="card__title">Faq</h2>
-                  <p class="card__sub">Deze sectie is nog niet uitgewerkt.</p>
+                  <p class="card__sub">This section has not been built yet.</p>
                 </div>
 
                 <div class="card card--empty" data-store-view="socials" hidden>
                   <svg class="icon empty__icon" aria-hidden="true"><use href="#i-socials"/></svg>
                   <h2 class="card__title">Socials</h2>
-                  <p class="card__sub">Deze sectie is nog niet uitgewerkt.</p>
+                  <p class="card__sub">This section has not been built yet.</p>
                 </div>
               </div>
             </div>
@@ -1987,7 +2001,7 @@
             <div class="card card--empty">
               <svg class="icon empty__icon" id="empty-icon" aria-hidden="true"><use href="#i-home"/></svg>
               <h2 class="card__title" id="empty-title">Page</h2>
-              <p class="card__sub">Deze view is nog niet uitgewerkt — de navigatie eromheen werkt wel.</p>
+              <p class="card__sub">This page has not been built yet — the navigation around it works.</p>
             </div>
           </section>
         </div>
@@ -2042,6 +2056,16 @@
           <li><a class="nav__item" href="#" data-set="notifications" data-title="Notifications" data-icon="i-bell">
             <svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Notifications</span><svg class="icon nav__chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></a></li>
         </ul>
+
+        <!-- Accountrij onderaan de lijst: hoort bij de persoon, niet bij
+             de winkel, vandaar de scheiding van de instellingen erboven. -->
+        <a class="nav__item setuser" href="#" data-set="account" data-title="Account" data-icon="i-user-circle">
+          <span class="setuser__avatar" aria-hidden="true">SO</span>
+          <span class="setuser__text">
+            <span class="setuser__name">Serdar Orman</span>
+            <span class="setuser__mail">serdarorman74@gmail.com</span>
+          </span>
+        </a>
       </aside>
 
       <section class="set-main">
@@ -3077,7 +3101,7 @@
           <div class="card card--empty">
             <svg class="icon empty__icon" id="set-empty-icon" aria-hidden="true"><use href="#i-store"/></svg>
             <h3 class="card__title" id="set-empty-title">Page</h3>
-            <p class="card__sub">Deze settings-pagina is nog niet uitgewerkt.</p>
+            <p class="card__sub">This settings page has not been built yet.</p>
           </div>
         </section>
       </section>
@@ -3116,6 +3140,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=26"></script>
+  <script src="app.js?v=27"></script>
 </body>
 </html>

@@ -1095,6 +1095,50 @@ select.input {
 
 /* Statusfilter: één compacte knop met een uitklapbare lijst, in plaats
    van een rij tabs. Het vinkje zegt wat er aanstaat. */
+/* Accountrij onderaan de settingslijst: de persoon, niet de winkel. */
+.setuser { gap: 12px; margin-top: 8px; padding: 12px; border-top: 1px solid var(--border); border-radius: 0; }
+.setuser__avatar {
+  display: grid; place-items: center;
+  width: 32px; height: 32px; flex: 0 0 auto;
+  border-radius: var(--r-md);
+  background: var(--accent); color: #fff;
+  font-size: var(--fs-sm); font-weight: 600;
+}
+.setuser__text { display: flex; flex-direction: column; min-width: 0; }
+.setuser__name { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.setuser__mail { font-size: var(--fs-sm); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Accountmenu in de header. */
+.umenu { position: relative; }
+.umenu__list {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  z-index: 60;
+  min-width: 232px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-md);
+  display: flex; flex-direction: column;
+}
+.umenu__list[hidden] { display: none; }
+.umenu__head { display: flex; flex-direction: column; gap: 2px; padding: 8px 10px 12px; border-bottom: 1px solid var(--border); margin-bottom: 6px; }
+.umenu__name { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
+.umenu__mail { font-size: var(--fs-sm); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; }
+.umenu__item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px;
+  border-radius: var(--r-sm);
+  text-align: left;
+  font-size: var(--fs-md);
+  color: var(--text-strong);
+}
+.umenu__item:hover { background: var(--bg-hover); }
+.umenu__item .icon { width: 18px; height: 18px; color: var(--text-muted); }
+/* Uitloggen is de enige onomkeerbare actie hier. */
+.umenu__item--out, .umenu__item--out .icon { color: var(--danger); }
+.umenu__item--out:hover { background: #fdf1f0; }
+
 .sfilter { position: relative; flex: 0 0 auto; }
 .sfilter__btn {
   display: inline-flex; align-items: center; gap: 4px;

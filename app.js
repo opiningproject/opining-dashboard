@@ -221,10 +221,10 @@
   }
 
   function sluitFilterMenus(behalve) {
-    document.querySelectorAll(".fmenu, .fchip__menu, .sfilter__menu").forEach(function (m) {
+    document.querySelectorAll(".fmenu, .fchip__menu, .sfilter__menu, .umenu__list").forEach(function (m) {
       if (m !== behalve) m.hidden = true;
     });
-    document.querySelectorAll(".psearch__filter, .fchip__label, .sfilter__btn").forEach(function (b) {
+    document.querySelectorAll(".psearch__filter, .fchip__label, .sfilter__btn, .umenu__btn").forEach(function (b) {
       b.setAttribute("aria-expanded", "false");
     });
   }
@@ -315,6 +315,31 @@
       var blok1 = alles.closest(".psearch");
       blok1.querySelectorAll(".fchip").forEach(function (c) { c.remove(); });
       syncClearAll(blok1);
+      return;
+    }
+
+    /* Accountmenu in de header. */
+    var uknop = e.target.closest(".umenu__btn");
+    if (uknop) {
+      var ul = uknop.nextElementSibling;
+      var dichtU = ul.hidden;
+      sluitFilterMenus(dichtU ? ul : null);
+      ul.hidden = !dichtU;
+      uknop.setAttribute("aria-expanded", String(dichtU));
+      return;
+    }
+
+    var uitloggen = e.target.closest(".umenu__item--out");
+    if (uitloggen) { sluitFilterMenus(); showToast("Signed out"); return; }
+
+    /* Account opent de settings-overlay op de accountpagina. */
+    var accountItem = e.target.closest(".umenu__item");
+    if (accountItem) {
+      sluitFilterMenus();
+      openSettings();
+      var rij = setNav.querySelector('[data-set="account"]');
+      activate(rij, setNav);
+      showSetPage("account", "Account", "i-user-circle");
       return;
     }
 
