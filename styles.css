@@ -68,6 +68,8 @@
   --drawer-w:    296px;
   --topbar-h:    56px;
   --content-max: 900px;
+  /* Bovenruimte van de contentkolom, om dezelfde reden als de onderruimte. */
+  --content-pad-t: 30px;
   /* Onderruimte van de contentkolom. Sticky offsets rekenen vanaf de
      binnenkant daarvan, dus een sticky voet heeft die waarde nodig om de
      schermrand te halen. */
@@ -306,7 +308,7 @@ legend { padding: 0; }
 .content {
   min-width: 0;
   overflow-y: auto;
-  padding: 30px 24px var(--content-pad-b);
+  padding: var(--content-pad-t) 24px var(--content-pad-b);
 }
 .content__inner { max-width: var(--content-max); margin-inline: auto; }
 
@@ -1183,7 +1185,10 @@ select.input {
 .panel--scroll .table { border-collapse: separate; border-spacing: 0; }
 .panel--scroll .table-wrap { overflow: visible; }
 .panel--scroll thead th {
-  position: sticky; top: 0; z-index: 1;
+  /* Zelfde correctie als bij de voet: de offset rekent vanaf de
+     binnenkant van de contentkolom, dus de padding eraf om de kop
+     tegen de header aan te leggen. */
+  position: sticky; top: calc(-1 * var(--content-pad-t)); z-index: 1;
   background: var(--gray-50);
 }
 .panel--scroll .panel__foot {
@@ -1905,7 +1910,7 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .srow { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 12px 0; }
   .srow > .label { padding-top: 0; }
 
-  .content { --content-pad-b: 48px; padding: 22px 16px var(--content-pad-b); }
+  .content { --content-pad-t: 22px; --content-pad-b: 48px; padding: var(--content-pad-t) 16px var(--content-pad-b); }
   .card { padding: 18px 16px 20px; }
   .field-row { grid-template-columns: minmax(0, 1fr); }
 
