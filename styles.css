@@ -1462,9 +1462,16 @@ select.input {
 .fee__line { display: flex; align-items: center; gap: 12px; }
 .fee__from { color: var(--text); }
 
-/* De sluitknop van de overlay zweeft rechtsboven over de inhoud heen;
-   paginaknoppen in de settings-kop moeten daar links van blijven. */
-.set-main .page-head { padding-right: 48px; }
+/* De sluitknop zweeft rechtsboven over de inhoud heen. Alleen zolang de
+   kolom binnen bereik van de knop ligt, staat hij bovenop de kop en moet
+   die ruimte vrijhouden. Is het scherm breder, dan staat hij náást de kolom
+   en mag de kop tot de rand doorlopen, in lijn met het paneel eronder. De
+   grens ligt boven de rekensom (1120 + 68), want de mediaquery telt de
+   scrollbalk van de overlay zelf niet mee. Onder 900px staat de knop op de
+   terugbalk en is de kop sowieso vrij. */
+@media (min-width: 901px) and (max-width: 1259px) {
+  .set-main .page-head { padding-right: 48px; }
+}
 
 /* Kruimelpad in de settings-kop: gedimd pagina-icoon dat terugleidt,
    met een chevron naar de naam van de subpagina. */
