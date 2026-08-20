@@ -1224,13 +1224,18 @@ select.input {
    zijwaarts schuift, anders weet je bij kolom vier niet meer welke
    bestelling je leest. De hoekcel plakt in beide richtingen. */
 .table--orders th:first-child,
+.table--archive th:first-child,
+.table--archive td:first-child,
 .table--orders td:first-child {
   position: sticky; left: 0; z-index: 2;
   background: var(--bg-surface);
 }
-.panel--scroll .table--orders thead th:first-child { z-index: 3; background: var(--gray-50); }
+.panel--scroll .table--orders thead th:first-child,
+.panel--scroll .table--archive thead th:first-child { z-index: 3; background: var(--gray-50); }
 /* De rand verschijnt pas als er daadwerkelijk iets achter wegschuift. */
 .table-wrap.is-scrolled .table--orders th:first-child,
+.table-wrap.is-scrolled .table--archive th:first-child,
+.table-wrap.is-scrolled .table--archive td:first-child,
 .table-wrap.is-scrolled .table--orders td:first-child {
   border-right: 1px solid var(--border);
   box-shadow: 6px 0 8px -6px rgba(18, 22, 28, .16);
@@ -1838,36 +1843,6 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tile:nth-child(odd) { border-left: 0; }
   .tile:nth-child(n+3) { border-top: 1px solid var(--border); }
-  /* ------------------------------------------------------------------
-     Orders & Archive op mobiel: geen horizontale scroll. De tabel wordt
-     een lijst van rijen; de kolomkoppen vervallen omdat elke waarde op
-     zijn plek in de rij al leesbaar is.
-     ------------------------------------------------------------------ */
-  .table--archive, .table--archive tbody, .table--archive tr, .table--archive td {
-    display: block;
-    width: 100%;
-  }
-  .table--archive thead { display: none; }
-
-  .table--archive tr {
-    display: flex; align-items: center; gap: 14px;
-    padding: 14px 16px;
-    border-top: 1px solid var(--border);
-  }
-  .table--archive td {
-    width: auto;
-    padding: 0;
-    border: 0;
-    white-space: normal;
-  }
-
-  /* Archive heeft geen tijdkolom: bestemming links, bedrag rechts. */
-  .table--archive td:nth-child(1) { flex: 1 1 auto; min-width: 0; }
-  .table--archive td:nth-child(2) { flex: 0 0 auto; margin-left: auto; }
-  /* Ook hier vervalt de menuknop: die ruimte is nodig om het adres op
-     één regel te houden. Acties horen op het detailscherm. */
-  .table--archive td:nth-child(3) { display: none; }
-
   .cell__title { overflow-wrap: anywhere; }
 
   .panel__foot { padding: 14px 16px; }
