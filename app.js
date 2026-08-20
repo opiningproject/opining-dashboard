@@ -9,7 +9,8 @@
      6. Toast                     → bevestiging na opslaan
      7. Zoekpaneel                → <html data-search>
      8. Paginering                → <table data-page>
-     9. Toetsenbord
+     9. Tabstreep                 → scrollindicator onder .tabs
+     10. Toetsenbord
    In een SPA vervang je §2 en §3 door de router; de rest blijft 1-op-1.
    ========================================================================== */
 (function () {
@@ -1380,7 +1381,46 @@
 
 
   /* ========================================================================
-     9. TOETSENBORD
+     9. TABSTREEP — laat zien dat er meer tabs zijn dan er passen
+     De rij tabs is een scroller zonder systeem-scrollbalk (die verschijnt op
+     iOS niet en is op desktop te grof). In plaats daarvan komt er een streepje
+     onder de rij, met een duim die meebeweegt. Het vakje eromheen wordt hier
+     gebouwd, zodat de HTML gewoon een <div class="tabs"> blijft.
+     ======================================================================== */
+  document.querySelectorAll(".tabs").forEach(function (tabs) {
+    var vak = document.createElement("div");
+    vak.className = "tabsbox";
+    tabs.parentNode.insertBefore(vak, tabs);
+    vak.appendChild(tabs);
+
+    var baan = document.createElement("div");
+    baan.className = "tabscroll";
+    baan.setAttribute("aria-hidden", "true");
+    var duim = document.createElement("span");
+    duim.className = "tabscroll__thumb";
+    baan.appendChild(duim);
+    vak.appendChild(baan);
+
+    function teken() {
+      var zichtbaar = tabs.clientWidth;
+      var totaal = tabs.scrollWidth;
+      /* Past alles, dan valt er niets te wijzen. */
+      baan.hidden = !zichtbaar || totaal <= zichtbaar + 1;
+      if (baan.hidden) return;
+      duim.style.width = (zichtbaar / totaal * 100) + "%";
+      duim.style.transform = "translateX(" + (tabs.scrollLeft * zichtbaar / totaal) + "px)";
+    }
+
+    tabs.addEventListener("scroll", teken);
+    /* Vangt ook het moment waarop de pagina zichtbaar wordt: dan pas heeft de
+       rij een breedte. */
+    if (window.ResizeObserver) new ResizeObserver(teken).observe(tabs);
+    window.addEventListener("resize", teken);
+    teken();
+  });
+
+  /* ========================================================================
+     10. TOETSENBORD
      ======================================================================== */
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {

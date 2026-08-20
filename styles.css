@@ -686,6 +686,16 @@ select.input {
 .panel__filter { width: 36px; height: 36px; margin-left: auto; border: 1px solid var(--border); border-radius: var(--r-full); }
 
 
+/* Passen de tabs niet in de kop, dan laat een streepje eronder zien dat er
+   meer staat en hoe ver je bent — zonder de scrollbalk van het systeem, die
+   op iOS toch niet verschijnt. app.js §9 bouwt het vakje en tekent de duim. */
+.tabsbox { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.tabscroll { height: 3px; border-radius: var(--r-full); background: var(--gray-100); }
+.tabscroll__thumb {
+  display: block; height: 100%;
+  border-radius: var(--r-full);
+  background: var(--gray-300);
+}
 .tabs { display: flex; align-items: center; gap: 4px; min-width: 0; overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
 .tab {
@@ -1001,7 +1011,7 @@ select.input {
    Geen hidden-attribuut: de klasse op de kop bepaalt wat er staat. */
 .psearch { display: none; flex-direction: column; gap: 12px; width: 100%; }
 .panel__head.is-searching { flex-direction: column; align-items: stretch; padding: 14px; }
-.panel__head.is-searching .tabs,
+.panel__head.is-searching .tabsbox,
 .panel__head.is-searching .panel__tool { display: none; }
 .panel__head.is-searching .psearch { display: flex; }
 
