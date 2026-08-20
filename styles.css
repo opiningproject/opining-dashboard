@@ -1230,6 +1230,23 @@ select.input {
 .cell__title { font-weight: 500; color: var(--text-strong); }
 .cell__meta { font-size: var(--fs-sm); color: var(--text-muted); }
 
+/* Betaalmethode in een lijst: een tegeltje met het merkkortje ervoor. Een
+   echte logo-set komt van de betaalprovider; tot die tijd draagt het kortje
+   de herkenning. */
+.pm { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.pm__mark {
+  display: grid; place-items: center;
+  width: 34px; height: 24px; flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--bg-surface);
+  font-size: 10px; font-weight: 700; letter-spacing: .02em;
+  color: var(--text-muted);
+}
+.pm__name { font-weight: 500; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* De ID-kolom is een verwijzing, geen leeswerk: smal en rustig. */
+.table--methods td:first-child { width: 1%; white-space: nowrap; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
 /* Tijdkolom. Het getal draagt de nadruk, de eenheid blijft rustig. */
 .when { display: flex; align-items: center; gap: 8px; color: var(--text); }
 .when b { font-weight: 600; color: var(--text-strong); }

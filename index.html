@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=51" />
+  <link rel="stylesheet" href="styles.css?v=52" />
 </head>
 <body>
 
@@ -2356,6 +2356,133 @@
           </div>
         </section>
 
+        <!-- ---------- SETTINGS-SUB: betaalmethoden ---------- -->
+        <!-- Zelfde opbouw als Past bills: titel in de kaart, lijst in een
+             eigen omlijnd vak eronder. -->
+        <section class="view" data-set-sub="payment-methods" hidden>
+          <div class="card">
+            <div class="card__headrow">
+              <h3 class="card__title">Payment methods</h3>
+              <a class="link" href="#">Learn more</a>
+            </div>
+
+            <div class="panel panel--inset">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All</button>
+                  <button class="tab" type="button">Enabled</button>
+                  <button class="tab" type="button">Disabled</button>
+                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter payment methods">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
+                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
+                <div class="psearch" data-filters="Status:Enabled|Disabled;Customer fee:No fee|Paid">
+                  <div class="psearch__top">
+                    <span class="psearch__field">
+                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                      <input type="search" placeholder="search" aria-label="Search this list" />
+                    </span>
+                    <button class="psearch__cancel" type="button">Cancel</button>
+                  </div>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                    <button class="fclear" type="button" hidden>Clear All</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table class="table table--stack table--methods" data-page="5">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Payment method</th>
+                      <th scope="col">Customer fee</th>
+                      <th scope="col">Enabled</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td data-label="ID">10</td>
+                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">iD</span><span class="pm__name">iDEAL</span></span></td>
+                      <td data-label="Customer fee">&euro; 0,25</td>
+                      <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept iDEAL</span></label></td>
+                    </tr>
+                    <tr>
+                      <td data-label="ID">136</td>
+                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">SCT</span><span class="pm__name">Bank transfer (SCT)</span></span></td>
+                      <td data-label="Customer fee">No fee</td>
+                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept bank transfer</span></label></td>
+                    </tr>
+                    <tr>
+                      <td data-label="ID">138</td>
+                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">PP</span><span class="pm__name">PayPal</span></span></td>
+                      <td data-label="Customer fee">&euro; 0,25</td>
+                      <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept PayPal</span></label></td>
+                    </tr>
+                    <tr>
+                      <td data-label="ID">436</td>
+                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">BC</span><span class="pm__name">Bancontact</span></span></td>
+                      <td data-label="Customer fee">&euro; 0,25</td>
+                      <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Bancontact</span></label></td>
+                    </tr>
+                    <tr>
+                      <td data-label="ID">706</td>
+                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">VM</span><span class="pm__name">Visa / Mastercard</span></span></td>
+                      <td data-label="Customer fee">No fee</td>
+                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Visa and Mastercard</span></label></td>
+                    </tr>
+                    <tr>
+                      <td data-label="ID">710</td>
+                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">CB</span><span class="pm__name">Carte Bleue</span></span></td>
+                      <td data-label="Customer fee">No fee</td>
+                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Carte Bleue</span></label></td>
+                    </tr>
+                    <tr>
+                      <td data-label="ID">712</td>
+                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">MA</span><span class="pm__name">Maestro</span></span></td>
+                      <td data-label="Customer fee">No fee</td>
+                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Maestro</span></label></td>
+                    </tr>
+                    <tr>
+                      <td data-label="ID">739</td>
+                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">RI</span><span class="pm__name">Riverty</span></span></td>
+                      <td data-label="Customer fee">No fee</td>
+                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Riverty</span></label></td>
+                    </tr>
+                    <tr>
+                      <td data-label="ID">1645</td>
+                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">YG</span><span class="pm__name">YourGift</span></span></td>
+                      <td data-label="Customer fee">No fee</td>
+                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept YourGift</span></label></td>
+                    </tr>
+                    <tr>
+                      <td data-label="ID">1702</td>
+                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">PS</span><span class="pm__name">Postepay</span></span></td>
+                      <td data-label="Customer fee">No fee</td>
+                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Postepay</span></label></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <nav class="panel__foot pager" aria-label="Payment method pages" hidden>
+                <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled>
+                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+                <button class="icon-btn pager__btn" type="button" aria-label="Next page">
+                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+                <p class="pager__count"></p>
+              </nav>
+            </div>
+          </div>
+        </section>
+
         <section class="view" data-set-view="hours" hidden>
           <p class="alert alert--info">
             <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
@@ -2838,6 +2965,21 @@
             </div>
           </div>
 
+          <!-- Zelfde vorm als de kaart eronder, maar de regel leidt naar een
+               eigen pagina in plaats van iets aan of uit te zetten. -->
+          <div class="card">
+            <h3 class="card__title">Online payments</h3>
+            <div class="rows">
+              <button class="row" type="button"
+                      data-sub="payment-methods"
+                      data-sub-title="Payment methods and fees"
+                      data-sub-lead="Control customer fees and your earnings for every transaction">
+                <span class="row__title">Manage online payment methods</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+            </div>
+          </div>
+
           <div class="card">
             <h3 class="card__title">Cash on delivery</h3>
             <div class="rows">
@@ -3194,6 +3336,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=51"></script>
+  <script src="app.js?v=52"></script>
 </body>
 </html>
