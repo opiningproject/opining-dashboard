@@ -1996,12 +1996,14 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .set-nav__gear { width: 24px; height: 24px; color: var(--text-strong); }
   .set-nav__title { font-size: 18px; font-weight: 500; letter-spacing: -.015em; color: var(--text-strong); }
 
-  /* Hier staat de rij los boven de lijst; zelfde tint, eigen kader. */
+  /* De rij zit vast op de lijst, zoals op desktop: de bovenrand van de
+     kaart eronder is meteen de scheidingslijn. */
   .shop {
-    margin: 0 0 14px;
+    margin: 0;
     padding: 12px;
     border: 1px solid var(--border);
-    border-radius: var(--r-lg);
+    border-bottom: 0;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
   }
   .nav__chev { display: block; }
 
@@ -2010,7 +2012,7 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
      binnen de ronding. */
   .set-nav .nav__list {
     border: 1px solid var(--border);
-    border-radius: var(--r-lg);
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
     background: var(--bg-surface);
     overflow: hidden;
   }
