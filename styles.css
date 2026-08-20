@@ -1183,7 +1183,9 @@ select.input {
   background: var(--gray-50);
 }
 .panel--scroll .panel__foot {
-  position: sticky; bottom: 0; z-index: 1;
+  /* Boven de bevroren kolom (2) en de sticky kop (3), anders schildert
+     de tabel dwars door de voet heen. */
+  position: sticky; bottom: 0; z-index: 4;
   background: var(--bg-surface);
 }
 
