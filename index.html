@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=31" />
+  <link rel="stylesheet" href="styles.css?v=32" />
 </head>
 <body>
 
@@ -3017,14 +3017,29 @@
         </section>
 
         <section class="view" data-set-view="billing" hidden>
+          <!-- Eén plan, één prijs. De grote som is wat er afgeschreven wordt
+               (incl. btw); het bedrag ex btw staat eronder omdat de factuur
+               die twee ook uit elkaar houdt. -->
+          <div class="card card--flush">
+            <div class="card__pad">
+              <div class="card__headrow">
+                <h3 class="card__title">Your plan</h3>
+                <span class="badge badge--active">Active</span>
+              </div>
+              <p class="amount">&euro; 35,09 <span class="amount__cur">per month</span></p>
+              <p class="card__sub">&euro; 29,00 excl. VAT plus 21% VAT (&euro; 6,09). Everything is included &mdash; no per-order fees.</p>
+            </div>
+            <p class="card__foot">Billed monthly. Cancel any time before your next bill.</p>
+          </div>
+
           <div class="card card--flush">
             <div class="card__pad">
               <div class="card__headrow">
                 <h3 class="card__title">Upcoming bill</h3>
                 <a class="link" href="#">View bill</a>
               </div>
-              <p class="amount">€0.00 <span class="amount__cur">EUR</span></p>
-              <p class="card__sub">Next bill in 2 days or when your ~€60 EUR threshold is reached. You have €60 remaining.</p>
+              <p class="amount">&euro; 35,09 <span class="amount__cur">EUR</span></p>
+              <p class="card__sub">Your next bill is on 1 September 2026.</p>
               <button class="addrow" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add payment method
               </button>
@@ -3078,11 +3093,11 @@
                   <tr><th scope="col">Date</th><th scope="col">Total</th><th scope="col">Status</th><th scope="col">Actions</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>Aug 17, 2026</td><td>€ 108,90</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
-                  <tr><td>Aug 13, 2026</td><td>€ 90,00</td><td><span class="badge badge--muted">Refunded</span></td><td><a class="link" href="#">View</a></td></tr>
-                  <tr><td>Jul 13, 2026</td><td>€ 87,02</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
-                  <tr><td>Jun 18, 2026</td><td>€ 18,00</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
-                  <tr><td>May 18, 2026</td><td>€ 18,00</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
+                  <tr><td>Aug 1, 2026</td><td>&euro; 35,09</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
+                  <tr><td>Jul 1, 2026</td><td>&euro; 35,09</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
+                  <tr><td>Jun 1, 2026</td><td>&euro; 35,09</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
+                  <tr><td>May 1, 2026</td><td>&euro; 35,09</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
+                  <tr><td>Apr 1, 2026</td><td>&euro; 35,09</td><td><span class="badge badge--active">Paid</span></td><td><a class="link" href="#">View</a></td></tr>
                 </tbody>
               </table>
             </div>
@@ -3139,6 +3154,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=31"></script>
+  <script src="app.js?v=32"></script>
 </body>
 </html>
