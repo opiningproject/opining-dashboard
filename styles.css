@@ -1973,6 +1973,9 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   /* Dicht staan dagnaam en tijden onder elkaar; de twee knoppen ernaast
      strekken over allebei de regels, zodat ze op de middenas blijven. */
   .hrow--shut { row-gap: 2px; }
+  /* De hele regel is de knop; alleen binnen de diensten is dat niet zo. */
+  .hrow { cursor: pointer; }
+  .hrow .shifts, .hrow .closed { cursor: auto; }
   .hrow__day { padding-top: 0; align-self: center; grid-column: 1; grid-row: 1; }
   .hrow .switch { margin-top: 0; align-self: center; grid-column: 2; grid-row: 1; }
   .hrow__more { grid-column: 3; grid-row: 1; }

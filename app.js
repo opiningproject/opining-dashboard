@@ -661,7 +661,12 @@
       var rij = e.target.closest(".hrow");
       if (!rij) return;
 
-      if (e.target.closest(".hrow__more")) {
+      /* De hele kopregel klapt de dag open, niet alleen de chevron. Wat je
+         zelf bedient blijft van zichzelf: de schakelaar, de tijdvelden en de
+         knoppen daarnaast. En alleen waar de chevron ook echt staat: op
+         desktop staat elke dag altijd open. */
+      var chevron = rij.querySelector(".hrow__more");
+      if (chevron && chevron.offsetParent && !e.target.closest(".switch, .shifts, .closed")) {
         setDagUitgeklapt(rij, rij.classList.contains("hrow--shut"));
         return;
       }
