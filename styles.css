@@ -1954,23 +1954,23 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   /* Openingstijden op mobiel: de kaart is het kader, met de grijze kop erop
      en haarlijnen tussen de dagen. Elke dag staat standaard dicht met zijn
      tijden op de regel, zodat je langs zeven regels scrolt en alleen
-     openklapt wat je wilt wijzigen. De schakelaar staat vóór de dagnaam:
-     eerst of je open bent, dan wanneer. */
+     openklapt wat je wilt wijzigen. De schakelaar staat rechts, vlak voor de
+     chevron, zodat aan- en uitzetten en openklappen naast elkaar liggen. */
   .cardhead { padding: 12px 16px; }
   .hours + .card__pad { padding: 14px 16px 16px; }
   .hrow {
-    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
     align-items: center;
     gap: 10px 8px;
     padding: 12px 16px;
   }
   .hrow__day { padding-top: 0; align-self: center; }
-  .hrow .switch { margin-top: 0; align-self: center; grid-column: 1; grid-row: 1; }
-  .hrow__day { grid-column: 2; grid-row: 1; }
+  .hrow .switch { margin-top: 0; align-self: center; grid-column: 3; grid-row: 1; }
+  .hrow__day { grid-column: 1; grid-row: 1; }
   /* De tijden bij een dichte dag: één regel, afgekapt als het niet past.
      Staat de dag open, dan staan de velden er zelf en zwijgt hij. */
   .hrow--shut .hrow__sum {
-    display: block; grid-column: 3; grid-row: 1;
+    display: block; grid-column: 2; grid-row: 1;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     font-size: var(--fs-sm); color: var(--text-muted);
   }
