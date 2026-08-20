@@ -1929,12 +1929,18 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .table--zones td:nth-child(3), .table--zones td:nth-child(4) { flex: 0 0 100%; }
   .table--domains td:first-child { flex: 1 1 auto; min-width: 0; }
   .dom { gap: 10px; }
-  /* Openingstijden op mobiel: elke dag een eigen blok in plaats van rijen
-     met haarlijnen ertussen, en standaard dicht. Zo scrol je langs zeven
-     kaartjes met hun tijden op één regel, en klap je alleen open wat je
+  /* Openingstijden op mobiel: één kader om de hele lijst, met haarlijnen
+     tussen de dagen. Elke dag staat standaard dicht met zijn tijden op de
+     regel, zodat je langs zeven regels scrolt en alleen openklapt wat je
      wilt wijzigen. De schakelaar staat vóór de dagnaam: eerst of je open
      bent, dan wanneer. */
-  .hours { padding: 0; border-top: 0; display: grid; gap: 10px; }
+  .hours {
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    background: var(--bg-surface);
+    overflow: hidden;
+  }
   /* De kaart heeft op mobiel zijn eigen zijruimte; de kop zou die verdubbelen
      en dan staat de titel niet meer boven de dagen. */
   .card__title.card__pad { padding: 0 0 14px; }
@@ -1943,9 +1949,7 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
     grid-template-columns: auto auto minmax(0, 1fr) auto;
     align-items: center;
     gap: 10px 8px;
-    padding: 10px 10px;
-    border: 1px solid var(--border);
-    border-radius: var(--r-lg);
+    padding: 12px;
   }
   .hrow__day { padding-top: 0; align-self: center; }
   .hrow .switch { margin-top: 0; align-self: center; grid-column: 1; grid-row: 1; }
@@ -1966,7 +1970,9 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
     transition: transform var(--dur) var(--ease);
   }
   .hrow__more .icon { width: 18px; height: 18px; }
-  .hrow--shut .hrow__more { transform: rotate(-90deg); }
+  /* Omlaag als de dag dicht is, omhoog zodra hij openstaat: de pijl wijst
+     naar wat de klik doet. */
+  .hrow:not(.hrow--shut) .hrow__more { transform: rotate(180deg); }
   /* Dicht: alleen de kop blijft staan. De samenvatting neemt het over. */
   .hrow--shut .shifts, .hrow--shut .closed { display: none; }
   .shifts, .closed { grid-column: 1 / -1; }
