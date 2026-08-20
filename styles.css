@@ -412,6 +412,10 @@ legend { padding: 0; }
   font-size: var(--fs-md); font-weight: 500;
 }
 .alert .icon { width: 18px; height: 18px; flex: 0 0 auto; }
+/* Staat de melding los in een kolom die zelf al ruimte tussen de blokken
+   houdt, dan hoeft hij geen eigen marge: die komt er bovenop. Binnen een
+   kaart blijft de marge staan, want daar scheidt hij niets anders. */
+.view > .alert { margin: 0; }
 
 /* ==========================================================================
    6. BUTTONS & FORM CONTROLS
