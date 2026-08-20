@@ -593,6 +593,40 @@
       });
     }
 
+    /* Sluiten kan niet vóór openen. De melding hangt onder de dienst en niet
+       in het veld: daar paste alleen een teken, en dat zei niet wát er mis
+       was. Tijden zijn "HH:MM", dus tekstvergelijking is chronologisch. */
+    var foutId = 0;
+    function valideerShift(shift) {
+      var velden = shift.querySelectorAll(".time");
+      if (velden.length < 2) return;
+
+      var eind = velden[1];
+      var fout = velden[0].value && eind.value && eind.value <= velden[0].value;
+      var melding = shift.nextElementSibling;
+      if (melding && !melding.classList.contains("shift__error")) melding = null;
+
+      eind.classList.toggle("time--error", !!fout);
+
+      if (!fout) {
+        if (melding) melding.remove();
+        eind.removeAttribute("aria-invalid");
+        eind.removeAttribute("aria-describedby");
+        return;
+      }
+
+      if (!melding) {
+        melding = document.createElement("p");
+        melding.className = "shift__error";
+        melding.id = "hours-err-" + (++foutId);
+        melding.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>' +
+          "Closing time must be later than the opening time.";
+        shift.after(melding);
+      }
+      eind.setAttribute("aria-invalid", "true");
+      eind.setAttribute("aria-describedby", melding.id);
+    }
+
     /* De samenvatting is wat je van een dichtgeklapte dag ziet. Alleen de
        mobiele CSS toont hem; hier staat wat erin komt. */
     function syncSamenvatting(rij) {
@@ -633,16 +667,23 @@
       }
 
       if (e.target.closest(".shift__add")) {
-        var laatste = rij.querySelector(".shift:last-child");
+        /* Niet .shift:last-child: onder de laatste dienst kan een foutmelding
+           staan, en die is dan het laatste kind. */
+        var alle = rij.querySelectorAll(".shift");
+        var laatste = alle[alle.length - 1];
         var kopie = laatste.cloneNode(true);
         /* De foutstaat hoort bij die ene waarde, niet bij een nieuwe dienst. */
-        var fout = kopie.querySelector(".tfield--error");
-        if (fout) fout.replaceWith(fout.querySelector(".time"));
         kopie.querySelectorAll(".time").forEach(function (veld) {
+          veld.classList.remove("time--error");
           veld.removeAttribute("aria-invalid");
           veld.removeAttribute("aria-describedby");
         });
-        laatste.after(kopie);
+        /* Achter de melding van de laatste dienst, anders zou de kopie de
+           melding van zijn voorganger overnemen. */
+        var na = laatste.nextElementSibling;
+        (na && na.classList.contains("shift__error") ? na : laatste).after(kopie);
+        /* De kopie draagt dezelfde tijden, dus geldt dezelfde toets. */
+        valideerShift(kopie);
         syncShifts(rij);
         syncSamenvatting(rij);
         markUnsaved("Opening hours");
@@ -650,7 +691,10 @@
 
       if (e.target.closest(".shift__del")) {
         if (rij.querySelectorAll(".shift").length < 2) return;
-        e.target.closest(".shift").remove();
+        var weg = e.target.closest(".shift");
+        var melding = weg.nextElementSibling;
+        if (melding && melding.classList.contains("shift__error")) melding.remove();
+        weg.remove();
         syncShifts(rij);
         syncSamenvatting(rij);
         markUnsaved("Opening hours");
@@ -662,6 +706,8 @@
       markUnsaved("Opening hours");
     });
     hoursView.addEventListener("input", function (e) {
+      var shift = e.target.closest(".shift");
+      if (shift) valideerShift(shift);
       var rij = e.target.closest(".hrow");
       if (rij) syncSamenvatting(rij);
       markUnsaved("Opening hours");
@@ -672,6 +718,7 @@
     hoursView.querySelectorAll(".hrow").forEach(function (rij) {
       setDagUitgeklapt(rij, false);
     });
+    hoursView.querySelectorAll(".shift").forEach(valideerShift);
   }
 
   /* ---- Loyalty: het voorbeeld volgt het gekozen percentage ---------------- */

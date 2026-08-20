@@ -1415,17 +1415,25 @@ select.input {
 .time::-webkit-calendar-picker-indicator { display: none; }
 .time::-webkit-inner-spin-button { display: none; }
 
-/* Veld met foutmelding: rode rand plus een vlag in het veld zelf. */
 .tfield { position: relative; display: inline-flex; }
-.tfield--error .time { border-color: var(--danger); padding-right: 30px; }
-.tfield--error .time:focus { box-shadow: 0 0 0 3px #fbeae9; }
-.tfield__flag {
-  position: absolute; right: 9px; top: 50%;
-  transform: translateY(-50%);
-  width: 17px; height: 17px;
+
+/* Een fout tijdveld: rode rand en een lichte tint, met de tijd gewoon in het
+   midden. Het waarschuwingsteken zat eerst ín het veld en duwde het cijfer
+   scheef, terwijl het niet vertelde wát er mis was. Dat staat nu onder de
+   dienst, waar de zin past. */
+.time--error {
+  border-color: var(--danger);
+  background: #fdf3f2;
   color: var(--danger);
-  pointer-events: none;
 }
+.time--error:focus { border-color: var(--danger); box-shadow: 0 0 0 3px #fbeae9; }
+
+.shift__error {
+  display: flex; align-items: center; gap: 8px;
+  font-size: var(--fs-sm);
+  color: var(--danger);
+}
+.shift__error .icon { width: 16px; height: 16px; }
 
 /* Samenvatting en chevron horen bij de mobiele accordeon; op desktop staat
    elke dag altijd open, dus daar bestaan ze niet. */
@@ -1926,8 +1934,11 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
      kaartjes met hun tijden op één regel, en klap je alleen open wat je
      wilt wijzigen. De schakelaar staat vóór de dagnaam: eerst of je open
      bent, dan wanneer. */
-  .hours { padding: 0 20px 20px; border-top: 0; display: grid; gap: 10px; }
-  .hours + .card__pad { padding-top: 0; }
+  .hours { padding: 0; border-top: 0; display: grid; gap: 10px; }
+  /* De kaart heeft op mobiel zijn eigen zijruimte; de kop zou die verdubbelen
+     en dan staat de titel niet meer boven de dagen. */
+  .card__title.card__pad { padding: 0 0 14px; }
+  .hours + .card__pad { padding: 14px 0 0; }
   .hrow {
     grid-template-columns: auto auto minmax(0, 1fr) auto;
     align-items: center;

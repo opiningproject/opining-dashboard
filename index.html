@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=38" />
+  <link rel="stylesheet" href="styles.css?v=39" />
 </head>
 <body>
 
@@ -2556,15 +2556,14 @@
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Thursday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <span class="tfield tfield--error">
-                      <input class="input time" type="time" value="00:00" aria-label="Thursday takeaway end"
-                             aria-invalid="true" aria-describedby="err-thu-takeaway" />
-                      <svg class="icon tfield__flag" aria-hidden="true"><use href="#i-warning"/></svg>
-                    </span>
-                    <span class="sr-only" id="err-thu-takeaway">End time must come after the start time.</span>
+                    <input class="input time time--error" type="time" value="00:00" aria-label="Thursday takeaway end"
+                           aria-invalid="true" aria-describedby="err-thu-takeaway" />
                     <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span>Add shift</span></button>
                   </div>
+                  <p class="shift__error" id="err-thu-takeaway">
+                    <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Closing time must be later than the opening time.
+                  </p>
                 </div>
                 <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
               </div>
@@ -3186,6 +3185,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=38"></script>
+  <script src="app.js?v=39"></script>
 </body>
 </html>
