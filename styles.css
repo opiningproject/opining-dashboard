@@ -1150,6 +1150,9 @@ select.input {
 /* Tijdkolom. Het getal draagt de nadruk, de eenheid blijft rustig. */
 .when { display: flex; align-items: center; gap: 8px; color: var(--text); }
 .when b { font-weight: 600; color: var(--text-strong); }
+/* Dag of datum vóór de tijd: ondergeschikt, want de tijd is de waarde
+   waar je op leest. */
+.when__day { margin-right: 8px; color: var(--text-muted); }
 .when .icon { width: 18px; height: 18px; }
 .when--late { color: var(--danger); }
 .when--late b { color: var(--danger); font-weight: 600; }
