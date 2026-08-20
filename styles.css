@@ -1959,24 +1959,27 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .cardhead { padding: 12px 16px; }
   .hours + .card__pad { padding: 14px 16px 16px; }
   .hrow {
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     align-items: center;
     gap: 10px 8px;
     padding: 12px 16px;
   }
-  .hrow__day { padding-top: 0; align-self: center; }
-  .hrow .switch { margin-top: 0; align-self: center; grid-column: 3; grid-row: 1; }
-  .hrow__day { grid-column: 1; grid-row: 1; }
-  /* De tijden bij een dichte dag: één regel, afgekapt als het niet past.
+  /* Dicht staan dagnaam en tijden onder elkaar; de twee knoppen ernaast
+     strekken over allebei de regels, zodat ze op de middenas blijven. */
+  .hrow--shut { row-gap: 2px; }
+  .hrow__day { padding-top: 0; align-self: center; grid-column: 1; grid-row: 1; }
+  .hrow .switch { margin-top: 0; align-self: center; grid-column: 2; grid-row: 1; }
+  .hrow__more { grid-column: 3; grid-row: 1; }
+  .hrow--shut .switch, .hrow--shut .hrow__more { grid-row: 1 / span 2; }
+  /* De tijden bij een dichte dag: eronder, in dezelfde maat als de dagnaam.
      Staat de dag open, dan staan de velden er zelf en zwijgt hij. */
   .hrow--shut .hrow__sum {
-    display: block; grid-column: 2; grid-row: 1;
+    display: block; grid-column: 1; grid-row: 2;
     overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    font-size: var(--fs-sm); color: var(--text-muted);
+    font-size: var(--fs-md); color: var(--text-muted);
   }
   .hrow__more {
     display: grid; place-items: center;
-    grid-column: 4; grid-row: 1;
     width: 28px; height: 28px; margin-right: -6px;
     border-radius: var(--r-md);
     color: var(--text-muted);
