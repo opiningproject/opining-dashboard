@@ -1221,11 +1221,13 @@ select.input {
 
 /* Rijen zijn hoog genoeg voor twee regels; vandaar iets meer lucht dan de
    standaardtabel. */
-.table--orders td, .table--archive td { padding-top: 12px; padding-bottom: 12px; vertical-align: middle; }
+.table--orders td, .table--archive td, .table--customers td { padding-top: 12px; padding-bottom: 12px; vertical-align: middle; }
 .table--orders th:first-child, .table--orders td:first-child,
-.table--archive th:first-child, .table--archive td:first-child { padding-left: 22px; }
+.table--archive th:first-child, .table--archive td:first-child,
+.table--customers th:first-child, .table--customers td:first-child { padding-left: 22px; }
 .table--orders th:last-child, .table--orders td:last-child,
-.table--archive th:last-child, .table--archive td:last-child  { padding-right: 22px; }
+.table--archive th:last-child, .table--archive td:last-child,
+.table--customers th:last-child, .table--customers td:last-child { padding-right: 22px; }
 
 /* Bevroren eerste kolom: de bestemming blijft staan terwijl de rest
    zijwaarts schuift, anders weet je bij kolom vier niet meer welke
@@ -1233,16 +1235,21 @@ select.input {
 .table--orders th:first-child,
 .table--archive th:first-child,
 .table--archive td:first-child,
+.table--customers th:first-child,
+.table--customers td:first-child,
 .table--orders td:first-child {
   position: sticky; left: 0; z-index: 2;
   background: var(--bg-surface);
 }
 .panel--scroll .table--orders thead th:first-child,
-.panel--scroll .table--archive thead th:first-child { z-index: 3; background: var(--gray-50); }
+.panel--scroll .table--archive thead th:first-child,
+.panel--scroll .table--customers thead th:first-child { z-index: 3; background: var(--gray-50); }
 /* De rand verschijnt pas als er daadwerkelijk iets achter wegschuift. */
 .table-wrap.is-scrolled .table--orders th:first-child,
 .table-wrap.is-scrolled .table--archive th:first-child,
 .table-wrap.is-scrolled .table--archive td:first-child,
+.table-wrap.is-scrolled .table--customers th:first-child,
+.table-wrap.is-scrolled .table--customers td:first-child,
 .table-wrap.is-scrolled .table--orders td:first-child {
   border-right: 1px solid var(--border);
   box-shadow: 6px 0 8px -6px rgba(18, 22, 28, .16);

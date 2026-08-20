@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=25" />
+  <link rel="stylesheet" href="styles.css?v=26" />
 </head>
 <body>
 
@@ -677,19 +677,29 @@
 
           <!-- ---------- VIEW: customers ---------- -->
           <section class="view" data-view="customers" hidden>
-
-            <div class="panel">
+            <div class="panel panel--scroll">
               <div class="panel__head">
-                <div class="tabs">
-                  <button class="tab is-active" type="button">All <span class="tab__count">1.284</span></button>
-                  <button class="tab" type="button">Returning</button>
-                  <button class="tab" type="button">New</button>
-                  <button class="tab" type="button">Inactive</button>
+                <!-- Zelfde opzet als Orders: één filter in plaats van tabs. -->
+                <div class="sfilter">
+                  <button class="sfilter__btn" type="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="sfilter__label">All</span>
+                    <svg class="icon sfilter__caret" aria-hidden="true"><use href="#i-chevrons-y"/></svg>
+                  </button>
+                  <div class="sfilter__menu" role="menu" hidden>
+                    <button class="sfilter__item is-selected" type="button" role="menuitemradio" aria-checked="true">
+                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>All</button>
+                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
+                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Returning</button>
+                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
+                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>New</button>
+                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
+                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Inactive</button>
+                  </div>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter customers">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
-                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
+                <!-- Zoekstand: vervangt het filter zolang hij openstaat. -->
                 <div class="psearch" data-filters="Orders:1-5|6-20|20+;Total spent:Under 100|100-500|500+;Last order:This week|This month|Older">
                   <div class="psearch__top">
                     <span class="psearch__field">
@@ -705,15 +715,17 @@
                       </button>
                       <div class="fmenu" role="menu" hidden></div>
                     </div>
-                  <button class="fclear" type="button" hidden>Clear All</button>
+                    <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
+
               <div class="table-wrap">
-                <table class="table table--stack">
+                <table class="table table--customers">
                   <thead>
                     <tr>
                       <th>Customer</th>
+                      <th>Email</th>
                       <th>Orders</th>
                       <th>Total spent</th>
                       <th>Last order</th>
@@ -722,59 +734,67 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="person"><span class="person__text"><span class="person__name">Thomas Jefferson</span><span class="person__meta">thomas@example.nl</span></span></span></td>
-                      <td data-label="Orders">24</td>
-                      <td data-label="Total spent">&euro; 681,20</td>
-                      <td data-label="Last order">Today</td>
+                      <td>Thomas Jefferson</td>
+                      <td>thomas@example.nl</td>
+                      <td>24</td>
+                      <td>&euro; 681,20</td>
+                      <td>Today</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Thomas Jefferson"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__text"><span class="person__name">Sanne de Vries</span><span class="person__meta">sanne@example.nl</span></span></span></td>
-                      <td data-label="Orders">18</td>
-                      <td data-label="Total spent">&euro; 512,75</td>
-                      <td data-label="Last order">Yesterday</td>
+                      <td>Sanne de Vries</td>
+                      <td>sanne@example.nl</td>
+                      <td>18</td>
+                      <td>&euro; 512,75</td>
+                      <td>Yesterday</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Sanne de Vries"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__text"><span class="person__name">Mo El Amrani</span><span class="person__meta">mo@example.nl</span></span></span></td>
-                      <td data-label="Orders">12</td>
-                      <td data-label="Total spent">&euro; 348,60</td>
-                      <td data-label="Last order">3 days ago</td>
+                      <td>Mo El Amrani</td>
+                      <td>mo@example.nl</td>
+                      <td>12</td>
+                      <td>&euro; 348,60</td>
+                      <td>3 days ago</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Mo El Amrani"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__text"><span class="person__name">Lisa Bakker</span><span class="person__meta">lisa@example.nl</span></span></span></td>
-                      <td data-label="Orders">9</td>
-                      <td data-label="Total spent">&euro; 254,10</td>
-                      <td data-label="Last order">5 days ago</td>
+                      <td>Lisa Bakker</td>
+                      <td>lisa@example.nl</td>
+                      <td>9</td>
+                      <td>&euro; 254,10</td>
+                      <td>5 days ago</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Lisa Bakker"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__text"><span class="person__name">Kevin Groot</span><span class="person__meta">kevin@example.nl</span></span></span></td>
-                      <td data-label="Orders">7</td>
-                      <td data-label="Total spent">&euro; 198,45</td>
-                      <td data-label="Last order">1 week ago</td>
+                      <td>Kevin Groot</td>
+                      <td>kevin@example.nl</td>
+                      <td>7</td>
+                      <td>&euro; 198,45</td>
+                      <td>1 week ago</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Kevin Groot"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__text"><span class="person__name">Fatima Yilmaz</span><span class="person__meta">fatima@example.nl</span></span></span></td>
-                      <td data-label="Orders">5</td>
-                      <td data-label="Total spent">&euro; 142,30</td>
-                      <td data-label="Last order">2 weeks ago</td>
+                      <td>Fatima Yilmaz</td>
+                      <td>fatima@example.nl</td>
+                      <td>5</td>
+                      <td>&euro; 142,30</td>
+                      <td>2 weeks ago</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Fatima Yilmaz"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__text"><span class="person__name">Daan Visser</span><span class="person__meta">daan@example.nl</span></span></span></td>
-                      <td data-label="Orders">3</td>
-                      <td data-label="Total spent">&euro; 87,90</td>
-                      <td data-label="Last order">3 weeks ago</td>
+                      <td>Daan Visser</td>
+                      <td>daan@example.nl</td>
+                      <td>3</td>
+                      <td>&euro; 87,90</td>
+                      <td>3 weeks ago</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Daan Visser"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="person"><span class="person__text"><span class="person__name">Iris Smit</span><span class="person__meta">iris@example.nl</span></span></span></td>
-                      <td data-label="Orders">1</td>
-                      <td data-label="Total spent">&euro; 24,50</td>
-                      <td data-label="Last order">1 month ago</td>
+                      <td>Iris Smit</td>
+                      <td>iris@example.nl</td>
+                      <td>1</td>
+                      <td>&euro; 24,50</td>
+                      <td>1 month ago</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Iris Smit"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                   </tbody>
@@ -782,8 +802,10 @@
               </div>
 
               <nav class="panel__foot pager" aria-label="Customer pages">
-                <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
-                <button class="icon-btn pager__btn" type="button" aria-label="Next page"><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+                <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled>
+                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+                <button class="icon-btn pager__btn" type="button" aria-label="Next page">
+                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
                 <p class="pager__count"><b>1&ndash;8</b> of 1.284</p>
               </nav>
             </div>
@@ -874,7 +896,17 @@
               <button class="btn btn--primary balance__action" type="button">See details</button>
             </div>
 
-            <div class="panel">
+            <div class="card">
+              <div class="card__headrow">
+                <h2 class="card__title">Payout history</h2>
+                <button class="icon-btn" type="button" aria-label="More actions for payouts">
+                  <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                </button>
+              </div>
+
+              <!-- Een paneel met een eigen titel zit in een omlijnd vak eronder,
+                   zodat de titel bij de kaart hoort en de lijst een eigen kader krijgt. -->
+              <div class="panel panel--inset">
               <div class="panel__head">
                 <div class="tabs">
                   <button class="tab is-active" type="button">All payouts</button>
@@ -961,6 +993,7 @@
                 <button class="icon-btn pager__btn" type="button" aria-label="Next page"><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
                 <p class="pager__count"><b>1&ndash;6</b> of 24</p>
               </nav>
+              </div>
             </div>
           </section>
 
@@ -3083,6 +3116,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=25"></script>
+  <script src="app.js?v=26"></script>
 </body>
 </html>
