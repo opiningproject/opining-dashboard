@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=27" />
+  <link rel="stylesheet" href="styles.css?v=28" />
 </head>
 <body>
 
@@ -2055,17 +2055,16 @@
             <svg class="icon" aria-hidden="true"><use href="#i-policies"/></svg><span>Policies</span><svg class="icon nav__chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></a></li>
           <li><a class="nav__item" href="#" data-set="notifications" data-title="Notifications" data-icon="i-bell">
             <svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg><span>Notifications</span><svg class="icon nav__chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></a></li>
+          <!-- Accountrij als laatste item van de lijst: hoort bij de persoon,
+               niet bij de winkel, vandaar de scheidingslijn erboven. -->
+          <li><a class="nav__item setuser" href="#" data-set="account" data-title="Account" data-icon="i-user-circle">
+            <span class="setuser__avatar" aria-hidden="true">SO</span>
+            <span class="setuser__text">
+              <span class="setuser__name">Serdar Orman</span>
+              <span class="setuser__mail">serdarorman74@gmail.com</span>
+            </span>
+          </a></li>
         </ul>
-
-        <!-- Accountrij onderaan de lijst: hoort bij de persoon, niet bij
-             de winkel, vandaar de scheiding van de instellingen erboven. -->
-        <a class="nav__item setuser" href="#" data-set="account" data-title="Account" data-icon="i-user-circle">
-          <span class="setuser__avatar" aria-hidden="true">SO</span>
-          <span class="setuser__text">
-            <span class="setuser__name">Serdar Orman</span>
-            <span class="setuser__mail">serdarorman74@gmail.com</span>
-          </span>
-        </a>
       </aside>
 
       <section class="set-main">
@@ -3140,6 +3139,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=27"></script>
+  <script src="app.js?v=28"></script>
 </body>
 </html>
