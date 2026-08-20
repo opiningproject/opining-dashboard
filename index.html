@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=32" />
+  <link rel="stylesheet" href="styles.css?v=33" />
 </head>
 <body>
 
@@ -3017,9 +3017,10 @@
         </section>
 
         <section class="view" data-set-view="billing" hidden>
-          <!-- Eén plan, één prijs. De grote som is wat er afgeschreven wordt
-               (incl. btw); het bedrag ex btw staat eronder omdat de factuur
-               die twee ook uit elkaar houdt. -->
+          <!-- Eén plan, dus ook één kaart: prijs, btw-splitsing en de eerst-
+               volgende afschrijving horen bij elkaar. De grote som is wat er
+               van de rekening gaat; ex btw staat eronder omdat de factuur die
+               twee ook uit elkaar houdt. -->
           <div class="card card--flush">
             <div class="card__pad">
               <div class="card__headrow">
@@ -3028,23 +3029,11 @@
               </div>
               <p class="amount">&euro; 35,09 <span class="amount__cur">per month</span></p>
               <p class="card__sub">&euro; 29,00 excl. VAT plus 21% VAT (&euro; 6,09). Everything is included &mdash; no per-order fees.</p>
-            </div>
-            <p class="card__foot">Billed monthly. Cancel any time before your next bill.</p>
-          </div>
-
-          <div class="card card--flush">
-            <div class="card__pad">
-              <div class="card__headrow">
-                <h3 class="card__title">Upcoming bill</h3>
-                <a class="link" href="#">View bill</a>
-              </div>
-              <p class="amount">&euro; 35,09 <span class="amount__cur">EUR</span></p>
-              <p class="card__sub">Your next bill is on 1 September 2026.</p>
               <button class="addrow" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add payment method
               </button>
             </div>
-            <p class="card__foot">Your payment method is charged on the first of each month.</p>
+            <p class="card__foot">Your next bill is on 1 September 2026. <a class="link" href="#">View bill</a></p>
           </div>
 
           <div class="card">
@@ -3154,6 +3143,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=32"></script>
+  <script src="app.js?v=33"></script>
 </body>
 </html>
