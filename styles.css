@@ -1973,7 +1973,7 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
 
   .set-nav {
     position: static;
-    padding: 0 8px 16px;
+    padding: 0 16px 16px;
     border: 0;
     border-radius: 0;
     box-shadow: none;
@@ -1988,9 +1988,9 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
     position: sticky; top: 0; z-index: 2;
     display: flex; align-items: center; gap: 12px;
     min-height: 56px;
-    width: calc(100% + 16px);
-    margin: 0 -8px 8px;
-    padding: 0 56px 0 8px;
+    width: calc(100% + 32px);
+    margin: 0 -16px 8px;
+    padding: 0 56px 0 16px;
     background: var(--bg-overlay);
   }
   .set-nav__gear { width: 24px; height: 24px; color: var(--text-strong); }
@@ -2021,7 +2021,7 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .setuser { margin: 0; border-radius: 0; }
 
   /* Boven de balk en op dezelfde middenas: 8 + halve knop = halve balk. */
-  .overlay__close { top: 8px; right: 10px; z-index: 3; margin-bottom: -48px; }
+  .overlay__close { top: 8px; right: 16px; z-index: 3; margin: 14px 16px -48px auto; }
 
   /* Niveau 1: de lijst. Niveau 2: de pagina met terug-knop. */
   [data-settings-view="list"] .set-main { display: none; }
