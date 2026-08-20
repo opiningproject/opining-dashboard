@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=52" />
+  <link rel="stylesheet" href="styles.css?v=53" />
 </head>
 <body>
 
@@ -2965,24 +2965,18 @@
             </div>
           </div>
 
-          <!-- Zelfde vorm als de kaart eronder, maar de regel leidt naar een
-               eigen pagina in plaats van iets aan of uit te zetten. -->
+          <!-- Beide manieren van betalen in één lijst: de bovenste leidt naar
+               een eigen pagina, de onderste is een schakelaar. -->
           <div class="card">
-            <h3 class="card__title">Online payments</h3>
+            <h3 class="card__title">Manage payment methods</h3>
             <div class="rows">
               <button class="row" type="button"
                       data-sub="payment-methods"
                       data-sub-title="Payment methods and fees"
                       data-sub-lead="Control customer fees and your earnings for every transaction">
-                <span class="row__title">Manage online payment methods</span>
+                <span class="row__title">Online payment methods</span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 class="card__title">Cash on delivery</h3>
-            <div class="rows">
               <div class="row row--static">
                 <span class="row__title">Cash on delivery</span>
                 <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept cash on delivery</span></label>
@@ -3336,6 +3330,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=52"></script>
+  <script src="app.js?v=53"></script>
 </body>
 </html>
