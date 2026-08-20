@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=43" />
+  <link rel="stylesheet" href="styles.css?v=44" />
 </head>
 <body>
 
@@ -2363,8 +2363,11 @@
           </p>
 
           <div class="card card--flush">
-            <h3 class="card__title card__pad">Delivery Hours</h3>
-            <div class="hours" data-hours="delivery">
+            <button class="cardhead" type="button" aria-expanded="true" aria-controls="hours-delivery">
+              <h3 class="card__title">Delivery Hours</h3>
+              <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+            </button>
+            <div class="hours" id="hours-delivery" data-hours="delivery">
               <div class="hrow">
                 <span class="hrow__day">Monday</span>
                 <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Monday for delivery</span></label>
@@ -2494,8 +2497,11 @@
           </div>
 
           <div class="card card--flush">
-            <h3 class="card__title card__pad">Takeaway Hours</h3>
-            <div class="hours" data-hours="takeaway">
+            <button class="cardhead" type="button" aria-expanded="true" aria-controls="hours-takeaway">
+              <h3 class="card__title">Takeaway Hours</h3>
+              <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+            </button>
+            <div class="hours" id="hours-takeaway" data-hours="takeaway">
               <div class="hrow">
                 <span class="hrow__day">Monday</span>
                 <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Monday for takeaway</span></label>
@@ -2629,8 +2635,11 @@
           </div>
 
           <div class="card card--flush">
-            <h3 class="card__title card__pad">Special Hours</h3>
-            <div class="hours" data-hours="special">
+            <button class="cardhead" type="button" aria-expanded="true" aria-controls="hours-special">
+              <h3 class="card__title">Special Hours</h3>
+              <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+            </button>
+            <div class="hours" id="hours-special" data-hours="special">
               <div class="hrow is-off">
                 <span class="hrow__day">Sunday</span>
                 <label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on this holiday</span></label>
@@ -3185,6 +3194,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=43"></script>
+  <script src="app.js?v=44"></script>
 </body>
 </html>

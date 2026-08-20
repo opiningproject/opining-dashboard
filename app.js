@@ -721,6 +721,23 @@
     hoursView.querySelectorAll(".shift").forEach(valideerShift);
   }
 
+
+  /* ---- Inklapbare kaartsecties ------------------------------------------- */
+  /* Een .cardhead klapt in wat zijn aria-controls aanwijst. Gedelegeerd, dus
+     het werkt ook voor secties die later in de HTML bijkomen. */
+  document.addEventListener("click", function (e) {
+    var kop = e.target.closest(".cardhead");
+    if (!kop) return;
+    var open = kop.getAttribute("aria-expanded") === "true";
+    kop.setAttribute("aria-expanded", open ? "false" : "true");
+    var doel = document.getElementById(kop.getAttribute("aria-controls"));
+    if (doel) doel.hidden = open;
+    /* Een knop onder de lijst (Add Holiday) hoort bij de sectie, niet bij de
+       kaart eromheen, dus die gaat mee. */
+    var extra = doel && doel.nextElementSibling;
+    if (extra && extra.classList.contains("card__pad")) extra.hidden = open;
+  });
+
   /* ---- Loyalty: het voorbeeld volgt het gekozen percentage ---------------- */
   var loyaltyView = document.querySelector('[data-view="loyalty"]');
 

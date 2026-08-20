@@ -1384,7 +1384,29 @@ select.input {
 .alert--info { background: var(--accent-soft); color: #14567f; }
 .alert--info .icon { color: var(--accent); }
 
-.hours { border-top: 1px solid var(--border); }
+/* Kop van een inklapbare kaartsectie: een grijze balk bovenin de kaart met
+   de titel en een chevron. De lijst eronder heeft geen eigen bovenlijn meer
+   nodig; de onderrand van de balk is die lijn. */
+.cardhead {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  border-radius: calc(var(--r-lg) - 1px) calc(var(--r-lg) - 1px) 0 0;
+  background: var(--gray-50);
+  text-align: left;
+}
+.cardhead:hover { background: var(--gray-100); }
+/* Dicht: geen lijn en weer rond aan alle kanten, want er staat niets onder. */
+.cardhead[aria-expanded="false"] { border-bottom: 0; border-radius: calc(var(--r-lg) - 1px); }
+.cardhead__chev {
+  color: var(--text-muted);
+  transition: transform var(--dur) var(--ease);
+}
+/* Omlaag als de sectie dicht is, omhoog zodra hij open staat. */
+.cardhead[aria-expanded="true"] .cardhead__chev { transform: rotate(180deg); }
+
+.hours { border-top: 0; }
 
 /* Dag, schakelaar en diensten in vaste kolommen, zodat alle tijdvelden
    onder elkaar uitlijnen ongeacht de lengte van de dagnaam. */
@@ -1929,27 +1951,18 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .table--zones td:nth-child(3), .table--zones td:nth-child(4) { flex: 0 0 100%; }
   .table--domains td:first-child { flex: 1 1 auto; min-width: 0; }
   .dom { gap: 10px; }
-  /* Openingstijden op mobiel: één kader om de hele lijst, met haarlijnen
-     tussen de dagen. Elke dag staat standaard dicht met zijn tijden op de
-     regel, zodat je langs zeven regels scrolt en alleen openklapt wat je
-     wilt wijzigen. De schakelaar staat vóór de dagnaam: eerst of je open
-     bent, dan wanneer. */
-  .hours {
-    padding: 0;
-    border: 1px solid var(--border);
-    border-radius: var(--r-lg);
-    background: var(--bg-surface);
-    overflow: hidden;
-  }
-  /* De kaart heeft op mobiel zijn eigen zijruimte; de kop zou die verdubbelen
-     en dan staat de titel niet meer boven de dagen. */
-  .card__title.card__pad { padding: 0 0 14px; }
-  .hours + .card__pad { padding: 14px 0 0; }
+  /* Openingstijden op mobiel: de kaart is het kader, met de grijze kop erop
+     en haarlijnen tussen de dagen. Elke dag staat standaard dicht met zijn
+     tijden op de regel, zodat je langs zeven regels scrolt en alleen
+     openklapt wat je wilt wijzigen. De schakelaar staat vóór de dagnaam:
+     eerst of je open bent, dan wanneer. */
+  .cardhead { padding: 12px 16px; }
+  .hours + .card__pad { padding: 14px 16px 16px; }
   .hrow {
     grid-template-columns: auto auto minmax(0, 1fr) auto;
     align-items: center;
     gap: 10px 8px;
-    padding: 12px;
+    padding: 12px 16px;
   }
   .hrow__day { padding-top: 0; align-self: center; }
   .hrow .switch { margin-top: 0; align-self: center; grid-column: 1; grid-row: 1; }
@@ -2039,6 +2052,9 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
 
   .content { --content-pad-t: 22px; --content-pad-b: 48px; padding: var(--content-pad-t) 16px var(--content-pad-b); }
   .card { padding: 18px 16px 20px; }
+  /* Een flush kaart heeft zijn ruimte binnenin staan; de regel hierboven zou
+     die verdubbelen. */
+  .card--flush { padding: 0; }
   .field-row { grid-template-columns: minmax(0, 1fr); }
 
   /* ---- Settings-overlay wordt een sheet met twee niveaus ---- */
