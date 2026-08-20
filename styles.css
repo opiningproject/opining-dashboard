@@ -1244,8 +1244,10 @@ select.input {
   color: var(--text-muted);
 }
 .pm__name { font-weight: 500; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-/* De ID-kolom is een verwijzing, geen leeswerk: smal en rustig. */
-.table--methods td:first-child { width: 1%; white-space: nowrap; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+/* De naam draagt de rij; de fee en de schakelaar blijven zo smal mogelijk,
+   zodat er op een telefoon zo min mogelijk te schuiven valt. */
+.table--methods td:first-child { width: 100%; }
+.table--methods th:last-child, .table--methods td:last-child { text-align: right; }
 
 /* Tijdkolom. Het getal draagt de nadruk, de eenheid blijft rustig. */
 .when { display: flex; align-items: center; gap: 8px; color: var(--text); }
