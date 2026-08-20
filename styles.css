@@ -407,7 +407,9 @@ legend { padding: 0; }
   border-radius: var(--r-md);
   background: var(--warning-bg);
   color: var(--warning-fg);
-  font-size: var(--fs-sm);
+  /* Zelfde tekst als een dagnaam: dit is een mededeling, geen kleine
+     lettertjes. De kleur blijft van de soort melding. */
+  font-size: var(--fs-md); font-weight: 500;
 }
 .alert .icon { width: 18px; height: 18px; flex: 0 0 auto; }
 
