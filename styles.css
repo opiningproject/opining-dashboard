@@ -1971,18 +1971,20 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .hrow--shut .shifts, .hrow--shut .closed { display: none; }
   .shifts, .closed { grid-column: 1 / -1; }
   .closed { padding-top: 0; }
-  .shift { flex-wrap: wrap; gap: 8px; }
-  .time { width: 104px; }
-  /* Hier is het een plusknop, geen tekstlink: de regel is al vol. */
-  .shift__add {
+  /* Plus en min horen naast elkaar op dezelfde regel als de tijden, in
+     dezelfde maat. Daarvoor moeten de velden smaller: twee knoppen erbij
+     passen anders niet binnen de dagkaart. */
+  .shift { flex-wrap: wrap; gap: 6px; }
+  .time { width: 92px; }
+  .shift__del, .shift__add {
     display: grid; place-items: center;
-    width: 32px; height: 32px;
+    width: 30px; height: 30px;
     margin-left: 0; padding: 0;
-    border-radius: var(--r-md);
+    border-radius: var(--r-full);
   }
-  .shift__add .icon { display: block; width: 19px; height: 19px; }
+  .shift__del .icon, .shift__add .icon { display: block; width: 20px; height: 20px; }
   .shift__add > span { display: none; }
-  .shift__add:hover { text-decoration: none; background: var(--gray-100); }
+  .shift__add:hover, .shift__del:hover { text-decoration: none; background: var(--gray-100); }
   /* Vier tegels naast elkaar worden te smal op mobiel. */
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tile:nth-child(odd) { border-left: 0; }
