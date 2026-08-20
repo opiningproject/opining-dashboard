@@ -1167,6 +1167,10 @@ select.input {
 
 .rowact { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
 .rowact .icon-btn { width: 32px; height: 32px; }
+/* Bij Orders staat de statusknop links in de kolom; de menuknop blijft
+   wel tegen de rechterrand. */
+.table--orders .rowact { justify-content: flex-start; }
+.table--orders .rowact .icon-btn { margin-left: auto; }
 
 .badge--pending { background: #fbe7d4; color: #9c4d16; }
 .badge--sched   { background: #f1e8fa; color: #6b3fa8; }
