@@ -8,7 +8,8 @@
      5. Setup-guide               → accordeon op het dashboard
      6. Toast                     → bevestiging na opslaan
      7. Zoekpaneel                → <html data-search>
-     8. Toetsenbord
+     8. Paginering                → <table data-page>
+     9. Toetsenbord
    In een SPA vervang je §2 en §3 door de router; de rest blijft 1-op-1.
    ========================================================================== */
 (function () {
@@ -1222,9 +1223,54 @@
     searchPanel.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("is-active"); });
     if (!stondAan) chip.classList.add("is-active");
   });
+  /* ========================================================================
+     8. PAGINERING — <table data-page="5">
+     De rijen staan gewoon in de HTML; hier gaat alles buiten de huidige
+     pagina uit. De voet hoort bij het paneel, niet bij de tabel, dus die
+     wordt ernaast gezocht. Past alles op één pagina, dan blijft hij weg:
+     bladeren zonder tweede pagina is alleen maar ruis.
+     ======================================================================== */
+  document.querySelectorAll("table[data-page]").forEach(function (table) {
+    var size = parseInt(table.dataset.page, 10);
+    var body = table.tBodies[0];
+    if (!size || !body) return;
+
+    var rows = Array.prototype.slice.call(body.rows);
+    var panel = table.closest(".panel") || table.parentNode;
+    var foot = panel.querySelector(".pager");
+    var last = Math.ceil(rows.length / size) - 1;
+    var page = 0;
+
+    if (!foot) return;
+    /* Eén pagina: geen voet, en de rijen blijven staan zoals ze staan. */
+    if (last < 1) { foot.hidden = true; return; }
+
+    var prev = foot.querySelectorAll(".pager__btn")[0];
+    var next = foot.querySelectorAll(".pager__btn")[1];
+    var count = foot.querySelector(".pager__count");
+
+    function render() {
+      var from = page * size;
+      var to = Math.min(from + size, rows.length);
+      rows.forEach(function (row, i) { row.hidden = i < from || i >= to; });
+      foot.hidden = false;
+      if (prev) prev.disabled = page === 0;
+      if (next) next.disabled = page === last;
+      if (count) count.innerHTML = "<b>" + (from + 1) + "&ndash;" + to + "</b> of " + rows.length;
+    }
+
+    if (prev) prev.addEventListener("click", function () {
+      if (page > 0) { page--; render(); }
+    });
+    if (next) next.addEventListener("click", function () {
+      if (page < last) { page++; render(); }
+    });
+    render();
+  });
+
 
   /* ========================================================================
-     8. TOETSENBORD
+     9. TOETSENBORD
      ======================================================================== */
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {

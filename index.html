@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=34" />
+  <link rel="stylesheet" href="styles.css?v=35" />
 </head>
 <body>
 
@@ -3077,7 +3077,7 @@
             </div>
 
             <div class="table-wrap">
-              <table class="table">
+              <table class="table" data-page="5">
                 <thead>
                   <tr><th scope="col">Date</th><th scope="col">Total</th><th scope="col">Status</th><th scope="col">Actions</th></tr>
                 </thead>
@@ -3090,6 +3090,16 @@
                 </tbody>
               </table>
             </div>
+
+            <!-- De voet hangt aan §9 en blijft weg zolang alles op één pagina
+                 past; met vijf regels valt er nu niets te bladeren. -->
+            <nav class="panel__foot pager" aria-label="Bill pages" hidden>
+              <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled>
+                <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+              <button class="icon-btn pager__btn" type="button" aria-label="Next page">
+                <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+              <p class="pager__count"></p>
+            </nav>
             </div>
           </div>
 
@@ -3143,6 +3153,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=34"></script>
+  <script src="app.js?v=35"></script>
 </body>
 </html>
