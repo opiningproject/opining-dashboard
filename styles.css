@@ -411,7 +411,9 @@ legend { padding: 0; }
      lettertjes. De kleur blijft van de soort melding. */
   font-size: var(--fs-md); font-weight: 500;
 }
-.alert .icon { width: 18px; height: 18px; flex: 0 0 auto; }
+/* Even groot als een pagina-icoon en in de kleur van de melding zelf, zodat
+   het teken bij de tekst hoort in plaats van ernaast te schreeuwen. */
+.alert .icon { width: 20px; height: 20px; stroke-width: 1.6; flex: 0 0 auto; }
 /* Staat de melding los in een kolom die zelf al ruimte tussen de blokken
    houdt, dan hoeft hij geen eigen marge: die komt er bovenop. Binnen een
    kaart blijft de marge staan, want daar scheidt hij niets anders. */
@@ -1388,7 +1390,6 @@ select.input {
 
 /* Neutrale toelichting; de gele .alert is voor waarschuwingen. */
 .alert--info { background: var(--accent-soft); color: #14567f; }
-.alert--info .icon { color: var(--accent); }
 
 /* Kop van een inklapbare kaartsectie: een grijze balk bovenin de kaart met
    de titel en een chevron. De lijst eronder heeft geen eigen bovenlijn meer
