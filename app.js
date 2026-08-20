@@ -593,15 +593,44 @@
       });
     }
 
+    /* De samenvatting is wat je van een dichtgeklapte dag ziet. Alleen de
+       mobiele CSS toont hem; hier staat wat erin komt. */
+    function syncSamenvatting(rij) {
+      var sum = rij.querySelector(".hrow__sum");
+      if (!sum) return;
+      if (rij.classList.contains("is-off")) { sum.textContent = "Closed"; return; }
+      var delen = [];
+      rij.querySelectorAll(".shift").forEach(function (shift) {
+        var velden = shift.querySelectorAll(".time");
+        if (velden.length === 2) delen.push(velden[0].value + " - " + velden[1].value);
+      });
+      sum.textContent = delen.join("  ·  ");
+    }
+
+    /* Open of dicht is puur een mobiele stand: op desktop doet de klasse
+       niets, dus hoeft hier niets met schermbreedtes gerekend te worden. */
+    function setDagUitgeklapt(rij, uit) {
+      rij.classList.toggle("hrow--shut", !uit);
+      var knop = rij.querySelector(".hrow__more");
+      if (knop) knop.setAttribute("aria-expanded", uit ? "true" : "false");
+      if (!uit) syncSamenvatting(rij);
+    }
+
     function setDagOpen(rij, open) {
       rij.classList.toggle("is-off", !open);
       rij.querySelector(".shifts").hidden = !open;
       rij.querySelector(".closed").hidden = open;
+      syncSamenvatting(rij);
     }
 
     hoursView.addEventListener("click", function (e) {
       var rij = e.target.closest(".hrow");
       if (!rij) return;
+
+      if (e.target.closest(".hrow__more")) {
+        setDagUitgeklapt(rij, rij.classList.contains("hrow--shut"));
+        return;
+      }
 
       if (e.target.closest(".shift__add")) {
         var laatste = rij.querySelector(".shift:last-child");
@@ -615,6 +644,7 @@
         });
         laatste.after(kopie);
         syncShifts(rij);
+        syncSamenvatting(rij);
         markUnsaved("Opening hours");
       }
 
@@ -622,6 +652,7 @@
         if (rij.querySelectorAll(".shift").length < 2) return;
         e.target.closest(".shift").remove();
         syncShifts(rij);
+        syncSamenvatting(rij);
         markUnsaved("Opening hours");
       }
     });
@@ -630,7 +661,17 @@
       if (e.target.matches('.switch input')) setDagOpen(e.target.closest(".hrow"), e.target.checked);
       markUnsaved("Opening hours");
     });
-    hoursView.addEventListener("input", function () { markUnsaved("Opening hours"); });
+    hoursView.addEventListener("input", function (e) {
+      var rij = e.target.closest(".hrow");
+      if (rij) syncSamenvatting(rij);
+      markUnsaved("Opening hours");
+    });
+
+    /* Alles begint dicht: op mobiel is dat de hele winst, op desktop doet de
+       klasse niets. */
+    hoursView.querySelectorAll(".hrow").forEach(function (rij) {
+      setDagUitgeklapt(rij, false);
+    });
   }
 
   /* ---- Loyalty: het voorbeeld volgt het gekozen percentage ---------------- */

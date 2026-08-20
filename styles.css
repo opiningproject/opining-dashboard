@@ -1427,6 +1427,10 @@ select.input {
   pointer-events: none;
 }
 
+/* Samenvatting en chevron horen bij de mobiele accordeon; op desktop staat
+   elke dag altijd open, dus daar bestaan ze niet. */
+.hrow__sum, .hrow__more { display: none; }
+
 .shift__del { width: 32px; height: 32px; color: var(--text-muted); }
 .shift__del .icon { width: 19px; height: 19px; }
 
@@ -1439,6 +1443,8 @@ select.input {
   color: var(--accent);
 }
 .shift__add:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* Op desktop is het een tekstlink; het plusje is de mobiele vorm. */
+.shift__add .icon { display: none; }
 
 .closed {
   display: flex; align-items: center; gap: 9px;
@@ -1915,16 +1921,57 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .table--zones td:nth-child(3), .table--zones td:nth-child(4) { flex: 0 0 100%; }
   .table--domains td:first-child { flex: 1 1 auto; min-width: 0; }
   .dom { gap: 10px; }
-  /* Openingstijden: dag en schakelaar op een eigen regel, diensten
-     eronder — drie kolommen passen hier niet naast elkaar. */
-  .hrow { grid-template-columns: 1fr auto; gap: 10px 12px; padding: 14px 16px; }
+  /* Openingstijden op mobiel: elke dag een eigen blok in plaats van rijen
+     met haarlijnen ertussen, en standaard dicht. Zo scrol je langs zeven
+     kaartjes met hun tijden op één regel, en klap je alleen open wat je
+     wilt wijzigen. De schakelaar staat vóór de dagnaam: eerst of je open
+     bent, dan wanneer. */
+  .hours { padding: 0 20px 20px; border-top: 0; display: grid; gap: 10px; }
+  .hours + .card__pad { padding-top: 0; }
+  .hrow {
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px 8px;
+    padding: 10px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+  }
   .hrow__day { padding-top: 0; align-self: center; }
-  .hrow .switch { margin-top: 0; align-self: center; }
+  .hrow .switch { margin-top: 0; align-self: center; grid-column: 1; grid-row: 1; }
+  .hrow__day { grid-column: 2; grid-row: 1; }
+  /* De tijden bij een dichte dag: één regel, afgekapt als het niet past.
+     Staat de dag open, dan staan de velden er zelf en zwijgt hij. */
+  .hrow--shut .hrow__sum {
+    display: block; grid-column: 3; grid-row: 1;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font-size: var(--fs-sm); color: var(--text-muted);
+  }
+  .hrow__more {
+    display: grid; place-items: center;
+    grid-column: 4; grid-row: 1;
+    width: 28px; height: 28px; margin-right: -6px;
+    border-radius: var(--r-md);
+    color: var(--text-muted);
+    transition: transform var(--dur) var(--ease);
+  }
+  .hrow__more .icon { width: 18px; height: 18px; }
+  .hrow--shut .hrow__more { transform: rotate(-90deg); }
+  /* Dicht: alleen de kop blijft staan. De samenvatting neemt het over. */
+  .hrow--shut .shifts, .hrow--shut .closed { display: none; }
   .shifts, .closed { grid-column: 1 / -1; }
   .closed { padding-top: 0; }
   .shift { flex-wrap: wrap; gap: 8px; }
   .time { width: 104px; }
-  .shift__add { margin-left: 0; }
+  /* Hier is het een plusknop, geen tekstlink: de regel is al vol. */
+  .shift__add {
+    display: grid; place-items: center;
+    width: 32px; height: 32px;
+    margin-left: 0; padding: 0;
+    border-radius: var(--r-md);
+  }
+  .shift__add .icon { display: block; width: 19px; height: 19px; }
+  .shift__add > span { display: none; }
+  .shift__add:hover { text-decoration: none; background: var(--gray-100); }
   /* Vier tegels naast elkaar worden te smal op mobiel. */
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tile:nth-child(odd) { border-left: 0; }
