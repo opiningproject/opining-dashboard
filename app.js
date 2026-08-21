@@ -154,6 +154,27 @@
 
   pageCrumb.addEventListener("click", backToList);
 
+
+  /* ---- Doorverwijzen naar de plek waar de taak hoort ---------------------
+     De knoppen in de setup-guide sturen je naar een pagina in de sidebar
+     (data-goto-page) of naar een settingspagina (data-goto-set). Ze klikken
+     het echte navigatie-item aan, zodat markering, titel en icoon precies
+     hetzelfde lopen als wanneer je er zelf heen navigeert. */
+  document.addEventListener("click", function (e) {
+    var naar = e.target.closest("[data-goto-page], [data-goto-set]");
+    if (!naar) return;
+    e.preventDefault();
+
+    if (naar.dataset.gotoPage) {
+      var pagina = sidebar.querySelector('.nav__item[data-page="' + naar.dataset.gotoPage + '"]');
+      if (pagina) pagina.click();
+      return;
+    }
+
+    openSettings();
+    var rij = setNav.querySelector('.nav__item[data-set="' + naar.dataset.gotoSet + '"]');
+    if (rij) rij.click();
+  });
   /* ---- Bevroren kolom: rand pas tonen zodra er iets achter wegschuift ----- */
   document.querySelectorAll(".table-wrap").forEach(function (wrap) {
     wrap.addEventListener("scroll", function () {

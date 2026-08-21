@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=63" />
+  <link rel="stylesheet" href="styles.css?v=64" />
 </head>
 <body>
 
@@ -315,7 +315,7 @@
                     <button class="step__title" type="button" aria-expanded="true">Customize your domain name</button>
                     <div class="step__panel"><div class="step__panel-inner">
                       <p class="step__meta">d2w1hd-rw.myopining.com</p>
-                      <button class="btn btn--primary" type="button">Name Store</button>
+                      <button class="btn btn--primary" type="button" data-goto-set="domain">Name Store</button>
                     </div></div>
                   </div>
                 </li>
@@ -325,7 +325,7 @@
                     <button class="step__title" type="button" aria-expanded="false">Customize your store</button>
                     <div class="step__panel"><div class="step__panel-inner">
                       <p class="step__meta">Theme, colours and logo</p>
-                      <button class="btn btn--primary" type="button">Customize</button>
+                      <button class="btn btn--primary" type="button" data-goto-page="online-store">Customize</button>
                     </div></div>
                   </div>
                 </li>
@@ -335,7 +335,7 @@
                     <button class="step__title" type="button" aria-expanded="false">Manage your openingtimes and order moments</button>
                     <div class="step__panel"><div class="step__panel-inner">
                       <p class="step__meta">No opening hours set yet</p>
-                      <button class="btn btn--primary" type="button">Set hours</button>
+                      <button class="btn btn--primary" type="button" data-goto-set="hours">Set hours</button>
                     </div></div>
                   </div>
                 </li>
@@ -345,7 +345,7 @@
                     <button class="step__title" type="button" aria-expanded="false">Set up payments</button>
                     <div class="step__panel"><div class="step__panel-inner">
                       <p class="step__meta">No payment provider connected</p>
-                      <button class="btn btn--primary" type="button">Set up payments</button>
+                      <button class="btn btn--primary" type="button" data-goto-set="payments">Set up payments</button>
                     </div></div>
                   </div>
                 </li>
@@ -355,7 +355,7 @@
                     <button class="step__title" type="button" aria-expanded="false">Add first delivery area</button>
                     <div class="step__panel"><div class="step__panel-inner">
                       <p class="step__meta">No delivery areas yet</p>
-                      <button class="btn btn--primary" type="button">Add area</button>
+                      <button class="btn btn--primary" type="button" data-goto-set="zones">Add area</button>
                     </div></div>
                   </div>
                 </li>
@@ -3378,6 +3378,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=63"></script>
+  <script src="app.js?v=64"></script>
 </body>
 </html>
