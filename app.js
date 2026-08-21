@@ -11,7 +11,8 @@
      8. Paginering                → <table data-page>
      9. Tabstreep                 → scrollindicator onder .tabs
      10. Postcodepop              → volledige reeks achter de teller
-     11. Toetsenbord
+     11. Systeemkiezer            → <select> over de knop op mobiel
+     12. Toetsenbord
    In een SPA vervang je §2 en §3 door de router; de rest blijft 1-op-1.
    ========================================================================== */
 (function () {
@@ -1478,7 +1479,69 @@
   document.addEventListener("scroll", sluitPop, true);
 
   /* ========================================================================
-     11. TOETSENBORD
+     11. SYSTEEMKIEZER — op een telefoon kiest de telefoon
+     Een eigen uitklapmenu is op een klein scherm slechter dan de kiezer die
+     het toestel zelf toont: die is groter, schuift van onderen in en werkt
+     zoals de gebruiker gewend is. Daarom ligt er een echt <select>
+     onzichtbaar over de knop. De knop blijft eruitzien zoals hij hoort; de
+     tik komt op het <select> terecht. Alleen onder 900px, zie styles.css.
+     ======================================================================== */
+
+  /* Statusfilter (orders, archief, klanten). De opties komen uit het menu dat
+     er al staat, zodat er niets dubbel onderhouden hoeft te worden. */
+  document.querySelectorAll(".sfilter").forEach(function (sf) {
+    var items = sf.querySelectorAll(".sfilter__item");
+    var knop = sf.querySelector(".sfilter__btn");
+    if (!items.length || !knop) return;
+
+    var sel = document.createElement("select");
+    sel.className = "sfilter__native";
+    sel.setAttribute("aria-label", knop.getAttribute("aria-label") || "Filter this list");
+    items.forEach(function (item, i) {
+      var opt = document.createElement("option");
+      opt.value = String(i);
+      opt.textContent = item.textContent.trim();
+      if (item.classList.contains("is-selected")) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    sf.appendChild(sel);
+
+    /* De keuze loopt via het bestaande menu-item, zodat label, vinkje en de
+       zoekstand precies hetzelfde bijwerken als op desktop. */
+    sel.addEventListener("change", function () { items[Number(sel.value)].click(); });
+    sf.addEventListener("click", function (e) {
+      var item = e.target.closest(".sfilter__item");
+      if (item) sel.value = String([].indexOf.call(items, item));
+    });
+  });
+
+  /* Postcodes achter de teller: dezelfde kiezer, maar er valt niets te
+     kiezen. De lijst springt terug naar de kop zodra je iets aantikt. */
+  document.querySelectorAll("[data-codes]").forEach(function (knop) {
+    var codes = knop.dataset.codes.split(",").map(function (c) { return c.trim(); });
+
+    var vak = document.createElement("span");
+    vak.className = "codes__wrap";
+    knop.parentNode.insertBefore(vak, knop);
+    vak.appendChild(knop);
+
+    var sel = document.createElement("select");
+    sel.className = "codes__native";
+    sel.setAttribute("aria-label", knop.getAttribute("aria-label") || "Postal codes");
+    var kop = document.createElement("option");
+    kop.textContent = codes.length + " postal codes";
+    sel.appendChild(kop);
+    codes.forEach(function (code) {
+      var opt = document.createElement("option");
+      opt.textContent = code;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener("change", function () { sel.selectedIndex = 0; });
+    vak.appendChild(sel);
+  });
+
+  /* ========================================================================
+     12. TOETSENBORD
      ======================================================================== */
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
