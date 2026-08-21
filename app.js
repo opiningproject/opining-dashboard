@@ -10,7 +10,8 @@
      7. Zoekpaneel                → <html data-search>
      8. Paginering                → <table data-page>
      9. Tabstreep                 → scrollindicator onder .tabs
-     10. Toetsenbord
+     10. Postcodepop              → volledige reeks achter de teller
+     11. Toetsenbord
    In een SPA vervang je §2 en §3 door de router; de rest blijft 1-op-1.
    ========================================================================== */
 (function () {
@@ -1420,12 +1421,70 @@
   });
 
   /* ========================================================================
-     10. TOETSENBORD
+     10. POSTCODEPOP — de volledige reeks achter de teller
+     Een zone kan tientallen postcodes beslaan; in de rij staat er één met een
+     teller. Klikken op die teller toont de rest in een zwevend vakje. Dat
+     vakje hangt aan de body en niet in de cel, want het scrollvak van de
+     tabel zou het afknippen.
+     ======================================================================== */
+  var pop = null;
+  var popKnop = null;
+
+  function sluitPop() {
+    if (!pop) return;
+    pop.remove();
+    pop = null;
+    if (popKnop) popKnop.setAttribute("aria-expanded", "false");
+    popKnop = null;
+  }
+
+  function openPop(knop) {
+    sluitPop();
+    pop = document.createElement("div");
+    pop.className = "codepop";
+    pop.setAttribute("role", "dialog");
+    pop.setAttribute("aria-label", "Postal codes");
+    knop.dataset.codes.split(",").forEach(function (code) {
+      var chip = document.createElement("span");
+      chip.textContent = code.trim();
+      pop.appendChild(chip);
+    });
+    document.body.appendChild(pop);
+
+    /* Onder de knop, en tegen de schermrand aan geschoven als het niet past. */
+    var r = knop.getBoundingClientRect();
+    var b = pop.getBoundingClientRect();
+    var links = Math.min(Math.max(8, r.left), innerWidth - b.width - 8);
+    var boven = r.bottom + 8;
+    if (boven + b.height > innerHeight - 8) boven = Math.max(8, r.top - b.height - 8);
+    pop.style.left = links + "px";
+    pop.style.top = boven + "px";
+
+    popKnop = knop;
+    knop.setAttribute("aria-expanded", "true");
+  }
+
+  document.addEventListener("click", function (e) {
+    var knop = e.target.closest("[data-codes]");
+    if (knop) {
+      if (knop === popKnop) { sluitPop(); return; }
+      openPop(knop);
+      return;
+    }
+    if (pop && !e.target.closest(".codepop")) sluitPop();
+  });
+  /* Meescrollen zou hem naast de knop laten zweven; dan liever weg. */
+  window.addEventListener("resize", sluitPop);
+  document.addEventListener("scroll", sluitPop, true);
+
+  /* ========================================================================
+     11. TOETSENBORD
      ======================================================================== */
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
       /* Bovenste laag eerst: het zoekpaneel ligt over alles, en de drawer
          kan over de settings-overlay heen liggen. */
+      if (pop) { sluitPop(); return; }
       if (root.dataset.search === "open") { closeSearch(); return; }
       if (root.dataset.drawer === "open") { setDrawer(false); return; }
       /* Binnen settings eerst een niveau omhoog, pas daarna sluiten. */

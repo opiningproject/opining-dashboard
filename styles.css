@@ -1542,6 +1542,30 @@ select.input {
   background: var(--gray-100);
   font-size: var(--fs-sm);
   color: var(--text-muted);
+  transition: background var(--dur) var(--ease);
+}
+.codes__more:hover, .codes__more[aria-expanded="true"] { background: var(--gray-200); color: var(--text-strong); }
+
+/* De volledige reeks postcodes bij de teller. Staat los in de body en is
+   position: fixed, want binnen de tabel zou hij worden afgeknipt door het
+   scrollvak. app.js §10 zet hem op zijn plek. */
+.codepop {
+  position: fixed; z-index: var(--z-toast);
+  display: flex; flex-wrap: wrap; gap: 6px;
+  max-width: 260px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-md);
+}
+.codepop span {
+  padding: 2px 9px;
+  border-radius: var(--r-full);
+  background: var(--gray-100);
+  font-size: var(--fs-sm);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Bezorgkosten: het tarief en de drempel waarboven het vervalt, op één regel. */
