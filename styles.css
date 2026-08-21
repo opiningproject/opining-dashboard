@@ -1129,19 +1129,6 @@ select.input {
 }
 .fmenu__item:hover { background: var(--bg-hover); }
 
-/* Statusfilter: één compacte knop met een uitklapbare lijst, in plaats
-   van een rij tabs. Het vinkje zegt wat er aanstaat. */
-/* Accountrij onderaan de settingslijst: de persoon, niet de winkel. */
-/* Onderdeel van de lijst: de negatieve marges heffen de 8px padding van
-   de kaart op, zodat de scheidingslijn van rand tot rand loopt en de
-   rij de onderhoeken van de kaart volgt. */
-.setuser {
-  margin: 8px -8px -8px;
-  padding: 13px 12px;
-  border-top: 1px solid var(--border);
-  border-radius: 0 0 calc(var(--r-lg) - 1px) calc(var(--r-lg) - 1px);
-}
-
 /* Accountmenu in de header. */
 .umenu { position: relative; }
 .umenu__list {
@@ -1173,6 +1160,8 @@ select.input {
 .umenu__item--out, .umenu__item--out .icon { color: var(--danger); }
 .umenu__item--out:hover { background: #fdf1f0; }
 
+/* Statusfilter: één compacte knop met een uitklapbare lijst, in plaats
+   van een rij tabs. Het vinkje zegt wat er aanstaat. */
 .sfilter { position: relative; flex: 0 0 auto; }
 .sfilter__btn {
   display: inline-flex; align-items: center; gap: 4px;
@@ -2223,10 +2212,6 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
     overflow: hidden;
   }
   .set-nav .nav__item { border-radius: 0; }
-  /* Geen lijnen tussen de instellingen; alleen de accountrij onderaan
-     wordt afgescheiden. Hier is de lijst zelf de kaart, dus zonder de
-     negatieve marges van de desktopversie. */
-  .setuser { margin: 0; border-radius: 0; }
 
   /* Boven de balk en op dezelfde middenas: 8 + halve knop = halve balk. */
   .overlay__close { top: 8px; right: 16px; z-index: 3; margin: 14px 16px -48px auto; }
