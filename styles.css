@@ -1136,22 +1136,11 @@ select.input {
    de kaart op, zodat de scheidingslijn van rand tot rand loopt en de
    rij de onderhoeken van de kaart volgt. */
 .setuser {
-  gap: 12px;
   margin: 8px -8px -8px;
-  padding: 14px 12px;
+  padding: 13px 12px;
   border-top: 1px solid var(--border);
   border-radius: 0 0 calc(var(--r-lg) - 1px) calc(var(--r-lg) - 1px);
 }
-.setuser__avatar {
-  display: grid; place-items: center;
-  width: 32px; height: 32px; flex: 0 0 auto;
-  border-radius: var(--r-md);
-  background: var(--accent); color: #fff;
-  font-size: var(--fs-sm); font-weight: 600;
-}
-.setuser__text { display: flex; flex-direction: column; min-width: 0; }
-.setuser__name { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
-.setuser__mail { font-size: var(--fs-sm); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* Accountmenu in de header. */
 .umenu { position: relative; }
@@ -1810,6 +1799,8 @@ select.input {
 /* Rij met een badge vlak voor de chevron. */
 .row > .badge { margin-left: auto; }
 .row > .badge + .row__caret { margin-left: 14px; }
+/* Een losse link achteraan de rij, bijvoorbeeld om het adres te wijzigen. */
+.row__link { flex: 0 0 auto; margin-left: 14px; }
 
 /* ==========================================================================
    8k. MARKETING-FORMULIEREN

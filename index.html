@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=62" />
+  <link rel="stylesheet" href="styles.css?v=63" />
 </head>
 <body>
 
@@ -2083,12 +2083,7 @@
           <!-- Accountrij als laatste item van de lijst: hoort bij de persoon,
                niet bij de winkel, vandaar de scheidingslijn erboven. -->
           <li><a class="nav__item setuser" href="#" data-set="account" data-title="Account" data-icon="i-user-circle">
-            <span class="setuser__avatar" aria-hidden="true">SO</span>
-            <span class="setuser__text">
-              <span class="setuser__name">Serdar Orman</span>
-              <span class="setuser__mail">serdarorman74@gmail.com</span>
-            </span>
-          </a></li>
+            <svg class="icon" aria-hidden="true"><use href="#i-user-circle"/></svg><span>Account</span><svg class="icon nav__chev" aria-hidden="true"><use href="#i-chevron-right"/></svg></a></li>
         </ul>
       </aside>
 
@@ -3290,6 +3285,56 @@
           </div>
         </section>
 
+
+        <!-- ---------- SETTINGS: account ---------- -->
+        <!-- Deze pagina gaat over de persoon, niet over de winkel: het adres
+             waarmee het account is aangemaakt en waarmee je inlogt. -->
+        <section class="view" data-set-view="account" hidden>
+          <div class="card">
+            <h3 class="card__title">Personal email</h3>
+            <p class="card__sub">The address you signed up with. It is where we send account and security notices, and it is your username when you log in.</p>
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-mail"/></svg>
+                <span class="row__text">
+                  <span class="row__title">serdarorman74@gmail.com</span>
+                  <span class="row__meta">Verified on 4 March 2026</span>
+                </span>
+                <span class="badge badge--active">Verified</span>
+                <a class="link row__link" href="#">Change</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Password</h3>
+            <p class="card__sub">Use at least ten characters. A password you use nowhere else is worth more than one with symbols in it.</p>
+            <div class="field">
+              <label class="label" for="acc-pass-old">Current password</label>
+              <input class="input" id="acc-pass-old" type="password" autocomplete="current-password" />
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label class="label" for="acc-pass-new">New password</label>
+                <input class="input" id="acc-pass-new" type="password" autocomplete="new-password" />
+              </div>
+              <div class="field">
+                <label class="label" for="acc-pass-again">Repeat new password</label>
+                <input class="input" id="acc-pass-again" type="password" autocomplete="new-password" />
+              </div>
+            </div>
+            <p class="hint hint--spaced">Changing your password signs you out everywhere else.</p>
+            <button class="btn btn--primary card__action" type="button">Update password</button>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Sign out</h3>
+            <p class="card__sub">Ends this session on this device. Your store stays online and keeps taking orders.</p>
+            <button class="btn btn--ghost card__action" type="button" id="account-signout">
+              <svg class="icon" aria-hidden="true"><use href="#i-logout"/></svg>Sign out
+            </button>
+          </div>
+        </section>
         <section class="view" data-set-view="generic" hidden>
           <div class="card card--empty">
             <svg class="icon empty__icon" id="set-empty-icon" aria-hidden="true"><use href="#i-store"/></svg>
@@ -3333,6 +3378,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=62"></script>
+  <script src="app.js?v=63"></script>
 </body>
 </html>
