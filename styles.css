@@ -2012,6 +2012,8 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
     border: 0; background: none;
   }
   .codes__wrap { position: relative; display: inline-flex; }
+  /* Een tik moet raak zijn: de teller krijgt de maat van de badge ernaast. */
+  .codes__more { padding: 3px 10px; font-weight: 500; }
   /* Domeinen: koppen weg, rijen worden blokken. Zones blijven een tabel die
      zijwaarts schuift, want daar staan vier kolommen naast elkaar die je met
      elkaar wilt vergelijken. */
