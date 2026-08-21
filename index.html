@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=61" />
+  <link rel="stylesheet" href="styles.css?v=62" />
 </head>
 <body>
 
@@ -68,6 +68,8 @@
     <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4.2v11.6M4.2 10h11.6"/></symbol>
     <symbol id="i-plus-circle" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><path d="M10 6.7v6.6M6.7 10h6.6"/></symbol>
     <symbol id="i-sort" viewBox="0 0 20 20"><path d="M6.3 4.6v10.8M3.7 12.8l2.6 2.6 2.6-2.6M13.7 15.4V4.6M11.1 7.2l2.6-2.6 2.6 2.6"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 20 20"><path d="M10 16.2V4.4M5.4 9l4.6-4.6L14.6 9"/></symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 20 20"><path d="M10 3.8v11.8M5.4 11l4.6 4.6L14.6 11"/></symbol>
     <!-- Compacte op-en-neer chevron voor een keuzeknop; i-sort heeft stelen. -->
     <symbol id="i-chevrons-y" viewBox="0 0 24 24"><path d="m9.6 10.4 2.4-2.4 2.4 2.4M9.6 13.6l2.4 2.4 2.4-2.4"/></symbol>
     <symbol id="i-dots" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="4.7" cy="10" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="15.3" cy="10" r="1.15"/></symbol>
@@ -521,6 +523,28 @@
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter archive">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
+                <!-- Sorteren: eerst waarop, daaronder in welke richting. -->
+                <div class="sort">
+                  <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Sort archive">
+                    <svg class="icon" aria-hidden="true"><use href="#i-sort"/></svg>
+                  </button>
+                  <div class="sort__menu" role="menu" hidden>
+                    <p class="sort__head">Sort by</p>
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field">
+                      <span class="sort__dot" aria-hidden="true"></span>Delivered time</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                      <span class="sort__dot" aria-hidden="true"></span>Destination</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                      <span class="sort__dot" aria-hidden="true"></span>Payment</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                      <span class="sort__dot" aria-hidden="true"></span>Deliverer</button>
+                    <div class="sort__sep" role="separator"></div>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>Ascending</button>
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg>Descending</button>
+                  </div>
+                </div>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
                 <div class="psearch" data-filters="Payment:Paid online|Cash;Order type:Delivery|Takeaway;Deliverer:Youssef Amrani|Nina Bakker|Ruben de Wit">
                   <div class="psearch__top">
@@ -3309,6 +3333,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=61"></script>
+  <script src="app.js?v=62"></script>
 </body>
 </html>

@@ -225,10 +225,10 @@
   }
 
   function sluitFilterMenus(behalve) {
-    document.querySelectorAll(".fmenu, .fchip__menu, .sfilter__menu, .umenu__list").forEach(function (m) {
+    document.querySelectorAll(".fmenu, .fchip__menu, .sfilter__menu, .sort__menu, .umenu__list").forEach(function (m) {
       if (m !== behalve) m.hidden = true;
     });
-    document.querySelectorAll(".psearch__filter, .fchip__label, .sfilter__btn, .umenu__btn").forEach(function (b) {
+    document.querySelectorAll(".psearch__filter, .fchip__label, .sfilter__btn, .sort__btn, .umenu__btn").forEach(function (b) {
       b.setAttribute("aria-expanded", "false");
     });
   }
@@ -347,6 +347,31 @@
       return;
     }
 
+    /* Sorteren: openen, en daarna twee keuzes die los van elkaar staan —
+       waarop je sorteert en in welke richting. Het menu blijft daarom open. */
+    var sortKnop = e.target.closest(".sort__btn");
+    if (sortKnop) {
+      var som = sortKnop.nextElementSibling;
+      var dichtSort = som.hidden;
+      sluitFilterMenus(dichtSort ? som : null);
+      som.hidden = !dichtSort;
+      sortKnop.setAttribute("aria-expanded", String(dichtSort));
+      return;
+    }
+
+    var sortItem = e.target.closest(".sort__item");
+    if (sortItem) {
+      var groep = sortItem.dataset.sort;
+      sortItem.closest(".sort__menu")
+        .querySelectorAll('[data-sort="' + groep + '"]').forEach(function (i) {
+          i.classList.remove("is-selected");
+          i.setAttribute("aria-checked", "false");
+        });
+      sortItem.classList.add("is-selected");
+      sortItem.setAttribute("aria-checked", "true");
+      return;
+    }
+
     /* Statusfilter openen en kiezen. */
     var sknop = e.target.closest(".sfilter__btn");
     if (sknop) {
@@ -393,8 +418,9 @@
       return;
     }
 
-    /* Klik ergens anders sluit openstaande menu's. */
-    if (!e.target.closest(".fchip__menu")) sluitFilterMenus();
+    /* Klik ergens anders sluit openstaande menu's. Het sorteermenu blijft
+       staan zolang je erin klikt: waarop en hoe zijn twee keuzes. */
+    if (!e.target.closest(".fchip__menu, .sort__menu")) sluitFilterMenus();
   });
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape") return;

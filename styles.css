@@ -1226,6 +1226,47 @@ select.input {
    app.js §11 en de mobiele regels onderaan. */
 .sfilter__native, .codes__native { display: none; }
 
+/* Sorteren staat naast de zoek-en-filterknop: eerst waarop, daaronder in
+   welke richting. Het menu hangt rechts uit, want de knop staat rechts. */
+.sort { position: relative; flex: 0 0 auto; margin-left: 8px; }
+/* Zelfde vorm als de zoek-en-filterknop ernaast, maar zonder de klasse
+   panel__tool: die schakelt de zoekstand in. */
+.sort__btn { width: auto; height: 34px; padding: 0 10px; border: 1px solid var(--border); border-radius: var(--r-md); }
+.sort__menu {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  z-index: 20;
+  min-width: 210px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-md);
+  display: flex; flex-direction: column;
+}
+.sort__menu[hidden] { display: none; }
+.sort__head { padding: 4px 10px 8px; font-size: var(--fs-sm); color: var(--text-muted); }
+.sort__item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  text-align: left;
+  font-size: var(--fs-md);
+  color: var(--text-strong);
+}
+.sort__item:hover { background: var(--bg-hover); }
+.sort__item .icon { width: 17px; height: 17px; color: var(--text-muted); }
+/* Waarop je sorteert leest als een keuzerondje; de richting is er maar één
+   van twee en krijgt daarom een gevuld vlak in plaats van een bolletje. */
+.sort__dot {
+  width: 16px; height: 16px; flex: 0 0 auto;
+  border: 2px solid var(--border-strong);
+  border-radius: var(--r-full);
+}
+.sort__item.is-selected .sort__dot { border-color: var(--text-strong); border-width: 5px; }
+.sort__item[data-sort="dir"].is-selected { background: var(--bg-active); font-weight: 500; }
+.sort__item[data-sort="dir"].is-selected .icon { color: var(--text-strong); }
+.sort__sep { height: 1px; margin: 6px 4px; background: var(--border); }
+
 .panel__tool {
   width: auto; height: 34px;
   margin-left: auto;
