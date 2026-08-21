@@ -527,6 +527,10 @@ select.input {
   z-index: var(--z-overlay);
   display: block;
   overflow-y: auto;
+  /* Alleen omhoog en omlaag. Een brede tabel scrolt in zijn eigen vak; zou
+     de overlay ook zijwaarts mogen, dan schuift de hele pagina mee zodra er
+     ergens een pixel buiten de rand valt. */
+  overflow-x: hidden;
   background: var(--bg-overlay);
   animation: overlay-in 300ms var(--ease);
 }
@@ -866,7 +870,9 @@ select.input {
 .addrow .icon { color: var(--text-muted); }
 
 /* Smalle schermen: de tabel mag scrollen in plaats van de pagina te rekken. */
-.table-wrap { overflow-x: auto; }
+/* position: relative houdt absoluut geplaatste kinderen (de sr-only labels in
+   de cellen) binnen het vak; anders duwen die de pagina zijwaarts open. */
+.table-wrap { position: relative; overflow-x: auto; }
 .table { width: 100%; border-collapse: collapse; font-size: var(--fs-md); }
 .table th {
   background: var(--gray-50);
