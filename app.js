@@ -213,12 +213,13 @@
   function chipVanFilter(filter) {
     var chip = document.createElement("span");
     chip.className = "fchip fchip--drop";
+    chip.dataset.naam = filter.naam;
 
     var knop = document.createElement("button");
     knop.type = "button";
     knop.className = "fchip__label";
     knop.setAttribute("aria-expanded", "false");
-    knop.innerHTML = filter.naam + ' <svg class="icon fchip__caret" aria-hidden="true"><use href="#i-caret"/></svg>';
+    knop.innerHTML = '<span class="fchip__waarde"></span><svg class="icon fchip__caret" aria-hidden="true"><use href="#i-caret"/></svg>';
 
     var menu = document.createElement("div");
     menu.className = "fchip__menu";
@@ -236,8 +237,38 @@
     leeg.textContent = "Clear";
     menu.appendChild(leeg);
 
-    chip.append(knop, menu);
+    /* Het kruisje hoort bij een chip die iets doet; zolang er niets is
+       aangevinkt filtert hij niet en valt er ook niets weg te halen. */
+    var weg = document.createElement("button");
+    weg.type = "button";
+    weg.className = "fchip__x";
+    weg.hidden = true;
+    weg.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>';
+
+    chip.append(knop, weg, menu);
+    syncChip(chip);
     return chip;
+  }
+
+  /* De chip zegt waarop je filtert, niet waarop je zóu kunnen filteren: zodra
+     er iets aanstaat draagt hij de gekozen waarden, met een kruisje ernaast. */
+  function syncChip(chip) {
+    var naam = chip.dataset.naam || "";
+    var aan = [].slice.call(chip.querySelectorAll("input:checked")).map(function (i) {
+      return i.nextElementSibling.textContent.trim();
+    });
+    var label = chip.querySelector(".fchip__waarde");
+    var weg = chip.querySelector(".fchip__x");
+
+    /* Meer dan twee wordt te lang voor een chip; dan telt hij de rest op. */
+    label.textContent = !aan.length ? naam
+      : aan.length <= 2 ? aan.join(", ")
+      : aan.slice(0, 1).join("") + " +" + (aan.length - 1);
+
+    chip.classList.toggle("is-active", aan.length > 0);
+    weg.hidden = !aan.length;
+    weg.setAttribute("aria-label", "Remove filter " + naam);
+    chip.querySelector(".fchip__label").setAttribute("aria-label", naam + (aan.length ? ": " + aan.join(", ") : ""));
   }
 
   /* Alles wissen hoort er alleen te staan zodra er iets te wissen valt. */
@@ -389,7 +420,9 @@
   });
   document.addEventListener("change", function (e) {
     var vink = e.target.closest(".fchip__menu input");
-    if (vink) pasPaneelFilter(vink.closest(".panel__head"));
+    if (!vink) return;
+    syncChip(vink.closest(".fchip"));
+    pasPaneelFilter(vink.closest(".panel__head"));
   });
 
   function sluitPaneelZoek(kop) {
@@ -453,6 +486,7 @@
       chip2.querySelectorAll("input").forEach(function (i) { i.checked = false; });
       chip2.querySelector(".fchip__menu").hidden = true;
       chip2.querySelector(".fchip__label").setAttribute("aria-expanded", "false");
+      syncChip(chip2);
       pasPaneelFilter(chip2.closest(".panel__head"));
       return;
     }
