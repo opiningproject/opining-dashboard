@@ -482,14 +482,16 @@
       return;
     }
 
+    /* Clear haalt het hele filter weg, niet alleen de vinkjes: een chip die
+       niets meer inperkt heeft geen reden om te blijven staan. */
     var leegmaken = e.target.closest(".fchip__clear");
     if (leegmaken) {
       var chip2 = leegmaken.closest(".fchip");
-      chip2.querySelectorAll("input").forEach(function (i) { i.checked = false; });
-      chip2.querySelector(".fchip__menu").hidden = true;
-      chip2.querySelector(".fchip__label").setAttribute("aria-expanded", "false");
-      syncChip(chip2);
-      pasPaneelFilter(chip2.closest(".panel__head"));
+      var kop2 = chip2.closest(".panel__head");
+      var blok2 = chip2.closest(".psearch");
+      chip2.remove();
+      syncClearAll(blok2);
+      pasPaneelFilter(kop2);
       return;
     }
 
