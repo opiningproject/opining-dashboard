@@ -595,8 +595,13 @@
       var blok = keuze.closest(".psearch");
       var filter = leesFilters(blok).filter(function (f) { return f.naam === keuze.textContent; })[0];
       /* Nieuwste filter vooraan, zoals in het ontwerp. */
-      blok.querySelector(".psearch__filters").prepend(chipVanFilter(filter));
+      var nieuw = chipVanFilter(filter);
+      blok.querySelector(".psearch__filters").prepend(nieuw);
       sluitFilterMenus();
+      /* Je koos net dit filter, dus je wilt zijn waarden zien: de chip komt
+         open in plaats van dat je er nog eens op moet klikken. */
+      nieuw.querySelector(".fchip__menu").hidden = false;
+      nieuw.querySelector(".fchip__label").setAttribute("aria-expanded", "true");
       syncClearAll(blok);
       pasPaneelFilter(blok.closest(".panel__head"));
       return;
