@@ -1338,6 +1338,8 @@ select.input {
 
 /* Voet van een paneel: zelfde inspringing als de tabelcellen. */
 .panel__foot { display: flex; align-items: center; gap: 10px; padding: 14px 22px; border-top: 1px solid var(--border); }
+/* Niets gevonden: de kolomkop blijft staan, zodat je ziet waarin je zocht. */
+.panel__empty { padding: 30px 22px; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); }
 
 /* Paginering. De actieve richting krijgt accentkleur, de doodlopende
    kant blijft zichtbaar maar uitgeschakeld. */

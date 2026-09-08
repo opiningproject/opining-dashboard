@@ -275,6 +275,123 @@
     });
   }
 
+
+  /* ---- Wat het filter overlaat -------------------------------------------
+     Zoekwoord en aangevinkte waarden samen bepalen welke rijen blijven staan.
+     Een rij valt af zodra hij aan één van de twee niet voldoet: het zoekwoord
+     moet ergens in de rij staan, en van elk filter mét vinkjes moet minstens
+     één waarde in de rij staan. Zoeken op de tekst van de rij is voor deze
+     lijsten genoeg; in productie filtert de server op de velden zelf. */
+  function rijTekst(rij) {
+    var stukken = [];
+    [].slice.call(rij.cells).forEach(function (cel) {
+      /* De actiekolom is bediening, geen gegeven: zonder deze uitzondering
+         matcht een knop met het woord "Kitchen" op iedere rij. */
+      if (cel.querySelector(".rowact")) return;
+      stukken.push(cel.textContent);
+    });
+    /* Staat de waarde nergens in de tekst — een status die alleen als knop
+       bestaat — dan draagt de rij hem in data-filter. */
+    if (rij.dataset.filter) stukken.push(rij.dataset.filter);
+    return stukken.join(" ").replace(/\s+/g, " ").trim().toLowerCase();
+  }
+
+  function toonGeenResultaten(panel, leeg) {
+    var melding = panel.querySelector(".panel__empty");
+    if (!melding) {
+      melding = document.createElement("p");
+      melding.className = "panel__empty";
+      melding.textContent = "No results.";
+      var wrap = panel.querySelector(".table-wrap");
+      if (!wrap) return;
+      wrap.after(melding);
+    }
+    melding.hidden = !leeg;
+  }
+
+  /* Lijsten zonder echte paginering dragen een vaste teller ("1–8 of 12"):
+     die suggereert een server met meer rijen dan hier staan. Zodra je filtert
+     klopt dat niet meer, dus dan vertelt de teller wat er écht overblijft en
+     zijn de bladerknoppen uit. Filter weg, oude tekst terug. */
+  function syncVastePager(panel, actief, aantal) {
+    var voet = panel.querySelector(".pager");
+    if (!voet) return;
+    var teller = voet.querySelector(".pager__count");
+    if (!teller) return;
+    if (teller.dataset.vast === undefined) teller.dataset.vast = teller.innerHTML;
+
+    voet.querySelectorAll(".pager__btn").forEach(function (b, i) {
+      b.disabled = actief || (i === 0);
+    });
+    teller.innerHTML = actief
+      ? (aantal ? "<b>1&ndash;" + aantal + "</b> of " + aantal : "<b>0</b> results")
+      : teller.dataset.vast;
+  }
+
+  /* Eén ingang voor alle inperkingen op een paneel. Buiten de zoekstand is dat
+     de gekozen tab of het statusfilter; erbinnen zijn het het zoekwoord en de
+     chips, want de tab is dan als chip meegenomen. */
+  function pasPaneelFilter(kop) {
+    var panel = kop && kop.closest(".panel");
+    var tabel = panel && panel.querySelector("table");
+    if (!tabel || !tabel.tBodies[0]) return;
+
+    var zoekt = kop.classList.contains("is-searching");
+    var zoek = "";
+    var eisen = [];
+
+    if (zoekt) {
+      var psearch = kop.querySelector(".psearch");
+      zoek = psearch.querySelector("input[type='search']").value.trim().toLowerCase();
+      /* Elke chip levert één eis: een lijstje waarden waarvan er één moet
+         kloppen. Een opengeklapte chip zonder vinkjes perkt niets in. */
+      psearch.querySelectorAll(".fchip").forEach(function (chip) {
+        var aan = [].slice.call(chip.querySelectorAll("input:checked")).map(function (i) {
+          return i.nextElementSibling.textContent.trim().toLowerCase();
+        });
+        if (aan.length) { eisen.push(aan); return; }
+        /* De chip die je vanuit de tab meenam draagt zijn waarde in het label. */
+        if (!chip.classList.contains("fchip--drop")) eisen.push([chip.textContent.trim().toLowerCase()]);
+      });
+    } else {
+      var gekozen = actieveInperking(kop);
+      if (gekozen && !/^All\b/i.test(gekozen)) eisen.push([gekozen.toLowerCase()]);
+    }
+
+    var over = 0;
+    [].slice.call(tabel.tBodies[0].rows).forEach(function (rij) {
+      var tekst = rijTekst(rij);
+      var past = (!zoek || tekst.indexOf(zoek) !== -1) && eisen.every(function (groep) {
+        return groep.some(function (waarde) { return tekst.indexOf(waarde) !== -1; });
+      });
+      if (past) { delete rij.dataset.filtered; over++; }
+      else rij.dataset.filtered = "1";
+    });
+
+    /* Heeft de lijst een pager, dan bepaalt die welke overgebleven rijen je
+       ziet; zonder pager staan ze er allemaal. */
+    if (tabel.herpagineer) {
+      tabel.herpagineer();
+    } else {
+      [].slice.call(tabel.tBodies[0].rows).forEach(function (rij) {
+        rij.hidden = !!rij.dataset.filtered;
+      });
+      syncVastePager(panel, !!(zoek || eisen.length), over);
+    }
+
+    toonGeenResultaten(panel, over === 0);
+  }
+
+  /* Tikken in het veld, vinkjes zetten en van tab wisselen werken meteen door. */
+  document.addEventListener("input", function (e) {
+    var veld = e.target.closest(".psearch input[type='search']");
+    if (veld) pasPaneelFilter(veld.closest(".panel__head"));
+  });
+  document.addEventListener("change", function (e) {
+    var vink = e.target.closest(".fchip__menu input");
+    if (vink) pasPaneelFilter(vink.closest(".panel__head"));
+  });
+
   function sluitPaneelZoek(kop) {
     kop.classList.remove("is-searching");
     kop.querySelector(".psearch input[type='search']").value = "";
@@ -282,6 +399,7 @@
     kop.querySelectorAll(".fchip").forEach(function (c) { c.remove(); });
     sluitFilterMenus();
     syncClearAll(kop.querySelector(".psearch"));
+    pasPaneelFilter(kop);
     kop.querySelector(".panel__tool").focus();
   }
 
@@ -300,6 +418,8 @@
       }
       vulFilterMenu(psearch);
       syncClearAll(psearch);
+      /* De meegenomen tab is een echt filter, dus die past hij meteen toe. */
+      pasPaneelFilter(kop);
       psearch.querySelector("input[type='search']").focus();
       return;
     }
@@ -312,6 +432,7 @@
       var blok0 = weg.closest(".psearch");
       weg.closest(".fchip").remove();
       syncClearAll(blok0);
+      pasPaneelFilter(blok0.closest(".panel__head"));
       return;
     }
 
@@ -332,6 +453,7 @@
       chip2.querySelectorAll("input").forEach(function (i) { i.checked = false; });
       chip2.querySelector(".fchip__menu").hidden = true;
       chip2.querySelector(".fchip__label").setAttribute("aria-expanded", "false");
+      pasPaneelFilter(chip2.closest(".panel__head"));
       return;
     }
 
@@ -340,6 +462,7 @@
       var blok1 = alles.closest(".psearch");
       blok1.querySelectorAll(".fchip").forEach(function (c) { c.remove(); });
       syncClearAll(blok1);
+      pasPaneelFilter(blok1.closest(".panel__head"));
       return;
     }
 
@@ -415,6 +538,7 @@
       sitem.setAttribute("aria-checked", "true");
       sf.querySelector(".sfilter__label").textContent = sitem.textContent.trim();
       sluitFilterMenus();
+      pasPaneelFilter(sf.closest(".panel__head"));
       return;
     }
 
@@ -436,6 +560,7 @@
       blok.querySelector(".psearch__filters").prepend(chipVanFilter(filter));
       sluitFilterMenus();
       syncClearAll(blok);
+      pasPaneelFilter(blok.closest(".panel__head"));
       return;
     }
 
@@ -890,6 +1015,8 @@
     if (!tab) return;
     tab.closest(".tabs").querySelectorAll(".tab").forEach(function (t) { t.classList.remove("is-active"); });
     tab.classList.add("is-active");
+    /* Een tab is een filter, geen etiket: de lijst volgt meteen. */
+    pasPaneelFilter(tab.closest(".panel__head"));
   });
 
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
@@ -1389,33 +1516,47 @@
      pagina uit. De voet hoort bij het paneel, niet bij de tabel, dus die
      wordt ernaast gezocht. Past alles op één pagina, dan blijft hij weg:
      bladeren zonder tweede pagina is alleen maar ruis.
+
+     Het filter uit §2 markeert weggefilterde rijen met data-filtered; die
+     tellen hier niet mee. Daarom hangt de hertekenfunctie aan de tabel, zodat
+     §2 hem kan aanroepen zodra de selectie verandert.
      ======================================================================== */
   document.querySelectorAll("table[data-page]").forEach(function (table) {
     var size = parseInt(table.dataset.page, 10);
     var body = table.tBodies[0];
     if (!size || !body) return;
 
-    var rows = Array.prototype.slice.call(body.rows);
+    var alle = Array.prototype.slice.call(body.rows);
     var panel = table.closest(".panel") || table.parentNode;
     var foot = panel.querySelector(".pager");
-    var last = Math.ceil(rows.length / size) - 1;
-    var page = 0;
-
     if (!foot) return;
-    /* Eén pagina: geen voet, en de rijen blijven staan zoals ze staan. */
-    if (last < 1) { foot.hidden = true; return; }
 
     var prev = foot.querySelectorAll(".pager__btn")[0];
     var next = foot.querySelectorAll(".pager__btn")[1];
     var count = foot.querySelector(".pager__count");
+    var page = 0;
+
+    function overgebleven() {
+      return alle.filter(function (r) { return !r.dataset.filtered; });
+    }
+    function laatste() {
+      return Math.max(0, Math.ceil(overgebleven().length / size) - 1);
+    }
 
     function render() {
+      var rows = overgebleven();
+      var eind = laatste();
+      /* Filteren kan de huidige pagina wegnemen; dan schuif je terug. */
+      if (page > eind) page = eind;
       var from = page * size;
       var to = Math.min(from + size, rows.length);
-      rows.forEach(function (row, i) { row.hidden = i < from || i >= to; });
-      foot.hidden = false;
+
+      alle.forEach(function (row) { row.hidden = true; });
+      rows.slice(from, to).forEach(function (row) { row.hidden = false; });
+
+      foot.hidden = rows.length <= size;
       if (prev) prev.disabled = page === 0;
-      if (next) next.disabled = page === last;
+      if (next) next.disabled = page === eind;
       if (count) count.innerHTML = "<b>" + (from + 1) + "&ndash;" + to + "</b> of " + rows.length;
     }
 
@@ -1423,8 +1564,11 @@
       if (page > 0) { page--; render(); }
     });
     if (next) next.addEventListener("click", function () {
-      if (page < last) { page++; render(); }
+      if (page < laatste()) { page++; render(); }
     });
+
+    /* §2 roept dit aan na elke wijziging in het filter. */
+    table.herpagineer = render;
     render();
   });
 
