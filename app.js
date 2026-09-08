@@ -469,10 +469,12 @@
       return;
     }
 
-    /* Uitklappen van een filterchip. */
+    /* Uitklappen van een filterchip. Het menu wordt op naam gezocht en niet
+       als "het element hierna": tussen de knop en het menu staat ook het
+       kruisje. */
     var label2 = e.target.closest(".fchip__label");
     if (label2) {
-      var m2 = label2.nextElementSibling;
+      var m2 = label2.parentNode.querySelector(".fchip__menu");
       var dicht = m2.hidden;
       sluitFilterMenus(dicht ? m2 : null);
       m2.hidden = !dicht;
