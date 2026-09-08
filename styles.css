@@ -1069,9 +1069,6 @@ select.input {
 /* Toegevoegd filter: klapt zijn waarden uit in plaats van meteen te
    verdwijnen, want de naam alleen zegt nog niet waarop je filtert. */
 .fchip--drop { position: relative; padding: 0; }
-/* Actief filter: de chip draagt de gekozen waarde en krijgt daarom een
-   duidelijker rand dan een chip die alleen een naam toont. */
-.fchip--drop.is-active { border-color: var(--text-strong); }
 /* Met een waarde erin is het kruisje het teken dat er iets te doen valt; de
    chevron zou er alleen naast staan. Klikken opent het menu nog steeds. */
 .fchip--drop.is-active .fchip__caret { display: none; }
