@@ -1045,7 +1045,9 @@ select.input {
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 /* Afbreken leest als tekst, niet als tweede knop naast Add filter. */
-.psearch__cancel { flex: 0 0 auto; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
+/* Evenveel lucht links als rechts van Cancel: de kop houdt 14px aan de rand
+   en de rij 18px ertussen; met de rand erbij legt de knop er zelf 3px bij. */
+.psearch__cancel { flex: 0 0 auto; padding-right: 3px; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
 .psearch__cancel:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* Filterrij: de meegekomen tab-chip, eventuele extra filters, en de
    knop die er meer bij zet. */
