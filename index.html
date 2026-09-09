@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=86" />
+  <link rel="stylesheet" href="styles.css?v=87" />
 </head>
 <body>
 
@@ -293,7 +293,7 @@
               </button>
             </div>
             <div class="page-head__tools" data-tools="finance" hidden>
-              <button class="btn btn--ghost page-head__action" type="button">
+              <button class="btn btn--ghost page-head__action" type="button" id="export-open" aria-haspopup="dialog">
                 <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
               </button>
             </div>
@@ -3381,6 +3381,40 @@
     </div>
   </div>
 
+  <!-- Exportvenster: kiezen van wanneer tot wanneer, en dan het bestand. Staat
+       buiten .app omdat het over alles heen hoort te liggen, net als de toast.
+       De datumvelden zijn gewone <input type="date">, dus op een telefoon komt
+       de kiezer van het toestel zelf tevoorschijn. -->
+  <div class="dialog" id="export-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="export-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="export-title">Export payouts</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead">Pick the period you need. You get a PDF with every payout in it.</p>
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="export-from">From</label>
+          <input class="input" id="export-from" type="date" value="2026-07-01" />
+        </div>
+        <div class="field">
+          <label class="label" for="export-to">To</label>
+          <input class="input" id="export-to" type="date" value="2026-09-09" />
+        </div>
+      </div>
+      <p class="hint hint--spaced" id="export-error" hidden>The end date falls before the start date.</p>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="export-go">
+          <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Korte bevestiging na een actie. Staat buiten .app omdat hij zwevend
        over alles heen hoort, ook over de settings-overlay. -->
   <div class="toast" id="toast" role="status" aria-live="polite" hidden>
@@ -3390,6 +3424,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=86"></script>
+  <script src="app.js?v=87"></script>
 </body>
 </html>

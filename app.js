@@ -618,6 +618,61 @@
   });
 
 
+
+  /* ---- Uitbetalingen exporteren -------------------------------------------
+     Eerst de vraag van wanneer tot wanneer, dan pas het bestand. De velden zijn
+     <input type="date">, dus de kiezer komt van het toestel zelf.
+     In het prototype opent er één voorbeeldbestand; in productie geef je de
+     gekozen periode mee aan het export-endpoint en levert de server de PDF. */
+  var exportVenster = document.getElementById("export-dialog");
+
+  if (exportVenster) {
+    var exportKnop = document.getElementById("export-open");
+    var vanaf = document.getElementById("export-from");
+    var tot = document.getElementById("export-to");
+    var fout = document.getElementById("export-error");
+    var vorigeFocus = null;
+
+    function openExport() {
+      vorigeFocus = document.activeElement;
+      exportVenster.hidden = false;
+      fout.hidden = true;
+      vanaf.focus();
+    }
+    function sluitExport() {
+      exportVenster.hidden = true;
+      if (vorigeFocus) vorigeFocus.focus();
+    }
+
+    if (exportKnop) exportKnop.addEventListener("click", openExport);
+
+    exportVenster.addEventListener("click", function (e) {
+      if (e.target.closest("[data-dialog-close]")) { sluitExport(); return; }
+
+      if (e.target.closest("#export-go")) {
+        /* Een omgekeerde periode levert een leeg bestand op; dat zeggen we
+           liever hier dan na de download. */
+        if (vanaf.value && tot.value && tot.value < vanaf.value) {
+          fout.hidden = false;
+          tot.focus();
+          return;
+        }
+        var url = "payouts-export.pdf?from=" + encodeURIComponent(vanaf.value)
+                + "&to=" + encodeURIComponent(tot.value);
+        window.open(url, "_blank", "noopener");
+        sluitExport();
+        showToast("Export ready");
+      }
+    });
+
+    /* Typen ruimt de melding op: hij ging over de vorige poging. */
+    exportVenster.addEventListener("input", function () { fout.hidden = true; });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !exportVenster.hidden) sluitExport();
+    });
+  }
+
   /* ---- Marketing-formulieren --------------------------------------------- */
   /* Codes zonder 0/O/1/I/L: die worden aan de balie stelselmatig verkeerd
      overgeschreven. */
