@@ -450,7 +450,7 @@ legend { padding: 0; }
 }
 .icon-btn:hover { background: var(--bg-hover); color: var(--text-strong); }
 
-.field { display: flex; flex-direction: column; gap: 6px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .field + .field, .field + .field-row, .field-row + .field { margin-top: 18px; }
 /* Een keuzelijst gevolgd door een veld heeft dezelfde tussenruimte nodig. */
 .choices + .field, .choices + .field-row { margin-top: 16px; }
@@ -481,6 +481,9 @@ legend { padding: 0; }
    langste optie. Chrome doet dat niet, dus het valt daar niet op:
    zonder deze twee regels liep de betaal-wizard op iOS buiten beeld. */
 select { min-width: 0; max-width: 100%; }
+/* Een datumveld doet in Safari hetzelfde: het houdt een eigen minimumbreedte
+   aan die breder is dan het vak eromheen, en steekt dan buiten de kaart. */
+input[type="date"], input[type="time"] { min-width: 0; max-width: 100%; }
 
 select.input {
   appearance: none;
@@ -2039,17 +2042,11 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
 .dialog__foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
 
 @media (max-width: 560px) {
-  /* Op een telefoon plakt het venster onderaan: daar reikt je duim. */
-  .dialog { place-items: end center; padding: 0; }
-  .dialog__card {
-    max-width: none;
-    padding-bottom: 26px;
-    border-radius: var(--r-lg) var(--r-lg) 0 0;
-    animation: sheet-in 240ms var(--ease);
-  }
+  /* Ook op een telefoon gecentreerd; alleen krapper, en de twee knoppen
+     verdelen de breedte. */
+  .dialog__card { padding: 18px; }
   .dialog__foot .btn { flex: 1 1 0; }
 }
-@keyframes sheet-in { from { transform: translateY(100%); } to { transform: none; } }
 
 
 /* ==========================================================================
