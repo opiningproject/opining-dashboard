@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=77" />
+  <link rel="stylesheet" href="styles.css?v=78" />
 </head>
 <body>
 
@@ -943,7 +943,10 @@
                 <p class="amount"><span class="amount__cur">EUR</span> 4.812,65</p>
                 <p class="card__sub">Next automatic payout on Friday 21 August</p>
               </div>
-              <button class="btn btn--primary balance__action" type="button">See details</button>
+              <!-- Opent de uitbetalingsspecificatie in een nieuw tabblad: een PDF is
+                   iets dat je bewaart of doorstuurt naar je boekhouder, dus die
+                   hoort niet in de plaats van het dashboard te komen. -->
+              <a class="btn btn--primary balance__action" href="payout-statement.pdf" target="_blank" rel="noopener">See details</a>
             </div>
 
             <div class="card">
@@ -3387,6 +3390,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=77"></script>
+  <script src="app.js?v=78"></script>
 </body>
 </html>
