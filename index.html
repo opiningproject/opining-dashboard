@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=84" />
+  <link rel="stylesheet" href="styles.css?v=85" />
 </head>
 <body>
 
@@ -969,13 +969,12 @@
                   <button class="tab is-active" type="button">All payouts</button>
                   <button class="tab" type="button">Paid</button>
                   <button class="tab" type="button">In transit</button>
-                  <button class="tab" type="button">Failed</button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter payouts">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status:Paid|In transit|Failed;Date:Last 30 days|This quarter;Amount:Under 1.000|1.000+">
+                <div class="psearch" data-filters="Status:Paid|In transit;Date:Last 30 days|This quarter;Amount:Under 1.000|1.000+">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -1034,12 +1033,6 @@
                       <td><a class="link" href="uitbetaling-2026-P-0042.pdf" target="_blank" rel="noopener" aria-label="Payout 2026-P-0046 of 1 August 2026">View</a></td>
                     </tr>
                     <tr>
-                      <td>25 Jul 2026</td>
-                      <td>&euro; 2.980,45</td>
-                      <td><span class="badge badge--danger">Failed</span></td>
-                      <td><a class="link" href="uitbetaling-2026-P-0042.pdf" target="_blank" rel="noopener" aria-label="Payout 2026-P-0045 of 25 July 2026">View</a></td>
-                    </tr>
-                    <tr>
                       <td>18 Jul 2026</td>
                       <td>&euro; 4.310,00</td>
                       <td><span class="badge badge--active">Paid</span></td>
@@ -1052,7 +1045,7 @@
               <nav class="panel__foot pager" aria-label="Payout pages">
                 <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
                 <button class="icon-btn pager__btn" type="button" aria-label="Next page"><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
-                <p class="pager__count"><b>1&ndash;6</b> of 24</p>
+                <p class="pager__count"><b>1&ndash;5</b> of 23</p>
               </nav>
               </div>
             </div>
@@ -3398,6 +3391,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=84"></script>
+  <script src="app.js?v=85"></script>
 </body>
 </html>

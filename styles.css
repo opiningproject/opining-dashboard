@@ -1742,6 +1742,8 @@ select.input {
 .balance__main { flex: 0 0 auto; }
 .balance__action { margin-left: auto; }
 
+/* Voor een mislukte of geblokkeerde regel. Staat nu nergens in de markup:
+   uitbetalingen kennen die stand niet meer. */
 .badge--danger { background: #fbeae9; color: var(--danger); }
 
 /* Tabellen met deze klasse worden op mobiel een lijst; zie §10. De
