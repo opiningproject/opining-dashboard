@@ -800,9 +800,6 @@ select.input {
 .srow + .srow { border-top: 1px solid var(--border); }
 .rule { height: 1px; margin: 18px 0; border: 0; background: var(--border); }
 .link { color: var(--text-strong); text-decoration: underline; text-underline-offset: 3px; }
-/* Downloadlink in een tabelrij: leest als link, niet als knop. */
-.link--invoice { color: var(--accent); font-weight: 500; }
-.link--invoice:hover { text-decoration-thickness: 2px; }
 
 .drop {
   display: grid; place-items: center;
