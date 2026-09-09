@@ -863,6 +863,9 @@ select.input {
 
 .amount { margin-top: 10px; font-size: 30px; font-weight: 600; letter-spacing: -.02em; color: var(--text-strong); }
 .amount__cur { font-size: var(--fs-md); font-weight: 500; color: var(--text-muted); }
+/* De tijd van de laatste bijwerking hoort bij het bedrag: klein en rustig,
+   op de basislijn van het getal. */
+.amount__note { margin-left: 12px; font-size: var(--fs-sm); font-weight: 400; color: var(--text-muted); white-space: nowrap; }
 
 .addrow {
   display: flex; align-items: center; gap: 10px;

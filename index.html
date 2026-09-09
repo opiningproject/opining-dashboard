@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=85" />
+  <link rel="stylesheet" href="styles.css?v=86" />
 </head>
 <body>
 
@@ -940,11 +940,10 @@
                     </span>
                   </span>
                 </p>
-                <p class="amount"><span class="amount__cur">EUR</span> 5.113,36</p>
-                <!-- Een tussenstand: zeggen tot wanneer hij bijgewerkt is, en wanneer
-                     de factuur volgt. Zonder die twee is een bedrag dat nog
-                     beweegt niet te plaatsen. -->
-                <p class="card__sub">Updated until 9 September 2026, 14:20</p>
+                <!-- De tijd hoort bij het bedrag, niet bij de mededeling eronder:
+                     het is dit getal dat blijft bewegen. Zo blijft er één regel
+                     over voor wanneer de factuur volgt. -->
+                <p class="amount"><span class="amount__cur">EUR</span> 5.113,36<span class="amount__note">updated 14:20</span></p>
                 <p class="card__sub">Invoice expected on 11 September 2026</p>
               </div>
               <!-- Opent de uitbetalingsspecificatie in een nieuw tabblad: een PDF is
@@ -3391,6 +3390,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=85"></script>
+  <script src="app.js?v=86"></script>
 </body>
 </html>
