@@ -4,115 +4,1180 @@
 << /Type /Catalog /Pages 2 0 R >>
 endobj
 2 0 obj
-<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R 13 0 R 15 0 R] /Count 6 >>
 endobj
 3 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /Helvetica 5 0 R /Helvetica-Bold 6 0 R >> >> /Contents 4 0 R >>
-endobj
-4 0 obj
-<< /Length 5533 >>
-stream
-BT /Helvetica-Bold 13.0 Tf 0.050 g 56.00 767.89 Td (Opining) Tj ET
-BT /Helvetica 9.5 Tf 0.450 g 394.56 767.89 Td (Generated on 9 September 2026) Tj ET
-0.850 G 0.7 w 56.00 753.89 m 539.28 753.89 l S
-BT /Helvetica-Bold 22.0 Tf 0.050 g 56.00 713.89 Td (Payout statement) Tj ET
-BT /Helvetica 10.5 Tf 0.450 g 56.00 691.89 Td (Payout PO-2026-0161 to Opining B.V.) Tj ET
-BT /Helvetica 10.5 Tf 0.450 g 56.00 645.89 Td (Payout date) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 206.00 645.89 Td (Friday 21 August 2026) Tj ET
-BT /Helvetica 10.5 Tf 0.450 g 56.00 623.89 Td (Period) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 206.00 623.89 Td (15 August 2026 - 21 August 2026) Tj ET
-BT /Helvetica 10.5 Tf 0.450 g 56.00 601.89 Td (Deposited to) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 206.00 601.89 Td (NL** **** **** 4821) Tj ET
-BT /Helvetica 10.5 Tf 0.450 g 56.00 579.89 Td (Reference) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 206.00 579.89 Td (OPN-PO-20260821) Tj ET
-BT /Helvetica 10.5 Tf 0.450 g 56.00 557.89 Td (Status) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 206.00 557.89 Td (In transit) Tj ET
-BT /Helvetica-Bold 12.0 Tf 0.050 g 56.00 517.89 Td (Summary) Tj ET
-0.850 G 0.7 w 56.00 505.89 m 539.28 505.89 l S
-BT /Helvetica 10.5 Tf 0.250 g 56.00 481.89 Td (Gross sales) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 474.48 481.89 Td (EUR 5.412,90) Tj ET
-BT /Helvetica 10.5 Tf 0.250 g 56.00 459.89 Td (Refunds) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 479.75 459.89 Td (EUR -318,40) Tj ET
-BT /Helvetica 10.5 Tf 0.250 g 56.00 437.89 Td (Chargebacks) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 485.58 437.89 Td (EUR -95,00) Tj ET
-BT /Helvetica 10.5 Tf 0.250 g 56.00 415.89 Td (Payment fees \(96 iDEAL x 0,35 + 28 PayPal x 0,29\)) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 485.58 415.89 Td (EUR -41,72) Tj ET
-BT /Helvetica 10.5 Tf 0.250 g 56.00 393.89 Td (Opining commission) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 479.75 393.89 Td (EUR -145,13) Tj ET
-0.850 G 0.7 w 56.00 383.89 m 539.28 383.89 l S
-0.960 g 56.00 347.89 483.28 30.00 re f
-BT /Helvetica-Bold 11.5 Tf 0.050 g 68.00 357.89 Td (Net payout) Tj ET
-BT /Helvetica-Bold 11.5 Tf 0.050 g 456.31 357.89 Td (EUR 4.812,65) Tj ET
-BT /Helvetica-Bold 12.0 Tf 0.050 g 56.00 301.89 Td (Orders in this payout) Tj ET
-BT /Helvetica 9.0 Tf 0.500 g 292.09 301.89 Td (Order number: YYMMDD, block letter, order of that day) Tj ET
-0.850 G 0.7 w 56.00 289.89 m 539.28 289.89 l S
-BT /Helvetica 9.5 Tf 0.450 g 56.00 267.89 Td (Date) Tj ET
-BT /Helvetica 9.5 Tf 0.450 g 146.00 267.89 Td (Order) Tj ET
-BT /Helvetica 9.5 Tf 0.450 g 236.00 267.89 Td (Type) Tj ET
-BT /Helvetica 9.5 Tf 0.450 g 311.00 267.89 Td (Payment) Tj ET
-BT /Helvetica 9.5 Tf 0.450 g 439.10 267.89 Td (Fee) Tj ET
-BT /Helvetica 9.5 Tf 0.450 g 506.53 267.89 Td (Amount) Tj ET
-0.920 G 0.7 w 56.00 259.89 m 539.28 259.89 l S
-BT /Helvetica 10.0 Tf 0.250 g 56.00 239.89 Td (20 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 239.89 Td (260820A14) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 236.00 239.89 Td (Delivery) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 311.00 239.89 Td (iDEAL) Tj ET
-BT /Helvetica 10.0 Tf 0.450 g 413.75 239.89 Td (EUR 0,35) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 239.89 Td (EUR 73,59) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 219.89 Td (20 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 219.89 Td (260820A13) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 236.00 219.89 Td (Takeaway) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 311.00 219.89 Td (iDEAL) Tj ET
-BT /Helvetica 10.0 Tf 0.450 g 413.75 219.89 Td (EUR 0,35) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 219.89 Td (EUR 41,20) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 199.89 Td (19 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 199.89 Td (260819A11) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 236.00 199.89 Td (Delivery) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 311.00 199.89 Td (PayPal) Tj ET
-BT /Helvetica 10.0 Tf 0.450 g 413.75 199.89 Td (EUR 0,29) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 199.89 Td (EUR 68,45) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 179.89 Td (19 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 179.89 Td (260819A09) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 236.00 179.89 Td (Delivery) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 311.00 179.89 Td (iDEAL) Tj ET
-BT /Helvetica 10.0 Tf 0.450 g 413.75 179.89 Td (EUR 0,35) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 179.89 Td (EUR 52,10) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 159.89 Td (18 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 159.89 Td (260818A07) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 236.00 159.89 Td (Takeaway) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 311.00 159.89 Td (PayPal) Tj ET
-BT /Helvetica 10.0 Tf 0.450 g 413.75 159.89 Td (EUR 0,29) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 159.89 Td (EUR 39,90) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 139.89 Td (17 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 139.89 Td (260817A12) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 236.00 139.89 Td (Delivery) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 311.00 139.89 Td (iDEAL) Tj ET
-BT /Helvetica 10.0 Tf 0.450 g 413.75 139.89 Td (EUR 0,35) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 139.89 Td (EUR 84,15) Tj ET
-0.920 G 0.7 w 56.00 129.89 m 539.28 129.89 l S
-BT /Helvetica 10.0 Tf 0.450 g 56.00 111.89 Td (124 orders in total, of which 6 shown above.) Tj ET
-0.850 G 0.7 w 56.00 96.00 m 539.28 96.00 l S
-BT /Helvetica 9.0 Tf 0.500 g 56.00 76.00 Td (Opining B.V. - Lusthofstraat 27A, 3062 WB Rotterdam - KVK 87654321 - VAT NL863254789B01) Tj ET
-BT /Helvetica 9.0 Tf 0.500 g 56.00 62.00 Td (Questions about this payout? Reply to payouts@opining.com and quote the reference above.) Tj ET
-endstream
-endobj
-5 0 obj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
 endobj
-6 0 obj
+4 0 obj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
 endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /Helvetica 3 0 R /Helvetica-Bold 4 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 11708 >>
+stream
+BT /Helvetica-Bold 9.5 Tf 0.150 g 44.00 801.89 Td (Opining) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 104.00 801.89 Td (Payout PO-2026-0161 - 15 to 21 August 2026 - interim) Tj ET
+0.800 G 0.5 w 44.00 793.89 m 551.28 793.89 l S
+BT /Helvetica-Bold 17.0 Tf 0.050 g 44.00 759.89 Td (Payout in progress) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 44.00 741.89 Td (Every order in this period with its transaction fee, and what the balance stands at. Not an invoice.) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 44.00 711.89 Td (Orders) Tj ET
+BT /Helvetica 11.0 Tf 0.050 g 44.00 696.89 Td (124) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 128.55 711.89 Td (Received) Tj ET
+BT /Helvetica 11.0 Tf 0.050 g 128.55 696.89 Td (EUR 5.568,30) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 213.09 711.89 Td (Transaction fees) Tj ET
+BT /Helvetica 11.0 Tf 0.050 g 213.09 696.89 Td (EUR -41,54) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 297.64 711.89 Td (Refunds) Tj ET
+BT /Helvetica 11.0 Tf 0.050 g 297.64 696.89 Td (EUR -318,40) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 382.19 711.89 Td (Chargebacks) Tj ET
+BT /Helvetica 11.0 Tf 0.050 g 382.19 696.89 Td (EUR -95,00) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 466.73 711.89 Td (Balance) Tj ET
+BT /Helvetica-Bold 11.0 Tf 0.050 g 466.73 696.89 Td (EUR 5.113,36) Tj ET
+0.800 G 0.5 w 44.00 677.89 m 551.28 677.89 l S
+0.940 g 44.00 645.89 507.28 17.00 re f
+BT /Helvetica-Bold 8.5 Tf 0.350 g 48.00 651.89 Td (DATE) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 122.00 651.89 Td (ORDER) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 212.00 651.89 Td (DESCRIPTION) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 409.98 651.89 Td (AMOUNT) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 507.59 651.89 Td (BALANCE) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 48.00 636.89 Td (15 Aug 2026) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 636.89 Td (260815A01) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 636.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 636.89 Td (+ 71,66) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 526.01 636.89 Td (71,66) Tj ET
+0.975 g 44.00 616.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 621.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 621.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 526.01 621.89 Td (71,31) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 606.89 Td (260815A02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 606.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 606.89 Td (+ 69,49) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 606.89 Td (140,80) Tj ET
+0.975 g 44.00 586.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 591.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 591.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 591.89 Td (140,45) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 576.89 Td (260815A03) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 576.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 576.89 Td (+ 23,88) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 576.89 Td (164,33) Tj ET
+0.975 g 44.00 556.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 561.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 561.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 561.89 Td (163,98) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 546.89 Td (260815A04) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 546.89 Td (Takeaway order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 546.89 Td (+ 52,39) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 546.89 Td (216,37) Tj ET
+0.975 g 44.00 526.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 531.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 531.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 531.89 Td (216,08) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 516.89 Td (260815A05) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 516.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 516.89 Td (+ 47,46) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 516.89 Td (263,54) Tj ET
+0.975 g 44.00 496.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 501.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 501.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 501.89 Td (263,19) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 486.89 Td (260815A06) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 486.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 486.89 Td (+ 61,73) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 486.89 Td (324,92) Tj ET
+0.975 g 44.00 466.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 471.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 471.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 471.89 Td (324,57) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 456.89 Td (260815A07) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 456.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 456.89 Td (+ 61,16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 456.89 Td (385,73) Tj ET
+0.975 g 44.00 436.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 441.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 441.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 441.89 Td (385,38) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 426.89 Td (260815A08) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 426.89 Td (Takeaway order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 426.89 Td (+ 66,87) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 426.89 Td (452,25) Tj ET
+0.975 g 44.00 406.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 411.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 411.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 411.89 Td (451,96) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 396.89 Td (260815A09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 396.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 396.89 Td (+ 25,90) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 396.89 Td (477,86) Tj ET
+0.975 g 44.00 376.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 381.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 381.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 381.89 Td (477,51) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 366.89 Td (260815A10) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 366.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 366.89 Td (+ 40,85) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 366.89 Td (518,36) Tj ET
+0.975 g 44.00 346.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 351.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 351.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 351.89 Td (518,01) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 336.89 Td (260815A11) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 336.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 336.89 Td (+ 36,20) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 336.89 Td (554,21) Tj ET
+0.975 g 44.00 316.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 321.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 321.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 321.89 Td (553,86) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 306.89 Td (260815A12) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 306.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 306.89 Td (+ 16,07) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 306.89 Td (569,93) Tj ET
+0.975 g 44.00 286.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 291.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 291.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 291.89 Td (569,64) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 276.89 Td (260815A13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 276.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 276.89 Td (+ 71,62) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 276.89 Td (641,26) Tj ET
+0.975 g 44.00 256.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 261.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 261.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 261.89 Td (640,91) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 246.89 Td (260815A14) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 246.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 246.89 Td (+ 39,33) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 246.89 Td (680,24) Tj ET
+0.975 g 44.00 226.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 231.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 231.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 231.89 Td (679,89) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 216.89 Td (260815A15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 216.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 216.89 Td (+ 41,16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 216.89 Td (721,05) Tj ET
+0.975 g 44.00 196.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 201.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 201.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 201.89 Td (720,70) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 186.89 Td (260815A16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 186.89 Td (Takeaway order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 186.89 Td (+ 26,79) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 186.89 Td (747,49) Tj ET
+0.975 g 44.00 166.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 171.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 171.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 171.89 Td (747,20) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 48.00 156.89 Td (16 Aug 2026) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 156.89 Td (260816A01) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 156.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 156.89 Td (+ 63,10) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 156.89 Td (810,30) Tj ET
+0.975 g 44.00 136.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 141.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 141.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 141.89 Td (809,95) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 126.89 Td (260816A02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 126.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 126.89 Td (+ 68,97) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 126.89 Td (878,92) Tj ET
+0.975 g 44.00 106.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 111.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 111.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 111.89 Td (878,57) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 96.89 Td (260816A03) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 96.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 96.89 Td (+ 71,88) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 96.89 Td (950,45) Tj ET
+0.975 g 44.00 76.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 81.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 81.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 81.89 Td (950,10) Tj ET
+0.850 G 0.5 w 44.00 40.00 m 551.28 40.00 l S
+BT /Helvetica 8.0 Tf 0.500 g 44.00 26.00 Td (Generated on 9 September 2026 - amounts in EUR - this overview updates until the payout is sent) Tj ET
+BT /Helvetica 8.0 Tf 0.500 g 508.14 26.00 Td (Page 1 of 6) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /Helvetica 3 0 R /Helvetica-Bold 4 0 R >> >> /Contents 8 0 R >>
+endobj
+8 0 obj
+<< /Length 12207 >>
+stream
+BT /Helvetica-Bold 9.5 Tf 0.150 g 44.00 801.89 Td (Opining) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 104.00 801.89 Td (Payout PO-2026-0161 - 15 to 21 August 2026 - interim) Tj ET
+0.800 G 0.5 w 44.00 793.89 m 551.28 793.89 l S
+0.940 g 44.00 759.89 507.28 17.00 re f
+BT /Helvetica-Bold 8.5 Tf 0.350 g 48.00 765.89 Td (DATE) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 122.00 765.89 Td (ORDER) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 212.00 765.89 Td (DESCRIPTION) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 409.98 765.89 Td (AMOUNT) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 507.59 765.89 Td (BALANCE) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 750.89 Td (260816A04) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 750.89 Td (Takeaway order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 750.89 Td (+ 16,19) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 750.89 Td (966,29) Tj ET
+0.975 g 44.00 730.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 735.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 735.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 521.29 735.89 Td (966,00) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 720.89 Td (260816A05) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 720.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 720.89 Td (+ 53,46) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 720.89 Td (1.019,46) Tj ET
+0.975 g 44.00 700.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 705.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 705.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 705.89 Td (1.019,11) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 690.89 Td (260816A06) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 690.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 690.89 Td (+ 17,77) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 690.89 Td (1.036,88) Tj ET
+0.975 g 44.00 670.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 675.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 675.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 675.89 Td (1.036,53) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 660.89 Td (260816A07) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 660.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 660.89 Td (+ 68,36) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 660.89 Td (1.104,89) Tj ET
+0.975 g 44.00 640.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 645.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 645.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 645.89 Td (1.104,54) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 630.89 Td (260816A08) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 630.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 630.89 Td (+ 44,95) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 630.89 Td (1.149,49) Tj ET
+0.975 g 44.00 610.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 615.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 615.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 615.89 Td (1.149,20) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 600.89 Td (260816A09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 600.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 600.89 Td (+ 31,22) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 600.89 Td (1.180,42) Tj ET
+0.975 g 44.00 580.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 585.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 585.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 585.89 Td (1.180,07) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 570.89 Td (260816A10) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 570.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 570.89 Td (+ 52,41) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 570.89 Td (1.232,48) Tj ET
+0.975 g 44.00 550.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 555.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 555.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 555.89 Td (1.232,13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 540.89 Td (260816A11) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 540.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 540.89 Td (+ 29,72) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 540.89 Td (1.261,85) Tj ET
+0.975 g 44.00 520.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 525.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 525.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 525.89 Td (1.261,50) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 510.89 Td (260816A12) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 510.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 510.89 Td (+ 54,23) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 510.89 Td (1.315,73) Tj ET
+0.975 g 44.00 490.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 495.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 495.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 495.89 Td (1.315,44) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 480.89 Td (260816A13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 480.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 480.89 Td (+ 60,02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 480.89 Td (1.375,46) Tj ET
+0.975 g 44.00 460.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 465.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 465.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 465.89 Td (1.375,11) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 450.89 Td (260816A14) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 450.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 450.89 Td (+ 21,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 450.89 Td (1.396,40) Tj ET
+0.975 g 44.00 430.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 435.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 435.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 435.89 Td (1.396,05) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 420.89 Td (260816A15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 420.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 420.89 Td (+ 69,12) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 420.89 Td (1.465,17) Tj ET
+0.975 g 44.00 400.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 405.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 405.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 405.89 Td (1.464,82) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 390.89 Td (260816A16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 390.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 390.89 Td (+ 29,75) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 390.89 Td (1.494,57) Tj ET
+0.975 g 44.00 370.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 375.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 375.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 375.89 Td (1.494,28) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 360.89 Td (260816A17) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 360.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 360.89 Td (+ 56,38) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 360.89 Td (1.550,66) Tj ET
+0.975 g 44.00 340.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 345.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 345.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 345.89 Td (1.550,31) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 48.00 330.89 Td (17 Aug 2026) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 330.89 Td (260817A01) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 330.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 330.89 Td (+ 34,61) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 330.89 Td (1.584,92) Tj ET
+0.975 g 44.00 310.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 315.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 315.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 315.89 Td (1.584,57) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 300.89 Td (260817A02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 300.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 300.89 Td (+ 63,80) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 300.89 Td (1.648,37) Tj ET
+0.975 g 44.00 280.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 285.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 285.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 285.89 Td (1.648,02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 270.89 Td (260817A03) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 270.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 270.89 Td (+ 50,15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 270.89 Td (1.698,17) Tj ET
+0.975 g 44.00 250.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 255.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 255.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 255.89 Td (1.697,88) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 240.89 Td (260817A04) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 240.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 240.89 Td (+ 46,90) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 240.89 Td (1.744,78) Tj ET
+0.975 g 44.00 220.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 225.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 225.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 225.89 Td (1.744,43) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 210.89 Td (260817A05) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 210.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 210.89 Td (+ 67,89) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 210.89 Td (1.812,32) Tj ET
+0.975 g 44.00 190.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 195.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 195.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 195.89 Td (1.811,97) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 180.89 Td (260817A06) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 180.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 180.89 Td (+ 21,68) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 180.89 Td (1.833,65) Tj ET
+0.975 g 44.00 160.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 165.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 165.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 165.89 Td (1.833,30) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 150.89 Td (260817A07) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 150.89 Td (Takeaway order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 150.89 Td (+ 65,95) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 150.89 Td (1.899,25) Tj ET
+0.975 g 44.00 130.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 135.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 135.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 135.89 Td (1.898,96) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 120.89 Td (260817A08) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 120.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 120.89 Td (+ 40,18) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 120.89 Td (1.939,14) Tj ET
+0.975 g 44.00 100.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 105.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 105.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 105.89 Td (1.938,79) Tj ET
+0.850 G 0.5 w 44.00 40.00 m 551.28 40.00 l S
+BT /Helvetica 8.0 Tf 0.500 g 44.00 26.00 Td (Generated on 9 September 2026 - amounts in EUR - this overview updates until the payout is sent) Tj ET
+BT /Helvetica 8.0 Tf 0.500 g 508.14 26.00 Td (Page 2 of 6) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /Helvetica 3 0 R /Helvetica-Bold 4 0 R >> >> /Contents 10 0 R >>
+endobj
+10 0 obj
+<< /Length 12209 >>
+stream
+BT /Helvetica-Bold 9.5 Tf 0.150 g 44.00 801.89 Td (Opining) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 104.00 801.89 Td (Payout PO-2026-0161 - 15 to 21 August 2026 - interim) Tj ET
+0.800 G 0.5 w 44.00 793.89 m 551.28 793.89 l S
+0.940 g 44.00 759.89 507.28 17.00 re f
+BT /Helvetica-Bold 8.5 Tf 0.350 g 48.00 765.89 Td (DATE) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 122.00 765.89 Td (ORDER) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 212.00 765.89 Td (DESCRIPTION) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 409.98 765.89 Td (AMOUNT) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 507.59 765.89 Td (BALANCE) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 750.89 Td (260817A09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 750.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 750.89 Td (+ 40,09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 750.89 Td (1.978,88) Tj ET
+0.975 g 44.00 730.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 735.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 735.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 735.89 Td (1.978,53) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 720.89 Td (260817A10) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 720.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 720.89 Td (+ 55,16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 720.89 Td (2.033,69) Tj ET
+0.975 g 44.00 700.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 705.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 705.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 705.89 Td (2.033,34) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 690.89 Td (260817A11) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 690.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 690.89 Td (+ 51,43) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 690.89 Td (2.084,77) Tj ET
+0.975 g 44.00 670.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 675.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 675.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 675.89 Td (2.084,48) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 660.89 Td (260817A12) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 660.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 660.89 Td (+ 58,02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 660.89 Td (2.142,50) Tj ET
+0.975 g 44.00 640.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 645.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 645.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 645.89 Td (2.142,15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 630.89 Td (260817A13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 630.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 630.89 Td (+ 34,77) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 630.89 Td (2.176,92) Tj ET
+0.975 g 44.00 610.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 615.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 615.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 615.89 Td (2.176,57) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 600.89 Td (260817A14) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 600.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 600.89 Td (+ 49,64) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 600.89 Td (2.226,21) Tj ET
+0.975 g 44.00 580.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 585.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 585.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 585.89 Td (2.225,86) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 570.89 Td (260817A15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 570.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 570.89 Td (+ 65,27) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 570.89 Td (2.291,13) Tj ET
+0.975 g 44.00 550.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 555.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 555.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 555.89 Td (2.290,84) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 540.89 Td (260817A16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 540.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 540.89 Td (+ 19,42) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 540.89 Td (2.310,26) Tj ET
+0.975 g 44.00 520.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 525.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 525.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 525.89 Td (2.309,91) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 510.89 Td (260817A17) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 510.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 510.89 Td (+ 26,13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 510.89 Td (2.336,04) Tj ET
+0.975 g 44.00 490.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 495.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 495.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 495.89 Td (2.335,69) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 480.89 Td (260817A18) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 480.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 480.89 Td (+ 24,44) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 480.89 Td (2.360,13) Tj ET
+0.975 g 44.00 460.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 465.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 465.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 465.89 Td (2.359,78) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 48.00 450.89 Td (18 Aug 2026) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 450.89 Td (260818A01) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 450.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 450.89 Td (+ 50,47) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 450.89 Td (2.410,25) Tj ET
+0.975 g 44.00 430.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 435.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 435.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 435.89 Td (2.409,96) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 420.89 Td (260818A02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 420.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 420.89 Td (+ 18,02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 420.89 Td (2.427,98) Tj ET
+0.975 g 44.00 400.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 405.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 405.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 405.89 Td (2.427,63) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 390.89 Td (260818A03) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 390.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 390.89 Td (+ 71,65) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 390.89 Td (2.499,28) Tj ET
+0.975 g 44.00 370.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 375.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 375.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 375.89 Td (2.498,93) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 360.89 Td (260818A04) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 360.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 360.89 Td (+ 37,36) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 360.89 Td (2.536,29) Tj ET
+0.975 g 44.00 340.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 345.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 345.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 345.89 Td (2.535,94) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 330.89 Td (260818A05) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 330.89 Td (Takeaway order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 330.89 Td (+ 55,27) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 330.89 Td (2.591,21) Tj ET
+0.975 g 44.00 310.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 315.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 315.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 315.89 Td (2.590,92) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 300.89 Td (260818A06) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 300.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 300.89 Td (+ 41,78) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 300.89 Td (2.632,70) Tj ET
+0.975 g 44.00 280.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 285.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 285.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 285.89 Td (2.632,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 270.89 Td (260818A07) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 270.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 270.89 Td (+ 40,33) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 270.89 Td (2.672,68) Tj ET
+0.975 g 44.00 250.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 255.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 255.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 255.89 Td (2.672,33) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 240.89 Td (260818A08) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 240.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 240.89 Td (+ 15,32) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 240.89 Td (2.687,65) Tj ET
+0.975 g 44.00 220.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 225.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 225.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 225.89 Td (2.687,30) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 210.89 Td (260818A09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 210.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 210.89 Td (+ 58,99) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 210.89 Td (2.746,29) Tj ET
+0.975 g 44.00 190.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 195.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 195.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 195.89 Td (2.746,00) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 180.89 Td (260818A10) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 180.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 180.89 Td (+ 17,54) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 180.89 Td (2.763,54) Tj ET
+0.975 g 44.00 160.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 165.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 165.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 165.89 Td (2.763,19) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 150.89 Td (260818A11) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 150.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 150.89 Td (+ 44,61) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 150.89 Td (2.807,80) Tj ET
+0.975 g 44.00 130.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 135.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 135.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 135.89 Td (2.807,45) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 120.89 Td (260818A12) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 120.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 120.89 Td (+ 64,48) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 120.89 Td (2.871,93) Tj ET
+0.975 g 44.00 100.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 105.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 105.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 105.89 Td (2.871,58) Tj ET
+0.850 G 0.5 w 44.00 40.00 m 551.28 40.00 l S
+BT /Helvetica 8.0 Tf 0.500 g 44.00 26.00 Td (Generated on 9 September 2026 - amounts in EUR - this overview updates until the payout is sent) Tj ET
+BT /Helvetica 8.0 Tf 0.500 g 508.14 26.00 Td (Page 3 of 6) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /Helvetica 3 0 R /Helvetica-Bold 4 0 R >> >> /Contents 12 0 R >>
+endobj
+12 0 obj
+<< /Length 12211 >>
+stream
+BT /Helvetica-Bold 9.5 Tf 0.150 g 44.00 801.89 Td (Opining) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 104.00 801.89 Td (Payout PO-2026-0161 - 15 to 21 August 2026 - interim) Tj ET
+0.800 G 0.5 w 44.00 793.89 m 551.28 793.89 l S
+0.940 g 44.00 759.89 507.28 17.00 re f
+BT /Helvetica-Bold 8.5 Tf 0.350 g 48.00 765.89 Td (DATE) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 122.00 765.89 Td (ORDER) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 212.00 765.89 Td (DESCRIPTION) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 409.98 765.89 Td (AMOUNT) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 507.59 765.89 Td (BALANCE) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 750.89 Td (260818A13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 750.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 750.89 Td (+ 45,15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 750.89 Td (2.916,73) Tj ET
+0.975 g 44.00 730.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 735.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 735.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 735.89 Td (2.916,44) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 720.89 Td (260818A14) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 720.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 720.89 Td (+ 46,94) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 720.89 Td (2.963,38) Tj ET
+0.975 g 44.00 700.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 705.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 705.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 705.89 Td (2.963,03) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 690.89 Td (260818A15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 690.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 690.89 Td (+ 39,61) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 690.89 Td (3.002,64) Tj ET
+0.975 g 44.00 670.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 675.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 675.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 675.89 Td (3.002,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 660.89 Td (260818A16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 660.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 660.89 Td (+ 54,12) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 660.89 Td (3.056,41) Tj ET
+0.975 g 44.00 640.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 645.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 645.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 645.89 Td (3.056,06) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 630.89 Td (260818A17) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 630.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 630.89 Td (+ 42,39) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 630.89 Td (3.098,45) Tj ET
+0.975 g 44.00 610.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 615.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 615.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 615.89 Td (3.098,16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 600.89 Td (260818A18) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 600.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 600.89 Td (+ 61,38) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 600.89 Td (3.159,54) Tj ET
+0.975 g 44.00 580.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 585.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 585.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 585.89 Td (3.159,19) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 570.89 Td (260818A19) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 570.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 570.89 Td (+ 70,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 570.89 Td (3.229,48) Tj ET
+0.975 g 44.00 550.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 555.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 555.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 555.89 Td (3.229,13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 48.00 540.89 Td (19 Aug 2026) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 540.89 Td (260819A01) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 540.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 540.89 Td (+ 38,00) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 540.89 Td (3.267,13) Tj ET
+0.975 g 44.00 520.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 525.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 525.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 525.89 Td (3.266,78) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 510.89 Td (260819A02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 510.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 510.89 Td (+ 60,11) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 510.89 Td (3.326,89) Tj ET
+0.975 g 44.00 490.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 495.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 495.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 495.89 Td (3.326,60) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 480.89 Td (260819A03) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 480.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 480.89 Td (+ 63,62) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 480.89 Td (3.390,22) Tj ET
+0.975 g 44.00 460.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 465.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 465.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 465.89 Td (3.389,87) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 450.89 Td (260819A04) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 450.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 450.89 Td (+ 48,77) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 450.89 Td (3.438,64) Tj ET
+0.975 g 44.00 430.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 435.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 435.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 435.89 Td (3.438,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 420.89 Td (260819A05) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 420.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 420.89 Td (+ 16,52) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 420.89 Td (3.454,81) Tj ET
+0.975 g 44.00 400.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 405.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 405.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 405.89 Td (3.454,46) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 390.89 Td (260819A06) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 390.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 390.89 Td (+ 34,43) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 390.89 Td (3.488,89) Tj ET
+0.975 g 44.00 370.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 375.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 375.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 375.89 Td (3.488,60) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 360.89 Td (260819A07) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 360.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 360.89 Td (+ 20,62) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 360.89 Td (3.509,22) Tj ET
+0.975 g 44.00 340.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 345.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 345.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 345.89 Td (3.508,87) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 330.89 Td (260819A08) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 330.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 330.89 Td (+ 51,13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 330.89 Td (3.560,00) Tj ET
+0.975 g 44.00 310.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 315.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 315.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 315.89 Td (3.559,65) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 300.89 Td (260819A09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 300.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 300.89 Td (+ 43,28) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 300.89 Td (3.602,93) Tj ET
+0.975 g 44.00 280.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 285.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 285.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 285.89 Td (3.602,58) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 270.89 Td (260819A10) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 270.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 270.89 Td (+ 41,55) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 270.89 Td (3.644,13) Tj ET
+0.975 g 44.00 250.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 255.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 255.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 255.89 Td (3.643,84) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 240.89 Td (260819A11) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 240.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 240.89 Td (+ 42,54) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 240.89 Td (3.686,38) Tj ET
+0.975 g 44.00 220.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 225.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 225.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 225.89 Td (3.686,03) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 210.89 Td (260819A12) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 210.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 210.89 Td (+ 47,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 210.89 Td (3.733,32) Tj ET
+0.975 g 44.00 190.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 195.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 195.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 195.89 Td (3.732,97) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 180.89 Td (260819A13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 180.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 180.89 Td (+ 16,64) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 180.89 Td (3.749,61) Tj ET
+0.975 g 44.00 160.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 165.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 165.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 165.89 Td (3.749,26) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 150.89 Td (260819A14) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 150.89 Td (Takeaway order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 150.89 Td (+ 19,51) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 150.89 Td (3.768,77) Tj ET
+0.975 g 44.00 130.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 135.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 135.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 135.89 Td (3.768,48) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 120.89 Td (260819A15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 120.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 120.89 Td (+ 34,34) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 120.89 Td (3.802,82) Tj ET
+0.975 g 44.00 100.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 105.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 105.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 105.89 Td (3.802,47) Tj ET
+0.850 G 0.5 w 44.00 40.00 m 551.28 40.00 l S
+BT /Helvetica 8.0 Tf 0.500 g 44.00 26.00 Td (Generated on 9 September 2026 - amounts in EUR - this overview updates until the payout is sent) Tj ET
+BT /Helvetica 8.0 Tf 0.500 g 508.14 26.00 Td (Page 4 of 6) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /Helvetica 3 0 R /Helvetica-Bold 4 0 R >> >> /Contents 14 0 R >>
+endobj
+14 0 obj
+<< /Length 12209 >>
+stream
+BT /Helvetica-Bold 9.5 Tf 0.150 g 44.00 801.89 Td (Opining) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 104.00 801.89 Td (Payout PO-2026-0161 - 15 to 21 August 2026 - interim) Tj ET
+0.800 G 0.5 w 44.00 793.89 m 551.28 793.89 l S
+0.940 g 44.00 759.89 507.28 17.00 re f
+BT /Helvetica-Bold 8.5 Tf 0.350 g 48.00 765.89 Td (DATE) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 122.00 765.89 Td (ORDER) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 212.00 765.89 Td (DESCRIPTION) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 409.98 765.89 Td (AMOUNT) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 507.59 765.89 Td (BALANCE) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 750.89 Td (260819A16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 750.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 750.89 Td (+ 15,97) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 750.89 Td (3.818,44) Tj ET
+0.975 g 44.00 730.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 735.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 735.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 735.89 Td (3.818,09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 720.89 Td (260819A17) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 720.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 720.89 Td (+ 38,04) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 720.89 Td (3.856,13) Tj ET
+0.975 g 44.00 700.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 705.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 705.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 705.89 Td (3.855,78) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 690.89 Td (260819A18) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 690.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 690.89 Td (+ 63,23) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 690.89 Td (3.919,01) Tj ET
+0.975 g 44.00 670.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 675.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 675.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 675.89 Td (3.918,72) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 48.00 660.89 Td (20 Aug 2026) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 660.89 Td (260820A01) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 660.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 660.89 Td (+ 28,90) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 660.89 Td (3.947,62) Tj ET
+0.975 g 44.00 640.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 645.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 645.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 645.89 Td (3.947,27) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 630.89 Td (260820A02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 630.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 630.89 Td (+ 54,17) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 630.89 Td (4.001,44) Tj ET
+0.975 g 44.00 610.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 615.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 615.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 615.89 Td (4.001,09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 600.89 Td (260820A03) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 600.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 600.89 Td (+ 54,60) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 600.89 Td (4.055,69) Tj ET
+0.975 g 44.00 580.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 585.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 585.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 585.89 Td (4.055,34) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 570.89 Td (260820A04) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 570.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 570.89 Td (+ 52,27) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 570.89 Td (4.107,61) Tj ET
+0.975 g 44.00 550.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 555.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 555.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 555.89 Td (4.107,32) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 540.89 Td (260820A05) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 540.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 540.89 Td (+ 20,46) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 540.89 Td (4.127,78) Tj ET
+0.975 g 44.00 520.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 525.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 525.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 525.89 Td (4.127,43) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 510.89 Td (260820A06) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 510.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 510.89 Td (+ 35,61) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 510.89 Td (4.163,04) Tj ET
+0.975 g 44.00 490.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 495.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 495.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 495.89 Td (4.162,69) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 480.89 Td (260820A07) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 480.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 480.89 Td (+ 45,12) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 480.89 Td (4.207,81) Tj ET
+0.975 g 44.00 460.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 465.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 465.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 465.89 Td (4.207,46) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 450.89 Td (260820A08) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 450.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 450.89 Td (+ 37,87) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 450.89 Td (4.245,33) Tj ET
+0.975 g 44.00 430.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 435.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 435.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 435.89 Td (4.245,04) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 420.89 Td (260820A09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 420.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 420.89 Td (+ 61,18) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 420.89 Td (4.306,22) Tj ET
+0.975 g 44.00 400.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 405.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 405.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 405.89 Td (4.305,87) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 390.89 Td (260820A10) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 390.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 390.89 Td (+ 39,33) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 390.89 Td (4.345,20) Tj ET
+0.975 g 44.00 370.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 375.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 375.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 375.89 Td (4.344,85) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 360.89 Td (260820A11) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 360.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 360.89 Td (+ 17,40) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 360.89 Td (4.362,25) Tj ET
+0.975 g 44.00 340.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 345.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 345.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 345.89 Td (4.361,90) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 330.89 Td (260820A12) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 330.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 330.89 Td (+ 38,63) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 330.89 Td (4.400,53) Tj ET
+0.975 g 44.00 310.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 315.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 315.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 315.89 Td (4.400,24) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 300.89 Td (260820A13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 300.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 300.89 Td (+ 58,78) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 300.89 Td (4.459,02) Tj ET
+0.975 g 44.00 280.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 285.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 285.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 285.89 Td (4.458,67) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 270.89 Td (260820A14) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 270.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 270.89 Td (+ 59,25) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 270.89 Td (4.517,92) Tj ET
+0.975 g 44.00 250.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 255.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 255.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 255.89 Td (4.517,57) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 240.89 Td (260820A15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 240.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 240.89 Td (+ 20,44) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 240.89 Td (4.538,01) Tj ET
+0.975 g 44.00 220.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 225.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 225.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 225.89 Td (4.537,66) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 210.89 Td (260820A16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 210.89 Td (Takeaway order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 210.89 Td (+ 52,23) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 210.89 Td (4.589,89) Tj ET
+0.975 g 44.00 190.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 195.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 195.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 195.89 Td (4.589,60) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 180.89 Td (260820A17) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 180.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 180.89 Td (+ 36,02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 180.89 Td (4.625,62) Tj ET
+0.975 g 44.00 160.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 165.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 165.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 165.89 Td (4.625,27) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 150.89 Td (260820A18) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 150.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 150.89 Td (+ 23,17) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 150.89 Td (4.648,44) Tj ET
+0.975 g 44.00 130.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 135.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 135.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 135.89 Td (4.648,09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 120.89 Td (260820A19) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 120.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 120.89 Td (+ 68,48) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 120.89 Td (4.716,57) Tj ET
+0.975 g 44.00 100.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 105.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 105.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 105.89 Td (4.716,22) Tj ET
+0.850 G 0.5 w 44.00 40.00 m 551.28 40.00 l S
+BT /Helvetica 8.0 Tf 0.500 g 44.00 26.00 Td (Generated on 9 September 2026 - amounts in EUR - this overview updates until the payout is sent) Tj ET
+BT /Helvetica 8.0 Tf 0.500 g 508.14 26.00 Td (Page 5 of 6) Tj ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /Helvetica 3 0 R /Helvetica-Bold 4 0 R >> >> /Contents 16 0 R >>
+endobj
+16 0 obj
+<< /Length 10374 >>
+stream
+BT /Helvetica-Bold 9.5 Tf 0.150 g 44.00 801.89 Td (Opining) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 104.00 801.89 Td (Payout PO-2026-0161 - 15 to 21 August 2026 - interim) Tj ET
+0.800 G 0.5 w 44.00 793.89 m 551.28 793.89 l S
+0.940 g 44.00 759.89 507.28 17.00 re f
+BT /Helvetica-Bold 8.5 Tf 0.350 g 48.00 765.89 Td (DATE) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 122.00 765.89 Td (ORDER) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 212.00 765.89 Td (DESCRIPTION) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 409.98 765.89 Td (AMOUNT) Tj ET
+BT /Helvetica-Bold 8.5 Tf 0.350 g 507.59 765.89 Td (BALANCE) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 48.00 750.89 Td (21 Aug 2026) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 750.89 Td (260821A01) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 750.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 750.89 Td (+ 56,87) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 750.89 Td (4.773,09) Tj ET
+0.975 g 44.00 730.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 735.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 735.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 735.89 Td (4.772,80) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 720.89 Td (260821A02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 720.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 720.89 Td (+ 40,42) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 720.89 Td (4.813,22) Tj ET
+0.975 g 44.00 700.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 705.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 705.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 705.89 Td (4.812,87) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 690.89 Td (260821A03) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 690.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 690.89 Td (+ 33,49) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 690.89 Td (4.846,36) Tj ET
+0.975 g 44.00 670.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 675.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 675.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 675.89 Td (4.846,01) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 660.89 Td (260821A04) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 660.89 Td (Takeaway order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 660.89 Td (+ 54,60) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 660.89 Td (4.900,61) Tj ET
+0.975 g 44.00 640.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 645.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 645.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 645.89 Td (4.900,26) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 630.89 Td (260821A05) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 630.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 630.89 Td (+ 25,55) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 630.89 Td (4.925,81) Tj ET
+0.975 g 44.00 610.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 615.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 615.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 615.89 Td (4.925,52) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 600.89 Td (260821A06) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 600.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 600.89 Td (+ 71,86) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 600.89 Td (4.997,38) Tj ET
+0.975 g 44.00 580.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 585.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 585.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 585.89 Td (4.997,03) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 570.89 Td (260821A07) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 570.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 570.89 Td (+ 55,77) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 570.89 Td (5.052,80) Tj ET
+0.975 g 44.00 550.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 555.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 555.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 555.89 Td (5.052,45) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 540.89 Td (260821A08) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 540.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 540.89 Td (+ 59,92) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 540.89 Td (5.112,37) Tj ET
+0.975 g 44.00 520.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 525.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 525.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 525.89 Td (5.112,02) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 510.89 Td (260821A09) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 510.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 510.89 Td (+ 62,99) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 510.89 Td (5.175,01) Tj ET
+0.975 g 44.00 490.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 495.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 495.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 495.89 Td (5.174,72) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 480.89 Td (260821A10) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 480.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 480.89 Td (+ 67,54) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 480.89 Td (5.242,26) Tj ET
+0.975 g 44.00 460.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 465.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 465.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 465.89 Td (5.241,91) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 450.89 Td (260821A11) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 450.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 450.89 Td (+ 26,73) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 450.89 Td (5.268,64) Tj ET
+0.975 g 44.00 430.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 435.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 435.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 435.89 Td (5.268,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 420.89 Td (260821A12) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 420.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 420.89 Td (+ 19,72) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 420.89 Td (5.288,01) Tj ET
+0.975 g 44.00 400.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 405.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 405.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 405.89 Td (5.287,66) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 390.89 Td (260821A13) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 390.89 Td (Delivery order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 390.89 Td (+ 25,95) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 390.89 Td (5.313,61) Tj ET
+0.975 g 44.00 370.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 375.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 375.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 375.89 Td (5.313,32) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 360.89 Td (260821A14) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 360.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 360.89 Td (+ 68,18) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 360.89 Td (5.381,50) Tj ET
+0.975 g 44.00 340.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 345.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 345.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 345.89 Td (5.381,15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 330.89 Td (260821A15) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 330.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 330.89 Td (+ 56,05) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 330.89 Td (5.437,20) Tj ET
+0.975 g 44.00 310.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 315.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 315.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 315.89 Td (5.436,85) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 300.89 Td (260821A16) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 300.89 Td (Delivery order paid with iDEAL) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 300.89 Td (+ 44,84) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 300.89 Td (5.481,69) Tj ET
+0.975 g 44.00 280.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 285.89 Td (iDEAL transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 285.89 Td (- 0,35) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 285.89 Td (5.481,34) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 122.00 270.89 Td (260821A17) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 270.89 Td (Takeaway order paid with PayPal) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 415.41 270.89 Td (+ 45,71) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 270.89 Td (5.527,05) Tj ET
+0.975 g 44.00 250.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 255.89 Td (PayPal transaction fee) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 422.27 255.89 Td (- 0,29) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 255.89 Td (5.526,76) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 212.00 240.89 Td (Refunds in this period \(3 orders\)) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 412.81 240.89 Td (- 318,40) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 240.89 Td (5.208,36) Tj ET
+0.975 g 44.00 220.89 507.28 15.00 re f
+BT /Helvetica 8.5 Tf 0.300 g 212.00 225.89 Td (Chargebacks in this period \(1 case\)) Tj ET
+BT /Helvetica 8.5 Tf 0.450 g 417.54 225.89 Td (- 95,00) Tj ET
+BT /Helvetica 8.5 Tf 0.300 g 514.20 225.89 Td (5.113,36) Tj ET
+0.600 G 0.9 w 44.00 221.89 m 551.28 221.89 l S
+0.940 g 44.00 200.89 507.28 17.00 re f
+BT /Helvetica-Bold 9.0 Tf 0.050 g 212.00 206.89 Td (Balance to be paid out on 21 August 2026) Tj ET
+BT /Helvetica-Bold 9.0 Tf 0.050 g 491.74 206.89 Td (EUR 5.113,36) Tj ET
+0.850 G 0.5 w 44.00 40.00 m 551.28 40.00 l S
+BT /Helvetica 8.0 Tf 0.500 g 44.00 26.00 Td (Generated on 9 September 2026 - amounts in EUR - this overview updates until the payout is sent) Tj ET
+BT /Helvetica 8.0 Tf 0.500 g 508.14 26.00 Td (Page 6 of 6) Tj ET
+endstream
+endobj
 xref
-0 7
+0 17
 0000000000 65535 f 
 0000000015 00000 n 
 0000000064 00000 n 
-0000000121 00000 n 
-0000000282 00000 n 
-0000005867 00000 n 
-0000005964 00000 n 
+0000000154 00000 n 
+0000000251 00000 n 
+0000000353 00000 n 
+0000000514 00000 n 
+0000012275 00000 n 
+0000012436 00000 n 
+0000024696 00000 n 
+0000024858 00000 n 
+0000037121 00000 n 
+0000037284 00000 n 
+0000049549 00000 n 
+0000049712 00000 n 
+0000061975 00000 n 
+0000062138 00000 n 
 trailer
-<< /Size 7 /Root 1 0 R >>
+<< /Size 17 /Root 1 0 R >>
 startxref
-6066
+72566
 %%EOF
