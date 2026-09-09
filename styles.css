@@ -693,8 +693,16 @@ select.input {
 /* Passen de tabs niet in de kop, dan laat een streepje eronder zien dat er
    meer staat en hoe ver je bent — zonder de scrollbalk van het systeem, die
    op iOS toch niet verschijnt. app.js §9 bouwt het vakje en tekent de duim. */
-.tabsbox { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.tabscroll { height: 3px; border-radius: var(--r-full); background: var(--gray-100); }
+/* Het streepje hangt onder de rij in plaats van eronder te staan: als het
+   ruimte innam zou de tabrij omhoog schuiven en niet meer op één lijn staan
+   met de knop ernaast. */
+.tabsbox { position: relative; min-width: 0; }
+.tabscroll {
+  position: absolute; left: 0; right: 0; bottom: -8px;
+  height: 3px;
+  border-radius: var(--r-full);
+  background: var(--gray-100);
+}
 .tabscroll__thumb {
   display: block; height: 100%;
   border-radius: var(--r-full);
