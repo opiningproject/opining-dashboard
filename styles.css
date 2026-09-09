@@ -1231,10 +1231,11 @@ select.input {
 
 /* Sorteren staat naast de zoek-en-filterknop: eerst waarop, daaronder in
    welke richting. Het menu hangt rechts uit, want de knop staat rechts. */
-.sort { position: relative; flex: 0 0 auto; margin-left: 8px; }
-/* Zelfde vorm als de zoek-en-filterknop ernaast, maar zonder de klasse
-   panel__tool: die schakelt de zoekstand in. */
-.sort__btn { width: auto; height: 34px; padding: 0 10px; border: 1px solid var(--border); border-radius: var(--r-md); }
+.sort { position: relative; flex: 0 0 auto; }
+.panel__head .sort { margin-left: 8px; }
+/* In een panel-kop staat hij naast de zoek-en-filterknop en krijgt hij
+   dezelfde vorm; in een kaartkop is het gewoon een menuknop zonder rand. */
+.panel__head .sort__btn { width: auto; height: 34px; padding: 0 10px; border: 1px solid var(--border); border-radius: var(--r-md); }
 .sort__menu {
   position: absolute; top: calc(100% + 6px); right: 0;
   z-index: 20;
