@@ -78,9 +78,9 @@ my $zaad = 20260821;
 sub trek { $zaad = ($zaad * 1103515245 + 12345) % 2147483648; return $zaad; }
 
 my %kosten = ('iDEAL' => 35, 'PayPal' => 29);
-my @dagen = ('15 Aug 2026', '16 Aug 2026', '17 Aug 2026', '18 Aug 2026',
-             '19 Aug 2026', '20 Aug 2026', '21 Aug 2026');
-my @code  = ('260815', '260816', '260817', '260818', '260819', '260820', '260821');
+my @dagen = ('3 Sep 2026', '4 Sep 2026', '5 Sep 2026', '6 Sep 2026',
+             '7 Sep 2026', '8 Sep 2026', '9 Sep 2026');
+my @code  = ('260903', '260904', '260905', '260906', '260907', '260908', '260909');
 my @perdag = (16, 17, 18, 19, 18, 19, 17);   # samen 124
 
 my @orders;
@@ -132,7 +132,7 @@ sub tabelkop {
 sub paginakop {
   tekst($M, 40, 'Helvetica-Bold', 9.5, 0.15, 'Opining');
   tekst($M + 60, 40, 'Helvetica', 9.5, 0.45,
-    'Payout PO-2026-0161 - 15 to 21 August 2026 - interim');
+    'Payout PO-2026-0161 - 3 to 9 September 2026 - interim');
   lijn(48, 0.8);
 }
 
@@ -219,7 +219,7 @@ boeking('', '', 'Chargebacks in this period (1 case)', -$chargebacks, $saldo, 0)
 lijn($y - 11, 0.6, 0.9);
 $y += 4;
 band($y - 11, 17, 0.94);
-tekst($M + $K_OMS, $y, 'Helvetica-Bold', 9, 0.05, 'Balance to be paid out on 21 August 2026');
+tekst($M + $K_OMS, $y, 'Helvetica-Bold', 9, 0.05, 'Balance to be paid out on 11 September 2026');
 rechts($K_SALDO - 4, $y, 'Helvetica-Bold', 9, 0.05, 'EUR ' . euro($saldo));
 
 push @paginas, [@ops];
@@ -230,7 +230,7 @@ for my $i (0 .. $#paginas) {
   @ops = ();
   lijn($H - 40, 0.85);
   tekst($M, $H - 26, 'Helvetica', 8, 0.5,
-    'Generated on 9 September 2026 - amounts in EUR - this overview updates until the payout is sent');
+    'Updated until 9 September 2026, 14:20 - amounts in EUR - this overview keeps updating until the payout is sent');
   rechts($W - $M, $H - 26, 'Helvetica', 8, 0.5, 'Page ' . ($i + 1) . ' of ' . $totaal);
   push @{ $paginas[$i] }, @ops;
 }
