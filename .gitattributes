@@ -1,0 +1,3 @@
+# Een PDF is bytes, geen tekst: zonder deze regel zet git op Windows de
+# regeleindes om en kloppen de byte-offsets in de xref-tabel niet meer.
+*.pdf binary
