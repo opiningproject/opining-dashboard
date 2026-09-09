@@ -617,17 +617,14 @@
     if (veld) sluitPaneelZoek(veld.closest(".panel__head"));
   });
 
-
-
   /* ---- Uitbetalingen exporteren -------------------------------------------
      Eerst de vraag van wanneer tot wanneer, dan pas het bestand. De velden zijn
-     <input type="date">, dus de kiezer komt van het toestel zelf.
-     In het prototype opent er één voorbeeldbestand; in productie geef je de
-     gekozen periode mee aan het export-endpoint en levert de server de PDF. */
+     <input type="date">, dus de kiezer komt van het toestel zelf. Het bestand
+     wordt hier uit de tabel opgebouwd; in productie levert de server de regels
+     voor de gekozen periode. */
   var exportVenster = document.getElementById("export-dialog");
 
   if (exportVenster) {
-    var exportKnop = document.getElementById("export-open");
     var vanaf = document.getElementById("export-from");
     var tot = document.getElementById("export-to");
     var fout = document.getElementById("export-error");
@@ -641,28 +638,91 @@
     }
     function sluitExport() {
       exportVenster.hidden = true;
+      sluitFilterMenus();
       if (vorigeFocus) vorigeFocus.focus();
     }
 
-    if (exportKnop) exportKnop.addEventListener("click", openExport);
+    /* Het menu achter de drie puntjes opent hetzelfde venster. */
+    document.addEventListener("click", function (e) {
+      if (e.target.closest("#export-csv")) openExport();
+    });
+
+    /* "2026-08-01" uit een datumveld, als lokale datum. */
+    function veldDatum(s) {
+      if (!s) return null;
+      var d = s.split("-");
+      return new Date(Number(d[0]), Number(d[1]) - 1, Number(d[2]));
+    }
+
+    /* "22 Aug 2026" is wat er in de tabel staat; hier wordt het een datum om
+       mee te vergelijken. */
+    var MAANDEN = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+                    Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+    function leesDatum(s) {
+      var d = s.trim().split(/\s+/);
+      if (d.length !== 3 || !(d[1] in MAANDEN)) return null;
+      return new Date(Number(d[2]), MAANDEN[d[1]], Number(d[0]));
+    }
+
+    /* Een veld met een komma of een aanhalingsteken hoort tussen quotes. */
+    function csvVeld(s) {
+      s = String(s).replace(/\s+/g, " ").trim();
+      return /[",;\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }
+
+    function maakCsv(van, naar) {
+      var tabel = document.querySelector('[data-view="finance"] .panel--inset table');
+      var regels = ['Payout,Date,Status,Amount'];
+      [].slice.call(tabel.tBodies[0].rows).forEach(function (rij) {
+        var datum = leesDatum(rij.cells[0].textContent);
+        if (!datum || (van && datum < van) || (naar && datum > naar)) return;
+        /* Het uitbetalingsnummer staat in het label van de link; in de kolom
+           zelf zou het alleen ruimte kosten. */
+        var link = rij.querySelector("a[aria-label]");
+        var nummer = link ? (link.getAttribute("aria-label").match(/[0-9]{4}-P-[0-9]{4}/) || [""])[0] : "";
+        regels.push([
+          csvVeld(nummer),
+          csvVeld(rij.cells[0].textContent),
+          csvVeld(rij.cells[2].textContent),
+          csvVeld(rij.cells[1].textContent.replace(/[^0-9,.-]/g, ""))
+        ].join(","));
+      });
+      return regels.join("\r\n") + "\r\n";
+    }
 
     exportVenster.addEventListener("click", function (e) {
       if (e.target.closest("[data-dialog-close]")) { sluitExport(); return; }
+      if (!e.target.closest("#export-go")) return;
 
-      if (e.target.closest("#export-go")) {
-        /* Een omgekeerde periode levert een leeg bestand op; dat zeggen we
-           liever hier dan na de download. */
-        if (vanaf.value && tot.value && tot.value < vanaf.value) {
-          fout.hidden = false;
-          tot.focus();
-          return;
-        }
-        var url = "payouts-export.pdf?from=" + encodeURIComponent(vanaf.value)
-                + "&to=" + encodeURIComponent(tot.value);
-        window.open(url, "_blank", "noopener");
-        sluitExport();
-        showToast("Export ready");
+      /* Een omgekeerde periode levert een leeg bestand op; dat zeggen we
+         liever hier dan na de download. */
+      if (vanaf.value && tot.value && tot.value < vanaf.value) {
+        fout.hidden = false;
+        tot.focus();
+        return;
       }
+
+      /* Als datum uit een veld door new Date() gaat, leest hij dat als UTC,
+         terwijl de datums in de tabel lokaal zijn. Dan valt de eerste dag van
+         de periode er net buiten; vandaar met de hand. */
+      var van = veldDatum(vanaf.value);
+      var naar = veldDatum(tot.value);
+      var csv = maakCsv(van, naar);
+      var aantal = csv.trim().split("\n").length - 1;
+
+      /* In productie haalt de server de regels op en zet hij het bestand klaar;
+         hier komt het uit de tabel die je voor je hebt. */
+      var url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "payouts-" + (vanaf.value || "start") + "-to-" + (tot.value || "today") + ".csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+
+      sluitExport();
+      showToast(aantal + (aantal === 1 ? " payout exported" : " payouts exported"));
     });
 
     /* Typen ruimt de melding op: hij ging over de vorige poging. */

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=88" />
+  <link rel="stylesheet" href="styles.css?v=89" />
 </head>
 <body>
 
@@ -293,8 +293,10 @@
               </button>
             </div>
             <div class="page-head__tools" data-tools="finance" hidden>
-              <button class="btn btn--ghost page-head__action" type="button" id="export-open" aria-haspopup="dialog">
-                <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
+              <!-- Beheren gaat over de instellingen achter de uitbetalingen:
+                   rekening, methoden en het ritme. Die staan bij Payments. -->
+              <button class="btn btn--ghost page-head__action" type="button" data-goto-set="payments">
+                <svg class="icon" aria-hidden="true"><use href="#i-cog"/></svg>Manage
               </button>
             </div>
           </div>
@@ -955,9 +957,18 @@
             <div class="card">
               <div class="card__headrow">
                 <h2 class="card__title">Payout history</h2>
-                <button class="icon-btn" type="button" aria-label="More actions for payouts">
-                  <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
-                </button>
+                <!-- Wat je met de reeks kunt doen, niet met één uitbetaling.
+                     Zelfde menu als het statusfilter, dus één manier van
+                     openen en sluiten voor alle menu's op de pagina. -->
+                <div class="sort">
+                  <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More actions for payouts">
+                    <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                  </button>
+                  <div class="sort__menu" role="menu" hidden>
+                    <button class="sort__item" type="button" role="menuitem" id="export-csv">
+                      <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export as CSV</button>
+                  </div>
+                </div>
               </div>
 
               <!-- Een paneel met een eigen titel zit in een omlijnd vak eronder,
@@ -3424,6 +3435,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=88"></script>
+  <script src="app.js?v=89"></script>
 </body>
 </html>
