@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=76" />
+  <link rel="stylesheet" href="styles.css?v=77" />
 </head>
 <body>
 
@@ -928,7 +928,18 @@
           <section class="view" data-view="finance" hidden>
             <div class="card balance">
               <div class="balance__main">
-                <p class="stat__label">Available balance</p>
+                <!-- De uitleg hoort bij het woord zelf: hover of focus laat
+                     zien wat er wel en niet in het bedrag zit. -->
+                <p class="stat__label">
+                  <span class="explain">
+                    <span class="explain__label" tabindex="0" aria-describedby="explain-payout-balance">Payout balance</span>
+                    <span class="explain__pop" id="explain-payout-balance" role="tooltip">
+                      <b>Payout balance</b>
+                      The total amount of funds to be paid out from your Opining Payments account, including any pending payments.
+                      <span class="explain__sum">Payout balance = payments &minus; refunds &minus; chargebacks &minus; fees</span>
+                    </span>
+                  </span>
+                </p>
                 <p class="amount"><span class="amount__cur">EUR</span> 4.812,65</p>
                 <p class="card__sub">Next automatic payout on Friday 21 August</p>
               </div>
@@ -3376,6 +3387,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=76"></script>
+  <script src="app.js?v=77"></script>
 </body>
 </html>
