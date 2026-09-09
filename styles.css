@@ -1028,7 +1028,9 @@ select.input {
    blijft staan zodat duidelijk is dat je in dezelfde lijst zoekt.
    Geen hidden-attribuut: de klasse op de kop bepaalt wat er staat. */
 .psearch { display: none; flex-direction: column; gap: 12px; width: 100%; }
-.panel__head.is-searching { flex-direction: column; align-items: stretch; padding: 14px; }
+/* Zelfde bovenruimte als de gesloten kop, zodat de zoekbalk precies de
+   plek van de tabs inneemt. */
+.panel__head.is-searching { flex-direction: column; align-items: stretch; padding: 12px 14px; }
 .panel__head.is-searching .tabsbox,
 .panel__head.is-searching .panel__tool { display: none; }
 .panel__head.is-searching .psearch { display: flex; }
@@ -1036,25 +1038,27 @@ select.input {
 .psearch__top { display: flex; align-items: center; gap: 18px; }
 .psearch__field { position: relative; flex: 1 1 auto; min-width: 0; }
 .psearch__icon {
-  position: absolute; left: 14px; top: 50%;
+  position: absolute; left: 12px; top: 50%;
   transform: translateY(-50%);
   width: 18px; height: 18px;
   color: var(--text-muted);
   pointer-events: none;
 }
+/* Even hoog als de tabs die hij vervangt, zodat de kop niet opspringt zodra
+   je gaat zoeken. Geen rand: het grijze vlak zegt al dat je hier typt. */
 .psearch__field input {
-  width: 100%; height: 44px;
-  padding: 0 14px 0 44px;
-  border: 1px solid var(--border-strong);
+  width: 100%; height: 34px;
+  padding: 0 12px 0 38px;
+  border: 0;
   border-radius: var(--r-md);
   font-size: 16px;   /* onder 16 zoomt iOS in bij focus */
-  background: var(--bg-surface);
+  background: var(--gray-100);
 }
 .psearch__field input::-webkit-search-cancel-button { display: none; }
 .psearch__field input:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 2px var(--accent);
 }
 /* Afbreken leest als tekst, niet als tweede knop naast Add filter. */
 /* Evenveel lucht links als rechts van Cancel: de kop houdt 14px aan de rand
