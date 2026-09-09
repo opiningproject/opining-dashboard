@@ -10,7 +10,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /Helvetica 5 0 R /Helvetica-Bold 6 0 R >> >> /Contents 4 0 R >>
 endobj
 4 0 obj
-<< /Length 5416 >>
+<< /Length 5533 >>
 stream
 BT /Helvetica-Bold 13.0 Tf 0.050 g 56.00 767.89 Td (Opining) Tj ET
 BT /Helvetica 9.5 Tf 0.450 g 394.56 767.89 Td (Generated on 9 September 2026) Tj ET
@@ -35,62 +35,62 @@ BT /Helvetica 10.5 Tf 0.250 g 56.00 459.89 Td (Refunds) Tj ET
 BT /Helvetica 10.5 Tf 0.100 g 479.75 459.89 Td (EUR -318,40) Tj ET
 BT /Helvetica 10.5 Tf 0.250 g 56.00 437.89 Td (Chargebacks) Tj ET
 BT /Helvetica 10.5 Tf 0.100 g 485.58 437.89 Td (EUR -95,00) Tj ET
-BT /Helvetica 10.5 Tf 0.250 g 56.00 415.89 Td (Opining fees) Tj ET
-BT /Helvetica 10.5 Tf 0.100 g 479.75 415.89 Td (EUR -186,85) Tj ET
-0.850 G 0.7 w 56.00 405.89 m 539.28 405.89 l S
-0.960 g 56.00 369.89 483.28 30.00 re f
-BT /Helvetica-Bold 11.5 Tf 0.050 g 68.00 379.89 Td (Net payout) Tj ET
-BT /Helvetica-Bold 11.5 Tf 0.050 g 456.31 379.89 Td (EUR 4.812,65) Tj ET
-BT /Helvetica-Bold 12.0 Tf 0.050 g 56.00 323.89 Td (Orders in this payout) Tj ET
-0.850 G 0.7 w 56.00 311.89 m 539.28 311.89 l S
-BT /Helvetica 9.5 Tf 0.450 g 56.00 289.89 Td (Date) Tj ET
-BT /Helvetica 9.5 Tf 0.450 g 146.00 289.89 Td (Order) Tj ET
-BT /Helvetica 9.5 Tf 0.450 g 226.00 289.89 Td (Type) Tj ET
-BT /Helvetica 9.5 Tf 0.450 g 326.00 289.89 Td (Payment) Tj ET
-BT /Helvetica 9.5 Tf 0.450 g 506.53 289.89 Td (Amount) Tj ET
-0.920 G 0.7 w 56.00 281.89 m 539.28 281.89 l S
-BT /Helvetica 10.0 Tf 0.250 g 56.00 261.89 Td (20 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 261.89 Td (#1284) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 226.00 261.89 Td (Delivery) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 326.00 261.89 Td (iDEAL) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 261.89 Td (EUR 73,59) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 241.89 Td (20 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 241.89 Td (#1283) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 226.00 241.89 Td (Takeaway) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 326.00 241.89 Td (Card) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 241.89 Td (EUR 41,20) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 221.89 Td (19 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 221.89 Td (#1281) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 226.00 221.89 Td (Delivery) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 326.00 221.89 Td (iDEAL) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 221.89 Td (EUR 68,45) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 201.89 Td (19 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 201.89 Td (#1279) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 226.00 201.89 Td (Delivery) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 326.00 201.89 Td (PayPal) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 201.89 Td (EUR 52,10) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 181.89 Td (18 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 181.89 Td (#1276) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 226.00 181.89 Td (Takeaway) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 326.00 181.89 Td (Bancontact) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 181.89 Td (EUR 39,90) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 161.89 Td (17 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 161.89 Td (#1272) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 226.00 161.89 Td (Delivery) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 326.00 161.89 Td (iDEAL) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 161.89 Td (EUR 84,15) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 141.89 Td (16 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 141.89 Td (#1268) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 226.00 141.89 Td (Delivery) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 326.00 141.89 Td (Card) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 141.89 Td (EUR 47,80) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 56.00 121.89 Td (15 Aug 2026) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 146.00 121.89 Td (#1264) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 226.00 121.89 Td (Takeaway) Tj ET
-BT /Helvetica 10.0 Tf 0.250 g 326.00 121.89 Td (iDEAL) Tj ET
-BT /Helvetica 10.0 Tf 0.100 g 491.47 121.89 Td (EUR 61,35) Tj ET
-0.920 G 0.7 w 56.00 111.89 m 539.28 111.89 l S
-BT /Helvetica 10.0 Tf 0.450 g 56.00 93.89 Td (124 orders in total, of which 8 shown above.) Tj ET
+BT /Helvetica 10.5 Tf 0.250 g 56.00 415.89 Td (Payment fees \(96 iDEAL x 0,35 + 28 PayPal x 0,29\)) Tj ET
+BT /Helvetica 10.5 Tf 0.100 g 485.58 415.89 Td (EUR -41,72) Tj ET
+BT /Helvetica 10.5 Tf 0.250 g 56.00 393.89 Td (Opining commission) Tj ET
+BT /Helvetica 10.5 Tf 0.100 g 479.75 393.89 Td (EUR -145,13) Tj ET
+0.850 G 0.7 w 56.00 383.89 m 539.28 383.89 l S
+0.960 g 56.00 347.89 483.28 30.00 re f
+BT /Helvetica-Bold 11.5 Tf 0.050 g 68.00 357.89 Td (Net payout) Tj ET
+BT /Helvetica-Bold 11.5 Tf 0.050 g 456.31 357.89 Td (EUR 4.812,65) Tj ET
+BT /Helvetica-Bold 12.0 Tf 0.050 g 56.00 301.89 Td (Orders in this payout) Tj ET
+BT /Helvetica 9.0 Tf 0.500 g 292.09 301.89 Td (Order number: YYMMDD, block letter, order of that day) Tj ET
+0.850 G 0.7 w 56.00 289.89 m 539.28 289.89 l S
+BT /Helvetica 9.5 Tf 0.450 g 56.00 267.89 Td (Date) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 146.00 267.89 Td (Order) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 236.00 267.89 Td (Type) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 311.00 267.89 Td (Payment) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 439.10 267.89 Td (Fee) Tj ET
+BT /Helvetica 9.5 Tf 0.450 g 506.53 267.89 Td (Amount) Tj ET
+0.920 G 0.7 w 56.00 259.89 m 539.28 259.89 l S
+BT /Helvetica 10.0 Tf 0.250 g 56.00 239.89 Td (20 Aug 2026) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 146.00 239.89 Td (260820A14) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 236.00 239.89 Td (Delivery) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 311.00 239.89 Td (iDEAL) Tj ET
+BT /Helvetica 10.0 Tf 0.450 g 413.75 239.89 Td (EUR 0,35) Tj ET
+BT /Helvetica 10.0 Tf 0.100 g 491.47 239.89 Td (EUR 73,59) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 56.00 219.89 Td (20 Aug 2026) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 146.00 219.89 Td (260820A13) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 236.00 219.89 Td (Takeaway) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 311.00 219.89 Td (iDEAL) Tj ET
+BT /Helvetica 10.0 Tf 0.450 g 413.75 219.89 Td (EUR 0,35) Tj ET
+BT /Helvetica 10.0 Tf 0.100 g 491.47 219.89 Td (EUR 41,20) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 56.00 199.89 Td (19 Aug 2026) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 146.00 199.89 Td (260819A11) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 236.00 199.89 Td (Delivery) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 311.00 199.89 Td (PayPal) Tj ET
+BT /Helvetica 10.0 Tf 0.450 g 413.75 199.89 Td (EUR 0,29) Tj ET
+BT /Helvetica 10.0 Tf 0.100 g 491.47 199.89 Td (EUR 68,45) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 56.00 179.89 Td (19 Aug 2026) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 146.00 179.89 Td (260819A09) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 236.00 179.89 Td (Delivery) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 311.00 179.89 Td (iDEAL) Tj ET
+BT /Helvetica 10.0 Tf 0.450 g 413.75 179.89 Td (EUR 0,35) Tj ET
+BT /Helvetica 10.0 Tf 0.100 g 491.47 179.89 Td (EUR 52,10) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 56.00 159.89 Td (18 Aug 2026) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 146.00 159.89 Td (260818A07) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 236.00 159.89 Td (Takeaway) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 311.00 159.89 Td (PayPal) Tj ET
+BT /Helvetica 10.0 Tf 0.450 g 413.75 159.89 Td (EUR 0,29) Tj ET
+BT /Helvetica 10.0 Tf 0.100 g 491.47 159.89 Td (EUR 39,90) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 56.00 139.89 Td (17 Aug 2026) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 146.00 139.89 Td (260817A12) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 236.00 139.89 Td (Delivery) Tj ET
+BT /Helvetica 10.0 Tf 0.250 g 311.00 139.89 Td (iDEAL) Tj ET
+BT /Helvetica 10.0 Tf 0.450 g 413.75 139.89 Td (EUR 0,35) Tj ET
+BT /Helvetica 10.0 Tf 0.100 g 491.47 139.89 Td (EUR 84,15) Tj ET
+0.920 G 0.7 w 56.00 129.89 m 539.28 129.89 l S
+BT /Helvetica 10.0 Tf 0.450 g 56.00 111.89 Td (124 orders in total, of which 6 shown above.) Tj ET
 0.850 G 0.7 w 56.00 96.00 m 539.28 96.00 l S
 BT /Helvetica 9.0 Tf 0.500 g 56.00 76.00 Td (Opining B.V. - Lusthofstraat 27A, 3062 WB Rotterdam - KVK 87654321 - VAT NL863254789B01) Tj ET
 BT /Helvetica 9.0 Tf 0.500 g 56.00 62.00 Td (Questions about this payout? Reply to payouts@opining.com and quote the reference above.) Tj ET
@@ -109,10 +109,10 @@ xref
 0000000064 00000 n 
 0000000121 00000 n 
 0000000282 00000 n 
-0000005750 00000 n 
-0000005847 00000 n 
+0000005867 00000 n 
+0000005964 00000 n 
 trailer
 << /Size 7 /Root 1 0 R >>
 startxref
-5949
+6066
 %%EOF

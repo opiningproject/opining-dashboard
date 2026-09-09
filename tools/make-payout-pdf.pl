@@ -87,10 +87,11 @@ lijn($y, 0.85);
 $y += 24;
 
 my @sum = (
-  ['Gross sales',            'EUR 5.412,90'],
-  ['Refunds',                'EUR -318,40'],
-  ['Chargebacks',            'EUR -95,00'],
-  ['Opining fees',            'EUR -186,85'],
+  ['Gross sales',                                  'EUR 5.412,90'],
+  ['Refunds',                                      'EUR -318,40'],
+  ['Chargebacks',                                  'EUR -95,00'],
+  ['Payment fees (96 iDEAL x 0,35 + 28 PayPal x 0,29)', 'EUR -41,72'],
+  ['Opining commission',                           'EUR -145,13'],
 );
 for my $r (@sum) {
   tekst($M, $y, 'Helvetica', 10.5, 0.25, $r->[0]);
@@ -107,40 +108,41 @@ $y += 52;
 # ---- orders ---------------------------------------------------------------
 $y += 16;
 tekst($M, $y, 'Helvetica-Bold', 12, 0.05, 'Orders in this payout');
+rechts($W - $M, $y, 'Helvetica', 9, 0.5, 'Order number: YYMMDD, block letter, order of that day');
 $y += 12;
 lijn($y, 0.85);
 $y += 22;
 
 tekst($M, $y, 'Helvetica', 9.5, 0.45, 'Date');
 tekst($M + 90, $y, 'Helvetica', 9.5, 0.45, 'Order');
-tekst($M + 170, $y, 'Helvetica', 9.5, 0.45, 'Type');
-tekst($M + 270, $y, 'Helvetica', 9.5, 0.45, 'Payment');
+tekst($M + 180, $y, 'Helvetica', 9.5, 0.45, 'Type');
+tekst($M + 255, $y, 'Helvetica', 9.5, 0.45, 'Payment');
+rechts($M + 400, $y, 'Helvetica', 9.5, 0.45, 'Fee');
 rechts($W - $M, $y, 'Helvetica', 9.5, 0.45, 'Amount');
 $y += 8;
 lijn($y, 0.92);
 $y += 20;
 
 my @orders = (
-  ['20 Aug 2026', '#1284', 'Delivery', 'iDEAL',      'EUR 73,59'],
-  ['20 Aug 2026', '#1283', 'Takeaway', 'Card',       'EUR 41,20'],
-  ['19 Aug 2026', '#1281', 'Delivery', 'iDEAL',      'EUR 68,45'],
-  ['19 Aug 2026', '#1279', 'Delivery', 'PayPal',     'EUR 52,10'],
-  ['18 Aug 2026', '#1276', 'Takeaway', 'Bancontact', 'EUR 39,90'],
-  ['17 Aug 2026', '#1272', 'Delivery', 'iDEAL',      'EUR 84,15'],
-  ['16 Aug 2026', '#1268', 'Delivery', 'Card',       'EUR 47,80'],
-  ['15 Aug 2026', '#1264', 'Takeaway', 'iDEAL',      'EUR 61,35'],
+  ['20 Aug 2026', '260820A14', 'Delivery', 'iDEAL',  'EUR 0,35', 'EUR 73,59'],
+  ['20 Aug 2026', '260820A13', 'Takeaway', 'iDEAL',  'EUR 0,35', 'EUR 41,20'],
+  ['19 Aug 2026', '260819A11', 'Delivery', 'PayPal', 'EUR 0,29', 'EUR 68,45'],
+  ['19 Aug 2026', '260819A09', 'Delivery', 'iDEAL',  'EUR 0,35', 'EUR 52,10'],
+  ['18 Aug 2026', '260818A07', 'Takeaway', 'PayPal', 'EUR 0,29', 'EUR 39,90'],
+  ['17 Aug 2026', '260817A12', 'Delivery', 'iDEAL',  'EUR 0,35', 'EUR 84,15'],
 );
 for my $o (@orders) {
   tekst($M, $y, 'Helvetica', 10, 0.25, $o->[0]);
   tekst($M + 90, $y, 'Helvetica', 10, 0.25, $o->[1]);
-  tekst($M + 170, $y, 'Helvetica', 10, 0.25, $o->[2]);
-  tekst($M + 270, $y, 'Helvetica', 10, 0.25, $o->[3]);
-  rechts($W - $M, $y, 'Helvetica', 10, 0.1, $o->[4]);
+  tekst($M + 180, $y, 'Helvetica', 10, 0.25, $o->[2]);
+  tekst($M + 255, $y, 'Helvetica', 10, 0.25, $o->[3]);
+  rechts($M + 400, $y, 'Helvetica', 10, 0.45, $o->[4]);
+  rechts($W - $M, $y, 'Helvetica', 10, 0.1, $o->[5]);
   $y += 20;
 }
 $y += 2;
 lijn($y - 12, 0.92);
-tekst($M, $y + 6, 'Helvetica', 10, 0.45, '124 orders in total, of which 8 shown above.');
+tekst($M, $y + 6, 'Helvetica', 10, 0.45, '124 orders in total, of which 6 shown above.');
 
 # ---- voet -----------------------------------------------------------------
 lijn($H - 96, 0.85);
