@@ -704,7 +704,11 @@ select.input {
 .tabs::-webkit-scrollbar { display: none; }
 .tab {
   flex: 0 0 auto;
-  padding: 7px 14px;
+  /* Even hoog als de knop ernaast; de vaste hoogte houdt ze gelijk,
+     ongeacht het label. */
+  display: inline-flex; align-items: center;
+  height: 34px;
+  padding: 0 14px;
   border-radius: var(--r-md);
   font-size: var(--fs-md); font-weight: 500;
   color: var(--text-muted);
