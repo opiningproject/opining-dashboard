@@ -1592,7 +1592,9 @@
       wizTrack.setAttribute("aria-valuenow", stap);
       wizVorige.hidden = stap === 1;
       /* Laatste stap rondt af in plaats van door te gaan. */
-      wizVolgende.textContent = stap === wizLaatste ? "Submit for review" : "Next";
+      wizVolgende.textContent = stap === wizLaatste ? "Submit for verification" : "Next";
+      /* Een vakje dat nog openstond hoort dicht als je de stap opnieuw ziet. */
+      wiz.querySelectorAll(".rev").forEach(function (vak) { zetRev(vak, false); });
       overlay.scrollTop = 0;
     }
 
@@ -1600,7 +1602,23 @@
     wizVolgende.addEventListener("click", function () {
       if (stap < wizLaatste) { toonStap(stap + 1); return; }
       backFromSub();
-      showToast("Details submitted for review");
+      showToast("Details submitted for verification");
+    });
+
+    /* Het potlood klapt hetzelfde vakje open als formulier: je wijzigt het
+       gegeven waar het staat, in plaats van zes stappen terug te lopen. */
+    function zetRev(vak, bewerken) {
+      vak.querySelector(".rev__read").hidden = bewerken;
+      vak.querySelector(".rev__form").hidden = !bewerken;
+    }
+
+    wiz.addEventListener("click", function (e) {
+      var pen = e.target.closest(".rev__pen");
+      if (pen) { zetRev(pen.closest(".rev"), true); return; }
+      var stop = e.target.closest(".rev__cancel");
+      if (stop) { zetRev(stop.closest(".rev"), false); return; }
+      var bewaar = e.target.closest(".rev__save");
+      if (bewaar) { zetRev(bewaar.closest(".rev"), false); showToast("Changes saved"); }
     });
 
     /* Het keuzeveld hoort bij één optie; bij de andere keuze is het niet van

@@ -1889,6 +1889,55 @@ select.input {
 .choice__control { margin-top: 10px; max-width: 100%; }
 .choice__control:disabled { background: var(--gray-50); color: var(--text-muted); cursor: not-allowed; }
 
+/* Controlestap: per partij één blok met wat je hebt ingevuld en de papieren
+   die erbij horen. De kop is een gewone .cardhead, alleen met een merkteken
+   en een stand erin. */
+.acct__head { gap: 14px; }
+.acct__mark {
+  display: grid; place-items: center;
+  width: 30px; height: 30px; flex: 0 0 auto;
+  border-radius: var(--r-md);
+  background: var(--accent); color: #fff;
+  font-size: var(--fs-sm); font-weight: 700;
+}
+/* De persoon krijgt een andere tint dan de zaak, zodat de twee blokken op
+   één blik uit elkaar te houden zijn. */
+.acct__mark--person { background: #6b3fa8; }
+.acct__text { display: flex; flex-direction: column; min-width: 0; margin-right: auto; }
+.acct__name { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
+.acct__role { font-size: var(--fs-sm); color: var(--text-muted); }
+.acct { padding: 20px; }
+
+/* Een ingevuld gegeven: grijs kadertje met een titel en een potlood om terug
+   te springen naar de stap waar het vandaan komt. */
+.rev {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--gray-50);
+}
+.rev + .rev { margin-top: 14px; }
+.rev__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.rev__title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-strong); }
+.rev__pen { width: 28px; height: 28px; color: var(--text-muted); }
+.rev__pen .icon { width: 16px; height: 16px; }
+.rev__value { margin-top: 4px; font-size: var(--fs-sm); color: var(--text-strong); }
+.rev__line { display: flex; align-items: flex-start; gap: 10px; margin-top: 12px; }
+.rev__icon { width: 16px; height: 16px; flex: 0 0 auto; margin-top: 2px; color: var(--text-muted); }
+.rev__text { min-width: 0; font-size: var(--fs-sm); color: var(--text-muted); }
+.rev__text b { display: block; font-weight: 600; color: var(--text-strong); }
+
+/* Bewerken gebeurt in hetzelfde vakje: het gegeven maakt plaats voor de
+   velden waar het vandaan komt, met de twee knoppen rechtsonder. */
+.rev__form { margin-top: 14px; }
+.rev__sub { margin-top: 20px; margin-bottom: 12px; font-size: var(--fs-sm); font-weight: 600; color: var(--text-strong); }
+.rev__sub--first { margin-top: 0; }
+.rev__acts { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+
+/* De kleine lettertjes staan onder de blokken, niet in een kaart: ze horen
+   bij het versturen, niet bij een van de twee partijen. */
+.wiz__terms { font-size: var(--fs-sm); color: var(--text-muted); }
+
 /* ==========================================================================
    8l. NOTIFICATIONS / POLICIES / LANGUAGE
    ========================================================================== */
@@ -1910,6 +1959,8 @@ select.input {
 
 /* Kerngegevens naast een rij, vóór de chevron. */
 .facts { display: flex; align-items: center; gap: 20px; margin-left: auto; }
+/* Let op: .rev is de controlestap hierboven; deze .fact is het strookje
+   onder een product. Twee namen die op elkaar lijken, twee componenten. */
 .fact { display: flex; align-items: center; gap: 8px; font-size: var(--fs-md); color: var(--text); }
 .fact .icon { width: 17px; height: 17px; color: var(--text-muted); }
 
