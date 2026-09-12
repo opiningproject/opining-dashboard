@@ -740,7 +740,6 @@ select.input {
    hoort bij de kaart, de lijst krijgt daaronder een eigen kader. */
 .panel--inset { margin-top: 16px; }
 /* Wat na een genest paneel volgt, houdt dezelfde afstand. */
-.card__after { margin-top: 16px; }
 
 .panel {
   border: 1px solid var(--border);
