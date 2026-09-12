@@ -1785,9 +1785,9 @@
   }, true);
 
   /* ---- Standaardtaal ------------------------------------------------------
-     Twee talen liggen vast en staan allebei live; welke van de twee de klant
-     als eerste ziet niet. Daarom staat er geen status in de lijst: die zou
-     bij elke regel hetzelfde zeggen. */
+     Twee talen liggen vast, staan allebei live en delen hetzelfde domein.
+     Wat overblijft is welke van de twee de klant als eerste ziet; daarom is
+     dat het enige wat de lijst laat zien en het enige wat het menu doet. */
   document.addEventListener("click", function (e) {
     if (!e.target.closest("[data-lang-default]")) return;
 
@@ -1797,15 +1797,9 @@
 
     lijst.querySelectorAll("tr").forEach(function (r) {
       var standaard = r === rij;
-      var meta = r.querySelector(".cell__meta");
-
-      if (standaard) {
-        r.setAttribute("data-default", "");
-        meta.textContent = "Default";
-      } else {
-        r.removeAttribute("data-default");
-        meta.textContent = "Translated by you";
-      }
+      if (standaard) r.setAttribute("data-default", "");
+      else r.removeAttribute("data-default");
+      r.querySelector(".lang__default").hidden = !standaard;
       /* Je eigen standaard omzetten kan niet; die regel wijst nergens heen. */
       var item = r.querySelector("[data-lang-default]");
       if (item) item.disabled = standaard;

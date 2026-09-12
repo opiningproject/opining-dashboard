@@ -1351,6 +1351,8 @@ select.input {
 .cell { display: flex; flex-direction: column; gap: 2px; }
 .cell__title { font-weight: 500; color: var(--text-strong); }
 .cell__meta { font-size: var(--fs-sm); color: var(--text-muted); }
+/* Taalregel: naam en het merkje Default op één regel. */
+.lang__default { margin-left: 10px; }
 
 /* Betaalmethode in een lijst: een tegeltje met het merkkortje ervoor. Een
    echte logo-set komt van de betaalprovider; tot die tijd draagt het kortje

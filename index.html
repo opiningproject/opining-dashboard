@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=104" />
+  <link rel="stylesheet" href="styles.css?v=105" />
 </head>
 <body>
 
@@ -3961,26 +3961,20 @@
             <!-- Een paneel met een eigen titel zit in een omlijnd vak eronder,
                  zodat de titel bij de kaart hoort en de lijst een eigen kader krijgt. -->
             <div class="panel panel--inset">
-              <div class="table-wrap">
               <table class="table table--stack">
                 <thead>
                   <tr>
                     <th>Language</th>
-                    <th>Domains</th>
                     <th><span class="sr-only">Actions</span></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Twee talen, vast. Welke van de twee de standaard is kun
-                       je wel omzetten; dat is wat het menu per rij doet. -->
+                  <!-- Twee talen, vast, allebei live en op hetzelfde domein.
+                       Blijft over: welke van de twee de klant als eerste ziet. -->
                   <tr data-lang="Dutch" data-default>
-                    <td><span class="cell"><span class="cell__title">Dutch</span><span class="cell__meta">Default</span></span></td>
-                    <td data-label="Domains">
-                      <label class="sr-only" for="lang-nl-domains">Domains for Dutch</label>
-                      <select class="input input--bare" id="lang-nl-domains">
-                        <option>1 domain</option>
-                        <option>All domains</option>
-                      </select>
+                    <td>
+                      <span class="cell__title">Dutch</span>
+                      <span class="badge badge--muted lang__default">Default</span>
                     </td>
                     <td><span class="rowact">
                       <span class="sort">
@@ -3994,13 +3988,9 @@
                     </span></td>
                   </tr>
                   <tr data-lang="English">
-                    <td><span class="cell"><span class="cell__title">English</span><span class="cell__meta">Translated by you</span></span></td>
-                    <td data-label="Domains">
-                      <label class="sr-only" for="lang-en-domains">Domains for English</label>
-                      <select class="input input--bare" id="lang-en-domains">
-                        <option>No domains</option>
-                        <option>1 domain</option>
-                      </select>
+                    <td>
+                      <span class="cell__title">English</span>
+                      <span class="badge badge--muted lang__default" hidden>Default</span>
                     </td>
                     <td><span class="rowact">
                       <span class="sort">
@@ -4015,7 +4005,6 @@
                   </tr>
                 </tbody>
               </table>
-              </div>
             </div>
           </div>
 
@@ -4457,6 +4446,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=104"></script>
+  <script src="app.js?v=105"></script>
 </body>
 </html>
