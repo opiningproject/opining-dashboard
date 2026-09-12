@@ -1365,10 +1365,6 @@ select.input {
 .prov { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
 .prov__row .row__text { gap: 8px; }
 .prov__note { margin: 0; border-top: 1px solid var(--border); border-radius: 0; }
-/* De naam draagt de rij; de fee en de schakelaar blijven zo smal mogelijk,
-   zodat er op een telefoon zo min mogelijk te schuiven valt. */
-.table--methods td:first-child { width: 100%; }
-.table--methods th:last-child, .table--methods td:last-child { text-align: right; }
 
 /* Tijdkolom. Het getal draagt de nadruk, de eenheid blijft rustig. */
 .when { display: flex; align-items: center; gap: 8px; color: var(--text); }
@@ -2240,6 +2236,51 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   /* Onder elkaar: eerst invullen, dan pas afrekenen. */
   .buy { grid-template-columns: minmax(0, 1fr); }
   .buy__side { position: static; }
+}
+
+/* ==========================================================================
+   8p. BETAALMETHODES EN TARIEVEN
+   Een lijst per soort, met een grijze kop erboven. Er valt per regel niets
+   in te stellen behalve aan of uit, dus de regel blijft smal.
+   ========================================================================== */
+.mhead { padding: 22px 20px 0; }
+.mhead__tabs { margin: 16px 0 18px; }
+.mgroup {
+  padding: 11px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--gray-50);
+  font-size: var(--fs-sm); font-weight: 600; color: var(--text-strong);
+}
+.mrow { display: flex; align-items: center; gap: 12px; padding: 11px 20px; border-top: 1px solid var(--border); }
+.mrow__name { min-width: 0; font-size: var(--fs-sm); color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mrow > .badge { margin-left: auto; }
+.mrow > .icon-btn { margin-left: auto; }
+.mrow > .badge + .icon-btn { margin-left: 10px; }
+/* Uit staat er nog wel, maar vraagt niet om aandacht. */
+.mrow--off .pm__mark { opacity: .5; }
+.mrow--off .mrow__name { color: var(--text-muted); }
+
+/* Tarieven: wat het kost, per gebied. Alleen lezen, dus geen knoppen. */
+.rate { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+.rate__head, .rate__row {
+  display: grid; grid-template-columns: minmax(0, 1fr) 130px 150px; gap: 12px;
+  padding: 11px 16px;
+  font-size: var(--fs-sm);
+}
+.rate__head { border-bottom: 1px solid var(--border); background: var(--gray-50); color: var(--text-muted); }
+.rate__row + .rate__row { border-top: 1px solid var(--border); }
+.rate__row .rate__name { color: var(--text-strong); }
+.rate__col { text-align: right; font-variant-numeric: tabular-nums; }
+.rate__row .rate__col { color: var(--text-strong); }
+
+@media (max-width: 640px) {
+  /* Te smal voor kolommen: de bedragen zakken onder de naam en nemen hun
+     kolomnaam mee, anders weet je niet welk bedrag waarbij hoort. */
+  .rate__head, .rate__row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .rate__head .rate__col { display: none; }
+  .rate__row .rate__col { text-align: left; }
+  .rate__row .rate__col:empty { display: none; }
+  .rate__row .rate__col[data-label]::before { content: attr(data-label) ": "; color: var(--text-muted); }
 }
 
 /* ==========================================================================

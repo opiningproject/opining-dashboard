@@ -1252,8 +1252,19 @@
     if (!tab) return;
     tab.closest(".tabs").querySelectorAll(".tab").forEach(function (t) { t.classList.remove("is-active"); });
     tab.classList.add("is-active");
-    /* Een tab is een filter, geen etiket: de lijst volgt meteen. */
-    pasPaneelFilter(tab.closest(".panel__head"));
+
+    /* Twee lijsten die niets met elkaar te maken hebben wisselen om in plaats
+       van te filteren; de groep zegt met data-tabs-for welke blokken. */
+    var groep = tab.closest(".tabs");
+    if (groep.dataset.tabsFor) {
+      document.querySelectorAll('[data-tabpane="' + groep.dataset.tabsFor + '"]')
+        .forEach(function (blok) { blok.hidden = blok.dataset.tab !== tab.dataset.tab; });
+      return;
+    }
+
+    /* Anders is een tab een filter, geen etiket: de lijst volgt meteen. */
+    var kop = tab.closest(".panel__head");
+    if (kop) pasPaneelFilter(kop);
   });
 
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */

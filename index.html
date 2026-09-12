@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=98" />
+  <link rel="stylesheet" href="styles.css?v=99" />
 </head>
 <body>
 
@@ -2884,115 +2884,217 @@
           </div>
         </section>
 
-        <!-- ---------- SETTINGS-SUB: betaalmethoden ---------- -->
-        <!-- Zelfde opbouw als Past bills: titel in de kaart, lijst in een
-             eigen omlijnd vak eronder. -->
+        <!-- ---------- SETTINGS-SUB: betaalmethodes ---------- -->
         <section class="view" data-set-sub="payment-methods" hidden>
+          <!-- Zolang de aanvraag niet verstuurd is, kun je hier van alles
+               aanzetten wat toch niets doet. Dat hoort bovenaan te staan. -->
+          <p class="alert" data-pay-state="off">
+            <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>
+            Opining Payments is not processing transactions yet. Complete your account setup to start accepting payments.
+          </p>
+
           <div class="card">
             <div class="card__headrow">
-              <h3 class="card__title">Payment methods</h3>
-              <a class="link" href="#">Learn more</a>
-            </div>
-
-            <div class="panel panel--inset">
-              <div class="panel__head">
-                <div class="tabs">
-                  <button class="tab is-active" type="button">All</button>
-                  <button class="tab" type="button">Enabled</button>
-                  <button class="tab" type="button">Disabled</button>
-                </div>
-                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter payment methods">
-                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
-                </button>
-                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status:Enabled|Disabled;Customer fee:No fee|Paid">
-                  <div class="psearch__top">
-                    <span class="psearch__field">
-                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                      <input type="search" placeholder="search" aria-label="Search this list" />
-                    </span>
-                    <button class="psearch__cancel" type="button">Cancel</button>
-                  </div>
-                  <div class="psearch__filters">
-                    <div class="fadd">
-                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
-                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                      </button>
-                      <div class="fmenu" role="menu" hidden></div>
-                    </div>
-                    <button class="fclear" type="button" hidden>Clear All</button>
-                  </div>
-                </div>
+              <div>
+                <h3 class="card__title card__title--info">
+                  Managed payment methods
+                  <span class="badge badge--active"><span class="badge__dot" aria-hidden="true"></span>Enabled</span>
+                </h3>
+                <p class="card__sub">We show every customer the methods that suit them, and add new methods to your store as they become available.</p>
               </div>
-
-              <div class="table-wrap">
-                <table class="table table--methods" data-page="5">
-                  <thead>
-                    <tr>
-                      <th scope="col">Payment method</th>
-                      <th scope="col">Customer fee</th>
-                      <th scope="col">Enabled</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr data-filter="enabled">
-                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">iD</span><span class="pm__name">iDEAL</span></span></td>
-                      <td>&euro; 0,35</td>
-                      <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept iDEAL</span></label></td>
-                    </tr>
-                    <tr data-filter="disabled">
-                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">SCT</span><span class="pm__name">Bank transfer (SCT)</span></span></td>
-                      <td>No fee</td>
-                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept bank transfer</span></label></td>
-                    </tr>
-                    <tr data-filter="enabled">
-                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">BC</span><span class="pm__name">Bancontact</span></span></td>
-                      <td>&euro; 0,25</td>
-                      <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Bancontact</span></label></td>
-                    </tr>
-                    <tr data-filter="disabled">
-                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">VM</span><span class="pm__name">Visa / Mastercard</span></span></td>
-                      <td>No fee</td>
-                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Visa and Mastercard</span></label></td>
-                    </tr>
-                    <tr data-filter="disabled">
-                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">CB</span><span class="pm__name">Carte Bleue</span></span></td>
-                      <td>No fee</td>
-                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Carte Bleue</span></label></td>
-                    </tr>
-                    <tr data-filter="disabled">
-                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">MA</span><span class="pm__name">Maestro</span></span></td>
-                      <td>No fee</td>
-                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Maestro</span></label></td>
-                    </tr>
-                    <tr data-filter="disabled">
-                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">RI</span><span class="pm__name">Riverty</span></span></td>
-                      <td>No fee</td>
-                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Riverty</span></label></td>
-                    </tr>
-                    <tr data-filter="disabled">
-                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">YG</span><span class="pm__name">YourGift</span></span></td>
-                      <td>No fee</td>
-                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept YourGift</span></label></td>
-                    </tr>
-                    <tr data-filter="disabled">
-                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">PS</span><span class="pm__name">Postepay</span></span></td>
-                      <td>No fee</td>
-                      <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Postepay</span></label></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <nav class="panel__foot pager" aria-label="Payment method pages" hidden>
-                <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled>
-                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
-                <button class="icon-btn pager__btn" type="button" aria-label="Next page">
-                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
-                <p class="pager__count"></p>
-              </nav>
+              <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Manage payment methods for me</span></label>
             </div>
           </div>
+
+          <div class="card card--flush">
+            <div class="mhead">
+              <div class="card__headrow">
+                <h3 class="card__title">Payment methods</h3>
+                <button class="btn btn--ghost" type="button"
+                        data-sub="payment-rates"
+                        data-sub-title="Payment rates">View payment rates</button>
+              </div>
+              <!-- Online en aan de deur zijn twee aparte lijsten, geen filter
+                   op één lijst: een pinautomaat kent geen iDEAL. -->
+              <div class="tabs mhead__tabs" data-tabs-for="methods">
+                <button class="tab is-active" type="button" data-tab="online">Online</button>
+                <button class="tab" type="button" data-tab="inperson">In-person</button>
+              </div>
+            </div>
+
+            <div data-tabpane="methods" data-tab="online">
+              <p class="mgroup">Cards</p>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">VI</span>
+                <span class="mrow__name">Visa</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Visa"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">MC</span>
+                <span class="mrow__name">Mastercard</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Mastercard"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow mrow--off">
+                <span class="pm__mark" aria-hidden="true">MA</span>
+                <span class="mrow__name">Maestro</span>
+                <span class="badge badge--muted">Disabled</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Maestro"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">AX</span>
+                <span class="mrow__name">American Express</span>
+                <button class="icon-btn" type="button" aria-label="Actions for American Express"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow mrow--off">
+                <span class="pm__mark" aria-hidden="true">CB</span>
+                <span class="mrow__name">Carte Bleue</span>
+                <span class="badge badge--muted">Disabled</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Carte Bleue"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+
+              <p class="mgroup">Local payment methods</p>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">iD</span>
+                <span class="mrow__name">iDEAL</span>
+                <button class="icon-btn" type="button" aria-label="Actions for iDEAL"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">BC</span>
+                <span class="mrow__name">Bancontact</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Bancontact"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow mrow--off">
+                <span class="pm__mark" aria-hidden="true">SCT</span>
+                <span class="mrow__name">Bank transfer (SCT)</span>
+                <span class="badge badge--muted">Disabled</span>
+                <button class="icon-btn" type="button" aria-label="Actions for bank transfer"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+
+              <p class="mgroup">Wallets</p>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">AP</span>
+                <span class="mrow__name">Apple Pay</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Apple Pay"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">GP</span>
+                <span class="mrow__name">Google Pay</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Google Pay"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+            </div>
+
+            <div data-tabpane="methods" data-tab="inperson" hidden>
+              <p class="mgroup">Cards</p>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">PIN</span>
+                <span class="mrow__name">Card present</span>
+                <button class="icon-btn" type="button" aria-label="Actions for card present"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">AX</span>
+                <span class="mrow__name">American Express</span>
+                <button class="icon-btn" type="button" aria-label="Actions for American Express in person"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+
+              <p class="mgroup">Wallets</p>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">AP</span>
+                <span class="mrow__name">Apple Pay</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Apple Pay in person"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true">GP</span>
+                <span class="mrow__name">Google Pay</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Google Pay in person"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS-SUB: tarieven ---------- -->
+        <!-- Alleen lezen: dit is wat je betaalt, niet wat je instelt. Op een
+             smal scherm zakken de bedragen onder de naam, met hun kolomnaam
+             ervoor uit data-label. -->
+        <section class="view" data-set-sub="payment-rates" hidden>
+          <div class="card">
+            <h3 class="card__title">Online</h3>
+            <div class="rate">
+              <div class="rate__head">
+                <span class="rate__name">Cards and wallets</span>
+                <span class="rate__col">EEA</span>
+                <span class="rate__col">International</span>
+              </div>
+              <div class="rate__row">
+                <span class="rate__name">All</span>
+                <span class="rate__col" data-label="EEA">1,4% + &euro; 0,25</span>
+                <span class="rate__col" data-label="International">2,9% + &euro; 0,25</span>
+              </div>
+            </div>
+            <div class="rate">
+              <div class="rate__head">
+                <span class="rate__name">American Express</span>
+                <span class="rate__col">EEA</span>
+                <span class="rate__col">International</span>
+              </div>
+              <div class="rate__row">
+                <span class="rate__name">All</span>
+                <span class="rate__col" data-label="EEA">2,9% + &euro; 0,25</span>
+                <span class="rate__col" data-label="International">2,9% + &euro; 0,25</span>
+              </div>
+            </div>
+            <div class="rate">
+              <div class="rate__head">
+                <span class="rate__name">Local payment methods</span>
+                <span class="rate__col"></span>
+                <span class="rate__col">Per transaction</span>
+              </div>
+              <div class="rate__row">
+                <span class="rate__name">iDEAL</span>
+                <span class="rate__col"></span>
+                <span class="rate__col" data-label="Per transaction">0,0% + &euro; 0,35</span>
+              </div>
+              <div class="rate__row">
+                <span class="rate__name">Bancontact</span>
+                <span class="rate__col"></span>
+                <span class="rate__col" data-label="Per transaction">0,0% + &euro; 0,25</span>
+              </div>
+              <div class="rate__row">
+                <span class="rate__name">Bank transfer (SCT)</span>
+                <span class="rate__col"></span>
+                <span class="rate__col" data-label="Per transaction">No fee</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">In-person</h3>
+            <div class="rate">
+              <div class="rate__head">
+                <span class="rate__name">Cards</span>
+                <span class="rate__col"></span>
+                <span class="rate__col">Per transaction</span>
+              </div>
+              <div class="rate__row">
+                <span class="rate__name">Card present</span>
+                <span class="rate__col"></span>
+                <span class="rate__col" data-label="Per transaction">1,4% + &euro; 0,00</span>
+              </div>
+            </div>
+            <div class="rate">
+              <div class="rate__head">
+                <span class="rate__name">American Express</span>
+                <span class="rate__col"></span>
+                <span class="rate__col">Per transaction</span>
+              </div>
+              <div class="rate__row">
+                <span class="rate__name">All</span>
+                <span class="rate__col"></span>
+                <span class="rate__col" data-label="Per transaction">1,4% + &euro; 0,00</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="hint">Rates are charged on the amount the customer pays and are taken off before the payout reaches your balance.</p>
         </section>
 
 
@@ -3703,8 +3805,7 @@
             <div class="rows">
               <button class="row" type="button"
                       data-sub="payment-methods"
-                      data-sub-title="Payment methods and fees"
-                      data-sub-lead="Control customer fees and your earnings for every transaction">
+                      data-sub-title="Payment methods">
                 <span class="row__title">Online payment methods</span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
@@ -4418,6 +4519,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=98"></script>
+  <script src="app.js?v=99"></script>
 </body>
 </html>
