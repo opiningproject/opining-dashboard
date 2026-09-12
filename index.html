@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=91" />
+  <link rel="stylesheet" href="styles.css?v=92" />
 </head>
 <body>
 
@@ -100,6 +100,7 @@
 
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.7-3.7"/></symbol>
     <symbol id="i-burger" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><path d="m6.7 10.2 2.2 2.2 4.4-4.6"/></symbol>
     <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m14.5 5.5-7 6.5 7 6.5"/></symbol>
     <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9.5 5.5 7 6.5-7 6.5"/></symbol>
     <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m5.5 9.5 6.5 7 6.5-7"/></symbol>
@@ -2136,7 +2137,9 @@
           </div>
           <div class="page-head__tools" data-set-tools="domain" hidden>
             <button class="btn btn--ghost page-head__action" type="button">Connect existing</button>
-            <button class="btn btn--primary page-head__action" type="button">
+            <button class="btn btn--primary page-head__action" type="button"
+                    data-sub="domain-buy"
+                    data-sub-title="Buy new domain">
               <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Buy new domain
             </button>
           </div>
@@ -3004,11 +3007,6 @@
 
         <!-- ---------- SETTINGS: domain ---------- -->
         <section class="view" data-set-view="domain" hidden>
-          <p class="alert alert--info">
-            <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-            A domain of your own is easier to remember and to put on a flyer. Buy one here, or connect one you already own.
-          </p>
-
           <!-- Het adres dat je van ons kreeg staat er altijd, en blijft werken
                ook als je later je eigen domein koppelt. -->
           <div class="card">
@@ -3052,12 +3050,12 @@
                          andere wijzen ernaartoe. -->
                     <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="dom__name">myrestaurant.nl</span><span class="pill">Primary</span></span></td>
                     <td><span class="badge badge--active">Connected</span></td>
-                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for myrestaurant.nl"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for myrestaurant.nl"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg><span class="rowact__label">Actions</span></button></span></td>
                   </tr>
                   <tr>
                     <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-external"/></svg><span class="dom__name">d2w1hd-rw.myopining.com</span></span></td>
                     <td><span class="badge badge--active">Connected</span></td>
-                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for d2w1hd-rw.myopining.com"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for d2w1hd-rw.myopining.com"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg><span class="rowact__label">Actions</span></button></span></td>
                   </tr>
                 </tbody>
               </table>
@@ -3390,6 +3388,185 @@
             </button>
           </div>
         </section>
+
+        <!-- ---------- SETTINGS-SUB: domein kopen ---------- -->
+        <section class="view" data-set-sub="domain-buy" hidden>
+          <div class="card">
+            <h3 class="card__title">Find the perfect domain</h3>
+            <p class="card__sub">Buy and manage your domain in the same place as your store, so there is one bill and one place to change things.</p>
+
+            <div class="dsearch">
+              <label class="sr-only" for="domain-q">Domain name</label>
+              <input class="input" id="domain-q" type="text" value="mijnburgers" placeholder="yourname" />
+              <button class="btn btn--primary" type="button">Search</button>
+            </div>
+
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon row__icon--ok" aria-hidden="true"><use href="#i-check-circle"/></svg>
+                <span class="row__text">
+                  <span class="row__title">mijnburgers.nl</span>
+                  <span class="row__meta">&euro; 9,00 per year</span>
+                </span>
+                <span class="badge badge--active">Available</span>
+                <button class="btn btn--ghost btn--sm" type="button" data-sub="domain-checkout" data-sub-title="Buy new domain">Buy</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dezelfde naam op een andere extensie. Geen suggesties die een
+               naam voor je verzinnen: wat je wilt heten weet je zelf. -->
+          <div class="card">
+            <h3 class="card__title">Other extensions</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon row__icon--ok" aria-hidden="true"><use href="#i-check-circle"/></svg>
+                <span class="row__text">
+                  <span class="row__title">mijnburgers.com</span>
+                  <span class="row__meta">&euro; 14,00 per year</span>
+                </span>
+                <span class="badge badge--active">Available</span>
+                <button class="btn btn--ghost btn--sm" type="button" data-sub="domain-checkout" data-sub-title="Buy new domain">Buy</button>
+              </div>
+              <div class="row row--static">
+                <svg class="icon row__icon row__icon--ok" aria-hidden="true"><use href="#i-check-circle"/></svg>
+                <span class="row__text">
+                  <span class="row__title">mijnburgers.eu</span>
+                  <span class="row__meta">&euro; 8,00 per year</span>
+                </span>
+                <span class="badge badge--active">Available</span>
+                <button class="btn btn--ghost btn--sm" type="button" data-sub="domain-checkout" data-sub-title="Buy new domain">Buy</button>
+              </div>
+              <div class="row row--static">
+                <svg class="icon row__icon row__icon--ok" aria-hidden="true"><use href="#i-check-circle"/></svg>
+                <span class="row__text">
+                  <span class="row__title">mijnburgers.store</span>
+                  <span class="row__meta">&euro; 9,00 the first year, &euro; 52,00 per year after that</span>
+                </span>
+                <span class="badge badge--active">Available</span>
+                <button class="btn btn--ghost btn--sm" type="button" data-sub="domain-checkout" data-sub-title="Buy new domain">Buy</button>
+              </div>
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-globe"/></svg>
+                <span class="row__text">
+                  <span class="row__title">mijnburgers.nu</span>
+                  <span class="row__meta">Taken, registered until March 2028</span>
+                </span>
+                <span class="badge badge--muted">Taken</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS-SUB: domein afrekenen ---------- -->
+        <!-- Twee kolommen: wat je invult links, wat het kost rechts. De
+             samenvatting blijft in beeld terwijl je het formulier afwerkt. -->
+        <section class="view" data-set-sub="domain-checkout" hidden>
+          <div class="buy">
+            <div class="buy__form">
+              <div class="card card--flush">
+                <p class="buy__domain" id="buy-domain">mijnburgers.nl</p>
+                <div class="row row--static buy__renew">
+                  <span class="row__text">
+                    <span class="row__title">Auto-renew every year</span>
+                    <span class="row__meta">We renew the domain before it expires, so your store stays reachable.</span>
+                  </span>
+                  <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Renew this domain automatically</span></label>
+                </div>
+              </div>
+
+              <div class="card">
+                <h3 class="card__title">Contact information</h3>
+                <p class="card__sub">These details go to the registry. They are required for every domain and are not shown on your store.</p>
+
+                <div class="field">
+                  <label class="label" for="buy-type">Registrant type</label>
+                  <select class="input" id="buy-type">
+                    <option>Organization</option>
+                    <option>Individual</option>
+                  </select>
+                  <p class="hint">An organization registers with its Chamber of Commerce details, an individual with a personal address.</p>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="buy-first">First name</label>
+                    <input class="input" id="buy-first" type="text" value="Serdar" autocomplete="given-name" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="buy-last">Last name</label>
+                    <input class="input" id="buy-last" type="text" value="Orman" autocomplete="family-name" />
+                  </div>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="buy-mail">Email</label>
+                    <input class="input" id="buy-mail" type="email" value="serdarorman74@gmail.com" autocomplete="email" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="buy-store">Store name</label>
+                    <input class="input" id="buy-store" type="text" placeholder="Bistro De Kade" aria-describedby="buy-store-error" />
+                    <p class="field__error" id="buy-store-error" hidden>
+                      <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Store name can't be blank.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="buy-phone">Phone</label>
+                    <input class="input" id="buy-phone" type="tel" value="+31 6 14522453" autocomplete="tel" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="buy-country">Country</label>
+                    <select class="input" id="buy-country">
+                      <option>Netherlands</option>
+                      <option>Belgium</option>
+                      <option>Germany</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="label" for="buy-street">Street and house number</label>
+                  <input class="input" id="buy-street" type="text" value="Lusthofstraat 27A" autocomplete="street-address" />
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="buy-zip">Postal code</label>
+                    <input class="input" id="buy-zip" type="text" value="3062 WB" autocomplete="postal-code" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="buy-city">City</label>
+                    <input class="input" id="buy-city" type="text" value="Rotterdam" autocomplete="address-level2" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <aside class="buy__side">
+              <div class="card">
+                <h3 class="card__title">Summary</h3>
+                <div class="srow srow--sum">
+                  <span class="srow__when"><b>Today</b>Domain purchase</span>
+                  <span class="srow__amount" id="buy-today">&euro; 9,00</span>
+                </div>
+                <div class="srow srow--sum">
+                  <span class="srow__when"><b>12 September 2027</b>Renewal, every year</span>
+                  <span class="srow__amount" id="buy-renew">&euro; 9,00</span>
+                </div>
+                <div class="srow srow--total">
+                  <span class="srow__when"><b>Amount due today</b>Plus applicable taxes</span>
+                  <span class="srow__amount" id="buy-total">&euro; 9,00</span>
+                </div>
+                <button class="btn btn--primary card__action buy__go" type="button" id="buy-go">Buy domain</button>
+                <p class="hint hint--spaced">This purchase is charged immediately and cannot be refunded. The domain is yours for a year and renews unless you turn that off.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
         <section class="view" data-set-view="generic" hidden>
           <div class="card card--empty">
             <svg class="icon empty__icon" id="set-empty-icon" aria-hidden="true"><use href="#i-store"/></svg>
@@ -3467,6 +3644,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=91"></script>
+  <script src="app.js?v=92"></script>
 </body>
 </html>

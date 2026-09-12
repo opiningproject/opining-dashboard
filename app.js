@@ -155,6 +155,54 @@
   pageCrumb.addEventListener("click", backToList);
 
 
+
+  /* ---- Knoppen op de titelregel op een klein scherm ------------------------
+     Twee knoppen naast een paginatitel passen op een telefoon niet. De
+     hoofdactie blijft staan, de rest verhuist naar een menu achter drie
+     puntjes. Het menu wordt hier uit de knoppen zelf gebouwd: zo staat een
+     actie maar één keer in de HTML en kan hij niet uit de pas gaan lopen.
+     Welke van de twee je ziet bepaalt de CSS, niet dit script. */
+  document.querySelectorAll(".page-head__tools").forEach(function (tools) {
+    /* Een blok met een keuzeveld laat zich niet in een menu vouwen; dat vult
+       op mobiel toch al zijn eigen regel. */
+    if (tools.querySelector("select")) return;
+
+    var bij = [].slice.call(tools.querySelectorAll(".btn:not(.btn--primary)"));
+    if (bij.length < 1 || bij.length === tools.querySelectorAll(".btn").length) return;
+
+    var vak = document.createElement("div");
+    vak.className = "sort page-head__more";
+
+    var knop = document.createElement("button");
+    knop.type = "button";
+    knop.className = "icon-btn sort__btn";
+    knop.setAttribute("aria-haspopup", "true");
+    knop.setAttribute("aria-expanded", "false");
+    knop.setAttribute("aria-label", "More actions");
+    knop.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>';
+
+    var menu = document.createElement("div");
+    menu.className = "sort__menu";
+    menu.setAttribute("role", "menu");
+    menu.hidden = true;
+
+    bij.forEach(function (bron) {
+      var item = document.createElement("button");
+      item.type = "button";
+      item.className = "sort__item";
+      item.setAttribute("role", "menuitem");
+      item.textContent = bron.textContent.trim();
+      /* De knop zelf blijft de actie; het menu-item drukt hem alleen in. */
+      item.addEventListener("click", function () {
+        sluitFilterMenus();
+        bron.click();
+      });
+      menu.appendChild(item);
+    });
+
+    vak.append(knop, menu);
+    tools.insertBefore(vak, tools.querySelector(".btn--primary") || null);
+  });
   /* ---- Doorverwijzen naar de plek waar de taak hoort ---------------------
      De knoppen in de setup-guide sturen je naar een pagina in de sidebar
      (data-goto-page) of naar een settingspagina (data-goto-set). Ze klikken
@@ -730,6 +778,70 @@
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && !exportVenster.hidden) sluitExport();
+    });
+  }
+
+
+  /* ---- Een domein kopen ---------------------------------------------------
+     De knop Buy staat bij een naam in de lijst; de afrekenpagina neemt die
+     naam en die prijs over, zodat je niet naar iets anders kijkt dan waar je
+     op klikte. De verlengdatum is een jaar later dan vandaag. */
+  var koopPagina = document.querySelector('[data-set-sub="domain-checkout"]');
+
+  if (koopPagina) {
+    var koopNaam = document.getElementById("buy-domain");
+    var koopVandaag = document.getElementById("buy-today");
+    var koopVerleng = document.getElementById("buy-renew");
+    var koopTotaal = document.getElementById("buy-total");
+    var koopWinkel = document.getElementById("buy-store");
+    var koopFout = document.getElementById("buy-store-error");
+
+    document.addEventListener("click", function (e) {
+      var knop = e.target.closest('[data-sub="domain-checkout"]');
+      if (!knop) return;
+
+      var rij = knop.closest(".row");
+      if (!rij) return;
+      var naam = rij.querySelector(".row__title").textContent.trim();
+      /* "€ 9,00 the first year, € 52,00 per year after that" — het eerste
+         bedrag is wat je nu betaalt, het laatste wat de verlenging kost. */
+      var bedragen = (rij.querySelector(".row__meta").textContent.match(/€\s?[\d.,]+/g) || []);
+      var nu = bedragen[0] || "";
+      var later = bedragen[bedragen.length - 1] || nu;
+
+      koopNaam.textContent = naam;
+      koopVandaag.textContent = nu;
+      koopVerleng.textContent = later;
+      koopTotaal.textContent = nu;
+
+      /* Verlengen gebeurt over een jaar; die datum hoort er met zoveel woorden
+         te staan, anders is "every year" een lege belofte. */
+      var over = new Date();
+      over.setFullYear(over.getFullYear() + 1);
+      var maanden = ["January", "February", "March", "April", "May", "June",
+                     "July", "August", "September", "October", "November", "December"];
+      koopVerleng.previousElementSibling.querySelector("b").textContent =
+        over.getDate() + " " + maanden[over.getMonth()] + " " + over.getFullYear();
+
+      koopWinkel.classList.remove("input--error");
+      koopFout.hidden = true;
+    });
+
+    /* Zonder winkelnaam kan de registratie niet de deur uit. */
+    document.getElementById("buy-go").addEventListener("click", function () {
+      if (!koopWinkel.value.trim()) {
+        koopWinkel.classList.add("input--error");
+        koopFout.hidden = false;
+        koopWinkel.focus();
+        return;
+      }
+      showToast(koopNaam.textContent + " purchased");
+      backFromSub();
+    });
+
+    koopWinkel.addEventListener("input", function () {
+      koopWinkel.classList.remove("input--error");
+      koopFout.hidden = true;
     });
   }
 
@@ -1384,6 +1496,8 @@
     var open = document.querySelector("[data-set-view]:not([hidden])");
     if (open) open.hidden = true;
     setSubs.forEach(function (v) { v.hidden = v.dataset.setSub !== sub; });
+    /* De knoppen op de titelregel horen bij de pagina erboven, niet bij deze. */
+    setTools.forEach(function (el) { el.hidden = true; });
 
     setCrumbIcon.querySelector("use").setAttribute("href", ouder.icoon);
     setCrumb.setAttribute("aria-label", "Back to " + ouder.titel);

@@ -676,6 +676,9 @@ select.input {
 
 .page-head__action { margin-left: auto; height: 36px; padding: 0 16px; font-size: var(--fs-md); }
 .page-head__action .icon { width: 18px; height: 18px; }
+/* De hoofdactie blijft altijd naast de titel; de rest zit op een klein scherm
+   achter de drie puntjes. app.js bouwt dat menu uit dezelfde knoppen. */
+.page-head__more { display: none; }
 
 /* Een paneel binnen een kaart die zelf al een titel draagt: de titel
    hoort bij de kaart, de lijst krijgt daaronder een eigen kader. */
@@ -1324,6 +1327,8 @@ select.input {
 
 .rowact { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
 .rowact .icon-btn { width: 32px; height: 32px; }
+/* Alleen op mobiel draagt de knop een woord; op desktop is het icoon genoeg. */
+.rowact__label { display: none; }
 /* Bij Orders staat de statusknop links in de kolom; de menuknop blijft
    wel tegen de rechterrand. */
 .table--orders .rowact { justify-content: flex-start; }
@@ -1654,6 +1659,13 @@ select.input {
 /* De naam kapt af in plaats van de rij te laten omslaan. */
 .dom__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dom__icon { color: var(--text-muted); }
+/* Zoekregel bij het kopen van een domein: veld en knop naast elkaar, het veld
+   neemt wat overblijft. */
+.dsearch { display: flex; gap: 10px; margin: 18px 0 6px; }
+.dsearch .input { flex: 1 1 auto; min-width: 0; }
+.dsearch .btn { flex: 0 0 auto; height: 44px; padding: 0 20px; }
+/* Een vinkje bij een naam die nog vrij is. */
+.row__icon--ok { color: var(--success); }
 /* Kenmerk bij een naam, zoals het primaire domein. Een rand in plaats van een
    vlak, zodat het niet met een status te verwarren is. */
 .pill { padding: 1px 8px; border: 1px solid var(--border-strong); border-radius: var(--r-full); font-size: var(--fs-sm); font-weight: 500; color: var(--text-muted); }
@@ -1855,6 +1867,8 @@ select.input {
 /* Rij met een badge vlak voor de chevron. */
 .row > .badge { margin-left: auto; }
 .row > .badge + .row__caret { margin-left: 14px; }
+/* Staat er een knop achter de badge, dan houdt die dezelfde afstand. */
+.row > .badge + .btn { margin-left: 14px; }
 /* Een losse link achteraan de rij, bijvoorbeeld om het adres te wijzigen. */
 .row__link { flex: 0 0 auto; margin-left: 14px; }
 
@@ -2026,6 +2040,50 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
 .hbar__val { font-size: var(--fs-sm); color: var(--text-muted); text-align: right; font-variant-numeric: tabular-nums; }
 
 /* ==========================================================================
+   8o. DOMEIN KOPEN
+   Wat je invult links, wat het kost rechts. De samenvatting blijft in beeld
+   terwijl je het formulier afwerkt, want dat is waar je op let.
+   ========================================================================== */
+.buy { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+.buy__form { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.buy__side { position: sticky; top: 0; }
+/* De naam van het domein staat als kop boven de verlengregel, met dezelfde
+   tint als een tabelkop: het is een gegeven, geen titel. */
+.buy__domain {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  border-radius: calc(var(--r-lg) - 1px) calc(var(--r-lg) - 1px) 0 0;
+  background: var(--gray-50);
+  font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
+}
+.buy__renew { padding: 14px 20px; }
+.buy__go { width: 100%; }
+
+/* Regels in de samenvatting: wanneer links, bedrag rechts. */
+.srow--sum, .srow--total {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  grid-template-columns: none;
+  padding: 12px 0;
+}
+.srow__when { display: flex; flex-direction: column; gap: 2px; font-size: var(--fs-sm); color: var(--text-muted); }
+.srow__when b { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.srow__amount { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.srow--total { border-top: 1px solid var(--border); }
+.srow--total .srow__amount, .srow--total .srow__when b { font-weight: 600; }
+
+/* Foutmelding onder een veld. */
+.input--error { border-color: var(--danger); background: #fdf3f2; }
+.input--error:focus { border-color: var(--danger); box-shadow: 0 0 0 3px #fbeae9; }
+.field__error { display: flex; align-items: center; gap: 6px; font-size: var(--fs-sm); color: var(--danger); }
+.field__error .icon { width: 15px; height: 15px; }
+
+@media (max-width: 900px) {
+  /* Onder elkaar: eerst invullen, dan pas afrekenen. */
+  .buy { grid-template-columns: minmax(0, 1fr); }
+  .buy__side { position: static; }
+}
+
+/* ==========================================================================
    8n. VENSTER — een korte vraag over de hele pagina heen
    Kleiner dan de settings-overlay: die vervangt het scherm, dit onderbreekt
    het even. Zelfde scrim als de mobiele drawer.
@@ -2133,13 +2191,13 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .codes__wrap { position: relative; display: inline-flex; }
   /* Een tik moet raak zijn: de teller krijgt de maat van de badge ernaast. */
   .codes__more { padding: 3px 10px; font-weight: 500; }
-  /* Domeinen: koppen weg, rijen worden blokken. Zones blijven een tabel die
-     zijwaarts schuift, want daar staan vier kolommen naast elkaar die je met
-     elkaar wilt vergelijken. */
+  /* Domeinen: koppen weg, en elke rij wordt een blokje. Drie kolommen naast
+     elkaar passen niet: de naam kan lang zijn en de knop moet raak te tikken
+     zijn. Dus naam met zijn kenmerk boven, status eronder, en de acties als
+     knop over de volle breedte. */
   .table--domains, .table--domains tbody, .table--domains tr, .table--domains td { display: block; width: 100%; }
   .table--domains thead { display: none; }
-  /* Geen flex-wrap: de rij blijft één regel, de naam kapt af als het krap wordt. */
-  .table--domains tr { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-top: 1px solid var(--border); }
+  .table--domains tr { padding: 14px 16px; border-top: 1px solid var(--border); }
   /* De panel-kop tekent al een lijn; zonder de tabelkop ertussen legt de
      eerste rij daar een tweede overheen, wat als één dikke rand leest. */
   .table--list tbody tr:first-child,
@@ -2147,8 +2205,20 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
   .table--domains tbody tr:first-child { border-top: 0; }
 
   .table--domains td { width: auto; padding: 0; border: 0; white-space: normal; }
-  .table--domains td:nth-child(3) { margin-left: auto; }
-  .table--domains td:first-child { flex: 1 1 auto; min-width: 0; }
+  .table--domains td:first-child { margin-bottom: 10px; }
+  .table--domains td:nth-child(2) { margin-bottom: 12px; }
+  .table--domains .dom { display: flex; width: 100%; gap: 10px; }
+  /* Het kenmerk naar de overkant, zodat de naam alle ruimte houdt. */
+  .table--domains .pill { margin-left: auto; flex: 0 0 auto; }
+  .table--domains .rowact { display: block; }
+  .table--domains .rowact .icon-btn {
+    width: 100%; height: 38px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-md);
+    font-size: var(--fs-md); font-weight: 500; color: var(--text-strong);
+  }
+  .table--domains .rowact .icon { display: none; }
+  .table--domains .rowact__label { display: block; }
   .dom { gap: 10px; }
   /* Openingstijden op mobiel: de kaart is het kader, met de grijze kop erop
      en haarlijnen tussen de dagen. Elke dag staat standaard dicht met zijn
@@ -2343,6 +2413,15 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
      want die ruimte is er niet. De tekst mag inkorten voor de knoppen. */
   .savebar { width: auto; flex: 1 1 auto; margin-inline: 0; min-width: 0; }
   .savebar__text { min-width: 0; overflow: hidden; white-space: nowrap; }
+  /* Twee knoppen naast een paginatitel passen hier niet. De hoofdactie blijft
+     staan; de rest zit achter de drie puntjes die app.js erbij zet. Alleen
+     waar dat menu er ook echt is, vandaar :has(). */
+  .page-head__tools:has(.page-head__more) .page-head__more { display: block; }
+  .page-head__tools:has(.page-head__more) .btn:not(.btn--primary) { display: none; }
+  /* Het menu lijnt uit op de knoppenrij, niet op de puntjes: anders steekt het
+     aan de linkerkant buiten het scherm. */
+  .page-head__tools:has(.page-head__more) { position: relative; }
+  .page-head__more { position: static; }
   .savebar__actions { margin-left: auto; flex: 0 0 auto; }
 }
 
