@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=90" />
+  <link rel="stylesheet" href="styles.css?v=91" />
 </head>
 <body>
 
@@ -2135,13 +2135,9 @@
             </button>
           </div>
           <div class="page-head__tools" data-set-tools="domain" hidden>
-            <label class="sr-only" for="domain-connect">Connect an existing domain</label>
-            <select class="input" id="domain-connect">
-              <option>connect existing</option>
-              <option>myrestaurant.nl</option>
-            </select>
+            <button class="btn btn--ghost page-head__action" type="button">Connect existing</button>
             <button class="btn btn--primary page-head__action" type="button">
-              <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>New domain
+              <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Buy new domain
             </button>
           </div>
           <div class="page-head__tools" data-set-tools="language" hidden>
@@ -3008,6 +3004,38 @@
 
         <!-- ---------- SETTINGS: domain ---------- -->
         <section class="view" data-set-view="domain" hidden>
+          <p class="alert alert--info">
+            <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+            A domain of your own is easier to remember and to put on a flyer. Buy one here, or connect one you already own.
+          </p>
+
+          <!-- Het adres dat je van ons kreeg staat er altijd, en blijft werken
+               ook als je later je eigen domein koppelt. -->
+          <div class="card">
+            <div class="promo">
+              <div class="promo__body">
+                <h3 class="card__title">Change your opining.com address</h3>
+                <p class="card__sub">Your store is reachable at an address we made for you. You can change it to something that matches your name, free of charge.</p>
+                <button class="btn btn--ghost card__action" type="button">Change opining.com address</button>
+              </div>
+
+              <svg class="promo__art" viewBox="0 0 200 150" role="img" aria-label="A browser window with an address bar">
+                <rect x="16" y="24" width="168" height="106" rx="9" fill="var(--gray-100)"/>
+                <rect x="16" y="24" width="168" height="26" rx="9" fill="var(--gray-200)"/>
+                <rect x="16" y="41" width="168" height="9" fill="var(--gray-200)"/>
+                <circle cx="30" cy="37" r="3.5" fill="var(--gray-0)"/>
+                <circle cx="41" cy="37" r="3.5" fill="var(--gray-0)"/>
+                <circle cx="52" cy="37" r="3.5" fill="var(--gray-0)"/>
+                <rect x="64" y="31" width="106" height="12" rx="6" fill="var(--gray-0)"/>
+                <rect x="72" y="35" width="46" height="4" rx="2" fill="var(--gray-300)"/>
+                <rect x="30" y="62" width="64" height="8" rx="4" fill="var(--accent)"/>
+                <rect x="30" y="80" width="140" height="6" rx="3" fill="var(--gray-300)"/>
+                <rect x="30" y="94" width="118" height="6" rx="3" fill="var(--gray-300)"/>
+                <rect x="30" y="110" width="54" height="12" rx="6" fill="var(--accent-soft)"/>
+              </svg>
+            </div>
+          </div>
+
           <div class="panel">
             <div class="table-wrap">
               <table class="table table--domains">
@@ -3020,19 +3048,23 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-globe"/></svg>myrestaurant.nl</span></td>
+                    <!-- Het primaire domein is waar bezoekers op uitkomen; de
+                         andere wijzen ernaartoe. -->
+                    <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="dom__name">myrestaurant.nl</span><span class="pill">Primary</span></span></td>
                     <td><span class="badge badge--active">Connected</span></td>
                     <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for myrestaurant.nl"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                   </tr>
                   <tr>
-                    <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-external"/></svg>498hf3.myopining.com</span></td>
+                    <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-external"/></svg><span class="dom__name">d2w1hd-rw.myopining.com</span></span></td>
                     <td><span class="badge badge--active">Connected</span></td>
-                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for 498hf3.myopining.com"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for d2w1hd-rw.myopining.com"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+
+          <p class="midlink"><a class="link" href="#">Learn more about domains</a></p>
         </section>
 
         <!-- ---------- SETTINGS: notifications ---------- -->
@@ -3435,6 +3467,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=90"></script>
+  <script src="app.js?v=91"></script>
 </body>
 </html>

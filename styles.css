@@ -1650,8 +1650,15 @@ select.input {
 .table--zones td:nth-child(3) { color: var(--text); }
 
 .table--domains td { padding-top: 14px; padding-bottom: 14px; }
-.dom { display: inline-flex; align-items: center; gap: 14px; color: var(--text-strong); }
+.dom { display: inline-flex; align-items: center; gap: 14px; min-width: 0; color: var(--text-strong); }
+/* De naam kapt af in plaats van de rij te laten omslaan. */
+.dom__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dom__icon { color: var(--text-muted); }
+/* Kenmerk bij een naam, zoals het primaire domein. Een rand in plaats van een
+   vlak, zodat het niet met een status te verwarren is. */
+.pill { padding: 1px 8px; border: 1px solid var(--border-strong); border-radius: var(--r-full); font-size: var(--fs-sm); font-weight: 500; color: var(--text-muted); }
+/* Losse verwijzing onder een lijst; hoort bij de pagina, niet bij de kaart. */
+.midlink { text-align: center; font-size: var(--fs-md); }
 
 /* Wervende kaart: tekst links, illustratie rechts. De illustratie is
    decoratief en verdwijnt als eerste bij weinig ruimte. */
@@ -2131,7 +2138,8 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
      elkaar wilt vergelijken. */
   .table--domains, .table--domains tbody, .table--domains tr, .table--domains td { display: block; width: 100%; }
   .table--domains thead { display: none; }
-  .table--domains tr { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 14px 16px; border-top: 1px solid var(--border); }
+  /* Geen flex-wrap: de rij blijft één regel, de naam kapt af als het krap wordt. */
+  .table--domains tr { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-top: 1px solid var(--border); }
   /* De panel-kop tekent al een lijn; zonder de tabelkop ertussen legt de
      eerste rij daar een tweede overheen, wat als één dikke rand leest. */
   .table--list tbody tr:first-child,
