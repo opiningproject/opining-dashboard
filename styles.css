@@ -1311,6 +1311,11 @@ select.input {
   color: var(--text-muted);
 }
 .pm__name { font-weight: 500; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Een aanbieder die buiten ons om afrekent staat in een eigen kader: het is
+   geen methode die wij aanzetten, maar een koppeling die jij onderhoudt. */
+.prov { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+.prov__row .row__text { gap: 8px; }
+.prov__note { margin: 0; border-top: 1px solid var(--border); border-radius: 0; }
 /* De naam draagt de rij; de fee en de schakelaar blijven zo smal mogelijk,
    zodat er op een telefoon zo min mogelijk te schuiven valt. */
 .table--methods td:first-child { width: 100%; }
@@ -1824,6 +1829,11 @@ select.input {
    staan bovenaan uitgelijnd in plaats van gecentreerd. */
 .choices--rich { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .choices--rich > legend { margin-bottom: 14px; }
+/* De velden in deze wizard staan op 13px; de keuzes en de controleregels
+   ernaast horen daar niet bovenuit te steken. */
+.wiz .card__sub, .wiz .choice, .wiz__count { font-size: var(--fs-sm); }
+.wiz .choice__title, .wiz .row__title { font-size: var(--fs-sm); font-weight: 600; }
+.wiz .choice__desc, .wiz .row__meta { font-size: var(--fs-sm); }
 .choice--rich { align-items: flex-start; gap: 14px; padding: 10px 4px; min-width: 0; }
 .choice--rich input { margin-top: 2px; }
 .choice__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=94" />
+  <link rel="stylesheet" href="styles.css?v=95" />
 </head>
 <body>
 
@@ -2459,11 +2459,6 @@
                       <td><label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept bank transfer</span></label></td>
                     </tr>
                     <tr data-filter="enabled">
-                      <td><span class="pm"><span class="pm__mark" aria-hidden="true">PP</span><span class="pm__name">PayPal</span></span></td>
-                      <td>&euro; 0,29</td>
-                      <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept PayPal</span></label></td>
-                    </tr>
-                    <tr data-filter="enabled">
                       <td><span class="pm"><span class="pm__mark" aria-hidden="true">BC</span><span class="pm__name">Bancontact</span></span></td>
                       <td>&euro; 0,25</td>
                       <td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept Bancontact</span></label></td>
@@ -2509,6 +2504,40 @@
                   <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
                 <p class="pager__count"></p>
               </nav>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS-SUB: PayPal ---------- -->
+        <!-- Alleen het koppelen staat hier. Tarieven en uitbetalingen regelt
+             PayPal zelf, dus die tonen we niet alsof wij ze bepalen. -->
+        <section class="view" data-set-sub="paypal" hidden>
+          <p class="alert alert--info">
+            <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+            Complete your PayPal account setup to start receiving payouts from PayPal.
+          </p>
+
+          <div class="card">
+            <h3 class="card__title">Connect your PayPal account</h3>
+            <p class="card__sub">Customers pay at PayPal and PayPal pays you out directly. These orders do not appear in your Opining payout balance.</p>
+            <div class="field">
+              <label class="label" for="pp-mail">PayPal account email</label>
+              <input class="input" id="pp-mail" type="email" placeholder="billing@restaurantname.nl" />
+              <p class="hint">Use the email address of the PayPal business account that should receive the money.</p>
+            </div>
+            <button class="btn btn--primary card__action" type="button">Connect PayPal</button>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Show PayPal at checkout</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <span class="row__text">
+                  <span class="row__title">Accept PayPal</span>
+                  <span class="row__meta">Turns on once the account above is connected.</span>
+                </span>
+                <label class="switch row__switch"><input type="checkbox" disabled /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept PayPal at checkout</span></label>
+              </div>
             </div>
           </div>
         </section>
@@ -3001,6 +3030,32 @@
                 <span class="row__title">Cash on delivery</span>
                 <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept cash on delivery</span></label>
               </div>
+            </div>
+          </div>
+
+          <!-- PayPal loopt buiten onze afhandeling om: de klant rekent bij
+               PayPal af en jij krijgt het geld daar ook uitbetaald. Daarom
+               staat het los van de methodes hierboven, met een eigen stand. -->
+          <div class="card">
+            <h3 class="card__title">Additional payment providers</h3>
+            <p class="card__sub">Methods that are processed outside Opining. You settle these with the provider itself.</p>
+            <div class="prov">
+              <button class="row prov__row" type="button"
+                      data-sub="paypal"
+                      data-sub-title="PayPal"
+                      data-sub-lead="Processed and paid out by PayPal">
+                <span class="row__text">
+                  <span class="row__title">PayPal</span>
+                  <span class="row__meta">Processing fees set by PayPal &middot; Paid out by PayPal</span>
+                  <span class="pm__mark prov__mark" aria-hidden="true">PP</span>
+                </span>
+                <span class="badge badge--pending">Setup incomplete</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <p class="alert alert--info prov__note">
+                <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                Complete your PayPal account setup to start receiving payouts from PayPal.
+              </p>
             </div>
           </div>
         </section>
@@ -3648,6 +3703,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=94"></script>
+  <script src="app.js?v=95"></script>
 </body>
 </html>
