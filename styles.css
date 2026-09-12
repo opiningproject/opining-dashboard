@@ -454,7 +454,9 @@ legend { padding: 0; }
 .field + .field, .field + .field-row,
 .field-row + .field, .field-row + .field-row { margin-top: 16px; }
 /* Een keuzelijst gevolgd door een veld heeft dezelfde tussenruimte nodig. */
-.choices + .field, .choices + .field-row { margin-top: 16px; }
+.choices + .field, .choices + .field-row,
+.choice + .field, .choice + .field-row,
+.card__sub + .field, .card__sub + .field-row { margin-top: 16px; }
 .field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 /* De regel hierboven mag niet binnen een twee-koloms rij toeslaan, anders
    zakt de rechterkolom een regel omlaag. */
@@ -489,6 +491,48 @@ select { min-width: 0; max-width: 100%; }
 /* Een datumveld doet in Safari hetzelfde: het houdt een eigen minimumbreedte
    aan die breder is dan het vak eromheen, en steekt dan buiten de kaart. */
 input[type="date"], input[type="time"] { min-width: 0; max-width: 100%; }
+
+/* Tussenkop binnen een kaart: hoort bij dezelfde kaart, maar begint een nieuw
+   onderwerp. Kleiner dan de kaarttitel en met lucht erboven. */
+.card__subtitle {
+  margin-top: 24px;
+  font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
+}
+
+/* Een label met een vraagteken ernaast: de twee horen op één regel. */
+.label--info { display: flex; align-items: center; gap: 6px; }
+.explain__icon { display: flex; color: var(--text-muted); cursor: help; }
+.explain__icon .icon { width: 16px; height: 16px; }
+.explain__icon:hover { color: var(--text); }
+.explain__icon:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-full); }
+
+/* Landnummer en telefoonnummer horen bij elkaar: één regel, het nummer neemt
+   wat overblijft. */
+.phone { display: flex; gap: 8px; min-width: 0; }
+.phone__code { flex: 0 0 auto; width: auto; padding-right: 28px; }
+.phone__nr { flex: 1 1 auto; min-width: 0; }
+
+/* Geboortedatum in drie vakjes: dag, maand, jaar. Ze zijn zo breed als wat
+   erin komt, dus niet de volle regel. */
+.dob { display: flex; gap: 8px; }
+.dob__part { width: 64px; text-align: center; }
+.dob__part--year { width: 84px; }
+
+/* Veld met een teken erin, bijvoorbeeld een adres dat je opzoekt. */
+.infield { position: relative; display: block; }
+.infield__icon {
+  position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
+  width: 15px; height: 15px; color: var(--text-muted); pointer-events: none;
+}
+.infield__input { padding-left: 30px; }
+
+/* Een veld dat vastligt blijft leesbaar, maar nodigt niet uit. */
+/* background-color, geen background: anders veegt de shorthand het pijltje
+   van een select weg. */
+.input:disabled { background-color: var(--gray-50); color: var(--text-muted); cursor: not-allowed; }
+
+/* Een lijst gegevens binnen een kaart die zelf al een kader heeft. */
+.rows--bare { margin: 0; border: 0; border-radius: 0; }
 
 select.input {
   appearance: none;
@@ -1800,6 +1844,9 @@ select.input {
    niet genoeg uitleg geeft. */
 .page-head__text { min-width: 0; }
 .page-head__lead { margin-top: 2px; font-size: var(--fs-md); color: var(--text-muted); }
+/* Titel met de stand van de pagina ernaast. */
+.page-head__line { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
+.page-head__badge { flex: 0 0 auto; }
 
 .wiz { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
 

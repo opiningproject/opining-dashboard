@@ -1439,7 +1439,8 @@
     if (lastFocus) lastFocus.focus({ preventScroll: true });
   }
 
-  var setTools = document.querySelectorAll("[data-set-tools]");
+  var setTools = document.querySelectorAll("[data-set-tools], [data-sub-tools]");
+  var setBadge = document.getElementById("set-badge");
 
   function showSetPage(page, title, icon) {
     setTitle.textContent = title;
@@ -1501,13 +1502,18 @@
     var open = document.querySelector("[data-set-view]:not([hidden])");
     if (open) open.hidden = true;
     setSubs.forEach(function (v) { v.hidden = v.dataset.setSub !== sub; });
-    /* De knoppen op de titelregel horen bij de pagina erboven, niet bij deze. */
-    setTools.forEach(function (el) { el.hidden = true; });
+    /* De knoppen van de pagina erboven horen hier niet meer; een subpagina
+       met eigen knoppen zet ze met data-sub-tools. */
+    setTools.forEach(function (el) { el.hidden = el.dataset.subTools !== sub; });
     /* Een pagina die om je aandacht vraagt (afrekenen) krijgt de volle breedte:
        de settingsnavigatie ernaast leidt daar alleen maar van af. */
     var vol = document.querySelector('[data-set-sub="' + sub + '"]');
     if (vol && vol.hasAttribute("data-sub-full")) root.dataset.settingsFull = "on";
     else delete root.dataset.settingsFull;
+
+    /* Een subpagina mag een eigen stand naast de titel zetten. */
+    setBadge.textContent = (vol && vol.dataset.subBadge) || "";
+    setBadge.hidden = !setBadge.textContent;
 
     setCrumbIcon.querySelector("use").setAttribute("href", ouder.icoon);
     setCrumb.setAttribute("aria-label", "Back to " + ouder.titel);
@@ -1531,6 +1537,7 @@
     setIcon.removeAttribute("hidden");
     setTitle.textContent = ouder.titel;
     setLead.hidden = true;
+    setBadge.hidden = true;
     ouder = null;
   }
 
@@ -1552,7 +1559,7 @@
   });
 
   /* ---- Stappenformulier binnen een subpagina ------------------------------
-     Eén kaart per stap; de teller en de balk volgen de actieve stap. */
+     Eén of meer kaarten per stap; de teller en de balk volgen de actieve stap. */
   var wiz = document.getElementById("pay-wiz");
   /* Buiten het blok gedeclareerd zodat openSetSub het formulier kan
      terugzetten als je de wizard opnieuw binnenkomt. */
@@ -1561,27 +1568,37 @@
   if (wiz) {
     var wizStappen = wiz.querySelectorAll("[data-step]");
     var wizNu      = document.getElementById("wiz-now");
+    var wizTotaal  = document.getElementById("wiz-total");
     var wizBalk    = document.getElementById("wiz-bar");
     var wizTrack   = wizBalk.parentNode;
     var wizVorige  = document.getElementById("wiz-back");
     var wizVolgende = document.getElementById("wiz-next");
     var stap = 1;
 
+    /* Een stap kan uit meer dan één kaart bestaan, dus tel de stapnummers en
+       niet de kaarten: anders klopt "stap 3 van 6" niet meer. */
+    var wizLaatste = 1;
+    wizStappen.forEach(function (kaart) {
+      wizLaatste = Math.max(wizLaatste, Number(kaart.dataset.step));
+    });
+    wizTotaal.textContent = wizLaatste;
+    wizTrack.setAttribute("aria-valuemax", wizLaatste);
+
     function toonStap(n) {
-      stap = Math.min(Math.max(n, 1), wizStappen.length);
+      stap = Math.min(Math.max(n, 1), wizLaatste);
       wizStappen.forEach(function (kaart) { kaart.hidden = Number(kaart.dataset.step) !== stap; });
       wizNu.textContent = stap;
-      wizBalk.style.width = (stap / wizStappen.length * 100) + "%";
+      wizBalk.style.width = (stap / wizLaatste * 100) + "%";
       wizTrack.setAttribute("aria-valuenow", stap);
       wizVorige.hidden = stap === 1;
       /* Laatste stap rondt af in plaats van door te gaan. */
-      wizVolgende.textContent = stap === wizStappen.length ? "Submit for review" : "Next";
+      wizVolgende.textContent = stap === wizLaatste ? "Submit for review" : "Next";
       overlay.scrollTop = 0;
     }
 
     wizVorige.addEventListener("click", function () { toonStap(stap - 1); });
     wizVolgende.addEventListener("click", function () {
-      if (stap < wizStappen.length) { toonStap(stap + 1); return; }
+      if (stap < wizLaatste) { toonStap(stap + 1); return; }
       backFromSub();
       showToast("Details submitted for review");
     });

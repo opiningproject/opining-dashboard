@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=95" />
+  <link rel="stylesheet" href="styles.css?v=96" />
 </head>
 <body>
 
@@ -2125,7 +2125,12 @@
           </button>
           <svg class="icon page-head__icon" id="set-icon" aria-hidden="true"><use href="#i-store"/></svg>
           <div class="page-head__text">
-            <h2 id="set-title">General</h2>
+            <div class="page-head__line">
+              <h2 id="set-title">General</h2>
+              <!-- Stand van de pagina zelf, naast de naam; app.js vult hem uit
+                   data-sub-badge van de subpagina die open gaat. -->
+              <span class="badge badge--pending page-head__badge" id="set-badge" hidden></span>
+            </div>
             <p class="page-head__lead" id="set-lead" hidden></p>
           </div>
           <!-- Actieknoppen per settings-pagina; app.js toont het blok waarvan
@@ -2142,6 +2147,10 @@
                     data-sub-title="Buy new domain">
               <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Buy new domain
             </button>
+          </div>
+          <!-- Knoppen van een subpagina; zelfde blok, maar op data-sub-tools. -->
+          <div class="page-head__tools" data-sub-tools="paypal" hidden>
+            <button class="btn btn--ghost page-head__action" type="button">Contact PayPal</button>
           </div>
           <div class="page-head__tools" data-set-tools="language" hidden>
             <button class="btn btn--primary page-head__action" type="button">
@@ -2235,8 +2244,8 @@
         <section class="view" data-set-sub="payments-setup" hidden>
           <div class="wiz" id="pay-wiz">
             <div class="wiz__head">
-              <p class="wiz__count">Step <b id="wiz-now">1</b> of 5</p>
-              <div class="wiz__track" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" aria-label="Setup progress">
+              <p class="wiz__count">Step <b id="wiz-now">1</b> of <span id="wiz-total">6</span></p>
+              <div class="wiz__track" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" aria-label="Setup progress">
                 <span id="wiz-bar"></span>
               </div>
             </div>
@@ -2272,29 +2281,235 @@
             <!-- Stap 2 -->
             <div class="card" data-step="2" hidden>
               <h3 class="card__title">Business details</h3>
-              <p class="card__sub">These details must match your registration with the Chamber of Commerce.</p>
               <div class="field">
-                <label class="label" for="biz-name">Legal business name</label>
-                <input class="input" id="biz-name" type="text" placeholder="Opining B.V." />
+                <span class="label label--info">
+                  <label for="biz-name">Registered name</label>
+                  <!-- De naam moet letterlijk kloppen met het handelsregister;
+                       dat is niet vanzelfsprekend, dus staat het erbij. -->
+                  <span class="explain">
+                    <button class="explain__icon" type="button" aria-label="What is a registered name?" aria-describedby="explain-biz-name">
+                      <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                    </button>
+                    <span class="explain__pop" id="explain-biz-name" role="tooltip">
+                      <b>Registered name</b>
+                      The name your business is filed under at the Chamber of Commerce. Your trade name can be different, but the registry checks this one.
+                    </span>
+                  </span>
+                </span>
+                <input class="input" id="biz-name" type="text" />
+                <p class="hint">The official registered name of your company.</p>
               </div>
+
+              <div class="field">
+                <label class="label" for="biz-kvk">Chamber of Commerce registration number (KVK)</label>
+                <input class="input" id="biz-kvk" type="text" inputmode="numeric" maxlength="8" />
+                <p class="hint">8 digits</p>
+              </div>
+
+              <div class="field">
+                <label class="label" for="biz-vat">VAT number</label>
+                <input class="input" id="biz-vat" type="text" />
+                <p class="hint">Format: NL123456789B01</p>
+              </div>
+              <label class="choice choice--plain">
+                <input type="checkbox" id="biz-no-vat" />
+                <span>I do not have a VAT number</span>
+              </label>
+
+              <div class="field">
+                <label class="label" for="biz-phone">Phone number</label>
+                <!-- Landnummer en nummer horen bij elkaar, dus staan ze in
+                     één vak naast elkaar in plaats van als twee velden. -->
+                <div class="phone">
+                  <label class="sr-only" for="biz-dial">Country calling code</label>
+                  <select class="input phone__code" id="biz-dial">
+                    <option>NL +31</option>
+                    <option>BE +32</option>
+                    <option>DE +49</option>
+                  </select>
+                  <input class="input phone__nr" id="biz-phone" type="tel" placeholder="6 14522453" autocomplete="tel-national" />
+                </div>
+              </div>
+
+              <h4 class="card__subtitle">Business address</h4>
+              <p class="card__sub">Enter the legally registered business address.</p>
+
+              <div class="field">
+                <label class="label" for="biz-country">Country/region</label>
+                <!-- Vast op Nederland: we werken hier nog niet buiten. -->
+                <select class="input" id="biz-country" disabled>
+                  <option>Netherlands</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label class="label" for="biz-street">Street and house number</label>
+                <span class="infield">
+                  <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                  <input class="input infield__input" id="biz-street" type="text" autocomplete="street-address" />
+                </span>
+              </div>
+
+              <div class="field">
+                <label class="label" for="biz-extra">Apartment, suite, etc</label>
+                <input class="input" id="biz-extra" type="text" autocomplete="address-line2" />
+              </div>
+
               <div class="field-row">
                 <div class="field">
-                  <label class="label" for="biz-kvk">KVK number</label>
-                  <input class="input" id="biz-kvk" type="text" placeholder="12345678" inputmode="numeric" />
+                  <label class="label" for="biz-zip">Postal code</label>
+                  <input class="input" id="biz-zip" type="text" autocomplete="postal-code" />
                 </div>
                 <div class="field">
-                  <label class="label" for="biz-vat">VAT number</label>
-                  <input class="input" id="biz-vat" type="text" placeholder="NL123456789B01" />
+                  <label class="label" for="biz-city">City</label>
+                  <input class="input" id="biz-city" type="text" autocomplete="address-level2" />
                 </div>
-              </div>
-              <div class="field">
-                <label class="label" for="biz-address">Registered address</label>
-                <input class="input" id="biz-address" type="text" placeholder="Lusthofstraat 27A, 3062 WB Rotterdam" />
               </div>
             </div>
 
-            <!-- Stap 3 -->
+            <!-- Stap 3 — twee kaarten, één stap: allebei gaan ze over hoe je
+                 zaak bij de bank en de kaartmaatschappij bekend staat. -->
             <div class="card" data-step="3" hidden>
+              <h3 class="card__title">Industry type</h3>
+              <div class="field">
+                <label class="label" for="biz-industry">Category</label>
+                <select class="input" id="biz-industry">
+                  <option value="">Select&hellip;</option>
+                  <option>Restaurant</option>
+                  <option>Fast food and takeaway</option>
+                  <option>Caterer</option>
+                  <option>Bakery</option>
+                  <option>Caf&eacute; or bar</option>
+                  <option>Food truck</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="card" data-step="3" hidden>
+              <h3 class="card__title">Details in customer bank statement</h3>
+              <p class="card__sub">Your customers see these details on their statement, so they recognise the charge.</p>
+              <div class="field">
+                <label class="label" for="stmt-name">Statement descriptor</label>
+                <input class="input" id="stmt-name" type="text" value="OPINING" maxlength="22" />
+                <p class="hint">Up to 22 characters, letters and numbers only.</p>
+              </div>
+              <div class="field">
+                <label class="label" for="stmt-phone">Store phone number</label>
+                <div class="phone">
+                  <label class="sr-only" for="stmt-dial">Country calling code</label>
+                  <select class="input phone__code" id="stmt-dial">
+                    <option>NL +31</option>
+                    <option>BE +32</option>
+                    <option>DE +49</option>
+                  </select>
+                  <input class="input phone__nr" id="stmt-phone" type="tel" value="6 14522453" autocomplete="tel-national" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Stap 4 -->
+            <div class="card" data-step="4" hidden>
+              <h3 class="card__title">Account representative</h3>
+              <p class="card__sub">The account representative needs to be the owner of the business.</p>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="rep-first">First name</label>
+                  <input class="input" id="rep-first" type="text" value="Serdar" autocomplete="given-name" />
+                </div>
+                <div class="field">
+                  <label class="label" for="rep-last">Last name</label>
+                  <input class="input" id="rep-last" type="text" value="Orman" autocomplete="family-name" />
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="label" id="rep-dob-label">Date of birth</span>
+                <!-- Dag, maand en jaar apart: een datumkiezer laat je maanden
+                     terugbladeren voor een geboortejaar. -->
+                <div class="dob" role="group" aria-labelledby="rep-dob-label">
+                  <label class="sr-only" for="rep-dd">Day</label>
+                  <input class="input dob__part" id="rep-dd" type="text" inputmode="numeric" maxlength="2" placeholder="DD" />
+                  <label class="sr-only" for="rep-mm">Month</label>
+                  <input class="input dob__part" id="rep-mm" type="text" inputmode="numeric" maxlength="2" placeholder="MM" />
+                  <label class="sr-only" for="rep-yyyy">Year</label>
+                  <input class="input dob__part dob__part--year" id="rep-yyyy" type="text" inputmode="numeric" maxlength="4" placeholder="YYYY" />
+                </div>
+              </div>
+
+              <div class="field">
+                <span class="label label--info">
+                  <label for="rep-bsn">Citizen service number (BSN)</label>
+                  <span class="explain">
+                    <button class="explain__icon" type="button" aria-label="Why do we ask for a BSN?" aria-describedby="explain-bsn">
+                      <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                    </button>
+                    <span class="explain__pop" id="explain-bsn" role="tooltip">
+                      <b>Citizen service number</b>
+                      The law requires us to identify the person behind the business before payouts can start. We pass it to the payment provider and never show it in your store.
+                    </span>
+                  </span>
+                </span>
+                <input class="input" id="rep-bsn" type="text" inputmode="numeric" maxlength="9" />
+                <p class="hint">8 or 9 digits</p>
+              </div>
+
+              <div class="field">
+                <label class="label" for="rep-mail">Email</label>
+                <input class="input" id="rep-mail" type="email" value="serdarorman74@gmail.com" autocomplete="email" />
+              </div>
+
+              <div class="field">
+                <label class="label" for="rep-phone">Phone number</label>
+                <div class="phone">
+                  <label class="sr-only" for="rep-dial">Country calling code</label>
+                  <select class="input phone__code" id="rep-dial">
+                    <option>NL +31</option>
+                    <option>BE +32</option>
+                    <option>DE +49</option>
+                  </select>
+                  <input class="input phone__nr" id="rep-phone" type="tel" placeholder="6 14522453" autocomplete="tel-national" />
+                </div>
+              </div>
+
+              <h4 class="card__subtitle">Residential address</h4>
+              <p class="card__sub">The address should be the person&rsquo;s primary residence.</p>
+
+              <div class="field">
+                <label class="label" for="rep-country">Country/region</label>
+                <select class="input" id="rep-country">
+                  <option>Netherlands</option>
+                  <option>Belgium</option>
+                  <option>Germany</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label class="label" for="rep-street">Street and house number</label>
+                <span class="infield">
+                  <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                  <input class="input infield__input" id="rep-street" type="text" autocomplete="street-address" />
+                </span>
+              </div>
+
+              <div class="field">
+                <label class="label" for="rep-extra">Apartment, suite, etc</label>
+                <input class="input" id="rep-extra" type="text" autocomplete="address-line2" />
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="rep-zip">Postal code</label>
+                  <input class="input" id="rep-zip" type="text" autocomplete="postal-code" />
+                </div>
+                <div class="field">
+                  <label class="label" for="rep-city">City</label>
+                  <input class="input" id="rep-city" type="text" autocomplete="address-level2" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Stap 5 -->
+            <div class="card" data-step="5" hidden>
               <h3 class="card__title">Payout account</h3>
               <p class="card__sub">Where your payouts land. The account must be in the name of the business above.</p>
               <div class="field">
@@ -2308,36 +2523,8 @@
               </div>
             </div>
 
-            <!-- Stap 4 -->
-            <div class="card" data-step="4" hidden>
-              <h3 class="card__title">Business representative</h3>
-              <p class="card__sub">The person authorised to act on behalf of the business. Required by law before payouts can start.</p>
-              <div class="field-row">
-                <div class="field">
-                  <label class="label" for="rep-first">First name</label>
-                  <input class="input" id="rep-first" type="text" placeholder="Serdar" />
-                </div>
-                <div class="field">
-                  <label class="label" for="rep-last">Last name</label>
-                  <input class="input" id="rep-last" type="text" placeholder="Orman" />
-                </div>
-              </div>
-              <div class="field">
-                <label class="label" for="rep-dob">Date of birth</label>
-                <input class="input" id="rep-dob" type="date" />
-              </div>
-              <div class="field">
-                <label class="label" for="rep-role">Role</label>
-                <select class="input" id="rep-role">
-                  <option>Owner</option>
-                  <option>Director</option>
-                  <option>Authorised signatory</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Stap 5 -->
-            <div class="card" data-step="5" hidden>
+            <!-- Stap 6 -->
+            <div class="card" data-step="6" hidden>
               <h3 class="card__title">Review and submit</h3>
               <p class="card__sub">Check everything once more. You can still change these details afterwards.</p>
               <div class="rows">
@@ -2510,35 +2697,58 @@
 
         <!-- ---------- SETTINGS-SUB: PayPal ---------- -->
         <!-- Alleen het koppelen staat hier. Tarieven en uitbetalingen regelt
-             PayPal zelf, dus die tonen we niet alsof wij ze bepalen. -->
-        <section class="view" data-set-sub="paypal" hidden>
-          <p class="alert alert--info">
-            <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-            Complete your PayPal account setup to start receiving payouts from PayPal.
-          </p>
-
+             PayPal zelf, dus die tonen we als gegeven, niet als instelling. -->
+        <section class="view" data-set-sub="paypal" data-sub-badge="Setup incomplete" hidden>
           <div class="card">
-            <h3 class="card__title">Connect your PayPal account</h3>
-            <p class="card__sub">Customers pay at PayPal and PayPal pays you out directly. These orders do not appear in your Opining payout balance.</p>
-            <div class="field">
-              <label class="label" for="pp-mail">PayPal account email</label>
-              <input class="input" id="pp-mail" type="email" placeholder="billing@restaurantname.nl" />
-              <p class="hint">Use the email address of the PayPal business account that should receive the money.</p>
-            </div>
-            <button class="btn btn--primary card__action" type="button">Connect PayPal</button>
-          </div>
-
-          <div class="card">
-            <h3 class="card__title">Show PayPal at checkout</h3>
+            <h3 class="card__title">Connected account</h3>
             <div class="rows">
               <div class="row row--static">
                 <span class="row__text">
-                  <span class="row__title">Accept PayPal</span>
-                  <span class="row__meta">Turns on once the account above is connected.</span>
+                  <span class="row__title">serdarorman74@gmail.com</span>
+                  <span class="row__meta">Opining &middot; entity</span>
                 </span>
-                <label class="switch row__switch"><input type="checkbox" disabled /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept PayPal at checkout</span></label>
+                <button class="btn btn--ghost" type="button">Complete setup</button>
               </div>
             </div>
+          </div>
+
+          <div class="card card--flush">
+            <div class="rows rows--bare">
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-card"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Payment methods</span>
+                  <span class="row__meta">PayPal balance, card and iDEAL through PayPal</span>
+                </span>
+              </div>
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-globe"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Supported currencies</span>
+                  <span class="row__meta">Euro (EUR &euro;)</span>
+                </span>
+              </div>
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-billing"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Fees</span>
+                  <span class="row__meta">Set by PayPal, charged on your PayPal account</span>
+                </span>
+              </div>
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-coin"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Payouts</span>
+                  <span class="row__meta">Paid out by PayPal, not through your Opining payout balance</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Uitzetten is de enige onomkeerbare knop hier, dus staat hij los
+               onderaan en niet tussen de gegevens. -->
+          <div class="formfoot">
+            <button class="btn btn--danger" type="button">Deactivate</button>
           </div>
         </section>
 
@@ -3703,6 +3913,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=95"></script>
+  <script src="app.js?v=96"></script>
 </body>
 </html>
