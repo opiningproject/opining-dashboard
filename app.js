@@ -589,6 +589,7 @@
       sluitFilterMenus(dichtSort ? som : null);
       som.hidden = !dichtSort;
       sortKnop.setAttribute("aria-expanded", String(dichtSort));
+      if (dichtSort && som.classList.contains("sort__menu--row")) plaatsRijMenu(sortKnop, som);
       return;
     }
 
@@ -1756,6 +1757,66 @@
     toast.hidden = true;
   }
 
+
+  /* Een menu in een tabelrij hangt vast aan het venster, want het paneel
+     eromheen knipt alles af wat buiten zijn rand valt. De plek komt dus van
+     hier: onder de knop, rechts uitgelijnd, en nooit half buiten beeld. */
+  function plaatsRijMenu(knop, menu) {
+    var r = knop.getBoundingClientRect();
+    /* Uitlijnen op randen in plaats van op een gemeten breedte: die staat nog
+       niet vast op het moment dat het menu net zichtbaar wordt. */
+    menu.style.right = Math.max(8, window.innerWidth - r.right) + "px";
+    menu.style.left = "auto";
+
+    /* Te dicht bij de onderkant: dan klapt het menu omhoog open. */
+    if (r.bottom > window.innerHeight - 120) {
+      menu.style.top = "auto";
+      menu.style.bottom = (window.innerHeight - r.top + 6) + "px";
+    } else {
+      menu.style.bottom = "auto";
+      menu.style.top = (r.bottom + 6) + "px";
+    }
+  }
+
+  /* Scrollen zou het menu laten zweven op de plek waar de rij stond. */
+  document.addEventListener("scroll", function () {
+    var open = document.querySelector(".sort__menu--row:not([hidden])");
+    if (open) sluitFilterMenus();
+  }, true);
+
+  /* ---- Standaardtaal ------------------------------------------------------
+     Twee talen liggen vast; welke van de twee de klant als eerste ziet niet.
+     De standaard is altijd gepubliceerd, anders wijs je naar een taal die er
+     voor de klant niet is. */
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest("[data-lang-default]")) return;
+
+    var rij = e.target.closest("tr");
+    var lijst = rij.closest("tbody");
+    if (rij.hasAttribute("data-default")) { sluitFilterMenus(); return; }
+
+    lijst.querySelectorAll("tr").forEach(function (r) {
+      var standaard = r === rij;
+      var meta = r.querySelector(".cell__meta");
+      var stand = r.querySelector(".badge");
+
+      if (standaard) {
+        r.setAttribute("data-default", "");
+        meta.textContent = "Default";
+        stand.className = "badge badge--active";
+        stand.textContent = "Published";
+      } else {
+        r.removeAttribute("data-default");
+        meta.textContent = "Translated by you";
+      }
+      /* Je eigen standaard omzetten kan niet; die regel wijst nergens heen. */
+      var item = r.querySelector("[data-lang-default]");
+      if (item) item.disabled = standaard;
+    });
+
+    sluitFilterMenus();
+    showToast(rij.dataset.lang + " is now the default language");
+  });
   /* ---- Adres opzoeken -----------------------------------------------------
      Een straat met huisnummer is genoeg: het postcoderegister kent de rest.
      Hier staat een handvol adressen in plaats van die koppeling, genoeg om te

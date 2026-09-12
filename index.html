@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=101" />
+  <link rel="stylesheet" href="styles.css?v=102" />
 </head>
 <body>
 
@@ -3978,7 +3978,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <!-- Twee talen, vast. Welke van de twee de standaard is kun
+                       je wel omzetten; dat is wat het menu per rij doet. -->
+                  <tr data-lang="Dutch" data-default>
                     <td><span class="cell"><span class="cell__title">Dutch</span><span class="cell__meta">Default</span></span></td>
                     <td data-label="Status"><span class="badge badge--active">Published</span></td>
                     <td data-label="Domains">
@@ -3988,9 +3990,18 @@
                         <option>All domains</option>
                       </select>
                     </td>
-                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Dutch"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    <td><span class="rowact">
+                      <span class="sort">
+                        <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Dutch">
+                          <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                        </button>
+                        <div class="sort__menu sort__menu--row" role="menu" hidden>
+                          <button class="sort__item" type="button" role="menuitem" data-lang-default disabled>Set as default</button>
+                        </div>
+                      </span>
+                    </span></td>
                   </tr>
-                  <tr>
+                  <tr data-lang="English">
                     <td><span class="cell"><span class="cell__title">English</span><span class="cell__meta">Translated by you</span></span></td>
                     <td data-label="Status"><span class="badge badge--muted">Draft</span></td>
                     <td data-label="Domains">
@@ -4000,7 +4011,16 @@
                         <option>1 domain</option>
                       </select>
                     </td>
-                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for English"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    <td><span class="rowact">
+                      <span class="sort">
+                        <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for English">
+                          <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                        </button>
+                        <div class="sort__menu sort__menu--row" role="menu" hidden>
+                          <button class="sort__item" type="button" role="menuitem" data-lang-default>Set as default</button>
+                        </div>
+                      </span>
+                    </span></td>
                   </tr>
                 </tbody>
               </table>
@@ -4456,6 +4476,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=101"></script>
+  <script src="app.js?v=102"></script>
 </body>
 </html>

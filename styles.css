@@ -1310,6 +1310,10 @@ select.input {
   display: flex; flex-direction: column;
 }
 .sort__menu[hidden] { display: none; }
+/* Een menu in een tabelrij moet uit zijn paneel kunnen steken; dat paneel
+   knipt alles af wat buiten de afgeronde rand valt. Vast ten opzichte van
+   het venster dus, met de plek uit app.js. */
+.sort__menu--row { position: fixed; top: auto; right: auto; min-width: 180px; }
 .sort__head { padding: 4px 10px 8px; font-size: var(--fs-sm); color: var(--text-muted); }
 .sort__item {
   display: flex; align-items: center; gap: 10px;
@@ -1320,6 +1324,8 @@ select.input {
   color: var(--text-strong);
 }
 .sort__item:hover { background: var(--bg-hover); }
+.sort__item:disabled { color: var(--text-muted); }
+.sort__item:disabled:hover { background: none; }
 .sort__item .icon { width: 17px; height: 17px; color: var(--text-muted); }
 /* Waarop je sorteert leest als een keuzerondje; de richting is er maar één
    van twee en krijgt daarom een gevuld vlak in plaats van een bolletje. */
