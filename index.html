@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=99" />
+  <link rel="stylesheet" href="styles.css?v=100" />
 </head>
 <body>
 
@@ -2327,10 +2327,6 @@
                 <input class="input" id="biz-vat" type="text" />
                 <p class="hint">Format: NL123456789B01</p>
               </div>
-              <label class="choice choice--plain">
-                <input type="checkbox" id="biz-no-vat" />
-                <span>I do not have a VAT number</span>
-              </label>
 
               <div class="field">
                 <label class="label" for="biz-phone">Phone number</label>
@@ -2362,8 +2358,10 @@
                 <label class="label" for="biz-street">Street and house number</label>
                 <span class="infield">
                   <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                  <input class="input infield__input" id="biz-street" type="text" autocomplete="street-address" />
+                  <input class="input infield__input" id="biz-street" type="text" autocomplete="street-address"
+                         data-lookup data-lookup-zip="biz-zip" data-lookup-city="biz-city" data-lookup-note="biz-street-note" />
                 </span>
+                <p class="hint" id="biz-street-note" hidden></p>
               </div>
 
               <div class="field">
@@ -2503,8 +2501,10 @@
                 <label class="label" for="rep-street">Street and house number</label>
                 <span class="infield">
                   <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                  <input class="input infield__input" id="rep-street" type="text" autocomplete="street-address" />
+                  <input class="input infield__input" id="rep-street" type="text" autocomplete="street-address"
+                         data-lookup data-lookup-zip="rep-zip" data-lookup-city="rep-city" data-lookup-note="rep-street-note" />
                 </span>
+                <p class="hint" id="rep-street-note" hidden></p>
               </div>
 
               <div class="field">
@@ -4519,6 +4519,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=99"></script>
+  <script src="app.js?v=100"></script>
 </body>
 </html>

@@ -1756,6 +1756,62 @@
     toast.hidden = true;
   }
 
+  /* ---- Adres opzoeken -----------------------------------------------------
+     Een straat met huisnummer is genoeg: het postcoderegister kent de rest.
+     Hier staat een handvol adressen in plaats van die koppeling, genoeg om te
+     laten zien wat er hoort te gebeuren en wat er gebeurt als een adres niet
+     gevonden wordt. */
+  var ADRESSEN = {
+    "lusthofstraat": { post: "3062 WB", plaats: "Rotterdam" },
+    "tochtstraat": { post: "3036 SK", plaats: "Rotterdam" },
+    "coolsingel": { post: "3011 AD", plaats: "Rotterdam" },
+    "witte de withstraat": { post: "3012 BL", plaats: "Rotterdam" },
+    "oude binnenweg": { post: "3012 CE", plaats: "Rotterdam" },
+    "damrak": { post: "1012 LP", plaats: "Amsterdam" },
+    "kalverstraat": { post: "1012 NX", plaats: "Amsterdam" },
+    "prinsengracht": { post: "1015 DV", plaats: "Amsterdam" },
+    "hoogstraat": { post: "2513 AR", plaats: "Den Haag" },
+    "oudegracht": { post: "3511 AR", plaats: "Utrecht" }
+  };
+
+  /* "Lusthofstraat 27A" -> "lusthofstraat". Het huisnummer bepaalt bij ons
+     niets, dus dat gaat eraf. */
+  function straatNaam(waarde) {
+    return waarde.toLowerCase().replace(/\s*\d.*$/, "").trim();
+  }
+
+  document.addEventListener("input", function (e) {
+    var veld = e.target.closest("[data-lookup]");
+    if (!veld) return;
+
+    var post = document.getElementById(veld.dataset.lookupZip);
+    var plaats = document.getElementById(veld.dataset.lookupCity);
+    var notitie = document.getElementById(veld.dataset.lookupNote);
+    var waarde = veld.value.trim();
+    /* Zonder huisnummer is het adres nog niet af; dan zoeken we nog niet. */
+    var af = /\d/.test(waarde);
+    var gevonden = af ? ADRESSEN[straatNaam(waarde)] : null;
+
+    if (gevonden) {
+      post.value = gevonden.post;
+      plaats.value = gevonden.plaats;
+    } else if (!waarde) {
+      post.value = "";
+      plaats.value = "";
+    }
+
+    if (!notitie) return;
+    if (gevonden) {
+      notitie.textContent = "Postal code and city found.";
+      notitie.hidden = false;
+    } else if (af) {
+      notitie.textContent = "We could not find this address. Fill in the postal code and city yourself.";
+      notitie.hidden = false;
+    } else {
+      notitie.hidden = true;
+    }
+  });
+
   /* ---- Kleine vensters en losse bevestigingen -----------------------------
      Een knop met data-dialog opent het venster met dat id; alles met
      data-dialog-close erin doet het weer dicht. Het exportvenster regelt dat

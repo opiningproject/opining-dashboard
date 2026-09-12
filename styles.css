@@ -494,11 +494,12 @@ select { min-width: 0; max-width: 100%; }
    aan die breder is dan het vak eromheen, en steekt dan buiten de kaart. */
 input[type="date"], input[type="time"] { min-width: 0; max-width: 100%; }
 
-/* Tussenkop binnen een kaart: hoort bij dezelfde kaart, maar begint een nieuw
-   onderwerp. Kleiner dan de kaarttitel en met lucht erboven. */
+/* Tussenkop binnen een kaart: begint een nieuw onderwerp binnen dezelfde
+   kaart. Even groot als de kaarttitel, met genoeg lucht erboven om als
+   scheiding te werken. */
 .card__subtitle {
-  margin-top: 24px;
-  font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
+  margin-top: 34px;
+  font-size: 18px; font-weight: 500; letter-spacing: -.01em; color: var(--text-strong);
 }
 
 /* Een label met een vraagteken ernaast: de twee horen op één regel. */
@@ -1915,7 +1916,7 @@ select.input {
   padding: 14px 16px;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  background: var(--gray-50);
+  background: var(--bg-surface);
 }
 .rev + .rev { margin-top: 14px; }
 .rev__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
