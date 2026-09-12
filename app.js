@@ -589,7 +589,6 @@
       sluitFilterMenus(dichtSort ? som : null);
       som.hidden = !dichtSort;
       sortKnop.setAttribute("aria-expanded", String(dichtSort));
-      if (dichtSort && som.classList.contains("sort__menu--row")) plaatsRijMenu(sortKnop, som);
       return;
     }
 
@@ -1758,55 +1757,13 @@
   }
 
 
-  /* Een menu in een tabelrij hangt vast aan het venster, want het paneel
-     eromheen knipt alles af wat buiten zijn rand valt. De plek komt dus van
-     hier: onder de knop, rechts uitgelijnd, en nooit half buiten beeld. */
-  function plaatsRijMenu(knop, menu) {
-    var r = knop.getBoundingClientRect();
-    /* Uitlijnen op randen in plaats van op een gemeten breedte: die staat nog
-       niet vast op het moment dat het menu net zichtbaar wordt. */
-    menu.style.right = Math.max(8, window.innerWidth - r.right) + "px";
-    menu.style.left = "auto";
-
-    /* Te dicht bij de onderkant: dan klapt het menu omhoog open. */
-    if (r.bottom > window.innerHeight - 120) {
-      menu.style.top = "auto";
-      menu.style.bottom = (window.innerHeight - r.top + 6) + "px";
-    } else {
-      menu.style.bottom = "auto";
-      menu.style.top = (r.bottom + 6) + "px";
-    }
-  }
-
-  /* Scrollen zou het menu laten zweven op de plek waar de rij stond. */
-  document.addEventListener("scroll", function () {
-    var open = document.querySelector(".sort__menu--row:not([hidden])");
-    if (open) sluitFilterMenus();
-  }, true);
-
   /* ---- Standaardtaal ------------------------------------------------------
      Twee talen liggen vast, staan allebei live en delen hetzelfde domein.
-     Wat overblijft is welke van de twee de klant als eerste ziet; daarom is
-     dat het enige wat de lijst laat zien en het enige wat het menu doet. */
-  document.addEventListener("click", function (e) {
-    if (!e.target.closest("[data-lang-default]")) return;
-
-    var rij = e.target.closest("tr");
-    var lijst = rij.closest("tbody");
-    if (rij.hasAttribute("data-default")) { sluitFilterMenus(); return; }
-
-    lijst.querySelectorAll("tr").forEach(function (r) {
-      var standaard = r === rij;
-      if (standaard) r.setAttribute("data-default", "");
-      else r.removeAttribute("data-default");
-      r.querySelector(".lang__default").hidden = !standaard;
-      /* Je eigen standaard omzetten kan niet; die regel wijst nergens heen. */
-      var item = r.querySelector("[data-lang-default]");
-      if (item) item.disabled = standaard;
-    });
-
-    sluitFilterMenus();
-    showToast(rij.dataset.lang + " is now the default language");
+     Wat overblijft is welke van de twee de klant als eerste ziet, en dat is
+     een keuze uit twee: de keuzerondjes zijn zelf de bediening. */
+  document.addEventListener("change", function (e) {
+    if (e.target.name !== "default-lang") return;
+    showToast(e.target.value + " is now the default language");
   });
 
   /* ---- Adres opzoeken -----------------------------------------------------

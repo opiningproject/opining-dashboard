@@ -1309,10 +1309,6 @@ select.input {
   display: flex; flex-direction: column;
 }
 .sort__menu[hidden] { display: none; }
-/* Een menu in een tabelrij moet uit zijn paneel kunnen steken; dat paneel
-   knipt alles af wat buiten de afgeronde rand valt. Vast ten opzichte van
-   het venster dus, met de plek uit app.js. */
-.sort__menu--row { position: fixed; top: auto; right: auto; min-width: 180px; }
 .sort__head { padding: 4px 10px 8px; font-size: var(--fs-sm); color: var(--text-muted); }
 .sort__item {
   display: flex; align-items: center; gap: 10px;
@@ -1323,8 +1319,6 @@ select.input {
   color: var(--text-strong);
 }
 .sort__item:hover { background: var(--bg-hover); }
-.sort__item:disabled { color: var(--text-muted); }
-.sort__item:disabled:hover { background: none; }
 .sort__item .icon { width: 17px; height: 17px; color: var(--text-muted); }
 /* Waarop je sorteert leest als een keuzerondje; de richting is er maar één
    van twee en krijgt daarom een gevuld vlak in plaats van een bolletje. */
@@ -1351,8 +1345,25 @@ select.input {
 .cell { display: flex; flex-direction: column; gap: 2px; }
 .cell__title { font-weight: 500; color: var(--text-strong); }
 .cell__meta { font-size: var(--fs-sm); color: var(--text-muted); }
-/* Taalregel: naam en het merkje Default op één regel. */
-.lang__default { margin-left: 10px; }
+/* Eén keuze uit een korte lijst: de hele regel is de knop, en het rondje
+   laat meteen zien welke het is. Geen menu dus, en geen aparte knop die bij
+   de gekozen regel niets meer te doen heeft. */
+.pick { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px 16px; cursor: pointer; transition: background var(--dur) var(--ease); }
+.pick + .pick { border-top: 1px solid var(--border); }
+.pick:hover { background: var(--gray-50); }
+.pick input {
+  appearance: none;
+  width: 20px; height: 20px; flex: 0 0 auto;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--r-full);
+  transition: border-color var(--dur) var(--ease);
+}
+.pick input:checked { border-color: var(--accent); border-width: 6px; }
+.pick input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pick__name { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+/* Het woord Default staat alleen bij de regel die het is. */
+.pick__meta { margin-left: auto; font-size: var(--fs-sm); color: var(--text-muted); visibility: hidden; }
+.pick input:checked ~ .pick__meta { visibility: visible; }
 
 /* Betaalmethode in een lijst: een tegeltje met het merkkortje ervoor. Een
    echte logo-set komt van de betaalprovider; tot die tijd draagt het kortje

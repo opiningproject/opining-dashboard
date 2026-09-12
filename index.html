@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=105" />
+  <link rel="stylesheet" href="styles.css?v=106" />
 </head>
 <body>
 
@@ -3956,55 +3956,22 @@
         <section class="view" data-set-view="language" hidden>
           <div class="card">
             <h3 class="card__title">Languages</h3>
-            <p class="card__sub">Adding translations lets customers order in their own language.</p>
+            <p class="card__sub">Both languages are live on your store. Pick the one customers see first.</p>
 
-            <!-- Een paneel met een eigen titel zit in een omlijnd vak eronder,
-                 zodat de titel bij de kaart hoort en de lijst een eigen kader krijgt. -->
-            <div class="panel panel--inset">
-              <table class="table table--stack">
-                <thead>
-                  <tr>
-                    <th>Language</th>
-                    <th><span class="sr-only">Actions</span></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Twee talen, vast, allebei live en op hetzelfde domein.
-                       Blijft over: welke van de twee de klant als eerste ziet. -->
-                  <tr data-lang="Dutch" data-default>
-                    <td>
-                      <span class="cell__title">Dutch</span>
-                      <span class="badge badge--muted lang__default">Default</span>
-                    </td>
-                    <td><span class="rowact">
-                      <span class="sort">
-                        <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Dutch">
-                          <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
-                        </button>
-                        <div class="sort__menu sort__menu--row" role="menu" hidden>
-                          <button class="sort__item" type="button" role="menuitem" data-lang-default disabled>Set as default</button>
-                        </div>
-                      </span>
-                    </span></td>
-                  </tr>
-                  <tr data-lang="English">
-                    <td>
-                      <span class="cell__title">English</span>
-                      <span class="badge badge--muted lang__default" hidden>Default</span>
-                    </td>
-                    <td><span class="rowact">
-                      <span class="sort">
-                        <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for English">
-                          <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
-                        </button>
-                        <div class="sort__menu sort__menu--row" role="menu" hidden>
-                          <button class="sort__item" type="button" role="menuitem" data-lang-default>Set as default</button>
-                        </div>
-                      </span>
-                    </span></td>
-                  </tr>
-                </tbody>
-              </table>
+            <!-- Eén keuze uit twee, dus twee keuzerondjes: de stand en de knop
+                 zijn hetzelfde ding. Een menu per regel zou bij allebei
+                 "Set as default" aanbieden, ook bij de taal die het al is. -->
+            <div class="rows">
+              <label class="pick">
+                <input type="radio" name="default-lang" value="Dutch" checked />
+                <span class="pick__name">Dutch</span>
+                <span class="pick__meta">Default</span>
+              </label>
+              <label class="pick">
+                <input type="radio" name="default-lang" value="English" />
+                <span class="pick__name">English</span>
+                <span class="pick__meta">Default</span>
+              </label>
             </div>
           </div>
 
@@ -4446,6 +4413,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=105"></script>
+  <script src="app.js?v=106"></script>
 </body>
 </html>
