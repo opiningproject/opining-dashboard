@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=97" />
+  <link rel="stylesheet" href="styles.css?v=98" />
 </head>
 <body>
 
@@ -2150,6 +2150,20 @@
               <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Buy new domain
             </button>
           </div>
+          <!-- Alleen zinvol zodra de aanvraag verstuurd is; app.js toont het
+               blok samen met de rest van de actieve stand. -->
+          <div class="page-head__tools" data-set-tools="payments" data-pay-state="on" hidden>
+            <div class="sort">
+              <button class="btn btn--ghost page-head__action sort__btn" type="button" aria-haspopup="true" aria-expanded="false">
+                More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+              <div class="sort__menu" role="menu" hidden>
+                <button class="sort__item" type="button" role="menuitem" data-goto-page="finance">View payouts</button>
+                <button class="sort__item" type="button" role="menuitem" data-toast="Statement sent to your email">Email a statement</button>
+                <button class="sort__item" type="button" role="menuitem">Contact support</button>
+              </div>
+            </div>
+          </div>
           <!-- Knoppen van een subpagina; zelfde blok, maar op data-sub-tools. -->
           <div class="page-head__tools" data-sub-tools="paypal" hidden>
             <button class="btn btn--ghost page-head__action" type="button">Contact PayPal</button>
@@ -2981,6 +2995,83 @@
           </div>
         </section>
 
+
+        <!-- ---------- SETTINGS-SUB: bankrekening toevoegen ---------- -->
+        <section class="view" data-set-sub="bank-account" hidden>
+          <div class="card">
+            <h3 class="card__title">Bank account</h3>
+            <p class="card__sub">Funds will be sent to this <a class="link" href="#">bank account</a>.</p>
+            <div class="field">
+              <label class="label" for="bank-cur">Payout currency</label>
+              <!-- Vast op euro: we betalen niet in een andere munt uit. -->
+              <select class="input" id="bank-cur" disabled>
+                <option>Euro (EUR &euro;)</option>
+              </select>
+              <p class="hint">Your bank needs to be able to accept this <a class="link" href="#">currency</a>.</p>
+            </div>
+            <div class="field">
+              <label class="label" for="bank-nr">IBAN (International Bank Account Number)</label>
+              <input class="input" id="bank-nr" type="text" placeholder="NL91 ABNA 0417 1643 00" />
+            </div>
+          </div>
+
+          <div class="formfoot formfoot--certify">
+            <p class="hint">By selecting Save, I certify that the information I have provided is complete and correct.</p>
+            <button class="btn btn--primary" type="button" data-toast="Bank account saved">Save</button>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS-SUB: wat de klant op zijn afschrift ziet ---------- -->
+        <section class="view" data-set-sub="statement" hidden>
+          <div class="card">
+            <h3 class="card__title">What customers see on their billing statement</h3>
+            <div class="field">
+              <label class="label" for="stmt-shown">Name on customer statement</label>
+              <input class="input" id="stmt-shown" type="text" value="OPINING" maxlength="22" />
+              <p class="hint">Helps customers recognise your business name on transaction details.</p>
+            </div>
+            <div class="field">
+              <label class="label" for="stmt-support">Support phone number</label>
+              <div class="phone">
+                <label class="sr-only" for="stmt-support-dial">Country calling code</label>
+                <select class="input phone__code" id="stmt-support-dial">
+                  <option>NL +31</option><option>BE +32</option><option>DE +49</option>
+                </select>
+                <input class="input phone__nr" id="stmt-support" type="tel" value="6 14522453" />
+              </div>
+              <p class="hint">Customers call this number when they do not recognise a charge.</p>
+            </div>
+            <button class="btn btn--primary card__action" type="button" data-toast="Statement details saved">Save</button>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS-SUB: fraude ---------- -->
+        <section class="view" data-set-sub="fraud" hidden>
+          <div class="card">
+            <h3 class="card__title">Reduce credit and debit card fraud</h3>
+            <p class="card__sub">We check every card payment before it goes through. A payment that fails these checks is refused, so it never reaches your orders.</p>
+            <div class="rows">
+              <div class="row row--static">
+                <span class="row__text">
+                  <span class="row__title">CVV verification</span>
+                  <span class="row__meta">Refuse a payment when the three digits on the back of the card are wrong.</span>
+                </span>
+                <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Verify the CVV</span></label>
+              </div>
+              <div class="row row--static">
+                <span class="row__text">
+                  <span class="row__title">Postal code verification</span>
+                  <span class="row__meta">Refuse a payment when the postal code does not match the card.</span>
+                </span>
+                <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Verify the postal code</span></label>
+              </div>
+            </div>
+            <p class="alert alert--info">
+              <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+              Turning a check off means more payments go through, and more of them can be charged back later.
+            </p>
+          </div>
+        </section>
         <!-- ---------- SETTINGS-SUB: PayPal ---------- -->
         <!-- Alleen het koppelen staat hier. Tarieven en uitbetalingen regelt
              PayPal zelf, dus die tonen we als gegeven, niet als instelling. -->
@@ -3468,7 +3559,7 @@
 
         <!-- ---------- SETTINGS: payments ---------- -->
         <section class="view" data-set-view="payments" hidden>
-          <div class="card">
+          <div class="card" data-pay-state="off">
             <div class="promo">
               <div class="promo__body">
                 <h3 class="card__title">Activate online payments</h3>
@@ -3507,6 +3598,101 @@
                   <path d="M156 8a48 48 0 0 1 40 0" opacity=".7"/>
                 </g>
               </svg>
+            </div>
+          </div>
+
+          <!-- Na het versturen van de aanvraag draait de pagina om: de reclame
+               verdwijnt en wat je vanaf dan te regelen hebt komt ervoor in de
+               plaats. app.js zet de stand met data-pay-state. -->
+          <div class="card" data-pay-state="on" hidden>
+            <h3 class="card__title card__title--info">
+              Payout bank account
+              <span class="explain">
+                <button class="explain__icon" type="button" aria-label="What is a payout bank account?" aria-describedby="explain-payout-account">
+                  <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                </button>
+                <span class="explain__pop" id="explain-payout-account" role="tooltip">
+                  <b>Payout bank account</b>
+                  The account we transfer your balance to. It has to be in the name of the business you registered, and it has to accept euros.
+                </span>
+              </span>
+            </h3>
+            <p class="card__sub">Add a bank account to receive payouts</p>
+            <div class="rows">
+              <button class="row" type="button" data-sub="bank-account" data-sub-title="Add bank account">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>
+                <span class="row__title">Add bank account</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="card" data-pay-state="on" hidden>
+            <h3 class="card__title">Payout settings</h3>
+            <div class="rows">
+              <button class="row" type="button" data-dialog="payout-dialog">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-billing"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Payout schedule</span>
+                  <span class="row__meta">Daily &middot; Opining</span>
+                </span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-mail"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Email confirmation</span>
+                  <span class="row__meta">Send email confirmation for every payout</span>
+                </span>
+                <label class="switch row__switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Email me for every payout</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" data-pay-state="on" hidden>
+            <div class="card__headrow">
+              <div>
+                <h3 class="card__title">Customer billing statement details</h3>
+                <p class="card__sub">How your store appears on customer bank statements</p>
+              </div>
+              <button class="btn btn--ghost" type="button"
+                      data-sub="statement"
+                      data-sub-title="Customer billing statement details">Edit</button>
+            </div>
+          </div>
+
+          <div class="card" data-pay-state="on" hidden>
+            <h3 class="card__title">Fraud prevention</h3>
+            <div class="rows">
+              <button class="row" type="button" data-sub="fraud" data-sub-title="Fraud prevention">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-card"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Reduce credit and debit card fraud</span>
+                  <span class="row__meta">CVV verification on</span>
+                </span>
+                <span class="badge badge--active"><span class="badge__dot" aria-hidden="true"></span>Automated</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="card" data-pay-state="on" hidden>
+            <div class="card__headrow">
+              <div>
+                <h3 class="card__title card__title--info">
+                  Test mode
+                  <span class="explain">
+                    <button class="explain__icon" type="button" aria-label="What is test mode?" aria-describedby="explain-test-mode">
+                      <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                    </button>
+                    <span class="explain__pop" id="explain-test-mode" role="tooltip">
+                      <b>Test mode</b>
+                      Orders go through the whole checkout without any money moving. Nothing lands in your payout balance and nothing is charged.
+                    </span>
+                  </span>
+                </h3>
+                <p class="card__sub">See how payments and orders work on your store</p>
+              </div>
+              <label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Turn on test mode</span></label>
             </div>
           </div>
 
@@ -3554,6 +3740,8 @@
               </p>
             </div>
           </div>
+
+          <p class="learnmore" data-pay-state="on" hidden><a class="link" href="#">Learn more about Opining Payments</a></p>
         </section>
 
         <!-- ---------- SETTINGS: domain ---------- -->
@@ -4160,6 +4348,37 @@
        buiten .app omdat het over alles heen hoort te liggen, net als de toast.
        De datumvelden zijn gewone <input type="date">, dus op een telefoon komt
        de kiezer van het toestel zelf tevoorschijn. -->
+
+  <!-- Uitbetaalritme en de naam die op het afschrift komt. Klein genoeg voor
+       een venster: twee velden, en je bent terug waar je was. -->
+  <div class="dialog" id="payout-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="payout-dialog-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="payout-dialog-title">Payout frequency and statement name</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead">The frequency of your payouts and how they are described on a statement.</p>
+      <div class="field">
+        <label class="label" for="payout-every">Payout every</label>
+        <select class="input" id="payout-every">
+          <option>business day</option>
+          <option>week</option>
+          <option>month</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="label" for="payout-name">Payout name</label>
+        <input class="input" id="payout-name" type="text" value="Opining" />
+      </div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" data-dialog-close data-toast="Payout settings saved">Save</button>
+      </div>
+    </div>
+  </div>
   <div class="dialog" id="export-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="export-title">
@@ -4199,6 +4418,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=97"></script>
+  <script src="app.js?v=98"></script>
 </body>
 </html>

@@ -214,6 +214,9 @@
     e.preventDefault();
 
     if (naar.dataset.gotoPage) {
+      /* Staat de settings-overlay open, dan moet die eerst weg: anders klik
+         je een pagina aan die je niet ziet. */
+      if (root.dataset.settings === "open") closeSettings();
       var pagina = sidebar.querySelector('.nav__item[data-page="' + naar.dataset.gotoPage + '"]');
       if (pagina) pagina.click();
       return;
@@ -1445,7 +1448,7 @@
   function showSetPage(page, title, icon) {
     setTitle.textContent = title;
     swapIcon(setIcon, icon);
-    setTools.forEach(function (el) { el.hidden = el.dataset.setTools !== page; });
+    toonSetTools(page);
 
     var found = false;
     setViews.forEach(function (v) {
@@ -1462,6 +1465,30 @@
     overlay.scrollTop = 0;
   }
 
+
+  /* ---- De betaalpagina heeft twee gezichten -------------------------------
+     Voor het versturen van de aanvraag staat er reclame; zodra die verstuurd
+     is, staat er wat je vanaf dan te regelen hebt. data-pay-state zegt van elk
+     blok bij welke van de twee het hoort. */
+  var betaalStand = "off";
+
+  function zetBetaalStand(stand) {
+    betaalStand = stand;
+    document.querySelectorAll("[data-pay-state]").forEach(function (el) {
+      el.hidden = el.dataset.payState !== stand;
+    });
+    /* De knoppen op de titelregel horen daarnaast bij één pagina; laat de
+       regel hieronder daar opnieuw over beslissen. */
+    var actief = setNav.querySelector(".nav__item.is-active");
+    if (actief) toonSetTools(actief.dataset.set);
+  }
+
+  function toonSetTools(page) {
+    setTools.forEach(function (el) {
+      el.hidden = el.dataset.setTools !== page ||
+        (el.dataset.payState !== undefined && el.dataset.payState !== betaalStand);
+    });
+  }
   btnSettings.addEventListener("click", openSettings);
   btnSetClose.addEventListener("click", closeSettings);
 
@@ -1602,6 +1629,9 @@
     wizVolgende.addEventListener("click", function () {
       if (stap < wizLaatste) { toonStap(stap + 1); return; }
       backFromSub();
+      /* De aanvraag is de deur uit; de betaalpagina laat vanaf nu zien wat je
+         te regelen hebt in plaats van waarom je zou beginnen. */
+      zetBetaalStand("on");
       showToast("Details submitted for verification");
     });
 
@@ -1714,6 +1744,31 @@
     toastTimer = null;
     toast.hidden = true;
   }
+
+  /* ---- Kleine vensters en losse bevestigingen -----------------------------
+     Een knop met data-dialog opent het venster met dat id; alles met
+     data-dialog-close erin doet het weer dicht. Het exportvenster regelt dat
+     zelf, want dat zet de focus ook terug. */
+  document.addEventListener("click", function (e) {
+    var opener = e.target.closest("[data-dialog]");
+    if (opener) {
+      var venster = document.getElementById(opener.dataset.dialog);
+      if (venster) venster.hidden = false;
+      return;
+    }
+    var sluit = e.target.closest("[data-dialog-close]");
+    if (sluit) {
+      var open = sluit.closest(".dialog");
+      if (open && open.id !== "export-dialog") open.hidden = true;
+    }
+  });
+
+  /* Een knop met data-toast bevestigt zichzelf. Zo staat in de HTML wat er
+     gebeurt, zonder voor elke knop een eigen regel JavaScript. */
+  document.addEventListener("click", function (e) {
+    var knop = e.target.closest("[data-toast]");
+    if (knop) showToast(knop.dataset.toast);
+  });
 
   document.getElementById("toast-close").addEventListener("click", hideToast);
 
