@@ -1664,8 +1664,9 @@ select.input {
 .dsearch { display: flex; gap: 10px; margin: 18px 0 6px; }
 .dsearch .input { flex: 1 1 auto; min-width: 0; }
 .dsearch .btn { flex: 0 0 auto; height: 44px; padding: 0 20px; }
-/* Een vinkje bij een naam die nog vrij is. */
-.row__icon--ok { color: var(--success); }
+/* Het vinkje is een bevestiging naast de naam, geen pictogram op zichzelf:
+   kleiner dan de andere rij-iconen. */
+.row__icon--ok { width: 16px; height: 16px; color: var(--success); }
 /* Kenmerk bij een naam, zoals het primaire domein. Een rand in plaats van een
    vlak, zodat het niet met een status te verwarren is. */
 .pill { padding: 1px 8px; border: 1px solid var(--border-strong); border-radius: var(--r-full); font-size: var(--fs-sm); font-weight: 500; color: var(--text-muted); }
@@ -1867,7 +1868,9 @@ select.input {
 /* Rij met een badge vlak voor de chevron. */
 .row > .badge { margin-left: auto; }
 .row > .badge + .row__caret { margin-left: 14px; }
-/* Staat er een knop achter de badge, dan houdt die dezelfde afstand. */
+/* Zonder badge duwt de knop zichzelf naar rechts; staat er wel een badge, dan
+   houdt de regel hieronder de afstand tussen die twee vast. */
+.row > .btn { margin-left: auto; }
 .row > .badge + .btn { margin-left: 14px; }
 /* Een losse link achteraan de rij, bijvoorbeeld om het adres te wijzigen. */
 .row__link { flex: 0 0 auto; margin-left: 14px; }
