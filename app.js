@@ -1785,9 +1785,9 @@
   }, true);
 
   /* ---- Standaardtaal ------------------------------------------------------
-     Twee talen liggen vast; welke van de twee de klant als eerste ziet niet.
-     De standaard is altijd gepubliceerd, anders wijs je naar een taal die er
-     voor de klant niet is. */
+     Twee talen liggen vast en staan allebei live; welke van de twee de klant
+     als eerste ziet niet. Daarom staat er geen status in de lijst: die zou
+     bij elke regel hetzelfde zeggen. */
   document.addEventListener("click", function (e) {
     if (!e.target.closest("[data-lang-default]")) return;
 
@@ -1798,13 +1798,10 @@
     lijst.querySelectorAll("tr").forEach(function (r) {
       var standaard = r === rij;
       var meta = r.querySelector(".cell__meta");
-      var stand = r.querySelector(".badge");
 
       if (standaard) {
         r.setAttribute("data-default", "");
         meta.textContent = "Default";
-        stand.className = "badge badge--active";
-        stand.textContent = "Published";
       } else {
         r.removeAttribute("data-default");
         meta.textContent = "Translated by you";
@@ -1817,6 +1814,7 @@
     sluitFilterMenus();
     showToast(rij.dataset.lang + " is now the default language");
   });
+
   /* ---- Adres opzoeken -----------------------------------------------------
      Een straat met huisnummer is genoeg: het postcoderegister kent de rest.
      Hier staat een handvol adressen in plaats van die koppeling, genoeg om te
