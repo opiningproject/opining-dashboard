@@ -793,6 +793,8 @@
     var koopVandaag = document.getElementById("buy-today");
     var koopVerleng = document.getElementById("buy-renew");
     var koopTotaal = document.getElementById("buy-total");
+    var koopDatum = document.getElementById("buy-renew-date");
+    var koopVandaagDatum = document.getElementById("buy-due-date");
     var koopWinkel = document.getElementById("buy-store");
     var koopFout = document.getElementById("buy-store-error");
 
@@ -820,8 +822,11 @@
       over.setFullYear(over.getFullYear() + 1);
       var maanden = ["January", "February", "March", "April", "May", "June",
                      "July", "August", "September", "October", "November", "December"];
-      koopVerleng.previousElementSibling.querySelector("b").textContent =
-        over.getDate() + " " + maanden[over.getMonth()] + " " + over.getFullYear();
+      function schrijfDatum(d) {
+        return d.getDate() + " " + maanden[d.getMonth()] + " " + d.getFullYear();
+      }
+      koopDatum.textContent = schrijfDatum(over);
+      koopVandaagDatum.textContent = schrijfDatum(new Date());
 
       koopWinkel.classList.remove("input--error");
       koopFout.hidden = true;
@@ -1498,6 +1503,11 @@
     setSubs.forEach(function (v) { v.hidden = v.dataset.setSub !== sub; });
     /* De knoppen op de titelregel horen bij de pagina erboven, niet bij deze. */
     setTools.forEach(function (el) { el.hidden = true; });
+    /* Een pagina die om je aandacht vraagt (afrekenen) krijgt de volle breedte:
+       de settingsnavigatie ernaast leidt daar alleen maar van af. */
+    var vol = document.querySelector('[data-set-sub="' + sub + '"]');
+    if (vol && vol.hasAttribute("data-sub-full")) root.dataset.settingsFull = "on";
+    else delete root.dataset.settingsFull;
 
     setCrumbIcon.querySelector("use").setAttribute("href", ouder.icoon);
     setCrumb.setAttribute("aria-label", "Back to " + ouder.titel);
@@ -1516,6 +1526,7 @@
   function closeSetSub() {
     if (!ouder) return;
     setSubs.forEach(function (v) { v.hidden = true; });
+    delete root.dataset.settingsFull;
     setCrumb.hidden = true;
     setIcon.removeAttribute("hidden");
     setTitle.textContent = ouder.titel;

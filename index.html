@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=93" />
+  <link rel="stylesheet" href="styles.css?v=94" />
 </head>
 <body>
 
@@ -3458,7 +3458,7 @@
         <!-- ---------- SETTINGS-SUB: domein afrekenen ---------- -->
         <!-- Twee kolommen: wat je invult links, wat het kost rechts. De
              samenvatting blijft in beeld terwijl je het formulier afwerkt. -->
-        <section class="view" data-set-sub="domain-checkout" hidden>
+        <section class="view" data-set-sub="domain-checkout" data-sub-full hidden>
           <div class="buy">
             <div class="buy__form">
               <div class="card card--flush">
@@ -3544,22 +3544,29 @@
             </div>
 
             <aside class="buy__side">
-              <div class="card">
-                <h3 class="card__title">Summary</h3>
-                <div class="srow srow--sum">
-                  <span class="srow__when"><b>Today</b>Domain purchase</span>
-                  <span class="srow__amount" id="buy-today">&euro; 9,00</span>
+              <div class="card card--flush">
+                <h3 class="card__title buy__sumtitle">Summary</h3>
+                <!-- Tijdlijn: links wanneer er iets gebeurt, rechts wat het kost.
+                     Het lijntje tussen de twee blokjes laat zien dat vandaag en
+                     over een jaar hetzelfde domein betreffen. -->
+                <ol class="tline">
+                  <li class="tline__step">
+                    <span class="tline__when"><b>Today</b>Domain purchase</span>
+                    <span class="tline__amount"><b id="buy-today">&euro; 9,00</b></span>
+                  </li>
+                  <li class="tline__step tline__step--open">
+                    <span class="tline__when"><b id="buy-renew-date">12 September 2027</b>Annual renewal</span>
+                    <span class="tline__amount"><b id="buy-renew">&euro; 9,00</b>Every year</span>
+                  </li>
+                </ol>
+                <div class="buy__due">
+                  <span class="tline__when"><b>Amount due</b><span id="buy-due-date">12 September 2026</span></span>
+                  <span class="tline__amount"><b id="buy-total">&euro; 9,00</b>Plus applicable taxes</span>
                 </div>
-                <div class="srow srow--sum">
-                  <span class="srow__when"><b>12 September 2027</b>Renewal, every year</span>
-                  <span class="srow__amount" id="buy-renew">&euro; 9,00</span>
+                <div class="buy__foot">
+                  <button class="btn btn--primary buy__go" type="button" id="buy-go">Buy domain</button>
+                  <p class="hint">This purchase is charged immediately and cannot be refunded. The domain is yours for a year and renews unless you turn that off.</p>
                 </div>
-                <div class="srow srow--total">
-                  <span class="srow__when"><b>Amount due today</b>Plus applicable taxes</span>
-                  <span class="srow__amount" id="buy-total">&euro; 9,00</span>
-                </div>
-                <button class="btn btn--primary card__action buy__go" type="button" id="buy-go">Buy domain</button>
-                <p class="hint hint--spaced">This purchase is charged immediately and cannot be refunded. The domain is yours for a year and renews unless you turn that off.</p>
               </div>
             </aside>
           </div>
@@ -3641,6 +3648,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=93"></script>
+  <script src="app.js?v=94"></script>
 </body>
 </html>

@@ -451,10 +451,11 @@ legend { padding: 0; }
 .icon-btn:hover { background: var(--bg-hover); color: var(--text-strong); }
 
 .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.field + .field, .field + .field-row, .field-row + .field { margin-top: 18px; }
+.field + .field, .field + .field-row,
+.field-row + .field, .field-row + .field-row { margin-top: 16px; }
 /* Een keuzelijst gevolgd door een veld heeft dezelfde tussenruimte nodig. */
 .choices + .field, .choices + .field-row { margin-top: 16px; }
-.field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 /* De regel hierboven mag niet binnen een twee-koloms rij toeslaan, anders
    zakt de rechterkolom een regel omlaag. */
 .field-row > .field + .field { margin-top: 0; }
@@ -464,19 +465,23 @@ legend { padding: 0; }
 
 .input {
   width: 100%;
-  height: 44px;
-  padding: 0 13px;
+  height: 32px;
+  padding: 0 10px;
   border: 1px solid var(--border-strong);
   border-radius: var(--r-md);
   background: var(--bg-surface);
-  /* 16px, niet --fs-md: iOS zoomt de pagina in zodra een veld dat je aantikt
-     kleiner dan 16px tekst heeft. Geldt voor elk tekstveld, dus ook de
-     zoekbalk hieronder. */
-  font-size: 16px;
+  /* 13px, net als de labels. Op een aanraakscherm gaat het veld terug naar
+     16px: iOS zoomt de pagina in zodra je een veld aantikt met kleinere tekst. */
+  font-size: var(--fs-sm);
   transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
 .input:hover { border-color: var(--gray-500); }
 .input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+/* Safari op iOS zoomt de hele pagina in zodra je een veld aantikt waarvan de
+   tekst kleiner is dan 16px. Op een aanraakscherm wint dat van de 13px. */
+@media (pointer: coarse) {
+  .input { font-size: 16px; }
+}
 /* Een select rekt in Safari zijn container op tot de breedte van zijn
    langste optie. Chrome doet dat niet, dus het valt daar niet op:
    zonder deze twee regels liep de betaal-wizard op iOS buiten beeld. */
@@ -487,10 +492,10 @@ input[type="date"], input[type="time"] { min-width: 0; max-width: 100%; }
 
 select.input {
   appearance: none;
-  padding-right: 38px;
+  padding-right: 30px;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23767c87' stroke-width='1.8' stroke-linecap='round'><path d='m8 10 4-4 4 4M8 14l4 4 4-4'/></svg>");
   background-repeat: no-repeat;
-  background-position: right 12px center;
+  background-position: right 8px center;
   background-size: 16px;
 }
 
@@ -567,6 +572,10 @@ select.input {
   margin-inline: auto;
   padding: 24px 24px 96px;
 }
+/* Een subpagina die om je aandacht vraagt neemt de volle breedte; de
+   settingsnavigatie ernaast leidt daar alleen van af. app.js zet de stand. */
+[data-settings-full] .overlay__inner { grid-template-columns: minmax(0, 1fr); }
+[data-settings-full] .set-nav { display: none; }
 
 .set-nav {
   align-self: start;
@@ -1663,7 +1672,7 @@ select.input {
    neemt wat overblijft. */
 .dsearch { display: flex; gap: 10px; margin: 18px 0 6px; }
 .dsearch .input { flex: 1 1 auto; min-width: 0; }
-.dsearch .btn { flex: 0 0 auto; height: 44px; padding: 0 20px; }
+.dsearch .btn { flex: 0 0 auto; height: 32px; padding: 0 16px; }
 /* Het vinkje is een bevestiging naast de naam, geen pictogram op zichzelf:
    kleiner dan de andere rij-iconen. */
 .row__icon--ok { width: 16px; height: 16px; color: var(--success); }
@@ -1896,7 +1905,7 @@ select.input {
    de korting doet. */
 .wasnow { white-space: nowrap; }
 .wasnow s { color: var(--text-muted); text-decoration-thickness: 1px; }
-.pricepreview { display: flex; align-items: center; gap: 10px; height: 44px; font-size: var(--fs-lg); }
+.pricepreview { display: flex; align-items: center; gap: 10px; height: 32px; font-size: var(--fs-lg); }
 .pricepreview s { font-size: var(--fs-md); color: var(--text-muted); }
 .pricepreview b { font-weight: 600; color: var(--text-strong); }
 
@@ -1948,7 +1957,7 @@ select.input {
 /* Codes lezen beter in een vaste breedte. */
 .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .01em; }
 
-textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: vertical; }
+textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vertical; }
 
 /* ==========================================================================
    8l. ANALYTICS — grafieken
@@ -2047,7 +2056,7 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
    Wat je invult links, wat het kost rechts. De samenvatting blijft in beeld
    terwijl je het formulier afwerkt, want dat is waar je op let.
    ========================================================================== */
-.buy { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+.buy { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 20px; align-items: start; }
 .buy__form { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
 .buy__side { position: sticky; top: 0; }
 /* De naam van het domein staat als kop boven de verlengregel, met dezelfde
@@ -2062,17 +2071,44 @@ textarea.input { height: auto; padding: 12px 13px; line-height: 1.5; resize: ver
 .buy__renew { padding: 14px 20px; }
 .buy__go { width: 100%; }
 
-/* Regels in de samenvatting: wanneer links, bedrag rechts. */
-.srow--sum, .srow--total {
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
-  grid-template-columns: none;
-  padding: 12px 0;
+/* De samenvatting bestaat uit vier stroken met een grijze lijn ertussen. Die
+   lijnen lopen van rand tot rand, dus de kaart zelf heeft geen zijpadding en
+   elke strook regelt die zelf. */
+.buy__sumtitle, .tline, .buy__due, .buy__foot { padding: 16px 20px; }
+.buy__sumtitle { padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.buy__due, .buy__foot { border-top: 1px solid var(--border); }
+.buy__foot .hint { margin-top: 12px; }
+
+/* Tijdlijn: elke stap begint met een vierkantje, en tussen twee vierkantjes
+   loopt een lijntje door. Vandaag is ingevuld, de verlenging is nog leeg. */
+.tline { display: flex; flex-direction: column; gap: 14px; list-style: none; }
+.tline__step { position: relative; display: flex; justify-content: space-between; gap: 16px; padding-left: 22px; }
+.tline__step::before {
+  content: ""; position: absolute; left: 0; top: 4px;
+  width: 9px; height: 9px; border: 1px solid var(--text-strong);
+  background: var(--text-strong);
 }
-.srow__when { display: flex; flex-direction: column; gap: 2px; font-size: var(--fs-sm); color: var(--text-muted); }
-.srow__when b { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
-.srow__amount { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text-strong); font-variant-numeric: tabular-nums; }
-.srow--total { border-top: 1px solid var(--border); }
-.srow--total .srow__amount, .srow--total .srow__when b { font-weight: 600; }
+/* Het lijntje loopt van dit vierkantje naar het volgende. Alleen de laatste
+   stap heeft er geen, want daaronder komt niets meer. */
+.tline__step::after {
+  content: ""; position: absolute; left: 4px; top: 15px; bottom: -16px;
+  width: 1px; background: var(--border-strong);
+}
+.tline__step:last-child::after { display: none; }
+.tline__step--open::before { background: var(--bg-surface); }
+
+.tline__when { display: flex; flex-direction: column; gap: 2px; font-size: var(--fs-sm); color: var(--text-muted); }
+.tline__when b { font-size: var(--fs-sm); font-weight: 600; color: var(--text-strong); }
+.tline__amount {
+  flex: 0 0 auto; display: flex; flex-direction: column; gap: 2px;
+  text-align: right; font-size: var(--fs-sm); color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.tline__amount b { font-weight: 600; color: var(--text-strong); }
+
+/* De regel met het bedrag van vandaag staat los van de tijdlijn en hoort
+   zonder vierkantje, maar wel op dezelfde inspringing. */
+.buy__due { display: flex; justify-content: space-between; gap: 16px; }
 
 /* Foutmelding onder een veld. */
 .input--error { border-color: var(--danger); background: #fdf3f2; }
