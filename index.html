@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=100" />
+  <link rel="stylesheet" href="styles.css?v=101" />
 </head>
 <body>
 
@@ -3147,33 +3147,6 @@
           </div>
         </section>
 
-        <!-- ---------- SETTINGS-SUB: fraude ---------- -->
-        <section class="view" data-set-sub="fraud" hidden>
-          <div class="card">
-            <h3 class="card__title">Reduce credit and debit card fraud</h3>
-            <p class="card__sub">We check every card payment before it goes through. A payment that fails these checks is refused, so it never reaches your orders.</p>
-            <div class="rows">
-              <div class="row row--static">
-                <span class="row__text">
-                  <span class="row__title">CVV verification</span>
-                  <span class="row__meta">Refuse a payment when the three digits on the back of the card are wrong.</span>
-                </span>
-                <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Verify the CVV</span></label>
-              </div>
-              <div class="row row--static">
-                <span class="row__text">
-                  <span class="row__title">Postal code verification</span>
-                  <span class="row__meta">Refuse a payment when the postal code does not match the card.</span>
-                </span>
-                <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Verify the postal code</span></label>
-              </div>
-            </div>
-            <p class="alert alert--info">
-              <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-              Turning a check off means more payments go through, and more of them can be charged back later.
-            </p>
-          </div>
-        </section>
         <!-- ---------- SETTINGS-SUB: PayPal ---------- -->
         <!-- Alleen het koppelen staat hier. Tarieven en uitbetalingen regelt
              PayPal zelf, dus die tonen we als gegeven, niet als instelling. -->
@@ -3759,42 +3732,6 @@
               <button class="btn btn--ghost" type="button"
                       data-sub="statement"
                       data-sub-title="Customer billing statement details">Edit</button>
-            </div>
-          </div>
-
-          <div class="card" data-pay-state="on" hidden>
-            <h3 class="card__title">Fraud prevention</h3>
-            <div class="rows">
-              <button class="row" type="button" data-sub="fraud" data-sub-title="Fraud prevention">
-                <svg class="icon row__icon" aria-hidden="true"><use href="#i-card"/></svg>
-                <span class="row__text">
-                  <span class="row__title">Reduce credit and debit card fraud</span>
-                  <span class="row__meta">CVV verification on</span>
-                </span>
-                <span class="badge badge--active"><span class="badge__dot" aria-hidden="true"></span>Automated</span>
-                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-              </button>
-            </div>
-          </div>
-
-          <div class="card" data-pay-state="on" hidden>
-            <div class="card__headrow">
-              <div>
-                <h3 class="card__title card__title--info">
-                  Test mode
-                  <span class="explain">
-                    <button class="explain__icon" type="button" aria-label="What is test mode?" aria-describedby="explain-test-mode">
-                      <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-                    </button>
-                    <span class="explain__pop" id="explain-test-mode" role="tooltip">
-                      <b>Test mode</b>
-                      Orders go through the whole checkout without any money moving. Nothing lands in your payout balance and nothing is charged.
-                    </span>
-                  </span>
-                </h3>
-                <p class="card__sub">See how payments and orders work on your store</p>
-              </div>
-              <label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Turn on test mode</span></label>
             </div>
           </div>
 
@@ -4519,6 +4456,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=100"></script>
+  <script src="app.js?v=101"></script>
 </body>
 </html>
