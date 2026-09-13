@@ -1688,7 +1688,12 @@
   /* Onthoudt wat er te bewaren valt, zodat de melding na Save kan benoemen
      waar het over ging. */
   var saveLabel = "Changes";
-  function markUnsaved(label) { saveLabel = label; setSavebar(true); }
+  /* Een besturing die zelf al een hele zin oplevert ("Dutch is now the default
+     language") zet die hier neer; anders maakt de savebar er "<pagina> saved"
+     van. Leeg na elke andere wijziging, want dan slaat die zin nergens meer op. */
+  var saveZin = "";
+  function markUnsaved(label) { saveLabel = label; saveZin = ""; setSavebar(true); }
+  function markUnsavedZin(zin) { saveZin = zin; setSavebar(true); }
 
   function showSavebar() { if (root.dataset.settings === "open") markUnsaved(setTitle.textContent); }
   function hideSavebar() { setSavebar(false); }
@@ -1700,7 +1705,8 @@
     if (!actie) return;
     hideSavebar();
     /* De melding benoemt wat er bewaard is; de settings-kop weet dat al. */
-    if (actie.dataset.save === "save") showToast(saveLabel + " saved");
+    if (actie.dataset.save === "save") showToast(saveZin || saveLabel + " saved");
+    saveZin = "";
   });
 
   /* ========================================================================
@@ -1760,10 +1766,11 @@
   /* ---- Standaardtaal ------------------------------------------------------
      Twee talen liggen vast, staan allebei live en delen hetzelfde domein.
      Wat overblijft is welke van de twee de klant als eerste ziet, en dat is
-     een keuze uit twee: de keuzerondjes zijn zelf de bediening. */
+     een keuze uit twee: de keuzerondjes zijn zelf de bediening. De melding
+     komt pas als je bovenin opslaat, net als bij elke andere instelling. */
   document.addEventListener("change", function (e) {
     if (e.target.name !== "default-lang") return;
-    showToast(e.target.value + " is now the default language");
+    markUnsavedZin(e.target.value + " is now the default language");
   });
 
   /* ---- Adres opzoeken -----------------------------------------------------
