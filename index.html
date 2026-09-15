@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=107" />
+  <link rel="stylesheet" href="styles.css?v=108" />
 </head>
 <body>
 
@@ -88,6 +88,7 @@
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M13.4 4.6h6v6M19.4 4.6 11.6 12.4M17.4 14v4.4a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 18.4V8.2a1.6 1.6 0 0 1 1.6-1.6H10"/></symbol>
     <symbol id="i-edit" viewBox="0 0 24 24"><path d="M16.5 4.6a2.1 2.1 0 0 1 3 3L9.6 17.5l-4 1 1-4z"/></symbol>
     <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8z"/><path d="M14 3.5V8h4.5"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 9A8 8 0 0 0 5 7.4L4 9"/><path d="M4 4.5V9h4.5"/><path d="M4.5 15A8 8 0 0 0 19 16.6l1-1.6"/><path d="M20 19.5V15h-4.5"/></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.8 11.2 12 15.4l4.2-4.2M4.6 19.4h14.8"/></symbol>
     <symbol id="i-code" viewBox="0 0 24 24"><path d="m8.6 8.4-4 3.6 4 3.6M15.4 8.4l4 3.6-4 3.6M13.4 5.4l-2.8 13.2"/></symbol>
     <symbol id="i-return" viewBox="0 0 24 24"><path d="M4.4 8.6h11a4.6 4.6 0 0 1 0 9.2H7.4M4.4 8.6 8 5M4.4 8.6 8 12.2"/></symbol>
@@ -2142,7 +2143,17 @@
             </button>
           </div>
           <div class="page-head__tools" data-set-tools="domain" hidden>
-            <button class="btn btn--ghost page-head__action" type="button">Connect existing</button>
+            <!-- Koppelen is de gewone weg; verhuizen van een andere aanbieder
+                 komt minder vaak voor en zit daarom achter het pijltje. -->
+            <span class="sort split">
+              <button class="btn btn--ghost page-head__action split__main" type="button">Connect existing</button>
+              <button class="btn btn--ghost page-head__action split__toggle sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More ways to add a domain">
+                <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+              <div class="sort__menu" role="menu" hidden>
+                <button class="sort__item" type="button" role="menuitem" data-dialog="transfer-dialog">Transfer domain</button>
+              </div>
+            </span>
             <button class="btn btn--primary page-head__action" type="button"
                     data-sub="domain-buy"
                     data-sub-title="Buy new domain">
@@ -4123,6 +4134,66 @@
           </div>
         </section>
 
+        <!-- ---------- SETTINGS-SUB: domein verhuizen ---------- -->
+        <!-- Verhuizen van een andere aanbieder. Het domein blijft van jou, alleen
+             wie het beheert verandert. De stappen staan in de volgorde waarin je
+             ze bij je huidige aanbieder afwerkt; Continue gaat pas aan als het
+             domein ontgrendeld is en de code erin staat. -->
+        <section class="view" data-set-sub="domain-transfer" hidden>
+          <div class="card card--flush">
+            <div class="xfer__pad">
+              <h3 class="card__title">Domain to transfer</h3>
+              <div class="rows">
+                <div class="row row--static">
+                  <span class="row__text">
+                    <span class="row__title" id="xfer-name">restaurantname.nl</span>
+                    <span class="row__meta">Includes a 1-year renewal on top of the time left on your domain.</span>
+                  </span>
+                  <span class="xfer__price" id="xfer-price">&euro; 9,00 / year</span>
+                </div>
+              </div>
+            </div>
+            <p class="xfer__foot"><b>Transfers can take up to 5 days.</b> DNS and email settings do not move along automatically. <a class="link" href="#">Learn more</a></p>
+          </div>
+
+          <div class="card card--flush">
+            <div class="xfer__pad">
+              <h3 class="card__title card__title--info">
+                Prepare domain for transfer
+                <span class="explain">
+                  <button class="explain__icon" type="button" aria-label="Why these steps?" aria-describedby="explain-xfer">
+                    <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                  </button>
+                  <span class="explain__pop" id="explain-xfer" role="tooltip">
+                    <b>Why these steps?</b>
+                    Your current provider has to let the domain go. They only do that when the domain is unlocked and you prove it is yours with the authorization code.
+                  </span>
+                </span>
+              </h3>
+              <ol class="xsteps">
+                <li><b>Log in</b> to your current domain provider.</li>
+                <li><b>Confirm your email</b> with that provider is correct, so you receive their instructions.</li>
+                <li>
+                  <b>Unlock your domain</b> so it can be transferred.
+                  <div class="xlock">
+                    <span>Your domain is <span class="badge badge--pending" id="xfer-lock">Locked</span></span>
+                    <button class="icon-btn" type="button" id="xfer-recheck" aria-label="Check the lock again">
+                      <svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>
+                    </button>
+                  </div>
+                </li>
+                <li>
+                  <label for="xfer-code"><b>Find and enter</b> your authorization code</label>
+                  <input class="input" id="xfer-code" type="text" placeholder="Example: 5YcCdX&amp;WIq0Xozj" autocomplete="off" />
+                </li>
+              </ol>
+            </div>
+            <div class="xfer__foot xfer__foot--act">
+              <button class="btn btn--primary" type="button" id="xfer-go" disabled>Continue</button>
+            </div>
+          </div>
+        </section>
+
         <!-- ---------- SETTINGS-SUB: domein kopen ---------- -->
         <section class="view" data-set-sub="domain-buy" hidden>
           <div class="card">
@@ -4374,6 +4445,31 @@
       </div>
     </div>
   </div>
+  <!-- Verhuizen begint met de vraag welk domein; prijs en stappen hangen daarvan af. -->
+  <div class="dialog" id="transfer-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="transfer-dialog-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="transfer-dialog-title">Transfer your domain to Opining</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead">To transfer, your domain is renewed for 1 year. Not every domain can be transferred.</p>
+      <div class="field">
+        <label class="label" for="transfer-domain">Domain</label>
+        <input class="input" id="transfer-domain" type="text" placeholder="e.g. restaurantname.nl" autocomplete="off" />
+        <p class="field__error" id="transfer-domain-error" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Enter a domain like restaurantname.nl.
+        </p>
+      </div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="transfer-next">Next</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dialog" id="export-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="export-title">
@@ -4413,6 +4509,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=107"></script>
+  <script src="app.js?v=108"></script>
 </body>
 </html>

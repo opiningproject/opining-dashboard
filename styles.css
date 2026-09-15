@@ -735,6 +735,11 @@ select.input {
 /* De hoofdactie blijft altijd naast de titel; de rest zit op een klein scherm
    achter de drie puntjes. app.js bouwt dat menu uit dezelfde knoppen. */
 .page-head__more { display: none; }
+/* Twee knoppen die samen een zijn: de gewone actie en een pijltje voor de
+   minder gewone weg. De naad ertussen is hun gedeelde rand. */
+.split { display: inline-flex; }
+.split__main { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.split__toggle { width: 36px; margin-left: -1px; padding: 0; justify-content: center; border-top-left-radius: 0; border-bottom-left-radius: 0; }
 
 /* Een paneel binnen een kaart die zelf al een titel draagt: de titel
    hoort bij de kaart, de lijst krijgt daaronder een eigen kader. */
@@ -2303,6 +2308,38 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 }
 
 /* ==========================================================================
+   8q. DOMEIN VERHUIZEN
+   Twee kaarten: welk domein en wat het kost, en daaronder wat je bij je
+   huidige aanbieder moet regelen. Beide eindigen in een grijze strook, voor
+   een voetnoot of voor de knop om verder te gaan.
+   ========================================================================== */
+.xfer__pad { padding: 22px 24px 24px; }
+.xfer__price { flex: 0 0 auto; margin-left: auto; font-size: var(--fs-md); color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.xfer__foot {
+  padding: 14px 24px;
+  border-top: 1px solid var(--border);
+  border-radius: 0 0 calc(var(--r-lg) - 1px) calc(var(--r-lg) - 1px);
+  background: var(--gray-50);
+  font-size: var(--fs-sm); color: var(--text-muted);
+}
+.xfer__foot b { font-weight: 600; color: var(--text-strong); }
+.xfer__foot--act { display: flex; justify-content: flex-end; }
+
+/* Genummerde stappen: het werkwoord vet, zodat je de lijst kunt scannen. */
+.xsteps { display: flex; flex-direction: column; gap: 16px; margin-top: 14px; padding-left: 20px; font-size: var(--fs-sm); color: var(--text); }
+.xsteps b { font-weight: 600; color: var(--text-strong); }
+.xsteps li::marker { font-weight: 600; color: var(--text-strong); }
+.xsteps .input { margin-top: 8px; }
+/* De stand van het slot, met een knop om opnieuw te kijken. */
+.xlock {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-top: 8px; padding: 6px 6px 6px 14px;
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  color: var(--text-muted);
+}
+.xlock .badge { margin-left: 6px; }
+
+/* ==========================================================================
    8n. VENSTER — een korte vraag over de hele pagina heen
    Kleiner dan de settings-overlay: die vervangt het scherm, dit onderbreekt
    het even. Zelfde scrim als de mobiele drawer.
@@ -2637,6 +2674,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
      waar dat menu er ook echt is, vandaar :has(). */
   .page-head__tools:has(.page-head__more) .page-head__more { display: block; }
   .page-head__tools:has(.page-head__more) .btn:not(.btn--primary) { display: none; }
+  /* De gesplitste knop verhuist in zijn geheel naar het menu. */
+  .page-head__tools:has(.page-head__more) .split { display: none; }
   /* Het menu lijnt uit op de knoppenrij, niet op de puntjes: anders steekt het
      aan de linkerkant buiten het scherm. */
   .page-head__tools:has(.page-head__more) { position: relative; }

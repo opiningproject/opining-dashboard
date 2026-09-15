@@ -167,8 +167,10 @@
        op mobiel toch al zijn eigen regel. */
     if (tools.querySelector("select")) return;
 
-    var bij = [].slice.call(tools.querySelectorAll(".btn:not(.btn--primary)"));
-    if (bij.length < 1 || bij.length === tools.querySelectorAll(".btn").length) return;
+    /* Het pijltje van een gesplitste knop is zelf geen actie; wat erachter zit
+       wel, dus dat gaat als eigen regel mee het menu in. */
+    var bij = [].slice.call(tools.querySelectorAll(".btn:not(.btn--primary):not(.split__toggle), .split .sort__item"));
+    if (bij.length < 1 || !tools.querySelector(".btn--primary")) return;
 
     var vak = document.createElement("div");
     vak.className = "sort page-head__more";
@@ -594,6 +596,10 @@
 
     var sortItem = e.target.closest(".sort__item");
     if (sortItem) {
+      /* Alleen een sorteerkeuze blijft open en krijgt een vinkje. Elk ander
+         menu-item is een actie; die regelt zijn eigen handler, en daarna
+         hoort het menu dicht. */
+      if (!sortItem.dataset.sort) { sluitFilterMenus(); return; }
       var groep = sortItem.dataset.sort;
       sortItem.closest(".sort__menu")
         .querySelectorAll('[data-sort="' + groep + '"]').forEach(function (i) {
@@ -1853,6 +1859,88 @@
     var knop = e.target.closest("[data-toast]");
     if (knop) showToast(knop.dataset.toast);
   });
+
+  /* ---- Domein verhuizen ---------------------------------------------------
+     Eerst het venster met de vraag welk domein, dan de pagina met de stappen
+     bij de huidige aanbieder. De prijs is een jaar verlenging tegen hetzelfde
+     tarief als bij kopen. Continue gaat pas aan als het domein ontgrendeld is
+     en de code erin staat. */
+  var verhuisVenster = document.getElementById("transfer-dialog");
+
+  if (verhuisVenster) {
+    var verhuisVeld = document.getElementById("transfer-domain");
+    var verhuisFout = document.getElementById("transfer-domain-error");
+    var slot = document.getElementById("xfer-lock");
+    var verhuisCode = document.getElementById("xfer-code");
+    var verder = document.getElementById("xfer-go");
+    var TARIEF = { nl: "9,00", com: "14,00", eu: "8,00" };
+
+    function zetVerder() {
+      verder.disabled = !(slot.dataset.open === "ja" && verhuisCode.value.trim());
+    }
+
+    /* Het venster begint elke keer leeg. */
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest('[data-dialog="transfer-dialog"]')) return;
+      verhuisVeld.value = "";
+      verhuisFout.hidden = true;
+      verhuisVeld.classList.remove("input--error");
+      setTimeout(function () { verhuisVeld.focus(); }, 0);
+    });
+
+    document.getElementById("transfer-next").addEventListener("click", function () {
+      /* Wie een adres plakt krijgt het domein eruit: geen https, geen www,
+         geen pad erachter. */
+      var naam = verhuisVeld.value.trim().toLowerCase()
+        .replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "");
+      if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(naam)) {
+        verhuisFout.hidden = false;
+        verhuisVeld.classList.add("input--error");
+        verhuisVeld.focus();
+        return;
+      }
+
+      var tld = naam.split(".").pop();
+      document.getElementById("xfer-name").textContent = naam;
+      document.getElementById("xfer-price").textContent = "€ " + (TARIEF[tld] || "14,00") + " / year";
+
+      /* Een nieuw domein begint weer vergrendeld en zonder code. */
+      slot.dataset.open = "nee";
+      slot.className = "badge badge--pending";
+      slot.textContent = "Locked";
+      verhuisCode.value = "";
+      zetVerder();
+
+      verhuisVenster.hidden = true;
+      openSetSub("domain-transfer", "Transfer domain");
+    });
+
+    verhuisVeld.addEventListener("input", function () {
+      verhuisFout.hidden = true;
+      verhuisVeld.classList.remove("input--error");
+    });
+    verhuisVeld.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") document.getElementById("transfer-next").click();
+    });
+
+    /* Opnieuw kijken of het slot eraf is. Echt is dit een opzoeking bij het
+       register; hier gaat het slot bij de eerste keer open, zodat je ziet wat
+       er daarna gebeurt. */
+    document.getElementById("xfer-recheck").addEventListener("click", function () {
+      slot.dataset.open = "ja";
+      slot.className = "badge badge--active";
+      slot.textContent = "Unlocked";
+      zetVerder();
+    });
+
+    verhuisCode.addEventListener("input", zetVerder);
+
+    verder.addEventListener("click", function () {
+      var domein = document.getElementById("xfer-name").textContent;
+      backFromSub();
+      showToast("Transfer of " + domein + " started");
+    });
+  }
 
   document.getElementById("toast-close").addEventListener("click", hideToast);
 
