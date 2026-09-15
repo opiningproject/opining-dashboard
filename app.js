@@ -1774,9 +1774,24 @@
      Wat overblijft is welke van de twee de klant als eerste ziet, en dat is
      een keuze uit twee: de keuzerondjes zijn zelf de bediening. De melding
      komt pas als je bovenin opslaat, net als bij elke andere instelling. */
+  var taalBewaard = (document.querySelector('[name="default-lang"]:checked') || {}).value;
+
   document.addEventListener("change", function (e) {
     if (e.target.name !== "default-lang") return;
+    /* Terug op wat er al bewaard stond: dan valt er niets op te slaan. */
+    if (e.target.value === taalBewaard) { hideSavebar(); return; }
     markUnsavedZin(e.target.value + " is now the default language");
+  });
+
+  /* Save legt de keuze vast; Discard zet het rondje terug waar het stond,
+     anders staat er een keuze in beeld die niet bewaard is. */
+  savebar.addEventListener("click", function (e) {
+    var actie = e.target.closest("[data-save]");
+    if (!actie) return;
+    var gekozen = document.querySelector('[name="default-lang"]:checked');
+    if (actie.dataset.save === "save") { if (gekozen) taalBewaard = gekozen.value; return; }
+    var terug = document.querySelector('[name="default-lang"][value="' + taalBewaard + '"]');
+    if (terug) terug.checked = true;
   });
 
   /* ---- Adres opzoeken -----------------------------------------------------
