@@ -812,23 +812,29 @@ select.input {
 .group__list { overflow: hidden; }
 .group__list > li { border-top: 1px solid var(--border); }
 
-.prod { display: flex; align-items: center; gap: 14px; padding: 10px 16px; transition: background var(--dur) var(--ease), opacity var(--dur) var(--ease); }
+.prod { display: flex; align-items: center; gap: 14px; padding: 10px 16px; transition: background var(--dur) var(--ease); }
 .prod:hover { background: var(--gray-25); }
 /* De greep. touch-action:none, anders scrollt de pagina bij het slepen op touch. */
 .prod__handle { display: grid; place-items: center; flex: 0 0 auto; color: var(--border-strong); cursor: grab; touch-action: none; }
 /* Over de rij bewegen maakt de greep donkerder: hier pak je hem vast. */
 .prod:hover .prod__handle { color: var(--text-muted); }
-/* De rij die je vasthebt komt los: witte achtergrond, accentrand en schaduw,
-   de greep in accentkleur. De rest van de lijst treedt even terug, zodat je
-   ziet wat je verplaatst en waar het tussen komt. */
-.prod.is-dragging {
-  position: relative; z-index: 2;
+/* De rij die je vasthebt zweeft boven de lijst en volgt de pointer. Een
+   schaduw tilt hem op; de rest van de lijst blijft gewoon staan. */
+.prod.is-floating {
+  position: fixed; z-index: 50;
+  border-top: 0;
   border-radius: var(--r-md);
   background: var(--bg-surface);
-  box-shadow: 0 0 0 2px var(--accent), var(--shadow-md);
+  box-shadow: 0 14px 32px rgba(18, 22, 28, .18), 0 2px 6px rgba(18, 22, 28, .08);
+  pointer-events: none;
 }
-.prod.is-dragging .prod__handle { color: var(--accent); }
-.is-sorting-list > li:not(.is-dragging) { opacity: .6; }
+/* Waar hij landt: een grijs vak op ware grootte, afgerond binnen de regel. */
+.prod-slot { position: relative; }
+.prod-slot::after {
+  content: ""; position: absolute; inset: 5px 8px;
+  border-radius: var(--r-md);
+  background: var(--gray-150);
+}
 /* Tijdens het slepen overal de grijphand, en geen tekst die blauw oplicht. */
 .is-sorting, .is-sorting * { cursor: grabbing; -webkit-user-select: none; user-select: none; }
 .prod__thumb {

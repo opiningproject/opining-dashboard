@@ -1218,7 +1218,9 @@
      touch niets. Beweging en loslaten luisteren op het venster, zodat slepen
      doorgaat ook buiten de rij. De nieuwe plek volgt uit de middens van de
      andere rijen, gemeten zonder transform: rijen die nog opzij glijden
-     zouden de gesleepte rij anders heen en weer laten springen.
+     zouden de gesleepte rij anders heen en weer laten springen. De rij die je
+     vasthebt zweeft los met een schaduw; een grijs vak op ware grootte laat
+     zien waar hij landt.
 
      Een nieuwe volgorde gaat niet vanzelf live. Wijkt hij af van wat bewaard
      is, dan komt de savebar; terugslepen naar de bewaarde volgorde haalt hem
@@ -1262,15 +1264,37 @@
 
     var rij = greep.closest(".prod");
     var lijst = rij.parentElement;
+    var vak = rij.getBoundingClientRect();
+    /* Waar je de rij vastpakte, zodat hij niet naar de pointer toe springt. */
+    var grip = e.clientY - vak.top;
     e.preventDefault();
-    rij.classList.add("is-dragging");
-    lijst.classList.add("is-sorting-list");
+
+    /* Het grijze vak houdt de plek vast waar de rij landt, op ware grootte. */
+    var plek = document.createElement("li");
+    plek.className = "prod-slot";
+    plek.style.height = vak.height + "px";
+    plek.setAttribute("aria-hidden", "true");
+    lijst.insertBefore(plek, rij);
+
+    /* De rij zelf zweeft boven de lijst en volgt de pointer. */
+    rij.classList.add("is-floating");
+    /* Een eindje naar rechts, zodat het grijze vak eronder zichtbaar blijft. */
+    rij.style.left = (vak.left + 18) + "px";
+    rij.style.top = vak.top + "px";
+    rij.style.width = vak.width + "px";
     root.classList.add("is-sorting");
 
+    function volgendeNaPlek() {
+      var n = plek.nextElementSibling;
+      return n === rij ? n.nextElementSibling : n;
+    }
+
     function verplaats(ev) {
+      rij.style.top = (ev.clientY - grip) + "px";
+
       /* Weggefilterde rijen tellen niet mee: daar kun je niet tussen landen. */
       var andere = [].slice.call(lijst.children).filter(function (li) {
-        return li !== rij && !li.hidden && !li.hasAttribute("data-filtered");
+        return li !== rij && li !== plek && !li.hidden && !li.hasAttribute("data-filtered");
       });
       /* Pointer en rijmiddens in dezelfde maat: vanaf de bovenkant van de
          lijst, zonder transform. */
@@ -1280,10 +1304,11 @@
         var li = andere[i];
         if (y < li.offsetTop - lijst.offsetTop + li.offsetHeight / 2) { voor = li; break; }
       }
-      var alGoed = voor ? rij.nextElementSibling === voor : lijst.lastElementChild === rij;
-      if (alGoed) return;
-      glij([].slice.call(lijst.children), function () {
-        if (voor) lijst.insertBefore(rij, voor); else lijst.appendChild(rij);
+      if (volgendeNaPlek() === voor) return;
+
+      var schuivers = [].slice.call(lijst.children).filter(function (li) { return li !== rij; });
+      glij(schuivers, function () {
+        if (voor) lijst.insertBefore(plek, voor); else lijst.appendChild(plek);
       });
     }
 
@@ -1291,10 +1316,32 @@
       window.removeEventListener("pointermove", verplaats);
       window.removeEventListener("pointerup", stop);
       window.removeEventListener("pointercancel", stop);
-      rij.classList.remove("is-dragging");
-      lijst.classList.remove("is-sorting-list");
+
+      /* Neerzetten waar het grijze vak staat, en vanaf de zweefplek erheen glijden. */
+      var zweefde = rij.getBoundingClientRect();
+      lijst.insertBefore(rij, plek);
+      plek.remove();
+      rij.classList.remove("is-floating");
+      rij.style.left = "";
+      rij.style.top = "";
+      rij.style.width = "";
       root.classList.remove("is-sorting");
       [].forEach.call(lijst.children, function (li) { li.style.transition = ""; li.style.transform = ""; });
+
+      var nu = rij.getBoundingClientRect();
+      var dx = zweefde.left - nu.left;
+      var dy = zweefde.top - nu.top;
+      if ((dx || dy) && !rustig.matches) {
+        rij.style.transform = "translate(" + dx + "px, " + dy + "px)";
+        rij.getBoundingClientRect();
+        rij.style.transition = "transform 160ms ease";
+        rij.style.transform = "";
+        rij.addEventListener("transitionend", function klaar() {
+          rij.style.transition = "";
+          rij.removeEventListener("transitionend", klaar);
+        });
+      }
+
       /* Afwijkend van wat bewaard is: vragen om te bewaren. Terug op de
          bewaarde volgorde: niets te bewaren, dus de savebar weg. */
       if (volgordeGewijzigd()) markUnsavedZin("Product order saved");
