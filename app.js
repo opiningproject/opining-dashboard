@@ -1217,17 +1217,54 @@
      Pointer-events in plaats van HTML5 drag-and-drop: dat laatste doet op
      touch niets. Beweging en loslaten luisteren op het venster, zodat slepen
      doorgaat ook buiten de rij. De nieuwe plek volgt uit de middens van de
-     andere rijen, niet uit elementFromPoint: daarvoor moest de gesleepte rij
-     onzichtbaar zijn voor de pointer, en dat maakte de greep erin ook doof. */
+     andere rijen, gemeten zonder transform: rijen die nog opzij glijden
+     zouden de gesleepte rij anders heen en weer laten springen.
+
+     Een nieuwe volgorde gaat niet vanzelf live. Wijkt hij af van wat bewaard
+     is, dan komt de savebar; terugslepen naar de bewaarde volgorde haalt hem
+     weer weg, en Discard zet elke rij terug. */
+  var sorteerLijsten = document.querySelectorAll('[data-view="products"] .group__list');
+  var bewaardeVolgorde = new Map();
+  var rustig = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function legVolgordeVast() {
+    sorteerLijsten.forEach(function (l) { bewaardeVolgorde.set(l, [].slice.call(l.children)); });
+  }
+  function volgordeGewijzigd() {
+    return [].some.call(sorteerLijsten, function (l) {
+      var bewaard = bewaardeVolgorde.get(l);
+      return [].some.call(l.children, function (li, i) { return li !== bewaard[i]; });
+    });
+  }
+  legVolgordeVast();
+
+  /* Rijen die van plek wisselen glijden erheen in plaats van te springen:
+     eerst meten, dan verplaatsen, dan het verschil wegschuiven. */
+  function glij(rijen, verplaats) {
+    if (rustig.matches) { verplaats(); return; }
+    var was = new Map();
+    rijen.forEach(function (li) { was.set(li, li.getBoundingClientRect().top); });
+    verplaats();
+    rijen.forEach(function (li) {
+      var dy = was.get(li) - li.getBoundingClientRect().top;
+      if (!dy) return;
+      li.style.transition = "none";
+      li.style.transform = "translateY(" + dy + "px)";
+      li.getBoundingClientRect();
+      li.style.transition = "transform 160ms ease";
+      li.style.transform = "";
+    });
+  }
+
   document.addEventListener("pointerdown", function (e) {
     var greep = e.target.closest(".prod__handle");
     if (!greep || e.button > 0) return;
 
     var rij = greep.closest(".prod");
     var lijst = rij.parentElement;
-    var begin = [].slice.call(lijst.children);
     e.preventDefault();
     rij.classList.add("is-dragging");
+    lijst.classList.add("is-sorting-list");
     root.classList.add("is-sorting");
 
     function verplaats(ev) {
@@ -1235,34 +1272,48 @@
       var andere = [].slice.call(lijst.children).filter(function (li) {
         return li !== rij && !li.hidden && !li.hasAttribute("data-filtered");
       });
-      /* Voor de eerste rij waarvan het midden onder de pointer ligt; ligt
-         geen enkel midden eronder, dan onderaan. */
+      /* Pointer en rijmiddens in dezelfde maat: vanaf de bovenkant van de
+         lijst, zonder transform. */
+      var y = ev.clientY - lijst.getBoundingClientRect().top;
       var voor = null;
       for (var i = 0; i < andere.length; i++) {
-        var vak = andere[i].getBoundingClientRect();
-        if (ev.clientY < vak.top + vak.height / 2) { voor = andere[i]; break; }
+        var li = andere[i];
+        if (y < li.offsetTop - lijst.offsetTop + li.offsetHeight / 2) { voor = li; break; }
       }
-      if (voor) {
-        if (rij.nextElementSibling !== voor) lijst.insertBefore(rij, voor);
-      } else if (lijst.lastElementChild !== rij) {
-        lijst.appendChild(rij);
-      }
+      var alGoed = voor ? rij.nextElementSibling === voor : lijst.lastElementChild === rij;
+      if (alGoed) return;
+      glij([].slice.call(lijst.children), function () {
+        if (voor) lijst.insertBefore(rij, voor); else lijst.appendChild(rij);
+      });
     }
 
     function stop() {
-      rij.classList.remove("is-dragging");
-      root.classList.remove("is-sorting");
       window.removeEventListener("pointermove", verplaats);
       window.removeEventListener("pointerup", stop);
       window.removeEventListener("pointercancel", stop);
-      /* Een volgorde gaat meteen live; alleen melden als er echt iets verschoof. */
-      var anders = [].slice.call(lijst.children).some(function (li, i) { return li !== begin[i]; });
-      if (anders) showToast("Product order updated");
+      rij.classList.remove("is-dragging");
+      lijst.classList.remove("is-sorting-list");
+      root.classList.remove("is-sorting");
+      [].forEach.call(lijst.children, function (li) { li.style.transition = ""; li.style.transform = ""; });
+      /* Afwijkend van wat bewaard is: vragen om te bewaren. Terug op de
+         bewaarde volgorde: niets te bewaren, dus de savebar weg. */
+      if (volgordeGewijzigd()) markUnsavedZin("Product order saved");
+      else hideSavebar();
     }
 
     window.addEventListener("pointermove", verplaats);
     window.addEventListener("pointerup", stop);
     window.addEventListener("pointercancel", stop);
+  });
+
+  /* Save legt de nieuwe volgorde vast; Discard zet elke rij terug waar hij stond. */
+  savebar.addEventListener("click", function (e) {
+    var actie = e.target.closest("[data-save]");
+    if (!actie) return;
+    if (actie.dataset.save === "save") { legVolgordeVast(); return; }
+    bewaardeVolgorde.forEach(function (rijen, lijst) {
+      rijen.forEach(function (li) { lijst.appendChild(li); });
+    });
   });
 
   /* Tabs zitten op meerdere plekken (producten, billing), dus één gedelegeerde
