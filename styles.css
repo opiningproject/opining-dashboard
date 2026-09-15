@@ -814,13 +814,13 @@ select.input {
 
 .prod { display: flex; align-items: center; gap: 14px; padding: 10px 16px; transition: background var(--dur) var(--ease); }
 .prod:hover { background: var(--gray-25); }
-/* touch-action:none, anders scrollt de pagina bij het slepen op touch. */
-.prod__handle { cursor: grab; touch-action: none; }
-.prod__handle:active { cursor: grabbing; }
-/* Tijdens het slepen genegeerd door elementFromPoint, zodat de rij
-   eronder gevonden wordt in plaats van de rij zelf. */
-.prod.is-dragging { opacity: .55; background: var(--gray-50); pointer-events: none; }
-.prod__handle { display: grid; place-items: center; flex: 0 0 auto; color: var(--border-strong); cursor: grab; }
+/* De greep. touch-action:none, anders scrollt de pagina bij het slepen op touch. */
+.prod__handle { display: grid; place-items: center; flex: 0 0 auto; color: var(--border-strong); cursor: grab; touch-action: none; }
+.prod__handle:hover { color: var(--text-muted); }
+/* De rij die je vasthebt komt los van de lijst, zodat je ziet wat je verplaatst. */
+.prod.is-dragging { position: relative; z-index: 1; background: var(--bg-surface); box-shadow: var(--shadow-md); }
+/* Tijdens het slepen overal de grijphand, en geen tekst die blauw oplicht. */
+.is-sorting, .is-sorting * { cursor: grabbing; -webkit-user-select: none; user-select: none; }
 .prod__thumb {
   display: grid; place-items: center;
   width: 44px; height: 44px; flex: 0 0 auto;

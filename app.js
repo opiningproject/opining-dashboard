@@ -1215,40 +1215,54 @@
 
   /* ---- Producten slepen om de volgorde te bepalen ------------------------
      Pointer-events in plaats van HTML5 drag-and-drop: dat laatste doet op
-     touch niets. De greep vangt de pointer, zodat slepen doorgaat ook als je
-     buiten de rij komt. */
+     touch niets. Beweging en loslaten luisteren op het venster, zodat slepen
+     doorgaat ook buiten de rij. De nieuwe plek volgt uit de middens van de
+     andere rijen, niet uit elementFromPoint: daarvoor moest de gesleepte rij
+     onzichtbaar zijn voor de pointer, en dat maakte de greep erin ook doof. */
   document.addEventListener("pointerdown", function (e) {
     var greep = e.target.closest(".prod__handle");
-    if (!greep) return;
+    if (!greep || e.button > 0) return;
 
     var rij = greep.closest(".prod");
     var lijst = rij.parentElement;
+    var begin = [].slice.call(lijst.children);
     e.preventDefault();
     rij.classList.add("is-dragging");
-    greep.setPointerCapture(e.pointerId);
+    root.classList.add("is-sorting");
 
     function verplaats(ev) {
-      /* De gesleepte rij staat op pointer-events:none, dus elementFromPoint
-         geeft de rij eronder terug in plaats van zichzelf. */
-      var onder = document.elementFromPoint(ev.clientX, ev.clientY);
-      var doel = onder && onder.closest(".prod");
-      if (!doel || doel === rij || doel.parentElement !== lijst) return;
-      var vak = doel.getBoundingClientRect();
-      var bovenHelft = ev.clientY < vak.top + vak.height / 2;
-      lijst.insertBefore(rij, bovenHelft ? doel : doel.nextSibling);
+      /* Weggefilterde rijen tellen niet mee: daar kun je niet tussen landen. */
+      var andere = [].slice.call(lijst.children).filter(function (li) {
+        return li !== rij && !li.hidden && !li.hasAttribute("data-filtered");
+      });
+      /* Voor de eerste rij waarvan het midden onder de pointer ligt; ligt
+         geen enkel midden eronder, dan onderaan. */
+      var voor = null;
+      for (var i = 0; i < andere.length; i++) {
+        var vak = andere[i].getBoundingClientRect();
+        if (ev.clientY < vak.top + vak.height / 2) { voor = andere[i]; break; }
+      }
+      if (voor) {
+        if (rij.nextElementSibling !== voor) lijst.insertBefore(rij, voor);
+      } else if (lijst.lastElementChild !== rij) {
+        lijst.appendChild(rij);
+      }
     }
 
-    function stop(ev) {
+    function stop() {
       rij.classList.remove("is-dragging");
-      greep.releasePointerCapture(ev.pointerId);
-      greep.removeEventListener("pointermove", verplaats);
-      greep.removeEventListener("pointerup", stop);
-      greep.removeEventListener("pointercancel", stop);
+      root.classList.remove("is-sorting");
+      window.removeEventListener("pointermove", verplaats);
+      window.removeEventListener("pointerup", stop);
+      window.removeEventListener("pointercancel", stop);
+      /* Een volgorde gaat meteen live; alleen melden als er echt iets verschoof. */
+      var anders = [].slice.call(lijst.children).some(function (li, i) { return li !== begin[i]; });
+      if (anders) showToast("Product order updated");
     }
 
-    greep.addEventListener("pointermove", verplaats);
-    greep.addEventListener("pointerup", stop);
-    greep.addEventListener("pointercancel", stop);
+    window.addEventListener("pointermove", verplaats);
+    window.addEventListener("pointerup", stop);
+    window.addEventListener("pointercancel", stop);
   });
 
   /* Tabs zitten op meerdere plekken (producten, billing), dus één gedelegeerde
@@ -1282,9 +1296,10 @@
   /* Elke lijstpagina heeft zijn eigen actie; Online Store wijkt af met een
      zachte knop in plaats van de primaire toevoegknop. */
   var PAGINA_ACTIES = {
-    products:       { label: "Add product",   icon: "i-plus", zacht: false },
-    choices:        { label: "Add new",       icon: "i-plus", zacht: false },
-    categories:     { label: "Add categorie", icon: "i-plus", zacht: false },
+    /* Menupaginas: alleen tekst op de knop. */
+    products:       { label: "Add product",   zacht: false },
+    choices:        { label: "Add new",       zacht: false },
+    categories:     { label: "Add categorie", zacht: false },
     deliverers:     { label: "Add deliverer", icon: "i-plus", zacht: false },
     discounts:      { label: "Create discount", icon: "i-plus", zacht: false, opent: "discount-new" },
     vouchers:       { label: "Create voucher",  icon: "i-plus", zacht: false, opent: "voucher-new" },
@@ -1314,7 +1329,11 @@
     pageAction.hidden = !actie;
     if (!actie) return;
     pageActionLabel.textContent = actie.label;
-    pageActionIcon.setAttribute("href", "#" + actie.icon);
+    /* Zonder icoon verdwijnt het teken; .hidden werkt niet op een svg, dus
+       het attribuut zelf. */
+    var teken = pageActionIcon.parentNode;
+    if (actie.icon) { pageActionIcon.setAttribute("href", "#" + actie.icon); teken.removeAttribute("hidden"); }
+    else teken.setAttribute("hidden", "");
     /* Acties die een aanmaakscherm openen dragen dat scherm mee; de
        gedelegeerde handler in §2 pikt data-open-view op. */
     if (actie.opent) {
