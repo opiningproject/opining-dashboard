@@ -1942,6 +1942,98 @@
     });
   }
 
+  /* ---- Bestaand domein koppelen -------------------------------------------
+     Venster met de vraag welk domein, dan de pagina met de DNS-records die je
+     bij je huidige aanbieder omzet. Het domein staat meteen in de lijst onder
+     het primaire domein, met Needs setup: toegevoegd, maar nog niet bereikbaar. */
+  var koppelVenster = document.getElementById("connect-dialog");
+
+  if (koppelVenster) {
+    var koppelVeld = document.getElementById("connect-domain");
+    var koppelFout = document.getElementById("connect-domain-error");
+    var koppelLijst = document.querySelector(".table--domains tbody");
+    var koppelRij = null;
+    var MAANDEN = ["January", "February", "March", "April", "May", "June",
+                   "July", "August", "September", "October", "November", "December"];
+
+    function zetStap(id, stand) {
+      document.getElementById(id).className = "dstep " + stand;
+    }
+
+    /* Het venster begint elke keer leeg. */
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest('[data-dialog="connect-dialog"]')) return;
+      koppelVeld.value = "";
+      koppelFout.hidden = true;
+      koppelVeld.classList.remove("input--error");
+      setTimeout(function () { koppelVeld.focus(); }, 0);
+    });
+
+    document.getElementById("connect-next").addEventListener("click", function () {
+      var naam = koppelVeld.value.trim().toLowerCase()
+        .replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+      if (!/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(naam)) {
+        koppelFout.hidden = false;
+        koppelVeld.classList.add("input--error");
+        koppelVeld.focus();
+        return;
+      }
+
+      document.querySelectorAll("[data-connect-name]").forEach(function (el) { el.textContent = naam; });
+      document.getElementById("connect-view").href = "https://" + naam;
+
+      /* Elke koppeling begint bij de eerste stap. */
+      zetStap("dstep-dns", "is-open");
+      zetStap("dstep-prop", "is-waiting");
+      zetStap("dstep-tls", "is-waiting");
+      document.querySelector("#dstep-prop .dstep__meta").hidden = true;
+
+      /* In de lijst direct onder het primaire domein, want daar verwijst hij
+         naartoe. Opnieuw koppelen vervangt de vorige regel. */
+      if (koppelRij) koppelRij.remove();
+      koppelRij = document.createElement("tr");
+      koppelRij.innerHTML =
+        '<td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-domain"/></svg><span class="dom__name"></span></span></td>' +
+        '<td><span class="badge badge--muted">Needs setup</span></td><td></td>';
+      koppelRij.querySelector(".dom__name").textContent = naam;
+      koppelLijst.insertBefore(koppelRij, koppelLijst.rows[1] || null);
+
+      var nu = new Date();
+      koppelVenster.hidden = true;
+      openSetSub("domain-connect", naam, "Added on " + nu.getDate() + " " + MAANDEN[nu.getMonth()] + " " + nu.getFullYear());
+    });
+
+    koppelVeld.addEventListener("input", function () {
+      koppelFout.hidden = true;
+      koppelVeld.classList.remove("input--error");
+    });
+    koppelVeld.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") document.getElementById("connect-next").click();
+    });
+
+    /* Jouw deel is klaar; de rest volgt vanzelf. De eerste stap klapt dicht,
+       de tweede gaat draaien. */
+    document.getElementById("connect-updated").addEventListener("click", function () {
+      zetStap("dstep-dns", "is-done");
+      zetStap("dstep-prop", "is-busy");
+      document.querySelector("#dstep-prop .dstep__meta").hidden = false;
+      showToast("We are checking your DNS records");
+    });
+
+    /* Een domein dat nog niet werkt kan geen primair domein zijn: bezoekers
+       zouden op een lege pagina uitkomen. */
+    document.getElementById("connect-primary").addEventListener("click", function () {
+      showToast("Finish the setup before making this your primary domain");
+    });
+
+    document.getElementById("connect-remove").addEventListener("click", function () {
+      var naam = document.getElementById("set-title").textContent;
+      if (koppelRij) { koppelRij.remove(); koppelRij = null; }
+      backFromSub();
+      showToast(naam + " removed");
+    });
+  }
+
   document.getElementById("toast-close").addEventListener("click", hideToast);
 
   /* ========================================================================

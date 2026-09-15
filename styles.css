@@ -2340,6 +2340,52 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .xlock .badge { margin-left: 6px; }
 
 /* ==========================================================================
+   8r. DOMEIN KOPPELEN
+   Een plaatje bovenin, daaronder drie stappen met een rondje ervoor. Alleen
+   de eerste doe je zelf; de andere twee staan grijs tot ze aan de beurt zijn.
+   ========================================================================== */
+.dhero {
+  display: grid; place-items: end center;
+  height: 128px; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  border-radius: calc(var(--r-lg) - 1px) calc(var(--r-lg) - 1px) 0 0;
+  background: var(--gray-50);
+}
+.dhero__art { width: 240px; height: 120px; }
+
+.dsteps { padding: 6px 24px 18px; }
+.dstep { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 12px; padding: 14px 0; }
+.dstep + .dstep { border-top: 1px solid var(--border); }
+.dstep__dot { width: 18px; height: 18px; margin-top: 1px; border: 1.5px dashed var(--border-strong); border-radius: var(--r-full); }
+.dstep__title { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.dstep__meta { margin-top: 4px; font-size: var(--fs-sm); color: var(--text-muted); }
+.dstep__act { display: flex; justify-content: flex-end; margin-top: 16px; }
+/* Dicht: alleen de titel, de uitleg is dan niet meer aan de orde. */
+.dstep:not(.is-open) .xsteps, .dstep:not(.is-open) .dstep__act { display: none; }
+.dstep.is-waiting .dstep__title { color: var(--text-muted); }
+.dstep.is-waiting .dstep__dot { border-color: var(--border); }
+/* Bezig: het rondje draait, zodat je ziet dat er iets gebeurt zonder jou. */
+.dstep.is-busy .dstep__dot { border-style: solid; border-color: var(--border); border-top-color: var(--accent); animation: dstep-draai .9s linear infinite; }
+.dstep.is-done .dstep__dot {
+  border: 0;
+  background: var(--success) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='m6 12.5 4 4L18 8'/></svg>") center / 12px no-repeat;
+}
+@keyframes dstep-draai { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .dstep.is-busy .dstep__dot { animation: none; } }
+
+/* De records: wat er nu staat, en wat het moet worden. */
+.dns { margin-top: 8px; }
+.table--dns { font-size: var(--fs-sm); }
+.table--dns th, .table--dns td { white-space: nowrap; }
+.dns__empty { color: var(--text-muted); }
+.dns__arrow { width: 1%; color: var(--text-muted); }
+.dns__arrow .icon { width: 16px; height: 16px; }
+.dns__new { font-weight: 600; color: var(--text-strong); }
+
+/* Een gekoppeld domein hangt in de lijst onder het primaire domein. */
+.dom--sub { padding-left: 26px; }
+
+/* ==========================================================================
    8n. VENSTER — een korte vraag over de hele pagina heen
    Kleiner dan de settings-overlay: die vervangt het scherm, dit onderbreekt
    het even. Zelfde scrim als de mobiele drawer.
