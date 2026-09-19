@@ -1689,8 +1689,8 @@ select.input {
 .alert--info { background: var(--accent-soft); color: #14567f; }
 /* Melding met een titel: de titel op een eigen regel, de uitleg eronder,
    en het teken bovenaan naast de titel in plaats van in het midden. */
-.alert--titled { align-items: flex-start; }
-.alert--titled b { display: block; margin-bottom: 2px; }
+.alert--titled { align-items: flex-start; padding: 16px; font-weight: 400; }
+.alert--titled b { display: block; margin-bottom: 2px; font-weight: 600; }
 .alert--titled .icon { margin-top: 1px; }
 
 /* Kop van een inklapbare kaartsectie: een grijze balk bovenin de kaart met
