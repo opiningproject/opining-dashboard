@@ -1458,6 +1458,26 @@ select.input {
 .paystat__dot { width: 10px; height: 10px; flex: 0 0 auto; border-radius: 3px; background: var(--gray-300); }
 .paystat__dot--wait { background: var(--warning-fg); }
 .paystat__note { margin-bottom: 0; }
+
+/* Een regel bovenaan de betaalpagina met de stand van de verificatie. */
+.vbar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+.vbar__icon {
+  display: grid; place-items: center;
+  width: 28px; height: 28px; flex: 0 0 auto;
+  border-radius: var(--r-md);
+  background: var(--accent-soft); color: #14567f;
+}
+.vbar__icon .icon { width: 18px; height: 18px; }
+.vbar__text { font-size: var(--fs-md); color: var(--text); }
+.vbar__text b { font-weight: 500; color: var(--text-strong); }
+/* Twee standen, gekozen met data-verify op de betaalpagina. Standaard staat
+   alles voor pending; bij failed wordt het i-teken een rood kruis, wordt de
+   wachtende stip rood en valt de uitleg over het controleren weg. */
+.v-failed { display: none; }
+[data-verify="failed"] .v-pending { display: none; }
+[data-verify="failed"] .v-failed { display: inline; }
+[data-verify="failed"] .vbar__icon { background: #fbeae9; color: var(--danger); }
+[data-verify="failed"] .paystat__dot--wait { background: var(--danger); }
 /* Welke methodes aanstaan, als rijtje kaartjes rechts in de regel. */
 .pmset { display: flex; align-items: center; gap: 6px; margin-left: auto; }
 .pmset + .row__caret { margin-left: 10px; }

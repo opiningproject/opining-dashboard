@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=121" />
+  <link rel="stylesheet" href="styles.css?v=122" />
 </head>
 <body>
 
@@ -3652,7 +3652,7 @@
         </section>
 
         <!-- ---------- SETTINGS: payments ---------- -->
-        <section class="view" data-set-view="payments" hidden>
+        <section class="view" data-set-view="payments" data-verify="pending" hidden>
           <div class="card" data-pay-state="off">
             <div class="promo">
               <div class="promo__body">
@@ -3695,6 +3695,17 @@
             </div>
           </div>
 
+          <!-- De stand van de verificatie in een regel bovenaan. data-verify op
+               de sectie kiest de variant: pending (blauw i-teken) of failed
+               (rood kruis); de statuskaart eronder volgt dezelfde stand. -->
+          <div class="card vbar" data-pay-state="on" hidden>
+            <span class="vbar__icon" aria-hidden="true">
+              <svg class="icon v-pending"><use href="#i-info"/></svg>
+              <svg class="icon v-failed"><use href="#i-close"/></svg>
+            </span>
+            <span class="vbar__text"><b>Verify business details</b> &middot; <span class="v-pending">Pending resolution</span><span class="v-failed">Verification failed</span></span>
+          </div>
+
           <!-- Na het versturen controleert Pay.nl de gegevens. Tot die klaar is
                kun je al instellen wat je wilt, maar nog geen online betalingen
                ontvangen; deze kaart zegt dat bovenaan. Manage opent het beheer:
@@ -3705,10 +3716,10 @@
               <button class="btn btn--ghost" type="button" data-sub="online-payments" data-sub-title="Online payments">Manage</button>
             </div>
             <div class="paystat">
-              <span class="paystat__item"><span class="paystat__dot paystat__dot--wait" aria-hidden="true"></span>Verification pending</span>
+              <span class="paystat__item"><span class="paystat__dot paystat__dot--wait" aria-hidden="true"></span><span class="v-pending">Verification pending</span><span class="v-failed">Verification failed</span></span>
               <span class="paystat__item"><span class="paystat__dot" aria-hidden="true"></span>Can&rsquo;t accept online payments yet</span>
             </div>
-            <p class="alert alert--info paystat__note">
+            <p class="alert alert--info paystat__note v-pending">
               <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
               <span><b>Pay.nl is verifying your details.</b> This usually takes one to two working days. We&rsquo;ll email you when it is done, and online payments start right away. Cash on delivery keeps working in the meantime.</span>
             </p>
@@ -4750,6 +4761,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=121"></script>
+  <script src="app.js?v=122"></script>
 </body>
 </html>
