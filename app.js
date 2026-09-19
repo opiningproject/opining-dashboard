@@ -1929,18 +1929,6 @@
     if (terug) terug.checked = true;
   });
 
-  /* Opining Payments uitzetten, na bevestiging. De betaalpagina gaat terug
-     naar de stand van voor de aanvraag: de uitnodiging om te beginnen. */
-  var uitzetKnop = document.getElementById("deactivate-go");
-  if (uitzetKnop) {
-    uitzetKnop.addEventListener("click", function () {
-      document.getElementById("deactivate-dialog").hidden = true;
-      backFromSub();
-      zetBetaalStand("off");
-      showToast("Opining Payments deactivated");
-    });
-  }
-
   /* ---- Uitbetaalrekening wijzigen ----------------------------------------
      Eerst het volledige IBAN van de huidige rekening, dan het nieuwe. Save
      gaat aan zodra beide zijn ingevuld; klopt het oude niet, dan zegt het

@@ -1381,9 +1381,6 @@ select.input {
   color: var(--text-strong);
 }
 .sort__item:hover { background: var(--bg-hover); }
-/* Een actie die iets uitzet staat onderaan en in rood, los van de rest. */
-.sort__item--danger { color: var(--danger); }
-.sort__item--danger:hover { background: #fdf1f0; }
 .sort__item .icon { width: 17px; height: 17px; color: var(--text-muted); }
 /* Waarop je sorteert leest als een keuzerondje; de richting is er maar één
    van twee en krijgt daarom een gevuld vlak in plaats van een bolletje. */
