@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=132" />
+  <link rel="stylesheet" href="styles.css?v=133" />
 </head>
 <body>
 
@@ -2908,19 +2908,6 @@
             Opining Payments is not processing transactions yet. Complete your account setup to start accepting payments.
           </p>
 
-          <div class="card">
-            <div class="card__headrow">
-              <div>
-                <h3 class="card__title card__title--info">
-                  Managed payment methods
-                  <span class="badge badge--active"><span class="badge__dot" aria-hidden="true"></span>Enabled</span>
-                </h3>
-                <p class="card__sub">We show every customer the methods that suit them, and add new methods to your store as they become available.</p>
-              </div>
-              <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Manage payment methods for me</span></label>
-            </div>
-          </div>
-
           <div class="card card--flush">
             <div class="mhead">
               <div class="card__headrow">
@@ -2929,15 +2916,8 @@
                         data-sub="payment-rates"
                         data-sub-title="Payment rates">View payment rates</button>
               </div>
-              <!-- Online en aan de deur zijn twee aparte lijsten, geen filter
-                   op één lijst: een pinautomaat kent geen iDEAL. -->
-              <div class="tabs mhead__tabs" data-tabs-for="methods">
-                <button class="tab is-active" type="button" data-tab="online">Online</button>
-                <button class="tab" type="button" data-tab="inperson">In-person</button>
-              </div>
             </div>
 
-            <div data-tabpane="methods" data-tab="online">
               <p class="mgroup">Cards</p>
               <div class="mrow">
                 <span class="pm__mark" aria-hidden="true">VI</span>
@@ -2996,33 +2976,6 @@
                 <span class="mrow__name">Google Pay</span>
                 <button class="icon-btn" type="button" aria-label="Actions for Google Pay"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
               </div>
-            </div>
-
-            <div data-tabpane="methods" data-tab="inperson" hidden>
-              <p class="mgroup">Cards</p>
-              <div class="mrow">
-                <span class="pm__mark" aria-hidden="true">PIN</span>
-                <span class="mrow__name">Card present</span>
-                <button class="icon-btn" type="button" aria-label="Actions for card present"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-              <div class="mrow">
-                <span class="pm__mark" aria-hidden="true">AX</span>
-                <span class="mrow__name">American Express</span>
-                <button class="icon-btn" type="button" aria-label="Actions for American Express in person"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-
-              <p class="mgroup">Wallets</p>
-              <div class="mrow">
-                <span class="pm__mark" aria-hidden="true">AP</span>
-                <span class="mrow__name">Apple Pay</span>
-                <button class="icon-btn" type="button" aria-label="Actions for Apple Pay in person"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-              <div class="mrow">
-                <span class="pm__mark" aria-hidden="true">GP</span>
-                <span class="mrow__name">Google Pay</span>
-                <button class="icon-btn" type="button" aria-label="Actions for Google Pay in person"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -4771,6 +4724,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=132"></script>
+  <script src="app.js?v=133"></script>
 </body>
 </html>
