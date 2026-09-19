@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=120" />
+  <link rel="stylesheet" href="styles.css?v=121" />
 </head>
 <body>
 
@@ -2163,9 +2163,11 @@
                 More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
               </button>
               <div class="sort__menu" role="menu" hidden>
+                <button class="sort__item" type="button" role="menuitem" data-sub="payment-methods" data-sub-title="Payment methods">Manage payment methods</button>
                 <button class="sort__item" type="button" role="menuitem" data-goto-page="finance">View payouts</button>
                 <button class="sort__item" type="button" role="menuitem" data-toast="Statement sent to your email">Email a statement</button>
                 <button class="sort__item" type="button" role="menuitem">Contact support</button>
+                <button class="sort__item sort__item--danger" type="button" role="menuitem" data-dialog="deactivate-dialog">Deactivate Opining Payments</button>
               </div>
             </div>
           </div>
@@ -4691,6 +4693,24 @@
     </div>
   </div>
 
+  <!-- Online betalingen uitzetten gaat niet zomaar terug, dus eerst vragen. -->
+  <div class="dialog" id="deactivate-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="deactivate-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="deactivate-title">Deactivate Opining Payments?</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead">Customers can no longer pay online at checkout. Cash on delivery keeps working. You can activate online payments again later.</p>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--danger" type="button" id="deactivate-go">Deactivate</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dialog" id="export-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="export-title">
@@ -4730,6 +4750,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=120"></script>
+  <script src="app.js?v=121"></script>
 </body>
 </html>

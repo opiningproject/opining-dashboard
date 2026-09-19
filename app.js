@@ -1911,6 +1911,18 @@
     if (terug) terug.checked = true;
   });
 
+  /* Opining Payments uitzetten, na bevestiging. De betaalpagina gaat terug
+     naar de stand van voor de aanvraag: de uitnodiging om te beginnen. */
+  var uitzetKnop = document.getElementById("deactivate-go");
+  if (uitzetKnop) {
+    uitzetKnop.addEventListener("click", function () {
+      document.getElementById("deactivate-dialog").hidden = true;
+      backFromSub();
+      zetBetaalStand("off");
+      showToast("Opining Payments deactivated");
+    });
+  }
+
   /* ---- Documenten uploaden in de controlestap -----------------------------
      Een venster voor alle drie de documenten. Per soort staat hier welke
      gegevens er letterlijk op moeten staan, welke stukken gelden en welke
