@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=124" />
+  <link rel="stylesheet" href="styles.css?v=125" />
 </head>
 <body>
 
@@ -2276,8 +2276,8 @@
         <section class="view" data-set-sub="payments-setup" hidden>
           <div class="wiz" id="pay-wiz">
             <div class="wiz__head">
-              <p class="wiz__count">Step <b id="wiz-now">1</b> of <span id="wiz-total">5</span></p>
-              <div class="wiz__track" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" aria-label="Setup progress">
+              <p class="wiz__count">Step <b id="wiz-now">1</b> of <span id="wiz-total">6</span></p>
+              <div class="wiz__track" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" aria-label="Setup progress">
                 <span id="wiz-bar"></span>
               </div>
             </div>
@@ -2540,10 +2540,25 @@
               </div>
             </div>
 
-            <!-- Stap 5 — twee blokken: de zaak en de persoon erachter. Elk
+            <!-- Stap 5 -->
+            <div class="card" data-step="5" hidden>
+              <h3 class="card__title">Payout account</h3>
+              <p class="card__sub">Where your payouts land. The account must be in the name of the business above.</p>
+              <div class="field">
+                <label class="label" for="bank-holder">Account holder</label>
+                <input class="input" id="bank-holder" type="text" placeholder="Opining B.V." />
+              </div>
+              <div class="field">
+                <label class="label" for="bank-iban">IBAN</label>
+                <input class="input" id="bank-iban" type="text" placeholder="NL91 ABNA 0417 1643 00" />
+                <p class="hint">We transfer your balance here on the payout schedule you choose later.</p>
+              </div>
+            </div>
+
+            <!-- Stap 6 — twee blokken: de zaak en de persoon erachter. Elk
                  gegeven is hier nog te wijzigen: het potlood klapt hetzelfde
                  vakje open als formulier, zodat je de stap niet terug hoeft. -->
-            <div class="card card--flush" data-step="5" hidden>
+            <div class="card card--flush" data-step="6" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-business">
                 <span class="acct__mark" aria-hidden="true">O</span>
                 <span class="acct__text">
@@ -2695,6 +2710,35 @@
                   </div>
                 </div>
 
+                <div class="rev">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Payout account</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit payout account">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <div class="rev__read">
+                    <div class="rev__line">
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-coin"/></svg>
+                      <span class="rev__text"><b>Opining</b>NL91 &lowast;&lowast;&lowast;&lowast; &lowast;&lowast;&lowast;&lowast; &lowast;&lowast;43 00</span>
+                    </div>
+                  </div>
+                  <div class="rev__form" hidden>
+                    <div class="field">
+                      <label class="label" for="rev-holder">Account holder</label>
+                      <input class="input" id="rev-holder" type="text" value="Opining" />
+                    </div>
+                    <div class="field">
+                      <label class="label" for="rev-iban">IBAN</label>
+                      <input class="input" id="rev-iban" type="text" value="NL91 ABNA 0417 1643 00" />
+                    </div>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
+
                 <h4 class="card__subtitle">Verification</h4>
                 <p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>
                 <div class="rows">
@@ -2708,7 +2752,7 @@
               </div>
             </div>
 
-            <div class="card card--flush" data-step="5" hidden>
+            <div class="card card--flush" data-step="6" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-rep">
                 <span class="acct__mark acct__mark--person" aria-hidden="true">SO</span>
                 <span class="acct__text">
@@ -2818,7 +2862,7 @@
               </div>
             </div>
 
-            <p class="wiz__terms" data-step="5" hidden>
+            <p class="wiz__terms" data-step="6" hidden>
               By using Opining Payments you agree to the <a class="link" href="#">terms of service</a> and <a class="link" href="#">applicable fees</a>.
             </p>
 
@@ -4721,6 +4765,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=124"></script>
+  <script src="app.js?v=125"></script>
 </body>
 </html>
