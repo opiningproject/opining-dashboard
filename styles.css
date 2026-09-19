@@ -1447,6 +1447,19 @@ select.input {
 .prov__row .row__text { gap: 8px; }
 .prov__note { margin: 0; border-top: 1px solid var(--border); border-radius: 0; }
 
+/* Stand van de online betalingen: twee statussen naast elkaar in een kader,
+   met een stip ervoor. Oranje is wachten, grijs is nog niet. */
+.paystat { display: flex; flex-wrap: wrap; margin-top: 14px; border: 1px solid var(--border); border-radius: var(--r-md); }
+.paystat__item { display: flex; align-items: center; gap: 10px; flex: 1 1 220px; padding: 12px 16px; font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.paystat__item + .paystat__item { border-left: 1px solid var(--border); }
+.paystat__dot { width: 10px; height: 10px; flex: 0 0 auto; border-radius: 3px; background: var(--gray-300); }
+.paystat__dot--wait { background: var(--warning-fg); }
+.paystat__note { margin-bottom: 0; }
+@media (max-width: 560px) {
+  /* Onder elkaar: de scheiding wordt een lijn erboven in plaats van ernaast. */
+  .paystat__item + .paystat__item { border-left: 0; border-top: 1px solid var(--border); }
+}
+
 /* Tijdkolom. Het getal draagt de nadruk, de eenheid blijft rustig. */
 .when { display: flex; align-items: center; gap: 8px; color: var(--text); }
 .when b { font-weight: 600; color: var(--text-strong); }

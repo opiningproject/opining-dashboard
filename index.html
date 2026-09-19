@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=118" />
+  <link rel="stylesheet" href="styles.css?v=119" />
 </head>
 <body>
 
@@ -3694,6 +3694,21 @@
             </div>
           </div>
 
+          <!-- Na het versturen controleert Pay.nl de gegevens. Tot die klaar is
+               kun je al instellen wat je wilt, maar nog geen online betalingen
+               ontvangen; deze kaart zegt dat bovenaan, voor alles wat volgt. -->
+          <div class="card" data-pay-state="on" hidden>
+            <h3 class="card__title">Online payments</h3>
+            <div class="paystat">
+              <span class="paystat__item"><span class="paystat__dot paystat__dot--wait" aria-hidden="true"></span>Verification pending</span>
+              <span class="paystat__item"><span class="paystat__dot" aria-hidden="true"></span>Can&rsquo;t accept online payments yet</span>
+            </div>
+            <p class="alert alert--info paystat__note">
+              <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+              <span><b>Pay.nl is verifying your details.</b> This usually takes one to two working days. We&rsquo;ll email you when it is done, and online payments start right away. Cash on delivery keeps working in the meantime.</span>
+            </p>
+          </div>
+
           <!-- Na het versturen van de aanvraag draait de pagina om: de reclame
                verdwijnt en wat je vanaf dan te regelen hebt komt ervoor in de
                plaats. app.js zet de stand met data-pay-state. -->
@@ -4699,6 +4714,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=118"></script>
+  <script src="app.js?v=119"></script>
 </body>
 </html>
