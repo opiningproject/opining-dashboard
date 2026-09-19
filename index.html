@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=122" />
+  <link rel="stylesheet" href="styles.css?v=123" />
 </head>
 <body>
 
@@ -3652,7 +3652,7 @@
         </section>
 
         <!-- ---------- SETTINGS: payments ---------- -->
-        <section class="view" data-set-view="payments" data-verify="pending" hidden>
+        <section class="view" data-set-view="payments" data-verify="setup" hidden>
           <div class="card" data-pay-state="off">
             <div class="promo">
               <div class="promo__body">
@@ -3696,8 +3696,8 @@
           </div>
 
           <!-- De stand van de verificatie in een regel bovenaan. data-verify op
-               de sectie kiest de variant: pending (blauw i-teken) of failed
-               (rood kruis); de statuskaart eronder volgt dezelfde stand. -->
+               de sectie kiest de variant: setup (nog verborgen), pending (blauw
+               i-teken) of failed (rood kruis); de kaart eronder volgt mee. -->
           <div class="card vbar" data-pay-state="on" hidden>
             <span class="vbar__icon" aria-hidden="true">
               <svg class="icon v-pending"><use href="#i-info"/></svg>
@@ -3715,13 +3715,17 @@
               <h3 class="card__title">Online payments</h3>
               <button class="btn btn--ghost" type="button" data-sub="online-payments" data-sub-title="Online payments">Manage</button>
             </div>
+            <p class="alert paystat__note v-setup">
+              <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>
+              <span>Opining Payments isn&rsquo;t processing transactions yet. We&rsquo;re setting up your account with Pay.nl.</span>
+            </p>
             <div class="paystat">
-              <span class="paystat__item"><span class="paystat__dot paystat__dot--wait" aria-hidden="true"></span><span class="v-pending">Verification pending</span><span class="v-failed">Verification failed</span></span>
-              <span class="paystat__item"><span class="paystat__dot" aria-hidden="true"></span>Can&rsquo;t accept online payments yet</span>
+              <span class="paystat__item"><span class="paystat__dot paystat__dot--one" aria-hidden="true"></span><span class="v-setup">Setting up payments</span><span class="v-pending">Accepting payments</span><span class="v-failed">Verification failed</span></span>
+              <span class="paystat__item"><span class="paystat__dot paystat__dot--two" aria-hidden="true"></span><span class="v-setup">Setting up payouts</span><span class="v-later">Can&rsquo;t receive payouts</span></span>
             </div>
             <p class="alert alert--info paystat__note v-pending">
               <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-              <span><b>Pay.nl is verifying your details.</b> This usually takes one to two working days. We&rsquo;ll email you when it is done, and online payments start right away. Cash on delivery keeps working in the meantime.</span>
+              <span><b>Pay.nl is verifying your details.</b> You can already accept online payments; payouts start as soon as the verification is done. This usually takes one to two working days, and we&rsquo;ll email you when it is.</span>
             </p>
             <div class="rows">
               <button class="row" type="button" data-sub="payment-methods" data-sub-title="Payment methods">
@@ -3784,7 +3788,7 @@
         <!-- Wat bij online betalingen hoort en niet elke dag verandert: waar het
              geld heen gaat, hoe vaak, en wat de klant op zijn afschrift ziet.
              Bereikbaar via Manage op de betaalpagina. -->
-        <section class="view" data-set-sub="online-payments" data-sub-badge="Verification pending" hidden>
+        <section class="view" data-set-sub="online-payments" hidden>
           <div class="card">
             <h3 class="card__title card__title--info">
               Payout bank account
@@ -4761,6 +4765,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=122"></script>
+  <script src="app.js?v=123"></script>
 </body>
 </html>

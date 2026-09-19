@@ -1623,6 +1623,23 @@
         (el.dataset.payState !== undefined && el.dataset.payState !== betaalStand);
     });
   }
+
+  /* Stand van de verificatie bij Pay.nl, op de betaalpagina als data-verify:
+     setup (het account wordt aangemaakt), pending (Pay.nl controleert) of
+     failed. Hier gaat setup na een paar tellen vanzelf over in pending; echt
+     komt die overgang uit de koppeling met Pay.nl. */
+  var betaalSectie = document.querySelector("[data-set-view=\"payments\"]");
+  var verificatieTimer = null;
+
+  function zetVerificatie(stand) {
+    if (betaalSectie) betaalSectie.dataset.verify = stand;
+  }
+
+  function startVerificatie() {
+    zetVerificatie("setup");
+    clearTimeout(verificatieTimer);
+    verificatieTimer = setTimeout(function () { zetVerificatie("pending"); }, 4000);
+  }
   btnSettings.addEventListener("click", openSettings);
   btnSetClose.addEventListener("click", closeSettings);
 
@@ -1766,6 +1783,7 @@
       /* De aanvraag is de deur uit; de betaalpagina laat vanaf nu zien wat je
          te regelen hebt in plaats van waarom je zou beginnen. */
       zetBetaalStand("on");
+      startVerificatie();
       showToast("Details submitted for verification");
     });
 
