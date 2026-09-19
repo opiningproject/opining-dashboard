@@ -1911,6 +1911,149 @@
     if (terug) terug.checked = true;
   });
 
+  /* ---- Documenten uploaden in de controlestap -----------------------------
+     Een venster voor alle drie de documenten. Per soort staat hier welke
+     gegevens er letterlijk op moeten staan en welke stukken gelden. Het vak
+     voor het bestand komt pas na de keuze, en Done gaat pas aan met een soort
+     gekozen en een bestand erbij. */
+  var docVenster = document.getElementById("doc-dialog");
+
+  if (docVenster) {
+    var KVK = "∗∗∗∗1595";
+    var ADRES = "Lusthofstraat 27A, 3062 WB Rotterdam, Netherlands";
+    var DOC_SOORTEN = {
+      business: {
+        titel: "Upload business document",
+        label: "Business document",
+        uitleg: "An official document from the Chamber of Commerce or the tax authority that shows the details above.",
+        gegevens: [["Registered name", "Opining"], ["Chamber of Commerce registration number (KVK)", KVK], ["Address", ADRES]],
+        keuzes: ["Chamber of Commerce extract (KVK)", "Articles of association", "VAT registration certificate"]
+      },
+      residence: {
+        titel: "Upload residential address document",
+        label: "Address document",
+        uitleg: "A document from the last three months, addressed to you at the address above.",
+        gegevens: [["Name", "Serdar Orman"], ["Residential address", ADRES]],
+        keuzes: ["Municipal registration extract (BRP)", "Utility bill", "Bank statement"]
+      },
+      identity: {
+        titel: "Upload identity document",
+        label: "Identity document",
+        uitleg: "A valid document with your photo on it. For an ID card, upload the front and the back.",
+        gegevens: [["Name", "Serdar Orman"], ["Date of birth", "21-06-2000"]],
+        keuzes: ["Passport", "ID card", "Driving licence"]
+      }
+    };
+
+    var doc = function (id) { return document.getElementById(id); };
+    var docRij = null;
+    var docBestand = null;
+
+    function zetDocKlaar() { doc("doc-done").disabled = !(doc("doc-type").value && docBestand); }
+
+    function toonBestand(f) {
+      docBestand = f;
+      doc("doc-empty").hidden = !!f;
+      doc("doc-chosen").hidden = !f;
+      doc("doc-drop").classList.toggle("drop--filled", !!f);
+      if (f) {
+        doc("doc-name").textContent = f.name;
+        doc("doc-size").textContent = f.size < 1048576
+          ? Math.max(1, Math.round(f.size / 1024)) + " KB"
+          : (f.size / 1048576).toFixed(1).replace(".", ",") + " MB";
+      }
+      /* Leeg, zodat hetzelfde bestand opnieuw kiezen ook weer iets doet. */
+      doc("doc-file").value = "";
+      zetDocKlaar();
+    }
+
+    function docFout(tekst) {
+      doc("doc-error-text").textContent = tekst || "";
+      doc("doc-error").hidden = !tekst;
+    }
+
+    /* Een bestand dat we niet kunnen lezen of dat te groot is, zeggen we
+       meteen, niet pas na Done. */
+    function neemBestand(f) {
+      if (!f) return;
+      if (!/\.(jpe?g|png|pdf)$/i.test(f.name)) { docFout("This file type is not accepted. Use .jpg, .png or .pdf."); return; }
+      if (f.size > 20 * 1048576) { docFout("This file is larger than 20 MB."); return; }
+      docFout("");
+      toonBestand(f);
+    }
+
+    document.addEventListener("click", function (e) {
+      var knop = e.target.closest("[data-doc-upload]");
+      if (!knop) return;
+      docRij = knop.closest("[data-doc]");
+      var soort = DOC_SOORTEN[docRij.dataset.doc];
+
+      doc("doc-title").textContent = soort.titel;
+      doc("doc-label").textContent = soort.label;
+      doc("doc-tip-title").textContent = soort.label;
+      doc("doc-tip-text").textContent = soort.uitleg;
+
+      var feiten = doc("doc-facts");
+      feiten.textContent = "";
+      soort.gegevens.forEach(function (paar) {
+        var blok = document.createElement("div");
+        var dt = document.createElement("dt");
+        var dd = document.createElement("dd");
+        dt.textContent = paar[0];
+        dd.textContent = paar[1];
+        blok.append(dt, dd);
+        feiten.appendChild(blok);
+      });
+
+      var keuze = doc("doc-type");
+      keuze.length = 1;
+      soort.keuzes.forEach(function (k) { keuze.add(new Option(k, k)); });
+      keuze.value = "";
+
+      doc("doc-drop").hidden = true;
+      doc("doc-rule").hidden = true;
+      docFout("");
+      toonBestand(null);
+      docVenster.hidden = false;
+      keuze.focus();
+    });
+
+    doc("doc-type").addEventListener("change", function () {
+      var gekozen = !!this.value;
+      doc("doc-drop").hidden = !gekozen;
+      doc("doc-rule").hidden = !gekozen;
+      zetDocKlaar();
+    });
+
+    doc("doc-add").addEventListener("click", function () { doc("doc-file").click(); });
+    doc("doc-file").addEventListener("change", function () { neemBestand(this.files[0]); });
+    doc("doc-remove").addEventListener("click", function () { toonBestand(null); });
+
+    /* Slepen mag ook: het vak licht op zolang er een bestand boven hangt. */
+    var zone = doc("doc-drop");
+    ["dragenter", "dragover"].forEach(function (t) {
+      zone.addEventListener(t, function (e) { e.preventDefault(); zone.classList.add("is-over"); });
+    });
+    ["dragleave", "drop"].forEach(function (t) {
+      zone.addEventListener(t, function (e) { e.preventDefault(); zone.classList.remove("is-over"); });
+    });
+    zone.addEventListener("drop", function (e) { neemBestand(e.dataTransfer.files[0]); });
+
+    /* Na Done staat in de regel wat er is aangeleverd, met een vinkje; de
+       knop wordt Replace. */
+    doc("doc-done").addEventListener("click", function () {
+      var meta = docRij.querySelector("[data-doc-file]");
+      meta.textContent = doc("doc-type").value + " · " + docBestand.name;
+      meta.hidden = false;
+      var icoon = docRij.querySelector(".row__icon");
+      icoon.classList.add("row__icon--done");
+      icoon.querySelector("use").setAttribute("href", "#i-check-circle");
+      docRij.querySelector("[data-doc-upload]").textContent = "Replace";
+      docVenster.hidden = true;
+      showToast("Document uploaded");
+    });
+  }
+
   /* ---- Adres opzoeken -----------------------------------------------------
      Een straat met huisnummer is genoeg: het postcoderegister kent de rest.
      Hier staat een handvol adressen in plaats van die koppeling, genoeg om te

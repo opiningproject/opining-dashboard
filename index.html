@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=115" />
+  <link rel="stylesheet" href="styles.css?v=116" />
 </head>
 <body>
 
@@ -2670,7 +2670,7 @@
                   </div>
                   <div class="rev__read">
                     <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-store-online"/></svg>
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-store"/></svg>
                       <span class="rev__text">Restaurant &middot; OPINING on the bank statement &middot; +31 6 14522453</span>
                     </div>
                   </div>
@@ -2741,10 +2741,10 @@
                 <h4 class="card__subtitle">Verification</h4>
                 <p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>
                 <div class="rows">
-                  <div class="row row--static">
+                  <div class="row row--static" data-doc="business">
                     <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="row__title">Business document</span>
-                    <button class="btn btn--ghost btn--sm" type="button">Upload</button>
+                    <span class="row__text"><span class="row__title">Business document</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
                 </div>
               </div>
@@ -2844,15 +2844,15 @@
                 <h4 class="card__subtitle">Confirm your identity</h4>
                 <p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>
                 <div class="rows">
-                  <div class="row row--static">
+                  <div class="row row--static" data-doc="residence">
                     <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="row__title">Residential address document</span>
-                    <button class="btn btn--ghost btn--sm" type="button">Upload</button>
+                    <span class="row__text"><span class="row__title">Residential address document</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
-                  <div class="row row--static">
+                  <div class="row row--static" data-doc="identity">
                     <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="row__title">Identity document</span>
-                    <button class="btn btn--ghost btn--sm" type="button">Upload</button>
+                    <span class="row__text"><span class="row__title">Identity document</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
                 </div>
               </div>
@@ -4616,6 +4616,58 @@
     </div>
   </div>
 
+  <!-- Een document uploaden in de controlestap. Een venster voor alle drie de
+       soorten; app.js vult titel, gegevens en keuzes uit DOC_SOORTEN. Het
+       vak voor het bestand verschijnt pas als je hebt gekozen welk stuk het is. -->
+  <div class="dialog" id="doc-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="doc-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="doc-title">Upload business document</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead">Upload a valid government-issued document that includes these exact details:</p>
+      <dl class="docfacts" id="doc-facts"></dl>
+      <div class="field">
+        <span class="label label--info">
+          <label for="doc-type" id="doc-label">Business document</label>
+          <span class="explain">
+            <button class="explain__icon" type="button" aria-label="Which documents are accepted?" aria-describedby="doc-tip">
+              <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+            </button>
+            <span class="explain__pop" id="doc-tip" role="tooltip"><b id="doc-tip-title">Business document</b><span id="doc-tip-text"></span></span>
+          </span>
+        </span>
+        <select class="input" id="doc-type"><option value="">Select&hellip;</option></select>
+      </div>
+      <div class="drop drop--doc" id="doc-drop" hidden>
+        <input type="file" id="doc-file" accept=".jpg,.jpeg,.png,.pdf" hidden />
+        <div class="drop__empty" id="doc-empty">
+          <button class="btn btn--ghost btn--sm" type="button" id="doc-add">Add files</button>
+          <p class="drop__hint">Accepts .jpg, .png, and .pdf</p>
+        </div>
+        <div class="drop__file" id="doc-chosen" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>
+          <span class="drop__name" id="doc-name"></span>
+          <span class="drop__size" id="doc-size"></span>
+          <button class="icon-btn" type="button" id="doc-remove" aria-label="Remove file">
+            <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+          </button>
+        </div>
+      </div>
+      <p class="field__error" id="doc-error" hidden>
+        <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg><span id="doc-error-text"></span>
+      </p>
+      <p class="hint docrule" id="doc-rule" hidden>Must be clear, complete and uncropped. Avoid grayscale scans and photos of photos.</p>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="doc-done" disabled>Done</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dialog" id="export-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="export-title">
@@ -4655,6 +4707,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=115"></script>
+  <script src="app.js?v=116"></script>
 </body>
 </html>
