@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=116" />
+  <link rel="stylesheet" href="styles.css?v=118" />
 </head>
 <body>
 
@@ -2744,6 +2744,7 @@
                   <div class="row row--static" data-doc="business">
                     <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
                     <span class="row__text"><span class="row__title">Business document</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <span class="docrow__name" data-doc-name hidden></span>
                     <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
                 </div>
@@ -2847,11 +2848,13 @@
                   <div class="row row--static" data-doc="residence">
                     <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
                     <span class="row__text"><span class="row__title">Residential address document</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <span class="docrow__name" data-doc-name hidden></span>
                     <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
                   <div class="row row--static" data-doc="identity">
                     <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
                     <span class="row__text"><span class="row__title">Identity document</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <span class="docrow__name" data-doc-name hidden></span>
                     <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
                 </div>
@@ -4628,7 +4631,7 @@
           <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
         </button>
       </div>
-      <p class="dialog__lead">Upload a valid government-issued document that includes these exact details:</p>
+      <p class="dialog__lead" id="doc-lead">Upload a valid government-issued document that includes these exact details:</p>
       <dl class="docfacts" id="doc-facts"></dl>
       <div class="field">
         <span class="label label--info">
@@ -4642,25 +4645,14 @@
         </span>
         <select class="input" id="doc-type"><option value="">Select&hellip;</option></select>
       </div>
-      <div class="drop drop--doc" id="doc-drop" hidden>
-        <input type="file" id="doc-file" accept=".jpg,.jpeg,.png,.pdf" hidden />
-        <div class="drop__empty" id="doc-empty">
-          <button class="btn btn--ghost btn--sm" type="button" id="doc-add">Add files</button>
-          <p class="drop__hint">Accepts .jpg, .png, and .pdf</p>
-        </div>
-        <div class="drop__file" id="doc-chosen" hidden>
-          <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>
-          <span class="drop__name" id="doc-name"></span>
-          <span class="drop__size" id="doc-size"></span>
-          <button class="icon-btn" type="button" id="doc-remove" aria-label="Remove file">
-            <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
-          </button>
-        </div>
-      </div>
+      <!-- Een aanwijzing die al geldt voordat je iets kiest, zoals bij een ID. -->
+      <ul class="docnote" id="doc-note" hidden><li id="doc-note-text"></li></ul>
+      <!-- Een of twee vakken, voor en achter; app.js bouwt ze na de keuze. -->
+      <div class="docdrops" id="doc-drops" hidden></div>
       <p class="field__error" id="doc-error" hidden>
         <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg><span id="doc-error-text"></span>
       </p>
-      <p class="hint docrule" id="doc-rule" hidden>Must be clear, complete and uncropped. Avoid grayscale scans and photos of photos.</p>
+      <p class="hint docrule" id="doc-rule" hidden><span id="doc-rule-text"></span> <a class="link" id="doc-rule-link" href="#" hidden></a></p>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
         <button class="btn btn--primary" type="button" id="doc-done" disabled>Done</button>
@@ -4707,6 +4699,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=116"></script>
+  <script src="app.js?v=118"></script>
 </body>
 </html>

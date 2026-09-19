@@ -906,20 +906,36 @@ select.input {
 }
 .docfacts dt { font-size: var(--fs-sm); color: var(--text-muted); }
 .docfacts dd { margin: 2px 0 0; font-size: var(--fs-sm); font-weight: 600; color: var(--text-strong); }
-.drop--doc { margin-top: 14px; min-height: 124px; transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease); }
-.drop--doc.drop--filled { min-height: 0; }
+.drop--doc { min-height: 124px; transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.drop--doc.drop--filled { min-height: 170px; }
 /* Er hangt een bestand boven het vak: laat zien dat loslaten hier kan. */
 .drop--doc.is-over { border-color: var(--accent); background: var(--accent-soft); }
 .drop__empty { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .drop__hint { font-size: var(--fs-sm); color: var(--text-muted); }
-.drop__file { display: flex; align-items: center; gap: 10px; width: 100%; }
-.drop__file > .icon { flex: 0 0 auto; color: var(--text-muted); }
-.drop__name { min-width: 0; font-size: var(--fs-sm); font-weight: 500; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.drop__size { flex: 0 0 auto; font-size: var(--fs-sm); color: var(--text-muted); }
-.drop__file .icon-btn { margin-left: auto; }
-.drop--doc + .field__error, .docrule { margin-top: 10px; }
-/* Een aangeleverd document krijgt een groen vinkje in plaats van het papiertje. */
-.row__icon--done { color: var(--success); }
+/* Gekozen bestand: een voorbeeld in het midden van het vak, zoals een
+   bestandskaartje: icoon, soort en naam. */
+.drop__file { display: flex; flex-direction: column; align-items: center; gap: 4px; max-width: 100%; text-align: center; }
+.drop__file > .icon { width: 26px; height: 26px; margin-bottom: 4px; color: var(--text-strong); }
+.drop__kind { font-size: var(--fs-sm); font-weight: 600; color: var(--text-strong); }
+.drop__name { max-width: 100%; font-size: var(--fs-sm); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Onder een gevuld vak: hoe je het opnieuw doet als het niet scherp is. */
+.drop__again { margin-top: 6px; font-size: var(--fs-sm); color: var(--text-muted); }
+/* Een of twee vakken; bij twee staan voor- en achterkant naast elkaar. */
+.docdrops { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 14px; }
+.docdrops--twee { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.docdrop { min-width: 0; }
+.docdrop__side { margin-bottom: 6px; text-align: center; font-size: var(--fs-sm); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--text-strong); }
+/* Een aanwijzing die al geldt voor je iets kiest, als opsomming onder de keuze. */
+.docnote { margin-top: 8px; padding-left: 18px; list-style: disc; font-size: var(--fs-sm); color: var(--text); }
+@media (max-width: 560px) {
+  /* Op een telefoon onder elkaar: twee vakken naast elkaar worden te smal. */
+  .docdrops--twee { grid-template-columns: minmax(0, 1fr); }
+}
+.docdrops + .field__error, .docrule { margin-top: 10px; }
+/* Na het aanleveren staat de bestandsnaam rechts in de regel, met daarachter
+   de knop om het opnieuw te doen. Een lange naam wordt afgekapt. */
+.docrow__name { flex: 0 1 auto; min-width: 0; max-width: 200px; margin-left: auto; font-size: var(--fs-sm); color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.docrow__name:not([hidden]) + [data-doc-upload] { margin-left: 6px; }
 
 .slider { display: flex; align-items: center; gap: 16px; padding-top: 4px; }
 .slider input[type="range"] { flex: 1 1 auto; min-width: 0; accent-color: var(--accent); }

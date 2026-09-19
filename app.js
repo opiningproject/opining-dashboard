@@ -1913,58 +1913,74 @@
 
   /* ---- Documenten uploaden in de controlestap -----------------------------
      Een venster voor alle drie de documenten. Per soort staat hier welke
-     gegevens er letterlijk op moeten staan en welke stukken gelden. Het vak
-     voor het bestand komt pas na de keuze, en Done gaat pas aan met een soort
-     gekozen en een bestand erbij. */
+     gegevens er letterlijk op moeten staan, welke stukken gelden en welke
+     bestanden. Een identiteitsbewijs met twee kanten vraagt twee vakken, voor
+     en achter. De vakken komen pas na de keuze, en Done gaat pas aan als elk
+     vak een bestand heeft. */
   var docVenster = document.getElementById("doc-dialog");
 
   if (docVenster) {
     var KVK = "∗∗∗∗1595";
     var ADRES = "Lusthofstraat 27A, 3062 WB Rotterdam, Netherlands";
+    var MET_PDF = { accept: ".jpg,.jpeg,.png,.pdf", tekst: "Accepts .jpg, .png, and .pdf",
+                    patroon: /\.(jpe?g|png|pdf)$/i, fout: "This file type is not accepted. Use .jpg, .png or .pdf." };
+    /* Een ID is een foto van het echte document, geen scan: dus geen pdf. */
+    var FOTO = { accept: ".jpg,.jpeg,.png", tekst: "Accepts .jpg and .png",
+                 patroon: /\.(jpe?g|png)$/i, fout: "This file type is not accepted. Use a .jpg or .png photo." };
+    var SCHERP = "Must be clear, complete and uncropped. Avoid grayscale scans and photos of photos.";
+    var TWEE = ["Front", "Back"];
+
     var DOC_SOORTEN = {
       business: {
         titel: "Upload business document",
+        lead: "Upload a valid government-issued document that includes these exact details:",
         label: "Business document",
         uitleg: "An official document from the Chamber of Commerce or the tax authority that shows the details above.",
         gegevens: [["Registered name", "Opining"], ["Chamber of Commerce registration number (KVK)", KVK], ["Address", ADRES]],
-        keuzes: ["Chamber of Commerce extract (KVK)", "Articles of association", "VAT registration certificate"]
+        keuzes: [{ naam: "Chamber of Commerce extract (KVK)" }, { naam: "Articles of association" }, { naam: "VAT registration certificate" }],
+        bestand: MET_PDF,
+        regel: SCHERP
       },
       residence: {
         titel: "Upload residential address document",
-        label: "Address document",
+        lead: "Upload a valid document that includes these exact details:",
+        label: "Residential address document",
         uitleg: "A document from the last three months, addressed to you at the address above.",
-        gegevens: [["Name", "Serdar Orman"], ["Residential address", ADRES]],
-        keuzes: ["Municipal registration extract (BRP)", "Utility bill", "Bank statement"]
+        gegevens: [["Legal name", "Serdar Orman"], ["Residential address", ADRES]],
+        keuzes: [{ naam: "Bank statement" }, { naam: "Government issued letter" }, { naam: "Proof of home insurance" }, { naam: "Utility bill" }],
+        bestand: MET_PDF,
+        regel: SCHERP
       },
       identity: {
         titel: "Upload identity document",
+        lead: "Upload a valid document that includes these exact details:",
         label: "Identity document",
-        uitleg: "A valid document with your photo on it. For an ID card, upload the front and the back.",
-        gegevens: [["Name", "Serdar Orman"], ["Date of birth", "21-06-2000"]],
-        keuzes: ["Passport", "ID card", "Driving licence"]
+        uitleg: "A valid document with your photo on it, in your own name.",
+        gegevens: [["Legal name", "Serdar Orman"], ["Date of birth", "21-06-2000"]],
+        notitie: "Submit an original photograph of the ID. Do not submit scans or photocopies.",
+        keuzes: [{ naam: "Driver’s license", kanten: TWEE }, { naam: "Dutch aliens document" },
+                 { naam: "Identity card", kanten: TWEE }, { naam: "Passport" }, { naam: "Resident permit ID" }],
+        bestand: FOTO,
+        regel: "Must be clear, complete, in color, and uncropped.",
+        regelLink: "See this page for guidance on submitting photo IDs."
       }
     };
 
     var doc = function (id) { return document.getElementById(id); };
     var docRij = null;
-    var docBestand = null;
+    var docSoort = null;
 
-    function zetDocKlaar() { doc("doc-done").disabled = !(doc("doc-type").value && docBestand); }
+    function vakken() { return [].slice.call(doc("doc-drops").querySelectorAll(".docdrop")); }
 
-    function toonBestand(f) {
-      docBestand = f;
-      doc("doc-empty").hidden = !!f;
-      doc("doc-chosen").hidden = !f;
-      doc("doc-drop").classList.toggle("drop--filled", !!f);
-      if (f) {
-        doc("doc-name").textContent = f.name;
-        doc("doc-size").textContent = f.size < 1048576
-          ? Math.max(1, Math.round(f.size / 1024)) + " KB"
-          : (f.size / 1048576).toFixed(1).replace(".", ",") + " MB";
-      }
-      /* Leeg, zodat hetzelfde bestand opnieuw kiezen ook weer iets doet. */
-      doc("doc-file").value = "";
-      zetDocKlaar();
+    /* Done gaat aan als elk vak een bestand heeft. De eisen staan eronder
+       zolang er nog iets ontbreekt; een gevuld vak zegt zelf hoe je opnieuw
+       uploadt. */
+    function zetDocKlaar() {
+      var alle = vakken();
+      var gekozen = !!doc("doc-type").value;
+      var compleet = alle.length > 0 && alle.every(function (v) { return v.bestand; });
+      doc("doc-done").disabled = !(gekozen && compleet);
+      doc("doc-rule").hidden = !(gekozen && !compleet);
     }
 
     function docFout(tekst) {
@@ -1972,30 +1988,89 @@
       doc("doc-error").hidden = !tekst;
     }
 
+    function toonBestand(vak, f) {
+      vak.bestand = f;
+      vak.querySelector(".drop__empty").hidden = !!f;
+      vak.querySelector(".drop__file").hidden = !f;
+      vak.querySelector(".drop__again").hidden = !f;
+      vak.querySelector(".drop").classList.toggle("drop--filled", !!f);
+      if (f) {
+        /* Het soort bestand in hoofdletters, zoals op het bestand zelf. */
+        var soort = (f.name.split(".").pop() || "").toUpperCase();
+        vak.querySelector(".drop__kind").textContent = soort === "JPEG" ? "JPG" : soort;
+        vak.querySelector(".drop__name").textContent = f.name;
+      }
+      /* Leeg, zodat hetzelfde bestand opnieuw kiezen ook weer iets doet. */
+      vak.querySelector("input").value = "";
+      zetDocKlaar();
+    }
+
     /* Een bestand dat we niet kunnen lezen of dat te groot is, zeggen we
        meteen, niet pas na Done. */
-    function neemBestand(f) {
+    function neemBestand(vak, f) {
       if (!f) return;
-      if (!/\.(jpe?g|png|pdf)$/i.test(f.name)) { docFout("This file type is not accepted. Use .jpg, .png or .pdf."); return; }
+      if (!docSoort.bestand.patroon.test(f.name)) { docFout(docSoort.bestand.fout); return; }
       if (f.size > 20 * 1048576) { docFout("This file is larger than 20 MB."); return; }
       docFout("");
-      toonBestand(f);
+      toonBestand(vak, f);
     }
+
+    function maakVak(kant) {
+      var vak = document.createElement("div");
+      vak.className = "docdrop";
+      vak.innerHTML =
+        '<p class="docdrop__side"></p>' +
+        '<div class="drop drop--doc">' +
+          '<input type="file" hidden />' +
+          '<div class="drop__empty"><button class="btn btn--ghost btn--sm" type="button" data-doc-add>Add files</button><p class="drop__hint"></p></div>' +
+          '<div class="drop__file" hidden>' +
+            '<svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>' +
+            '<span class="drop__kind"></span><span class="drop__name"></span>' +
+          '</div>' +
+        '</div>' +
+        '<p class="drop__again" hidden>If the image is not clear, <button class="link link--btn" type="button" data-doc-add>upload the document again</button></p>';
+      var zij = vak.querySelector(".docdrop__side");
+      if (kant) zij.textContent = kant; else zij.remove();
+      var kiezer = vak.querySelector("input");
+      kiezer.accept = docSoort.bestand.accept;
+      if (kant) kiezer.setAttribute("aria-label", kant + " of the document");
+      vak.querySelector(".drop__hint").textContent = docSoort.bestand.tekst;
+      vak.bestand = null;
+
+      /* Slepen mag ook: het vak licht op zolang er een bestand boven hangt. */
+      var zone = vak.querySelector(".drop");
+      ["dragenter", "dragover"].forEach(function (t) {
+        zone.addEventListener(t, function (e) { e.preventDefault(); zone.classList.add("is-over"); });
+      });
+      ["dragleave", "drop"].forEach(function (t) {
+        zone.addEventListener(t, function (e) { e.preventDefault(); zone.classList.remove("is-over"); });
+      });
+      zone.addEventListener("drop", function (e) { neemBestand(vak, e.dataTransfer.files[0]); });
+      kiezer.addEventListener("change", function () { neemBestand(vak, this.files[0]); });
+      return vak;
+    }
+
+    /* Toevoegen en opnieuw uploaden openen allebei de bestandskiezer van dat vak. */
+    doc("doc-drops").addEventListener("click", function (e) {
+      var vak = e.target.closest(".docdrop");
+      if (vak && e.target.closest("[data-doc-add]")) vak.querySelector("input").click();
+    });
 
     document.addEventListener("click", function (e) {
       var knop = e.target.closest("[data-doc-upload]");
       if (!knop) return;
       docRij = knop.closest("[data-doc]");
-      var soort = DOC_SOORTEN[docRij.dataset.doc];
+      docSoort = DOC_SOORTEN[docRij.dataset.doc];
 
-      doc("doc-title").textContent = soort.titel;
-      doc("doc-label").textContent = soort.label;
-      doc("doc-tip-title").textContent = soort.label;
-      doc("doc-tip-text").textContent = soort.uitleg;
+      doc("doc-title").textContent = docSoort.titel;
+      doc("doc-lead").textContent = docSoort.lead;
+      doc("doc-label").textContent = docSoort.label;
+      doc("doc-tip-title").textContent = docSoort.label;
+      doc("doc-tip-text").textContent = docSoort.uitleg;
 
       var feiten = doc("doc-facts");
       feiten.textContent = "";
-      soort.gegevens.forEach(function (paar) {
+      docSoort.gegevens.forEach(function (paar) {
         var blok = document.createElement("div");
         var dt = document.createElement("dt");
         var dd = document.createElement("dd");
@@ -2007,48 +2082,50 @@
 
       var keuze = doc("doc-type");
       keuze.length = 1;
-      soort.keuzes.forEach(function (k) { keuze.add(new Option(k, k)); });
+      docSoort.keuzes.forEach(function (k) { keuze.add(new Option(k.naam, k.naam)); });
       keuze.value = "";
 
-      doc("doc-drop").hidden = true;
-      doc("doc-rule").hidden = true;
+      doc("doc-note").hidden = !docSoort.notitie;
+      doc("doc-note-text").textContent = docSoort.notitie || "";
+      doc("doc-rule-text").textContent = docSoort.regel;
+      doc("doc-rule-link").textContent = docSoort.regelLink || "";
+      doc("doc-rule-link").hidden = !docSoort.regelLink;
+
+      doc("doc-drops").textContent = "";
+      doc("doc-drops").hidden = true;
       docFout("");
-      toonBestand(null);
+      zetDocKlaar();
       docVenster.hidden = false;
       keuze.focus();
     });
 
+    /* De keuze bepaalt hoeveel vakken er komen: een, of twee voor voor- en
+       achterkant. Een andere keuze begint met lege vakken. */
     doc("doc-type").addEventListener("change", function () {
-      var gekozen = !!this.value;
-      doc("doc-drop").hidden = !gekozen;
-      doc("doc-rule").hidden = !gekozen;
+      var waarde = this.value;
+      var gekozen = docSoort.keuzes.filter(function (k) { return k.naam === waarde; })[0];
+      var plek = doc("doc-drops");
+      plek.textContent = "";
+      docFout("");
+      if (gekozen) (gekozen.kanten || [null]).forEach(function (kant) { plek.appendChild(maakVak(kant)); });
+      plek.classList.toggle("docdrops--twee", !!(gekozen && gekozen.kanten));
+      plek.hidden = !gekozen;
       zetDocKlaar();
     });
 
-    doc("doc-add").addEventListener("click", function () { doc("doc-file").click(); });
-    doc("doc-file").addEventListener("change", function () { neemBestand(this.files[0]); });
-    doc("doc-remove").addEventListener("click", function () { toonBestand(null); });
-
-    /* Slepen mag ook: het vak licht op zolang er een bestand boven hangt. */
-    var zone = doc("doc-drop");
-    ["dragenter", "dragover"].forEach(function (t) {
-      zone.addEventListener(t, function (e) { e.preventDefault(); zone.classList.add("is-over"); });
-    });
-    ["dragleave", "drop"].forEach(function (t) {
-      zone.addEventListener(t, function (e) { e.preventDefault(); zone.classList.remove("is-over"); });
-    });
-    zone.addEventListener("drop", function (e) { neemBestand(e.dataTransfer.files[0]); });
-
-    /* Na Done staat in de regel wat er is aangeleverd, met een vinkje; de
-       knop wordt Replace. */
+    /* Na Done staat onder de titel welk stuk het is, en rechts de bestandsnaam
+       met een knop om het opnieuw te doen. Die knop opent hetzelfde venster. */
     doc("doc-done").addEventListener("click", function () {
-      var meta = docRij.querySelector("[data-doc-file]");
-      meta.textContent = doc("doc-type").value + " · " + docBestand.name;
-      meta.hidden = false;
-      var icoon = docRij.querySelector(".row__icon");
-      icoon.classList.add("row__icon--done");
-      icoon.querySelector("use").setAttribute("href", "#i-check-circle");
-      docRij.querySelector("[data-doc-upload]").textContent = "Replace";
+      docRij.querySelector("[data-doc-file]").textContent = doc("doc-type").value;
+      docRij.querySelector("[data-doc-file]").hidden = false;
+      var naam = docRij.querySelector("[data-doc-name]");
+      naam.textContent = vakken().map(function (v) { return v.bestand.name; }).join(", ");
+      naam.title = naam.textContent;
+      naam.hidden = false;
+      var knop = docRij.querySelector("[data-doc-upload]");
+      knop.className = "icon-btn";
+      knop.setAttribute("aria-label", "Upload " + docSoort.label.toLowerCase() + " again");
+      knop.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>';
       docVenster.hidden = true;
       showToast("Document uploaded");
     });
