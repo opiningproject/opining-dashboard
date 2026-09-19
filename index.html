@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=119" />
+  <link rel="stylesheet" href="styles.css?v=120" />
 </head>
 <body>
 
@@ -2156,9 +2156,8 @@
               <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Buy new domain
             </button>
           </div>
-          <!-- Alleen zinvol zodra de aanvraag verstuurd is; app.js toont het
-               blok samen met de rest van de actieve stand. -->
-          <div class="page-head__tools" data-set-tools="payments" data-pay-state="on" hidden>
+          <!-- Knoppen op het beheer van online betalingen, achter Manage. -->
+          <div class="page-head__tools" data-sub-tools="online-payments" hidden>
             <div class="sort">
               <button class="btn btn--ghost page-head__action sort__btn" type="button" aria-haspopup="true" aria-expanded="false">
                 More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
@@ -3696,9 +3695,13 @@
 
           <!-- Na het versturen controleert Pay.nl de gegevens. Tot die klaar is
                kun je al instellen wat je wilt, maar nog geen online betalingen
-               ontvangen; deze kaart zegt dat bovenaan, voor alles wat volgt. -->
+               ontvangen; deze kaart zegt dat bovenaan. Manage opent het beheer:
+               uitbetalingen, ritme en wat de klant op zijn afschrift ziet. -->
           <div class="card" data-pay-state="on" hidden>
-            <h3 class="card__title">Online payments</h3>
+            <div class="card__headrow">
+              <h3 class="card__title">Online payments</h3>
+              <button class="btn btn--ghost" type="button" data-sub="online-payments" data-sub-title="Online payments">Manage</button>
+            </div>
             <div class="paystat">
               <span class="paystat__item"><span class="paystat__dot paystat__dot--wait" aria-hidden="true"></span>Verification pending</span>
               <span class="paystat__item"><span class="paystat__dot" aria-hidden="true"></span>Can&rsquo;t accept online payments yet</span>
@@ -3707,12 +3710,69 @@
               <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
               <span><b>Pay.nl is verifying your details.</b> This usually takes one to two working days. We&rsquo;ll email you when it is done, and online payments start right away. Cash on delivery keeps working in the meantime.</span>
             </p>
+            <div class="rows">
+              <button class="row" type="button" data-sub="payment-methods" data-sub-title="Payment methods">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-card"/></svg>
+                <span class="row__title">Payment methods</span>
+                <span class="pmset" aria-hidden="true"><span class="pm__mark">iD</span><span class="pm__mark">BC</span><span class="pm__mark">VI</span><span class="pm__mark">MC</span><span class="pmset__more">+3</span></span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-coin"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Payouts</span>
+                  <span class="row__meta">Add a bank account to get paid for online orders</span>
+                </span>
+                <button class="btn btn--ghost btn--sm" type="button" data-sub="bank-account" data-sub-title="Add bank account">Add bank account</button>
+              </div>
+            </div>
           </div>
 
-          <!-- Na het versturen van de aanvraag draait de pagina om: de reclame
-               verdwijnt en wat je vanaf dan te regelen hebt komt ervoor in de
-               plaats. app.js zet de stand met data-pay-state. -->
-          <div class="card" data-pay-state="on" hidden>
+          <!-- PayPal loopt buiten onze afhandeling om: de klant rekent bij
+               PayPal af en jij krijgt het geld daar ook uitbetaald. Daarom
+               staat het los van de methodes hierboven, met een eigen stand. -->
+          <div class="card">
+            <h3 class="card__title">Additional payment methods</h3>
+            <p class="card__sub">Methods that are settled outside Opining Payments.</p>
+            <div class="prov">
+              <button class="row prov__row" type="button"
+                      data-sub="paypal"
+                      data-sub-title="PayPal"
+                      data-sub-lead="Processed and paid out by PayPal">
+                <span class="row__text">
+                  <span class="row__title">PayPal</span>
+                  <span class="row__meta">Processing fees set by PayPal &middot; Paid out by PayPal</span>
+                  <span class="pm__mark prov__mark" aria-hidden="true">PP</span>
+                </span>
+                <span class="badge badge--pending">Setup incomplete</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
+              <p class="alert alert--info prov__note">
+                <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                Complete your PayPal account setup to start receiving payouts from PayPal.
+              </p>
+            </div>
+            <!-- Rembours rekent de bezorger af; er loopt geen geld via ons. -->
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-coin"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Cash on delivery</span>
+                  <span class="row__meta">Customers pay the deliverer when the order arrives</span>
+                </span>
+                <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept cash on delivery</span></label>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ---------- SETTINGS-SUB: online betalingen beheren ---------- -->
+        <!-- Wat bij online betalingen hoort en niet elke dag verandert: waar het
+             geld heen gaat, hoe vaak, en wat de klant op zijn afschrift ziet.
+             Bereikbaar via Manage op de betaalpagina. -->
+        <section class="view" data-set-sub="online-payments" data-sub-badge="Verification pending" hidden>
+          <div class="card">
             <h3 class="card__title card__title--info">
               Payout bank account
               <span class="explain">
@@ -3734,7 +3794,7 @@
             </div>
           </div>
 
-          <div class="card" data-pay-state="on" hidden>
+          <div class="card">
             <h3 class="card__title">Payout settings</h3>
             <div class="rows">
               <button class="row" type="button" data-dialog="payout-dialog">
@@ -3756,7 +3816,7 @@
             </div>
           </div>
 
-          <div class="card" data-pay-state="on" hidden>
+          <div class="card">
             <div class="card__headrow">
               <div>
                 <h3 class="card__title">Customer billing statement details</h3>
@@ -3768,51 +3828,7 @@
             </div>
           </div>
 
-          <!-- Beide manieren van betalen in één lijst: de bovenste leidt naar
-               een eigen pagina, de onderste is een schakelaar. -->
-          <div class="card">
-            <h3 class="card__title">Manage payment methods</h3>
-            <div class="rows">
-              <button class="row" type="button"
-                      data-sub="payment-methods"
-                      data-sub-title="Payment methods">
-                <span class="row__title">Online payment methods</span>
-                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-              </button>
-              <div class="row row--static">
-                <span class="row__title">Cash on delivery</span>
-                <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Accept cash on delivery</span></label>
-              </div>
-            </div>
-          </div>
-
-          <!-- PayPal loopt buiten onze afhandeling om: de klant rekent bij
-               PayPal af en jij krijgt het geld daar ook uitbetaald. Daarom
-               staat het los van de methodes hierboven, met een eigen stand. -->
-          <div class="card">
-            <h3 class="card__title">Additional payment providers</h3>
-            <p class="card__sub">Methods that are processed outside Opining. You settle these with the provider itself.</p>
-            <div class="prov">
-              <button class="row prov__row" type="button"
-                      data-sub="paypal"
-                      data-sub-title="PayPal"
-                      data-sub-lead="Processed and paid out by PayPal">
-                <span class="row__text">
-                  <span class="row__title">PayPal</span>
-                  <span class="row__meta">Processing fees set by PayPal &middot; Paid out by PayPal</span>
-                  <span class="pm__mark prov__mark" aria-hidden="true">PP</span>
-                </span>
-                <span class="badge badge--pending">Setup incomplete</span>
-                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-              </button>
-              <p class="alert alert--info prov__note">
-                <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-                Complete your PayPal account setup to start receiving payouts from PayPal.
-              </p>
-            </div>
-          </div>
-
-          <p class="learnmore" data-pay-state="on" hidden><a class="link" href="#">Learn more about Opining Payments</a></p>
+          <p class="learnmore"><a class="link" href="#">Learn more about Opining Payments</a></p>
         </section>
 
         <!-- ---------- SETTINGS: domain ---------- -->
@@ -4714,6 +4730,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=119"></script>
+  <script src="app.js?v=120"></script>
 </body>
 </html>
