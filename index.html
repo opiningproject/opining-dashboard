@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=125" />
+  <link rel="stylesheet" href="styles.css?v=129" />
 </head>
 <body>
 
@@ -3119,6 +3119,20 @@
 
         <!-- ---------- SETTINGS-SUB: bankrekening toevoegen ---------- -->
         <section class="view" data-set-sub="bank-account" hidden>
+          <!-- Een rekening vervangen mag alleen wie de huidige kent: eerst het
+               volledige IBAN van de rekening die er nu staat, dan het nieuwe. -->
+          <div class="card">
+            <h3 class="card__title">Confirm previous bank account</h3>
+            <p class="card__sub">To replace or remove your bank account, you first need to confirm your identity by entering the IBAN (International Bank Account Number) of the bank account ending in 4300.</p>
+            <div class="field">
+              <label class="label" for="bank-old">IBAN (International Bank Account Number)</label>
+              <input class="input" id="bank-old" type="text" autocomplete="off" />
+              <p class="field__error" id="bank-old-error" hidden>
+                <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>This IBAN does not match the account ending in 4300.
+              </p>
+            </div>
+          </div>
+
           <div class="card">
             <h3 class="card__title">Bank account</h3>
             <p class="card__sub">Funds will be sent to this <a class="link" href="#">bank account</a>.</p>
@@ -3138,7 +3152,7 @@
 
           <div class="formfoot formfoot--certify">
             <p class="hint">By selecting Save, I certify that the information I have provided is complete and correct.</p>
-            <button class="btn btn--primary" type="button" data-toast="Bank account saved">Save</button>
+            <button class="btn btn--primary" type="button" id="bank-save" disabled>Save</button>
           </div>
         </section>
 
@@ -3723,9 +3737,9 @@
               <span class="paystat__item"><span class="paystat__dot paystat__dot--one" aria-hidden="true"></span><span class="v-setup">Setting up payments</span><span class="v-pending">Accepting payments</span><span class="v-failed">Verification failed</span></span>
               <span class="paystat__item"><span class="paystat__dot paystat__dot--two" aria-hidden="true"></span><span class="v-setup">Setting up payouts</span><span class="v-later">Can&rsquo;t receive payouts</span></span>
             </div>
-            <p class="alert alert--info paystat__note v-pending">
+            <p class="alert alert--info alert--titled paystat__note v-pending">
               <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-              <span><b>Pay.nl is verifying your details.</b> You can already accept online payments; payouts start as soon as the verification is done. This usually takes one to two working days, and we&rsquo;ll email you when it is.</span>
+              <span><b>Pay.nl is verifying your details</b>You can already accept online payments; payouts start as soon as the verification is done. This usually takes one to two working days, and we&rsquo;ll email you when it is.</span>
             </p>
             <div class="rows">
               <button class="row" type="button" data-sub="payment-methods" data-sub-title="Payment methods">
@@ -3734,14 +3748,15 @@
                 <span class="pmset" aria-hidden="true"><span class="pm__mark">iD</span><span class="pm__mark">BC</span><span class="pm__mark">VI</span><span class="pm__mark">MC</span><span class="pmset__more">+3</span></span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
-              <div class="row row--static">
+              <!-- De rekening komt uit de onboarding; hier alleen de bank en de
+                   laatste vier cijfers. Het pijltje gaat naar Finance, waar de
+                   uitbetalingen zelf staan. -->
+              <button class="row" type="button" data-goto-page="finance">
                 <svg class="icon row__icon" aria-hidden="true"><use href="#i-coin"/></svg>
-                <span class="row__text">
-                  <span class="row__title">Payouts</span>
-                  <span class="row__meta">Add a bank account to get paid for online orders</span>
-                </span>
-                <button class="btn btn--ghost btn--sm" type="button" data-sub="bank-account" data-sub-title="Add bank account">Add bank account</button>
-              </div>
+                <span class="row__title">Payouts</span>
+                <span class="row__value">ABN AMRO Bank N.V. &lowast;&lowast;&lowast;&lowast;&lowast;&lowast; 4300</span>
+                <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
             </div>
           </div>
 
@@ -3790,8 +3805,9 @@
              Bereikbaar via Manage op de betaalpagina. -->
         <section class="view" data-set-sub="online-payments" hidden>
           <div class="card">
-            <h3 class="card__title card__title--info">
-              Payout bank account
+            <div class="card__headrow">
+              <h3 class="card__title card__title--info">
+                Payout bank account
               <span class="explain">
                 <button class="explain__icon" type="button" aria-label="What is a payout bank account?" aria-describedby="explain-payout-account">
                   <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
@@ -3801,13 +3817,25 @@
                   The account we transfer your balance to. It has to be in the name of the business you registered, and it has to accept euros.
                 </span>
               </span>
-            </h3>
-            <p class="card__sub">Add a bank account to receive payouts</p>
-            <div class="rows">
-              <button class="row" type="button" data-sub="bank-account" data-sub-title="Add bank account">
-                <svg class="icon row__icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>
-                <span class="row__title">Add bank account</span>
-              </button>
+              </h3>
+              <button class="btn btn--ghost" type="button" data-goto-page="finance">View payouts</button>
+            </div>
+            <!-- Het menu steekt buiten het kader uit, dus dit kader knipt niet af. -->
+            <div class="rows rows--menu">
+              <div class="row row--static">
+                <span class="row__text">
+                  <span class="row__title">ABN AMRO Bank N.V. &lowast;&lowast;&lowast;&lowast;&lowast;&lowast; 4300</span>
+                  <span class="row__meta">Euro (EUR &euro;)</span>
+                </span>
+                <span class="sort row__menu">
+                  <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for this bank account">
+                    <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                  </button>
+                  <div class="sort__menu" role="menu" hidden>
+                    <button class="sort__item" type="button" role="menuitem" data-sub="bank-account" data-sub-title="Change bank account">Change bank account</button>
+                  </div>
+                </span>
+              </div>
             </div>
           </div>
 
@@ -4765,6 +4793,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=125"></script>
+  <script src="app.js?v=129"></script>
 </body>
 </html>

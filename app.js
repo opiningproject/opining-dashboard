@@ -1941,6 +1941,46 @@
     });
   }
 
+  /* ---- Uitbetaalrekening wijzigen ----------------------------------------
+     Eerst het volledige IBAN van de huidige rekening, dan het nieuwe. Save
+     gaat aan zodra beide zijn ingevuld; klopt het oude niet, dan zegt het
+     veld dat en wordt er niets bewaard. Spaties en kleine letters tellen
+     niet mee, zoals een IBAN meestal wordt overgetypt. */
+  var bankOud = document.getElementById("bank-old");
+
+  if (bankOud) {
+    var bankNieuw = document.getElementById("bank-nr");
+    var bankBewaar = document.getElementById("bank-save");
+    var bankFout = document.getElementById("bank-old-error");
+    var HUIDIG_IBAN = "NL91ABNA0417164300";
+    var ibanKaal = function (v) { return v.replace(/\s+/g, "").toUpperCase(); };
+
+    function zetBankKlaar() {
+      bankBewaar.disabled = !(ibanKaal(bankOud.value) && ibanKaal(bankNieuw.value));
+    }
+
+    bankOud.addEventListener("input", function () {
+      bankFout.hidden = true;
+      bankOud.classList.remove("input--error");
+      zetBankKlaar();
+    });
+    bankNieuw.addEventListener("input", zetBankKlaar);
+
+    bankBewaar.addEventListener("click", function () {
+      if (ibanKaal(bankOud.value) !== HUIDIG_IBAN) {
+        bankFout.hidden = false;
+        bankOud.classList.add("input--error");
+        bankOud.focus();
+        return;
+      }
+      bankOud.value = "";
+      bankNieuw.value = "";
+      zetBankKlaar();
+      backFromSub();
+      showToast("Bank account changed");
+    });
+  }
+
   /* ---- Documenten uploaden in de controlestap -----------------------------
      Een venster voor alle drie de documenten. Per soort staat hier welke
      gegevens er letterlijk op moeten staan, welke stukken gelden en welke

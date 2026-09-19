@@ -1488,6 +1488,14 @@ select.input {
 /* Welke methodes aanstaan, als rijtje kaartjes rechts in de regel. */
 .pmset { display: flex; align-items: center; gap: 6px; margin-left: auto; }
 .pmset + .row__caret { margin-left: 10px; }
+/* Een waarde rechts in de regel, zoals de rekening bij Payouts. */
+.row__value { min-width: 0; margin-left: auto; font-size: var(--fs-sm); color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row__value + .row__caret { margin-left: 10px; }
+/* Een kader met een menu erin mag het menu niet afknippen. De enige regel
+   krijgt zelf de ronde hoeken, anders steekt zijn hover-achtergrond uit. */
+.rows--menu { overflow: visible; }
+.rows--menu > .row { border-radius: calc(var(--r-md) - 1px); }
+.row__menu { margin-left: auto; }
 .pmset__more {
   display: grid; place-items: center;
   height: 24px; padding: 0 8px;
@@ -1679,6 +1687,11 @@ select.input {
 
 /* Neutrale toelichting; de gele .alert is voor waarschuwingen. */
 .alert--info { background: var(--accent-soft); color: #14567f; }
+/* Melding met een titel: de titel op een eigen regel, de uitleg eronder,
+   en het teken bovenaan naast de titel in plaats van in het midden. */
+.alert--titled { align-items: flex-start; }
+.alert--titled b { display: block; margin-bottom: 2px; }
+.alert--titled .icon { margin-top: 1px; }
 
 /* Kop van een inklapbare kaartsectie: een grijze balk bovenin de kaart met
    de titel en een chevron. De lijst eronder heeft geen eigen bovenlijn meer
