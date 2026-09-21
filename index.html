@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=133" />
+  <link rel="stylesheet" href="styles.css?v=137" />
 </head>
 <body>
 
@@ -2561,11 +2561,16 @@
                   <span class="acct__name">Opining</span>
                   <span class="acct__role">Business</span>
                 </span>
-                <span class="badge badge--active">Ready to submit</span>
+                <span class="badge badge--active u-normal">Ready to submit</span>
+                <span class="badge badge--danger u-update">Action required</span>
                 <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
               </button>
 
               <div class="acct" id="review-business">
+                <p class="alert alert--danger u-update">
+                  <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>
+                  <span>Information on the account does not match the Chamber of Commerce records. Check the registered name, the KVK number and the address.</span>
+                </p>
                 <div class="rev">
                   <div class="rev__head">
                     <h4 class="rev__title">Business type</h4>
@@ -2755,7 +2760,8 @@
                   <span class="acct__name">Serdar Orman</span>
                   <span class="acct__role">Account representative</span>
                 </span>
-                <span class="badge badge--active">Ready to submit</span>
+                <span class="badge badge--active u-normal">Ready to submit</span>
+                <span class="badge badge--muted u-update">Done</span>
                 <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
               </button>
 
@@ -3662,11 +3668,21 @@
                de sectie kiest de variant: setup (nog verborgen), pending (blauw
                i-teken) of failed (rood kruis); de kaart eronder volgt mee. -->
           <div class="card vbar" data-pay-state="on" hidden>
-            <span class="vbar__icon" aria-hidden="true">
-              <svg class="icon v-pending"><use href="#i-info"/></svg>
-              <svg class="icon v-failed"><use href="#i-close"/></svg>
-            </span>
-            <span class="vbar__text"><b>Verify business details</b> &middot; <span class="v-pending">Pending resolution</span><span class="v-failed">Verification failed</span></span>
+            <p class="vbar__band">
+              <span class="vbar__icon" aria-hidden="true">
+                <svg class="icon v-pending"><use href="#i-info"/></svg>
+                <svg class="icon v-failed"><use href="#i-alert"/></svg>
+              </span>
+              <span class="v-pending">Verify business details &middot; Pending resolution</span>
+              <span class="v-failed">Payouts are paused</span>
+            </p>
+            <div class="vbar__body v-failed">
+              <p>Update your account information to resume payouts.</p>
+              <button class="btn btn--ghost btn--sm" type="button"
+                      data-sub="payments-setup" data-update
+                      data-sub-title="Update details"
+                      data-sub-lead="To continue using Opining Payments, review and update the information below.">Update</button>
+            </div>
           </div>
 
           <!-- Na het versturen controleert Pay.nl de gegevens. Tot die klaar is
@@ -3683,7 +3699,7 @@
               <span>Opining Payments isn&rsquo;t processing transactions yet. We&rsquo;re setting up your account with Pay.nl.</span>
             </p>
             <div class="paystat">
-              <span class="paystat__item"><span class="paystat__dot paystat__dot--one" aria-hidden="true"></span><span class="v-setup">Setting up payments</span><span class="v-pending">Accepting payments</span><span class="v-failed">Verification failed</span></span>
+              <span class="paystat__item"><span class="paystat__dot paystat__dot--one" aria-hidden="true"></span><span class="v-setup">Setting up payments</span><span class="v-pending">Accepting payments</span><span class="v-failed">Payment methods limited</span></span>
               <span class="paystat__item"><span class="paystat__dot paystat__dot--two" aria-hidden="true"></span><span class="v-setup">Setting up payouts</span><span class="v-later">Can&rsquo;t receive payouts</span></span>
             </div>
             <p class="alert alert--info alert--titled paystat__note v-pending">
@@ -3728,9 +3744,9 @@
                 <span class="badge badge--pending">Setup incomplete</span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
-              <p class="alert alert--info prov__note">
+              <p class="alert alert--info alert--titled prov__note">
                 <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-                Complete your PayPal account setup to start receiving payouts from PayPal.
+                <span><b>Complete your PayPal account setup</b>Payouts from PayPal land in your PayPal account, not in your Opining balance.</span>
               </p>
             </div>
             <!-- Rembours rekent de bezorger af; er loopt geen geld via ons. -->
@@ -4724,6 +4740,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=133"></script>
+  <script src="app.js?v=137"></script>
 </body>
 </html>

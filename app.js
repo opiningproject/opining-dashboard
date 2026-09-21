@@ -1920,6 +1920,77 @@
     if (terug) terug.checked = true;
   });
 
+
+  /* ---- Gegevens bijwerken na een afwijzing --------------------------------
+     Dezelfde controlestap, maar dan als opdracht: wat klopt er niet en welk
+     stuk ontbreekt nog. De knop Update op de betaalpagina komt hier binnen;
+     Complete account setup zet de stand terug naar de eerste aanvraag.
+     Opnieuw versturen kan pas als het ontbrekende document er is en de
+     gegevens opnieuw zijn opgeslagen. */
+  function zetWizardStand(update) {
+    var wizVak = document.getElementById("pay-wiz");
+    if (!wizVak) return;
+    wizVak.classList.toggle("is-update", update);
+    delete wizVak.dataset.bijgewerkt;
+
+    /* De vertegenwoordiger is al in orde; dat blok mag dicht. */
+    var repKop = wizVak.querySelector("[aria-controls=\"review-rep\"]");
+    var repVak = document.getElementById("review-rep");
+    if (repKop && repVak) {
+      repKop.setAttribute("aria-expanded", update ? "false" : "true");
+      repVak.hidden = update;
+    }
+
+    /* Een document dat nog niet is aangeleverd, valt op met een rood teken. */
+    wizVak.querySelectorAll("[data-doc]").forEach(function (rij) {
+      if (!rij.querySelector("[data-doc-file]").hidden) return;
+      rij.querySelector(".row__icon use").setAttribute("href", update ? "#i-alert" : "#i-file");
+      rij.querySelector(".row__icon").classList.toggle("row__icon--alert", update);
+    });
+  }
+
+  function zetUpdateKlaar() {
+    var wizVak = document.getElementById("pay-wiz");
+    var knop = document.getElementById("wiz-next");
+    if (!wizVak || !knop) return;
+    if (!wizVak.classList.contains("is-update")) { knop.disabled = false; return; }
+    var stuk = wizVak.querySelector("[data-doc=\"business\"] [data-doc-file]");
+    knop.textContent = "Submit information";
+    knop.disabled = !(stuk && !stuk.hidden && wizVak.dataset.bijgewerkt === "ja");
+  }
+
+  document.addEventListener("click", function (e) {
+    var knop = e.target.closest("[data-sub=\"payments-setup\"]");
+    if (!knop) return;
+    var update = knop.hasAttribute("data-update");
+    zetWizardStand(update);
+    /* Bijwerken begint bij de controlestap, niet bij stap een. */
+    if (update && resetWiz) resetWiz(99);
+    zetUpdateKlaar();
+  });
+
+  document.addEventListener("click", function (e) {
+    var wizVak = document.getElementById("pay-wiz");
+    if (!wizVak) return;
+    /* Opslaan in het blok van de zaak telt als bijgewerkt; een aangeleverd
+       document telt vanzelf mee via de regel zelf. */
+    if (e.target.closest("#review-business .rev__save")) wizVak.dataset.bijgewerkt = "ja";
+    if (e.target.closest("#doc-done")) {
+      /* Aangeleverd: de rode markering hoort weg, ook al komt er geen vinkje. */
+      wizVak.querySelectorAll("[data-doc]").forEach(function (rij) {
+        if (rij.querySelector("[data-doc-file]").hidden) return;
+        rij.querySelector(".row__icon use").setAttribute("href", "#i-file");
+        rij.querySelector(".row__icon").classList.remove("row__icon--alert");
+      });
+    }
+    if (e.target.closest("#review-business .rev__save") || e.target.closest("#doc-done")) zetUpdateKlaar();
+    /* Verstuurd: de opdracht is voorbij, de wizard staat weer normaal. */
+    if (e.target.closest("#wiz-next") && wizVak.classList.contains("is-update")) {
+      zetWizardStand(false);
+      zetUpdateKlaar();
+    }
+  });
+
   /* ---- Uitbetaalrekening wijzigen ----------------------------------------
      Eerst het volledige IBAN van de huidige rekening, dan het nieuwe. Save
      gaat aan zodra beide zijn ingevuld; klopt het oude niet, dan zegt het

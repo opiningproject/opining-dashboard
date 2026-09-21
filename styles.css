@@ -1458,17 +1458,19 @@ select.input {
 .paystat__dot--two { background: var(--danger); }
 .paystat__note { margin-bottom: 0; }
 
-/* Een regel bovenaan de betaalpagina met de stand van de verificatie. */
-.vbar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
-.vbar__icon {
-  display: grid; place-items: center;
-  width: 28px; height: 28px; flex: 0 0 auto;
-  border-radius: var(--r-md);
+/* De stand van de verificatie bovenaan de betaalpagina. Een kopregel met een
+   icoon en een titel; bij een probleem komt daar een tekst met een knop
+   onder. Dezelfde opbouw voor beide standen, alleen de kleur verschilt. */
+.vbar { overflow: hidden; padding: 0; }
+.vbar__band {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px;
   background: var(--accent-soft); color: #14567f;
+  font-size: var(--fs-md); font-weight: 600;
 }
+.vbar__icon { display: grid; place-items: center; flex: 0 0 auto; }
 .vbar__icon .icon { width: 18px; height: 18px; }
-.vbar__text { font-size: var(--fs-md); color: var(--text); }
-.vbar__text b { font-weight: 500; color: var(--text-strong); }
+.vbar__body { display: none; flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px 16px; font-size: var(--fs-md); color: var(--text); }
 /* Drie standen, gekozen met data-verify op de betaalpagina.
    setup: het account wordt aangemaakt; grijze stippen, een gele melding en
    nog geen balk bovenaan. pending: onder review; betalen kan al, uitbetalen
@@ -1480,8 +1482,10 @@ select.input {
 [data-verify="setup"] .v-setup, [data-verify="failed"] .v-failed { display: inline; }
 [data-verify="setup"] .alert.v-setup { display: flex; }
 [data-verify="setup"] .paystat__dot { background: var(--gray-300); }
-[data-verify="failed"] .vbar__icon { background: #fbeae9; color: var(--danger); }
-[data-verify="failed"] .paystat__dot--one { background: var(--danger); }
+[data-verify="failed"] .vbar__band { background: var(--danger); color: #fff; }
+[data-verify="failed"] .vbar__body.v-failed { display: flex; }
+/* Beperkt, niet uit: oranje. Uitbetalen kan echt niet, dat blijft rood. */
+[data-verify="failed"] .paystat__dot--one { background: var(--warning-fg); }
 /* Welke methodes aanstaan, als rijtje kaartjes rechts in de regel. */
 .pmset { display: flex; align-items: center; gap: 6px; margin-left: auto; }
 .pmset + .row__caret { margin-left: 10px; }
@@ -2392,6 +2396,24 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    Een lijst per soort, met een grijze kop erboven. Er valt per regel niets
    in te stellen behalve aan of uit, dus de regel blijft smal.
    ========================================================================== */
+
+/* ==========================================================================
+   8s. BIJWERKEN NA EEN AFWIJZING
+   Dezelfde controlestap, maar dan met wat er mis is: een rood kader, een
+   label Action required en een rood teken bij het document dat ontbreekt.
+   .is-update op de wizard zet de stand; zonder dat blijft alles zoals het
+   was bij de eerste aanvraag.
+   ========================================================================== */
+.alert--danger { background: #fbeae9; color: var(--danger); }
+.u-update { display: none; }
+.is-update .u-normal { display: none; }
+.is-update .u-update { display: inline; }
+.is-update .alert.u-update { display: flex; }
+/* Je komt hier uit een melding, niet uit de wizard: geen stappenteller en
+   geen weg terug naar eerdere stappen. */
+.is-update .wiz__head, .is-update .wiz__foot .btn--ghost { display: none; }
+.row__icon--alert { color: var(--danger); }
+
 .mhead { padding: 22px 20px 18px; }
 .mgroup {
   padding: 11px 20px;
