@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=141" />
+  <link rel="stylesheet" href="styles.css?v=145" />
 </head>
 <body>
 
@@ -2112,7 +2112,7 @@
 
       <section class="set-main">
         <button class="set-back" type="button" id="settings-back">
-          <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>Settings
+          <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>Back
         </button>
 
         <div class="page-head">
@@ -2120,6 +2120,8 @@
                gedimd icoon, chevron, en daarachter de naam van de subpagina. -->
           <button class="crumb" type="button" id="set-crumb" hidden>
             <svg class="icon page-head__icon" id="set-crumb-icon" aria-hidden="true"><use href="#i-store"/></svg>
+            <svg class="icon crumb__sep" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+            <span class="crumb__name" id="set-crumb-name"></span>
             <svg class="icon crumb__sep" aria-hidden="true"><use href="#i-chevron-right"/></svg>
           </button>
           <svg class="icon page-head__icon" id="set-icon" aria-hidden="true"><use href="#i-store"/></svg>
@@ -2926,14 +2928,39 @@
             </div>
 
               <div class="mrow">
-                <span class="pm__mark" aria-hidden="true"><img src="img/pay/ideal.png" alt="" /></span>
+                <span class="pm__mark" aria-hidden="true"><img src="img/pay/idealwero.svg" alt="" /></span>
                 <span class="mrow__name">iDEAL</span>
                 <button class="icon-btn" type="button" aria-label="Actions for iDEAL"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
               </div>
               <div class="mrow">
-                <span class="pm__mark" aria-hidden="true"><img src="img/pay/card.png" alt="" /></span>
-                <span class="mrow__name">Credit or debit card</span>
-                <button class="icon-btn" type="button" aria-label="Actions for credit or debit card"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+                <span class="pm__mark" aria-hidden="true"><img src="img/pay/visa.svg" alt="" /></span>
+                <span class="mrow__name">Visa</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Visa"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true"><img src="img/pay/mastercard.svg" alt="" /></span>
+                <span class="mrow__name">Mastercard</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Mastercard"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true"><img src="img/pay/maestro.svg" alt="" /></span>
+                <span class="mrow__name">Maestro</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Maestro"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true"><img src="img/pay/apple.svg" alt="" /></span>
+                <span class="mrow__name">Apple Pay</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Apple Pay"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true"><img src="img/pay/google.svg" alt="" /></span>
+                <span class="mrow__name">Google Pay</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Google Pay"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+              </div>
+              <div class="mrow">
+                <span class="pm__mark" aria-hidden="true"><img src="img/pay/klarna.svg" alt="" /></span>
+                <span class="mrow__name">Klarna</span>
+                <button class="icon-btn" type="button" aria-label="Actions for Klarna"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
               </div>
           </div>
         </section>
@@ -2947,7 +2974,7 @@
             <h3 class="card__title">Online</h3>
             <div class="rate">
               <div class="rate__head">
-                <span class="rate__name">Credit or debit card</span>
+                <span class="rate__name">Cards and wallets</span>
                 <span class="rate__col">EEA</span>
                 <span class="rate__col">International</span>
               </div>
@@ -2967,6 +2994,18 @@
                 <span class="rate__name">iDEAL</span>
                 <span class="rate__col"></span>
                 <span class="rate__col" data-label="Per transaction">0,0% + &euro; 0,35</span>
+              </div>
+            </div>
+            <div class="rate">
+              <div class="rate__head">
+                <span class="rate__name">Pay later</span>
+                <span class="rate__col"></span>
+                <span class="rate__col">Per transaction</span>
+              </div>
+              <div class="rate__row">
+                <span class="rate__name">Klarna</span>
+                <span class="rate__col"></span>
+                <span class="rate__col" data-label="Per transaction">2,99% + &euro; 0,35</span>
               </div>
             </div>
           </div>
@@ -3613,7 +3652,7 @@
               <button class="row" type="button" data-sub="payment-methods" data-sub-title="Payment methods">
                 <svg class="icon row__icon" aria-hidden="true"><use href="#i-card"/></svg>
                 <span class="row__title">Payment methods</span>
-                <span class="pmset" aria-hidden="true"><span class="pm__mark"><img src="img/pay/ideal.png" alt="" /></span><span class="pm__mark"><img src="img/pay/card.png" alt="" /></span></span>
+                <span class="pmset" aria-hidden="true"><span class="pm__mark"><img src="img/pay/idealwero.svg" alt="" /></span><span class="pm__mark"><img src="img/pay/visa.svg" alt="" /></span><span class="pm__mark"><img src="img/pay/mastercard.svg" alt="" /></span><span class="pm__mark"><img src="img/pay/apple.svg" alt="" /></span><span class="pmset__more">+3</span></span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
               <!-- De rekening komt uit de onboarding; hier alleen de bank en de
@@ -3642,7 +3681,7 @@
                 <span class="row__text">
                   <span class="row__title">PayPal</span>
                   <span class="row__meta">Processing fees set by PayPal &middot; Paid out by PayPal</span>
-                  <span class="pm__mark prov__mark" aria-hidden="true"><img src="img/pay/paypal.png" alt="" /></span>
+                  <span class="pm__mark prov__mark" aria-hidden="true"><img src="img/pay/paypal.svg" alt="" /></span>
                 </span>
                 <span class="badge badge--pending">Setup incomplete</span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
@@ -4643,6 +4682,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=141"></script>
+  <script src="app.js?v=145"></script>
 </body>
 </html>

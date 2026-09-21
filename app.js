@@ -1661,13 +1661,35 @@
      terugknop. */
   var setCrumb     = document.getElementById("set-crumb");
   var setCrumbIcon = document.getElementById("set-crumb-icon");
+  var setCrumbName = document.getElementById("set-crumb-name");
   var setLead      = document.getElementById("set-lead");
   var setSubs      = document.querySelectorAll("[data-set-sub]");
-  var ouder        = null;   /* titel + icoon van de pagina waar we vandaan komen */
+  var stapel       = [];   /* pagina's waar we vandaan komen, onderste eerst */
 
-  function openSetSub(sub, titel, lead) {
-    ouder = { titel: setTitle.textContent, icoon: setIcon.querySelector("use").getAttribute("href") };
+  function huidigeSub() {
+    var open = document.querySelector("[data-set-sub]:not([hidden])");
+    return open ? open.dataset.setSub : null;
+  }
 
+  /* In de kop staat de pagina direct erboven, niet de settings-pagina: op de
+     tarievenpagina dus Payment methods. Daarom onthouden we elke stap. */
+  function toonKruimel() {
+    var boven = stapel[stapel.length - 1];
+    if (!boven) { setCrumb.hidden = true; setIcon.removeAttribute("hidden"); return; }
+    setCrumbIcon.querySelector("use")
+      .setAttribute("href", setIcon.querySelector("use").getAttribute("href"));
+    setCrumbName.textContent = boven.titel;
+    setCrumb.setAttribute("aria-label", "Back to " + boven.titel);
+    setCrumb.setAttribute("title", "Back to " + boven.titel);
+    setCrumb.hidden = false;
+    /* Let op: .hidden is een eigenschap van HTMLElement, niet van SVG. Op een
+       <svg> moet je het attribuut zetten, anders gebeurt er niets. */
+    setIcon.setAttribute("hidden", "");
+  }
+
+  /* Laat een subpagina zien. Los van openSetSub, want terugkomen op een
+     subpagina mag niets aan de stapel toevoegen. */
+  function toonSub(sub, titel, lead) {
     var open = document.querySelector("[data-set-view]:not([hidden])");
     if (open) open.hidden = true;
     setSubs.forEach(function (v) { v.hidden = v.dataset.setSub !== sub; });
@@ -1684,13 +1706,7 @@
     setBadge.textContent = (vol && vol.dataset.subBadge) || "";
     setBadge.hidden = !setBadge.textContent;
 
-    setCrumbIcon.querySelector("use").setAttribute("href", ouder.icoon);
-    setCrumb.setAttribute("aria-label", "Back to " + ouder.titel);
-    setCrumb.setAttribute("title", "Back to " + ouder.titel);
-    setCrumb.hidden = false;
-    /* Let op: .hidden is een eigenschap van HTMLElement, niet van SVG. Op een
-       <svg> moet je het attribuut zetten, anders gebeurt er niets. */
-    setIcon.setAttribute("hidden", "");
+    toonKruimel();
     setTitle.textContent = titel;
     setLead.textContent = lead || "";
     setLead.hidden = !lead;
@@ -1698,24 +1714,40 @@
     overlay.scrollTop = 0;
   }
 
+  function openSetSub(sub, titel, lead) {
+    stapel.push({ titel: setTitle.textContent, sub: huidigeSub(),
+                  lead: setLead.hidden ? "" : setLead.textContent });
+    toonSub(sub, titel, lead);
+  }
+
+  /* Alles dicht: terug naar de settings-pagina zelf. */
   function closeSetSub() {
-    if (!ouder) return;
+    if (!stapel.length) return;
+    var onderste = stapel[0];
+    stapel.length = 0;
     setSubs.forEach(function (v) { v.hidden = true; });
     delete root.dataset.settingsFull;
     setCrumb.hidden = true;
     setIcon.removeAttribute("hidden");
-    setTitle.textContent = ouder.titel;
+    setTitle.textContent = onderste.titel;
     setLead.hidden = true;
     setBadge.hidden = true;
-    ouder = null;
   }
 
-  /* Geeft terug of er daadwerkelijk een niveau omhoog is gegaan, zodat de
-     mobiele terug-knop weet of hij nog naar de lijst moet. */
+  /* Een stap terug: naar de subpagina eronder, of naar de settings-pagina.
+     Geeft terug of er echt iets terugging, zodat de mobiele terugknop weet of
+     hij daarna nog naar de lijst moet. */
   function backFromSub() {
-    var terug = ouder;
+    var terug = stapel.pop();
     if (!terug) return false;
-    closeSetSub();
+    if (terug.sub) { toonSub(terug.sub, terug.titel, terug.lead); return true; }
+    stapel.length = 0;
+    setSubs.forEach(function (v) { v.hidden = true; });
+    delete root.dataset.settingsFull;
+    setCrumb.hidden = true;
+    setIcon.removeAttribute("hidden");
+    setLead.hidden = true;
+    setBadge.hidden = true;
     var actief = setNav.querySelector(".nav__item.is-active");
     if (actief) showSetPage(actief.dataset.set, terug.titel, actief.dataset.icon);
     return true;
