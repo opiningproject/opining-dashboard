@@ -1427,24 +1427,11 @@ select.input {
 .pick__meta { margin-left: auto; font-size: var(--fs-sm); color: var(--text-muted); visibility: hidden; }
 .pick input:checked ~ .pick__meta { visibility: visible; }
 
-/* Betaalmethode in een lijst: een tegeltje met het merkkortje ervoor. Een
-   echte logo-set komt van de betaalprovider; tot die tijd draagt het kortje
-   de herkenning. */
-.pm { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.pm__mark {
-  display: grid; place-items: center;
-  width: 34px; height: 24px; flex: 0 0 auto;
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  background: var(--bg-surface);
-  font-size: 10px; font-weight: 700; letter-spacing: .02em;
-  color: var(--text-muted);
-}
-/* Een logo vult het kadertje zonder uit te rekken; zonder afbeelding blijft
-   de afkorting staan. */
-.pm__mark:has(img) { padding: 3px; }
+/* Plek voor het logo van een betaalmethode. Geen kader eromheen: de logos
+   hebben hun eigen vorm en kleur, en een vakje maakt dat alleen maar druk.
+   Het logo schaalt mee zonder uit te rekken. */
+.pm__mark { display: grid; place-items: center; width: 34px; height: 24px; flex: 0 0 auto; }
 .pm__mark img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.pm__name { font-weight: 500; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* Een aanbieder die buiten ons om afrekent staat in een eigen kader: het is
    geen methode die wij aanzetten, maar een koppeling die jij onderhoudt. */
 .prov { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
@@ -1501,13 +1488,6 @@ select.input {
 .rows--menu { overflow: visible; }
 .rows--menu > .row { border-radius: calc(var(--r-md) - 1px); }
 .row__menu { margin-left: auto; }
-.pmset__more {
-  display: grid; place-items: center;
-  height: 24px; padding: 0 8px;
-  border-radius: var(--r-sm);
-  background: var(--gray-100);
-  font-size: 11px; font-weight: 600; color: var(--text-muted);
-}
 @media (max-width: 560px) {
   /* Te krap naast de titel: de regel zegt het ook zonder kaartjes. */
   .pmset { display: none; }
@@ -2397,8 +2377,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 
 /* ==========================================================================
    8p. BETAALMETHODES EN TARIEVEN
-   Een lijst per soort, met een grijze kop erboven. Er valt per regel niets
-   in te stellen behalve aan of uit, dus de regel blijft smal.
+   Een korte lijst met het logo voorop. Er valt per regel niets in te stellen
+   behalve aan of uit, dus de regel blijft smal.
    ========================================================================== */
 
 /* ==========================================================================
@@ -2419,20 +2399,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .row__icon--alert { color: var(--danger); }
 
 .mhead { padding: 22px 20px 18px; }
-.mgroup {
-  padding: 11px 20px;
-  border-top: 1px solid var(--border);
-  background: var(--gray-50);
-  font-size: var(--fs-sm); font-weight: 600; color: var(--text-strong);
-}
 .mrow { display: flex; align-items: center; gap: 12px; padding: 11px 20px; border-top: 1px solid var(--border); }
 .mrow__name { min-width: 0; font-size: var(--fs-sm); color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mrow > .badge { margin-left: auto; }
 .mrow > .icon-btn { margin-left: auto; }
-.mrow > .badge + .icon-btn { margin-left: 10px; }
 /* Uit staat er nog wel, maar vraagt niet om aandacht. */
-.mrow--off .pm__mark { opacity: .5; }
-.mrow--off .mrow__name { color: var(--text-muted); }
 
 /* Tarieven: wat het kost, per gebied. Alleen lezen, dus geen knoppen. */
 .rate { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }

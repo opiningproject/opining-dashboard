@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=140" />
+  <link rel="stylesheet" href="styles.css?v=141" />
 </head>
 <body>
 
@@ -2925,63 +2925,15 @@
               </div>
             </div>
 
-              <p class="mgroup">Cards</p>
-              <div class="mrow">
-                <span class="pm__mark" aria-hidden="true">VI</span>
-                <span class="mrow__name">Visa</span>
-                <button class="icon-btn" type="button" aria-label="Actions for Visa"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-              <div class="mrow">
-                <span class="pm__mark" aria-hidden="true">MC</span>
-                <span class="mrow__name">Mastercard</span>
-                <button class="icon-btn" type="button" aria-label="Actions for Mastercard"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-              <div class="mrow mrow--off">
-                <span class="pm__mark" aria-hidden="true">MA</span>
-                <span class="mrow__name">Maestro</span>
-                <span class="badge badge--muted">Disabled</span>
-                <button class="icon-btn" type="button" aria-label="Actions for Maestro"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-              <div class="mrow">
-                <span class="pm__mark" aria-hidden="true">AX</span>
-                <span class="mrow__name">American Express</span>
-                <button class="icon-btn" type="button" aria-label="Actions for American Express"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-              <div class="mrow mrow--off">
-                <span class="pm__mark" aria-hidden="true">CB</span>
-                <span class="mrow__name">Carte Bleue</span>
-                <span class="badge badge--muted">Disabled</span>
-                <button class="icon-btn" type="button" aria-label="Actions for Carte Bleue"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-
-              <p class="mgroup">Local payment methods</p>
               <div class="mrow">
                 <span class="pm__mark" aria-hidden="true"><img src="img/pay/ideal.png" alt="" /></span>
                 <span class="mrow__name">iDEAL</span>
                 <button class="icon-btn" type="button" aria-label="Actions for iDEAL"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
               </div>
               <div class="mrow">
-                <span class="pm__mark" aria-hidden="true">BC</span>
-                <span class="mrow__name">Bancontact</span>
-                <button class="icon-btn" type="button" aria-label="Actions for Bancontact"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-              <div class="mrow mrow--off">
-                <span class="pm__mark" aria-hidden="true">SCT</span>
-                <span class="mrow__name">Bank transfer (SCT)</span>
-                <span class="badge badge--muted">Disabled</span>
-                <button class="icon-btn" type="button" aria-label="Actions for bank transfer"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-
-              <p class="mgroup">Wallets</p>
-              <div class="mrow">
-                <span class="pm__mark" aria-hidden="true">AP</span>
-                <span class="mrow__name">Apple Pay</span>
-                <button class="icon-btn" type="button" aria-label="Actions for Apple Pay"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
-              </div>
-              <div class="mrow">
-                <span class="pm__mark" aria-hidden="true">GP</span>
-                <span class="mrow__name">Google Pay</span>
-                <button class="icon-btn" type="button" aria-label="Actions for Google Pay"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
+                <span class="pm__mark" aria-hidden="true"><img src="img/pay/card.png" alt="" /></span>
+                <span class="mrow__name">Credit or debit card</span>
+                <button class="icon-btn" type="button" aria-label="Actions for credit or debit card"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>
               </div>
           </div>
         </section>
@@ -2995,25 +2947,13 @@
             <h3 class="card__title">Online</h3>
             <div class="rate">
               <div class="rate__head">
-                <span class="rate__name">Cards and wallets</span>
+                <span class="rate__name">Credit or debit card</span>
                 <span class="rate__col">EEA</span>
                 <span class="rate__col">International</span>
               </div>
               <div class="rate__row">
-                <span class="rate__name">All</span>
+                <span class="rate__name">All cards</span>
                 <span class="rate__col" data-label="EEA">1,4% + &euro; 0,25</span>
-                <span class="rate__col" data-label="International">2,9% + &euro; 0,25</span>
-              </div>
-            </div>
-            <div class="rate">
-              <div class="rate__head">
-                <span class="rate__name">American Express</span>
-                <span class="rate__col">EEA</span>
-                <span class="rate__col">International</span>
-              </div>
-              <div class="rate__row">
-                <span class="rate__name">All</span>
-                <span class="rate__col" data-label="EEA">2,9% + &euro; 0,25</span>
                 <span class="rate__col" data-label="International">2,9% + &euro; 0,25</span>
               </div>
             </div>
@@ -3027,44 +2967,6 @@
                 <span class="rate__name">iDEAL</span>
                 <span class="rate__col"></span>
                 <span class="rate__col" data-label="Per transaction">0,0% + &euro; 0,35</span>
-              </div>
-              <div class="rate__row">
-                <span class="rate__name">Bancontact</span>
-                <span class="rate__col"></span>
-                <span class="rate__col" data-label="Per transaction">0,0% + &euro; 0,25</span>
-              </div>
-              <div class="rate__row">
-                <span class="rate__name">Bank transfer (SCT)</span>
-                <span class="rate__col"></span>
-                <span class="rate__col" data-label="Per transaction">No fee</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3 class="card__title">In-person</h3>
-            <div class="rate">
-              <div class="rate__head">
-                <span class="rate__name">Cards</span>
-                <span class="rate__col"></span>
-                <span class="rate__col">Per transaction</span>
-              </div>
-              <div class="rate__row">
-                <span class="rate__name">Card present</span>
-                <span class="rate__col"></span>
-                <span class="rate__col" data-label="Per transaction">1,4% + &euro; 0,00</span>
-              </div>
-            </div>
-            <div class="rate">
-              <div class="rate__head">
-                <span class="rate__name">American Express</span>
-                <span class="rate__col"></span>
-                <span class="rate__col">Per transaction</span>
-              </div>
-              <div class="rate__row">
-                <span class="rate__name">All</span>
-                <span class="rate__col"></span>
-                <span class="rate__col" data-label="Per transaction">1,4% + &euro; 0,00</span>
               </div>
             </div>
           </div>
@@ -3711,7 +3613,7 @@
               <button class="row" type="button" data-sub="payment-methods" data-sub-title="Payment methods">
                 <svg class="icon row__icon" aria-hidden="true"><use href="#i-card"/></svg>
                 <span class="row__title">Payment methods</span>
-                <span class="pmset" aria-hidden="true"><span class="pm__mark">iD</span><span class="pm__mark">BC</span><span class="pm__mark">VI</span><span class="pm__mark">MC</span><span class="pmset__more">+3</span></span>
+                <span class="pmset" aria-hidden="true"><span class="pm__mark"><img src="img/pay/ideal.png" alt="" /></span><span class="pm__mark"><img src="img/pay/card.png" alt="" /></span></span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
               <!-- De rekening komt uit de onboarding; hier alleen de bank en de
@@ -4741,6 +4643,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=140"></script>
+  <script src="app.js?v=141"></script>
 </body>
 </html>
