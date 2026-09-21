@@ -1440,6 +1440,9 @@ select.input {
   font-size: 10px; font-weight: 700; letter-spacing: .02em;
   color: var(--text-muted);
 }
+/* Een logo vult het kadertje zonder uit te rekken; zonder afbeelding blijft
+   de afkorting staan. */
+.pm__mark img { max-width: 100%; max-height: 100%; object-fit: contain; }
 .pm__name { font-weight: 500; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* Een aanbieder die buiten ons om afrekent staat in een eigen kader: het is
    geen methode die wij aanzetten, maar een koppeling die jij onderhoudt. */

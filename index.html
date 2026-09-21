@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=137" />
+  <link rel="stylesheet" href="styles.css?v=138" />
 </head>
 <body>
 
@@ -80,6 +80,8 @@
     <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.2" y="5.2" width="17.6" height="13.6" rx="2"/><path d="m3.9 6.6 8.1 6 8.1-6"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.6" y="10.4" width="14.8" height="9.4" rx="2"/><path d="M8.3 10.4V7.7a3.7 3.7 0 0 1 7.4 0v2.7"/></symbol>
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 11.1v5.1M12 7.8h.01"/></symbol>
+    <symbol id="i-payout" viewBox="0 0 24 24"><rect x="2.6" y="8.4" width="12.2" height="8.6" rx="2"/><circle cx="8.7" cy="12.7" r="2"/><path d="M16.4 12.2 21 7.6"/><path d="M17.1 7.6H21v3.9"/></symbol>
+    <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.6" y="6.4" width="14.6" height="9.4" rx="2"/><circle cx="9.9" cy="11.1" r="2.1"/><path d="M6.6 19.2h10.1a4 4 0 0 0 4-4V9.5"/></symbol>
     <symbol id="i-coin" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="8.8"/><path d="M12 6.9l1.45 2.85 2.85 1.45-2.85 1.45L12 15.5l-1.45-2.85L7.7 11.2l2.85-1.45z" fill="#fff"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.2 14.2A8.6 8.6 0 0 1 9.8 3.8a8.6 8.6 0 1 0 10.4 10.4Z"/></symbol>
     <symbol id="i-minus-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M8.4 12h7.2"/></symbol>
@@ -2720,7 +2722,7 @@
                   </div>
                   <div class="rev__read">
                     <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-coin"/></svg>
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-payout"/></svg>
                       <span class="rev__text"><b>Opining</b>NL91 &lowast;&lowast;&lowast;&lowast; &lowast;&lowast;&lowast;&lowast; &lowast;&lowast;43 00</span>
                     </div>
                   </div>
@@ -3176,7 +3178,7 @@
                 </span>
               </div>
               <div class="row row--static">
-                <svg class="icon row__icon" aria-hidden="true"><use href="#i-coin"/></svg>
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-payout"/></svg>
                 <span class="row__text">
                   <span class="row__title">Payouts</span>
                   <span class="row__meta">Paid out by PayPal, not through your Opining payout balance</span>
@@ -3717,7 +3719,7 @@
                    laatste vier cijfers. Het pijltje gaat naar Finance, waar de
                    uitbetalingen zelf staan. -->
               <button class="row" type="button" data-goto-page="finance">
-                <svg class="icon row__icon" aria-hidden="true"><use href="#i-coin"/></svg>
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-payout"/></svg>
                 <span class="row__title">Payouts</span>
                 <span class="row__value">ABN AMRO Bank N.V. &lowast;&lowast;&lowast;&lowast;&lowast;&lowast; 4300</span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
@@ -3752,7 +3754,7 @@
             <!-- Rembours rekent de bezorger af; er loopt geen geld via ons. -->
             <div class="rows">
               <div class="row row--static">
-                <svg class="icon row__icon" aria-hidden="true"><use href="#i-coin"/></svg>
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-cash"/></svg>
                 <span class="row__text">
                   <span class="row__title">Cash on delivery</span>
                   <span class="row__meta">Customers pay the deliverer when the order arrives</span>
@@ -4740,6 +4742,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=137"></script>
+  <script src="app.js?v=138"></script>
 </body>
 </html>
