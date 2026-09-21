@@ -1442,6 +1442,7 @@ select.input {
 }
 /* Een logo vult het kadertje zonder uit te rekken; zonder afbeelding blijft
    de afkorting staan. */
+.pm__mark:has(img) { padding: 3px; }
 .pm__mark img { max-width: 100%; max-height: 100%; object-fit: contain; }
 .pm__name { font-weight: 500; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* Een aanbieder die buiten ons om afrekent staat in een eigen kader: het is
