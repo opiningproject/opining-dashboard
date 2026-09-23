@@ -3041,4 +3041,260 @@
       showToast(BELEID[beleidRij.dataset.policy].titel + " saved");
     });
   }
+  /* ---- Rekening: betaalmethodes -------------------------------------------
+     De methodes voor de rekening van Opining zelf staan in hetzelfde vak als
+     de knop eronder. De keuze bovenin het venster bepaalt de velden, de titel
+     en de knop: een kaart of een incasso. Van een kaart houden we alleen de
+     laatste vier cijfers vast; de rest is in het echt iets voor de
+     betaaldienst, niet voor ons. */
+  var pmVenster = document.getElementById("paymethod-dialog");
+
+  if (pmVenster) {
+    var pmVak = document.getElementById("bill-methods");
+    var pmKnop = document.getElementById("pm-add");
+    var pmTitel = document.getElementById("paymethod-dialog-title");
+    var pmSoortVeld = document.getElementById("pm-kind");
+    var pmPrimair = document.getElementById("pm-primary");
+    var pmNummer = document.getElementById("pm-number");
+    var pmVervalt = document.getElementById("pm-exp");
+    var pmCode = document.getElementById("pm-cvc");
+    var pmNaam = document.getElementById("pm-name");
+    var pmVoor = document.getElementById("pm-first");
+    var pmAchter = document.getElementById("pm-last");
+    var pmMail = document.getElementById("pm-mail");
+    var pmIban = document.getElementById("pm-iban");
+    var pmVelden = [pmNummer, pmVervalt, pmCode, pmNaam, pmVoor, pmAchter, pmMail, pmIban];
+
+    /* Het merk volgt uit het eerste cijfer, zoals elke kassa het doet. */
+    function pmMerk(nummer) {
+      var eerste = nummer.charAt(0);
+      if (eerste === "4") return { naam: "Visa", logo: "img/pay/visa.svg" };
+      if (eerste === "5") return { naam: "Mastercard", logo: "img/pay/mastercard.svg" };
+      if (eerste === "6") return { naam: "Maestro", logo: "img/pay/maestro.svg" };
+      return { naam: "Card", logo: "" };
+    }
+
+    function pmCijfers(veld) { return veld.value.replace(/\D/g, ""); }
+    function pmIbanSchoon() { return pmIban.value.toUpperCase().replace(/[^A-Z0-9]/g, ""); }
+    function pmSepa() { return pmSoortVeld.value === "sepa"; }
+
+    /* De knop gaat pas aan als de velden samen een kaart of een rekening
+       kunnen zijn. We rekenen niets na: dat doet de betaaldienst. */
+    function zetPmKlaar() {
+      if (pmSepa()) {
+        pmKnop.disabled = !(/^[A-Z]{2}\d{2}[A-Z0-9]{10,26}$/.test(pmIbanSchoon()) &&
+          pmVoor.value.trim() && pmAchter.value.trim() &&
+          /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(pmMail.value.trim()));
+        return;
+      }
+      pmKnop.disabled = !(pmCijfers(pmNummer).length >= 12 &&
+        pmCijfers(pmVervalt).length === 4 &&
+        pmCijfers(pmCode).length >= 3 &&
+        pmNaam.value.trim().length > 1);
+    }
+
+    pmVelden.forEach(function (v) { v.addEventListener("input", zetPmKlaar); });
+
+    /* De keuze bepaalt welke velden erbij horen, en hoe het venster heet. */
+    pmSoortVeld.addEventListener("change", function () {
+      pmVenster.querySelectorAll("[data-pm-fields]").forEach(function (blok) {
+        blok.hidden = blok.dataset.pmFields !== pmSoortVeld.value;
+      });
+      pmTitel.textContent = pmSepa() ? "Add SEPA direct debit" : "Add credit card";
+      pmKnop.textContent = pmSepa() ? "Add SEPA Direct Debit" : "Save card";
+      zetPmKlaar();
+    });
+
+    /* Nummer in blokjes van vier en de datum met een schuine streep: zo staat
+       het op de kaart, en zo zie je meteen of je je vertikt hebt. */
+    pmNummer.addEventListener("input", function () {
+      this.value = pmCijfers(this).slice(0, 19).replace(/(.{4})(?=.)/g, "$1 ");
+    });
+    pmVervalt.addEventListener("input", function () {
+      var c = pmCijfers(this).slice(0, 4);
+      this.value = c.length > 2 ? c.slice(0, 2) + " / " + c.slice(2) : c;
+    });
+    pmCode.addEventListener("input", function () {
+      this.value = pmCijfers(this).slice(0, 4);
+    });
+    /* Een IBAN lees je in blokjes van vier, net als op een bankafschrift. */
+    pmIban.addEventListener("input", function () {
+      this.value = pmIbanSchoon().slice(0, 34).replace(/(.{4})(?=.)/g, "$1 ");
+    });
+
+    /* De bovenste is de primaire; de rest is reserve, voor als die wordt
+       geweigerd. */
+    function pmStanden() {
+      [].slice.call(pmVak.querySelectorAll(".payrow")).forEach(function (rij, i) {
+        var stand = rij.querySelector(".badge");
+        stand.textContent = i === 0 ? "Primary" : "Backup";
+        stand.className = i === 0 ? "badge badge--draft" : "badge badge--muted";
+        rij.querySelector("[data-pm-primary]").hidden = i === 0;
+      });
+    }
+
+    /* Het venster begint elke keer leeg, op een kaart. */
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest('[data-dialog="paymethod-dialog"]')) return;
+      pmVelden.forEach(function (v) { v.value = ""; });
+      pmSoortVeld.value = "card";
+      pmPrimair.checked = !pmVak.querySelector(".payrow");
+      pmSoortVeld.dispatchEvent(new Event("change"));
+    });
+
+    pmKnop.addEventListener("click", function () {
+      var sepa = pmSepa();
+      var merk = sepa ? { naam: "SEPA Direct Debit", logo: "img/pay/sepa.svg" }
+                      : pmMerk(pmCijfers(pmNummer));
+      var laatste = sepa ? pmIbanSchoon().slice(-4) : pmCijfers(pmNummer).slice(-4);
+      var naam = sepa ? merk.naam + " ending in " + laatste
+                      : merk.naam + " •••• " + laatste;
+
+      var rij = document.createElement("div");
+      rij.className = "payrow";
+      rij.innerHTML =
+        '<span class="pm__mark" aria-hidden="true"></span>' +
+        '<span class="payrow__name"></span>' +
+        '<span class="badge badge--draft">Primary</span>' +
+        '<span class="sort payrow__menu">' +
+          '<button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false">' +
+            '<svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>' +
+          '<div class="sort__menu sort__menu--kort" role="menu" hidden>' +
+            '<button class="sort__item" type="button" role="menuitem" data-pm-primary>Make primary</button>' +
+            '<button class="sort__item" type="button" role="menuitem" data-pm-remove>Remove</button>' +
+          '</div>' +
+        '</span>';
+      var vakje = rij.querySelector(".pm__mark");
+      if (merk.logo) vakje.innerHTML = '<img src="' + merk.logo + '" alt="" />';
+      else vakje.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-card"/></svg>';
+      rij.querySelector(".payrow__name").textContent = naam;
+      rij.querySelector(".sort__btn").setAttribute("aria-label", "Actions for " + naam);
+
+      /* Aangevinkt: bovenaan, en dus primair. Anders onderaan als reserve. */
+      if (pmPrimair.checked) pmVak.insertBefore(rij, pmVak.firstElementChild);
+      else pmVak.insertBefore(rij, pmVak.querySelector(".addrow"));
+      pmStanden();
+      pmVenster.hidden = true;
+      showToast("Payment method added");
+    });
+
+    pmVak.addEventListener("click", function (e) {
+      var rij = e.target.closest(".payrow");
+      if (!rij) return;
+      if (e.target.closest("[data-pm-primary]")) {
+        pmVak.insertBefore(rij, pmVak.firstElementChild);
+        pmStanden();
+        showToast("Primary payment method changed");
+      } else if (e.target.closest("[data-pm-remove]")) {
+        rij.remove();
+        pmStanden();
+        showToast("Payment method removed");
+      }
+    });
+  }
+
+  /* Het btw-nummer: één nummer, dus geen lijst maar een regel die je beheert.
+     Na het opslaan gaat het naar VIES; zolang dat loopt staat er Checking. */
+  var vatVenster = document.getElementById("vat-dialog");
+
+  if (vatVenster) {
+    var vatVeld = document.getElementById("vat-number");
+    var vatFout = document.getElementById("vat-error");
+    var vatKnop = document.getElementById("vat-add");
+    var vatWaarde = document.getElementById("bill-vat-value");
+    var vatStand = document.getElementById("bill-vat-badge");
+    var vatNotitie = document.getElementById("bill-vat-note");
+    var vatTimer = null;
+    /* Negen cijfers, een B en twee cijfers, met NL ervoor of niet. Genoeg om
+       een typfout te zien; de echte controle doet VIES. */
+    var VAT_VORM = /^(NL)?\d{9}B\d{2}$/;
+
+    function vatSchoon() { return vatVeld.value.toUpperCase().replace(/[^A-Z0-9]/g, ""); }
+
+    /* Dezelfde vorm als bij opslaan: de knop gaat pas aan als het nummer klopt. */
+    function zetVatKlaar() { vatKnop.disabled = !VAT_VORM.test(vatSchoon()); }
+
+    vatVeld.addEventListener("input", function () {
+      vatFout.hidden = true;
+      vatVeld.classList.remove("input--error");
+      zetVatKlaar();
+    });
+
+    /* Het venster opent leeg als er nog niets staat, en anders met wat er al
+       ingevuld was; de knop zegt dan ook iets anders. */
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest('[data-dialog="vat-dialog"]')) return;
+      var gezet = vatVaststaat();
+      vatVeld.value = gezet || "";
+      vatFout.hidden = true;
+      document.getElementById("vat-dialog-title").textContent = gezet ? "Change VAT number" : "Add tax info";
+      vatKnop.textContent = gezet ? "Save" : "Add VAT number";
+      zetVatKlaar();
+      setTimeout(function () { vatVeld.focus(); }, 0);
+    });
+
+    function vatVaststaat() {
+      var nu = vatWaarde.textContent.trim();
+      return nu === "Not set" ? "" : nu;
+    }
+
+    vatKnop.addEventListener("click", function () {
+      var nummer = vatSchoon();
+      if (!VAT_VORM.test(nummer)) {
+        vatFout.hidden = false;
+        vatVeld.classList.add("input--error");
+        vatVeld.focus();
+        return;
+      }
+      vatWaarde.textContent = nummer;
+      vatStand.textContent = "Being verified";
+      vatStand.className = "badge badge--pending";
+      vatStand.hidden = false;
+      vatNotitie.hidden = false;
+      vatVenster.hidden = true;
+      showToast("VAT number saved");
+      clearTimeout(vatTimer);
+      vatTimer = setTimeout(function () {
+        vatStand.textContent = "Verified";
+        vatStand.className = "badge badge--active";
+        vatNotitie.hidden = true;
+      }, 2500);
+    });
+  }
+
+  /* Het factuuradres. Save gaat pas aan als er iets veranderd is, anders is
+     het een knop die niets doet. Het land ligt vast en telt dus niet mee. */
+  var adresVenster = document.getElementById("address-dialog");
+
+  if (adresVenster) {
+    var adresVelden = ["addr-company", "addr-street", "addr-extra", "addr-zip", "addr-city"]
+      .map(function (id) { return document.getElementById(id); });
+    var adresKnop = document.getElementById("addr-save");
+
+    function adresStand() {
+      return adresVelden.map(function (v) { return v.value.trim(); }).join("|");
+    }
+
+    var adresBewaard = adresStand();
+
+    adresVelden.forEach(function (v) {
+      v.addEventListener("input", function () {
+        adresKnop.disabled = adresStand() === adresBewaard ||
+          !adresVelden[1].value.trim() || !adresVelden[4].value.trim();
+      });
+    });
+
+    adresKnop.addEventListener("click", function () {
+      var extra = adresVelden[2].value.trim();
+      var post = adresVelden[3].value.trim().toUpperCase();
+      document.getElementById("bill-address").textContent =
+        [adresVelden[1].value.trim(), extra, post + " " + adresVelden[4].value.trim(),
+         document.getElementById("addr-country").value]
+          .filter(Boolean).join(", ");
+      adresBewaard = adresStand();
+      adresKnop.disabled = true;
+      adresVenster.hidden = true;
+      showToast("Billing address saved");
+    });
+  }
 })();

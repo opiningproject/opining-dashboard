@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=156" />
+  <link rel="stylesheet" href="styles.css?v=159" />
 </head>
 <body>
 
@@ -3965,11 +3965,45 @@
               </div>
               <p class="amount">&euro; 35,09 <span class="amount__cur">per month</span></p>
               <p class="card__sub">&euro; 29,00 excl.</p>
-              <button class="addrow" type="button">
-                <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add payment method
-              </button>
+              <!-- Eén vak: de toegevoegde methodes komen boven de knop te
+                   staan, binnen hetzelfde kader. -->
+              <div class="paybox" id="bill-methods">
+                <button class="addrow" type="button" data-dialog="paymethod-dialog">
+                  <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add payment method
+                </button>
+              </div>
             </div>
             <p class="card__foot">Your next bill is on 1 September 2026. <a class="link" href="#">View bill</a></p>
+          </div>
+
+          <!-- Adres en btw-nummer horen bij dezelfde factuur, dus staan ze in
+               één kaart. Valuta laten we weg: we rekenen alleen in euro's. -->
+          <div class="card">
+            <h3 class="card__title">Address and VAT number</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-pin"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Billing address</span>
+                  <span class="row__meta" id="bill-address">Lusthofstraat 27A, 3062 WB Rotterdam, Netherlands</span>
+                </span>
+                <button class="btn btn--ghost btn--sm" type="button" data-dialog="address-dialog">Manage</button>
+              </div>
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-billing"/></svg>
+                <span class="row__text">
+                  <span class="row__title">VAT number</span>
+                  <span class="row__meta" id="bill-vat-value">Not set</span>
+                </span>
+                <span class="badge badge--active" id="bill-vat-badge" hidden>Verified</span>
+                <button class="btn btn--ghost btn--sm" type="button" data-dialog="vat-dialog">Manage</button>
+              </div>
+            </div>
+            <!-- Zolang VIES nog kijkt, staat hier waarom er nog niets verandert. -->
+            <p class="alert alert--info" id="bill-vat-note" hidden>
+              <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+              <span>Your VAT number is being verified with VIES. This takes a few days. We email you if anything is wrong with it.</span>
+            </p>
           </div>
 
           <div class="card">
@@ -4540,6 +4574,151 @@
       </div>
     </div>
   </div>
+  <!-- Een betaalmethode voor de rekening van Opining zelf: een kaart of een
+       incasso. De keuze bovenin bepaalt de velden, de titel en de knop. Van de
+       kaart houden we alleen de laatste vier cijfers vast; de rest is in het
+       echt iets voor de betaaldienst, niet voor ons. -->
+  <div class="dialog" id="paymethod-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="paymethod-dialog-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="paymethod-dialog-title">Add credit card</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <div class="field">
+        <label class="label" for="pm-kind">Payment method type</label>
+        <select class="input" id="pm-kind">
+          <option value="card" selected>Credit card</option>
+          <option value="sepa">SEPA direct debit</option>
+        </select>
+      </div>
+
+      <div data-pm-fields="card">
+        <div class="field">
+          <label class="label" for="pm-number">Card number</label>
+          <input class="input" id="pm-number" type="text" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="label" for="pm-exp">Expires</label>
+            <input class="input" id="pm-exp" type="text" inputmode="numeric" autocomplete="off" placeholder="MM / YY" />
+          </div>
+          <div class="field">
+            <label class="label" for="pm-cvc">CVV</label>
+            <input class="input" id="pm-cvc" type="text" inputmode="numeric" autocomplete="off" placeholder="123" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label" for="pm-name">Name on card</label>
+          <input class="input" id="pm-name" type="text" autocomplete="off" />
+        </div>
+      </div>
+
+      <div data-pm-fields="sepa" hidden>
+        <div class="field-row">
+          <div class="field">
+            <label class="label" for="pm-first">First name</label>
+            <input class="input" id="pm-first" type="text" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label class="label" for="pm-last">Last name</label>
+            <input class="input" id="pm-last" type="text" autocomplete="off" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label" for="pm-mail">Email</label>
+          <input class="input" id="pm-mail" type="email" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label class="label" for="pm-iban">IBAN</label>
+          <input class="input" id="pm-iban" type="text" autocomplete="off" placeholder="NL91 ABNA 0417 1643 00" />
+        </div>
+        <p class="dialog__fine"><b>SEPA Direct Debit Mandate</b>By continuing you authorise Opining to send instructions to your bank to debit your account, and your bank to follow those instructions. You can ask your bank for a refund within eight weeks of the debit date, under the terms of your agreement with them. We tell you about an upcoming debit at least two days in advance.</p>
+      </div>
+
+      <div class="dialog__foot">
+        <label class="cbox"><input type="checkbox" id="pm-primary" checked /><span>Set as primary method</span></label>
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="pm-add" disabled>Save card</button>
+      </div>
+    </div>
+  </div>
+  <!-- Het adres waarop de factuur van Opining staat. Het land ligt vast bij de
+       inschrijving van het bedrijf, dus dat veld staat vast; de rest mag je
+       wijzigen. Save gaat pas aan als er iets veranderd is. -->
+  <div class="dialog" id="address-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="address-dialog-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="address-dialog-title">Billing address</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead">This address is printed on every bill we send you.</p>
+      <div class="field">
+        <label class="label" for="addr-country">Country/region</label>
+        <select class="input" id="addr-country" disabled>
+          <option selected>Netherlands</option>
+        </select>
+        <p class="hint">Set when your business was registered. Email us to change it.</p>
+      </div>
+      <div class="field">
+        <label class="label" for="addr-company">Company</label>
+        <input class="input" id="addr-company" type="text" value="Opining" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label class="label" for="addr-street">Street and house number</label>
+        <input class="input" id="addr-street" type="text" value="Lusthofstraat 27A" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label class="label" for="addr-extra">Apartment, suite, etc</label>
+        <input class="input" id="addr-extra" type="text" autocomplete="off" />
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="addr-zip">Postal code</label>
+          <input class="input" id="addr-zip" type="text" value="3062 WB" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label class="label" for="addr-city">City</label>
+          <input class="input" id="addr-city" type="text" value="Rotterdam" autocomplete="off" />
+        </div>
+      </div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="addr-save" disabled>Save</button>
+      </div>
+    </div>
+  </div>
+  <!-- Het btw-nummer gaat naar VIES. Dat duurt dagen, dus zeggen we hier al
+       wat er gaat gebeuren en vragen we het in het Nederlandse formaat. -->
+  <div class="dialog" id="vat-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="vat-dialog-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="vat-dialog-title">Add tax info</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead">We verify your VAT number with the VAT Information Exchange System (VIES). This takes a few days. We email you if anything is wrong with it.</p>
+      <div class="field">
+        <label class="label" for="vat-number">VAT number</label>
+        <input class="input" id="vat-number" type="text" autocomplete="off" placeholder="NL123456789B01" />
+        <p class="hint">Nine digits, then the letter B, then two digits. The country code may stay in front.</p>
+        <p class="field__error" id="vat-error" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>This does not look like a Dutch VAT number. Example: NL123456789B01.
+        </p>
+      </div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="vat-add" disabled>Add VAT number</button>
+      </div>
+    </div>
+  </div>
   <!-- Een beleidstekst schrijven. De opmaakknoppen werken op de tekst in het
        vak eronder; Save gaat pas aan zodra er iets staat. -->
   <div class="dialog" id="policy-dialog" hidden>
@@ -4738,6 +4917,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=156"></script>
+  <script src="app.js?v=159"></script>
 </body>
 </html>

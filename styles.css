@@ -2131,13 +2131,15 @@ select.input {
 }
 .input--bare:hover { border-color: var(--border-strong); padding-left: 10px; background-position: right 8px center; }
 
-/* Rij met een badge vlak voor de chevron. */
+/* Rij met een badge vlak voor de chevron. Een verborgen badge telt nog mee als
+   buur, dus staat overal :not([hidden]) bij: anders staat de knop links tegen
+   de tekst aan zolang de stand nog leeg is. */
 .row > .badge { margin-left: auto; }
-.row > .badge + .row__caret { margin-left: 14px; }
+.row > .badge:not([hidden]) + .row__caret { margin-left: 14px; }
 /* Zonder badge duwt de knop zichzelf naar rechts; staat er wel een badge, dan
    houdt de regel hieronder de afstand tussen die twee vast. */
 .row > .btn { margin-left: auto; }
-.row > .badge + .btn { margin-left: 14px; }
+.row > .badge:not([hidden]) + .btn { margin-left: 14px; }
 /* Een losse link achteraan de rij, bijvoorbeeld om het adres te wijzigen. */
 .row__link { flex: 0 0 auto; margin-left: 14px; }
 
@@ -2936,3 +2938,29 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .editor__area a { color: var(--accent); text-decoration: underline; }
 /* Zolang er niets staat, zegt het vak zelf waar het voor is. */
 .editor__area:empty::before { content: attr(data-hint); color: var(--text-muted); }
+
+/* Toegevoegde betaalmethodes en de knop eronder staan in hetzelfde kader:
+   het is één vak dat groeit, geen losse knop met een lijst erboven. */
+.paybox { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+.paybox .addrow { margin: 0; border: 0; border-radius: 0; }
+.payrow { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.payrow__name { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* De stand duwt het menu naar rechts; zonder stand doet het menu dat zelf. */
+.payrow .badge { margin-left: auto; }
+.payrow .badge:not([hidden]) + .payrow__menu { margin-left: 0; }
+.payrow__menu { margin-left: auto; }
+
+/* Vinkje met tekst ernaast, links in de voet van een venster. Het hoort bij de
+   knop ernaast: wat je aanvinkt gebeurt zodra je op die knop drukt. */
+.cbox { display: inline-flex; align-items: center; gap: 10px; margin-right: auto; font-size: var(--fs-md); color: var(--text-strong); cursor: pointer; }
+.cbox input { width: 16px; height: 16px; flex: 0 0 auto; accent-color: var(--accent); }
+/* Kleine lettertjes onder een formulier: wel te lezen, niet in de weg. */
+.dialog__fine { margin-top: 18px; font-size: var(--fs-sm); line-height: 1.5; color: var(--text-muted); }
+.dialog__fine b { display: block; margin-bottom: 4px; font-weight: 600; color: var(--text-strong); }
+
+@media (max-width: 560px) {
+  /* De voet wordt twee regels: het vinkje boven de knoppen, anders staat het
+     tegen Cancel aan geduwd. */
+  .dialog__foot { flex-wrap: wrap; }
+  .cbox { flex: 1 0 100%; margin-right: 0; }
+}
