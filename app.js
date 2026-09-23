@@ -3267,9 +3267,9 @@
   var adresVenster = document.getElementById("address-dialog");
 
   if (adresVenster) {
-    var adresVelden = ["addr-company", "addr-street", "addr-extra", "addr-zip", "addr-city"]
+    var adresVelden = ["bill-addr-company", "bill-addr-street", "bill-addr-extra", "bill-addr-zip", "bill-addr-city"]
       .map(function (id) { return document.getElementById(id); });
-    var adresKnop = document.getElementById("addr-save");
+    var adresKnop = document.getElementById("bill-addr-save");
 
     function adresStand() {
       return adresVelden.map(function (v) { return v.value.trim(); }).join("|");
@@ -3289,7 +3289,7 @@
       var post = adresVelden[3].value.trim().toUpperCase();
       document.getElementById("bill-address").textContent =
         [adresVelden[1].value.trim(), extra, post + " " + adresVelden[4].value.trim(),
-         document.getElementById("addr-country").value]
+         document.getElementById("bill-addr-country").value]
           .filter(Boolean).join(", ");
       adresBewaard = adresStand();
       adresKnop.disabled = true;
