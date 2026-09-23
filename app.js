@@ -1155,10 +1155,6 @@
     kop.setAttribute("aria-expanded", open ? "false" : "true");
     var doel = document.getElementById(kop.getAttribute("aria-controls"));
     if (doel) doel.hidden = open;
-    /* Een knop onder de lijst (Add Holiday) hoort bij de sectie, niet bij de
-       kaart eromheen, dus die gaat mee. */
-    var extra = doel && doel.nextElementSibling;
-    if (extra && extra.classList.contains("card__pad")) extra.hidden = open;
   });
 
   /* ---- Loyalty: het voorbeeld volgt het gekozen percentage ---------------- */
