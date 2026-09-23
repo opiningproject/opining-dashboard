@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=147" />
+  <link rel="stylesheet" href="styles.css?v=150" />
 </head>
 <body>
 
@@ -247,7 +247,7 @@
         <div class="content__inner">
           <!-- De actieknop hoort bij de pagina, niet bij de view: app.js §2
                zet label en zichtbaarheid per pagina. -->
-          <div class="page-head">
+        <div class="page-head">
             <!-- Zelfde kruimelpad als in settings: binnen een aanmaakscherm
                  dimt het pagina-icoon en leidt het terug naar de lijst. -->
             <button class="crumb" type="button" id="page-crumb" hidden>
@@ -2117,11 +2117,10 @@
 
         <div class="page-head">
           <!-- Binnen een subpagina wordt het pagina-icoon het kruimelpad terug:
-               gedimd icoon, chevron, en daarachter de naam van de subpagina. -->
+               gedimd icoon en een chevron. De naam van de pagina erboven komt
+               er niet bij: het icoon zelf is de weg terug. -->
           <button class="crumb" type="button" id="set-crumb" hidden>
             <svg class="icon page-head__icon" id="set-crumb-icon" aria-hidden="true"><use href="#i-store"/></svg>
-            <svg class="icon crumb__sep" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-            <span class="crumb__name" id="set-crumb-name"></span>
             <svg class="icon crumb__sep" aria-hidden="true"><use href="#i-chevron-right"/></svg>
           </button>
           <svg class="icon page-head__icon" id="set-icon" aria-hidden="true"><use href="#i-store"/></svg>
@@ -2132,7 +2131,6 @@
                    data-sub-badge van de subpagina die open gaat. -->
               <span class="badge badge--pending page-head__badge" id="set-badge" hidden></span>
             </div>
-            <p class="page-head__lead" id="set-lead" hidden></p>
           </div>
           <!-- Actieknoppen per settings-pagina; app.js toont het blok waarvan
                data-set-tools gelijk is aan de open pagina. -->
@@ -2186,6 +2184,10 @@
               </div>
             </span>
           </div>
+          <!-- De subtitel staat op een eigen regel onder de hele kopregel, niet
+               ingesprongen naast het icoon: zo begint hij op dezelfde lijn als
+               de kaarten eronder. -->
+          <p class="page-head__lead" id="set-lead" hidden></p>
         </div>
 
         <section class="view" data-set-view="general">
@@ -4682,6 +4684,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=147"></script>
+  <script src="app.js?v=150"></script>
 </body>
 </html>

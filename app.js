@@ -1661,7 +1661,6 @@
      terugknop. */
   var setCrumb     = document.getElementById("set-crumb");
   var setCrumbIcon = document.getElementById("set-crumb-icon");
-  var setCrumbName = document.getElementById("set-crumb-name");
   var setLead      = document.getElementById("set-lead");
   var setSubs      = document.querySelectorAll("[data-set-sub]");
   var stapel       = [];   /* pagina's waar we vandaan komen, onderste eerst */
@@ -1671,14 +1670,14 @@
     return open ? open.dataset.setSub : null;
   }
 
-  /* In de kop staat de pagina direct erboven, niet de settings-pagina: op de
-     tarievenpagina dus Payment methods. Daarom onthouden we elke stap. */
+  /* Het icoon gaat een stap terug, naar de pagina direct erboven: op de
+     tarievenpagina dus Payment methods, niet Payments. Daarom onthouden we
+     elke stap. De naam staat alleen in de tooltip, niet in de kopregel. */
   function toonKruimel() {
     var boven = stapel[stapel.length - 1];
     if (!boven) { setCrumb.hidden = true; setIcon.removeAttribute("hidden"); return; }
     setCrumbIcon.querySelector("use")
       .setAttribute("href", setIcon.querySelector("use").getAttribute("href"));
-    setCrumbName.textContent = boven.titel;
     setCrumb.setAttribute("aria-label", "Back to " + boven.titel);
     setCrumb.setAttribute("title", "Back to " + boven.titel);
     setCrumb.hidden = false;

@@ -403,7 +403,7 @@ legend { padding: 0; }
 .row__caret { margin-left: auto; width: 18px; height: 18px; color: var(--text-muted); }
 
 .alert {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: flex-start; gap: 10px;
   margin: 16px 0 6px;
   padding: 12px 14px;
   border-radius: var(--r-md);
@@ -415,7 +415,9 @@ legend { padding: 0; }
 }
 /* Even groot als een pagina-icoon en in de kleur van de melding zelf, zodat
    het teken bij de tekst hoort in plaats van ernaast te schreeuwen. */
-.alert .icon { width: 20px; height: 20px; stroke-width: 1.6; flex: 0 0 auto; }
+/* Bij een melding van twee regels hoort het teken bij de eerste regel; de
+   halve pixel eronder zet hem optisch midden op die regel. */
+.alert .icon { width: 20px; height: 20px; stroke-width: 1.6; flex: 0 0 auto; margin-top: 1px; }
 /* Staat de melding los in een kolom die zelf al ruimte tussen de blokken
    houdt, dan hoeft hij geen eigen marge: die komt er bovenop. Binnen een
    kaart blijft de marge staan, want daar scheidt hij niets anders. */
@@ -1682,25 +1684,23 @@ select.input {
 .alert--info { background: var(--accent-soft); color: #14567f; }
 /* Melding met een titel: de titel op een eigen regel, de uitleg eronder,
    en het teken bovenaan naast de titel in plaats van in het midden. */
-.alert--titled { align-items: flex-start; padding: 16px; font-weight: 400; }
+.alert--titled { padding: 16px; font-weight: 400; }
 .alert--titled b { display: block; margin-bottom: 2px; font-weight: 600; }
-.alert--titled .icon { margin-top: 1px; }
-
-/* Kop van een inklapbare kaartsectie: een grijze balk bovenin de kaart met
-   de titel en een chevron. De lijst eronder heeft geen eigen bovenlijn meer
-   nodig; de onderrand van de balk is die lijn. */
+/* Kop van een inklapbare kaartsectie: de titel met een chevron, in dezelfde
+   witte kaart. Geen grijze balk en geen lijn eronder, want de kop hoort bij
+   wat eronder staat en is geen losse strook erboven. */
 .cardhead {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   width: 100%;
   padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
   border-radius: calc(var(--r-lg) - 1px) calc(var(--r-lg) - 1px) 0 0;
-  background: var(--gray-50);
+  background: var(--bg-surface);
   text-align: left;
 }
-.cardhead:hover { background: var(--gray-100); }
-/* Dicht: geen lijn en weer rond aan alle kanten, want er staat niets onder. */
-.cardhead[aria-expanded="false"] { border-bottom: 0; border-radius: calc(var(--r-lg) - 1px); }
+/* Alleen bij zweven een spoortje grijs: het blijft een knop. */
+.cardhead:hover { background: var(--gray-50); }
+/* Dicht: weer rond aan alle kanten, want er staat niets onder. */
+.cardhead[aria-expanded="false"] { border-radius: calc(var(--r-lg) - 1px); }
 .cardhead__chev {
   color: var(--text-muted);
   transition: transform var(--dur) var(--ease);
@@ -1845,17 +1845,7 @@ select.input {
 
 /* Kruimelpad in de settings-kop: gedimd pagina-icoon dat terugleidt,
    met een chevron naar de naam van de subpagina. */
-.crumb { display: flex; align-items: center; gap: 8px; padding: 2px; border-radius: var(--r-sm); }
-/* De pagina waar je vandaan komt. Te lang knipt af; zweven licht hem op, zodat
-   je ziet dat het een weg terug is. */
-.crumb__name {
-  max-width: 190px; padding: 2px 8px;
-  border-radius: var(--r-sm);
-  font-size: var(--fs-md); color: var(--text-muted);
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
-}
-.crumb:hover .crumb__name { background: var(--bg-hover); color: var(--text-strong); }
+.crumb { display: flex; align-items: center; gap: 10px; padding: 2px; border-radius: var(--r-sm); }
 .crumb .page-head__icon { color: var(--text-muted); transition: color var(--dur) var(--ease); }
 .crumb:hover .page-head__icon { color: var(--text-strong); }
 .crumb__sep { width: 15px; height: 15px; color: var(--border-strong); }
@@ -1999,7 +1989,14 @@ select.input {
 /* Ondertitel onder een paginatitel; alleen in gebruik waar de titel alleen
    niet genoeg uitleg geeft. */
 .page-head__text { min-width: 0; }
-.page-head__lead { margin-top: 2px; font-size: var(--fs-md); color: var(--text-muted); }
+/* Een eigen regel onder de kopregel, dus over de volle breedte en na de
+   knoppen. Ingesprongen naast het icoon zou hij niet meer uitlijnen met de
+   kaarten eronder. */
+.page-head__lead {
+  flex: 1 0 100%; order: 9;
+  max-width: 78ch;
+  font-size: var(--fs-md); color: var(--text-muted);
+}
 /* Titel met de stand van de pagina ernaast. */
 .page-head__line { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
 .page-head__badge { flex: 0 0 auto; }
@@ -2063,6 +2060,9 @@ select.input {
 .acct__name { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
 .acct__role { font-size: var(--fs-sm); color: var(--text-muted); }
 .acct { padding: 20px; }
+/* De melding is geen kop van het blok eronder: dezelfde ruimte als tussen
+   twee blokken. */
+.acct > .alert { margin: 0 0 14px; }
 
 /* Een ingevuld gegeven: grijs kadertje met een titel en een potlood om terug
    te springen naar de stap waar het vandaan komt. */
@@ -2770,8 +2770,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .content { --content-pad-t: 22px; --content-pad-b: 48px; padding: var(--content-pad-t) 16px var(--content-pad-b); }
   .card { padding: 18px 16px 20px; }
   /* Een flush kaart heeft zijn ruimte binnenin staan; de regel hierboven zou
-     die verdubbelen. */
-  .card--flush { padding: 0; }
+     die verdubbelen. Dat geldt ook voor de meldingsbalk: die loopt van rand
+     tot rand, in elke stand. */
+  .card--flush, .vbar { padding: 0; }
   .field-row { grid-template-columns: minmax(0, 1fr); }
 
   /* ---- Settings-overlay wordt een sheet met twee niveaus ---- */
@@ -2849,9 +2850,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   }
   .set-back:hover { color: var(--text-strong); }
   .set-back .icon { width: 18px; height: 18px; }
-  /* De terugknop erboven brengt je al een stap terug; de naam van die pagina
-     er nog eens bij zou de titel wegdrukken. Alleen het icoon blijft staan. */
-  .crumb__name, .crumb__name + .crumb__sep { display: none; }
   .set-main .page-head { margin-bottom: 16px; }
 
   /* Zelfde balk en knopmaten als op desktop; alleen de vaste 640px vervalt,
