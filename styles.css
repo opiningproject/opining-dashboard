@@ -2422,9 +2422,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    en zou het menu anders altijd tegen de naam aan plakken. */
 .mrow__badge:not([hidden]) + .mrow__menu { margin-left: 0; }
 .mrow__menu { margin-left: auto; }
-/* Eén regel in het menu: zo breed als die regel, niet zo breed als een
-   sorteermenu. */
-.sort__menu--kort { min-width: 140px; }
+/* Eén woord in het menu: zo breed als dat woord. De 210px van een
+   sorteermenu maakt er een leeg vlak van. */
+.sort__menu--kort { min-width: 0; }
 
 /* Tarieven: wat het kost, per gebied. Alleen lezen, dus geen knoppen. */
 .rate { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
