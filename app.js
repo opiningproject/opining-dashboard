@@ -1921,19 +1921,26 @@
     toast.hidden = true;
   }
 
+  /* ---- Taalkeuzes met de Save-knop ----------------------------------------
+     Twee lijstjes die hetzelfde werken: de taal van de winkel (wat de gast
+     ziet) en de taal van dit dashboard (alleen voor jou). Terugkiezen wat er
+     al stond laat de balk weer verdwijnen, want dan is er niets te bewaren. */
+  var TAALGROEPEN = {
+    "default-lang": { zin: function (v) { return v + " is now the default language"; } },
+    "admin-lang": { zin: function (v) { return "This dashboard is now in " + v; } }
+  };
 
-  /* ---- Standaardtaal ------------------------------------------------------
-     Twee talen liggen vast, staan allebei live en delen hetzelfde domein.
-     Wat overblijft is welke van de twee de klant als eerste ziet, en dat is
-     een keuze uit twee: de keuzerondjes zijn zelf de bediening. De melding
-     komt pas als je bovenin opslaat, net als bij elke andere instelling. */
-  var taalBewaard = (document.querySelector('[name="default-lang"]:checked') || {}).value;
+  function taalKeuze(naam) { return document.querySelector('[name="' + naam + '"]:checked'); }
+
+  Object.keys(TAALGROEPEN).forEach(function (naam) {
+    TAALGROEPEN[naam].bewaard = (taalKeuze(naam) || {}).value;
+  });
 
   document.addEventListener("change", function (e) {
-    if (e.target.name !== "default-lang") return;
-    /* Terug op wat er al bewaard stond: dan valt er niets op te slaan. */
-    if (e.target.value === taalBewaard) { hideSavebar(); return; }
-    markUnsavedZin(e.target.value + " is now the default language");
+    var groep = TAALGROEPEN[e.target.name];
+    if (!groep) return;
+    if (e.target.value === groep.bewaard) { hideSavebar(); return; }
+    markUnsavedZin(groep.zin(e.target.value));
   });
 
   /* Save legt de keuze vast; Discard zet het rondje terug waar het stond,
@@ -1941,10 +1948,16 @@
   savebar.addEventListener("click", function (e) {
     var actie = e.target.closest("[data-save]");
     if (!actie) return;
-    var gekozen = document.querySelector('[name="default-lang"]:checked');
-    if (actie.dataset.save === "save") { if (gekozen) taalBewaard = gekozen.value; return; }
-    var terug = document.querySelector('[name="default-lang"][value="' + taalBewaard + '"]');
-    if (terug) terug.checked = true;
+    Object.keys(TAALGROEPEN).forEach(function (naam) {
+      var groep = TAALGROEPEN[naam];
+      if (actie.dataset.save === "save") {
+        var gekozen = taalKeuze(naam);
+        if (gekozen) groep.bewaard = gekozen.value;
+        return;
+      }
+      var terug = document.querySelector('[name="' + naam + '"][value="' + groep.bewaard + '"]');
+      if (terug) terug.checked = true;
+    });
   });
 
 

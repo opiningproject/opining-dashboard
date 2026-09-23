@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=155" />
+  <link rel="stylesheet" href="styles.css?v=156" />
 </head>
 <body>
 
@@ -4067,6 +4067,26 @@
             </div>
           </div>
 
+          <!-- De taal van het dashboard hangt aan de persoon, niet aan de
+               winkel: een collega mag het in een andere taal gebruiken. Wat de
+               gast ziet staat bij Store Language. -->
+          <div class="card">
+            <h3 class="card__title">Language</h3>
+            <p class="card__sub">The language of this dashboard, for you alone. It does not change what guests see on your store.</p>
+            <div class="rows">
+              <label class="pick">
+                <input type="radio" name="admin-lang" value="English" checked />
+                <span class="pick__name">English</span>
+                <span class="pick__meta">Current</span>
+              </label>
+              <label class="pick">
+                <input type="radio" name="admin-lang" value="Dutch" />
+                <span class="pick__name">Dutch</span>
+                <span class="pick__meta">Current</span>
+              </label>
+            </div>
+          </div>
+
           <div class="card">
             <h3 class="card__title">Password</h3>
             <p class="card__sub">Use at least ten characters. A password you use nowhere else is worth more than one with symbols in it.</p>
@@ -4718,6 +4738,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=155"></script>
+  <script src="app.js?v=156"></script>
 </body>
 </html>
