@@ -2850,4 +2850,25 @@
       document.getElementById("global-search").focus();
     }
   });
+
+  /* ---- Demostand via de adresbalk ----------------------------------------
+     De verificatie komt in het echt van Pay.nl, dus er is geen knop om hem te
+     laten mislukken. Voor het tonen van een scherm kan het wel met ?demo= in
+     de link: failed (afgewezen, uitbetalingen gepauzeerd), pending (in
+     behandeling), setup (account wordt aangemaakt) of off (nog niets
+     ingesteld). De link opent meteen de betaalpagina. */
+  var demoStand = new URLSearchParams(location.search).get("demo") ||
+                  new URLSearchParams(location.hash.slice(1)).get("demo");
+  if (demoStand) {
+    btnSettings.click();
+    var demoItem = setNav.querySelector('.nav__item[data-set="payments"]');
+    if (demoItem) demoItem.click();
+    clearTimeout(verificatieTimer);
+    if (demoStand === "off") {
+      zetBetaalStand("off");
+    } else {
+      zetBetaalStand("on");
+      zetVerificatie(demoStand === "setup" || demoStand === "pending" ? demoStand : "failed");
+    }
+  }
 })();
