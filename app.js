@@ -2909,4 +2909,127 @@
       methodeVenster.hidden = true;
     });
   }
+
+  /* ---- Beleidsteksten schrijven -------------------------------------------
+     Twee teksten: privacy en voorwaarden. Het venster schrijft in een
+     contenteditable met execCommand. Dat is oude techniek, maar het werkt in
+     elke browser en er hoeft geen bibliotheek voor mee. Wie dit echt bouwt
+     vervangt het door de editor die de rest van het product gebruikt. */
+  var beleidVenster = document.getElementById("policy-dialog");
+
+  if (beleidVenster) {
+    var BELEID = {
+      privacy: {
+        titel: "Privacy policy",
+        sjabloon:
+          "<h2>Privacy policy</h2>" +
+          "<p>This policy explains which personal data we collect when you order with us, why we need it and how long we keep it.</p>" +
+          "<h3>What we collect</h3>" +
+          "<ul><li>Your name, address, phone number and email address</li>" +
+          "<li>What you ordered and what you paid</li>" +
+          "<li>Notes you add to an order, such as an allergy</li></ul>" +
+          "<h3>Why we need it</h3>" +
+          "<p>We use your details to prepare and deliver your order, to handle payment and to answer questions about it. We do not sell your details to anyone.</p>" +
+          "<h3>How long we keep it</h3>" +
+          "<p>We keep order details as long as the tax rules require. You can ask us to remove everything else at any time.</p>" +
+          "<h3>Your rights</h3>" +
+          "<p>You can ask to see, correct or remove your data. Send us an email and we will answer within one month.</p>"
+      },
+      terms: {
+        titel: "Terms and conditions",
+        sjabloon:
+          "<h2>Terms and conditions</h2>" +
+          "<p>These terms apply to every order you place with us.</p>" +
+          "<h3>Orders</h3>" +
+          "<p>An order is final once you have paid. Check your address and phone number before you confirm, because we use them to reach you.</p>" +
+          "<h3>Prices</h3>" +
+          "<p>All prices include VAT. Delivery costs are shown before you pay.</p>" +
+          "<h3>Delivery and collection</h3>" +
+          "<p>The time we show is an estimate. If your order is going to be late we let you know.</p>" +
+          "<h3>Cancelling</h3>" +
+          "<p>Because we prepare food to order, an order cannot be cancelled once the kitchen has started. Call us and we will see what is possible.</p>" +
+          "<h3>Something wrong</h3>" +
+          "<p>Let us know the same day and we will put it right.</p>"
+      }
+    };
+
+    var beleidRij = null;
+    var beleidVak = document.getElementById("policy-body");
+    var beleidOpslaan = document.getElementById("policy-save");
+
+    /* Save hoort niets te doen zolang er niets staat, en ook niet als je de
+       tekst weer precies zo achterlaat als je hem vond. */
+    var beleidStart = "";
+    function zetBeleidKlaar() {
+      var nu = beleidVak.innerHTML.trim();
+      beleidOpslaan.disabled = !beleidVak.textContent.trim() || nu === beleidStart;
+    }
+
+    document.addEventListener("click", function (e) {
+      var rij = e.target.closest("[data-policy]");
+      if (!rij) return;
+      beleidRij = rij;
+      var soort = BELEID[rij.dataset.policy];
+      document.getElementById("policy-dialog-title").textContent = soort.titel;
+      beleidVak.innerHTML = rij.dataset.policyText || "";
+      beleidStart = beleidVak.innerHTML.trim();
+      document.getElementById("policy-block").value = "p";
+      document.getElementById("policy-note").hidden = true;
+      document.getElementById("policy-disclaimer").setAttribute("aria-expanded", "false");
+      zetBeleidKlaar();
+      beleidVenster.hidden = false;
+      beleidVak.focus();
+    });
+
+    document.getElementById("policy-disclaimer").addEventListener("click", function () {
+      var notitie = document.getElementById("policy-note");
+      notitie.hidden = !notitie.hidden;
+      this.setAttribute("aria-expanded", String(!notitie.hidden));
+    });
+
+    document.getElementById("policy-template").addEventListener("click", function () {
+      beleidVak.innerHTML = BELEID[beleidRij.dataset.policy].sjabloon;
+      beleidVak.focus();
+      zetBeleidKlaar();
+    });
+
+    /* De knoppen werken op wat je hebt geselecteerd, dus de selectie mag niet
+       verdwijnen als je de knop aanraakt. */
+    document.querySelector(".editor__bar").addEventListener("pointerdown", function (e) {
+      if (e.target.closest(".editor__btn")) e.preventDefault();
+    });
+
+    document.querySelector(".editor__bar").addEventListener("click", function (e) {
+      var knop = e.target.closest(".editor__btn");
+      if (!knop) return;
+      var cmd = knop.dataset.cmd;
+      if (cmd === "createLink") {
+        var adres = window.prompt("Link to which address?", "https://");
+        if (!adres) return;
+        document.execCommand("createLink", false, adres);
+      } else {
+        document.execCommand(cmd, false, null);
+      }
+      beleidVak.focus();
+      zetBeleidKlaar();
+    });
+
+    document.getElementById("policy-block").addEventListener("change", function () {
+      document.execCommand("formatBlock", false, this.value);
+      beleidVak.focus();
+      zetBeleidKlaar();
+    });
+
+    beleidVak.addEventListener("input", zetBeleidKlaar);
+
+    /* Opgeslagen: de rij onthoudt de tekst en zegt voortaan dat er iets staat. */
+    document.getElementById("policy-save").addEventListener("click", function () {
+      beleidRij.dataset.policyText = beleidVak.innerHTML;
+      var stand = beleidRij.querySelector("[data-policy-badge]");
+      stand.textContent = "Published";
+      stand.className = "badge badge--active";
+      beleidVenster.hidden = true;
+      showToast(BELEID[beleidRij.dataset.policy].titel + " saved");
+    });
+  }
 })();

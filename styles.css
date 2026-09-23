@@ -2113,13 +2113,6 @@ select.input {
    en niet aanklikbaar als navigatie. */
 .link--btn { font: inherit; color: var(--text-strong); text-decoration: underline; text-underline-offset: 3px; }
 
-/* Kerngegevens naast een rij, vóór de chevron. */
-.facts { display: flex; align-items: center; gap: 20px; margin-left: auto; }
-/* Let op: .rev is de controlestap hierboven; deze .fact is het strookje
-   onder een product. Twee namen die op elkaar lijken, twee componenten. */
-.fact { display: flex; align-items: center; gap: 8px; font-size: var(--fs-md); color: var(--text); }
-.fact .icon { width: 17px; height: 17px; color: var(--text-muted); }
-
 /* Voetregel van een kaart: rustiger vlak, losgetrokken van de inhoud. */
 /* Sluitknop in een note-balk. */
 .note__close { margin-left: auto; width: 30px; height: 30px; }
@@ -2597,9 +2590,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .hbar { grid-template-columns: 84px minmax(0, 1fr) 42px; gap: 10px; }
   /* Legenda onder de titel in plaats van ernaast. */
   .card__headrow { flex-wrap: wrap; }
-  /* Kerngegevens onder de titel in plaats van ernaast. */
-  .row:has(.facts) { flex-wrap: wrap; }
-  .facts { width: 100%; margin-left: 0; gap: 14px; flex-wrap: wrap; }
   .card__action { width: 100%; }
   /* Op smalle schermen vullen de wizardknoppen de regel. */
   .wiz__foot .btn { flex: 1 1 auto; }
@@ -2897,3 +2887,52 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
     transition-duration: .01ms !important;
   }
 }
+
+/* ==========================================================================
+   8t. BELEIDSTEKSTEN
+   ========================================================================== */
+
+/* Balkje boven de schrijfruimte: waarschuwing links, sjabloon rechts. Grijs,
+   want het hoort bij het venster en niet bij de tekst die je schrijft. */
+.ptpl {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  background: var(--gray-50);
+  font-size: var(--fs-md); color: var(--text);
+}
+.ptpl__text { min-width: 0; flex: 1 1 260px; }
+.ptpl__chev { width: 15px; height: 15px; vertical-align: -3px; transition: transform var(--dur) var(--ease); }
+[aria-expanded="true"] .ptpl__chev { transform: rotate(180deg); }
+.ptpl__note { flex: 1 0 100%; font-size: var(--fs-sm); color: var(--text-muted); }
+
+/* Schrijfruimte met de knoppenbalk erboven in hetzelfde kader. */
+.editor { border: 1px solid var(--border-strong); border-radius: var(--r-md); overflow: hidden; }
+.editor__bar {
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+}
+.editor__block { width: auto; height: 32px; padding: 0 30px 0 10px; font-size: var(--fs-sm); }
+.editor__sep { width: 1px; height: 20px; margin: 0 6px; background: var(--border); }
+.editor__btn {
+  display: grid; place-items: center;
+  width: 32px; height: 32px;
+  border-radius: var(--r-sm);
+  font-size: var(--fs-md); color: var(--text-strong);
+}
+.editor__btn:hover { background: var(--bg-hover); }
+.editor__btn .icon { width: 18px; height: 18px; }
+/* Hoog genoeg om te zien dat het een tekst wordt, niet een veldje. */
+.editor__area { min-height: 240px; max-height: 42vh; overflow-y: auto; padding: 14px 16px; font-size: var(--fs-md); line-height: 1.55; color: var(--text-strong); }
+.editor__area:focus { outline: none; }
+.editor__area h2 { margin: 16px 0 6px; font-size: 16px; font-weight: 600; }
+.editor__area h3 { margin: 14px 0 4px; font-size: var(--fs-md); font-weight: 600; }
+.editor__area h2:first-child, .editor__area h3:first-child { margin-top: 0; }
+.editor__area p + p, .editor__area ul { margin-top: 10px; }
+.editor__area ul { padding-left: 20px; list-style: disc; }
+.editor__area a { color: var(--accent); text-decoration: underline; }
+/* Zolang er niets staat, zegt het vak zelf waar het voor is. */
+.editor__area:empty::before { content: attr(data-hint); color: var(--text-muted); }
