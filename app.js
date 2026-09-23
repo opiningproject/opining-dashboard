@@ -2870,4 +2870,43 @@
       zetVerificatie(demoStand === "setup" || demoStand === "pending" ? demoStand : "failed");
     }
   }
+
+  /* ---- Betaalmethodes aan- en uitzetten -----------------------------------
+     Uitzetten gaat via een vraag, want vanaf dat moment kan een klant er niet
+     meer mee afrekenen. Aanzetten mag meteen: dat kan niets kapotmaken. De
+     rij blijft staan, maar het logo verliest zijn kleur en er komt Disabled
+     bij te staan. */
+  var methodeVenster = document.getElementById("method-dialog");
+
+  if (methodeVenster) {
+    var methodeRij = null;
+
+    function zetMethode(rij, uit) {
+      rij.classList.toggle("is-off", uit);
+      rij.querySelector(".mrow__badge").hidden = !uit;
+      rij.querySelector("[data-method-toggle]").textContent = uit ? "Enable" : "Disable";
+      showToast(rij.querySelector(".mrow__name").textContent + (uit ? " disabled" : " enabled"));
+    }
+
+    document.addEventListener("click", function (e) {
+      var item = e.target.closest("[data-method-toggle]");
+      if (!item) return;
+      var rij = item.closest(".mrow");
+      if (rij.classList.contains("is-off")) { zetMethode(rij, false); return; }
+
+      var naam = rij.querySelector(".mrow__name").textContent;
+      methodeRij = rij;
+      document.getElementById("method-dialog-title").textContent = "Disable " + naam;
+      document.getElementById("method-dialog-text").textContent =
+        "Your customers will not be able to pay directly with " + naam + ". There are no " +
+        "extra fees for using " + naam + " and removing it may reduce your conversion.";
+      document.getElementById("method-confirm").textContent = "Disable " + naam;
+      methodeVenster.hidden = false;
+    });
+
+    document.getElementById("method-confirm").addEventListener("click", function () {
+      if (methodeRij) zetMethode(methodeRij, true);
+      methodeVenster.hidden = true;
+    });
+  }
 })();
