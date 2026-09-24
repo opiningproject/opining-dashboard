@@ -3115,6 +3115,11 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Lucht tussen de naam van de dag en de velden eronder. */
 #day-dialog .dialog__head { margin-bottom: 20px; }
 
-/* Kopje boven de tijden: zonder dat staan er twee velden zonder uitleg in het
-   venster. */
-.dayfields { margin-bottom: 8px; font-size: var(--fs-sm); font-weight: 600; color: var(--text-strong); }
+
+/* Elk tijdveld met zijn eigen kopje: de twee velden zeggen los van elkaar
+   niets. De streep ertussen zakt mee naar de hoogte van de velden. */
+.shift { align-items: flex-end; }
+.tcol { display: flex; flex-direction: column; gap: 4px; flex: 1 1 0; min-width: 0; }
+.tcol .label { margin: 0; }
+.tcol .time { width: 100%; }
+.shift__dash { padding-bottom: 9px; }

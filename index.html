@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=205" />
+  <link rel="stylesheet" href="styles.css?v=206" />
 </head>
 <body>
 
@@ -3241,12 +3241,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Monday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Monday delivery start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Monday delivery start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Monday delivery end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Monday delivery end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -3272,12 +3271,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Tuesday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Tuesday delivery start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Tuesday delivery start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Tuesday delivery end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Tuesday delivery end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -3303,12 +3301,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Wednesday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Wednesday delivery start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Wednesday delivery start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Wednesday delivery end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Wednesday delivery end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -3334,12 +3331,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Thursday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Thursday delivery start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Thursday delivery start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Thursday delivery end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Thursday delivery end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -3365,12 +3361,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Friday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Friday delivery start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Friday delivery start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:59" aria-label="Friday delivery end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:59" aria-label="Friday delivery end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -3396,18 +3391,17 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Saturday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="00:00" aria-label="Saturday delivery start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="00:00" aria-label="Saturday delivery start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="02:00" aria-label="Saturday delivery end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="02:00" aria-label="Saturday delivery end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Saturday delivery start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Saturday delivery start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Saturday delivery end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Saturday delivery end" /></label>
                   </div>
                 </div>
                     <div class="rev__acts">
@@ -3432,12 +3426,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" aria-label="Open on Sunday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts" hidden>
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Sunday delivery start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Sunday delivery start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Sunday delivery end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Sunday delivery end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -3477,12 +3470,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Monday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Monday takeaway start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Monday takeaway start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Monday takeaway end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Monday takeaway end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -3508,12 +3500,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Tuesday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Tuesday takeaway start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Tuesday takeaway start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Tuesday takeaway end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Tuesday takeaway end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -3539,12 +3530,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Wednesday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Wednesday takeaway start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Wednesday takeaway start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Wednesday takeaway end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Wednesday takeaway end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -3570,13 +3560,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Thursday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Thursday takeaway start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Thursday takeaway start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time time--error" type="time" value="00:00" aria-label="Thursday takeaway end"
-                           aria-invalid="true" aria-describedby="err-thu-takeaway" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time time--error" type="time" value="00:00" aria-label="Thursday takeaway end" aria-invalid="true" aria-describedby="err-thu-takeaway" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                   <p class="shift__error" id="err-thu-takeaway">
@@ -3605,12 +3593,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Friday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Friday takeaway start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Friday takeaway start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:59" aria-label="Friday takeaway end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:59" aria-label="Friday takeaway end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -3636,18 +3623,17 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Saturday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts">
                   <div class="shift">
-                    <input class="input time" type="time" value="00:00" aria-label="Saturday takeaway start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="00:00" aria-label="Saturday takeaway start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="02:00" aria-label="Saturday takeaway end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="02:00" aria-label="Saturday takeaway end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Saturday takeaway start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Saturday takeaway start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Saturday takeaway end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Saturday takeaway end" /></label>
                   </div>
                 </div>
                     <div class="rev__acts">
@@ -3672,12 +3658,11 @@
                     </span>
                   <div class="rev__form" hidden>
                     <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" aria-label="Open on Sunday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
-                    <p class="dayfields">Hours</p>
                     <div class="shifts" hidden>
                   <div class="shift">
-                    <input class="input time" type="time" value="15:00" aria-label="Sunday takeaway start" />
+                    <label class="tcol"><span class="label">Opens</span><input class="input time" type="time" value="15:00" aria-label="Sunday takeaway start" /></label>
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
-                    <input class="input time" type="time" value="23:00" aria-label="Sunday takeaway end" />
+                    <label class="tcol"><span class="label">Closes</span><input class="input time" type="time" value="23:00" aria-label="Sunday takeaway end" /></label>
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
@@ -5347,6 +5332,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=205"></script>
+  <script src="app.js?v=206"></script>
 </body>
 </html>
