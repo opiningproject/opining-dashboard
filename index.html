@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=183" />
+  <link rel="stylesheet" href="styles.css?v=184" />
 </head>
 <body>
 
@@ -83,7 +83,6 @@
     <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.6" y="6.4" width="14.6" height="9.4" rx="2"/><circle cx="9.9" cy="11.1" r="2.1"/><path d="M6.6 19.2h10.1a4 4 0 0 0 4-4V9.5"/></symbol>
     <symbol id="i-coin" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="8.8"/><path d="M12 6.9l1.45 2.85 2.85 1.45-2.85 1.45L12 15.5l-1.45-2.85L7.7 11.2l2.85-1.45z" fill="#fff"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.2 14.2A8.6 8.6 0 0 1 9.8 3.8a8.6 8.6 0 1 0 10.4 10.4Z"/></symbol>
-    <symbol id="i-minus-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M8.4 12h7.2"/></symbol>
     <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.4 8.4h13.2l-1 11a1.6 1.6 0 0 1-1.6 1.45H8a1.6 1.6 0 0 1-1.6-1.45zM8.9 8.4V6.6a3.1 3.1 0 0 1 6.2 0v1.8"/></symbol>
     <symbol id="i-chargeback" viewBox="0 0 24 24"><rect x="3.4" y="6" width="17.2" height="13" rx="2"/><path d="M14.4 12.5H8.6M11 9.9l-2.6 2.6L11 15.1"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M13.4 4.6h6v6M19.4 4.6 11.6 12.4M17.4 14v4.4a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 18.4V8.2a1.6 1.6 0 0 1 1.6-1.6H10"/></symbol>
@@ -93,6 +92,7 @@
     <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.8 11.2 12 15.4l4.2-4.2M4.6 19.4h14.8"/></symbol>
     <symbol id="i-redirect" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M8 15.5v-1.8A2.7 2.7 0 0 1 10.7 11H16"/><path d="M13.6 8.6 16 11l-2.4 2.4"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 6.5h15M9.5 6.5V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v1.5"/><path d="M6.5 6.5 7.4 19a1.5 1.5 0 0 0 1.5 1.4h6.2a1.5 1.5 0 0 0 1.5-1.4l.9-12.5"/><path d="M10.4 10v6.6M13.6 10v6.6"/></symbol>
     <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="5" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="5" cy="17.5" r="1.1" fill="currentColor" stroke="none"/></symbol>
     <symbol id="i-link" viewBox="0 0 24 24"><path d="M10.6 13.4a3.9 3.9 0 0 0 5.6 0l2.6-2.6a3.9 3.9 0 0 0-5.6-5.6l-1.3 1.3"/><path d="M13.4 10.6a3.9 3.9 0 0 0-5.6 0l-2.6 2.6a3.9 3.9 0 0 0 5.6 5.6l1.3-1.3"/></symbol>
     <symbol id="i-code" viewBox="0 0 24 24"><path d="m8.6 8.4-4 3.6 4 3.6M15.4 8.4l4 3.6-4 3.6M13.4 5.4l-2.8 13.2"/></symbol>
@@ -3242,10 +3242,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Monday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Monday delivery end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3269,10 +3269,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Tuesday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Tuesday delivery end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3296,10 +3296,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Wednesday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Wednesday delivery end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3323,10 +3323,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Thursday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Thursday delivery end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3350,10 +3350,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Friday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:59" aria-label="Friday delivery end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3377,17 +3377,16 @@
                     <input class="input time" type="time" value="00:00" aria-label="Saturday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="02:00" aria-label="Saturday delivery end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Saturday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Saturday delivery end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3411,10 +3410,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Sunday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Sunday delivery end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3446,10 +3445,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Monday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Monday takeaway end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3473,10 +3472,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Tuesday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Tuesday takeaway end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3500,10 +3499,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Wednesday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Wednesday takeaway end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3528,13 +3527,13 @@
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time time--error" type="time" value="00:00" aria-label="Thursday takeaway end"
                            aria-invalid="true" aria-describedby="err-thu-takeaway" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                   <p class="shift__error" id="err-thu-takeaway">
                     <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Closing time must be later than the opening time.
                   </p>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3558,10 +3557,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Friday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:59" aria-label="Friday takeaway end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3585,17 +3584,16 @@
                     <input class="input time" type="time" value="00:00" aria-label="Saturday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="02:00" aria-label="Saturday takeaway end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Saturday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Saturday takeaway end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3619,10 +3617,10 @@
                     <input class="input time" type="time" value="15:00" aria-label="Sunday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
                     <input class="input time" type="time" value="23:00" aria-label="Sunday takeaway end" />
-                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-minus-circle"/></svg></button>
-                    <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
+                    <button class="icon-btn shift__del" type="button" aria-label="Remove this shift" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
                   </div>
                 </div>
+                    <button class="btn btn--ghost btn--sm shift__add" type="button">Add shift</button>
                     <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -5274,6 +5272,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=183"></script>
+  <script src="app.js?v=184"></script>
 </body>
 </html>

@@ -1756,20 +1756,15 @@ select.input {
 .shift__error .icon { width: 16px; height: 16px; }
 
 
-.shift__del { width: 32px; height: 32px; color: var(--text-muted); }
-.shift__del .icon { width: 19px; height: 19px; }
+/* Weggooien is onomkeerbaar, dus het teken is een prullenbak in de kleur van
+   iets wat verdwijnt. */
+.shift__del { width: 32px; height: 32px; color: var(--danger); }
+.shift__del:hover { background: #fdf1f0; }
+.shift__del .icon { width: 18px; height: 18px; }
 
-/* Staat rechts uitgelijnd op de laatste dienstregel. */
-.shift__add {
-  white-space: nowrap;
-  margin-left: auto;
-  padding: 6px 4px;
-  font-size: var(--fs-md); font-weight: 500;
-  color: var(--accent);
-}
-.shift__add:hover { text-decoration: underline; text-underline-offset: 3px; }
-/* Op desktop is het een tekstlink; het plusje is de mobiele vorm. */
-.shift__add .icon { display: none; }
+/* Een dienst erbij hoort onder de tijden, niet ernaast: het gaat over de hele
+   dag, niet over de regel waar je net stond. */
+.shift__add { margin-top: 10px; }
 
 .closed {
   display: flex; align-items: center; gap: 9px;
@@ -2664,20 +2659,17 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .hours + .card__pad { padding: 14px 16px 16px; }
   .shifts, .closed { grid-column: 1 / -1; }
   .closed { padding-top: 0; }
-  /* Plus en min horen naast elkaar op dezelfde regel als de tijden, in
-     dezelfde maat. Daarvoor moeten de velden smaller: twee knoppen erbij
-     passen anders niet binnen de dagkaart. */
+  /* Op een smal scherm mogen de tijden omslaan; de prullenbak blijft een
+     ronde knop op de regel zelf, en Add shift blijft een knop eronder. */
   .shift { flex-wrap: wrap; gap: 6px; }
   .time { width: 92px; }
-  .shift__del, .shift__add {
+  .shift__del {
     display: grid; place-items: center;
     width: 30px; height: 30px;
     margin-left: 0; padding: 0;
     border-radius: var(--r-full);
   }
-  .shift__del .icon, .shift__add .icon { display: block; width: 20px; height: 20px; }
-  .shift__add > span { display: none; }
-  .shift__add:hover, .shift__del:hover { text-decoration: none; background: var(--gray-100); }
+  .shift__del .icon { display: block; width: 18px; height: 18px; }
   /* Vier tegels naast elkaar worden te smal op mobiel. */
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tile:nth-child(odd) { border-left: 0; }

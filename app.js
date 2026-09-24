@@ -1075,9 +1075,8 @@
        de onderste regel — anders staat hij midden in de rij. */
     function syncShifts(rij) {
       var shifts = rij.querySelectorAll(".shift");
-      shifts.forEach(function (shift, i) {
+      shifts.forEach(function (shift) {
         shift.querySelector(".shift__del").hidden = shifts.length < 2;
-        shift.querySelector(".shift__add").hidden = i !== shifts.length - 1;
       });
     }
 
