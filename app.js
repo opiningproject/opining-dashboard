@@ -874,6 +874,8 @@
       if (lijst) {
         if (koopRij) koopRij.remove();
         koopRij = document.createElement("tr");
+        koopRij.className = "dom-child";
+        koopRij.setAttribute("data-domain", "");
         koopRij.innerHTML =
           '<td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true">' +
           '<use href="#i-globe"/></svg><span class="dom__name"></span></span></td>' +
@@ -2572,6 +2574,8 @@
          naartoe. Opnieuw koppelen vervangt de vorige regel. */
       if (koppelRij) koppelRij.remove();
       koppelRij = document.createElement("tr");
+      koppelRij.className = "dom-child";
+      koppelRij.setAttribute("data-domain", "");
       koppelRij.innerHTML =
         '<td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-redirect"/></svg><span class="dom__name"></span></span></td>' +
         '<td><span class="badge badge--muted">Needs setup</span></td><td></td>';
@@ -3459,8 +3463,10 @@
         /* Het label verhuist mee, en het icoon zegt waar de rij voor staat:
            een wereldbol voor het adres zelf, een verwijzing voor de rest. */
         var label = oud.querySelector(".pill");
+        oud.classList.add("dom-child");
         oud.querySelector(".dom").classList.add("dom--sub");
         oud.querySelector(".dom__icon use").setAttribute("href", "#i-redirect");
+        domRij.classList.remove("dom-child");
         domRij.querySelector(".dom").classList.remove("dom--sub");
         domRij.querySelector(".dom__icon use").setAttribute("href", "#i-globe");
         domRij.querySelector(".dom").appendChild(label);
