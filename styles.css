@@ -2943,7 +2943,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    het is één vak dat groeit, geen losse knop met een lijst erboven. */
 .paybox { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
 .paybox .addrow { margin: 0; border: 0; border-radius: 0; }
-.payrow { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.payrow { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+/* De lijn zit tussen twee regels, niet onder elke regel: met een onderlijn op
+   de laatste regel valt die samen met de rand van het vak en lijkt de lijn
+   dubbel zo dik. */
+.paybox .payrow + .payrow, .paybox .payrow + .addrow { border-top: 1px solid var(--border); }
 .payrow__name { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* De stand duwt het menu naar rechts; zonder stand doet het menu dat zelf. */
 .payrow .badge { margin-left: auto; }
