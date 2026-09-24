@@ -1734,19 +1734,14 @@ select.input {
 
 /* Tijdvelden: smal, gecentreerd, zonder de klokknop van de browser — die
    past niet in het ontwerp. Tikken opent op mobiel nog steeds de kiezer. */
-/* De twee tijden verdelen de breedte van het dagvakje; alleen de prullenbak
-   ernaast houdt zijn eigen maat. */
-.shift .time { flex: 1 1 0; width: auto; min-width: 0; }
+/* Een tijdveld is verder een gewoon invoerveld: zelfde hoogte, zelfde
+   padding, tekst links. Alleen de cijfers krijgen vaste breedte, zodat 09:00
+   en 23:00 even breed staan. Safari geeft zo'n veld een eigen minimumbreedte;
+   zonder appearance: none duwt het zichzelf buiten zijn kolom. */
 .time {
-  width: 98px;
-  height: 36px;
-  padding: 0 10px;
-  text-align: center;
   font-variant-numeric: tabular-nums;
+  appearance: none; -webkit-appearance: none;
 }
-/* Safari geeft een tijdveld een eigen minimumbreedte; zonder dit duwt het
-   zichzelf buiten zijn kolom. */
-.time { appearance: none; -webkit-appearance: none; }
 .time::-webkit-calendar-picker-indicator { display: none; }
 .time::-webkit-inner-spin-button { display: none; }
 
