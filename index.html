@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=197" />
+  <link rel="stylesheet" href="styles.css?v=198" />
 </head>
 <body>
 
@@ -3218,7 +3218,10 @@
           <div class="card card--flush">
             <div class="cardhead cardhead--switch">
               <button class="cardhead__main" type="button" aria-expanded="true" aria-controls="hours-delivery">
-                <h3 class="acct__name">Delivery Hours</h3>
+                <span class="acct__text">
+                  <h3 class="acct__name">Delivery Hours</h3>
+                  <span class="acct__role">Manage your delivery hours</span>
+                </span>
                 <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
               </button>
               <label class="switch"><input type="checkbox" checked data-hours-on data-instant aria-label="Take delivery orders" /><span class="switch__track" aria-hidden="true"></span></label>
@@ -3416,7 +3419,10 @@
           <div class="card card--flush">
             <div class="cardhead cardhead--switch">
               <button class="cardhead__main" type="button" aria-expanded="true" aria-controls="hours-takeaway">
-                <h3 class="acct__name">Takeaway Hours</h3>
+                <span class="acct__text">
+                  <h3 class="acct__name">Takeaway Hours</h3>
+                  <span class="acct__role">Manage your takeaway hours</span>
+                </span>
                 <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
               </button>
               <label class="switch"><input type="checkbox" checked data-hours-on data-instant aria-label="Take takeaway orders" /><span class="switch__track" aria-hidden="true"></span></label>
@@ -5256,6 +5262,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=197"></script>
+  <script src="app.js?v=198"></script>
 </body>
 </html>

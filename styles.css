@@ -1714,7 +1714,7 @@ select.input {
 
 /* De kop van een uren-sectie is een regel tekst; met dezelfde padding als
    een kop met een bolletje erin oogt hij te krap. Vandaar wat meer lucht. */
-.cardhead:has(+ .hours) { padding-top: 18px; padding-bottom: 18px; }
+.cardhead:has(+ .hours) { padding-top: 20px; padding-bottom: 20px; }
 
 /* Openingstijden: net als de controlestap staat elke dag in een eigen vakje.
    Dicht zie je de dag met zijn tijden; het potlood klapt hem open. */
@@ -2675,7 +2675,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   /* Openingstijden op mobiel: dezelfde vakjes als op een breed scherm, alleen
      krapper. Het potlood blijft de manier om een dag te wijzigen. */
   .cardhead { padding: 12px 16px; }
-  .cardhead:has(+ .hours) { padding-top: 16px; padding-bottom: 16px; }
+  .cardhead:has(+ .hours) { padding-top: 18px; padding-bottom: 18px; }
   .hours { padding: 4px 16px 16px; }
   .hours + .card__pad { padding: 14px 16px 16px; }
   .shifts, .closed { grid-column: 1 / -1; }
