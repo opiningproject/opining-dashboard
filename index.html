@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=166" />
+  <link rel="stylesheet" href="styles.css?v=167" />
 </head>
 <body>
 
@@ -492,7 +492,6 @@
                       <td>&euro;73.59</td>
                       <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A07"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
                     </tr>
-                  </tbody>
                 </table>
               </div>
 
@@ -3897,6 +3896,23 @@
                       </span>
                     </td>
                   </tr>
+                  <tr data-domain>
+                    <td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-domain"/></svg><span class="dom__name">www.myrestaurant.nl</span></span></td>
+                    <td><span class="badge badge--active">Connected</span></td>
+                    <td>
+                      <span class="domacts">
+                        <button class="icon-btn domact" type="button" title="Preview domain" data-domain-view aria-label="Preview www.myrestaurant.nl">
+                          <svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg>
+                        </button>
+                        <button class="icon-btn domact" type="button" title="Edit DNS settings" data-domain-dns aria-label="Edit DNS settings for www.myrestaurant.nl">
+                          <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                        </button>
+                        <button class="icon-btn domact" type="button" title="Change domain type" aria-label="Change domain type for www.myrestaurant.nl" data-domain-type>
+                          <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg>
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -5146,6 +5162,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=166"></script>
+  <script src="app.js?v=167"></script>
 </body>
 </html>
