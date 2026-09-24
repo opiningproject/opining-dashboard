@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=201" />
+  <link rel="stylesheet" href="styles.css?v=203" />
 </head>
 <body>
 
@@ -82,7 +82,6 @@
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 11.1v5.1M12 7.8h.01"/></symbol>
     <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.6" y="6.4" width="14.6" height="9.4" rx="2"/><circle cx="9.9" cy="11.1" r="2.1"/><path d="M6.6 19.2h10.1a4 4 0 0 0 4-4V9.5"/></symbol>
     <symbol id="i-coin" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="8.8"/><path d="M12 6.9l1.45 2.85 2.85 1.45-2.85 1.45L12 15.5l-1.45-2.85L7.7 11.2l2.85-1.45z" fill="#fff"/></symbol>
-    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.2 14.2A8.6 8.6 0 0 1 9.8 3.8a8.6 8.6 0 1 0 10.4 10.4Z"/></symbol>
     <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.4 8.4h13.2l-1 11a1.6 1.6 0 0 1-1.6 1.45H8a1.6 1.6 0 0 1-1.6-1.45zM8.9 8.4V6.6a3.1 3.1 0 0 1 6.2 0v1.8"/></symbol>
     <symbol id="i-chargeback" viewBox="0 0 24 24"><rect x="3.4" y="6" width="17.2" height="13" rx="2"/><path d="M14.4 12.5H8.6M11 9.9l-2.6 2.6L11 15.1"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M13.4 4.6h6v6M19.4 4.6 11.6 12.4M17.4 14v4.4a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 18.4V8.2a1.6 1.6 0 0 1 1.6-1.6H10"/></symbol>
@@ -3228,9 +3227,11 @@
             </div>
             <div class="hours" id="hours-delivery" data-hours="delivery">
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Monday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Monday delivery hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3238,10 +3239,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Monday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Monday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Monday delivery start" />
@@ -3250,7 +3249,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3259,9 +3257,11 @@
                 </div>
 
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Tuesday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Tuesday delivery hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3269,10 +3269,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Tuesday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Tuesday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Tuesday delivery start" />
@@ -3281,7 +3279,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3290,9 +3287,11 @@
                 </div>
 
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Wednesday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Wednesday delivery hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3300,10 +3299,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Wednesday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Wednesday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Wednesday delivery start" />
@@ -3312,7 +3309,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3321,9 +3317,11 @@
                 </div>
 
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Thursday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Thursday delivery hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3331,10 +3329,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Thursday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Thursday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Thursday delivery start" />
@@ -3343,7 +3339,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3352,9 +3347,11 @@
                 </div>
 
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Friday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Friday delivery hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3362,10 +3359,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Friday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Friday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Friday delivery start" />
@@ -3374,7 +3369,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3383,9 +3377,11 @@
                 </div>
 
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Saturday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Saturday delivery hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3393,10 +3389,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Saturday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Saturday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="00:00" aria-label="Saturday delivery start" />
@@ -3410,7 +3404,6 @@
                     <input class="input time" type="time" value="23:00" aria-label="Saturday delivery end" />
                   </div>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3419,9 +3412,11 @@
                 </div>
 
               <div class="rev hrow is-off">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Sunday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Sunday delivery hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3429,10 +3424,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" aria-label="Open on Sunday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" aria-label="Open on Sunday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts" hidden>
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Sunday delivery start" />
@@ -3441,7 +3434,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3464,9 +3456,11 @@
             </div>
             <div class="hours" id="hours-takeaway" data-hours="takeaway">
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Monday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Monday takeaway hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3474,10 +3468,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Monday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Monday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Monday takeaway start" />
@@ -3486,7 +3478,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3495,9 +3486,11 @@
                 </div>
 
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Tuesday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Tuesday takeaway hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3505,10 +3498,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Tuesday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Tuesday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Tuesday takeaway start" />
@@ -3517,7 +3508,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3526,9 +3516,11 @@
                 </div>
 
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Wednesday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Wednesday takeaway hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3536,10 +3528,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Wednesday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Wednesday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Wednesday takeaway start" />
@@ -3548,7 +3538,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3557,9 +3546,11 @@
                 </div>
 
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Thursday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Thursday takeaway hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3567,10 +3558,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Thursday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Thursday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Thursday takeaway start" />
@@ -3583,7 +3572,6 @@
                     <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Closing time must be later than the opening time.
                   </p>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3592,9 +3580,11 @@
                 </div>
 
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Friday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Friday takeaway hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3602,10 +3592,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Friday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Friday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Friday takeaway start" />
@@ -3614,7 +3602,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3623,9 +3610,11 @@
                 </div>
 
               <div class="rev hrow">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Saturday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Saturday takeaway hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3633,10 +3622,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Saturday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" checked aria-label="Open on Saturday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="00:00" aria-label="Saturday takeaway start" />
@@ -3650,7 +3637,6 @@
                     <input class="input time" type="time" value="23:00" aria-label="Saturday takeaway end" />
                   </div>
                 </div>
-                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -3659,9 +3645,11 @@
                 </div>
 
               <div class="rev hrow is-off">
-                  <div class="rev__head">
+                  <div class="daybody">
                     <h4 class="rev__title">Sunday</h4>
-                    <span class="sort daymenu">
+                    <p class="rev__value hrow__sum"></p>
+                  </div>
+                  <span class="sort daymenu">
                       <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Sunday takeaway hours">
                         <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                       </button>
@@ -3669,10 +3657,8 @@
                         <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
                       </div>
                     </span>
-                  </div>
-                  <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" aria-label="Open on Sunday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
+                    <label class="switch dayopen"><span class="dayopen__label" data-day-state>Open</span><input type="checkbox" aria-label="Open on Sunday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts" hidden>
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Sunday takeaway start" />
@@ -3681,7 +3667,6 @@
                   </div>
                     <button class="shift__toggle" type="button">Add shift</button>
                 </div>
-                    <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
                       <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
@@ -5348,6 +5333,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=201"></script>
+  <script src="app.js?v=203"></script>
 </body>
 </html>

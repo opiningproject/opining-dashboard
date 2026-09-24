@@ -1144,7 +1144,8 @@
       var vorm = dagVorm(rij);
       rij.classList.toggle("is-off", !open);
       vorm.querySelector(".shifts").hidden = !open;
-      vorm.querySelector(".closed").hidden = open;
+      var stand = vorm.querySelector("[data-day-state]");
+      if (stand) stand.textContent = open ? "Open" : "Closed";
       syncSamenvatting(rij);
     }
 
@@ -1163,6 +1164,8 @@
       dagOpen = rij;
       document.getElementById("day-dialog-title").textContent =
         rij.querySelector(".rev__title").textContent;
+      var stand = form.querySelector("[data-day-state]");
+      if (stand) stand.textContent = form.querySelector(".switch input").checked ? "Open" : "Closed";
       form.hidden = false;
       /* Opslaan kan pas als er iets te bewaren is. */
       form.querySelector(".rev__save").disabled = true;

@@ -1787,13 +1787,6 @@ select.input {
    een kort formuliertje, geen bladzijde met gegevens. */
 .hrow .rev__acts { margin-top: 14px; }
 
-.closed {
-  display: flex; align-items: center; gap: 9px;
-  padding-top: 11px;
-  font-size: var(--fs-md);
-  color: var(--text-muted);
-}
-.closed .icon { width: 17px; height: 17px; }
 
 .hours + .card__pad .addrow { margin-top: 0; }
 
@@ -2679,8 +2672,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .cardhead:has(+ .hours) { padding-top: 18px; padding-bottom: 18px; }
   .hours { padding: 4px 16px 16px; }
   .hours + .card__pad { padding: 14px 16px 16px; }
-  .shifts, .closed { grid-column: 1 / -1; }
-  .closed { padding-top: 0; }
   /* Op een smal scherm mogen de twee tijden omslaan als het krap wordt. */
   .shift { flex-wrap: wrap; gap: 6px; }
   /* Vier tegels naast elkaar worden te smal op mobiel. */
@@ -3104,3 +3095,24 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* In het venster is het formulier de hele inhoud; het kader eromheen is het
    venster zelf. */
 #day-dialog-body .rev__form { margin-top: 0; }
+
+/* De dagregel: tekst links, het menu rechts en verticaal in het midden van de
+   hele regel in plaats van op de hoogte van de dagnaam. */
+.hours .rev { display: flex; align-items: center; gap: 12px; }
+.daybody { flex: 1 1 auto; min-width: 0; }
+.daymenu { flex: 0 0 auto; }
+
+/* De schakelaar in het venster is een regel met een kader: links wat de dag
+   is, rechts de schakelaar zelf. */
+.dayopen {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+.dayopen:hover { background: var(--gray-50); }
+.dayopen__label { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+
+/* Lucht tussen de naam van de dag en de velden eronder. */
+#day-dialog .dialog__head { margin-bottom: 20px; }
