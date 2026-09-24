@@ -1771,8 +1771,15 @@ select.input {
 .shift__del .icon { width: 17px; height: 17px; }
 
 /* Een dienst erbij hoort onder de tijden, niet ernaast: het gaat over de hele
-   dag, niet over de regel waar je net stond. */
-.shift__add { margin-top: 10px; }
+   dag, niet over de regel waar je net stond. Geen knop met een kader: dat
+   leek te veel op de tijdvelden erboven. */
+.shift__add {
+  display: inline-block;
+  margin-top: 10px; padding: 2px 0;
+  font-size: var(--fs-md); font-weight: 500;
+  color: var(--accent);
+}
+.shift__add:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* De knoppen staan dichter op de tijden dan in de controlestap: hier is het
    een kort formuliertje, geen bladzijde met gegevens. */
 .hrow .rev__acts { margin-top: 14px; }
