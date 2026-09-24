@@ -1704,7 +1704,8 @@ select.input {
 /* Alleen bij zweven een spoortje grijs: het blijft een knop. */
 .cardhead:hover { background: var(--gray-50); }
 /* Dicht: weer rond aan alle kanten, want er staat niets onder. */
-.cardhead[aria-expanded="false"] { border-radius: calc(var(--r-lg) - 1px); }
+.cardhead[aria-expanded="false"],
+.cardhead:has([aria-expanded="false"]) { border-radius: calc(var(--r-lg) - 1px); }
 .cardhead__chev {
   color: var(--text-muted);
   transition: transform var(--dur) var(--ease);
