@@ -3043,3 +3043,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Alleen achter de stand die het domein nu heeft. */
 .opt__now { display: none; font-weight: 400; color: var(--text-muted); }
 .opt--now .opt__now { display: inline; }
+
+/* Een kale subpagina: alleen het bericht en de knop. De kruimel en de titel
+   zeggen daar niets zinnigs, want je komt er maar op een manier. */
+[data-settings-bare] .set-main .page-head { display: none; }

@@ -878,7 +878,7 @@
         koopRij.setAttribute("data-domain", "");
         koopRij.innerHTML =
           '<td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true">' +
-          '<use href="#i-globe"/></svg><span class="dom__name"></span></span></td>' +
+          '<use href="#i-redirect"/></svg><span class="dom__name"></span></span></td>' +
           '<td><span class="badge badge--pending">Propagating</span></td><td></td>';
         koopRij.querySelector(".dom__name").textContent = naam;
         lijst.insertBefore(koopRij, lijst.rows[1] || null);
@@ -1766,6 +1766,11 @@
     var vol = document.querySelector('[data-set-sub="' + sub + '"]');
     if (vol && vol.hasAttribute("data-sub-full")) root.dataset.settingsFull = "on";
     else delete root.dataset.settingsFull;
+    /* Een pagina die alleen een bericht is (de bevestiging na een aankoop)
+       heeft geen kop nodig: er valt niets te benoemen en nergens heen te
+       gaan behalve de knop die er staat. */
+    if (vol && vol.hasAttribute("data-sub-bare")) root.dataset.settingsBare = "on";
+    else delete root.dataset.settingsBare;
 
     /* Een subpagina mag een eigen stand naast de titel zetten. */
     setBadge.textContent = (vol && vol.dataset.subBadge) || "";
@@ -1792,6 +1797,7 @@
     stapel.length = 0;
     setSubs.forEach(function (v) { v.hidden = true; });
     delete root.dataset.settingsFull;
+    delete root.dataset.settingsBare;
     setCrumb.hidden = true;
     setIcon.removeAttribute("hidden");
     setTitle.textContent = onderste.titel;
@@ -1809,6 +1815,7 @@
     stapel.length = 0;
     setSubs.forEach(function (v) { v.hidden = true; });
     delete root.dataset.settingsFull;
+    delete root.dataset.settingsBare;
     setCrumb.hidden = true;
     setIcon.removeAttribute("hidden");
     setLead.hidden = true;
