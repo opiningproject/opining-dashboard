@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=160" />
+  <link rel="stylesheet" href="styles.css?v=161" />
 </head>
 <body>
 
@@ -2135,6 +2135,14 @@
           </div>
           <!-- Actieknoppen per settings-pagina; app.js toont het blok waarvan
                data-set-tools gelijk is aan de open pagina. -->
+          <div class="page-head__tools" data-set-tools="billing" hidden>
+            <button class="btn btn--ghost page-head__action" type="button"
+                    data-sub="billing-profile"
+                    data-sub-title="Billing profile"
+                    data-sub-lead="Your payment methods, tax ID and billing address.">
+              <svg class="icon" aria-hidden="true"><use href="#i-billing"/></svg>Billing profile
+            </button>
+          </div>
           <div class="page-head__tools" data-set-tools="zones" hidden>
             <button class="btn btn--primary page-head__action" type="button">
               <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>Add zone
@@ -3965,45 +3973,19 @@
               </div>
               <p class="amount">&euro; 35,09 <span class="amount__cur">per month</span></p>
               <p class="card__sub">&euro; 29,00 excl.</p>
-              <!-- Eén vak: de toegevoegde methodes komen boven de knop te
-                   staan, binnen hetzelfde kader. -->
-              <div class="paybox" id="bill-methods">
-                <button class="addrow" type="button" data-dialog="paymethod-dialog">
+              <!-- Alleen de methode waarvan we afschrijven; de rest beheer je
+                   in het betaalprofiel. app.js houdt deze regel gelijk aan de
+                   primaire methode daar. -->
+              <div class="paybox" id="bill-primary">
+                <button class="addrow" type="button"
+                        data-sub="billing-profile"
+                        data-sub-title="Billing profile"
+                        data-sub-lead="Your payment methods, tax ID and billing address.">
                   <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add payment method
                 </button>
               </div>
             </div>
             <p class="card__foot">Your next bill is on 1 September 2026. <a class="link" href="#">View bill</a></p>
-          </div>
-
-          <!-- Adres en btw-nummer horen bij dezelfde factuur, dus staan ze in
-               één kaart. Valuta laten we weg: we rekenen alleen in euro's. -->
-          <div class="card">
-            <h3 class="card__title">Address and VAT number</h3>
-            <div class="rows">
-              <div class="row row--static">
-                <svg class="icon row__icon" aria-hidden="true"><use href="#i-pin"/></svg>
-                <span class="row__text">
-                  <span class="row__title">Billing address</span>
-                  <span class="row__meta" id="bill-address">Lusthofstraat 27A, 3062 WB Rotterdam, Netherlands</span>
-                </span>
-                <button class="btn btn--ghost btn--sm" type="button" data-dialog="address-dialog">Manage</button>
-              </div>
-              <div class="row row--static">
-                <svg class="icon row__icon" aria-hidden="true"><use href="#i-billing"/></svg>
-                <span class="row__text">
-                  <span class="row__title">VAT number</span>
-                  <span class="row__meta" id="bill-vat-value">Not set</span>
-                </span>
-                <span class="badge badge--active" id="bill-vat-badge" hidden>Verified</span>
-                <button class="btn btn--ghost btn--sm" type="button" data-dialog="vat-dialog">Manage</button>
-              </div>
-            </div>
-            <!-- Zolang VIES nog kijkt, staat hier waarom er nog niets verandert. -->
-            <p class="alert alert--info" id="bill-vat-note" hidden>
-              <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-              <span>Your VAT number is being verified with VIES. This takes a few days. We email you if anything is wrong with it.</span>
-            </p>
           </div>
 
           <div class="card">
@@ -4072,11 +4054,59 @@
             </nav>
             </div>
           </div>
-
           <div class="card">
             <h3 class="card__title">Cancellation</h3>
             <p class="card__sub">Cancelling stops your subscription at the end of the current billing period. Your store goes offline, and your order history stays available for export for 90 days.</p>
             <button class="btn btn--danger card__action" type="button">Cancel plan</button>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS-SUB: betaalprofiel ---------- -->
+        <!-- Alles wat met de rekening van Opining te maken heeft, maar niet
+             elke dag nodig is: waarvan we afschrijven, het btw-nummer en het
+             adres op de factuur. -->
+        <section class="view" data-set-sub="billing-profile" hidden>
+          <div class="card card--flush">
+            <div class="card__pad">
+              <h3 class="card__title">Payment methods</h3>
+              <p class="card__sub">For your plan and anything else you buy in Opining.</p>
+              <!-- Eén vak: de toegevoegde methodes komen boven de knop te
+                   staan, binnen hetzelfde kader. -->
+              <div class="paybox" id="bill-methods">
+                <button class="addrow" type="button" data-dialog="paymethod-dialog">
+                  <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add payment method
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Adres en btw-nummer horen bij dezelfde factuur, dus staan ze in
+               één kaart. Valuta laten we weg: we rekenen alleen in euro's. -->
+          <div class="card">
+            <h3 class="card__title">Address and VAT number</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-pin"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Billing address</span>
+                  <span class="row__meta" id="bill-address">Lusthofstraat 27A, 3062 WB Rotterdam, Netherlands</span>
+                </span>
+                <button class="btn btn--ghost btn--sm" type="button" data-dialog="address-dialog">Manage</button>
+              </div>
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-billing"/></svg>
+                <span class="row__text">
+                  <span class="row__title">VAT number</span>
+                  <span class="row__meta" id="bill-vat-value">Not set</span>
+                </span>
+                <span class="badge badge--active" id="bill-vat-badge" hidden>Verified</span>
+                <button class="btn btn--ghost btn--sm" type="button" data-dialog="vat-dialog">Manage</button>
+              </div>
+            </div>
+            <!-- Zolang VIES nog kijkt, staat hier waarom er nog niets verandert. -->
+            <p class="alert alert--info" id="bill-vat-note" hidden>
+              <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+              <span>Your VAT number is being verified with VIES. This takes a few days. We email you if anything is wrong with it.</span>
+            </p>
           </div>
         </section>
 
@@ -4917,6 +4947,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=160"></script>
+  <script src="app.js?v=161"></script>
 </body>
 </html>

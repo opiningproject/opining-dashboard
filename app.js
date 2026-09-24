@@ -3051,6 +3051,7 @@
 
   if (pmVenster) {
     var pmVak = document.getElementById("bill-methods");
+    var pmHoofd = document.getElementById("bill-primary");
     var pmKnop = document.getElementById("pm-add");
     var pmTitel = document.getElementById("paymethod-dialog-title");
     var pmSoortVeld = document.getElementById("pm-kind");
@@ -3131,6 +3132,33 @@
         stand.className = i === 0 ? "badge badge--draft" : "badge badge--muted";
         rij.querySelector("[data-pm-primary]").hidden = i === 0;
       });
+      pmSpiegel();
+    }
+
+    /* Op de rekeningpagina zelf staat alleen waar we van afschrijven. Beheren
+       gebeurt in het profiel, dus die regel krijgt een potlood in plaats van
+       een menu. Zolang er niets is, staat er de knop die het profiel opent. */
+    function pmSpiegel() {
+      if (!pmHoofd) return;
+      var eerste = pmVak.querySelector(".payrow");
+      var oud = pmHoofd.querySelector(".payrow");
+      if (oud) oud.remove();
+      pmHoofd.querySelector(".addrow").hidden = !!eerste;
+      if (!eerste) return;
+
+      var kopie = eerste.cloneNode(true);
+      kopie.querySelector(".payrow__menu").remove();
+      kopie.querySelector(".badge").remove();
+      var pen = document.createElement("button");
+      pen.className = "icon-btn payrow__menu";
+      pen.type = "button";
+      pen.setAttribute("aria-label", "Manage payment methods");
+      pen.dataset.sub = "billing-profile";
+      pen.dataset.subTitle = "Billing profile";
+      pen.dataset.subLead = "Your payment methods, tax ID and billing address.";
+      pen.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>';
+      kopie.appendChild(pen);
+      pmHoofd.insertBefore(kopie, pmHoofd.querySelector(".addrow"));
     }
 
     /* Het venster begint elke keer leeg, op een kaart. */
