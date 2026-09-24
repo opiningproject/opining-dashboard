@@ -1714,20 +1714,20 @@ select.input {
 .hrow { display: block; }
 .hrow__sum:empty { display: none; }
 /* De schakelaar met zijn tekst staat bovenaan het formulier. */
-.hrow__open { gap: 12px; margin-bottom: 14px; }
+.hrow__open { gap: 10px; margin-bottom: 12px; }
 .hrow__label { font-size: var(--fs-sm); color: var(--text); }
 /* Een dag die dicht is: de tijden zijn er nog, maar doen niets. */
 .hrow.is-off .rev__value { color: var(--text-muted); }
 
-.shifts { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.shift { display: flex; align-items: center; gap: 12px; }
+.shifts { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.shift { display: flex; align-items: center; gap: 8px; }
 .shift__dash { color: var(--text-muted); }
 
 /* Tijdvelden: smal, gecentreerd, zonder de klokknop van de browser — die
    past niet in het ontwerp. Tikken opent op mobiel nog steeds de kiezer. */
 .time {
-  width: 118px;
-  height: 40px;
+  width: 98px;
+  height: 36px;
   padding: 0 10px;
   text-align: center;
   font-variant-numeric: tabular-nums;
@@ -1758,13 +1758,16 @@ select.input {
 
 /* Weggooien is onomkeerbaar, dus het teken is een prullenbak in de kleur van
    iets wat verdwijnt. */
-.shift__del { width: 32px; height: 32px; color: var(--danger); }
+.shift__del { width: 28px; height: 28px; margin-left: 2px; color: var(--danger); }
 .shift__del:hover { background: #fdf1f0; }
-.shift__del .icon { width: 18px; height: 18px; }
+.shift__del .icon { width: 17px; height: 17px; }
 
 /* Een dienst erbij hoort onder de tijden, niet ernaast: het gaat over de hele
    dag, niet over de regel waar je net stond. */
 .shift__add { margin-top: 10px; }
+/* De knoppen staan dichter op de tijden dan in de controlestap: hier is het
+   een kort formuliertje, geen bladzijde met gegevens. */
+.hrow .rev__acts { margin-top: 14px; }
 
 .closed {
   display: flex; align-items: center; gap: 9px;
