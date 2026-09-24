@@ -3114,3 +3114,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 
 /* Lucht tussen de naam van de dag en de velden eronder. */
 #day-dialog .dialog__head { margin-bottom: 20px; }
+
+/* Kopje boven de tijden: zonder dat staan er twee velden zonder uitleg in het
+   venster. */
+.dayfields { margin-bottom: 8px; font-size: var(--fs-sm); font-weight: 600; color: var(--text-strong); }
