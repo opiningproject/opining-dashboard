@@ -3049,14 +3049,33 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 [data-settings-bare] .set-main .page-head { display: none; }
 
 @media (max-width: 900px) {
-  /* Gestapelde domeinlijst: de boomstructuur en de stippellijn zeggen hier
-     niets meer, want elke rij staat toch al als een eigen blok onder elkaar.
-     Alles terug naar een gewone regel met een lijn ertussen. */
+  /* Gestapelde domeinlijst. De boomstructuur blijft, maar dan om de blokken
+     heen in plaats van binnen een regel: een lijn langs de verwijzingen met
+     een streepje naar elke naam, en een stippellijn als scheiding. De lijnen
+     die bij de tabelweergave horen zetten we uit. */
   .table--domains .dom--sub { margin-left: 0; }
   .table--domains td:first-child::before,
   .table--domains td:first-child::after { display: none; }
-  .table--domains tr.dom-child td { border-top: 0; }
   .table--domains tr.dom-child td:first-child { background-image: none; }
+  .table--domains tr.dom-child td { border-top: 0; }
+
+  .table--domains tr.dom-child {
+    position: relative;
+    padding-left: 48px;
+    border-top: 1px dashed var(--border);
+  }
+  /* De stam loopt door langs de blokken; bij de laatste verwijzing stopt hij
+     bij het streepje, want daaronder hoort niets meer. */
+  .table--domains tr.dom-child::before {
+    content: ""; position: absolute; left: 24px; top: 0; bottom: 0;
+    border-left: 1px solid var(--border-strong);
+  }
+  .table--domains tr.dom-child:last-child::before { bottom: auto; height: 24px; }
+  /* Het streepje komt uit op de hoogte van het icoon. */
+  .table--domains tr.dom-child::after {
+    content: ""; position: absolute; left: 24px; top: 24px; width: 14px;
+    border-top: 1px solid var(--border-strong);
+  }
   /* De acties staan hier altijd in beeld: zweven kan niet met een vinger, en
      ook een smal venster op een laptop hoort ze te tonen. */
   .table--domains .domact { visibility: visible; }
