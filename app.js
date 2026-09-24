@@ -3482,6 +3482,85 @@
       showToast(naam + " is now your primary domain");
     });
 
+    /* Een rij die app.js zelf toevoegt (gekocht of gekoppeld domein) heeft nog
+       een lege actiecel; die vullen we met dezelfde drie knoppen. */
+    var DOM_ACTIES = [
+      { titel: "Preview domain", icoon: "#i-eye", attr: "data-domain-view" },
+      { titel: "Edit DNS settings", icoon: "#i-edit", attr: "data-domain-dns" },
+      { titel: "Change domain type", icoon: "#i-globe", attr: "data-domain-type" }
+    ];
+
+    function maakDomeinActies(rij) {
+      if (rij.querySelector(".domacts")) return;
+      var cel = rij.cells[rij.cells.length - 1];
+      if (!cel) return;
+      var naam = domNaam(rij);
+      var vak = document.createElement("span");
+      vak.className = "domacts";
+      DOM_ACTIES.forEach(function (a) {
+        var knop = document.createElement("button");
+        knop.className = "icon-btn domact";
+        knop.type = "button";
+        knop.title = a.titel;
+        knop.setAttribute("aria-label", a.titel + " for " + naam);
+        knop.setAttribute(a.attr, "");
+        knop.innerHTML = '<svg class="icon" aria-hidden="true"><use href="' + a.icoon + '"/></svg>';
+        vak.appendChild(knop);
+      });
+      cel.appendChild(vak);
+    }
+
+
+    /* Op een smal scherm passen drie losse knoppen niet naast de naam, en
+       zweven bestaat er niet. Daar wordt het een knop Actions met een menu.
+       We bouwen dat menu uit de knoppen die er al staan, zodat er maar een
+       plek is waar de acties beschreven worden. */
+    function maakDomeinMenu(rij) {
+      maakDomeinActies(rij);
+      var acts = rij.querySelector(".domacts");
+      if (!acts || rij.querySelector(".domenu")) return;
+
+      var items = [].map.call(acts.querySelectorAll(".domact"), function (knop) {
+        var item = document.createElement("button");
+        item.className = "sort__item";
+        item.type = "button";
+        item.setAttribute("role", "menuitem");
+        ["data-domain-view", "data-domain-dns", "data-domain-type"].forEach(function (naam) {
+          if (knop.hasAttribute(naam)) item.setAttribute(naam, "");
+        });
+        item.innerHTML = '<svg class="icon" aria-hidden="true"><use href="' +
+          knop.querySelector("use").getAttribute("href") + '"/></svg>';
+        item.appendChild(document.createTextNode(knop.title));
+        return item;
+      });
+
+      var vak = document.createElement("span");
+      vak.className = "sort domenu";
+      var knop = document.createElement("button");
+      knop.className = "btn btn--ghost sort__btn domenu__btn";
+      knop.type = "button";
+      knop.setAttribute("aria-haspopup", "true");
+      knop.setAttribute("aria-expanded", "false");
+      knop.textContent = "Actions";
+      var menu = document.createElement("div");
+      menu.className = "sort__menu domenu__menu";
+      menu.setAttribute("role", "menu");
+      menu.hidden = true;
+      items.forEach(function (i) { menu.appendChild(i); });
+      vak.append(knop, menu);
+      acts.parentNode.appendChild(vak);
+    }
+
+    domLijst.querySelectorAll("tr[data-domain]").forEach(maakDomeinMenu);
+    /* Een rij die er later bij komt (gekocht of gekoppeld domein) krijgt het
+       menu zodra hij in de lijst staat. */
+    new MutationObserver(function (lijsten) {
+      lijsten.forEach(function (l) {
+        [].forEach.call(l.addedNodes, function (n) {
+          if (n.nodeType === 1 && n.matches("tr")) maakDomeinMenu(n);
+        });
+      });
+    }).observe(domLijst, { childList: true });
     /* De twee andere knoppen in de rij: kijken hoe het domein eruitziet, en
        de DNS-records. Die records staan bij de aanbieder waar het domein
        vandaan komt, behalve bij een domein dat je bij ons kocht. */

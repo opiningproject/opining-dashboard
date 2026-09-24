@@ -3080,3 +3080,14 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
      ook een smal venster op een laptop hoort ze te tonen. */
   .table--domains .domact { visibility: visible; }
 }
+
+/* Op een breed scherm zijn de acties drie losse knoppen; het menu eronder is
+   voor smalle schermen. */
+.domenu { display: none; }
+@media (max-width: 900px) {
+  .table--domains .domacts { display: none; }
+  .domenu { display: block; }
+  .domenu__btn { width: 100%; height: 38px; justify-content: center; border: 1px solid var(--border-strong); background: var(--bg-surface); font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+  /* Links uitgelijnd onder de knop, want de knop is de hele breedte. */
+  .domenu__menu { left: 0; right: auto; min-width: 220px; }
+}
