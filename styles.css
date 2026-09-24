@@ -3098,3 +3098,20 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   /* Links uitgelijnd onder de knop, want de knop is de hele breedte. */
   .domenu__menu { left: 0; right: auto; min-width: 220px; }
 }
+
+@media (max-width: 560px) {
+  /* Een regel met tekst, een stand en een knop past op een telefoon niet op
+     een lijn: de naam wordt dan onleesbaar kort of schuift onder de rest.
+     Daarom breekt hij af: eerst de tekst over de volle breedte, daarna de
+     stand en de knop op een eigen regel. */
+  .row--static { flex-wrap: wrap; }
+  /* Het icoon blijft naast de tekst staan; de rest breekt eronder af. */
+  .row--static > .row__icon { flex: 0 0 auto; }
+  .row--static > .row__text { flex: 1 1 calc(100% - 34px); }
+  .row--static > .badge { margin-left: 0; }
+  .row--static > .row__link, .row--static > .btn { margin-left: auto; }
+  .row--static > .badge:not([hidden]) + .row__link,
+  .row--static > .badge:not([hidden]) + .btn { margin-left: auto; }
+  /* Een lang adres kapt af in plaats van de regel op te rekken. */
+  .row__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
