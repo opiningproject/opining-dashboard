@@ -842,6 +842,9 @@
     });
 
     /* Zonder winkelnaam kan de registratie niet de deur uit. */
+    var koopVervalt = "";
+    var koopRij = null;
+
     document.getElementById("buy-go").addEventListener("click", function () {
       if (!koopWinkel.value.trim()) {
         koopWinkel.classList.add("input--error");
@@ -849,8 +852,73 @@
         koopWinkel.focus();
         return;
       }
-      showToast(koopNaam.textContent + " purchased");
+
+      var naam = koopNaam.textContent;
+      var MAAND = ["January", "February", "March", "April", "May", "June",
+                   "July", "August", "September", "October", "November", "December"];
+      var over = new Date();
+      over.setFullYear(over.getFullYear() + 1);
+      koopVervalt = over.getDate() + " " + MAAND[over.getMonth()] + " " + over.getFullYear();
+
+      document.getElementById("bought-domain").textContent = naam;
+      document.getElementById("bought-price").textContent = koopTotaal.textContent + " EUR";
+      document.querySelectorAll("[data-domain-expiry]").forEach(function (el) {
+        el.textContent = koopVervalt;
+      });
+      document.getElementById("detail-view").href = "https://" + naam;
+
+      /* Het domein staat meteen in de lijst, onder het primaire domein: gekocht
+         is nog niet bereikbaar, dus Propagating. Opnieuw kopen vervangt de
+         vorige regel. */
+      var lijst = document.querySelector(".table--domains tbody");
+      if (lijst) {
+        if (koopRij) koopRij.remove();
+        koopRij = document.createElement("tr");
+        koopRij.innerHTML =
+          '<td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true">' +
+          '<use href="#i-globe"/></svg><span class="dom__name"></span></span></td>' +
+          '<td><span class="badge badge--pending">Propagating</span></td><td></td>';
+        koopRij.querySelector(".dom__name").textContent = naam;
+        lijst.insertBefore(koopRij, lijst.rows[1] || null);
+      }
+
+      /* Afrekenen is klaar, dus die schermen mogen dicht: de bevestiging hangt
+         aan de domeinpagina, niet aan de winkelwagen. */
+      /* De winkelnaam hierboven zette de opslaan-balk aan; die hoort niet bij
+         een aankoop die al gedaan is. */
+      hideSavebar();
+      while (backFromSub()) { /* tot we weer op de domeinpagina staan */ }
+      openSetSub("domain-bought", naam, "");
+      showToast(naam + " purchased");
+    });
+
+    /* Van de bevestiging naar het domein zelf: dat is één stap opzij, geen
+       stap dieper, dus eerst terug en dan de andere pagina open. */
+    document.getElementById("bought-status").addEventListener("click", function () {
+      var naam = document.getElementById("bought-domain").textContent;
       backFromSub();
+      openSetSub("domain-detail", naam, "Managed by Opining · Expires on " + koopVervalt);
+    });
+
+    document.getElementById("detail-primary").addEventListener("click", function () {
+      showToast("Wait until the domain is reachable before making it primary");
+    });
+
+    document.getElementById("detail-transfer").addEventListener("click", function () {
+      showToast("A domain can be transferred 60 days after you bought it");
+    });
+
+    /* Deze twee schakelaars gelden meteen: een melding, geen opslaan-balk. */
+    document.getElementById("domain-renew").addEventListener("change", function () {
+      hideSavebar();
+      showToast(this.checked ? "This domain renews every year"
+                             : "Auto-renew is off. Your domain expires on " + koopVervalt);
+    });
+
+    document.getElementById("domain-whois").addEventListener("change", function () {
+      hideSavebar();
+      showToast(this.checked ? "Your contact details stay private"
+                             : "Your contact details are public in the WHOIS register");
     });
 
     koopWinkel.addEventListener("input", function () {
@@ -3327,6 +3395,91 @@
       adresKnop.disabled = true;
       adresVenster.hidden = true;
       showToast("Billing address saved");
+    });
+  }
+
+  /* ---- Domeintype wijzigen -------------------------------------------------
+     Eén domein is het adres in de balk; de andere wijzen ernaartoe of tonen
+     dezelfde pagina onder een tweede naam. Het venster laat zien wat het nu is
+     en wat het kan worden; kiezen wat er al staat verandert niets, dus dan
+     blijft de knop uit. */
+  var domVenster = document.getElementById("domtype-dialog");
+
+  if (domVenster) {
+    var domRij = null;
+    var domLijst = document.querySelector(".table--domains tbody");
+    var domKnop = document.getElementById("domtype-go");
+
+    function domNaam(rij) { return rij.querySelector(".dom__name").textContent.trim(); }
+    function domIsPrimair(rij) { return !!rij.querySelector(".pill"); }
+    function domKeuze() {
+      var g = domVenster.querySelector('[name="domtype"]:checked');
+      return g ? g.value : "";
+    }
+
+    document.addEventListener("click", function (e) {
+      var knop = e.target.closest("[data-domain-type]");
+      if (!knop) return;
+      domRij = knop.closest("tr");
+      var nu = domIsPrimair(domRij) ? "primary" : "redirect";
+
+      document.getElementById("domtype-title").textContent =
+        "Change domain type for " + domNaam(domRij);
+      domVenster.querySelectorAll(".opt").forEach(function (opt) {
+        var veld = opt.querySelector("input");
+        veld.checked = veld.value === nu;
+        opt.classList.toggle("opt--now", veld.value === nu);
+      });
+      domKnop.disabled = true;
+      domVenster.hidden = false;
+    });
+
+    domVenster.addEventListener("change", function (e) {
+      if (e.target.name !== "domtype") return;
+      var nu = domIsPrimair(domRij) ? "primary" : "redirect";
+      domKnop.disabled = domKeuze() === nu;
+    });
+
+    /* Een nieuw primair domein gaat naar boven en krijgt het label; het oude
+       zakt eronder en wijst er voortaan naartoe. */
+    domKnop.addEventListener("click", function () {
+      var keuze = domKeuze();
+      var naam = domNaam(domRij);
+      domVenster.hidden = true;
+
+      if (keuze !== "primary") {
+        showToast(naam + (keuze === "alias" ? " shows the same page under its own name"
+                                            : " now redirects to your primary domain"));
+        return;
+      }
+
+      var oud = [].slice.call(domLijst.querySelectorAll("tr[data-domain]"))
+        .filter(function (r) { return domIsPrimair(r); })[0];
+      if (oud && oud !== domRij) {
+        /* Het label verhuist mee, en het icoon zegt waar de rij voor staat:
+           een wereldbol voor het adres zelf, een verwijzing voor de rest. */
+        var label = oud.querySelector(".pill");
+        oud.querySelector(".dom").classList.add("dom--sub");
+        oud.querySelector(".dom__icon use").setAttribute("href", "#i-domain");
+        domRij.querySelector(".dom").classList.remove("dom--sub");
+        domRij.querySelector(".dom__icon use").setAttribute("href", "#i-globe");
+        domRij.querySelector(".dom").appendChild(label);
+        domLijst.insertBefore(domRij, oud);
+      }
+      showToast(naam + " is now your primary domain");
+    });
+
+    /* De twee andere knoppen in de rij: kijken hoe het domein eruitziet, en
+       de DNS-records. Die records staan bij de aanbieder waar het domein
+       vandaan komt, behalve bij een domein dat je bij ons kocht. */
+    document.addEventListener("click", function (e) {
+      var kijk = e.target.closest("[data-domain-view]");
+      if (kijk) {
+        window.open("https://" + domNaam(kijk.closest("tr")), "_blank", "noopener");
+        return;
+      }
+      var dns = e.target.closest("[data-domain-dns]");
+      if (dns) showToast("DNS records for " + domNaam(dns.closest("tr")) + " are managed at your provider");
     });
   }
 })();

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=163" />
+  <link rel="stylesheet" href="styles.css?v=166" />
 </head>
 <body>
 
@@ -2181,6 +2181,20 @@
           <div class="page-head__tools" data-sub-tools="paypal" hidden>
             <button class="btn btn--ghost page-head__action" type="button">Contact PayPal</button>
           </div>
+          <!-- Zelfde bediening als bij een gekoppeld domein: bekijken, of via
+               het menu primair maken of loslaten. -->
+          <div class="page-head__tools" data-sub-tools="domain-detail" hidden>
+            <a class="btn btn--ghost page-head__action" id="detail-view" href="#" target="_blank" rel="noopener">View</a>
+            <span class="sort">
+              <button class="btn btn--ghost page-head__action sort__btn" type="button" aria-haspopup="true" aria-expanded="false">
+                Domain settings <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+              <div class="sort__menu" role="menu" hidden>
+                <button class="sort__item" type="button" role="menuitem" id="detail-primary">Set as primary domain</button>
+                <button class="sort__item" type="button" role="menuitem" id="detail-transfer">Transfer to another provider</button>
+              </div>
+            </span>
+          </div>
           <div class="page-head__tools" data-sub-tools="domain-connect" hidden>
             <a class="btn btn--ghost page-head__action" id="connect-view" href="#" target="_blank" rel="noopener">View</a>
             <span class="sort">
@@ -3843,17 +3857,45 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <!-- Het primaire domein is waar bezoekers op uitkomen; de
-                         andere wijzen ernaartoe. -->
+                  <!-- Alle domeinen wijzen naar dezelfde bestelpagina. Het
+                       primaire staat bovenaan, de rest eronder ingesprongen:
+                       zo zie je in één oogopslag waar bezoekers uitkomen. De
+                       acties verschijnen bij zweven, en op een aanraakscherm
+                       staan ze er altijd. -->
+                  <tr class="domhead"><td colspan="3">Online store</td></tr>
+                  <tr data-domain>
                     <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="dom__name">myrestaurant.nl</span><span class="pill">Primary</span></span></td>
                     <td><span class="badge badge--active">Connected</span></td>
-                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for myrestaurant.nl"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg><span class="rowact__label">Actions</span></button></span></td>
+                    <td>
+                      <span class="domacts">
+                        <button class="icon-btn domact" type="button" title="Preview domain" data-domain-view aria-label="Preview myrestaurant.nl">
+                          <svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg>
+                        </button>
+                        <button class="icon-btn domact" type="button" title="Edit DNS settings" data-domain-dns aria-label="Edit DNS settings for myrestaurant.nl">
+                          <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                        </button>
+                        <button class="icon-btn domact" type="button" title="Change domain type" aria-label="Change domain type for myrestaurant.nl" data-domain-type>
+                          <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg>
+                        </button>
+                      </span>
+                    </td>
                   </tr>
-                  <tr>
-                    <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-external"/></svg><span class="dom__name">d2w1hd-rw.myopining.com</span></span></td>
+                  <tr data-domain>
+                    <td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-domain"/></svg><span class="dom__name">d2w1hd-rw.myopining.com</span></span></td>
                     <td><span class="badge badge--active">Connected</span></td>
-                    <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for d2w1hd-rw.myopining.com"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg><span class="rowact__label">Actions</span></button></span></td>
+                    <td>
+                      <span class="domacts">
+                        <button class="icon-btn domact" type="button" title="Preview domain" data-domain-view aria-label="Preview d2w1hd-rw.myopining.com">
+                          <svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg>
+                        </button>
+                        <button class="icon-btn domact" type="button" title="Edit DNS settings" data-domain-dns aria-label="Edit DNS settings for d2w1hd-rw.myopining.com">
+                          <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                        </button>
+                        <button class="icon-btn domact" type="button" title="Change domain type" aria-label="Change domain type for d2w1hd-rw.myopining.com" data-domain-type>
+                          <svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg>
+                        </button>
+                      </span>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -4566,6 +4608,98 @@
             </aside>
           </div>
         </section>
+
+        <!-- ---------- SETTINGS-SUB: domein gekocht ---------- -->
+        <!-- Het scherm na het afrekenen. Eén boodschap, één vervolgstap: kijken
+             hoe het domein ervoor staat. De registratie zelf loopt via de mail,
+             dus dat staat er meteen bij. -->
+        <section class="view" data-set-sub="domain-bought" data-sub-full hidden>
+          <div class="card card--flush bought">
+            <div class="dhero dhero--ok" aria-hidden="true">
+              <svg class="dhero__art" viewBox="0 0 240 120">
+                <circle cx="120" cy="124" r="100" fill="var(--gray-0)" opacity=".5"/>
+                <rect x="58" y="30" width="124" height="94" rx="10" fill="var(--accent)"/>
+                <rect x="58" y="30" width="124" height="20" rx="10" fill="var(--accent-hover)"/>
+                <rect x="58" y="42" width="124" height="8" fill="var(--accent-hover)"/>
+                <circle cx="70" cy="40" r="2.6" fill="var(--gray-0)" opacity=".7"/>
+                <circle cx="79" cy="40" r="2.6" fill="var(--gray-0)" opacity=".7"/>
+                <circle cx="88" cy="40" r="2.6" fill="var(--gray-0)" opacity=".7"/>
+                <rect x="44" y="56" width="104" height="18" rx="9" fill="var(--text-strong)"/>
+                <text x="60" y="69" font-size="11" font-weight="700" fill="#fff">www</text>
+                <circle cx="120" cy="96" r="24" fill="var(--gray-0)" opacity=".18"/>
+                <circle cx="158" cy="84" r="17" fill="var(--text-strong)"/>
+                <path d="M150 84.5l5.5 5.5L166 79" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="card__pad">
+              <h3 class="card__title">You have purchased a new domain</h3>
+              <p class="card__sub">Finish the registration by following the instructions in the confirmation email we sent to <b id="bought-mail">serdarorman74@gmail.com</b>.</p>
+              <div class="boughtrow">
+                <span class="boughtrow__name" id="bought-domain">myrestaurant.nl</span>
+                <span class="boughtrow__price" id="bought-price">&euro; 9,00 EUR</span>
+              </div>
+              <button class="btn btn--primary card__action" type="button" id="bought-status">See domain status</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- SETTINGS-SUB: gekocht domein beheren ---------- -->
+        <!-- Wat je aan een domein van ons kunt instellen: of het vanzelf
+             verlengt, waar de DNS-records staan en op wiens naam het staat.
+             Doelen en subdomeinen laten we weg: er is één winkel om naartoe te
+             wijzen. -->
+        <section class="view" data-set-sub="domain-detail" data-sub-badge="Propagating" hidden>
+          <div class="card">
+            <h3 class="card__title">Renewal</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <span class="row__text">
+                  <span class="row__title">Auto-renew this domain every year</span>
+                  <span class="row__meta">Your domain expires on <span data-domain-expiry>24 September 2027</span></span>
+                </span>
+                <label class="switch"><input type="checkbox" checked id="domain-renew" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Renew this domain every year</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">DNS</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-domain"/></svg>
+                <span class="row__text">
+                  <span class="row__title">DNS settings</span>
+                  <span class="row__meta">Records and nameservers for this domain</span>
+                </span>
+                <button class="btn btn--ghost btn--sm" type="button" data-toast="DNS settings are managed by Opining">Manage</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Registration details</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-user-circle"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Contact information</span>
+                  <span class="row__meta">Serdar Orman, Lusthofstraat 27A, 3062 WB Rotterdam, Netherlands</span>
+                </span>
+                <button class="icon-btn" type="button" aria-label="Edit contact information" data-toast="Contact details are taken from your account">
+                  <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                </button>
+              </div>
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-lock"/></svg>
+                <span class="row__text">
+                  <span class="row__title">WHOIS privacy</span>
+                  <span class="row__meta">Your contact details stay out of the public register</span>
+                </span>
+                <label class="switch"><input type="checkbox" checked id="domain-whois" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Keep my contact details private</span></label>
+              </div>
+            </div>
+          </div>
+        </section>
         <section class="view" data-set-view="generic" hidden>
           <div class="card card--empty">
             <svg class="icon empty__icon" id="set-empty-icon" aria-hidden="true"><use href="#i-store"/></svg>
@@ -4632,6 +4766,40 @@
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
         <button class="btn btn--primary" type="button" data-dialog-close data-toast="Payout settings saved">Save</button>
+      </div>
+    </div>
+  </div>
+  <!-- Waar een domein voor dient: het adres in de balk, een doorverwijzing
+       ernaartoe, of dezelfde pagina onder een tweede naam. De huidige stand
+       krijgt (Current) achter zich; Change gaat pas aan als je iets anders
+       kiest. -->
+  <div class="dialog" id="domtype-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="domtype-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="domtype-title">Change domain type</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <label class="opt">
+        <input type="radio" name="domtype" value="primary" />
+        <span class="opt__name">Primary domain<span class="opt__now"> (Current)</span></span>
+        <span class="opt__desc">Shown in the address bar while a guest is ordering.</span>
+      </label>
+      <label class="opt">
+        <input type="radio" name="domtype" value="redirect" />
+        <span class="opt__name">Redirecting domain<span class="opt__now"> (Current)</span></span>
+        <span class="opt__desc">Sends visitors on to the primary domain.</span>
+      </label>
+      <label class="opt">
+        <input type="radio" name="domtype" value="alias" />
+        <span class="opt__name">Alias domain<span class="opt__now"> (Current)</span></span>
+        <span class="opt__desc">Shows the same ordering page under a second name, without changing the address bar. Search engines see two addresses for one page.</span>
+      </label>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="domtype-go" disabled>Change domain type</button>
       </div>
     </div>
   </div>
@@ -4978,6 +5146,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=163"></script>
+  <script src="app.js?v=166"></script>
 </body>
 </html>

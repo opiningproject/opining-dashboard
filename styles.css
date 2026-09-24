@@ -2655,15 +2655,14 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .table--domains .dom { display: flex; width: 100%; gap: 10px; }
   /* Het kenmerk naar de overkant, zodat de naam alle ruimte houdt. */
   .table--domains .pill { margin-left: auto; flex: 0 0 auto; }
-  .table--domains .rowact { display: block; }
-  .table--domains .rowact .icon-btn {
-    width: 100%; height: 38px;
-    border: 1px solid var(--border-strong);
-    border-radius: var(--r-md);
-    font-size: var(--fs-md); font-weight: 500; color: var(--text-strong);
-  }
-  .table--domains .rowact .icon { display: none; }
-  .table--domains .rowact__label { display: block; }
+  /* De acties staan hier altijd in beeld (zweven kan niet met een vinger) en
+     links uitgelijnd onder de naam, als een rijtje knoppen. */
+  .table--domains .domacts { justify-content: flex-start; gap: 4px; }
+  .table--domains .domact { width: 38px; height: 38px; border: 1px solid var(--border-strong); border-radius: var(--r-md); }
+  /* Het lijntje van de boomstructuur zegt hier niets meer: elke rij staat toch
+     al onder elkaar als een eigen blok. */
+  .table--domains .dom--sub { margin-left: 0; }
+  .table--domains .dom--sub::before { display: none; }
   .dom { gap: 10px; }
   /* Openingstijden op mobiel: de kaart is het kader, met de grijze kop erop
      en haarlijnen tussen de dagen. Elke dag staat standaard dicht met zijn
@@ -2968,3 +2967,57 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .dialog__foot { flex-wrap: wrap; }
   .cbox { flex: 1 0 100%; margin-right: 0; }
 }
+
+/* Scherm na het kopen van een domein: één kaart in het midden, want er is maar
+   één ding te doen. */
+.bought { max-width: 560px; margin-inline: auto; }
+.dhero--ok { background: var(--accent-soft); }
+/* De aankoop zelf, als bonnetje onder de tekst. */
+.boughtrow {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  background: var(--gray-50);
+}
+.boughtrow__name { min-width: 0; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.boughtrow__price { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text); }
+
+/* Domeinlijst: een kopregel per bestemming, daaronder het primaire domein en
+   de adressen die ernaartoe wijzen. */
+.domhead td { padding-top: 10px; padding-bottom: 10px; background: var(--gray-50); font-size: var(--fs-sm); color: var(--text-muted); }
+/* Ingesprongen, met een lijntje dat laat zien waar het bij hoort. */
+.table--domains .dom--sub { position: relative; margin-left: 26px; }
+.table--domains .dom--sub::before {
+  content: ""; position: absolute; left: -14px; top: -14px; bottom: 50%;
+  width: 9px;
+  border-left: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  border-bottom-left-radius: 4px;
+}
+/* Acties pas bij zweven: de lijst blijft rustig zolang je niets doet. Met een
+   vinger kun je niet zweven, dus daar staan ze altijd. */
+.domacts { display: flex; align-items: center; justify-content: flex-end; gap: 2px; }
+.domact { visibility: hidden; }
+tr:hover .domact, .domact:focus-visible { visibility: visible; }
+@media (hover: none) {
+  .domact { visibility: visible; }
+}
+
+/* Keuze met uitleg eronder, voor een venster waarin het verschil telt. */
+.opt { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 4px 12px; padding: 14px 0; cursor: pointer; }
+.opt + .opt { border-top: 1px solid var(--border); }
+.opt input {
+  width: 18px; height: 18px; margin-top: 1px;
+  appearance: none; -webkit-appearance: none;
+  border: 2px solid var(--border-strong); border-radius: var(--r-full);
+  background: var(--bg-surface);
+  transition: border-color var(--dur) var(--ease), border-width var(--dur) var(--ease);
+}
+.opt input:checked { border-color: var(--accent); border-width: 6px; }
+.opt input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.opt__name { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.opt__desc { grid-column: 2; font-size: var(--fs-sm); color: var(--text-muted); }
+/* Alleen achter de stand die het domein nu heeft. */
+.opt__now { display: none; font-weight: 400; color: var(--text-muted); }
+.opt--now .opt__now { display: inline; }
