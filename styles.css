@@ -1733,6 +1733,9 @@ select.input {
 
 /* Tijdvelden: smal, gecentreerd, zonder de klokknop van de browser — die
    past niet in het ontwerp. Tikken opent op mobiel nog steeds de kiezer. */
+/* De twee tijden verdelen de breedte van het dagvakje; alleen de prullenbak
+   ernaast houdt zijn eigen maat. */
+.shift .time { flex: 1 1 0; width: auto; min-width: 0; }
 .time {
   width: 98px;
   height: 36px;
@@ -2681,7 +2684,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   /* Op een smal scherm mogen de tijden omslaan; de prullenbak blijft een
      ronde knop op de regel zelf, en Add shift blijft een knop eronder. */
   .shift { flex-wrap: wrap; gap: 6px; }
-  .time { width: 92px; }
   .shift__del {
     display: grid; place-items: center;
     width: 30px; height: 30px;
