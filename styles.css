@@ -2983,9 +2983,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .boughtrow__name { min-width: 0; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .boughtrow__price { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text); }
 
-/* Domeinlijst: een kopregel per bestemming, daaronder het primaire domein en
-   de adressen die ernaartoe wijzen. */
-.domhead td { padding-top: 10px; padding-bottom: 10px; background: var(--gray-50); font-size: var(--fs-sm); color: var(--text-muted); }
+/* Domeinlijst: het primaire domein bovenaan, de verwijzingen eronder. */
 /* Ingesprongen, met een lijntje dat laat zien waar het bij hoort. */
 .table--domains .dom--sub { position: relative; margin-left: 26px; }
 .table--domains .dom--sub::before {
@@ -2994,6 +2992,18 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   border-left: 1px solid var(--border-strong);
   border-bottom: 1px solid var(--border-strong);
   border-bottom-left-radius: 4px;
+}
+/* Een verwijzing hoort bij het domein erboven, dus de scheiding is lichter:
+   een stippellijn die met de naam mee inspringt. In de eerste cel tekenen we
+   hem met een streepjespatroon in plaats van een rand, zodat hij kan
+   beginnen waar de naam begint zonder de tabel breder te maken. */
+.table--domains tr:has(.dom--sub) td { border-top: 1px dashed var(--border); }
+.table--domains tr:has(.dom--sub) td:first-child {
+  border-top-color: transparent;
+  background-image: repeating-linear-gradient(to right, var(--border) 0 4px, transparent 4px 8px);
+  background-size: calc(100% - 46px) 1px;
+  background-position: 46px 0;
+  background-repeat: no-repeat;
 }
 /* Acties pas bij zweven: de lijst blijft rustig zolang je niets doet. Met een
    vinger kun je niet zweven, dus daar staan ze altijd. */

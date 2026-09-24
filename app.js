@@ -2573,7 +2573,7 @@
       if (koppelRij) koppelRij.remove();
       koppelRij = document.createElement("tr");
       koppelRij.innerHTML =
-        '<td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-domain"/></svg><span class="dom__name"></span></span></td>' +
+        '<td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-redirect"/></svg><span class="dom__name"></span></span></td>' +
         '<td><span class="badge badge--muted">Needs setup</span></td><td></td>';
       koppelRij.querySelector(".dom__name").textContent = naam;
       koppelLijst.insertBefore(koppelRij, koppelLijst.rows[1] || null);
@@ -3460,7 +3460,7 @@
            een wereldbol voor het adres zelf, een verwijzing voor de rest. */
         var label = oud.querySelector(".pill");
         oud.querySelector(".dom").classList.add("dom--sub");
-        oud.querySelector(".dom__icon use").setAttribute("href", "#i-domain");
+        oud.querySelector(".dom__icon use").setAttribute("href", "#i-redirect");
         domRij.querySelector(".dom").classList.remove("dom--sub");
         domRij.querySelector(".dom__icon use").setAttribute("href", "#i-globe");
         domRij.querySelector(".dom").appendChild(label);

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=167" />
+  <link rel="stylesheet" href="styles.css?v=168" />
 </head>
 <body>
 
@@ -92,6 +92,7 @@
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 9A8 8 0 0 0 5 7.4L4 9"/><path d="M4 4.5V9h4.5"/><path d="M4.5 15A8 8 0 0 0 19 16.6l1-1.6"/><path d="M20 19.5V15h-4.5"/></symbol>
     <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.8 11.2 12 15.4l4.2-4.2M4.6 19.4h14.8"/></symbol>
+    <symbol id="i-redirect" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M8 15.5v-1.8A2.7 2.7 0 0 1 10.7 11H16"/><path d="M13.6 8.6 16 11l-2.4 2.4"/></symbol>
     <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="5" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="5" cy="17.5" r="1.1" fill="currentColor" stroke="none"/></symbol>
     <symbol id="i-link" viewBox="0 0 24 24"><path d="M10.6 13.4a3.9 3.9 0 0 0 5.6 0l2.6-2.6a3.9 3.9 0 0 0-5.6-5.6l-1.3 1.3"/><path d="M13.4 10.6a3.9 3.9 0 0 0-5.6 0l-2.6 2.6a3.9 3.9 0 0 0 5.6 5.6l1.3-1.3"/></symbol>
     <symbol id="i-code" viewBox="0 0 24 24"><path d="m8.6 8.4-4 3.6 4 3.6M15.4 8.4l4 3.6-4 3.6M13.4 5.4l-2.8 13.2"/></symbol>
@@ -3818,33 +3819,6 @@
 
         <!-- ---------- SETTINGS: domain ---------- -->
         <section class="view" data-set-view="domain" hidden>
-          <!-- Het adres dat je van ons kreeg staat er altijd, en blijft werken
-               ook als je later je eigen domein koppelt. -->
-          <div class="card">
-            <div class="promo">
-              <div class="promo__body">
-                <h3 class="card__title">Change your opining.com address</h3>
-                <p class="card__sub">Your store is reachable at an address we made for you. You can change it to something that matches your name, free of charge.</p>
-                <button class="btn btn--ghost card__action" type="button">Change opining.com address</button>
-              </div>
-
-              <svg class="promo__art" viewBox="0 0 200 150" role="img" aria-label="A browser window with an address bar">
-                <rect x="16" y="24" width="168" height="106" rx="9" fill="var(--gray-100)"/>
-                <rect x="16" y="24" width="168" height="26" rx="9" fill="var(--gray-200)"/>
-                <rect x="16" y="41" width="168" height="9" fill="var(--gray-200)"/>
-                <circle cx="30" cy="37" r="3.5" fill="var(--gray-0)"/>
-                <circle cx="41" cy="37" r="3.5" fill="var(--gray-0)"/>
-                <circle cx="52" cy="37" r="3.5" fill="var(--gray-0)"/>
-                <rect x="64" y="31" width="106" height="12" rx="6" fill="var(--gray-0)"/>
-                <rect x="72" y="35" width="46" height="4" rx="2" fill="var(--gray-300)"/>
-                <rect x="30" y="62" width="64" height="8" rx="4" fill="var(--accent)"/>
-                <rect x="30" y="80" width="140" height="6" rx="3" fill="var(--gray-300)"/>
-                <rect x="30" y="94" width="118" height="6" rx="3" fill="var(--gray-300)"/>
-                <rect x="30" y="110" width="54" height="12" rx="6" fill="var(--accent-soft)"/>
-              </svg>
-            </div>
-          </div>
-
           <div class="panel">
             <div class="table-wrap">
               <table class="table table--domains">
@@ -3856,12 +3830,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Alle domeinen wijzen naar dezelfde bestelpagina. Het
-                       primaire staat bovenaan, de rest eronder ingesprongen:
-                       zo zie je in één oogopslag waar bezoekers uitkomen. De
-                       acties verschijnen bij zweven, en op een aanraakscherm
-                       staan ze er altijd. -->
-                  <tr class="domhead"><td colspan="3">Online store</td></tr>
+                  <!-- Alle domeinen wijzen naar dezelfde bestelpagina, dus geen
+                       kopregel erboven: het primaire domein staat bovenaan en de
+                       verwijzingen eronder, ingesprongen. De acties verschijnen
+                       bij zweven, en op een aanraakscherm staan ze er altijd. -->
                   <tr data-domain>
                     <td><span class="dom"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-globe"/></svg><span class="dom__name">myrestaurant.nl</span><span class="pill">Primary</span></span></td>
                     <td><span class="badge badge--active">Connected</span></td>
@@ -3880,7 +3852,7 @@
                     </td>
                   </tr>
                   <tr data-domain>
-                    <td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-domain"/></svg><span class="dom__name">d2w1hd-rw.myopining.com</span></span></td>
+                    <td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-redirect"/></svg><span class="dom__name">d2w1hd-rw.myopining.com</span></span></td>
                     <td><span class="badge badge--active">Connected</span></td>
                     <td>
                       <span class="domacts">
@@ -3897,7 +3869,7 @@
                     </td>
                   </tr>
                   <tr data-domain>
-                    <td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-domain"/></svg><span class="dom__name">www.myrestaurant.nl</span></span></td>
+                    <td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true"><use href="#i-redirect"/></svg><span class="dom__name">www.myrestaurant.nl</span></span></td>
                     <td><span class="badge badge--active">Connected</span></td>
                     <td>
                       <span class="domacts">
@@ -5162,6 +5134,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=167"></script>
+  <script src="app.js?v=168"></script>
 </body>
 </html>
