@@ -3206,6 +3206,10 @@
       showToast("Payment method added");
     });
 
+    /* De twee voorbeeldregels staan in de HTML; hiermee krijgen ze meteen de
+       juiste stand en staat de primaire ook op de rekeningpagina. */
+    pmStanden();
+
     pmVak.addEventListener("click", function (e) {
       var rij = e.target.closest(".payrow");
       if (!rij) return;

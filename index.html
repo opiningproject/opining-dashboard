@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=161" />
+  <link rel="stylesheet" href="styles.css?v=162" />
 </head>
 <body>
 
@@ -4073,6 +4073,37 @@
               <!-- Eén vak: de toegevoegde methodes komen boven de knop te
                    staan, binnen hetzelfde kader. -->
               <div class="paybox" id="bill-methods">
+                <!-- Twee methodes om mee te beginnen: de kaart waarvan we
+                     afschrijven en een incasso als reserve. app.js zet de
+                     standen en houdt de rekeningpagina gelijk. -->
+                <div class="payrow">
+                  <span class="pm__mark" aria-hidden="true"><img src="img/pay/visa.svg" alt="" /></span>
+                  <span class="payrow__name">Visa &bull;&bull;&bull;&bull; 5320</span>
+                  <span class="badge badge--draft">Primary</span>
+                  <span class="sort payrow__menu">
+                    <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Visa ending in 5320">
+                      <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                    </button>
+                    <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                      <button class="sort__item" type="button" role="menuitem" data-pm-primary>Make primary</button>
+                      <button class="sort__item" type="button" role="menuitem" data-pm-remove>Remove</button>
+                    </div>
+                  </span>
+                </div>
+                <div class="payrow">
+                  <span class="pm__mark" aria-hidden="true"><img src="img/pay/sepa.svg" alt="" /></span>
+                  <span class="payrow__name">SEPA Direct Debit ending in 5362</span>
+                  <span class="badge badge--muted">Backup</span>
+                  <span class="sort payrow__menu">
+                    <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for SEPA Direct Debit ending in 5362">
+                      <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                    </button>
+                    <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                      <button class="sort__item" type="button" role="menuitem" data-pm-primary>Make primary</button>
+                      <button class="sort__item" type="button" role="menuitem" data-pm-remove>Remove</button>
+                    </div>
+                  </span>
+                </div>
                 <button class="addrow" type="button" data-dialog="paymethod-dialog">
                   <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add payment method
                 </button>
@@ -4947,6 +4978,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=161"></script>
+  <script src="app.js?v=162"></script>
 </body>
 </html>
