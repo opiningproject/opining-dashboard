@@ -1730,7 +1730,9 @@ select.input {
    tijdveld in Safari verder uit dan zijn kolom en loopt het uit de kaart;
    minmax(0, 1fr) laat dat niet toe. */
 .shift { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 8px; }
-.shift__dash { color: var(--text-muted); }
+/* Het streepje krijgt de hoogte van een invoerveld en staat daarin in het
+   midden; met alleen een marge stond het altijd net iets te hoog of te laag. */
+.shift__dash { display: grid; place-items: center; height: 32px; align-self: end; color: var(--text-muted); }
 
 /* Tijdvelden: smal, gecentreerd, zonder de klokknop van de browser — die
    past niet in het ontwerp. Tikken opent op mobiel nog steeds de kiezer. */
@@ -3120,4 +3122,3 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .tcol { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .tcol .label { margin: 0; }
 .tcol .time { width: 100%; min-width: 0; max-width: 100%; }
-.shift__dash { padding-bottom: 9px; }
