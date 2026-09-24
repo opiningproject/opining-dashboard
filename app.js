@@ -1071,13 +1071,12 @@
   var hoursView = document.querySelector('[data-set-view="hours"]');
 
   if (hoursView) {
-    /* Verwijderen kan pas vanaf twee diensten, en "Add shift" hoort alleen op
-       de onderste regel — anders staat hij midden in de rij. */
+    /* Een dag heeft een dienst, of twee: een lunchdienst en een avonddienst.
+       Dezelfde tekst voegt de tweede toe en haalt hem weer weg, zodat er geen
+       los prullenbakje naast de tijden hoeft te staan. */
     function syncShifts(rij) {
-      var shifts = rij.querySelectorAll(".shift");
-      shifts.forEach(function (shift) {
-        shift.querySelector(".shift__del").hidden = shifts.length < 2;
-      });
+      var knop = rij.querySelector(".shift__toggle");
+      if (knop) knop.textContent = rij.querySelectorAll(".shift").length > 1 ? "Remove shift" : "Add shift";
     }
 
     /* Sluiten kan niet vóór openen. De melding hangt onder de dienst en niet
@@ -1178,10 +1177,22 @@
         return;
       }
 
-      if (e.target.closest(".shift__add")) {
+      if (e.target.closest(".shift__toggle")) {
+        var alle = rij.querySelectorAll(".shift");
+
+        /* Staat er al een tweede dienst, dan haalt dezelfde tekst hem weg. */
+        if (alle.length > 1) {
+          var weg = alle[alle.length - 1];
+          var fout = weg.nextElementSibling;
+          if (fout && fout.classList.contains("shift__error")) fout.remove();
+          weg.remove();
+          syncShifts(rij);
+          zetOpslaanKlaar(rij);
+          return;
+        }
+
         /* Niet .shift:last-child: onder de laatste dienst kan een foutmelding
            staan, en die is dan het laatste kind. */
-        var alle = rij.querySelectorAll(".shift");
         var laatste = alle[alle.length - 1];
         var kopie = laatste.cloneNode(true);
         /* De foutstaat hoort bij die ene waarde, niet bij een nieuwe dienst. */
@@ -1196,16 +1207,6 @@
         (na && na.classList.contains("shift__error") ? na : laatste).after(kopie);
         /* De kopie draagt dezelfde tijden, dus geldt dezelfde toets. */
         valideerShift(kopie);
-        syncShifts(rij);
-        zetOpslaanKlaar(rij);
-      }
-
-      if (e.target.closest(".shift__del")) {
-        if (rij.querySelectorAll(".shift").length < 2) return;
-        var weg = e.target.closest(".shift");
-        var melding = weg.nextElementSibling;
-        if (melding && melding.classList.contains("shift__error")) melding.remove();
-        weg.remove();
         syncShifts(rij);
         zetOpslaanKlaar(rij);
       }
@@ -1231,7 +1232,11 @@
     });
 
     /* De tijden op de dichte regel komen uit de velden eronder. */
-    hoursView.querySelectorAll(".hrow").forEach(syncSamenvatting);
+    hoursView.querySelectorAll(".hrow").forEach(function (rij) {
+      syncSamenvatting(rij);
+      /* Een dag die al twee diensten heeft, begint met Remove shift. */
+      syncShifts(rij);
+    });
     hoursView.querySelectorAll(".shift").forEach(valideerShift);
   }
 
