@@ -3047,3 +3047,17 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Een kale subpagina: alleen het bericht en de knop. De kruimel en de titel
    zeggen daar niets zinnigs, want je komt er maar op een manier. */
 [data-settings-bare] .set-main .page-head { display: none; }
+
+@media (max-width: 900px) {
+  /* Gestapelde domeinlijst: de boomstructuur en de stippellijn zeggen hier
+     niets meer, want elke rij staat toch al als een eigen blok onder elkaar.
+     Alles terug naar een gewone regel met een lijn ertussen. */
+  .table--domains .dom--sub { margin-left: 0; }
+  .table--domains td:first-child::before,
+  .table--domains td:first-child::after { display: none; }
+  .table--domains tr.dom-child td { border-top: 0; }
+  .table--domains tr.dom-child td:first-child { background-image: none; }
+  /* De acties staan hier altijd in beeld: zweven kan niet met een vinger, en
+     ook een smal venster op een laptop hoort ze te tonen. */
+  .table--domains .domact { visibility: visible; }
+}
