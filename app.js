@@ -1158,6 +1158,8 @@
       if (e.target.closest(".rev__pen")) {
         dagKopie = rij.querySelector(".rev__form").innerHTML;
         zetDag(rij, true);
+        /* Opslaan kan pas als er iets te bewaren is. */
+        rij.querySelector(".rev__save").disabled = true;
         return;
       }
 
@@ -1195,6 +1197,7 @@
         /* De kopie draagt dezelfde tijden, dus geldt dezelfde toets. */
         valideerShift(kopie);
         syncShifts(rij);
+        zetOpslaanKlaar(rij);
       }
 
       if (e.target.closest(".shift__del")) {
@@ -1204,16 +1207,27 @@
         if (melding && melding.classList.contains("shift__error")) melding.remove();
         weg.remove();
         syncShifts(rij);
+        zetOpslaanKlaar(rij);
       }
     });
 
+    /* Alles wat je in het formulier doet maakt opslaan mogelijk: een andere
+       tijd, de schakelaar, of een dienst erbij of eraf. */
+    function zetOpslaanKlaar(rij) {
+      var knop = rij && rij.querySelector(".rev__save");
+      if (knop) knop.disabled = false;
+    }
+
     hoursView.addEventListener("change", function (e) {
-      if (e.target.matches(".switch input")) setDagOpen(e.target.closest(".hrow"), e.target.checked);
+      var rij = e.target.closest(".hrow");
+      if (e.target.matches(".switch input")) setDagOpen(rij, e.target.checked);
+      zetOpslaanKlaar(rij);
     });
 
     hoursView.addEventListener("input", function (e) {
       var shift = e.target.closest(".shift");
       if (shift) valideerShift(shift);
+      zetOpslaanKlaar(e.target.closest(".hrow"));
     });
 
     /* De tijden op de dichte regel komen uit de velden eronder. */
