@@ -1076,7 +1076,7 @@
        los prullenbakje naast de tijden hoeft te staan. */
     function syncShifts(rij) {
       var knop = rij.querySelector(".shift__toggle");
-      if (knop) knop.textContent = rij.querySelectorAll(".shift").length > 1 ? "Remove shift" : "Add shift";
+      if (knop) knop.textContent = rij.querySelectorAll(".shift").length > 1 ? "Remove extra shift" : "Add shift";
     }
 
     /* Sluiten kan niet vóór openen. De melding hangt onder de dienst en niet

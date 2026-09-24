@@ -1721,9 +1721,10 @@ select.input {
 .hours { border-top: 0; padding: 4px 20px 20px; }
 .hrow { display: block; }
 .hrow__sum:empty { display: none; }
-/* De schakelaar met zijn tekst staat bovenaan het formulier. */
-.hrow__open { gap: 10px; margin-bottom: 12px; }
-.hrow__label { font-size: var(--fs-sm); color: var(--text); }
+/* De schakelaar staat bovenaan het formulier. Geen tekst ernaast: de dagnaam
+   staat erboven en de schakelaar zegt zelf genoeg; wat hij doet staat als
+   aria-label op het veld voor wie het niet ziet. */
+.hrow__open { margin-bottom: 12px; }
 /* Een dag die dicht is: de tijden zijn er nog, maar doen niets. */
 .hrow.is-off .rev__value { color: var(--text-muted); }
 
@@ -1778,6 +1779,9 @@ select.input {
   color: var(--accent);
 }
 .shift__toggle:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* De tweede dienst staat onder die tekst; een beetje lucht eronder houdt hem
+   los van de knoppen. */
+.shift__toggle + .shift { margin-bottom: 8px; }
 /* De knoppen staan dichter op de tijden dan in de controlestap: hier is het
    een kort formuliertje, geen bladzijde met gegevens. */
 .hrow .rev__acts { margin-top: 14px; }

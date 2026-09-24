@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=191" />
+  <link rel="stylesheet" href="styles.css?v=193" />
 </head>
 <body>
 
@@ -3215,11 +3215,6 @@
         </section>
 
         <section class="view" data-set-view="hours" hidden>
-          <p class="alert alert--info">
-            <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-            Keep this in mind. A day starts at 00:00 and ends at 23:59.
-          </p>
-
           <div class="card card--flush">
             <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="hours-delivery">
               <h3 class="acct__name">Delivery Hours</h3>
@@ -3235,7 +3230,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Monday for delivery" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for delivery</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Monday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Monday delivery start" />
@@ -3261,7 +3256,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Tuesday for delivery" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for delivery</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Tuesday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Tuesday delivery start" />
@@ -3287,7 +3282,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Wednesday for delivery" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for delivery</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Wednesday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Wednesday delivery start" />
@@ -3313,7 +3308,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Thursday for delivery" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for delivery</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Thursday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Thursday delivery start" />
@@ -3339,7 +3334,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Friday for delivery" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for delivery</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Friday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Friday delivery start" />
@@ -3365,7 +3360,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Saturday for delivery" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for delivery</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Saturday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="00:00" aria-label="Saturday delivery start" />
@@ -3396,7 +3391,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" aria-label="Open on Sunday for delivery" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for delivery</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" aria-label="Open on Sunday for delivery" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts" hidden>
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Sunday delivery start" />
@@ -3430,7 +3425,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Monday for takeaway" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for takeaway</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Monday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Monday takeaway start" />
@@ -3456,7 +3451,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Tuesday for takeaway" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for takeaway</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Tuesday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Tuesday takeaway start" />
@@ -3482,7 +3477,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Wednesday for takeaway" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for takeaway</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Wednesday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Wednesday takeaway start" />
@@ -3508,7 +3503,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Thursday for takeaway" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for takeaway</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Thursday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Thursday takeaway start" />
@@ -3538,7 +3533,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Friday for takeaway" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for takeaway</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Friday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Friday takeaway start" />
@@ -3564,7 +3559,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Saturday for takeaway" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for takeaway</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" checked aria-label="Open on Saturday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="00:00" aria-label="Saturday takeaway start" />
@@ -3595,7 +3590,7 @@
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
-                    <label class="switch hrow__open"><input type="checkbox" aria-label="Open on Sunday for takeaway" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open for takeaway</span></label>
+                    <label class="switch hrow__open"><input type="checkbox" aria-label="Open on Sunday for takeaway" /><span class="switch__track" aria-hidden="true"></span></label>
                     <div class="shifts" hidden>
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Sunday takeaway start" />
@@ -5255,6 +5250,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=191"></script>
+  <script src="app.js?v=193"></script>
 </body>
 </html>
