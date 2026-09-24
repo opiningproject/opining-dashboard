@@ -3085,6 +3085,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   text-align: left;
 }
 .cardhead__main .cardhead__chev { margin-left: auto; }
+/* Titel en regel eronder mogen wat uit elkaar: het zijn twee zinnen, geen
+   tweeregelige kop. */
+.cardhead__main .acct__text { gap: 3px; }
 .cardhead--switch:hover { background: var(--gray-50); }
 .cardhead--switch[aria-expanded] { background: none; }
 /* Uit: de dagen staan er nog, maar je kunt er niets mee tot je het kanaal
