@@ -2984,8 +2984,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .boughtrow__price { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text); }
 
 /* Domeinlijst: het primaire domein bovenaan, de verwijzingen eronder. */
-/* Ingesprongen onder het primaire domein. */
-.table--domains .dom--sub { margin-left: 26px; }
+/* Ingesprongen tot onder de naam van het primaire domein: het icoon van een
+   verwijzing begint waar die naam begint. */
+.table--domains .dom--sub { margin-left: 34px; padding-left: 0; }
 /* De stam begint onder het bolletje van het primaire domein en loopt door
    langs alle verwijzingen; elke verwijzing pikt er met een bocht op aan. De
    lijnen zitten op de cel en niet op de naam, want de cel is precies zo hoog
@@ -2993,7 +2994,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    doorgetrokken leest als een kader, met een onderbreking als een lijstje. */
 .table--domains td:first-child { position: relative; }
 .table--domains tr.dom-child td:first-child::before {
-  content: ""; position: absolute; left: 30px; top: 5px; bottom: 50%; width: 38px;
+  content: ""; position: absolute; left: 30px; top: 5px; bottom: 50%; width: 20px;
   border-left: 1px solid var(--border-strong);
   border-bottom: 1px solid var(--border-strong);
   border-bottom-left-radius: 5px;
@@ -3010,8 +3011,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .table--domains tr.dom-child td:first-child {
   border-top-color: transparent;
   background-image: repeating-linear-gradient(to right, var(--border) 0 4px, transparent 4px 8px);
-  background-size: calc(100% - 72px) 1px;
-  background-position: 72px 0;
+  background-size: calc(100% - 54px) 1px;
+  background-position: 54px 0;
   background-repeat: no-repeat;
 }
 /* Acties pas bij zweven: de lijst blijft rustig zolang je niets doet. Met een
