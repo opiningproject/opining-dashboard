@@ -3094,3 +3094,13 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Uit: de dagen staan er nog, maar je kunt er niets mee tot je het kanaal
    weer aanzet. */
 .hours.is-off { opacity: .45; pointer-events: none; }
+
+/* De dagen vormen één lijst in plaats van losse kaartjes: geen ruimte ertussen
+   en gedeelde haarlijnen, met alleen bovenaan en onderaan ronde hoeken. */
+.hours .rev { border-radius: 0; }
+.hours .rev + .rev { margin-top: -1px; }
+.hours .rev:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
+.hours .rev:last-child { border-radius: 0 0 var(--r-md) var(--r-md); }
+/* In het venster is het formulier de hele inhoud; het kader eromheen is het
+   venster zelf. */
+#day-dialog-body .rev__form { margin-top: 0; }

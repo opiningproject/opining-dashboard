@@ -1071,12 +1071,23 @@
   var hoursView = document.querySelector('[data-set-view="hours"]');
 
   if (hoursView) {
+    /* Het formulier van een dag staat in zijn eigen vakje, of in het venster
+       zolang je het wijzigt. Alles wat erin zit zoek je daarom hier op. */
+    function dagVorm(rij) {
+      if (dagOpen === rij) {
+        var open = dagPlek.querySelector(".rev__form");
+        if (open) return open;
+      }
+      return rij.querySelector(".rev__form");
+    }
+
     /* Een dag heeft een dienst, of twee: een lunchdienst en een avonddienst.
        Dezelfde tekst voegt de tweede toe en haalt hem weer weg, zodat er geen
        los prullenbakje naast de tijden hoeft te staan. */
     function syncShifts(rij) {
-      var knop = rij.querySelector(".shift__toggle");
-      if (knop) knop.textContent = rij.querySelectorAll(".shift").length > 1 ? "Remove extra shift" : "Add shift";
+      var vorm = dagVorm(rij);
+      var knop = vorm.querySelector(".shift__toggle");
+      if (knop) knop.textContent = vorm.querySelectorAll(".shift").length > 1 ? "Remove extra shift" : "Add shift";
     }
 
     /* Sluiten kan niet vóór openen. De melding hangt onder de dienst en niet
@@ -1120,7 +1131,7 @@
       if (!sum) return;
       if (rij.classList.contains("is-off")) { sum.textContent = "Closed"; return; }
       var delen = [];
-      rij.querySelectorAll(".shift").forEach(function (shift) {
+      dagVorm(rij).querySelectorAll(".shift").forEach(function (shift) {
         var velden = shift.querySelectorAll(".time");
         if (velden.length === 2) delen.push(velden[0].value + " - " + velden[1].value);
       });
@@ -1130,55 +1141,77 @@
     /* De schakelaar zet de dag aan of uit: de tijden verdwijnen dan en er
        staat closed, en de regel erboven zegt Closed. */
     function setDagOpen(rij, open) {
+      var vorm = dagVorm(rij);
       rij.classList.toggle("is-off", !open);
-      rij.querySelector(".shifts").hidden = !open;
-      rij.querySelector(".closed").hidden = open;
+      vorm.querySelector(".shifts").hidden = !open;
+      vorm.querySelector(".closed").hidden = open;
       syncSamenvatting(rij);
     }
 
-    /* Een dag staat dicht als een regel met zijn tijden; het potlood klapt
-       hem open als formulier, net als in de controlestap. Cancel zet alles
-       terug zoals het stond, Save legt het vast. */
-    function zetDag(rij, bewerken) {
-      rij.querySelector(".rev__value").hidden = bewerken;
-      rij.querySelector(".rev__form").hidden = !bewerken;
-      rij.querySelector(".rev__pen").hidden = bewerken;
+    /* Een dag wijzig je in een venster. Het formulier zelf blijft hetzelfde
+       stuk HTML: het verhuist naar het venster zolang het open staat en gaat
+       daarna terug naar zijn eigen vakje. Zo staat elk veld maar op één plek
+       beschreven, en werken dezelfde handlers hieronder gewoon door. */
+    var dagVenster = document.getElementById("day-dialog");
+    var dagPlek = document.getElementById("day-dialog-body");
+    var dagOpen = null;   /* de dag die nu open staat */
+    var dagKopie = null;  /* hoe het formulier erbij stond voordat je begon */
+
+    function openDag(rij) {
+      var form = rij.querySelector(".rev__form");
+      dagKopie = form.innerHTML;
+      dagOpen = rij;
+      document.getElementById("day-dialog-title").textContent =
+        rij.querySelector(".rev__title").textContent;
+      form.hidden = false;
+      /* Opslaan kan pas als er iets te bewaren is. */
+      form.querySelector(".rev__save").disabled = true;
+      dagPlek.appendChild(form);
+      dagVenster.hidden = false;
     }
 
-    /* Wat er stond voordat je begon te wijzigen, zodat Cancel echt terug kan.
-       De inhoud gaat als tekst het geheugen in; de knoppen erin werken via
-       delegatie, dus die blijven het doen na herstel. */
-    var dagKopie = null;
+    /* Terug naar het vakje. Met herstel true komt de tekst terug zoals hij
+       was, zodat Cancel en het kruisje hetzelfde doen. */
+    function sluitDag(herstel) {
+      if (!dagOpen) return;
+      var form = dagPlek.querySelector(".rev__form");
+      if (form) {
+        if (herstel && dagKopie !== null) form.innerHTML = dagKopie;
+        form.hidden = true;
+        dagOpen.appendChild(form);
+      }
+      var schakelaar = dagOpen.querySelector(".switch input");
+      if (schakelaar) dagOpen.classList.toggle("is-off", !schakelaar.checked);
+      syncSamenvatting(dagOpen);
+      syncShifts(dagOpen);
+      dagVenster.hidden = true;
+      dagOpen = null;
+      dagKopie = null;
+    }
 
+    document.addEventListener("click", function (e) {
+      if (e.target.closest("[data-day-edit]")) {
+        openDag(e.target.closest(".hrow"));
+        return;
+      }
+      if (e.target.closest("[data-day-close]")) sluitDag(true);
+    });
     hoursView.addEventListener("click", function (e) {
-      var rij = e.target.closest(".hrow");
+      /* Het formulier staat tijdens het wijzigen in het venster en niet meer
+         in zijn eigen rij; dan wijst dagOpen de weg. */
+      var rij = e.target.closest(".hrow") || dagOpen;
       if (!rij) return;
 
-      if (e.target.closest(".rev__pen")) {
-        dagKopie = rij.querySelector(".rev__form").innerHTML;
-        zetDag(rij, true);
-        /* Opslaan kan pas als er iets te bewaren is. */
-        rij.querySelector(".rev__save").disabled = true;
-        return;
-      }
-
-      if (e.target.closest(".rev__cancel")) {
-        if (dagKopie !== null) rij.querySelector(".rev__form").innerHTML = dagKopie;
-        rij.classList.toggle("is-off", !rij.querySelector('.switch input').checked);
-        syncSamenvatting(rij);
-        zetDag(rij, false);
-        return;
-      }
+      if (e.target.closest(".rev__cancel")) { sluitDag(true); return; }
 
       if (e.target.closest(".rev__save")) {
-        syncSamenvatting(rij);
-        zetDag(rij, false);
+        sluitDag(false);
         showToast(rij.querySelector(".rev__title").textContent + " saved");
         return;
       }
-
       if (e.target.closest(".shift__toggle")) {
-        var alle = rij.querySelectorAll(".shift");
+        var vorm = dagVorm(rij);
+        var alle = vorm.querySelectorAll(".shift");
 
         /* Staat er al een tweede dienst, dan haalt dezelfde tekst hem weg. */
         if (alle.length > 1) {
@@ -1214,12 +1247,15 @@
     /* Alles wat je in het formulier doet maakt opslaan mogelijk: een andere
        tijd, de schakelaar, of een dienst erbij of eraf. */
     function zetOpslaanKlaar(rij) {
-      var knop = rij && rij.querySelector(".rev__save");
+      var knop = rij && dagVorm(rij).querySelector(".rev__save");
       if (knop) knop.disabled = false;
     }
 
     hoursView.addEventListener("change", function (e) {
-      var rij = e.target.closest(".hrow");
+      /* Tijdens het wijzigen staat het formulier in het venster, dus buiten
+         de rij; dagOpen wijst dan de weg. */
+      var rij = e.target.closest(".hrow") || dagOpen;
+      if (!rij) return;
       if (e.target.matches(".switch input")) setDagOpen(rij, e.target.checked);
       zetOpslaanKlaar(rij);
     });
@@ -1227,7 +1263,7 @@
     hoursView.addEventListener("input", function (e) {
       var shift = e.target.closest(".shift");
       if (shift) valideerShift(shift);
-      zetOpslaanKlaar(e.target.closest(".hrow"));
+      zetOpslaanKlaar(e.target.closest(".hrow") || dagOpen);
     });
 
     /* De schakelaar in de kop zet het hele kanaal aan of uit. De dagen blijven

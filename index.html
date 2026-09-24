@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=200" />
+  <link rel="stylesheet" href="styles.css?v=201" />
 </head>
 <body>
 
@@ -3230,9 +3230,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Monday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Monday delivery hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Monday delivery hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3256,9 +3261,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Tuesday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Tuesday delivery hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Tuesday delivery hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3282,9 +3292,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Wednesday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Wednesday delivery hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Wednesday delivery hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3308,9 +3323,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Thursday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Thursday delivery hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Thursday delivery hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3334,9 +3354,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Friday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Friday delivery hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Friday delivery hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3360,9 +3385,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Saturday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Saturday delivery hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Saturday delivery hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3391,9 +3421,14 @@
               <div class="rev hrow is-off">
                   <div class="rev__head">
                     <h4 class="rev__title">Sunday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Sunday delivery hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Sunday delivery hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3431,9 +3466,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Monday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Monday takeaway hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Monday takeaway hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3457,9 +3497,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Tuesday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Tuesday takeaway hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Tuesday takeaway hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3483,9 +3528,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Wednesday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Wednesday takeaway hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Wednesday takeaway hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3509,9 +3559,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Thursday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Thursday takeaway hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Thursday takeaway hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3539,9 +3594,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Friday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Friday takeaway hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Friday takeaway hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3565,9 +3625,14 @@
               <div class="rev hrow">
                   <div class="rev__head">
                     <h4 class="rev__title">Saturday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Saturday takeaway hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Saturday takeaway hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3596,9 +3661,14 @@
               <div class="rev hrow is-off">
                   <div class="rev__head">
                     <h4 class="rev__title">Sunday</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Sunday takeaway hours">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
+                    <span class="sort daymenu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Sunday takeaway hours">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-day-edit>Edit</button>
+                      </div>
+                    </span>
                   </div>
                   <p class="rev__value hrow__sum"></p>
                   <div class="rev__form" hidden>
@@ -3618,6 +3688,22 @@
                     </div>
                   </div>
                 </div>
+            </div>
+          </div>
+
+          <!-- Een dag wijzig je in een venster: het formulier verhuist hierheen
+               zolang het open staat en gaat daarna terug naar zijn eigen vakje.
+               Zo blijft er een plek waar de velden beschreven staan. -->
+          <div class="dialog" id="day-dialog" hidden>
+            <div class="dialog__scrim" data-day-close></div>
+            <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="day-dialog-title">
+              <div class="dialog__head">
+                <h2 class="dialog__title" id="day-dialog-title">Monday</h2>
+                <button class="icon-btn" type="button" data-day-close aria-label="Close">
+                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+              </div>
+              <div id="day-dialog-body"></div>
             </div>
           </div>
         </section>
@@ -5262,6 +5348,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=200"></script>
+  <script src="app.js?v=201"></script>
 </body>
 </html>
