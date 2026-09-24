@@ -1722,10 +1722,6 @@ select.input {
 .hours { border-top: 0; padding: 4px 20px 20px; }
 .hrow { display: block; }
 .hrow__sum:empty { display: none; }
-/* De schakelaar staat bovenaan het formulier. Geen tekst ernaast: de dagnaam
-   staat erboven en de schakelaar zegt zelf genoeg; wat hij doet staat als
-   aria-label op het veld voor wie het niet ziet. */
-.hrow__open { margin-bottom: 12px; }
 /* Een dag die dicht is: de tijden zijn er nog, maar doen niets. */
 .hrow.is-off .rev__value { color: var(--text-muted); }
 
@@ -3112,6 +3108,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   border-radius: var(--r-md);
 }
 .dayopen:hover { background: var(--gray-50); }
+/* De tijden zijn een ander onderwerp dan open of dicht; die ruimte zegt dat. */
+.dayopen { margin-bottom: 18px; }
 .dayopen__label { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
 
 /* Lucht tussen de naam van de dag en de velden eronder. */
