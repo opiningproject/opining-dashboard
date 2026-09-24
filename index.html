@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=181" />
+  <link rel="stylesheet" href="styles.css?v=183" />
 </head>
 <body>
 
@@ -3227,12 +3227,17 @@
               <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
             </button>
             <div class="hours" id="hours-delivery" data-hours="delivery">
-              <div class="hrow">
-                <span class="hrow__day">Monday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Monday for delivery</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Monday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Monday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Monday delivery hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Monday for delivery</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Monday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3241,15 +3246,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow">
-                <span class="hrow__day">Tuesday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Tuesday for delivery</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Tuesday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Tuesday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Tuesday delivery hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Tuesday for delivery</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Tuesday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3258,15 +3273,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow">
-                <span class="hrow__day">Wednesday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Wednesday for delivery</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Wednesday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Wednesday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Wednesday delivery hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Wednesday for delivery</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Wednesday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3275,15 +3300,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow">
-                <span class="hrow__day">Thursday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Thursday for delivery</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Thursday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Thursday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Thursday delivery hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Thursday for delivery</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Thursday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3292,15 +3327,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow">
-                <span class="hrow__day">Friday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Friday for delivery</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Friday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Friday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Friday delivery hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Friday for delivery</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Friday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3309,15 +3354,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow">
-                <span class="hrow__day">Saturday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Saturday for delivery</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Saturday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Saturday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Saturday delivery hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Saturday for delivery</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="00:00" aria-label="Saturday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3333,15 +3388,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow is-off">
-                <span class="hrow__day">Sunday</span>
-                <label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Sunday for delivery</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Sunday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts" hidden>
+              <div class="rev hrow is-off">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Sunday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Sunday delivery hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Sunday for delivery</span></label>
+                    <div class="shifts" hidden>
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Sunday delivery start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3350,8 +3415,13 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
 
@@ -3361,12 +3431,17 @@
               <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
             </button>
             <div class="hours" id="hours-takeaway" data-hours="takeaway">
-              <div class="hrow">
-                <span class="hrow__day">Monday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Monday for takeaway</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Monday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Monday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Monday takeaway hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Monday for takeaway</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Monday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3375,15 +3450,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow">
-                <span class="hrow__day">Tuesday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Tuesday for takeaway</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Tuesday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Tuesday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Tuesday takeaway hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Tuesday for takeaway</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Tuesday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3392,15 +3477,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow">
-                <span class="hrow__day">Wednesday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Wednesday for takeaway</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Wednesday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Wednesday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Wednesday takeaway hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Wednesday for takeaway</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Wednesday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3409,15 +3504,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow">
-                <span class="hrow__day">Thursday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Thursday for takeaway</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Thursday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Thursday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Thursday takeaway hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Thursday for takeaway</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Thursday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3430,15 +3535,25 @@
                     <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Closing time must be later than the opening time.
                   </p>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow">
-                <span class="hrow__day">Friday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Friday for takeaway</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Friday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Friday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Friday takeaway hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Friday for takeaway</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Friday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3447,15 +3562,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow">
-                <span class="hrow__day">Saturday</span>
-                <label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Saturday for takeaway</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Saturday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts">
+              <div class="rev hrow">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Saturday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Saturday takeaway hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Saturday for takeaway</span></label>
+                    <div class="shifts">
                   <div class="shift">
                     <input class="input time" type="time" value="00:00" aria-label="Saturday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3471,15 +3596,25 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed" hidden><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="hrow is-off">
-                <span class="hrow__day">Sunday</span>
-                <label class="switch"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Open on Sunday for takeaway</span></label>
-                <span class="hrow__sum" aria-hidden="true"></span>
-                <button class="hrow__more" type="button" aria-expanded="true" aria-label="Show hours for Sunday"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-                <div class="shifts" hidden>
+              <div class="rev hrow is-off">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Sunday</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit Sunday takeaway hours">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <p class="rev__value hrow__sum"></p>
+                  <div class="rev__form" hidden>
+                    <label class="switch hrow__open"><input type="checkbox" /><span class="switch__track" aria-hidden="true"></span><span class="hrow__label">Open on Sunday for takeaway</span></label>
+                    <div class="shifts" hidden>
                   <div class="shift">
                     <input class="input time" type="time" value="15:00" aria-label="Sunday takeaway start" />
                     <span class="shift__dash" aria-hidden="true">&ndash;</span>
@@ -3488,8 +3623,13 @@
                     <button class="shift__add" type="button" aria-label="Add shift"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg><span>Add shift</span></button>
                   </div>
                 </div>
-                <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
-              </div>
+                    <p class="closed"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>closed</p>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
         </section>
@@ -5134,6 +5274,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=181"></script>
+  <script src="app.js?v=183"></script>
 </body>
 </html>

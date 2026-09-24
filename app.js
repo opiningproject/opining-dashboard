@@ -1129,15 +1129,8 @@
       sum.textContent = delen.join("  ·  ");
     }
 
-    /* Open of dicht is puur een mobiele stand: op desktop doet de klasse
-       niets, dus hoeft hier niets met schermbreedtes gerekend te worden. */
-    function setDagUitgeklapt(rij, uit) {
-      rij.classList.toggle("hrow--shut", !uit);
-      var knop = rij.querySelector(".hrow__more");
-      if (knop) knop.setAttribute("aria-expanded", uit ? "true" : "false");
-      if (!uit) syncSamenvatting(rij);
-    }
-
+    /* De schakelaar zet de dag aan of uit: de tijden verdwijnen dan en er
+       staat closed, en de regel erboven zegt Closed. */
     function setDagOpen(rij, open) {
       rij.classList.toggle("is-off", !open);
       rij.querySelector(".shifts").hidden = !open;
@@ -1145,17 +1138,42 @@
       syncSamenvatting(rij);
     }
 
+    /* Een dag staat dicht als een regel met zijn tijden; het potlood klapt
+       hem open als formulier, net als in de controlestap. Cancel zet alles
+       terug zoals het stond, Save legt het vast. */
+    function zetDag(rij, bewerken) {
+      rij.querySelector(".rev__value").hidden = bewerken;
+      rij.querySelector(".rev__form").hidden = !bewerken;
+      rij.querySelector(".rev__pen").hidden = bewerken;
+    }
+
+    /* Wat er stond voordat je begon te wijzigen, zodat Cancel echt terug kan.
+       De inhoud gaat als tekst het geheugen in; de knoppen erin werken via
+       delegatie, dus die blijven het doen na herstel. */
+    var dagKopie = null;
+
     hoursView.addEventListener("click", function (e) {
       var rij = e.target.closest(".hrow");
       if (!rij) return;
 
-      /* De hele kopregel klapt de dag open, niet alleen de chevron. Wat je
-         zelf bedient blijft van zichzelf: de schakelaar, de tijdvelden en de
-         knoppen daarnaast. En alleen waar de chevron ook echt staat: op
-         desktop staat elke dag altijd open. */
-      var chevron = rij.querySelector(".hrow__more");
-      if (chevron && chevron.offsetParent && !e.target.closest(".switch, .shifts, .closed")) {
-        setDagUitgeklapt(rij, rij.classList.contains("hrow--shut"));
+      if (e.target.closest(".rev__pen")) {
+        dagKopie = rij.querySelector(".rev__form").innerHTML;
+        zetDag(rij, true);
+        return;
+      }
+
+      if (e.target.closest(".rev__cancel")) {
+        if (dagKopie !== null) rij.querySelector(".rev__form").innerHTML = dagKopie;
+        rij.classList.toggle("is-off", !rij.querySelector('.switch input').checked);
+        syncSamenvatting(rij);
+        zetDag(rij, false);
+        return;
+      }
+
+      if (e.target.closest(".rev__save")) {
+        syncSamenvatting(rij);
+        zetDag(rij, false);
+        showToast(rij.querySelector(".rev__title").textContent + " saved");
         return;
       }
 
@@ -1178,8 +1196,6 @@
         /* De kopie draagt dezelfde tijden, dus geldt dezelfde toets. */
         valideerShift(kopie);
         syncShifts(rij);
-        syncSamenvatting(rij);
-        markUnsaved("Opening hours");
       }
 
       if (e.target.closest(".shift__del")) {
@@ -1189,31 +1205,22 @@
         if (melding && melding.classList.contains("shift__error")) melding.remove();
         weg.remove();
         syncShifts(rij);
-        syncSamenvatting(rij);
-        markUnsaved("Opening hours");
       }
     });
 
     hoursView.addEventListener("change", function (e) {
-      if (e.target.matches('.switch input')) setDagOpen(e.target.closest(".hrow"), e.target.checked);
-      markUnsaved("Opening hours");
+      if (e.target.matches(".switch input")) setDagOpen(e.target.closest(".hrow"), e.target.checked);
     });
+
     hoursView.addEventListener("input", function (e) {
       var shift = e.target.closest(".shift");
       if (shift) valideerShift(shift);
-      var rij = e.target.closest(".hrow");
-      if (rij) syncSamenvatting(rij);
-      markUnsaved("Opening hours");
     });
 
-    /* Alles begint dicht: op mobiel is dat de hele winst, op desktop doet de
-       klasse niets. */
-    hoursView.querySelectorAll(".hrow").forEach(function (rij) {
-      setDagUitgeklapt(rij, false);
-    });
+    /* De tijden op de dichte regel komen uit de velden eronder. */
+    hoursView.querySelectorAll(".hrow").forEach(syncSamenvatting);
     hoursView.querySelectorAll(".shift").forEach(valideerShift);
   }
-
 
   /* ---- Inklapbare kaartsecties ------------------------------------------- */
   /* Een .cardhead klapt in wat zijn aria-controls aanwijst. Gedelegeerd, dus
@@ -1931,7 +1938,12 @@
   function markUnsaved(label) { saveLabel = label; saveZin = ""; setSavebar(true); }
   function markUnsavedZin(zin) { saveZin = zin; setSavebar(true); }
 
-  function showSavebar() { if (root.dataset.settings === "open") markUnsaved(setTitle.textContent); }
+  /* Wat in een eigen vakje met Cancel en Save staat, bewaart zichzelf; daar
+     hoort de balk bovenin niet ook nog eens om te vragen. */
+  function showSavebar(e) {
+    if (e && e.target.closest && e.target.closest(".rev__form")) return;
+    if (root.dataset.settings === "open") markUnsaved(setTitle.textContent);
+  }
   function hideSavebar() { setSavebar(false); }
 
   overlay.addEventListener("change", showSavebar);

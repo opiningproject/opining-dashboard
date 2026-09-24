@@ -1708,20 +1708,16 @@ select.input {
 /* Omlaag als de sectie dicht is, omhoog zodra hij open staat. */
 .cardhead[aria-expanded="true"] .cardhead__chev { transform: rotate(180deg); }
 
-.hours { border-top: 0; }
-
-/* Dag, schakelaar en diensten in vaste kolommen, zodat alle tijdvelden
-   onder elkaar uitlijnen ongeacht de lengte van de dagnaam. */
-.hrow {
-  display: grid;
-  grid-template-columns: 128px 36px minmax(0, 1fr);
-  align-items: start;
-  gap: 16px;
-  padding: 14px 20px;
-}
-.hrow + .hrow { border-top: 1px solid var(--border); }
-.hrow__day { padding-top: 11px; font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
-.hrow .switch { margin-top: 10px; }
+/* Openingstijden: net als de controlestap staat elke dag in een eigen vakje.
+   Dicht zie je de dag met zijn tijden; het potlood klapt hem open. */
+.hours { border-top: 0; padding: 4px 20px 20px; }
+.hrow { display: block; }
+.hrow__sum:empty { display: none; }
+/* De schakelaar met zijn tekst staat bovenaan het formulier. */
+.hrow__open { gap: 12px; margin-bottom: 14px; }
+.hrow__label { font-size: var(--fs-sm); color: var(--text); }
+/* Een dag die dicht is: de tijden zijn er nog, maar doen niets. */
+.hrow.is-off .rev__value { color: var(--text-muted); }
 
 .shifts { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .shift { display: flex; align-items: center; gap: 12px; }
@@ -1759,9 +1755,6 @@ select.input {
 }
 .shift__error .icon { width: 16px; height: 16px; }
 
-/* Samenvatting en chevron horen bij de mobiele accordeon; op desktop staat
-   elke dag altijd open, dus daar bestaan ze niet. */
-.hrow__sum, .hrow__more { display: none; }
 
 .shift__del { width: 32px; height: 32px; color: var(--text-muted); }
 .shift__del .icon { width: 19px; height: 19px; }
@@ -2664,49 +2657,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .table--domains .dom--sub { margin-left: 0; }
   .table--domains .dom--sub::before { display: none; }
   .dom { gap: 10px; }
-  /* Openingstijden op mobiel: de kaart is het kader, met de grijze kop erop
-     en haarlijnen tussen de dagen. Elke dag staat standaard dicht met zijn
-     tijden op de regel, zodat je langs zeven regels scrolt en alleen
-     openklapt wat je wilt wijzigen. De schakelaar staat rechts, vlak voor de
-     chevron, zodat aan- en uitzetten en openklappen naast elkaar liggen. */
+  /* Openingstijden op mobiel: dezelfde vakjes als op een breed scherm, alleen
+     krapper. Het potlood blijft de manier om een dag te wijzigen. */
   .cardhead { padding: 12px 16px; }
+  .hours { padding: 4px 16px 16px; }
   .hours + .card__pad { padding: 14px 16px 16px; }
-  .hrow {
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    align-items: center;
-    gap: 10px 8px;
-    padding: 12px 16px;
-  }
-  /* Dicht staan dagnaam en tijden onder elkaar; de twee knoppen ernaast
-     strekken over allebei de regels, zodat ze op de middenas blijven. */
-  .hrow--shut { row-gap: 2px; }
-  /* De hele regel is de knop; alleen binnen de diensten is dat niet zo. */
-  .hrow { cursor: pointer; }
-  .hrow .shifts, .hrow .closed { cursor: auto; }
-  .hrow__day { padding-top: 0; align-self: center; grid-column: 1; grid-row: 1; }
-  .hrow .switch { margin-top: 0; align-self: center; grid-column: 2; grid-row: 1; }
-  .hrow__more { grid-column: 3; grid-row: 1; }
-  .hrow--shut .switch, .hrow--shut .hrow__more { grid-row: 1 / span 2; }
-  /* De tijden bij een dichte dag: eronder, in dezelfde maat als de dagnaam.
-     Staat de dag open, dan staan de velden er zelf en zwijgt hij. */
-  .hrow--shut .hrow__sum {
-    display: block; grid-column: 1; grid-row: 2;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    font-size: var(--fs-md); color: var(--text-muted);
-  }
-  .hrow__more {
-    display: grid; place-items: center;
-    width: 28px; height: 28px; margin-right: -6px;
-    border-radius: var(--r-md);
-    color: var(--text-muted);
-    transition: transform var(--dur) var(--ease);
-  }
-  .hrow__more .icon { width: 18px; height: 18px; }
-  /* Omlaag als de dag dicht is, omhoog zodra hij openstaat: de pijl wijst
-     naar wat de klik doet. */
-  .hrow:not(.hrow--shut) .hrow__more { transform: rotate(180deg); }
-  /* Dicht: alleen de kop blijft staan. De samenvatting neemt het over. */
-  .hrow--shut .shifts, .hrow--shut .closed { display: none; }
   .shifts, .closed { grid-column: 1 / -1; }
   .closed { padding-top: 0; }
   /* Plus en min horen naast elkaar op dezelfde regel als de tijden, in
