@@ -3075,18 +3075,18 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   .row__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
 
-/* Een dag krijgt zijn afkorting als vierkantje vooraan: zeven keer hetzelfde
-   klokje zegt niets, de afkorting wel. Het geeft de regel dezelfde linkerkant
-   als de andere lijsten met een icoon. */
-.daymark {
-  display: grid; place-items: center;
-  width: 30px; height: 30px; flex: 0 0 auto;
-  border-radius: var(--r-md);
-  background: var(--gray-100); color: var(--text-muted);
-  font-size: var(--fs-sm); font-weight: 600;
+/* Kop met een schakelaar ernaast: de knop klapt de sectie open of dicht, de
+   schakelaar zet het hele kanaal aan of uit. Twee dingen, dus twee knoppen;
+   de kop zelf is daarom geen knop meer maar de regel eromheen. */
+.cardhead--switch { display: flex; align-items: center; gap: 14px; }
+.cardhead__main {
+  display: flex; align-items: center; gap: 14px; flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
 }
-.daytext { display: flex; flex-direction: column; min-width: 0; margin-right: auto; }
-.daytext .rev__value { margin-top: 2px; }
-.hrow .rev__head { gap: 12px; }
-/* Dicht: het vierkantje dimt mee met de tijden. */
-.hrow.is-off .daymark { color: var(--gray-300); }
+.cardhead__main .cardhead__chev { margin-left: auto; }
+.cardhead--switch:hover { background: var(--gray-50); }
+.cardhead--switch[aria-expanded] { background: none; }
+/* Uit: de dagen staan er nog, maar je kunt er niets mee tot je het kanaal
+   weer aanzet. */
+.hours.is-off { opacity: .45; pointer-events: none; }

@@ -1230,6 +1230,19 @@
       zetOpslaanKlaar(e.target.closest(".hrow"));
     });
 
+    /* De schakelaar in de kop zet het hele kanaal aan of uit. De dagen blijven
+       staan, maar je kunt er niets mee zolang je geen bezorging of afhaal
+       aanbiedt. */
+    hoursView.addEventListener("change", function (e) {
+      if (!e.target.matches("[data-hours-on]")) return;
+      var kaart = e.target.closest(".card");
+      var lijst = kaart.querySelector(".hours");
+      lijst.classList.toggle("is-off", !e.target.checked);
+      var naam = kaart.querySelector(".acct__name").textContent.toLowerCase();
+      showToast(e.target.checked ? "Orders are open for " + naam.replace(" hours", "")
+                                 : "No orders for " + naam.replace(" hours", ""));
+    });
+
     /* De tijden op de dichte regel komen uit de velden eronder. */
     hoursView.querySelectorAll(".hrow").forEach(function (rij) {
       syncSamenvatting(rij);
@@ -1245,9 +1258,14 @@
   document.addEventListener("click", function (e) {
     var kop = e.target.closest(".cardhead");
     if (!kop) return;
-    var open = kop.getAttribute("aria-expanded") === "true";
-    kop.setAttribute("aria-expanded", open ? "false" : "true");
-    var doel = document.getElementById(kop.getAttribute("aria-controls"));
+    /* De schakelaar in de kop zet het kanaal aan of uit; dat is iets anders
+       dan de sectie open- of dichtklappen. */
+    if (e.target.closest(".switch")) return;
+    /* Staat er een knop in de kop, dan draagt die de stand. */
+    var stuur = kop.querySelector("[aria-controls]") || kop;
+    var open = stuur.getAttribute("aria-expanded") === "true";
+    stuur.setAttribute("aria-expanded", open ? "false" : "true");
+    var doel = document.getElementById(stuur.getAttribute("aria-controls"));
     if (doel) doel.hidden = open;
   });
 
@@ -1955,10 +1973,11 @@
   function markUnsaved(label) { saveLabel = label; saveZin = ""; setSavebar(true); }
   function markUnsavedZin(zin) { saveZin = zin; setSavebar(true); }
 
-  /* Wat in een eigen vakje met Cancel en Save staat, bewaart zichzelf; daar
-     hoort de balk bovenin niet ook nog eens om te vragen. */
+  /* Wat in een eigen vakje met Cancel en Save staat bewaart zichzelf, en wat
+     meteen geldt (data-instant) hoeft er ook niet om te vragen. In beide
+     gevallen zwijgt de balk bovenin. */
   function showSavebar(e) {
-    if (e && e.target.closest && e.target.closest(".rev__form")) return;
+    if (e && e.target.closest && e.target.closest(".rev__form, [data-instant]")) return;
     if (root.dataset.settings === "open") markUnsaved(setTitle.textContent);
   }
   function hideSavebar() { setSavebar(false); }
