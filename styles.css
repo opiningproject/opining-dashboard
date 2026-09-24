@@ -1726,7 +1726,10 @@ select.input {
 .hrow.is-off .rev__value { color: var(--text-muted); }
 
 .shifts { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.shift { display: flex; align-items: center; gap: 8px; }
+/* Drie vaste kolommen: veld, streepje, veld. Met een flexrij rekt een
+   tijdveld in Safari verder uit dan zijn kolom en loopt het uit de kaart;
+   minmax(0, 1fr) laat dat niet toe. */
+.shift { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; gap: 8px; }
 .shift__dash { color: var(--text-muted); }
 
 /* Tijdvelden: smal, gecentreerd, zonder de klokknop van de browser — die
@@ -1741,6 +1744,9 @@ select.input {
   text-align: center;
   font-variant-numeric: tabular-nums;
 }
+/* Safari geeft een tijdveld een eigen minimumbreedte; zonder dit duwt het
+   zichzelf buiten zijn kolom. */
+.time { appearance: none; -webkit-appearance: none; }
 .time::-webkit-calendar-picker-indicator { display: none; }
 .time::-webkit-inner-spin-button { display: none; }
 
@@ -2668,8 +2674,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .cardhead:has(+ .hours) { padding-top: 18px; padding-bottom: 18px; }
   .hours { padding: 4px 16px 16px; }
   .hours + .card__pad { padding: 14px 16px 16px; }
-  /* Op een smal scherm mogen de twee tijden omslaan als het krap wordt. */
-  .shift { flex-wrap: wrap; gap: 6px; }
   /* Vier tegels naast elkaar worden te smal op mobiel. */
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tile:nth-child(odd) { border-left: 0; }
@@ -3117,9 +3121,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 
 
 /* Elk tijdveld met zijn eigen kopje: de twee velden zeggen los van elkaar
-   niets. De streep ertussen zakt mee naar de hoogte van de velden. */
-.shift { align-items: flex-end; }
-.tcol { display: flex; flex-direction: column; gap: 4px; flex: 1 1 0; min-width: 0; }
+   niets. */
+.tcol { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .tcol .label { margin: 0; }
-.tcol .time { width: 100%; }
+.tcol .time { width: 100%; min-width: 0; max-width: 100%; }
 .shift__dash { padding-bottom: 9px; }
