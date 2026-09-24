@@ -3062,7 +3062,14 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   .table--domains tr.dom-child {
     position: relative;
     padding-left: 48px;
-    border-top: 1px dashed var(--border);
+    /* De scheiding begint bij het icoon van de verwijzing, niet bij de rand
+       van de kaart: een streepjespatroon in plaats van een rand, zodat hij
+       kan inspringen en de stam er links van vrij blijft. */
+    border-top: 0;
+    background-image: repeating-linear-gradient(to right, var(--border) 0 4px, transparent 4px 8px);
+    background-size: calc(100% - 48px) 1px;
+    background-position: 48px 0;
+    background-repeat: no-repeat;
   }
   /* De stam loopt door langs de blokken; bij de laatste verwijzing stopt hij
      bij het streepje, want daaronder hoort niets meer. */
