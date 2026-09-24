@@ -1201,10 +1201,9 @@
           veld.removeAttribute("aria-invalid");
           veld.removeAttribute("aria-describedby");
         });
-        /* Achter de melding van de laatste dienst, anders zou de kopie de
-           melding van zijn voorganger overnemen. */
-        var na = laatste.nextElementSibling;
-        (na && na.classList.contains("shift__error") ? na : laatste).after(kopie);
+        /* Onderaan, dus onder de tekst die hem toevoegde: zo staat de tweede
+           dienst waar je hem verwacht en niet boven de knop. */
+        laatste.closest(".shifts").appendChild(kopie);
         /* De kopie draagt dezelfde tijden, dus geldt dezelfde toets. */
         valideerShift(kopie);
         syncShifts(rij);

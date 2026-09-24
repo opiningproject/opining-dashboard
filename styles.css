@@ -1772,8 +1772,8 @@ select.input {
    leek te veel op de tijdvelden erboven. Een tweede dienst haal je met
    dezelfde tekst weer weg, dus er is geen los prullenbakje nodig. */
 .shift__toggle {
-  display: inline-block;
-  margin-top: 10px; padding: 2px 0;
+  align-self: flex-start;
+  margin: 4px 0; padding: 2px 0;
   font-size: var(--fs-md); font-weight: 500;
   color: var(--accent);
 }
