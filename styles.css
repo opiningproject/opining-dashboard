@@ -3074,3 +3074,19 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   /* Een lang adres kapt af in plaats van de regel op te rekken. */
   .row__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
+
+/* Een dag krijgt zijn afkorting als vierkantje vooraan: zeven keer hetzelfde
+   klokje zegt niets, de afkorting wel. Het geeft de regel dezelfde linkerkant
+   als de andere lijsten met een icoon. */
+.daymark {
+  display: grid; place-items: center;
+  width: 30px; height: 30px; flex: 0 0 auto;
+  border-radius: var(--r-md);
+  background: var(--gray-100); color: var(--text-muted);
+  font-size: var(--fs-sm); font-weight: 600;
+}
+.daytext { display: flex; flex-direction: column; min-width: 0; margin-right: auto; }
+.daytext .rev__value { margin-top: 2px; }
+.hrow .rev__head { gap: 12px; }
+/* Dicht: het vierkantje dimt mee met de tijden. */
+.hrow.is-off .daymark { color: var(--gray-300); }
