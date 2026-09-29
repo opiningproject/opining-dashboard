@@ -3253,6 +3253,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* De knop waarmee je tekent, met de bevestiging ernaast. */
 .signbar { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 20px; }
 .signbar__done { display: flex; align-items: center; gap: 8px; font-size: var(--fs-md); color: var(--text-muted); }
+.signbar__note { font-size: var(--fs-md); color: var(--text-muted); }
 .signbar__done .icon { width: 18px; height: 18px; color: var(--success); }
 .signbar__done b { font-weight: 600; color: var(--text-strong); }
 

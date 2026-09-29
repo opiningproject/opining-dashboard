@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=226" />
+  <link rel="stylesheet" href="styles.css?v=227" />
 </head>
 <body>
 
@@ -3036,7 +3036,8 @@
               <!-- Tekenen met een knop: de naam hierboven komt onder het
                    contract te staan, met de datum en de plaats erbij. -->
               <div class="signbar">
-                <button class="btn btn--primary" type="button" id="sign-go">Sign the agreement</button>
+                <button class="btn btn--primary" type="button" id="sign-go" disabled>Sign the agreement</button>
+                <p class="signbar__note">Upload your identity document and fill in the name of the undersigned first.</p>
                 <p class="signbar__done" hidden>
                   <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
                   <span>Signed by <b data-signed-who></b> on <span data-signed-when></span>.</span>
@@ -5770,6 +5771,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=226"></script>
+  <script src="app.js?v=227"></script>
 </body>
 </html>

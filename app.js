@@ -3991,6 +3991,8 @@
       stand.setAttribute("data-upload-status", "");
       /* Leeg, zodat hetzelfde bestand opnieuw kiezen ook weer iets doet. */
       vak.querySelector("input").value = "";
+      /* Elders in de stap hangt de tekenknop hiervan af. */
+      document.dispatchEvent(new CustomEvent("upload-stand"));
     }
 
     function uploadNeem(vak, bestand) {
@@ -4083,6 +4085,8 @@
       var paspoort = contract.parentNode.querySelector("[data-id-one]");
       var achter = contract.parentNode.querySelector('[data-id-side="back"]');
       if (achter) achter.hidden = !!(paspoort && paspoort.checked);
+      /* Een kant die wegvalt hoeft ook niet meer aangeleverd te zijn. */
+      zetTekenKlaar();
     }
 
     contract.parentNode.querySelectorAll('input[name="id-kind"]').forEach(function (keuze) {
@@ -4103,8 +4107,29 @@
       return twee(d.getDate()) + "-" + twee(d.getMonth() + 1) + "-" + d.getFullYear();
     }
 
+    /* Tekenen kan pas als het stuk compleet is: de naam eronder en de kanten
+       van het legitimatiebewijs die bij de gekozen soort horen. Bij een
+       paspoort staat de achterkant er niet, dus die telt dan ook niet mee. */
+    function tekenMag() {
+      if (!tekenNaam.value.trim()) return false;
+      var vakken = contract.parentNode.querySelectorAll("[data-id-side]");
+      return [].every.call(vakken, function (vak) {
+        return vak.hidden || !!vak.querySelector(".drop--filled");
+      });
+    }
+
+    function zetTekenKlaar() {
+      /* Is er al getekend, dan staat de knop er niet meer. */
+      if (!tekenKnop || tekenKnop.hidden) return;
+      var mag = tekenMag();
+      tekenKnop.disabled = !mag;
+      var uitleg = document.querySelector(".signbar__note");
+      if (uitleg) uitleg.hidden = mag;
+    }
+
     if (tekenKnop) {
       var tekenKlaar = document.querySelector(".signbar__done");
+      var tekenNote = document.querySelector(".signbar__note");
       var merk = contract.querySelector("[data-sign-mark]");
 
       function zetHandtekening(naam) {
@@ -4118,18 +4143,19 @@
 
         tekenKnop.hidden = !!naam;
         tekenKlaar.hidden = !naam;
+        tekenNote.hidden = true;
         if (naam) {
           tekenKlaar.querySelector("[data-signed-who]").textContent = naam;
           tekenKlaar.querySelector("[data-signed-when]").textContent = datum;
         }
         /* Zolang er getekend is hoort de naam niet meer te veranderen. */
         tekenNaam.readOnly = !!naam;
+        if (!naam) zetTekenKlaar();
       }
 
       tekenKnop.addEventListener("click", function () {
-        var naam = tekenNaam.value.trim();
-        if (!naam) { tekenNaam.focus(); showToast("Fill in the name of the undersigned first"); return; }
-        zetHandtekening(naam);
+        if (!tekenMag()) return;
+        zetHandtekening(tekenNaam.value.trim());
         /* Meteen laten zien waar de handtekening terechtkwam. */
         contract.scrollTop = contract.scrollHeight;
         showToast("Agreement signed");
@@ -4139,6 +4165,12 @@
         zetHandtekening("");
         tekenNaam.focus();
       });
+
+      /* De knop volgt de velden: de naam hierboven en de stukken die je
+         aanlevert. Dat laatste bericht komt uit het uploadblok. */
+      tekenNaam.addEventListener("input", zetTekenKlaar);
+      document.addEventListener("upload-stand", zetTekenKlaar);
+      zetTekenKlaar();
     }
 
     /* Bijwerken zodra de wizard een stap laat zien: dan is stap 1 net langs
