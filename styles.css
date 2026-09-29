@@ -3225,7 +3225,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   min-height: 46px;
   margin-top: 6px;
   padding-bottom: 4px;
-  border-bottom: 1px solid var(--gray-300);
   font-family: "Segoe Script", "Bradley Hand", "Brush Script MT", "Apple Chancery", cursive;
   font-size: 22px;
   line-height: 42px;
