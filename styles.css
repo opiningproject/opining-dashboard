@@ -2544,6 +2544,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   border-radius: var(--r-lg);
   background: var(--bg-surface);
   box-shadow: var(--shadow-lg);
+  /* Een lang formulier mag niet buiten het scherm vallen; dan scrollt het
+     venster zelf. */
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
   animation: dialog-in 200ms var(--ease);
 }
 /* Breder venster voor wie meer te lezen krijgt, zoals de gegevens bij een upload. */
@@ -3128,3 +3132,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .label__opt { margin-left: 6px; font-weight: 400; color: var(--text-muted); }
 /* Straat en huisnummer: de straat krijgt de ruimte, het nummer is kort. */
 .field-row--street { grid-template-columns: minmax(0, 1fr) 120px; }
+
+/* Twee keuzes die elkaar uitsluiten en kort zijn, passen naast elkaar. */
+.choices--row { flex-direction: row; gap: 24px; flex-wrap: wrap; }
+/* Het eerste kopje in een venster heeft de kop erboven al als scheiding. */
+.card__subtitle--first { margin-top: 0; }

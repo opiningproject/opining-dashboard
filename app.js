@@ -1940,7 +1940,12 @@
 
     function toonStap(n) {
       stap = Math.min(Math.max(n, 1), wizLaatste);
-      wizStappen.forEach(function (kaart) { kaart.hidden = Number(kaart.dataset.step) !== stap; });
+      wizStappen.forEach(function (kaart) {
+        var anders = Number(kaart.dataset.step) !== stap;
+        /* Van de twee betrokkenen-kaarten hoort er maar een bij de rechtsvorm
+           die in stap 1 gekozen is. */
+        kaart.hidden = anders || kaart.dataset.off === "ja";
+      });
       wizNu.textContent = stap;
       wizBalk.style.width = (stap / wizLaatste * 100) + "%";
       wizTrack.setAttribute("aria-valuenow", stap);
@@ -2002,11 +2007,11 @@
   function markUnsaved(label) { saveLabel = label; saveZin = ""; setSavebar(true); }
   function markUnsavedZin(zin) { saveZin = zin; setSavebar(true); }
 
-  /* Wat in een eigen vakje met Cancel en Save staat bewaart zichzelf, en wat
-     meteen geldt (data-instant) hoeft er ook niet om te vragen. In beide
-     gevallen zwijgt de balk bovenin. */
+  /* Wat in een eigen vakje met Cancel en Save staat bewaart zichzelf, wat
+     meteen geldt (data-instant) hoeft er niet om te vragen, en de onboarding
+     heeft onderaan zijn eigen knoppen. In al die gevallen zwijgt de balk. */
   function showSavebar(e) {
-    if (e && e.target.closest && e.target.closest(".rev__form, [data-instant]")) return;
+    if (e && e.target.closest && e.target.closest(".rev__form, [data-instant], .wiz")) return;
     if (root.dataset.settings === "open") markUnsaved(setTitle.textContent);
   }
   function hideSavebar() { setSavebar(false); }
@@ -3650,6 +3655,148 @@
       }
       var dns = e.target.closest("[data-domain-dns]");
       if (dns) showToast("DNS records for " + domNaam(dns.closest("tr")) + " are managed at your provider");
+    });
+  }
+
+  /* ---- Betrokkenen in de onboarding ---------------------------------------
+     Een eenmanszaak heeft één eigenaar; bij een BV of vennootschap moeten alle
+     UBO's en tekenbevoegden erbij. De rechtsvorm uit stap 1 bepaalt daarom
+     welke van de twee kaarten je in stap 3 ziet. */
+  var persoonVenster = document.getElementById("person-dialog");
+
+  if (persoonVenster) {
+    var rechtsvorm = document.getElementById("biz-legal");
+    var lijst = document.getElementById("people-list");
+    var persoonRij = null;   /* de regel die je nu bewerkt, of null bij nieuw */
+
+    /* Alleen een eenmanszaak heeft één betrokkene. */
+    function alleenEigenaar() {
+      return /sole proprietorship/i.test(rechtsvorm.value);
+    }
+
+    function zetBetrokkenen() {
+      var enkel = alleenEigenaar();
+      document.querySelectorAll('[data-people="single"]').forEach(function (kaart) {
+        kaart.dataset.off = enkel ? "" : "ja";
+      });
+      document.querySelectorAll('[data-people="multi"]').forEach(function (kaart) {
+        kaart.dataset.off = enkel ? "ja" : "";
+      });
+    }
+
+    rechtsvorm.addEventListener("change", function () {
+      zetBetrokkenen();
+      /* De stap opnieuw tekenen, zodat de juiste kaart meteen in beeld komt. */
+      if (resetWiz) resetWiz(3);
+    });
+    zetBetrokkenen();
+
+    /* Het percentage hoort bij een financieel belang; bij de andere twee
+       standen zegt het niets, dus dan staat het er ook niet. */
+    var uboKeuze = document.getElementById("person-ubo");
+    function zetUboVelden() {
+      var soort = uboKeuze.value;
+      document.getElementById("person-pct-field").hidden = soort !== "Financial interest";
+      document.getElementById("person-kind-field").hidden = soort === "No UBO";
+    }
+    uboKeuze.addEventListener("change", zetUboVelden);
+
+    var velden = ["first", "last", "lang", "street", "nr", "zip", "city", "country",
+                  "dob", "nat", "pep", "sign", "ubo", "pct"];
+
+    function veld(naam) { return document.getElementById("person-" + naam); }
+
+    function openPersoon(rij) {
+      persoonRij = rij;
+      document.getElementById("person-dialog-title").textContent =
+        rij ? "Details of " + rij.dataset.personName : "Add person";
+
+      velden.forEach(function (naam) {
+        var el = veld(naam);
+        var waarde = rij ? (rij.dataset["person" + naam.charAt(0).toUpperCase() + naam.slice(1)] || "") : "";
+        if (el.tagName === "SELECT") el.value = waarde || el.options[0].value;
+        else el.value = waarde;
+      });
+      if (!rij) {
+        veld("country").value = "Netherlands";
+        veld("ubo").value = "Financial interest";
+        veld("sign").value = "Authorised to sign on their own";
+        veld("pct").value = "0%";
+      }
+      zetUboVelden();
+      persoonVenster.hidden = false;
+      veld("first").focus();
+    }
+
+    /* Wat er in de regel komt te staan: hoe iemand tekent, en zijn belang. */
+    function persoonRegel(soort, pct, teken) {
+      var delen = [teken];
+      if (soort === "Financial interest") delen.push(pct + " financial interest");
+      else if (soort === "Controlling interest") delen.push("controlling interest");
+      else delen.push("no UBO");
+      return delen.join(" · ");
+    }
+
+    function letters(voor, achter) {
+      return ((voor.charAt(0) || "") + (achter.charAt(0) || "")).toUpperCase() || "?";
+    }
+
+    document.getElementById("person-save").addEventListener("click", function () {
+      var voor = veld("first").value.trim();
+      var achter = veld("last").value.trim();
+      if (!voor || !achter) { veld("first").focus(); return; }
+
+      var rij = persoonRij;
+      if (!rij) {
+        rij = document.createElement("div");
+        rij.className = "row row--static";
+        rij.setAttribute("data-person", "");
+        rij.innerHTML =
+          '<span class="acct__mark acct__mark--person" aria-hidden="true"></span>' +
+          '<span class="row__text"><span class="row__title"></span>' +
+          '<span class="row__meta" data-person-meta></span></span>' +
+          '<span class="badge badge--pending" data-person-status>Identification required</span>' +
+          '<span class="sort row__menu">' +
+            '<button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false">' +
+              '<svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>' +
+            '<div class="sort__menu sort__menu--kort" role="menu" hidden>' +
+              '<button class="sort__item" type="button" role="menuitem" data-person-edit>Edit</button>' +
+              '<button class="sort__item" type="button" role="menuitem" data-person-remove>Remove</button>' +
+            '</div>' +
+          '</span>';
+        lijst.appendChild(rij);
+      }
+
+      velden.forEach(function (naam) {
+        rij.dataset["person" + naam.charAt(0).toUpperCase() + naam.slice(1)] = veld(naam).value;
+      });
+      rij.dataset.personName = voor + " " + achter;
+      rij.querySelector(".acct__mark").textContent = letters(voor, achter);
+      /* De naam staat als tekst vooraan, met eventueel het label "you" erachter;
+         dat label hoort te blijven staan. */
+      var titel = rij.querySelector(".row__title");
+      var pil = titel.querySelector(".pill");
+      titel.textContent = voor + " " + achter + " ";
+      if (pil) titel.appendChild(pil);
+      rij.querySelector("[data-person-meta]").textContent =
+        persoonRegel(veld("ubo").value, veld("pct").value, veld("sign").value);
+      rij.querySelector(".sort__btn").setAttribute("aria-label", "Actions for " + voor + " " + achter);
+
+      persoonVenster.hidden = true;
+      showToast(persoonRij ? "Details saved" : voor + " " + achter + " added");
+    });
+
+    document.addEventListener("click", function (e) {
+      if (e.target.closest("[data-person-add]")) { openPersoon(null); return; }
+      var wijzig = e.target.closest("[data-person-edit]");
+      if (wijzig) { openPersoon(wijzig.closest("[data-person]")); return; }
+      var weg = e.target.closest("[data-person-remove]");
+      if (weg) {
+        var rij = weg.closest("[data-person]");
+        var naam = rij.dataset.personName;
+        rij.remove();
+        showToast(naam + " removed");
+      }
     });
   }
 })();
