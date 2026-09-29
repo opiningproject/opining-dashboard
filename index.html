@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=216" />
+  <link rel="stylesheet" href="styles.css?v=217" />
 </head>
 <body>
 
@@ -89,6 +89,7 @@
     <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3.5H7.5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8z"/><path d="M14 3.5V8h4.5"/></symbol>
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 9A8 8 0 0 0 5 7.4L4 9"/><path d="M4 4.5V9h4.5"/><path d="M4.5 15A8 8 0 0 0 19 16.6l1-1.6"/><path d="M20 19.5V15h-4.5"/></symbol>
     <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M6.6 16.4a4 4 0 0 1 .5-8 5.4 5.4 0 0 1 10.3 1.2 3.4 3.4 0 0 1 .4 6.8"/><path d="M12 20V10.5M8.4 13.6 12 10l3.6 3.6"/></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.8 11.2 12 15.4l4.2-4.2M4.6 19.4h14.8"/></symbol>
     <symbol id="i-redirect" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M8 15.5v-1.8A2.7 2.7 0 0 1 10.7 11H16"/><path d="M13.6 8.6 16 11l-2.4 2.4"/></symbol>
     <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="5" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="5" cy="17.5" r="1.1" fill="currentColor" stroke="none"/></symbol>
@@ -2780,9 +2781,61 @@
                 </div>
               </div>
             </div>
-
-            <!-- Stap 5 -->
+            <!-- Stap 4 — extra gegevens. Pay.nl vraagt hier de stukken op die
+                 het handelsregister bevestigen. Een uittreksel UBO-register
+                 hoort bij een rechtspersoon; bij een eenmanszaak bestaat dat
+                 register niet, dus dat vak blijft daar weg. -->
             <div class="card" data-step="4" hidden>
+              <h3 class="card__title">We need a bit more data</h3>
+              <p class="card__sub">Check the details you filled in and upload the documents we need.</p>
+
+              <div class="rev docup" data-upload>
+                <div class="rev__head">
+                  <h4 class="rev__title">Chamber of Commerce extract</h4>
+                  <span class="badge badge--pending" data-upload-status>Data incomplete</span>
+                </div>
+                <p class="rev__value">For <b data-biz-name>your business</b>, no older than three months.</p>
+                <div class="drop drop--doc">
+                  <input type="file" accept=".pdf,.jpg,.jpeg" hidden aria-label="Chamber of Commerce extract" />
+                  <div class="drop__empty">
+                    <svg class="icon drop__cloud" aria-hidden="true"><use href="#i-upload"/></svg>
+                    <p class="drop__lead">Upload your Chamber of Commerce extract here</p>
+                    <p class="drop__hint">Drag the file here, or <button class="link link--btn" type="button" data-upload-pick>select a file</button>.</p>
+                  </div>
+                  <div class="drop__file" hidden>
+                    <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>
+                    <span class="drop__kind"></span><span class="drop__name"></span>
+                  </div>
+                </div>
+                <p class="hint">PDF or JPG, up to 25 MB.</p>
+                <p class="drop__again" hidden>Wrong file? <button class="link link--btn" type="button" data-upload-pick>upload it again</button></p>
+              </div>
+
+              <div class="rev docup" data-upload data-ubo-doc>
+                <div class="rev__head">
+                  <h4 class="rev__title">UBO register extract</h4>
+                  <span class="badge badge--pending" data-upload-status>Data incomplete</span>
+                </div>
+                <p class="rev__value">The extract that shows who the ultimate beneficial owners are.</p>
+                <div class="drop drop--doc">
+                  <input type="file" accept=".pdf,.jpg,.jpeg" hidden aria-label="UBO register extract" />
+                  <div class="drop__empty">
+                    <svg class="icon drop__cloud" aria-hidden="true"><use href="#i-upload"/></svg>
+                    <p class="drop__lead">Upload your UBO register extract here</p>
+                    <p class="drop__hint">Drag the file here, or <button class="link link--btn" type="button" data-upload-pick>select a file</button>.</p>
+                  </div>
+                  <div class="drop__file" hidden>
+                    <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>
+                    <span class="drop__kind"></span><span class="drop__name"></span>
+                  </div>
+                </div>
+                <p class="hint">PDF or JPG, up to 25 MB.</p>
+                <p class="drop__again" hidden>Wrong file? <button class="link link--btn" type="button" data-upload-pick>upload it again</button></p>
+              </div>
+            </div>
+
+            <!-- Stap 5 — uitbetaling: op welke rekening het geld binnenkomt. -->
+            <div class="card" data-step="5" hidden>
               <h3 class="card__title">Payout account</h3>
               <p class="card__sub">Where your payouts land. The account must be in the name of the business above.</p>
               <div class="field">
@@ -2799,7 +2852,7 @@
             <!-- Stap 6 — twee blokken: de zaak en de persoon erachter. Elk
                  gegeven is hier nog te wijzigen: het potlood klapt hetzelfde
                  vakje open als formulier, zodat je de stap niet terug hoeft. -->
-            <div class="card card--flush" data-step="5" hidden>
+            <div class="card card--flush" data-step="6" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-business">
                 <span class="acct__mark" aria-hidden="true">O</span>
                 <span class="acct__text">
@@ -2998,7 +3051,7 @@
               </div>
             </div>
 
-            <div class="card card--flush" data-step="5" hidden>
+            <div class="card card--flush" data-step="6" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-rep">
                 <span class="acct__mark acct__mark--person" aria-hidden="true">SO</span>
                 <span class="acct__text">
@@ -3109,7 +3162,7 @@
               </div>
             </div>
 
-            <p class="wiz__terms" data-step="5" hidden>
+            <p class="wiz__terms" data-step="6" hidden>
               By using Opining Payments you agree to the <a class="link" href="#">terms of service</a> and <a class="link" href="#">applicable fees</a>.
             </p>
 
@@ -5522,6 +5575,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=216"></script>
+  <script src="app.js?v=217"></script>
 </body>
 </html>

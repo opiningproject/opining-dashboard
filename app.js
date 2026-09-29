@@ -3690,6 +3690,11 @@
       document.querySelectorAll('[data-people="multi"]').forEach(function (kaart) {
         kaart.dataset.off = enkel ? "ja" : "";
       });
+      /* Het UBO-register bestaat alleen voor een rechtspersoon; een
+         eenmanszaak hoeft dat stuk dus niet aan te leveren. */
+      document.querySelectorAll("[data-ubo-doc]").forEach(function (vak) {
+        vak.hidden = enkel;
+      });
     }
 
     rechtsvorm.addEventListener("change", function () {
@@ -3819,6 +3824,85 @@
         rij.remove();
         showToast(naam + " removed");
       }
+    });
+  }
+
+  /* ---- Documenten aanleveren in de onboarding -----------------------------
+     Elk vak met data-upload werkt hetzelfde: slepen of kiezen, daarna zie je
+     welk bestand erin zit en kun je het vervangen. De stand rechtsboven zegt
+     of het stuk er al is. Wat er echt mee gebeurt is iets voor de koppeling
+     met Pay.nl; hier laten we zien hoe het eruitziet. */
+  var uploadVakken = document.querySelectorAll("[data-upload]");
+
+  if (uploadVakken.length) {
+    var UPLOAD_MAX = 25 * 1048576;
+
+    /* De naam die je in stap 1 invult, staat ook bij het stuk dat we van dat
+       bedrijf nodig hebben. */
+    var naamVeld = document.getElementById("biz-name");
+    function zetBedrijfsnaam() {
+      var naam = naamVeld.value.trim() || "your business";
+      document.querySelectorAll("[data-biz-name]").forEach(function (el) {
+        el.textContent = naam;
+      });
+    }
+    naamVeld.addEventListener("input", zetBedrijfsnaam);
+    zetBedrijfsnaam();
+    var UPLOAD_SOORT = /\.(pdf|jpe?g)$/i;
+
+    function uploadToon(vak, bestand) {
+      var zone = vak.querySelector(".drop");
+      var stand = vak.querySelector("[data-upload-status]");
+      vak.querySelector(".drop__empty").hidden = !!bestand;
+      vak.querySelector(".drop__file").hidden = !bestand;
+      vak.querySelector(".drop__again").hidden = !bestand;
+      zone.classList.toggle("drop--filled", !!bestand);
+
+      if (bestand) {
+        var soort = (bestand.name.split(".").pop() || "").toUpperCase();
+        vak.querySelector(".drop__kind").textContent = soort === "JPEG" ? "JPG" : soort;
+        vak.querySelector(".drop__name").textContent = bestand.name;
+        stand.textContent = "Received";
+        stand.className = "badge badge--active";
+      } else {
+        stand.textContent = "Data incomplete";
+        stand.className = "badge badge--pending";
+      }
+      stand.setAttribute("data-upload-status", "");
+      /* Leeg, zodat hetzelfde bestand opnieuw kiezen ook weer iets doet. */
+      vak.querySelector("input").value = "";
+    }
+
+    function uploadNeem(vak, bestand) {
+      if (!bestand) return;
+      if (!UPLOAD_SOORT.test(bestand.name)) {
+        showToast("This file type is not accepted. Use a PDF or JPG.");
+        return;
+      }
+      if (bestand.size > UPLOAD_MAX) {
+        showToast("This file is larger than 25 MB.");
+        return;
+      }
+      uploadToon(vak, bestand);
+      showToast(vak.querySelector(".rev__title").textContent + " uploaded");
+    }
+
+    uploadVakken.forEach(function (vak) {
+      var zone = vak.querySelector(".drop");
+      var kiezer = vak.querySelector("input");
+
+      ["dragenter", "dragover"].forEach(function (t) {
+        zone.addEventListener(t, function (e) { e.preventDefault(); zone.classList.add("is-over"); });
+      });
+      ["dragleave", "drop"].forEach(function (t) {
+        zone.addEventListener(t, function (e) { e.preventDefault(); zone.classList.remove("is-over"); });
+      });
+      zone.addEventListener("drop", function (e) { uploadNeem(vak, e.dataTransfer.files[0]); });
+      kiezer.addEventListener("change", function () { uploadNeem(vak, this.files[0]); });
+
+      vak.addEventListener("click", function (e) {
+        if (e.target.closest("[data-upload-pick]")) kiezer.click();
+      });
     });
   }
 })();

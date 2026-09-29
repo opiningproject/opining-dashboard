@@ -3143,3 +3143,12 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .persform { margin-top: 14px; }
 .persform .card__subtitle { margin-top: 24px; font-size: var(--fs-md); font-weight: 600; }
 .persform .card__subtitle--first { margin-top: 14px; }
+
+/* Een document aanleveren in de onboarding: kader met de naam van het stuk en
+   de stand, en daaronder het vak waar je het bestand in laat vallen. */
+.docup + .docup { margin-top: 14px; }
+.docup .rev__value { margin-bottom: 12px; }
+.docup .drop { margin-top: 0; }
+.docup .hint { margin-top: 8px; }
+.drop__cloud { width: 26px; height: 26px; color: var(--text-muted); }
+.drop__lead { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); text-align: center; }
