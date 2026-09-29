@@ -4115,7 +4115,6 @@
         zetTekst("[data-sign-name]", naam, "");
         zetTekst("[data-sign-date]", naam ? datum : "", "");
         zetTekst("[data-sign-place]", naam ? plaats : "", "");
-        zetTekst("[data-sign-ours]", naam ? datum : "", "");
 
         tekenKnop.hidden = !!naam;
         tekenKlaar.hidden = !naam;
