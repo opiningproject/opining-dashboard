@@ -1940,7 +1940,12 @@
 
     function toonStap(n) {
       stap = Math.min(Math.max(n, 1), wizLaatste);
-      wizStappen.forEach(function (kaart) {
+      /* De samenvatting krijgt een blok per betrokkene uit stap 3; die blokken
+         bestaan pas als je hier komt, dus eerst bijwerken. Dat gebeurt met een
+         bericht, want de betrokkenen worden verderop in dit bestand geregeld. */
+      document.dispatchEvent(new CustomEvent("wiz-stap", { detail: stap }));
+      /* Opnieuw opzoeken: er kunnen blokken bij gekomen zijn. */
+      wiz.querySelectorAll("[data-step]").forEach(function (kaart) {
         var anders = Number(kaart.dataset.step) !== stap;
         /* Van de twee betrokkenen-kaarten hoort er maar een bij de rechtsvorm
            die in stap 1 gekozen is. */
@@ -1958,6 +1963,10 @@
     }
 
     wizVorige.addEventListener("click", function () { toonStap(stap - 1); });
+
+    /* Andersom kan ook: een blok elders vraagt om een stap, bijvoorbeeld het
+       potlood in de samenvatting dat je terugbrengt naar de betrokkenen. */
+    document.addEventListener("wiz-ga", function (e) { toonStap(e.detail); });
     wizVolgende.addEventListener("click", function () {
       if (stap < wizLaatste) { toonStap(stap + 1); return; }
       backFromSub();
@@ -3756,8 +3765,17 @@
       }
       zetUboVelden();
 
+      /* De regel blijft staan waar hij staat: de velden komen eronder, zodat
+         je ziet wie je aan het bewerken bent. De kop in het veldenvak is dan
+         dubbelop, dus die blijft weg. */
       var lees = vak.querySelector(".persrow__read");
-      if (lees) lees.hidden = true;
+      document.getElementById("person-form-title").hidden = !!lees;
+      /* Het potlood is even weg; opslaan of annuleren staat onder de velden. */
+      var pen = lees && lees.querySelector("[data-person-edit]");
+      if (pen) pen.hidden = true;
+      /* Iemand die je zelf bent kun je niet uit de lijst halen. */
+      document.querySelector("[data-person-remove]").hidden =
+        !!(vak.hasAttribute("data-person-self") || vak.hasAttribute("data-person-new"));
       vak.appendChild(persoonVak);
       persoonVak.hidden = false;
       /* De knop eronder is even weg: je bent al met iemand bezig. */
@@ -3765,16 +3783,16 @@
       veld("first").focus();
     }
 
-    /* De velden terug op hun plek en de regel weer in beeld. Een vak dat nog
-       niemand voorstelt verdwijnt helemaal. */
+    /* De velden terug op hun plek en het potlood weer in beeld. Een vak dat
+       nog niemand voorstelt verdwijnt helemaal. */
     function sluitPersoon() {
       persoonVak.hidden = true;
       persoonThuis.insertBefore(persoonVak, persoonAnker);
       if (persoonRij) {
         if (persoonRij.hasAttribute("data-person-new")) persoonRij.remove();
         else {
-          var lees = persoonRij.querySelector(".persrow__read");
-          if (lees) lees.hidden = false;
+          var pen = persoonRij.querySelector("[data-person-edit]");
+          if (pen) pen.hidden = false;
         }
       }
       persoonKnop.hidden = false;
@@ -3792,6 +3810,80 @@
 
     function letters(voor, achter) {
       return ((voor.charAt(0) || "") + (achter.charAt(0) || "")).toUpperCase() || "?";
+    }
+
+    /* ---- Betrokkenen in de samenvatting ------------------------------------
+       Stap 7 toont de vertegenwoordiger van huis uit; iedereen die er in stap 3
+       bij komt krijgt daaronder een eigen blok, in dezelfde stijl. Ze worden
+       opnieuw opgebouwd zodra je de stap opent, dus ze lopen nooit achter op
+       de lijst. */
+    function tekstDatum(waarde) {
+      var d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(waarde || "");
+      return d ? d[3] + "-" + d[2] + "-" + d[1] : (waarde || "");
+    }
+
+    function zetOverzichtPersonen() {
+      var terms = document.querySelector(".wiz__terms");
+      if (!terms) return;
+      terms.parentNode.querySelectorAll("[data-review-person]").forEach(function (oud) {
+        oud.remove();
+      });
+      /* De eenmanszaak heeft geen lijst met betrokkenen. */
+      if (alleenEigenaar()) return;
+
+      lijst.querySelectorAll("[data-person]").forEach(function (vak, i) {
+        if (vak.hasAttribute("data-person-self") || vak.hasAttribute("data-person-new")) return;
+        var g = vak.dataset;
+        var naam = g.personName || "";
+        var kaart = document.createElement("div");
+        var id = "review-person-" + (i + 1);
+        kaart.className = "card card--flush";
+        kaart.setAttribute("data-step", "7");
+        kaart.setAttribute("data-review-person", "");
+        kaart.hidden = true;
+        kaart.innerHTML =
+          '<button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="' + id + '">' +
+            '<span class="acct__mark acct__mark--person" aria-hidden="true"></span>' +
+            '<span class="acct__text"><span class="acct__name"></span>' +
+            '<span class="acct__role"></span></span>' +
+            '<span class="badge badge--active u-normal">Ready to submit</span>' +
+            '<span class="badge badge--muted u-update">Done</span>' +
+            '<svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>' +
+          '</button>' +
+          '<div class="acct" id="' + id + '"><div class="rev"><div class="rev__head">' +
+            '<h4 class="rev__title">Review</h4>' +
+            '<button class="icon-btn rev__pen" type="button" data-review-edit>' +
+              '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>' +
+          '</div><div class="rev__read">' +
+            '<div class="rev__line"><svg class="icon rev__icon" aria-hidden="true"><use href="#i-customers"/></svg>' +
+              '<span class="rev__text"><b data-r-naam></b><span data-r-persoon></span></span></div>' +
+            '<div class="rev__line"><svg class="icon rev__icon" aria-hidden="true"><use href="#i-pin"/></svg>' +
+              '<span class="rev__text"><b>Residential address</b><span data-r-adres></span></span></div>' +
+          '</div></div></div>';
+
+        kaart.querySelector(".acct__mark").textContent =
+          letters(g.personFirst || "", g.personLast || "");
+        kaart.querySelector(".acct__name").textContent = naam;
+        kaart.querySelector(".acct__role").textContent =
+          persoonRegel(g.personUbo, g.personPct, g.personSign);
+        kaart.querySelector(".rev__pen").setAttribute("aria-label", "Edit " + naam);
+        kaart.querySelector("[data-r-naam]").textContent = naam;
+        kaart.querySelector("[data-r-persoon]").textContent =
+          [tekstDatum(g.personDob), g.personNat].filter(Boolean).join(" · ");
+        kaart.querySelector("[data-r-adres]").textContent =
+          [[g.personStreet, g.personNr].filter(Boolean).join(" "),
+           [g.personZip, g.personCity].filter(Boolean).join(" "),
+           g.personCountry].filter(Boolean).join(", ");
+        /* Het potlood brengt je terug naar stap 3, bij die persoon. De wizard
+           luistert naar dit bericht; die code staat elders in dit bestand. */
+        kaart.querySelector("[data-review-edit]").addEventListener("click", function () {
+          document.dispatchEvent(new CustomEvent("wiz-ga", { detail: 3 }));
+          openPersoon(vak);
+          vak.scrollIntoView({ block: "center" });
+        });
+
+        terms.parentNode.insertBefore(kaart, terms);
+      });
     }
 
     document.getElementById("person-save").addEventListener("click", function () {
@@ -3813,15 +3905,8 @@
           '<span class="row__text"><span class="row__title"></span>' +
           '<span class="row__meta" data-person-meta></span></span>' +
           '<span class="badge badge--pending" data-person-status>Identification required</span>' +
-          '<span class="sort row__menu">' +
-            '<button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false">' +
-              '<svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>' +
-            '<div class="sort__menu sort__menu--kort" role="menu" hidden>' +
-              '<button class="sort__item" type="button" role="menuitem" data-person-edit>Edit</button>' +
-              '<button class="sort__item" type="button" role="menuitem" data-person-remove>Remove</button>' +
-            '</div>' +
-          '</span>';
-        lees.hidden = true;
+          '<button class="icon-btn rev__pen" type="button" data-person-edit hidden>' +
+            '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>';
         vak.insertBefore(lees, vak.firstChild);
       }
 
@@ -3830,21 +3915,19 @@
       });
       vak.dataset.personName = voor + " " + achter;
       lees.querySelector(".acct__mark").textContent = letters(voor, achter);
-      /* De naam staat als tekst vooraan, met eventueel het label "you" erachter;
-         dat label hoort te blijven staan. */
-      var titel = lees.querySelector(".row__title");
-      var pil = titel.querySelector(".pill");
-      titel.textContent = voor + " " + achter + " ";
-      if (pil) titel.appendChild(pil);
+      lees.querySelector(".row__title").textContent = voor + " " + achter;
       lees.querySelector("[data-person-meta]").textContent =
         persoonRegel(veld("ubo").value, veld("pct").value, veld("sign").value);
-      lees.querySelector(".sort__btn").setAttribute("aria-label", "Actions for " + voor + " " + achter);
+      lees.querySelector("[data-person-edit]").setAttribute("aria-label", "Edit " + voor + " " + achter);
 
       /* Het vak stelt nu iemand voor; sluiten mag het niet meer weggooien. */
       vak.removeAttribute("data-person-new");
       sluitPersoon();
       showToast(nieuw ? voor + " " + achter + " added" : "Details saved");
     });
+
+    /* De samenvatting bijwerken zodra de wizard een stap laat zien. */
+    document.addEventListener("wiz-stap", zetOverzichtPersonen);
 
     document.addEventListener("click", function (e) {
       if (e.target.closest("[data-person-add]")) { openPersoon(null); return; }
@@ -3853,9 +3936,11 @@
       if (wijzig) { openPersoon(wijzig.closest("[data-person]")); return; }
       var weg = e.target.closest("[data-person-remove]");
       if (weg) {
-        var rij = weg.closest("[data-person]");
-        var naam = rij.dataset.personName;
-        rij.remove();
+        var vak = weg.closest("[data-person]");
+        var naam = vak.dataset.personName;
+        /* Eerst de velden terug op hun plek, anders verdwijnen ze mee. */
+        sluitPersoon();
+        vak.remove();
         showToast(naam + " removed");
       }
     });

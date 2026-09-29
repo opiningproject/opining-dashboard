@@ -3152,6 +3152,12 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .persrow__read { padding: 14px 16px; }
 .persrow > .persform { margin-top: 0; padding: 14px 16px; }
 .persrow > .persform > .rev__head { margin-bottom: 4px; }
+/* De regel blijft staan terwijl je bewerkt; een lijn scheidt hem van de
+   velden eronder. */
+.persrow__read + .persform { border-top: 1px solid var(--border); }
+/* Weghalen staat links, los van de twee knoppen rechts. */
+.persform__acts { align-items: center; }
+.persform__remove { color: var(--danger); margin-right: auto; }
 
 /* Een document aanleveren in de onboarding: kader met de naam van het stuk en
    de stand, en daaronder het vak waar je het bestand in laat vallen. */

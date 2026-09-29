@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=220" />
+  <link rel="stylesheet" href="styles.css?v=222" />
 </head>
 <body>
 
@@ -2497,18 +2497,13 @@
                   <div class="row row--static persrow__read">
                     <span class="acct__mark acct__mark--person" aria-hidden="true">SO</span>
                     <span class="row__text">
-                      <span class="row__title">Serdar Orman <span class="pill">you</span></span>
+                      <span class="row__title">Serdar Orman</span>
                       <span class="row__meta" data-person-meta>Authorised to sign on their own &middot; 0% financial interest</span>
                     </span>
                     <span class="badge badge--pending" data-person-status>Identification required</span>
-                    <span class="sort row__menu">
-                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Serdar Orman">
-                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
-                      </button>
-                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
-                        <button class="sort__item" type="button" role="menuitem" data-person-edit>Edit</button>
-                      </div>
-                    </span>
+                    <button class="icon-btn rev__pen" type="button" data-person-edit aria-label="Edit Serdar Orman">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2673,7 +2668,10 @@
                   </label>
                 </fieldset>
 
-                <div class="rev__acts">
+                <div class="rev__acts persform__acts">
+                  <!-- Weghalen staat links, bij de betrokkene zelf; jezelf uit
+                       de lijst halen kan niet. -->
+                  <button class="link link--btn persform__remove" type="button" data-person-remove hidden>Remove this person</button>
                   <button class="btn btn--ghost btn--sm" type="button" data-person-cancel>Cancel</button>
                   <button class="btn btn--primary btn--sm" type="button" id="person-save">Save</button>
                 </div>
@@ -5657,6 +5655,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=220"></script>
+  <script src="app.js?v=222"></script>
 </body>
 </html>
