@@ -4120,7 +4120,7 @@
 
     function zetTekenKlaar() {
       /* Is er al getekend, dan staat de knop er niet meer. */
-      if (!tekenKnop || tekenKnop.hidden) return;
+      if (!tekenKnop || (tekenWerk && tekenWerk.hidden)) return;
       var mag = tekenMag();
       tekenKnop.disabled = !mag;
       var uitleg = document.querySelector(".signbar__note");
@@ -4128,9 +4128,11 @@
     }
 
     if (tekenKnop) {
-      var tekenKlaar = document.querySelector(".signbar__done");
-      var tekenNote = document.querySelector(".signbar__note");
+      var tekenWerk = document.querySelector(".signwork");
+      var tekenGedaan = document.querySelector("[data-sign-done]");
+      var tekenLead = document.querySelector("[data-sign-lead]");
       var merk = contract.querySelector("[data-sign-mark]");
+      var leadOpen = tekenLead.textContent;
 
       function zetHandtekening(naam) {
         var datum = vandaag();
@@ -4141,12 +4143,16 @@
         zetTekst("[data-sign-date]", naam ? datum : "", "");
         zetTekst("[data-sign-place]", naam ? plaats : "", "");
 
-        tekenKnop.hidden = !!naam;
-        tekenKlaar.hidden = !naam;
-        tekenNote.hidden = true;
+        /* Getekend is klaar: het invulwerk gaat dicht en er blijft een regel
+           over die zegt dat het stuk de deur uit is. */
+        tekenWerk.hidden = !!naam;
+        tekenGedaan.hidden = !naam;
+        tekenLead.textContent = naam
+          ? "The agreement has been signed and sent. We check it and let you know as soon as it is approved."
+          : leadOpen;
         if (naam) {
-          tekenKlaar.querySelector("[data-signed-who]").textContent = naam;
-          tekenKlaar.querySelector("[data-signed-when]").textContent = datum;
+          tekenGedaan.querySelector("[data-signed-who]").textContent = naam;
+          tekenGedaan.querySelector("[data-signed-when]").textContent = datum;
         }
         /* Zolang er getekend is hoort de naam niet meer te veranderen. */
         tekenNaam.readOnly = !!naam;
@@ -4156,9 +4162,7 @@
       tekenKnop.addEventListener("click", function () {
         if (!tekenMag()) return;
         zetHandtekening(tekenNaam.value.trim());
-        /* Meteen laten zien waar de handtekening terechtkwam. */
-        contract.scrollTop = contract.scrollHeight;
-        showToast("Agreement signed");
+        showToast("Agreement signed and sent");
       });
 
       document.getElementById("sign-undo").addEventListener("click", function () {
