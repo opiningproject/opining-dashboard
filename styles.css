@@ -3122,3 +3122,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .tcol { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .tcol .label { margin: 0; }
 .tcol .time { width: 100%; min-width: 0; max-width: 100%; }
+
+/* Niet elk veld is verplicht; dat ene zegt het zelf, in plaats van sterretjes
+   bij alle andere. */
+.label__opt { margin-left: 6px; font-weight: 400; color: var(--text-muted); }
+/* Straat en huisnummer: de straat krijgt de ruimte, het nummer is kort. */
+.field-row--street { grid-template-columns: minmax(0, 1fr) 120px; }

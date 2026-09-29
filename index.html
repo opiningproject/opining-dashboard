@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=209" />
+  <link rel="stylesheet" href="styles.css?v=210" />
 </head>
 <body>
 
@@ -2298,113 +2298,74 @@
         <section class="view" data-set-sub="payments-setup" hidden>
           <div class="wiz" id="pay-wiz">
             <div class="wiz__head">
-              <p class="wiz__count">Step <b id="wiz-now">1</b> of <span id="wiz-total">6</span></p>
-              <div class="wiz__track" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" aria-label="Setup progress">
+              <p class="wiz__count">Step <b id="wiz-now">1</b> of <span id="wiz-total">5</span></p>
+              <div class="wiz__track" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" aria-label="Setup progress">
                 <span id="wiz-bar"></span>
               </div>
             </div>
 
-            <!-- Stap 1 -->
+            <!-- Stap 1 — bedrijfsgegevens. Volgt de onboarding van Pay.nl: één
+                 scherm met wie je bent bij de Kamer van Koophandel en waar je
+                 staat ingeschreven. -->
             <div class="card" data-step="1">
-              <fieldset class="choices choices--rich">
-                <legend class="card__title">I am running my store as:</legend>
-                <label class="choice choice--rich">
-                  <input type="radio" name="entity" value="business" checked />
-                  <span class="choice__body">
-                    <span class="choice__title">A registered business</span>
-                    <span class="choice__desc">I have a business that will own this store and is registered with the government of the Netherlands.</span>
-                    <label class="sr-only" for="entity-type">Business type</label>
-                    <select class="input choice__control" id="entity-type">
-                      <option>Sole proprietorship (including individuals with KVK)</option>
-                      <option>Private limited company (BV)</option>
-                      <option>General partnership (VOF)</option>
-                      <option>Partnership (maatschap)</option>
-                    </select>
-                  </span>
-                </label>
-                <label class="choice choice--rich">
-                  <input type="radio" name="entity" value="nonprofit" />
-                  <span class="choice__body">
-                    <span class="choice__title">A non-profit</span>
-                    <span class="choice__desc">I have a non-profit entity that will own this store and is registered with the government of the Netherlands.</span>
-                  </span>
-                </label>
-              </fieldset>
-            </div>
-
-            <!-- Stap 2 -->
-            <div class="card" data-step="2" hidden>
-              <h3 class="card__title">Business details</h3>
-              <div class="field">
-                <span class="label label--info">
-                  <label for="biz-name">Registered name</label>
-                  <!-- De naam moet letterlijk kloppen met het handelsregister;
-                       dat is niet vanzelfsprekend, dus staat het erbij. -->
-                  <span class="explain">
-                    <button class="explain__icon" type="button" aria-label="What is a registered name?" aria-describedby="explain-biz-name">
-                      <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-                    </button>
-                    <span class="explain__pop" id="explain-biz-name" role="tooltip">
-                      <b>Registered name</b>
-                      The name your business is filed under at the Chamber of Commerce. Your trade name can be different, but the registry checks this one.
-                    </span>
-                  </span>
-                </span>
-                <input class="input" id="biz-name" type="text" />
-                <p class="hint">The official registered name of your company.</p>
-              </div>
+              <h3 class="card__title">We need a few more details about your business</h3>
 
               <div class="field">
-                <label class="label" for="biz-kvk">Chamber of Commerce registration number (KVK)</label>
-                <input class="input" id="biz-kvk" type="text" inputmode="numeric" maxlength="8" />
-                <p class="hint">8 digits</p>
-              </div>
-
-              <div class="field">
-                <label class="label" for="biz-vat">VAT number</label>
-                <input class="input" id="biz-vat" type="text" />
-                <p class="hint">Format: NL123456789B01</p>
-              </div>
-
-              <div class="field">
-                <label class="label" for="biz-phone">Phone number</label>
-                <!-- Landnummer en nummer horen bij elkaar, dus staan ze in
-                     één vak naast elkaar in plaats van als twee velden. -->
-                <div class="phone">
-                  <label class="sr-only" for="biz-dial">Country calling code</label>
-                  <select class="input phone__code" id="biz-dial">
-                    <option>NL +31</option>
-                    <option>BE +32</option>
-                    <option>DE +49</option>
-                  </select>
-                  <input class="input phone__nr" id="biz-phone" type="tel" placeholder="6 14522453" autocomplete="tel-national" />
-                </div>
-              </div>
-
-              <h4 class="card__subtitle">Business address</h4>
-              <p class="card__sub">Enter the legally registered business address.</p>
-
-              <div class="field">
-                <label class="label" for="biz-country">Country/region</label>
-                <!-- Vast op Nederland: we werken hier nog niet buiten. -->
-                <select class="input" id="biz-country" disabled>
-                  <option>Netherlands</option>
+                <label class="label" for="biz-country">In which country is your business registered?</label>
+                <select class="input" id="biz-country">
+                  <option selected>Netherlands</option>
+                  <option>Belgium</option>
+                  <option>Germany</option>
                 </select>
               </div>
 
               <div class="field">
-                <label class="label" for="biz-street">Street and house number</label>
-                <span class="infield">
-                  <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                  <input class="input infield__input" id="biz-street" type="text" autocomplete="street-address"
-                         data-lookup data-lookup-zip="biz-zip" data-lookup-city="biz-city" data-lookup-note="biz-street-note" />
-                </span>
-                <p class="hint" id="biz-street-note" hidden></p>
+                <label class="label" for="biz-name">What is your business name?</label>
+                <input class="input" id="biz-name" type="text" autocomplete="organization" />
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="biz-kvk">Chamber of Commerce number (KVK)</label>
+                  <input class="input" id="biz-kvk" type="text" inputmode="numeric" maxlength="8" />
+                </div>
+                <div class="field">
+                  <label class="label" for="biz-vat">VAT number <span class="label__opt">optional</span></label>
+                  <input class="input" id="biz-vat" type="text" />
+                </div>
               </div>
 
               <div class="field">
-                <label class="label" for="biz-extra">Apartment, suite, etc</label>
-                <input class="input" id="biz-extra" type="text" autocomplete="address-line2" />
+                <label class="label" for="biz-legal">What is the legal form of your business?</label>
+                <select class="input" id="biz-legal">
+                  <option value="">Select&hellip;</option>
+                  <option>Sole proprietorship (eenmanszaak)</option>
+                  <option selected>Private limited company (BV)</option>
+                  <option>General partnership (VOF)</option>
+                  <option>Limited partnership (CV)</option>
+                  <option>Partnership (maatschap)</option>
+                  <option>Foundation (stichting)</option>
+                  <option>Association (vereniging)</option>
+                </select>
+              </div>
+
+              <h4 class="card__subtitle">Which address belongs to your business?</h4>
+              <!-- Straat en huisnummer staan apart, zoals in het handelsregister.
+                   Typen in de straat vult postcode en plaats vanzelf. -->
+              <div class="field-row field-row--street">
+                <div class="field">
+                  <label class="label" for="biz-street">Street</label>
+                  <span class="infield">
+                    <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                    <input class="input infield__input" id="biz-street" type="text" autocomplete="address-line1"
+                           data-lookup data-lookup-zip="biz-zip" data-lookup-city="biz-city" data-lookup-note="biz-street-note" />
+                  </span>
+                  <p class="hint" id="biz-street-note" hidden></p>
+                </div>
+                <div class="field">
+                  <label class="label" for="biz-nr">Number</label>
+                  <input class="input" id="biz-nr" type="text" autocomplete="address-line2" />
+                </div>
               </div>
 
               <div class="field-row">
@@ -2417,11 +2378,20 @@
                   <input class="input" id="biz-city" type="text" autocomplete="address-level2" />
                 </div>
               </div>
+
+              <div class="field">
+                <label class="label" for="biz-addr-country">Country</label>
+                <select class="input" id="biz-addr-country">
+                  <option selected>Netherlands</option>
+                  <option>Belgium</option>
+                  <option>Germany</option>
+                </select>
+              </div>
             </div>
 
             <!-- Stap 3 — twee kaarten, één stap: allebei gaan ze over hoe je
                  zaak bij de bank en de kaartmaatschappij bekend staat. -->
-            <div class="card" data-step="3" hidden>
+            <div class="card" data-step="2" hidden>
               <h3 class="card__title">Industry type</h3>
               <div class="field">
                 <label class="label" for="biz-industry">Category</label>
@@ -2437,7 +2407,7 @@
               </div>
             </div>
 
-            <div class="card" data-step="3" hidden>
+            <div class="card" data-step="2" hidden>
               <h3 class="card__title">Details in customer bank statement</h3>
               <p class="card__sub">Your customers see these details on their statement, so they recognise the charge.</p>
               <div class="field">
@@ -2460,7 +2430,7 @@
             </div>
 
             <!-- Stap 4 -->
-            <div class="card" data-step="4" hidden>
+            <div class="card" data-step="3" hidden>
               <h3 class="card__title">Account representative</h3>
               <p class="card__sub">The account representative needs to be the owner of the business.</p>
               <div class="field-row">
@@ -2563,7 +2533,7 @@
             </div>
 
             <!-- Stap 5 -->
-            <div class="card" data-step="5" hidden>
+            <div class="card" data-step="4" hidden>
               <h3 class="card__title">Payout account</h3>
               <p class="card__sub">Where your payouts land. The account must be in the name of the business above.</p>
               <div class="field">
@@ -2580,7 +2550,7 @@
             <!-- Stap 6 — twee blokken: de zaak en de persoon erachter. Elk
                  gegeven is hier nog te wijzigen: het potlood klapt hetzelfde
                  vakje open als formulier, zodat je de stap niet terug hoeft. -->
-            <div class="card card--flush" data-step="6" hidden>
+            <div class="card card--flush" data-step="5" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-business">
                 <span class="acct__mark" aria-hidden="true">O</span>
                 <span class="acct__text">
@@ -2779,7 +2749,7 @@
               </div>
             </div>
 
-            <div class="card card--flush" data-step="6" hidden>
+            <div class="card card--flush" data-step="5" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-rep">
                 <span class="acct__mark acct__mark--person" aria-hidden="true">SO</span>
                 <span class="acct__text">
@@ -2890,7 +2860,7 @@
               </div>
             </div>
 
-            <p class="wiz__terms" data-step="6" hidden>
+            <p class="wiz__terms" data-step="5" hidden>
               By using Opining Payments you agree to the <a class="link" href="#">terms of service</a> and <a class="link" href="#">applicable fees</a>.
             </p>
 
@@ -5332,6 +5302,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=209"></script>
+  <script src="app.js?v=210"></script>
 </body>
 </html>

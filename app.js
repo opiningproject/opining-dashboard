@@ -1979,16 +1979,6 @@
       if (bewaar) { zetRev(bewaar.closest(".rev"), false); showToast("Changes saved"); }
     });
 
-    /* Het keuzeveld hoort bij één optie; bij de andere keuze is het niet van
-       toepassing en dus uitgeschakeld. */
-    wiz.addEventListener("change", function (e) {
-      if (e.target.name !== "entity") return;
-      wiz.querySelectorAll(".choice--rich").forEach(function (keuze) {
-        var control = keuze.querySelector(".choice__control");
-        if (control) control.disabled = !keuze.querySelector("input").checked;
-      });
-    });
-
     resetWiz = toonStap;
     toonStap(1);
   }
@@ -2473,8 +2463,9 @@
     "oudegracht": { post: "3511 AR", plaats: "Utrecht" }
   };
 
-  /* "Lusthofstraat 27A" -> "lusthofstraat". Het huisnummer bepaalt bij ons
-     niets, dus dat gaat eraf. */
+  /* "Lusthofstraat 27A" -> "lusthofstraat". Het huisnummer staat tegenwoordig
+     in een eigen veld, maar wie het toch achter de straat typt krijgt
+     hetzelfde resultaat. */
   function straatNaam(waarde) {
     return waarde.toLowerCase().replace(/\s*\d.*$/, "").trim();
   }
@@ -2486,15 +2477,15 @@
     var post = document.getElementById(veld.dataset.lookupZip);
     var plaats = document.getElementById(veld.dataset.lookupCity);
     var notitie = document.getElementById(veld.dataset.lookupNote);
-    var waarde = veld.value.trim();
-    /* Zonder huisnummer is het adres nog niet af; dan zoeken we nog niet. */
-    var af = /\d/.test(waarde);
-    var gevonden = af ? ADRESSEN[straatNaam(waarde)] : null;
+    var naam = straatNaam(veld.value.trim());
+    /* Bij twee letters valt er nog niets te zoeken; dan zwijgen we. */
+    var af = naam.length > 2;
+    var gevonden = af ? ADRESSEN[naam] : null;
 
     if (gevonden) {
       post.value = gevonden.post;
       plaats.value = gevonden.plaats;
-    } else if (!waarde) {
+    } else if (!naam) {
       post.value = "";
       plaats.value = "";
     }
@@ -2504,7 +2495,7 @@
       notitie.textContent = "Postal code and city found.";
       notitie.hidden = false;
     } else if (af) {
-      notitie.textContent = "We could not find this address. Fill in the postal code and city yourself.";
+      notitie.textContent = "We could not find this street. Fill in the postal code and city yourself.";
       notitie.hidden = false;
     } else {
       notitie.hidden = true;
