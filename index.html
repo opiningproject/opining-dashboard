@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=210" />
+  <link rel="stylesheet" href="styles.css?v=211" />
 </head>
 <body>
 
@@ -2389,43 +2389,76 @@
               </div>
             </div>
 
-            <!-- Stap 3 — twee kaarten, één stap: allebei gaan ze over hoe je
-                 zaak bij de bank en de kaartmaatschappij bekend staat. -->
+            <!-- Stap 2 — activiteiten. Pay.nl wil weten in welke hoek je zit en
+                 wat je precies verkoopt; die twee bepalen welke betaalmethodes
+                 en tarieven mogen. De lijst volgt hun categorieën. -->
             <div class="card" data-step="2" hidden>
-              <h3 class="card__title">Industry type</h3>
+              <h3 class="card__title">Tell us a bit more about your business</h3>
+
               <div class="field">
-                <label class="label" for="biz-industry">Category</label>
-                <select class="input" id="biz-industry">
-                  <option value="">Select&hellip;</option>
-                  <option>Restaurant</option>
-                  <option>Fast food and takeaway</option>
-                  <option>Caterer</option>
-                  <option>Bakery</option>
-                  <option>Caf&eacute; or bar</option>
-                  <option>Food truck</option>
+                <label class="label" for="act-category">In which category is your business active?</label>
+                <select class="input" id="act-category">
+                  <option>Subscriptions and memberships</option>
+                  <option>Pharmacies</option>
+                  <option>Car and motorcycle parts</option>
+                  <option>Car rental</option>
+                  <option>B2B and wholesale</option>
+                  <option>Baby and kids</option>
+                  <option>Bakeries</option>
+                  <option>Beauty and wellness</option>
+                  <option>Taxes and fines</option>
+                  <option>Top-ups and prepaid credit</option>
+                  <option>Payment services (CPSP or financial institute)</option>
+                  <option>Flowers, plants, garden and tools</option>
+                  <option>Books, magazines and DVDs</option>
+                  <option>C2C payment services</option>
+                  <option>Gift cards and game cards</option>
+                  <option>Gifts and greeting cards</option>
+                  <option>Caterers and meal delivery</option>
+                  <option selected>Cafe, bar, restaurant</option>
+                  <option>CBD</option>
+                  <option>Consultancy</option>
+                  <option>Consumer purchases (average order below 100 euro)</option>
+                  <option>Crowdfunding and peer-to-peer lending</option>
+                  <option>Cryptocurrency</option>
+                  <option>Daily deals</option>
+                  <option>Animals (traders and breeders)</option>
+                  <option>Pet shops</option>
+                  <option>Digital entertainment (chat and flirt)</option>
+                  <option>Digital entertainment (dating)</option>
+                  <option>Digital entertainment (photo, video, live)</option>
+                  <option>Digital entertainment (games and in-game purchases)</option>
+                  <option>Digital services for adults (ads and promotions)</option>
+                  <option>Digital value carriers</option>
+                  <option>Drugstore and health</option>
+                  <option>Education and training</option>
+                  <option>Electronics</option>
+                  <option>Erotic products</option>
+                  <option>Food and drink (bar or cafe)</option>
+                  <option>Events and festivals</option>
+                  <option>Invoicing</option>
+                  <option>Fashion</option>
+                  <option>Bicycle shops</option>
+                  <option>Gadgets</option>
+                  <option>Healthcare and practices</option>
+                  <option>Hotels and accommodation</option>
+                  <option>Home and living</option>
+                  <option>Jewellery and watches</option>
+                  <option>Charities and donations</option>
+                  <option>Sports and fitness</option>
+                  <option>Supermarkets and food retail</option>
+                  <option>Telecom and internet</option>
+                  <option>Tickets and events</option>
+                  <option>Travel and tourism</option>
+                  <option>Transport and taxi</option>
+                  <option>Webshop, other</option>
                 </select>
               </div>
-            </div>
 
-            <div class="card" data-step="2" hidden>
-              <h3 class="card__title">Details in customer bank statement</h3>
-              <p class="card__sub">Your customers see these details on their statement, so they recognise the charge.</p>
               <div class="field">
-                <label class="label" for="stmt-name">Statement descriptor</label>
-                <input class="input" id="stmt-name" type="text" value="OPINING" maxlength="22" />
-                <p class="hint">Up to 22 characters, letters and numbers only.</p>
-              </div>
-              <div class="field">
-                <label class="label" for="stmt-phone">Store phone number</label>
-                <div class="phone">
-                  <label class="sr-only" for="stmt-dial">Country calling code</label>
-                  <select class="input phone__code" id="stmt-dial">
-                    <option>NL +31</option>
-                    <option>BE +32</option>
-                    <option>DE +49</option>
-                  </select>
-                  <input class="input phone__nr" id="stmt-phone" type="tel" value="6 14522453" autocomplete="tel-national" />
-                </div>
+                <label class="label" for="act-desc">What are your main trade activities?</label>
+                <textarea class="input" id="act-desc" rows="3">Selling restaurant food for everyone. We are open 7 days a week.</textarea>
+                <p class="hint">In your own words: what do you sell, and to whom?</p>
               </div>
             </div>
 
@@ -5302,6 +5335,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=210"></script>
+  <script src="app.js?v=211"></script>
 </body>
 </html>
