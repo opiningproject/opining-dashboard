@@ -3213,3 +3213,44 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Legitimatie: de keuze bepaalt of er een achterkant bij hoort. */
 .choices--id { margin-top: 22px; }
 .choices--id > .label { margin-bottom: 4px; }
+
+/* Het slotblok van het contract: twee kolommen, elk met een handtekening en
+   de drie gegevens eronder. Zolang er niet getekend is staan er stippellijnen,
+   net als op het papieren stuk. */
+.sign { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 16px; }
+.sign__col { display: flex; flex-direction: column; min-width: 0; }
+.sign__who { font-style: italic; color: var(--text-muted); }
+/* De handtekening zelf: een schrijfletter, iets scheef, op de lijn. */
+.sign__mark {
+  min-height: 46px;
+  margin-top: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--gray-300);
+  font-family: "Segoe Script", "Bradley Hand", "Brush Script MT", "Apple Chancery", cursive;
+  font-size: 22px;
+  line-height: 42px;
+  color: var(--text-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  transform: rotate(-1.5deg);
+  transform-origin: left bottom;
+}
+.sign__mark[hidden] { display: block; visibility: hidden; }
+.sign__facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 10px; margin-top: 12px; }
+.sign__facts dt { font-style: italic; color: var(--text-muted); }
+.sign__facts dd {
+  min-width: 0;
+  border-bottom: 1px dotted var(--gray-400);
+  color: var(--text-strong);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* De knop waarmee je tekent, met de bevestiging ernaast. */
+.signbar { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 20px; }
+.signbar__done { display: flex; align-items: center; gap: 8px; font-size: var(--fs-md); color: var(--text-muted); }
+.signbar__done .icon { width: 18px; height: 18px; color: var(--success); }
+.signbar__done b { font-weight: 600; color: var(--text-strong); }
+
+@media (max-width: 599px) {
+  .sign { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+}

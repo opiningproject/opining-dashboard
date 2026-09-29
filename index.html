@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=223" />
+  <link rel="stylesheet" href="styles.css?v=224" />
 </head>
 <body>
 
@@ -2927,6 +2927,31 @@
                 <p class="contract__p"><span class="contract__nr">1.3</span> The fees for the subscription and for payment acceptance are the fees shown in the dashboard at the time this agreement is signed.</p>
                 <p class="contract__p"><span class="contract__nr">1.4</span> Merchant declares to have read and accepted the general terms and conditions of Opining, and waives the applicability of its own terms.</p>
                 <p class="contract__p"><span class="contract__nr">1.5</span> Payments collected for Merchant are paid out in full to the business bank account registered in the dashboard, held with a financial institution within the EU (SEPA).</p>
+
+                <!-- Het slotblok van het contract. De kant van Opining staat
+                     er al; de kant van de ondernemer wordt ingevuld door de
+                     knop onder de stap, zodat hij niets hoeft over te typen. -->
+                <h5 class="contract__sub">Read and agreed</h5>
+                <div class="sign">
+                  <div class="sign__col" data-sign-side="merchant">
+                    <span class="sign__who">Merchant</span>
+                    <span class="sign__mark" data-sign-mark hidden></span>
+                    <dl class="sign__facts">
+                      <dt>Name</dt><dd data-sign-name></dd>
+                      <dt>Date</dt><dd data-sign-date></dd>
+                      <dt>Place</dt><dd data-sign-place></dd>
+                    </dl>
+                  </div>
+                  <div class="sign__col">
+                    <span class="sign__who">Opining</span>
+                    <span class="sign__mark">Opining B.V.</span>
+                    <dl class="sign__facts">
+                      <dt>Name</dt><dd>O. W. H. Kok</dd>
+                      <dt>Date</dt><dd data-sign-ours></dd>
+                      <dt>Place</dt><dd>Rotterdam</dd>
+                    </dl>
+                  </div>
+                </div>
               </div>
               <p class="contract__foot">
                 <a class="link agreement" href="#">
@@ -3002,6 +3027,18 @@
                   </span>
                 </span>
                 <input class="input" id="sign-name" type="text" autocomplete="name" />
+                <p class="hint">Your name is placed under the agreement as your signature.</p>
+              </div>
+
+              <!-- Tekenen met een knop: de naam hierboven komt onder het
+                   contract te staan, met de datum en de plaats erbij. -->
+              <div class="signbar">
+                <button class="btn btn--primary" type="button" id="sign-go">Sign the agreement</button>
+                <p class="signbar__done" hidden>
+                  <svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>
+                  <span>Signed by <b data-signed-who></b> on <span data-signed-when></span>.</span>
+                  <button class="link link--btn" type="button" id="sign-undo">Undo</button>
+                </p>
               </div>
             </div>
 
@@ -5730,6 +5767,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=223"></script>
+  <script src="app.js?v=224"></script>
 </body>
 </html>

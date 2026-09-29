@@ -4090,6 +4090,58 @@
     });
     zetKanten();
 
+    /* ---- Tekenen met een knop ---------------------------------------------
+       Ondertekenen is een handeling, geen invulveld: je typt je naam en drukt
+       op de knop. Wat je typte komt dan onder het contract te staan, met de
+       datum van vandaag en de plaats uit stap 1 erbij. Ongedaan maken kan,
+       zolang de aanvraag niet de deur uit is. */
+    var tekenKnop = document.getElementById("sign-go");
+
+    function vandaag() {
+      var d = new Date();
+      function twee(n) { return (n < 10 ? "0" : "") + n; }
+      return twee(d.getDate()) + "-" + twee(d.getMonth() + 1) + "-" + d.getFullYear();
+    }
+
+    if (tekenKnop) {
+      var tekenKlaar = document.querySelector(".signbar__done");
+      var merk = contract.querySelector("[data-sign-mark]");
+
+      function zetHandtekening(naam) {
+        var datum = vandaag();
+        var plaats = waarde("biz-city");
+        merk.textContent = naam;
+        merk.hidden = !naam;
+        zetTekst("[data-sign-name]", naam, "");
+        zetTekst("[data-sign-date]", naam ? datum : "", "");
+        zetTekst("[data-sign-place]", naam ? plaats : "", "");
+        zetTekst("[data-sign-ours]", naam ? datum : "", "");
+
+        tekenKnop.hidden = !!naam;
+        tekenKlaar.hidden = !naam;
+        if (naam) {
+          tekenKlaar.querySelector("[data-signed-who]").textContent = naam;
+          tekenKlaar.querySelector("[data-signed-when]").textContent = datum;
+        }
+        /* Zolang er getekend is hoort de naam niet meer te veranderen. */
+        tekenNaam.readOnly = !!naam;
+      }
+
+      tekenKnop.addEventListener("click", function () {
+        var naam = tekenNaam.value.trim();
+        if (!naam) { tekenNaam.focus(); showToast("Fill in the name of the undersigned first"); return; }
+        zetHandtekening(naam);
+        /* Meteen laten zien waar de handtekening terechtkwam. */
+        contract.scrollTop = contract.scrollHeight;
+        showToast("Agreement signed");
+      });
+
+      document.getElementById("sign-undo").addEventListener("click", function () {
+        zetHandtekening("");
+        tekenNaam.focus();
+      });
+    }
+
     /* Bijwerken zodra de wizard een stap laat zien: dan is stap 1 net langs
        geweest en klopt de alinea met wat er staat. */
     document.addEventListener("wiz-stap", vulContract);
