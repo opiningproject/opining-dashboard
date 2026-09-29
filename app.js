@@ -3904,7 +3904,8 @@
           '<span class="acct__mark acct__mark--person" aria-hidden="true"></span>' +
           '<span class="row__text"><span class="row__title"></span>' +
           '<span class="row__meta" data-person-meta></span></span>' +
-          '<span class="badge badge--pending" data-person-status>Identification required</span>' +
+          /* Legitimeren hoeft alleen de eerste betrokkene, degene die de
+             overeenkomst tekent; de rest krijgt dus geen stand mee. */
           '<button class="icon-btn rev__pen" type="button" data-person-edit hidden>' +
             '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>';
         vak.insertBefore(lees, vak.firstChild);
@@ -4023,6 +4024,76 @@
         if (e.target.closest("[data-upload-pick]")) kiezer.click();
       });
     });
+  }
+
+  /* ---- De overeenkomst in stap 6 -------------------------------------------
+     De eerste alinea van het contract is geen vaste tekst: daar staat de zaak
+     in zoals die in stap 1 is ingevuld, met de tekenbevoegde erbij. Zo leest
+     de ondernemer zijn eigen gegevens terug voordat hij tekent. Wat je kiest
+     bij Legitimatie bepaalt of er een achterkant bij hoort; een paspoort heeft
+     er maar een. */
+  var contract = document.querySelector(".contract");
+
+  if (contract) {
+    var tekenNaam = document.getElementById("sign-name");
+
+    function waarde(id) {
+      var el = document.getElementById(id);
+      return el ? el.value.trim() : "";
+    }
+
+    /* De tekenbevoegde: bij een eenmanszaak de eigenaar uit stap 3, anders de
+       eerste betrokkene uit de lijst. */
+    function tekenbevoegde() {
+      var enkel = document.querySelector('[data-people="single"]');
+      if (enkel && enkel.dataset.off !== "ja") {
+        return [waarde("rep-first"), waarde("rep-last")].filter(Boolean).join(" ");
+      }
+      var zelf = document.querySelector("[data-person-self]");
+      return zelf ? (zelf.dataset.personName || "") : "";
+    }
+
+    function zetTekst(kies, tekst, terug) {
+      var el = contract.querySelector(kies);
+      if (el) el.textContent = tekst || terug;
+    }
+
+    function vulContract() {
+      var naam = waarde("biz-name");
+      var stad = waarde("biz-city");
+      var adres = [waarde("biz-street"), waarde("biz-nr")].filter(Boolean).join(" ");
+      var teken = tekenbevoegde();
+
+      zetTekst("[data-ct-name]", naam.toUpperCase(), "YOUR BUSINESS");
+      zetTekst("[data-ct-city]", stad, "your city");
+      zetTekst("[data-ct-address]", [adres, stad].filter(Boolean).join(", "), "your business address");
+      zetTekst("[data-ct-kvk]", waarde("biz-kvk"), "your Chamber of Commerce number");
+      zetTekst("[data-ct-rep]", teken.toUpperCase(), "THE ACCOUNT REPRESENTATIVE");
+
+      /* De naam staat vast zodra je er zelf iets anders neerzet. */
+      if (tekenNaam && !tekenNaam.dataset.getypt) tekenNaam.value = teken;
+    }
+
+    if (tekenNaam) {
+      tekenNaam.addEventListener("input", function () { this.dataset.getypt = "ja"; });
+    }
+
+    /* Een paspoort heeft maar een kant die telt. */
+    function zetKanten() {
+      var paspoort = contract.parentNode.querySelector("[data-id-one]");
+      var achter = contract.parentNode.querySelector('[data-id-side="back"]');
+      if (achter) achter.hidden = !!(paspoort && paspoort.checked);
+    }
+
+    contract.parentNode.querySelectorAll('input[name="id-kind"]').forEach(function (keuze) {
+      keuze.addEventListener("change", zetKanten);
+    });
+    zetKanten();
+
+    /* Bijwerken zodra de wizard een stap laat zien: dan is stap 1 net langs
+       geweest en klopt de alinea met wat er staat. */
+    document.addEventListener("wiz-stap", vulContract);
+    vulContract();
   }
 
   /* ---- Uitbetaalrekening in de onboarding ---------------------------------

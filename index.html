@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=222" />
+  <link rel="stylesheet" href="styles.css?v=223" />
 </head>
 <body>
 
@@ -2497,7 +2497,7 @@
                   <div class="row row--static persrow__read">
                     <span class="acct__mark acct__mark--person" aria-hidden="true">SO</span>
                     <span class="row__text">
-                      <span class="row__title">Serdar Orman</span>
+                      <span class="row__title">Serdar Orman <span class="pill">you</span></span>
                       <span class="row__meta" data-person-meta>Authorised to sign on their own &middot; 0% financial interest</span>
                     </span>
                     <span class="badge badge--pending" data-person-status>Identification required</span>
@@ -2899,25 +2899,60 @@
               </div>
             </div>
 
-            <!-- Stap 6 — de overeenkomst: downloaden, tekenen en terugsturen. -->
+            <!-- Stap 6 — de overeenkomst. De eerste alinea wordt opgemaakt uit
+                 wat er in stap 1 en 3 is ingevuld; daaronder legitimeer je je
+                 en teken je met je naam. -->
             <div class="card" data-step="6" hidden>
               <h3 class="card__title">Almost done. Review and sign the agreement.</h3>
-              <p class="card__sub">The agreement sets out how we do business together. Sign it and you can get started right away.</p>
+              <p class="card__sub">The first section is filled in with the details you entered. Read the agreement, confirm your identity and sign with your name.</p>
 
-              <div class="rev docup" data-upload>
+              <div class="contract" tabindex="0" role="region" aria-label="Cooperation agreement">
+                <h4 class="contract__title">Cooperation agreement</h4>
+                <h5 class="contract__sub">Undersigned</h5>
+                <p class="contract__p">
+                  <b data-ct-name>Your business</b>, established in <span data-ct-city>your city</span>,
+                  <span data-ct-address>your business address</span>, registered in the trade register under
+                  number <span data-ct-kvk>your Chamber of Commerce number</span>, in this matter legally
+                  represented by <span data-ct-rep>the account representative</span>, hereinafter referred to
+                  as &ldquo;Merchant&rdquo;;
+                </p>
+                <p class="contract__p">&amp;</p>
+                <p class="contract__p">
+                  Opining B.V., established in Rotterdam, registered in the trade register under number
+                  77851595, hereinafter referred to as &ldquo;Opining&rdquo;;
+                </p>
+                <h5 class="contract__sub">Declare to have agreed as follows</h5>
+                <p class="contract__p"><span class="contract__nr">1.1</span> Opining provides Merchant with the ordering platform and, through its payment service provider, the acceptance of online payments for an indefinite term.</p>
+                <p class="contract__p"><span class="contract__nr">1.2</span> Merchant may end this agreement at any time, without a notice period, from the settings in the Opining dashboard.</p>
+                <p class="contract__p"><span class="contract__nr">1.3</span> The fees for the subscription and for payment acceptance are the fees shown in the dashboard at the time this agreement is signed.</p>
+                <p class="contract__p"><span class="contract__nr">1.4</span> Merchant declares to have read and accepted the general terms and conditions of Opining, and waives the applicability of its own terms.</p>
+                <p class="contract__p"><span class="contract__nr">1.5</span> Payments collected for Merchant are paid out in full to the business bank account registered in the dashboard, held with a financial institution within the EU (SEPA).</p>
+              </div>
+              <p class="contract__foot">
+                <a class="link agreement" href="#">
+                  <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>Download the agreement (PDF)
+                </a>
+              </p>
+
+              <fieldset class="choices choices--id">
+                <legend class="label">Identification</legend>
+                <label class="choice"><input type="radio" name="id-kind" value="passport" data-id-one /><span>Passport</span></label>
+                <label class="choice"><input type="radio" name="id-kind" value="id-card" checked /><span>Identity card</span></label>
+                <label class="choice"><input type="radio" name="id-kind" value="licence" /><span>Driving licence (Dutch only)</span></label>
+                <label class="choice"><input type="radio" name="id-kind" value="permit" /><span>Residence permit</span></label>
+              </fieldset>
+
+              <div class="rev docup" data-upload data-id-side="front">
                 <div class="rev__head">
-                  <a class="link agreement" href="#">
-                    <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>Download and sign the agreement
-                  </a>
+                  <h4 class="rev__title">Front</h4>
                   <span class="badge badge--pending" data-upload-status>Data incomplete</span>
                 </div>
-                <p class="rev__value">By signing, the authorised representative agrees to the agreement and confirms they may sign on behalf of the business.</p>
-                <h4 class="rev__title agreement__label">Signed agreement</h4>
+                <p class="rev__value">The side with your photo, in one clear picture.</p>
                 <div class="drop drop--doc">
-                  <input type="file" accept=".pdf,.jpg,.jpeg" hidden aria-label="Signed agreement" />
+                  <input type="file" accept=".pdf,.jpg,.jpeg" hidden aria-label="Front of your identity document" />
                   <div class="drop__empty">
                     <svg class="icon drop__cloud" aria-hidden="true"><use href="#i-upload"/></svg>
-                    <p class="drop__lead">Upload the signed agreement here</p>
+                    <p class="drop__lead">Upload the front here</p>
                     <p class="drop__hint">Drag the file here, or <button class="link link--btn" type="button" data-upload-pick>select a file</button>.</p>
                   </div>
                   <div class="drop__file" hidden>
@@ -2928,9 +2963,49 @@
                 <p class="hint">PDF or JPG, up to 25 MB.</p>
                 <p class="drop__again" hidden>Wrong file? <button class="link link--btn" type="button" data-upload-pick>upload it again</button></p>
               </div>
+
+              <!-- Een paspoort heeft maar een kant die telt; bij de andere
+                   stukken hoort de achterkant er wel bij. -->
+              <div class="rev docup" data-upload data-id-side="back">
+                <div class="rev__head">
+                  <h4 class="rev__title">Back</h4>
+                  <span class="badge badge--pending" data-upload-status>Data incomplete</span>
+                </div>
+                <p class="rev__value">The other side of the same document.</p>
+                <div class="drop drop--doc">
+                  <input type="file" accept=".pdf,.jpg,.jpeg" hidden aria-label="Back of your identity document" />
+                  <div class="drop__empty">
+                    <svg class="icon drop__cloud" aria-hidden="true"><use href="#i-upload"/></svg>
+                    <p class="drop__lead">Upload the back here</p>
+                    <p class="drop__hint">Drag the file here, or <button class="link link--btn" type="button" data-upload-pick>select a file</button>.</p>
+                  </div>
+                  <div class="drop__file" hidden>
+                    <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>
+                    <span class="drop__kind"></span><span class="drop__name"></span>
+                  </div>
+                </div>
+                <p class="hint">PDF or JPG, up to 25 MB.</p>
+                <p class="drop__again" hidden>Wrong file? <button class="link link--btn" type="button" data-upload-pick>upload it again</button></p>
+              </div>
+
+              <div class="field">
+                <span class="label label--info">
+                  <label for="sign-name">Undersigned</label>
+                  <span class="explain">
+                    <button class="explain__icon" type="button" aria-label="Who signs the agreement?" aria-describedby="explain-sign-name">
+                      <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                    </button>
+                    <span class="explain__pop" id="explain-sign-name" role="tooltip">
+                      <b>Undersigned</b>
+                      The person who is authorised to sign for the business. Typing the full name here counts as the signature under this agreement.
+                    </span>
+                  </span>
+                </span>
+                <input class="input" id="sign-name" type="text" autocomplete="name" />
+              </div>
             </div>
 
-            <!-- Stap 6 — twee blokken: de zaak en de persoon erachter. Elk
+            <!-- Stap 7 — twee blokken: de zaak en de persoon erachter. Elk
                  gegeven is hier nog te wijzigen: het potlood klapt hetzelfde
                  vakje open als formulier, zodat je de stap niet terug hoeft. -->
             <div class="card card--flush" data-step="7" hidden>
@@ -5655,6 +5730,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=222"></script>
+  <script src="app.js?v=223"></script>
 </body>
 </html>
