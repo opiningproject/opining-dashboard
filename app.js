@@ -3905,4 +3905,43 @@
       });
     });
   }
+
+  /* ---- Uitbetaalrekening in de onboarding ---------------------------------
+     De rekening staat er als regel; Change klapt het vak eronder open waarin
+     je hem met de hand invult, met het bankafschrift erbij. Opslaan schrijft
+     de nieuwe gegevens terug naar die regel en naar de samenvatting. */
+  var bankVak = document.getElementById("bank-form");
+
+  if (bankVak) {
+    var bankRegel = document.getElementById("bank-iban-shown");
+    var bankNaam = document.getElementById("bank-holder-shown");
+
+    function zetBankVak(open) {
+      bankVak.hidden = !open;
+      document.querySelector("[data-bank-change]").hidden = open;
+    }
+
+    document.addEventListener("click", function (e) {
+      if (e.target.closest("[data-bank-change]")) {
+        document.getElementById("bank-holder").value = bankNaam.textContent.trim();
+        document.getElementById("bank-iban").value = bankRegel.textContent.trim();
+        zetBankVak(true);
+        document.getElementById("bank-holder").focus();
+        return;
+      }
+      if (e.target.closest("[data-bank-cancel]")) { zetBankVak(false); return; }
+      if (e.target.closest("#payout-save")) {
+        var iban = document.getElementById("bank-iban").value.trim();
+        var houder = document.getElementById("bank-holder").value.trim();
+        if (!iban || !houder) { document.getElementById("bank-iban").focus(); return; }
+        bankRegel.textContent = iban;
+        bankNaam.textContent = houder;
+        /* De samenvatting laat dezelfde rekening zien. */
+        document.querySelectorAll("[data-payout-iban]").forEach(function (el) { el.textContent = iban; });
+        document.querySelectorAll("[data-payout-holder]").forEach(function (el) { el.textContent = houder; });
+        zetBankVak(false);
+        showToast("Payout account saved");
+      }
+    });
+  }
 })();

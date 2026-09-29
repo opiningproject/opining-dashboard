@@ -3152,3 +3152,13 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .docup .hint { margin-top: 8px; }
 .drop__cloud { width: 26px; height: 26px; color: var(--text-muted); }
 .drop__lead { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); text-align: center; }
+
+/* De rekening met de hand invoeren: hetzelfde kader als de andere vakken in
+   de onboarding, met het afschrift eronder. */
+.bankform { margin-top: 14px; }
+.bankform .docup { margin-top: 18px; }
+.acct__mark--bank { background: var(--gray-100); color: var(--text-strong); font-size: var(--fs-xs); font-weight: 700; }
+/* De link naar de overeenkomst leest als een bestand, dus met het icoon ervoor. */
+.agreement { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 500; }
+.agreement .icon { width: 18px; height: 18px; }
+.agreement__label { margin-top: 18px; margin-bottom: 8px; }
