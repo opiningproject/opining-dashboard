@@ -3137,3 +3137,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .choices--row { flex-direction: row; gap: 24px; flex-wrap: wrap; }
 /* Het eerste kopje in een venster heeft de kop erboven al als scheiding. */
 .card__subtitle--first { margin-top: 0; }
+
+/* Het vak waarin je een betrokkene toevoegt of wijzigt: hetzelfde kader als
+   de blokken in de controlestap, met wat lucht boven de lijst erboven. */
+.persform { margin-top: 14px; }
+.persform .card__subtitle { margin-top: 24px; font-size: var(--fs-md); font-weight: 600; }
+.persform .card__subtitle--first { margin-top: 14px; }

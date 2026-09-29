@@ -1971,8 +1971,13 @@
     /* Het potlood klapt hetzelfde vakje open als formulier: je wijzigt het
        gegeven waar het staat, in plaats van zes stappen terug te lopen. */
     function zetRev(vak, bewerken) {
-      vak.querySelector(".rev__read").hidden = bewerken;
-      vak.querySelector(".rev__form").hidden = !bewerken;
+      var lees = vak.querySelector(".rev__read");
+      var vorm = vak.querySelector(".rev__form");
+      /* Niet elk vak in deze stijl heeft een lees- en een schrijfstand: het
+         vak waarin je een betrokkene invult is er altijd een om te vullen. */
+      if (!lees || !vorm) return;
+      lees.hidden = bewerken;
+      vorm.hidden = !bewerken;
     }
 
     wiz.addEventListener("click", function (e) {
@@ -3656,15 +3661,18 @@
       var dns = e.target.closest("[data-domain-dns]");
       if (dns) showToast("DNS records for " + domNaam(dns.closest("tr")) + " are managed at your provider");
     });
+
+
   }
-
   /* ---- Betrokkenen in de onboarding ---------------------------------------
-     Een eenmanszaak heeft één eigenaar; bij een BV of vennootschap moeten alle
-     UBO's en tekenbevoegden erbij. De rechtsvorm uit stap 1 bepaalt daarom
-     welke van de twee kaarten je in stap 3 ziet. */
-  var persoonVenster = document.getElementById("person-dialog");
+     Een eenmanszaak heeft een eigenaar; bij een BV of vennootschap moeten alle
+     UBO's en tekenbevoegden erbij. De rechtsvorm uit stap 1 bepaalt welke van
+     de twee kaarten je in stap 3 ziet. Toevoegen en wijzigen gebeurt in een vak
+     dat in diezelfde kaart openklapt: zo blijft de lijst in beeld en verlaat je
+     de stap niet. */
+  var persoonVak = document.getElementById("person-form");
 
-  if (persoonVenster) {
+  if (persoonVak) {
     var rechtsvorm = document.getElementById("biz-legal");
     var lijst = document.getElementById("people-list");
     var persoonRij = null;   /* de regel die je nu bewerkt, of null bij nieuw */
@@ -3708,7 +3716,7 @@
 
     function openPersoon(rij) {
       persoonRij = rij;
-      document.getElementById("person-dialog-title").textContent =
+      document.getElementById("person-form-title").textContent =
         rij ? "Details of " + rij.dataset.personName : "Add person";
 
       velden.forEach(function (naam) {
@@ -3724,8 +3732,19 @@
         veld("pct").value = "0%";
       }
       zetUboVelden();
-      persoonVenster.hidden = false;
+      /* Het vak komt onder de lijst; de knop eronder is even weg, want je
+         bent al iemand aan het toevoegen. */
+      persoonVak.hidden = false;
+      document.querySelector("[data-person-add]").hidden = true;
       veld("first").focus();
+      veld("first").focus();
+    }
+
+    /* Het vak dicht en de knop terug: je kunt weer iemand toevoegen. */
+    function sluitPersoon() {
+      persoonVak.hidden = true;
+      document.querySelector("[data-person-add]").hidden = false;
+      persoonRij = null;
     }
 
     /* Wat er in de regel komt te staan: hoe iemand tekent, en zijn belang. */
@@ -3782,12 +3801,15 @@
         persoonRegel(veld("ubo").value, veld("pct").value, veld("sign").value);
       rij.querySelector(".sort__btn").setAttribute("aria-label", "Actions for " + voor + " " + achter);
 
-      persoonVenster.hidden = true;
-      showToast(persoonRij ? "Details saved" : voor + " " + achter + " added");
+      /* Eerst onthouden of het een bestaande regel was: sluiten wist dat. */
+      var bestond = !!persoonRij;
+      sluitPersoon();
+      showToast(bestond ? "Details saved" : voor + " " + achter + " added");
     });
 
     document.addEventListener("click", function (e) {
       if (e.target.closest("[data-person-add]")) { openPersoon(null); return; }
+      if (e.target.closest("[data-person-cancel]")) { sluitPersoon(); return; }
       var wijzig = e.target.closest("[data-person-edit]");
       if (wijzig) { openPersoon(wijzig.closest("[data-person]")); return; }
       var weg = e.target.closest("[data-person-remove]");

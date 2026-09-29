@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=215" />
+  <link rel="stylesheet" href="styles.css?v=216" />
 </head>
 <body>
 
@@ -2506,6 +2506,172 @@
                   </span>
                 </div>
               </div>
+              <!-- Toevoegen of wijzigen gebeurt in de kaart zelf: het vak klapt
+                   onder de lijst open, zodat je ziet wie er al staan. -->
+              <div class="rev persform" id="person-form" hidden>
+                <div class="rev__head">
+                  <h4 class="rev__title" id="person-form-title">Add person</h4>
+                </div>
+                <h4 class="card__subtitle card__subtitle--first">Personal details</h4>
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="person-first">First name</label>
+                    <input class="input" id="person-first" type="text" autocomplete="given-name" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="person-last">Last name</label>
+                    <input class="input" id="person-last" type="text" autocomplete="family-name" />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label" for="person-lang">Language <span class="label__opt">optional</span></label>
+                  <select class="input" id="person-lang">
+                    <option value="">Select a language&hellip;</option>
+                    <option>Dutch</option>
+                    <option>English</option>
+                    <option>German</option>
+                  </select>
+                </div>
+
+                <h4 class="card__subtitle">Home address</h4>
+                <div class="field-row field-row--street">
+                  <div class="field">
+                    <label class="label" for="person-street">Street</label>
+                    <span class="infield">
+                      <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                      <input class="input infield__input" id="person-street" type="text" autocomplete="address-line1"
+                             data-lookup data-lookup-zip="person-zip" data-lookup-city="person-city" data-lookup-note="person-street-note" />
+                    </span>
+                    <p class="hint" id="person-street-note" hidden></p>
+                  </div>
+                  <div class="field">
+                    <label class="label" for="person-nr">Number</label>
+                    <input class="input" id="person-nr" type="text" />
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="person-zip">Postal code</label>
+                    <input class="input" id="person-zip" type="text" autocomplete="postal-code" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="person-city">City</label>
+                    <input class="input" id="person-city" type="text" autocomplete="address-level2" />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label" for="person-country">Country</label>
+                  <select class="input" id="person-country">
+                    <option selected>Netherlands</option>
+                    <option>Belgium</option>
+                    <option>Germany</option>
+                  </select>
+                </div>
+
+                <h4 class="card__subtitle">Additional information</h4>
+                <div class="field-row">
+                  <div class="field">
+                    <label class="label" for="person-dob">Date of birth</label>
+                    <input class="input" id="person-dob" type="date" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="person-nat">Nationality</label>
+                    <select class="input" id="person-nat">
+                      <option value="">Make a choice&hellip;</option>
+                      <option selected>Dutch</option>
+                      <option>Belgian</option>
+                      <option>German</option>
+                      <option>Turkish</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <span class="label label--info">
+                    <label for="person-pep">Are you or someone close to you politically exposed?</label>
+                    <span class="explain">
+                      <button class="explain__icon" type="button" aria-label="What is a politically exposed person?" aria-describedby="explain-pep">
+                        <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                      </button>
+                      <span class="explain__pop" id="explain-pep" role="tooltip">
+                        <b>Politically exposed person</b>
+                        Someone who holds or held a prominent public office, or a close family member of that person. Banks have to look at those accounts more closely.
+                      </span>
+                    </span>
+                  </span>
+                  <select class="input" id="person-pep">
+                    <option selected>No</option>
+                    <option>Yes</option>
+                  </select>
+                </div>
+
+                <h4 class="card__subtitle">Involvement in the business</h4>
+                <div class="field">
+                  <span class="label label--info">
+                    <label for="person-sign">Are you authorised to sign?</label>
+                    <span class="explain">
+                      <button class="explain__icon" type="button" aria-label="What does authorised to sign mean?" aria-describedby="explain-sign">
+                        <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                      </button>
+                      <span class="explain__pop" id="explain-sign" role="tooltip">
+                        <b>Authorised to sign</b>
+                        Whether you may sign agreements on behalf of the business, alone or together with someone else. It is in the Chamber of Commerce register.
+                      </span>
+                    </span>
+                  </span>
+                  <select class="input" id="person-sign">
+                    <option selected>Authorised to sign on their own</option>
+                    <option>Not authorised to sign</option>
+                    <option>Authorised to sign jointly</option>
+                  </select>
+                </div>
+
+                <!-- Een bestuurlijk belang heeft geen percentage; alleen een
+                     financieel belang drukt zich in procenten uit. -->
+                <div class="field-row field-row--ubo">
+                  <div class="field">
+                    <span class="label label--info">
+                      <label for="person-ubo">Are you a UBO?</label>
+                      <span class="explain">
+                        <button class="explain__icon" type="button" aria-label="What is a UBO?" aria-describedby="explain-ubo-field">
+                          <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                        </button>
+                        <span class="explain__pop" id="explain-ubo-field" role="tooltip">
+                          <b>Ultimate beneficial owner</b>
+                          Someone who owns more than 25% of the business, or who controls it in another way.
+                        </span>
+                      </span>
+                    </span>
+                    <select class="input" id="person-ubo">
+                      <option>No UBO</option>
+                      <option>Controlling interest</option>
+                      <option selected>Financial interest</option>
+                    </select>
+                  </div>
+                  <div class="field" id="person-pct-field">
+                    <label class="label" for="person-pct">Percentage</label>
+                    <input class="input" id="person-pct" type="text" inputmode="numeric" value="0%" />
+                  </div>
+                </div>
+
+                <fieldset class="choices choices--row" id="person-kind-field">
+                  <legend class="sr-only">Type of UBO</legend>
+                  <label class="choice">
+                    <input type="radio" name="person-kind" value="direct" checked />
+                    <span class="choice__title">Direct UBO</span>
+                  </label>
+                  <label class="choice">
+                    <input type="radio" name="person-kind" value="indirect" />
+                    <span class="choice__title">Indirect UBO</span>
+                  </label>
+                </fieldset>
+
+                <div class="rev__acts">
+                  <button class="btn btn--ghost btn--sm" type="button" data-person-cancel>Cancel</button>
+                  <button class="btn btn--primary btn--sm" type="button" id="person-save">Save</button>
+                </div>
+              </div>
+
 
               <button class="addrow" type="button" data-person-add>
                 <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add person
@@ -2953,209 +3119,6 @@
             </div>
           </div>
         </section>
-
-          <!-- De gegevens van een betrokkene. Pay.nl doet dit op een eigen
-               pagina; hier is het een venster, zodat je de lijst achter je
-               houdt en niet kwijtraakt waar je was. -->
-          <div class="dialog" id="person-dialog" data-instant hidden>
-            <div class="dialog__scrim" data-dialog-close></div>
-            <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="person-dialog-title">
-              <div class="dialog__head">
-                <h2 class="dialog__title" id="person-dialog-title">Person details</h2>
-                <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
-                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
-                </button>
-              </div>
-
-              <h4 class="card__subtitle card__subtitle--first">Personal details</h4>
-              <div class="field-row">
-                <div class="field">
-                  <label class="label" for="person-first">First name</label>
-                  <input class="input" id="person-first" type="text" autocomplete="given-name" />
-                </div>
-                <div class="field">
-                  <label class="label" for="person-last">Last name</label>
-                  <input class="input" id="person-last" type="text" autocomplete="family-name" />
-                </div>
-              </div>
-              <div class="field">
-                <label class="label" for="person-lang">Language <span class="label__opt">optional</span></label>
-                <select class="input" id="person-lang">
-                  <option value="">Select a language&hellip;</option>
-                  <option>Dutch</option>
-                  <option>English</option>
-                  <option>German</option>
-                </select>
-              </div>
-
-              <h4 class="card__subtitle">Home address</h4>
-              <div class="field-row field-row--street">
-                <div class="field">
-                  <label class="label" for="person-street">Street</label>
-                  <span class="infield">
-                    <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                    <input class="input infield__input" id="person-street" type="text" autocomplete="address-line1"
-                           data-lookup data-lookup-zip="person-zip" data-lookup-city="person-city" data-lookup-note="person-street-note" />
-                  </span>
-                  <p class="hint" id="person-street-note" hidden></p>
-                </div>
-                <div class="field">
-                  <label class="label" for="person-nr">Number</label>
-                  <input class="input" id="person-nr" type="text" />
-                </div>
-              </div>
-              <div class="field-row">
-                <div class="field">
-                  <label class="label" for="person-zip">Postal code</label>
-                  <input class="input" id="person-zip" type="text" autocomplete="postal-code" />
-                </div>
-                <div class="field">
-                  <label class="label" for="person-city">City</label>
-                  <input class="input" id="person-city" type="text" autocomplete="address-level2" />
-                </div>
-              </div>
-              <div class="field">
-                <label class="label" for="person-country">Country</label>
-                <select class="input" id="person-country">
-                  <option selected>Netherlands</option>
-                  <option>Belgium</option>
-                  <option>Germany</option>
-                </select>
-              </div>
-
-              <h4 class="card__subtitle">Additional information</h4>
-              <div class="field-row">
-                <div class="field">
-                  <label class="label" for="person-dob">Date of birth</label>
-                  <input class="input" id="person-dob" type="date" />
-                </div>
-                <div class="field">
-                  <label class="label" for="person-nat">Nationality</label>
-                  <select class="input" id="person-nat">
-                    <option value="">Make a choice&hellip;</option>
-                    <option selected>Dutch</option>
-                    <option>Belgian</option>
-                    <option>German</option>
-                    <option>Turkish</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-              </div>
-              <div class="field">
-                <span class="label label--info">
-                  <label for="person-pep">Are you or someone close to you politically exposed?</label>
-                  <span class="explain">
-                    <button class="explain__icon" type="button" aria-label="What is a politically exposed person?" aria-describedby="explain-pep">
-                      <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-                    </button>
-                    <span class="explain__pop" id="explain-pep" role="tooltip">
-                      <b>Politically exposed person</b>
-                      Someone who holds or held a prominent public office, or a close family member of that person. Banks have to look at those accounts more closely.
-                    </span>
-                  </span>
-                </span>
-                <select class="input" id="person-pep">
-                  <option selected>No</option>
-                  <option>Yes</option>
-                </select>
-              </div>
-
-              <h4 class="card__subtitle">Involvement in the business</h4>
-              <div class="field">
-                <span class="label label--info">
-                  <label for="person-sign">Are you authorised to sign?</label>
-                  <span class="explain">
-                    <button class="explain__icon" type="button" aria-label="What does authorised to sign mean?" aria-describedby="explain-sign">
-                      <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-                    </button>
-                    <span class="explain__pop" id="explain-sign" role="tooltip">
-                      <b>Authorised to sign</b>
-                      Whether you may sign agreements on behalf of the business, alone or together with someone else. It is in the Chamber of Commerce register.
-                    </span>
-                  </span>
-                </span>
-                <select class="input" id="person-sign">
-                  <option selected>Authorised to sign on their own</option>
-                  <option>Not authorised to sign</option>
-                  <option>Authorised to sign jointly</option>
-                </select>
-              </div>
-
-              <!-- Een bestuurlijk belang heeft geen percentage; alleen een
-                   financieel belang drukt zich in procenten uit. -->
-              <div class="field-row field-row--ubo">
-                <div class="field">
-                  <span class="label label--info">
-                    <label for="person-ubo">Are you a UBO?</label>
-                    <span class="explain">
-                      <button class="explain__icon" type="button" aria-label="What is a UBO?" aria-describedby="explain-ubo-field">
-                        <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-                      </button>
-                      <span class="explain__pop" id="explain-ubo-field" role="tooltip">
-                        <b>Ultimate beneficial owner</b>
-                        Someone who owns more than 25% of the business, or who controls it in another way.
-                      </span>
-                    </span>
-                  </span>
-                  <select class="input" id="person-ubo">
-                    <option>No UBO</option>
-                    <option>Controlling interest</option>
-                    <option selected>Financial interest</option>
-                  </select>
-                </div>
-                <div class="field" id="person-pct-field">
-                  <label class="label" for="person-pct">Percentage</label>
-                  <input class="input" id="person-pct" type="text" inputmode="numeric" value="0%" />
-                </div>
-              </div>
-
-              <fieldset class="choices choices--row" id="person-kind-field">
-                <legend class="sr-only">Type of UBO</legend>
-                <label class="choice">
-                  <input type="radio" name="person-kind" value="direct" checked />
-                  <span class="choice__title">Direct UBO</span>
-                </label>
-                <label class="choice">
-                  <input type="radio" name="person-kind" value="indirect" />
-                  <span class="choice__title">Indirect UBO</span>
-                </label>
-              </fieldset>
-
-              <div class="dialog__foot">
-                <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
-                <button class="btn btn--primary" type="button" id="person-save">Save</button>
-              </div>
-            </div>
-          </div>
-
-        <!-- ---------- SETTINGS SUB: store address ---------- -->
-        <section class="view" data-set-sub="address" hidden>
-          <div class="card">
-            <h3 class="card__title">Store address</h3>
-            <p class="card__sub">Used for taxes, invoices and the delivery radius.</p>
-            <div class="field">
-              <label class="label" for="addr-street">Street and number</label>
-              <input class="input" id="addr-street" type="text" value="Lusthofstraat 27A" />
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label class="label" for="addr-zip">Postal code</label>
-                <input class="input" id="addr-zip" type="text" value="3062 WB" />
-              </div>
-              <div class="field">
-                <label class="label" for="addr-city">City</label>
-                <input class="input" id="addr-city" type="text" value="Rotterdam" />
-              </div>
-            </div>
-            <div class="field">
-              <label class="label" for="addr-country">Country</label>
-              <select class="input" id="addr-country">
-                <option>Netherlands</option>
-                <option>Belgium</option>
-                <option>Germany</option>
-              </select>
-            </div>
-          </div>
         </section>
 
         <!-- ---------- SETTINGS-SUB: betaalmethodes ---------- -->
@@ -5559,6 +5522,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=215"></script>
+  <script src="app.js?v=216"></script>
 </body>
 </html>
