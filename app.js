@@ -3719,36 +3719,65 @@
 
     function veld(naam) { return document.getElementById("person-" + naam); }
 
-    function openPersoon(rij) {
-      persoonRij = rij;
+    /* Waar het veldenvak hoort zolang niemand bewerkt wordt; van daaruit
+       verhuist het heen en weer. */
+    var persoonThuis = persoonVak.parentNode;
+    var persoonAnker = persoonVak.nextSibling;
+    var persoonKnop = document.querySelector("[data-person-add]");
+
+    /* Bewerken gebeurt in het vakje van die persoon zelf: de regel maakt
+       plaats voor de velden, net als de blokken in de samenvatting. Een
+       nieuwe betrokkene krijgt een leeg vak onderaan de lijst. */
+    function openPersoon(vak) {
+      if (persoonRij) sluitPersoon();
+      if (!vak) {
+        vak = document.createElement("div");
+        vak.className = "rev persrow";
+        vak.setAttribute("data-person", "");
+        vak.setAttribute("data-person-new", "");
+        lijst.appendChild(vak);
+      }
+      persoonRij = vak;
+
       document.getElementById("person-form-title").textContent =
-        rij ? "Details of " + rij.dataset.personName : "Add person";
+        vak.dataset.personName ? "Details of " + vak.dataset.personName : "Add person";
 
       velden.forEach(function (naam) {
         var el = veld(naam);
-        var waarde = rij ? (rij.dataset["person" + naam.charAt(0).toUpperCase() + naam.slice(1)] || "") : "";
+        var waarde = vak.dataset["person" + naam.charAt(0).toUpperCase() + naam.slice(1)] || "";
         if (el.tagName === "SELECT") el.value = waarde || el.options[0].value;
         else el.value = waarde;
       });
-      if (!rij) {
+      if (vak.hasAttribute("data-person-new")) {
         veld("country").value = "Netherlands";
         veld("ubo").value = "Financial interest";
         veld("sign").value = "Authorised to sign on their own";
         veld("pct").value = "0%";
       }
       zetUboVelden();
-      /* Het vak komt onder de lijst; de knop eronder is even weg, want je
-         bent al iemand aan het toevoegen. */
+
+      var lees = vak.querySelector(".persrow__read");
+      if (lees) lees.hidden = true;
+      vak.appendChild(persoonVak);
       persoonVak.hidden = false;
-      document.querySelector("[data-person-add]").hidden = true;
-      veld("first").focus();
+      /* De knop eronder is even weg: je bent al met iemand bezig. */
+      persoonKnop.hidden = true;
       veld("first").focus();
     }
 
-    /* Het vak dicht en de knop terug: je kunt weer iemand toevoegen. */
+    /* De velden terug op hun plek en de regel weer in beeld. Een vak dat nog
+       niemand voorstelt verdwijnt helemaal. */
     function sluitPersoon() {
       persoonVak.hidden = true;
-      document.querySelector("[data-person-add]").hidden = false;
+      persoonThuis.insertBefore(persoonVak, persoonAnker);
+      if (persoonRij) {
+        if (persoonRij.hasAttribute("data-person-new")) persoonRij.remove();
+        else {
+          var lees = persoonRij.querySelector(".persrow__read");
+          if (lees) lees.hidden = false;
+        }
+      }
+      persoonKnop.hidden = false;
       persoonRij = null;
     }
 
@@ -3770,12 +3799,16 @@
       var achter = veld("last").value.trim();
       if (!voor || !achter) { veld("first").focus(); return; }
 
-      var rij = persoonRij;
-      if (!rij) {
-        rij = document.createElement("div");
-        rij.className = "row row--static";
-        rij.setAttribute("data-person", "");
-        rij.innerHTML =
+      var vak = persoonRij;
+      var nieuw = vak.hasAttribute("data-person-new");
+
+      /* Een nieuw vak heeft nog geen regel; die komt boven de velden te staan
+         en blijft over zodra het vak weer dichtgaat. */
+      var lees = vak.querySelector(".persrow__read");
+      if (!lees) {
+        lees = document.createElement("div");
+        lees.className = "row row--static persrow__read";
+        lees.innerHTML =
           '<span class="acct__mark acct__mark--person" aria-hidden="true"></span>' +
           '<span class="row__text"><span class="row__title"></span>' +
           '<span class="row__meta" data-person-meta></span></span>' +
@@ -3788,28 +3821,29 @@
               '<button class="sort__item" type="button" role="menuitem" data-person-remove>Remove</button>' +
             '</div>' +
           '</span>';
-        lijst.appendChild(rij);
+        lees.hidden = true;
+        vak.insertBefore(lees, vak.firstChild);
       }
 
       velden.forEach(function (naam) {
-        rij.dataset["person" + naam.charAt(0).toUpperCase() + naam.slice(1)] = veld(naam).value;
+        vak.dataset["person" + naam.charAt(0).toUpperCase() + naam.slice(1)] = veld(naam).value;
       });
-      rij.dataset.personName = voor + " " + achter;
-      rij.querySelector(".acct__mark").textContent = letters(voor, achter);
+      vak.dataset.personName = voor + " " + achter;
+      lees.querySelector(".acct__mark").textContent = letters(voor, achter);
       /* De naam staat als tekst vooraan, met eventueel het label "you" erachter;
          dat label hoort te blijven staan. */
-      var titel = rij.querySelector(".row__title");
+      var titel = lees.querySelector(".row__title");
       var pil = titel.querySelector(".pill");
       titel.textContent = voor + " " + achter + " ";
       if (pil) titel.appendChild(pil);
-      rij.querySelector("[data-person-meta]").textContent =
+      lees.querySelector("[data-person-meta]").textContent =
         persoonRegel(veld("ubo").value, veld("pct").value, veld("sign").value);
-      rij.querySelector(".sort__btn").setAttribute("aria-label", "Actions for " + voor + " " + achter);
+      lees.querySelector(".sort__btn").setAttribute("aria-label", "Actions for " + voor + " " + achter);
 
-      /* Eerst onthouden of het een bestaande regel was: sluiten wist dat. */
-      var bestond = !!persoonRij;
+      /* Het vak stelt nu iemand voor; sluiten mag het niet meer weggooien. */
+      vak.removeAttribute("data-person-new");
       sluitPersoon();
-      showToast(bestond ? "Details saved" : voor + " " + achter + " added");
+      showToast(nieuw ? voor + " " + achter + " added" : "Details saved");
     });
 
     document.addEventListener("click", function (e) {

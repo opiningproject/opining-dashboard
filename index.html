@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=219" />
+  <link rel="stylesheet" href="styles.css?v=220" />
 </head>
 <body>
 
@@ -2483,33 +2483,39 @@
                 </span>
               </p>
 
-              <div class="rows rows--menu" id="people-list">
-                <div class="row row--static" data-person data-person-self
+              <!-- Elke betrokkene is een eigen vak. Bewerken gebeurt in dat
+                   vak zelf: de regel maakt plaats voor de velden, net als in
+                   de samenvatting van de laatste stap. -->
+              <div class="persons" id="people-list">
+                <div class="rev persrow" data-person data-person-self
                      data-person-name="Serdar Orman" data-person-first="Serdar" data-person-last="Orman"
                      data-person-lang="Dutch" data-person-street="Lusthofstraat" data-person-nr="27A"
                      data-person-zip="3062 WB" data-person-city="Rotterdam" data-person-country="Netherlands"
                      data-person-dob="2000-06-21" data-person-nat="Dutch" data-person-pep="No"
                      data-person-sign="Authorised to sign on their own"
                      data-person-ubo="Financial interest" data-person-pct="0%">
-                  <span class="acct__mark acct__mark--person" aria-hidden="true">SO</span>
-                  <span class="row__text">
-                    <span class="row__title">Serdar Orman <span class="pill">you</span></span>
-                    <span class="row__meta" data-person-meta>Authorised to sign on their own &middot; 0% financial interest</span>
-                  </span>
-                  <span class="badge badge--pending" data-person-status>Identification required</span>
-                  <span class="sort row__menu">
-                    <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Serdar Orman">
-                      <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
-                    </button>
-                    <div class="sort__menu sort__menu--kort" role="menu" hidden>
-                      <button class="sort__item" type="button" role="menuitem" data-person-edit>Edit</button>
-                    </div>
-                  </span>
+                  <div class="row row--static persrow__read">
+                    <span class="acct__mark acct__mark--person" aria-hidden="true">SO</span>
+                    <span class="row__text">
+                      <span class="row__title">Serdar Orman <span class="pill">you</span></span>
+                      <span class="row__meta" data-person-meta>Authorised to sign on their own &middot; 0% financial interest</span>
+                    </span>
+                    <span class="badge badge--pending" data-person-status>Identification required</span>
+                    <span class="sort row__menu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Serdar Orman">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-person-edit>Edit</button>
+                      </div>
+                    </span>
+                  </div>
                 </div>
               </div>
-              <!-- Toevoegen of wijzigen gebeurt in de kaart zelf: het vak klapt
-                   onder de lijst open, zodat je ziet wie er al staan. -->
-              <div class="rev persform" id="person-form" hidden>
+              <!-- Dit ene vak met velden verhuist naar de betrokkene die je
+                   bewerkt, of naar een nieuw vak onderaan de lijst. Zo staan
+                   de velden nooit dubbel in de pagina. -->
+              <div class="persform" id="person-form" hidden>
                 <div class="rev__head">
                   <h4 class="rev__title" id="person-form-title">Add person</h4>
                 </div>
@@ -5651,6 +5657,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=219"></script>
+  <script src="app.js?v=220"></script>
 </body>
 </html>
