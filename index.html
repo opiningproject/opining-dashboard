@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=236" />
+  <link rel="stylesheet" href="styles.css?v=237" />
 </head>
 <body>
 
@@ -2824,7 +2824,7 @@
                  bankafschrift bij waar de bedrijfsnaam op staat. -->
             <div class="card" data-step="5" hidden>
               <h3 class="card__title">Which bank account can we pay out to?</h3>
-              <p class="card__sub">Link your business bank account with a one-off payment of &euro; 0,49. That amount lands in your balance. You can also enter the account by hand; we then need a recent bank statement that clearly shows your business name. Private accounts are not accepted.</p>
+              <p class="card__sub">This is where we pay out what you earn. It has to be a business account in the name of your business; private accounts are not accepted. We ask for a recent bank statement in the last step.</p>
 
               <!-- De regel komt er pas als je de rekening hebt opgegeven; tot
                    die tijd staan de velden hieronder open. -->
@@ -2853,27 +2853,6 @@
                   <label class="label" for="bank-iban">IBAN</label>
                   <input class="input" id="bank-iban" type="text" />
                   <p class="hint">A business account in the name above. We pay out here on the schedule you choose later.</p>
-                </div>
-                <div class="docup" data-upload>
-                  <div class="rev__head">
-                    <h4 class="rev__title">Bank statement</h4>
-                    <span class="badge badge--pending" data-upload-status>Data incomplete</span>
-                  </div>
-                  <p class="rev__value">Recent, with your business name and the IBAN clearly visible.</p>
-                  <div class="drop drop--doc">
-                    <input type="file" accept=".pdf,.jpg,.jpeg" hidden aria-label="Bank statement" />
-                    <div class="drop__empty">
-                      <svg class="icon drop__cloud" aria-hidden="true"><use href="#i-upload"/></svg>
-                      <p class="drop__lead">Upload your bank statement here</p>
-                      <p class="drop__hint">Drag the file here, or <button class="link link--btn" type="button" data-upload-pick>select a file</button>.</p>
-                    </div>
-                    <div class="drop__file" hidden>
-                      <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>
-                      <span class="drop__kind"></span><span class="drop__name"></span>
-                    </div>
-                  </div>
-                  <p class="hint">PDF or JPG, up to 25 MB.</p>
-                  <p class="drop__again" hidden>Wrong file? <button class="link link--btn" type="button" data-upload-pick>upload it again</button></p>
                 </div>
                 <div class="rev__acts">
                   <button class="btn btn--ghost btn--sm" type="button" data-bank-cancel hidden>Cancel</button>
@@ -5660,6 +5639,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=236"></script>
+  <script src="app.js?v=237"></script>
 </body>
 </html>
