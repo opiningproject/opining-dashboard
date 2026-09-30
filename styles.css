@@ -3233,7 +3233,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .contract__nr { display: inline-block; min-width: 30px; font-weight: 600; color: var(--text-strong); }
 
 /* Legitimatie: de keuze bepaalt of er een achterkant bij hoort. */
-.choices--id { margin-top: 22px; }
+.choices--id { margin-top: 32px; }
 .choices--id > .label { margin-bottom: 4px; }
 /* Na de keuze begint het aanleveren; die vakken plakken anders tegen de
    onderste keuzeregel aan. */
