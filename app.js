@@ -4322,8 +4322,29 @@
       document.dispatchEvent(new CustomEvent("wiz-ga", { detail: Number(pen.dataset.sumEdit) }));
     });
 
-    document.addEventListener("wiz-stap", vulSamenvatting);
+    /* De stand van een sectie hangt af van de stukken die erin gevraagd
+       worden: zolang er een ontbreekt is de sectie niet klaar om te versturen.
+       De overeenkomst heeft een eigen stand en blijft hier buiten. */
+    function zetSectieStand() {
+      document.querySelectorAll(".wiz .card--flush").forEach(function (kaart) {
+        var stand = kaart.querySelector(".badge.u-normal");
+        if (!stand) return;
+        var mist = [].filter.call(kaart.querySelectorAll("[data-doc] [data-doc-file]"),
+          function (el) { return el.hidden; }).length;
+        stand.textContent = mist
+          ? (mist === 1 ? "Document required" : "Documents required")
+          : "Ready to submit";
+        stand.className = "badge " + (mist ? "badge--pending" : "badge--active") + " u-normal";
+      });
+    }
+
+    document.addEventListener("wiz-stap", function () {
+      vulSamenvatting();
+      zetSectieStand();
+    });
+    document.addEventListener("upload-stand", zetSectieStand);
     vulSamenvatting();
+    zetSectieStand();
   }
   /* ---- De overeenkomst in stap 6 -------------------------------------------
      De eerste alinea van het contract is geen vaste tekst: daar staat de zaak
@@ -4488,6 +4509,28 @@
       });
       return true;
     }
+
+    /* In de samenvatting is dezelfde rekening te wijzigen. Het potlood vult
+       de velden met wat er staat; opslaan schrijft het terug naar de stap en
+       naar de regel erboven. */
+    document.addEventListener("click", function (e) {
+      var vak = document.getElementById("review-payout");
+      if (!vak) return;
+      var velden = [["rev-holder", "bank-holder"], ["rev-iban", "bank-iban"], ["rev-bic", "bank-bic"]];
+
+      if (e.target.closest("#review-payout .rev__pen")) {
+        velden.forEach(function (p) {
+          document.getElementById(p[0]).value = document.getElementById(p[1]).value;
+        });
+        return;
+      }
+      if (e.target.closest("#review-payout .rev__save")) {
+        velden.forEach(function (p) {
+          document.getElementById(p[1]).value = document.getElementById(p[0]).value.trim();
+        });
+        bewaarBank();
+      }
+    });
 
     document.addEventListener("wiz-stap", bewaarBank);
   }

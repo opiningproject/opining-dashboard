@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=255" />
+  <link rel="stylesheet" href="styles.css?v=256" />
 </head>
 <body>
 
@@ -2975,11 +2975,15 @@
                   <div class="rev__form" hidden>
                     <div class="field">
                       <label class="label" for="rev-holder">Account holder</label>
-                      <input class="input" id="rev-holder" type="text" value="Opining BV" />
+                      <input class="input" id="rev-holder" type="text" />
                     </div>
                     <div class="field">
                       <label class="label" for="rev-iban">IBAN</label>
-                      <input class="input" id="rev-iban" type="text" value="NL59 INGB 0102 9917 15" />
+                      <input class="input" id="rev-iban" type="text" />
+                    </div>
+                    <div class="field">
+                      <label class="label" for="rev-bic">BIC <span class="label__opt">optional</span></label>
+                      <input class="input" id="rev-bic" type="text" autocapitalize="characters" />
                     </div>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -5524,6 +5528,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=255"></script>
+  <script src="app.js?v=256"></script>
 </body>
 </html>
