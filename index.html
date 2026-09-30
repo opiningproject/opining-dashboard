@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=256" />
+  <link rel="stylesheet" href="styles.css?v=258" />
 </head>
 <body>
 
@@ -2323,13 +2323,13 @@
 
               <div class="field">
                 <label class="label" for="biz-name">What is your business name?</label>
-                <input class="input" id="biz-name" type="text" autocomplete="organization" />
+                <input class="input" id="biz-name" type="text" required autocomplete="organization" />
               </div>
 
               <div class="field-row">
                 <div class="field">
                   <label class="label" for="biz-kvk">Chamber of Commerce number (KVK)</label>
-                  <input class="input" id="biz-kvk" type="text" inputmode="numeric" maxlength="8" />
+                  <input class="input" id="biz-kvk" type="text" inputmode="numeric" maxlength="8" required />
                 </div>
                 <div class="field">
                   <label class="label" for="biz-vat">VAT number <span class="label__opt">optional</span></label>
@@ -2339,7 +2339,7 @@
 
               <div class="field">
                 <label class="label" for="biz-legal">What is the legal form of your business?</label>
-                <select class="input" id="biz-legal">
+                <select class="input" id="biz-legal" required>
                   <option value="">Select&hellip;</option>
                   <option>Sole proprietorship (eenmanszaak)</option>
                   <option selected>Private limited company (BV)</option>
@@ -2359,25 +2359,25 @@
                   <label class="label" for="biz-street">Street</label>
                   <span class="infield">
                     <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                    <input class="input infield__input" id="biz-street" type="text" autocomplete="address-line1"
+                    <input class="input infield__input" id="biz-street" type="text" required autocomplete="address-line1"
                            data-lookup data-lookup-zip="biz-zip" data-lookup-city="biz-city" data-lookup-note="biz-street-note" />
                   </span>
                   <p class="hint" id="biz-street-note" hidden></p>
                 </div>
                 <div class="field">
                   <label class="label" for="biz-nr">Number</label>
-                  <input class="input" id="biz-nr" type="text" autocomplete="address-line2" />
+                  <input class="input" id="biz-nr" type="text" required autocomplete="address-line2" />
                 </div>
               </div>
 
               <div class="field-row">
                 <div class="field">
                   <label class="label" for="biz-zip">Postal code</label>
-                  <input class="input" id="biz-zip" type="text" autocomplete="postal-code" />
+                  <input class="input" id="biz-zip" type="text" required autocomplete="postal-code" />
                 </div>
                 <div class="field">
                   <label class="label" for="biz-city">City</label>
-                  <input class="input" id="biz-city" type="text" autocomplete="address-level2" />
+                  <input class="input" id="biz-city" type="text" required autocomplete="address-level2" />
                 </div>
               </div>
 
@@ -2459,7 +2459,7 @@
 
               <div class="field">
                 <label class="label" for="act-desc">What are your main trade activities?</label>
-                <textarea class="input" id="act-desc" rows="3">Selling restaurant food for everyone. We are open 7 days a week.</textarea>
+                <textarea class="input" id="act-desc" required rows="3">Selling restaurant food for everyone. We are open 7 days a week.</textarea>
                 <p class="hint">In your own words: what do you sell, and to whom?</p>
               </div>
             </div>
@@ -2484,11 +2484,11 @@
                 <div class="field-row">
                   <div class="field">
                     <label class="label" for="person-first">First name</label>
-                    <input class="input" id="person-first" type="text" autocomplete="given-name" />
+                    <input class="input" id="person-first" type="text" required autocomplete="given-name" />
                   </div>
                   <div class="field">
                     <label class="label" for="person-last">Last name</label>
-                    <input class="input" id="person-last" type="text" autocomplete="family-name" />
+                    <input class="input" id="person-last" type="text" required autocomplete="family-name" />
                   </div>
                 </div>
                 <div class="field">
@@ -2507,24 +2507,24 @@
                     <label class="label" for="person-street">Street</label>
                     <span class="infield">
                       <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                      <input class="input infield__input" id="person-street" type="text" autocomplete="address-line1"
+                      <input class="input infield__input" id="person-street" type="text" required autocomplete="address-line1"
                              data-lookup data-lookup-zip="person-zip" data-lookup-city="person-city" data-lookup-note="person-street-note" />
                     </span>
                     <p class="hint" id="person-street-note" hidden></p>
                   </div>
                   <div class="field">
                     <label class="label" for="person-nr">Number</label>
-                    <input class="input" id="person-nr" type="text" />
+                    <input class="input" id="person-nr" type="text" required />
                   </div>
                 </div>
                 <div class="field-row">
                   <div class="field">
                     <label class="label" for="person-zip">Postal code</label>
-                    <input class="input" id="person-zip" type="text" autocomplete="postal-code" />
+                    <input class="input" id="person-zip" type="text" required autocomplete="postal-code" />
                   </div>
                   <div class="field">
                     <label class="label" for="person-city">City</label>
-                    <input class="input" id="person-city" type="text" autocomplete="address-level2" />
+                    <input class="input" id="person-city" type="text" required autocomplete="address-level2" />
                   </div>
                 </div>
                 <div class="field">
@@ -2540,11 +2540,11 @@
                 <div class="field-row">
                   <div class="field">
                     <label class="label" for="person-dob">Date of birth</label>
-                    <input class="input" id="person-dob" type="date" />
+                    <input class="input" id="person-dob" type="date" required />
                   </div>
                   <div class="field">
                     <label class="label" for="person-nat">Nationality</label>
-                    <select class="input" id="person-nat">
+                    <select class="input" id="person-nat" required>
                       <option value="">Make a choice&hellip;</option>
                       <option selected>Dutch</option>
                       <option>Belgian</option>
@@ -2678,11 +2678,11 @@
               <div class="field-row">
                 <div class="field">
                   <label class="label" for="rep-first">First name</label>
-                  <input class="input" id="rep-first" type="text" value="Serdar" autocomplete="given-name" />
+                  <input class="input" id="rep-first" type="text" required value="Serdar" autocomplete="given-name" />
                 </div>
                 <div class="field">
                   <label class="label" for="rep-last">Last name</label>
-                  <input class="input" id="rep-last" type="text" value="Orman" autocomplete="family-name" />
+                  <input class="input" id="rep-last" type="text" required value="Orman" autocomplete="family-name" />
                 </div>
               </div>
 
@@ -2692,11 +2692,11 @@
                      terugbladeren voor een geboortejaar. -->
                 <div class="dob" role="group" aria-labelledby="rep-dob-label">
                   <label class="sr-only" for="rep-dd">Day</label>
-                  <input class="input dob__part" id="rep-dd" type="text" inputmode="numeric" maxlength="2" placeholder="DD" />
+                  <input class="input dob__part" id="rep-dd" type="text" required inputmode="numeric" maxlength="2" placeholder="DD" />
                   <label class="sr-only" for="rep-mm">Month</label>
-                  <input class="input dob__part" id="rep-mm" type="text" inputmode="numeric" maxlength="2" placeholder="MM" />
+                  <input class="input dob__part" id="rep-mm" type="text" required inputmode="numeric" maxlength="2" placeholder="MM" />
                   <label class="sr-only" for="rep-yyyy">Year</label>
-                  <input class="input dob__part dob__part--year" id="rep-yyyy" type="text" inputmode="numeric" maxlength="4" placeholder="YYYY" />
+                  <input class="input dob__part dob__part--year" id="rep-yyyy" type="text" required inputmode="numeric" maxlength="4" placeholder="YYYY" />
                 </div>
               </div>
 
@@ -2719,7 +2719,7 @@
 
               <div class="field">
                 <label class="label" for="rep-mail">Email</label>
-                <input class="input" id="rep-mail" type="email" value="serdarorman74@gmail.com" autocomplete="email" />
+                <input class="input" id="rep-mail" type="email" required value="serdarorman74@gmail.com" autocomplete="email" />
               </div>
 
               <div class="field">
@@ -2751,7 +2751,7 @@
                 <label class="label" for="rep-street">Street and house number</label>
                 <span class="infield">
                   <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                  <input class="input infield__input" id="rep-street" type="text" autocomplete="street-address"
+                  <input class="input infield__input" id="rep-street" type="text" required autocomplete="street-address"
                          data-lookup data-lookup-zip="rep-zip" data-lookup-city="rep-city" data-lookup-note="rep-street-note" />
                 </span>
                 <p class="hint" id="rep-street-note" hidden></p>
@@ -2765,11 +2765,11 @@
               <div class="field-row">
                 <div class="field">
                   <label class="label" for="rep-zip">Postal code</label>
-                  <input class="input" id="rep-zip" type="text" autocomplete="postal-code" />
+                  <input class="input" id="rep-zip" type="text" required autocomplete="postal-code" />
                 </div>
                 <div class="field">
                   <label class="label" for="rep-city">City</label>
-                  <input class="input" id="rep-city" type="text" autocomplete="address-level2" />
+                  <input class="input" id="rep-city" type="text" required autocomplete="address-level2" />
                 </div>
               </div>
             </div>
@@ -2786,11 +2786,11 @@
               <div class="bankform" id="bank-form">
                 <div class="field">
                   <label class="label" for="bank-holder">Account holder</label>
-                  <input class="input" id="bank-holder" type="text" />
+                  <input class="input" id="bank-holder" type="text" required />
                 </div>
                 <div class="field">
                   <label class="label" for="bank-iban">IBAN</label>
-                  <input class="input" id="bank-iban" type="text" />
+                  <input class="input" id="bank-iban" type="text" required />
                 </div>
                 <div class="field">
                   <label class="label" for="bank-bic">BIC <span class="label__opt">optional</span></label>
@@ -5528,6 +5528,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=256"></script>
+  <script src="app.js?v=258"></script>
 </body>
 </html>

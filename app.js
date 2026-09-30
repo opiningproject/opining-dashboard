@@ -1975,8 +1975,50 @@
       wizVolgende.textContent = i === reeks.length - 1 ? "Submit for verification" : "Next";
       /* Een vakje dat nog openstond hoort dicht als je de stap opnieuw ziet. */
       wiz.querySelectorAll(".rev").forEach(function (vak) { zetRev(vak, false); });
+      zetStapKlaar();
       overlay.scrollTop = 0;
     }
+
+    /* Doorlopen kan pas als de stap af is: elk gevraagd veld ingevuld, en op
+       de laatste stap ook elk stuk aangeleverd en de overeenkomst getekend.
+       Zo kom je niet aan het eind met gaten in je aanvraag. */
+    function stapKlaar() {
+      var persVak = document.getElementById("person-form");
+      /* Het veldenvak van een betrokkene telt alleen mee in de stap over
+         jezelf; sta je in de lijst iemand te bewerken, dan hoort dat vak bij
+         die regel en niet bij de stap. */
+      var persTelt = persVak && persVak.classList.contains("persform--kaal") && !persVak.hidden;
+      var klaar = true;
+
+      wiz.querySelectorAll(".card[data-step]:not([hidden]) [required]").forEach(function (veld) {
+        if (veld.closest("[hidden]")) return;
+        if (persVak && persVak.contains(veld) && !persTelt) return;
+        if (!String(veld.value).trim()) klaar = false;
+      });
+
+      /* De laatste stap: alle stukken binnen en getekend. */
+      var reeks = wizReeks();
+      if (reeks.indexOf(stap) === reeks.length - 1) {
+        wiz.querySelectorAll("[data-doc] [data-doc-file]").forEach(function (el) {
+          if (el.hidden) klaar = false;
+        });
+        var stand = document.querySelector("[data-sign-state]");
+        if (stand && stand.textContent !== "Sent") klaar = false;
+      }
+      return klaar;
+    }
+
+    function zetStapKlaar() {
+      /* Bij het bijwerken van een afgekeurde aanvraag bepaalt die code de
+         knop; dan blijven we eraf. */
+      if (wiz.classList.contains("is-update")) return;
+      wizVolgende.disabled = !stapKlaar();
+    }
+
+    wiz.addEventListener("input", zetStapKlaar);
+    wiz.addEventListener("change", zetStapKlaar);
+    document.addEventListener("upload-stand", zetStapKlaar);
+    document.addEventListener("wiz-klaar", zetStapKlaar);
 
     /* Een stap verder of terug in de reeks, niet in de nummering. */
     function schuif(richting) {
@@ -2124,7 +2166,6 @@
      ziet) en de taal van dit dashboard (alleen voor jou). Terugkiezen wat er
      al stond laat de balk weer verdwijnen, want dan is er niets te bewaren. */
   var TAALGROEPEN = {
-    "default-lang": { zin: function (v) { return v + " is now the default language"; } },
     "admin-lang": { zin: function (v) { return "This dashboard is now in " + v; } }
   };
 
@@ -2191,7 +2232,12 @@
     var wizVak = document.getElementById("pay-wiz");
     var knop = document.getElementById("wiz-next");
     if (!wizVak || !knop) return;
-    if (!wizVak.classList.contains("is-update")) { knop.disabled = false; return; }
+    /* Buiten het bijwerken bepaalt de stap zelf of je verder mag; dat wordt
+       elders geregeld, dus laat de knop daar met rust. */
+    if (!wizVak.classList.contains("is-update")) {
+      document.dispatchEvent(new CustomEvent("wiz-klaar"));
+      return;
+    }
     /* Opnieuw versturen mag zodra elk gevraagd stuk er is en de gegevens
        opnieuw zijn opgeslagen. Welke stukken dat zijn hangt van de stap af,
        dus we kijken naar de regels die er staan. */
@@ -4466,6 +4512,8 @@
           uitleg.hidden = false;
         }
         tekenNaam.readOnly = true;
+        /* De knop van de stap kijkt hier ook naar. */
+        document.dispatchEvent(new CustomEvent("wiz-klaar"));
       }
 
       tekenKnop.addEventListener("click", function () {
