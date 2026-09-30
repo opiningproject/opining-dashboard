@@ -4507,22 +4507,54 @@
       return twee(d.getDate()) + "-" + twee(d.getMonth() + 1) + "-" + d.getFullYear();
     }
 
-    /* Tekenen kan pas als je naam eronder staat en je identiteitsbewijs is
-       aangeleverd; dat stuk vraag je aan bij de betrokkenen. */
-    function tekenMag() {
-      if (!tekenNaam.value.trim()) return false;
+    /* Waarom er nog niet getekend kan worden: het identiteitsbewijs ontbreekt,
+       of de naam eronder. Dat staat op drie plekken, zodat je het ziet zonder
+       het venster te openen: in de stand van de sectie, in de regel eronder en
+       naast de knop in het venster zelf. */
+    function tekenReden() {
       var stuk = document.querySelector('[data-doc="identity"] [data-doc-file]');
-      return !!(stuk && !stuk.hidden);
+      if (!stuk || stuk.hidden) return "id";
+      if (!tekenNaam.value.trim()) return "naam";
+      return "";
     }
 
+    function tekenMag() { return tekenReden() === ""; }
+
     function zetTekenKlaar() {
-      /* Is er al getekend, dan staat de knop er niet meer. */
+      /* Is er al getekend, dan valt er niets meer te melden. */
       if (!tekenKnop || tekenKnop.hidden) return;
-      var mag = tekenMag();
-      tekenKnop.disabled = !mag;
+      var reden = tekenReden();
+      tekenKnop.disabled = !!reden;
+
       var uitleg = document.querySelector(".signbar__note");
-      if (uitleg) uitleg.hidden = mag;
+      if (uitleg) {
+        uitleg.hidden = !reden;
+        if (reden === "id") {
+          uitleg.innerHTML = 'You need to upload your identity document before you can sign. '
+            + '<button class="link link--btn" type="button" data-ga-identity>Upload it now</button>';
+        } else if (reden === "naam") {
+          uitleg.textContent = "Fill in the name of the undersigned.";
+        }
+      }
+      if (tekenStand) {
+        tekenStand.textContent = reden === "id" ? "Identity document required" : "Not signed yet";
+      }
+      if (tekenRegel) {
+        tekenRegel.textContent = reden === "id"
+          ? "Upload your identity document first, at People involved"
+          : "Read it and sign with your name";
+      }
     }
+
+    /* Vanuit het venster meteen naar het uploadvenster van het identiteits-
+       bewijs: dat scheelt zoeken. */
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest("[data-ga-identity]")) return;
+      var venster = document.getElementById("agreement-dialog");
+      if (venster) venster.hidden = true;
+      var knop = document.querySelector('[data-doc="identity"] [data-doc-upload]');
+      if (knop) knop.click();
+    });
 
     if (tekenKnop) {
       var tekenVenster = document.getElementById("agreement-dialog");
