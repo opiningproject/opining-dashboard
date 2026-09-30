@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=233" />
+  <link rel="stylesheet" href="styles.css?v=234" />
 </head>
 <body>
 
@@ -3048,8 +3048,8 @@
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-business">
                 <span class="acct__mark" aria-hidden="true">O</span>
                 <span class="acct__text">
-                  <span class="acct__name">Opining</span>
-                  <span class="acct__role">Business</span>
+                  <span class="acct__name" data-sum-name>Your business</span>
+                  <span class="acct__role">Business details</span>
                 </span>
                 <span class="badge badge--active u-normal">Ready to submit</span>
                 <span class="badge badge--danger u-update">Action required</span>
@@ -3069,7 +3069,7 @@
                     </button>
                   </div>
                   <div class="rev__read">
-                    <p class="rev__value">Sole proprietorship</p>
+                    <p class="rev__value" data-sum-legal>Not filled in yet</p>
                   </div>
                   <div class="rev__form" hidden>
                     <div class="field">
@@ -3099,11 +3099,11 @@
                   <div class="rev__read">
                     <div class="rev__line">
                       <svg class="icon rev__icon" aria-hidden="true"><use href="#i-store"/></svg>
-                      <span class="rev__text"><b>Opining</b>KVK &lowast;&lowast;&lowast;&lowast;1595 &middot; +31 6 14522453</span>
+                      <span class="rev__text"><b data-sum-name>Your business</b><span data-sum-ids></span></span>
                     </div>
                     <div class="rev__line">
                       <svg class="icon rev__icon" aria-hidden="true"><use href="#i-pin"/></svg>
-                      <span class="rev__text"><b>Business address</b>Lusthofstraat 27A, 3062 WB Rotterdam, Netherlands</span>
+                      <span class="rev__text"><b>Business address</b><span data-sum-address></span></span>
                     </div>
                   </div>
                   <div class="rev__form" hidden>
@@ -3153,54 +3153,6 @@
                   </div>
                 </div>
 
-                <div class="rev">
-                  <div class="rev__head">
-                    <h4 class="rev__title">Store details</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit store details">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
-                  </div>
-                  <div class="rev__read">
-                    <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-store"/></svg>
-                      <span class="rev__text">Restaurant &middot; OPINING on the bank statement &middot; +31 6 14522453</span>
-                    </div>
-                  </div>
-                  <div class="rev__form" hidden>
-                    <h5 class="rev__sub rev__sub--first">Industry type</h5>
-                    <div class="field">
-                      <label class="label" for="rev-industry">Category</label>
-                      <select class="input" id="rev-industry">
-                        <option>Restaurant</option>
-                        <option>Fast food and takeaway</option>
-                        <option>Caterer</option>
-                        <option>Bakery</option>
-                        <option>Caf&eacute; or bar</option>
-                        <option>Food truck</option>
-                      </select>
-                    </div>
-                    <h5 class="rev__sub">Details in customer bank statement</h5>
-                    <div class="field">
-                      <label class="label" for="rev-descriptor">Statement descriptor</label>
-                      <input class="input" id="rev-descriptor" type="text" value="OPINING" maxlength="22" />
-                    </div>
-                    <div class="field">
-                      <label class="label" for="rev-storephone">Store phone number</label>
-                      <div class="phone">
-                        <label class="sr-only" for="rev-dial3">Country calling code</label>
-                        <select class="input phone__code" id="rev-dial3">
-                          <option>NL +31</option><option>BE +32</option><option>DE +49</option>
-                        </select>
-                        <input class="input phone__nr" id="rev-storephone" type="tel" value="6 14522453" />
-                      </div>
-                    </div>
-                    <div class="rev__acts">
-                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
-                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
-                    </div>
-                  </div>
-                </div>
-
                 <h4 class="card__subtitle">Verification</h4>
                 <p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>
                 <div class="rows">
@@ -3209,6 +3161,42 @@
                     <span class="row__text"><span class="row__title">Business document</span><span class="row__meta" data-doc-file hidden></span></span>
                     <span class="docrow__name" data-doc-name hidden></span>
                     <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wat de zaak doet, uit stap 2. Wijzigen brengt je terug naar die
+                 stap; de lijst met categorieën staat daar al. -->
+            <div class="card card--flush" data-step="7" hidden>
+              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-activities">
+                <span class="acct__mark acct__mark--soft" aria-hidden="true"><svg class="icon"><use href="#i-store"/></svg></span>
+                <span class="acct__text">
+                  <span class="acct__name">Activities</span>
+                  <span class="acct__role" data-sum-category>Cafe, bar, restaurant</span>
+                </span>
+                <span class="badge badge--active u-normal">Ready to submit</span>
+                <span class="badge badge--muted u-update">Done</span>
+                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+
+              <div class="acct" id="review-activities">
+                <div class="rev">
+                  <div class="rev__head">
+                    <h4 class="rev__title">What your business does</h4>
+                    <button class="icon-btn rev__pen" type="button" data-sum-edit="2" aria-label="Edit activities">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <div class="rev__read">
+                    <div class="rev__line">
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-list"/></svg>
+                      <span class="rev__text"><b>Category</b><span data-sum-category></span></span>
+                    </div>
+                    <div class="rev__line">
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-store"/></svg>
+                      <span class="rev__text"><b>Trade activities</b><span data-sum-desc></span></span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -3264,117 +3252,6 @@
                   <div class="row row--static" data-doc="statement">
                     <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
                     <span class="row__text"><span class="row__title">Bank statement</span><span class="row__meta" data-doc-file hidden></span></span>
-                    <span class="docrow__name" data-doc-name hidden></span>
-                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card card--flush" data-step="7" hidden>
-              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-rep">
-                <span class="acct__mark acct__mark--person" aria-hidden="true">SO</span>
-                <span class="acct__text">
-                  <span class="acct__name">Serdar Orman</span>
-                  <span class="acct__role">Account representative</span>
-                </span>
-                <span class="badge badge--active u-normal">Ready to submit</span>
-                <span class="badge badge--muted u-update">Done</span>
-                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-              </button>
-
-              <div class="acct" id="review-rep">
-                <div class="rev">
-                  <div class="rev__head">
-                    <h4 class="rev__title">Review</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit representative">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
-                  </div>
-                  <div class="rev__read">
-                    <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-customers"/></svg>
-                      <span class="rev__text"><b>Serdar Orman</b>21-06-2000 &middot; BSN &lowast;&lowast;&lowast;&lowast;&lowast;6477 &middot; +31 6 14522453 &middot; serdarorman74@gmail.com</span>
-                    </div>
-                    <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-pin"/></svg>
-                      <span class="rev__text"><b>Residential address</b>Lusthofstraat 27A, 3062 WB Rotterdam, Netherlands</span>
-                    </div>
-                  </div>
-                  <div class="rev__form" hidden>
-                    <div class="field-row">
-                      <div class="field">
-                        <label class="label" for="rev-first">First name</label>
-                        <input class="input" id="rev-first" type="text" value="Serdar" />
-                      </div>
-                      <div class="field">
-                        <label class="label" for="rev-last">Last name</label>
-                        <input class="input" id="rev-last" type="text" value="Orman" />
-                      </div>
-                    </div>
-                    <div class="field">
-                      <span class="label" id="rev-dob-label">Date of birth</span>
-                      <div class="dob" role="group" aria-labelledby="rev-dob-label">
-                        <label class="sr-only" for="rev-dd">Day</label>
-                        <input class="input dob__part" id="rev-dd" type="text" inputmode="numeric" maxlength="2" value="21" />
-                        <label class="sr-only" for="rev-mm">Month</label>
-                        <input class="input dob__part" id="rev-mm" type="text" inputmode="numeric" maxlength="2" value="06" />
-                        <label class="sr-only" for="rev-yyyy">Year</label>
-                        <input class="input dob__part dob__part--year" id="rev-yyyy" type="text" inputmode="numeric" maxlength="4" value="2000" />
-                      </div>
-                    </div>
-                    <div class="field">
-                      <label class="label" for="rev-bsn">Citizen service number (BSN)</label>
-                      <input class="input" id="rev-bsn" type="text" inputmode="numeric" maxlength="9" value="123456477" />
-                    </div>
-                    <div class="field">
-                      <label class="label" for="rev-mail">Email</label>
-                      <input class="input" id="rev-mail" type="email" value="serdarorman74@gmail.com" />
-                    </div>
-                    <div class="field">
-                      <label class="label" for="rev-repphone">Phone number</label>
-                      <div class="phone">
-                        <label class="sr-only" for="rev-dial4">Country calling code</label>
-                        <select class="input phone__code" id="rev-dial4">
-                          <option>NL +31</option><option>BE +32</option><option>DE +49</option>
-                        </select>
-                        <input class="input phone__nr" id="rev-repphone" type="tel" value="6 14522453" />
-                      </div>
-                    </div>
-                    <h5 class="rev__sub">Residential address</h5>
-                    <div class="field">
-                      <label class="label" for="rev-street3">Street and house number</label>
-                      <input class="input" id="rev-street3" type="text" value="Lusthofstraat 27A" />
-                    </div>
-                    <div class="field-row">
-                      <div class="field">
-                        <label class="label" for="rev-zip3">Postal code</label>
-                        <input class="input" id="rev-zip3" type="text" value="3062 WB" />
-                      </div>
-                      <div class="field">
-                        <label class="label" for="rev-city3">City</label>
-                        <input class="input" id="rev-city3" type="text" value="Rotterdam" />
-                      </div>
-                    </div>
-                    <div class="rev__acts">
-                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
-                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
-                    </div>
-                  </div>
-                </div>
-
-                <h4 class="card__subtitle">Confirm your identity</h4>
-                <p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>
-                <div class="rows">
-                  <div class="row row--static" data-doc="residence">
-                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="row__text"><span class="row__title">Residential address document</span><span class="row__meta" data-doc-file hidden></span></span>
-                    <span class="docrow__name" data-doc-name hidden></span>
-                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
-                  </div>
-                  <div class="row row--static" data-doc="identity">
-                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="row__text"><span class="row__title">Identity document</span><span class="row__meta" data-doc-file hidden></span></span>
                     <span class="docrow__name" data-doc-name hidden></span>
                     <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
@@ -5794,6 +5671,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=233"></script>
+  <script src="app.js?v=234"></script>
 </body>
 </html>

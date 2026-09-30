@@ -3184,6 +3184,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .bankform { margin-top: 14px; }
 .bankform .docup { margin-top: 18px; }
 .acct__mark--bank { background: var(--gray-100); color: var(--text-muted); }
+/* Een sectie zonder eigen kleur: grijs vlakje met het icoon erin. */
+.acct__mark--soft { background: var(--gray-100); color: var(--text-muted); }
+.acct__mark--soft .icon { width: 18px; height: 18px; }
 .acct__mark--bank .icon { width: 18px; height: 18px; }
 /* De link naar de overeenkomst leest als een bestand, dus met het icoon ervoor. */
 .agreement { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 500; }

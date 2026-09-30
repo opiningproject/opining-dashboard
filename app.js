@@ -2296,6 +2296,16 @@
         bestand: FOTO,
         regel: "Must be clear, complete, in color, and uncropped.",
         regelLink: "See this page for guidance on submitting photo IDs."
+      },
+      statement: {
+        titel: "Upload bank statement",
+        lead: "Upload a recent statement that includes these exact details:",
+        label: "Bank statement",
+        uitleg: "A statement of the business account we pay out to, no older than three months.",
+        gegevens: [["Account holder", "Opining"], ["IBAN", "NL59 INGB 0102 9917 15"]],
+        keuzes: [{ naam: "Bank statement" }, { naam: "Screenshot from online banking" }],
+        bestand: MET_PDF,
+        regel: SCHERP
       }
     };
 
@@ -3832,79 +3842,147 @@
     function letters(voor, achter) {
       return ((voor.charAt(0) || "") + (achter.charAt(0) || "")).toUpperCase() || "?";
     }
-
     /* ---- Betrokkenen in de samenvatting ------------------------------------
-       Stap 7 toont de vertegenwoordiger van huis uit; iedereen die er in stap 3
-       bij komt krijgt daaronder een eigen blok, in dezelfde stijl. Ze worden
-       opnieuw opgebouwd zodra je de stap opent, dus ze lopen nooit achter op
-       de lijst. */
+       Stap 7 heeft een eigen sectie voor de mensen achter de zaak. */
     function tekstDatum(waarde) {
-      var d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(waarde || "");
+      var d = /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.exec(waarde || "");
       return d ? d[3] + "-" + d[2] + "-" + d[1] : (waarde || "");
     }
 
-    function zetOverzichtPersonen() {
-      var terms = document.querySelector(".wiz__terms");
-      if (!terms) return;
-      terms.parentNode.querySelectorAll("[data-review-person]").forEach(function (oud) {
-        oud.remove();
-      });
-      /* De eenmanszaak heeft geen lijst met betrokkenen. */
-      if (alleenEigenaar()) return;
+    /* De betrokkenen in de samenvatting: een eigen sectie met een blok per
+       persoon. Bij een eenmanszaak komt die ene persoon uit de kaart van de
+       vertegenwoordiger, bij een BV uit de lijst van stap 3. De sectie wordt
+       opnieuw opgebouwd zodra je de stap opent, dus hij loopt nooit achter. */
+    function tekstVeld(id) {
+      var el = document.getElementById(id);
+      return el ? el.value.trim() : "";
+    }
 
-      lijst.querySelectorAll("[data-person]").forEach(function (vak, i) {
-        if (vak.hasAttribute("data-person-self") || vak.hasAttribute("data-person-new")) return;
+    function eigenaarAlsPersoon() {
+      var dag = tekstVeld("rep-dd"), maand = tekstVeld("rep-mm"), jaar = tekstVeld("rep-yyyy");
+      return {
+        naam: [tekstVeld("rep-first"), tekstVeld("rep-last")].filter(Boolean).join(" "),
+        voor: tekstVeld("rep-first"),
+        achter: tekstVeld("rep-last"),
+        geboren: (dag && maand && jaar) ? dag + "-" + maand + "-" + jaar : "",
+        nat: "",
+        adres: [tekstVeld("rep-street"),
+                [tekstVeld("rep-zip"), tekstVeld("rep-city")].filter(Boolean).join(" "),
+                tekstVeld("rep-country")].filter(Boolean).join(", "),
+        rol: "Owner",
+        zelf: true,
+        vak: null
+      };
+    }
+
+    function lijstAlsPersonen() {
+      return [].map.call(lijst.querySelectorAll("[data-person]:not([data-person-new])"), function (vak) {
         var g = vak.dataset;
-        var naam = g.personName || "";
-        var kaart = document.createElement("div");
-        var id = "review-person-" + (i + 1);
-        kaart.className = "card card--flush";
-        kaart.setAttribute("data-step", "7");
-        kaart.setAttribute("data-review-person", "");
-        kaart.hidden = true;
-        kaart.innerHTML =
-          '<button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="' + id + '">' +
-            '<span class="acct__mark acct__mark--person" aria-hidden="true"></span>' +
-            '<span class="acct__text"><span class="acct__name"></span>' +
-            '<span class="acct__role"></span></span>' +
-            '<span class="badge badge--active u-normal">Ready to submit</span>' +
-            '<span class="badge badge--muted u-update">Done</span>' +
-            '<svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>' +
-          '</button>' +
-          '<div class="acct" id="' + id + '"><div class="rev"><div class="rev__head">' +
-            '<h4 class="rev__title">Review</h4>' +
-            '<button class="icon-btn rev__pen" type="button" data-review-edit>' +
-              '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>' +
-          '</div><div class="rev__read">' +
-            '<div class="rev__line"><svg class="icon rev__icon" aria-hidden="true"><use href="#i-customers"/></svg>' +
-              '<span class="rev__text"><b data-r-naam></b><span data-r-persoon></span></span></div>' +
-            '<div class="rev__line"><svg class="icon rev__icon" aria-hidden="true"><use href="#i-pin"/></svg>' +
-              '<span class="rev__text"><b>Residential address</b><span data-r-adres></span></span></div>' +
-          '</div></div></div>';
-
-        kaart.querySelector(".acct__mark").textContent =
-          letters(g.personFirst || "", g.personLast || "");
-        kaart.querySelector(".acct__name").textContent = naam;
-        kaart.querySelector(".acct__role").textContent =
-          persoonRegel(g.personUbo, g.personPct, g.personSign);
-        kaart.querySelector(".rev__pen").setAttribute("aria-label", "Edit " + naam);
-        kaart.querySelector("[data-r-naam]").textContent = naam;
-        kaart.querySelector("[data-r-persoon]").textContent =
-          [tekstDatum(g.personDob), g.personNat].filter(Boolean).join(" · ");
-        kaart.querySelector("[data-r-adres]").textContent =
-          [[g.personStreet, g.personNr].filter(Boolean).join(" "),
-           [g.personZip, g.personCity].filter(Boolean).join(" "),
-           g.personCountry].filter(Boolean).join(", ");
-        /* Het potlood brengt je terug naar stap 3, bij die persoon. De wizard
-           luistert naar dit bericht; die code staat elders in dit bestand. */
-        kaart.querySelector("[data-review-edit]").addEventListener("click", function () {
-          document.dispatchEvent(new CustomEvent("wiz-ga", { detail: 3 }));
-          openPersoon(vak);
-          vak.scrollIntoView({ block: "center" });
-        });
-
-        terms.parentNode.insertBefore(kaart, terms);
+        return {
+          naam: g.personName || "",
+          voor: g.personFirst || "",
+          achter: g.personLast || "",
+          geboren: tekstDatum(g.personDob),
+          nat: g.personNat || "",
+          adres: [[g.personStreet, g.personNr].filter(Boolean).join(" "),
+                  [g.personZip, g.personCity].filter(Boolean).join(" "),
+                  g.personCountry].filter(Boolean).join(", "),
+          rol: persoonRegel(g.personUbo, g.personPct, g.personSign),
+          zelf: vak.hasAttribute("data-person-self"),
+          vak: vak
+        };
       });
+    }
+
+    /* De documenten horen bij degene die tekent: die moet zich legitimeren. */
+    var IDENTITEIT =
+      '<h4 class="card__subtitle">Confirm your identity</h4>' +
+      '<p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>' +
+      '<div class="rows">' +
+        '<div class="row row--static" data-doc="residence">' +
+          '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
+          '<span class="row__text"><span class="row__title">Residential address document</span>' +
+          '<span class="row__meta" data-doc-file hidden></span></span>' +
+          '<span class="docrow__name" data-doc-name hidden></span>' +
+          '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
+        '</div>' +
+        '<div class="row row--static" data-doc="identity">' +
+          '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
+          '<span class="row__text"><span class="row__title">Identity document</span>' +
+          '<span class="row__meta" data-doc-file hidden></span></span>' +
+          '<span class="docrow__name" data-doc-name hidden></span>' +
+          '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
+        '</div>' +
+      '</div>';
+
+    function persoonBlok(p) {
+      var vak = document.createElement("div");
+      vak.className = "rev";
+      vak.innerHTML =
+        '<div class="rev__head"><h4 class="rev__title"></h4>' +
+          '<button class="icon-btn rev__pen" type="button" data-review-edit>' +
+            '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button></div>' +
+        '<div class="rev__read">' +
+          '<div class="rev__line"><svg class="icon rev__icon" aria-hidden="true"><use href="#i-customers"/></svg>' +
+            '<span class="rev__text"><b data-r-naam></b><span data-r-persoon></span></span></div>' +
+          '<div class="rev__line"><svg class="icon rev__icon" aria-hidden="true"><use href="#i-pin"/></svg>' +
+            '<span class="rev__text"><b>Residential address</b><span data-r-adres></span></span></div>' +
+          '<div class="rev__line"><svg class="icon rev__icon" aria-hidden="true"><use href="#i-list"/></svg>' +
+            '<span class="rev__text"><b>Involvement</b><span data-r-rol></span></span></div>' +
+        '</div>';
+
+      vak.querySelector(".rev__title").textContent = p.zelf ? p.naam + " (you)" : p.naam;
+      vak.querySelector(".rev__pen").setAttribute("aria-label", "Edit " + p.naam);
+      vak.querySelector("[data-r-naam]").textContent = p.naam;
+      vak.querySelector("[data-r-persoon]").textContent =
+        [p.geboren, p.nat].filter(Boolean).join(" · ");
+      vak.querySelector("[data-r-adres]").textContent = p.adres;
+      vak.querySelector("[data-r-rol]").textContent = p.rol;
+
+      /* Het potlood brengt je terug naar stap 3, bij die persoon. */
+      vak.querySelector("[data-review-edit]").addEventListener("click", function () {
+        document.dispatchEvent(new CustomEvent("wiz-ga", { detail: 3 }));
+        if (p.vak) { openPersoon(p.vak); p.vak.scrollIntoView({ block: "center" }); }
+      });
+      return vak;
+    }
+
+    function zetOverzichtPersonen() {
+      var uitbetaling = document.getElementById("review-payout");
+      var anker = uitbetaling ? uitbetaling.closest(".card") : document.querySelector(".wiz__terms");
+      if (!anker) return;
+      var oud = document.querySelector("[data-review-people]");
+      if (oud) oud.remove();
+
+      var mensen = alleenEigenaar() ? [eigenaarAlsPersoon()] : lijstAlsPersonen();
+      mensen = mensen.filter(function (p) { return p.naam; });
+      if (!mensen.length) return;
+
+      var kaart = document.createElement("div");
+      kaart.className = "card card--flush";
+      kaart.setAttribute("data-step", "7");
+      kaart.setAttribute("data-review-people", "");
+      kaart.hidden = true;
+      kaart.innerHTML =
+        '<button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-people">' +
+          '<span class="acct__mark acct__mark--person" aria-hidden="true"></span>' +
+          '<span class="acct__text"><span class="acct__name">People involved</span>' +
+          '<span class="acct__role"></span></span>' +
+          '<span class="badge badge--active u-normal">Ready to submit</span>' +
+          '<span class="badge badge--muted u-update">Done</span>' +
+          '<svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>' +
+        '</button><div class="acct" id="review-people"></div>';
+
+      kaart.querySelector(".acct__mark").textContent = letters(mensen[0].voor, mensen[0].achter);
+      kaart.querySelector(".acct__role").textContent = mensen.length === 1
+        ? mensen[0].naam : mensen.length + " people";
+
+      var body = kaart.querySelector(".acct");
+      mensen.forEach(function (p) { body.appendChild(persoonBlok(p)); });
+      /* De legitimatie hoort bij de eerste: die tekent de overeenkomst. */
+      body.insertAdjacentHTML("beforeend", IDENTITEIT);
+
+      anker.parentNode.insertBefore(kaart, anker);
     }
 
     document.getElementById("person-save").addEventListener("click", function () {
@@ -4079,6 +4157,54 @@
     });
   }
 
+
+  /* ---- De samenvatting volgt wat er is ingevuld ----------------------------
+     De blokken in stap 7 stonden vol met voorbeeldtekst. Ze lezen nu uit de
+     velden van stap 1 en 2, zodat de ondernemer zijn eigen gegevens terugziet
+     voordat hij de aanvraag verstuurt. */
+  var sumVak = document.querySelector("[data-sum-legal]");
+
+  if (sumVak) {
+    function sumWaarde(id) {
+      var el = document.getElementById(id);
+      return el ? el.value.trim() : "";
+    }
+
+    function sumZet(kies, tekst, terug) {
+      document.querySelectorAll(kies).forEach(function (el) {
+        el.textContent = tekst || terug;
+      });
+    }
+
+    function vulSamenvatting() {
+      var naam = sumWaarde("biz-name");
+      var kvk = sumWaarde("biz-kvk");
+      var btw = sumWaarde("biz-vat");
+      var adres = [sumWaarde("biz-street"), sumWaarde("biz-nr")].filter(Boolean).join(" ");
+      var plaats = [sumWaarde("biz-zip"), sumWaarde("biz-city")].filter(Boolean).join(" ");
+      var land = sumWaarde("biz-addr-country");
+
+      sumZet("[data-sum-name]", naam, "Your business");
+      sumZet("[data-sum-legal]", sumWaarde("biz-legal"), "Not filled in yet");
+      sumZet("[data-sum-ids]", [kvk ? "KVK " + kvk : "", btw ? "VAT " + btw : ""]
+        .filter(Boolean).join(" · "), "No registration number yet");
+      sumZet("[data-sum-address]", [adres, plaats, land].filter(Boolean).join(", "),
+        "No address yet");
+      sumZet("[data-sum-category]", sumWaarde("act-category"), "Not chosen yet");
+      sumZet("[data-sum-desc]", sumWaarde("act-desc"), "Not described yet");
+    }
+
+    /* Het potlood van een sectie brengt je terug naar de stap waar het
+       gegeven vandaan komt; daar staat het veld al. */
+    document.addEventListener("click", function (e) {
+      var pen = e.target.closest("[data-sum-edit]");
+      if (!pen) return;
+      document.dispatchEvent(new CustomEvent("wiz-ga", { detail: Number(pen.dataset.sumEdit) }));
+    });
+
+    document.addEventListener("wiz-stap", vulSamenvatting);
+    vulSamenvatting();
+  }
   /* ---- De overeenkomst in stap 6 -------------------------------------------
      De eerste alinea van het contract is geen vaste tekst: daar staat de zaak
      in zoals die in stap 1 is ingevuld, met de tekenbevoegde erbij. Zo leest
