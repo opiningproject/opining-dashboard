@@ -4130,44 +4130,36 @@
     if (tekenKnop) {
       var tekenWerk = document.querySelector(".signwork");
       var tekenGedaan = document.querySelector("[data-sign-done]");
+      var tekenKop = document.querySelector("[data-sign-title]");
       var tekenLead = document.querySelector("[data-sign-lead]");
       var merk = contract.querySelector("[data-sign-mark]");
-      var leadOpen = tekenLead.textContent;
 
+      /* Tekenen is eenmalig: terugdraaien kan niet, want dan is de
+         handtekening niets meer waard. De stap sluit zichzelf af. */
       function zetHandtekening(naam) {
         var datum = vandaag();
-        var plaats = waarde("biz-city");
         merk.textContent = naam;
-        merk.hidden = !naam;
+        merk.hidden = false;
         zetTekst("[data-sign-name]", naam, "");
-        zetTekst("[data-sign-date]", naam ? datum : "", "");
-        zetTekst("[data-sign-place]", naam ? plaats : "", "");
+        zetTekst("[data-sign-date]", datum, "");
+        zetTekst("[data-sign-place]", waarde("biz-city"), "");
 
-        /* Getekend is klaar: het invulwerk gaat dicht en er blijft een regel
-           over die zegt dat het stuk de deur uit is. */
-        tekenWerk.hidden = !!naam;
-        tekenGedaan.hidden = !naam;
-        tekenLead.textContent = naam
-          ? "The agreement has been signed and sent. We check it and let you know as soon as it is approved."
-          : leadOpen;
-        if (naam) {
-          tekenGedaan.querySelector("[data-signed-who]").textContent = naam;
-          tekenGedaan.querySelector("[data-signed-when]").textContent = datum;
-        }
-        /* Zolang er getekend is hoort de naam niet meer te veranderen. */
-        tekenNaam.readOnly = !!naam;
-        if (!naam) zetTekenKlaar();
+        /* Het invulwerk gaat dicht; er blijft een regel over die zegt dat het
+           stuk de deur uit is. */
+        tekenWerk.hidden = true;
+        tekenGedaan.hidden = false;
+        tekenKop.textContent = "The agreement is signed and on its way.";
+        tekenLead.textContent = "We check it and let you know as soon as it is approved. "
+          + "You can go on to the summary.";
+        tekenGedaan.querySelector("[data-signed-who]").textContent = naam;
+        tekenGedaan.querySelector("[data-signed-when]").textContent = datum;
+        tekenNaam.readOnly = true;
       }
 
       tekenKnop.addEventListener("click", function () {
         if (!tekenMag()) return;
         zetHandtekening(tekenNaam.value.trim());
         showToast("Agreement signed and sent");
-      });
-
-      document.getElementById("sign-undo").addEventListener("click", function () {
-        zetHandtekening("");
-        tekenNaam.focus();
       });
 
       /* De knop volgt de velden: de naam hierboven en de stukken die je

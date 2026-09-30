@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=229" />
+  <link rel="stylesheet" href="styles.css?v=230" />
 </head>
 <body>
 
@@ -2904,7 +2904,7 @@
                  wat er in stap 1 en 3 is ingevuld; daaronder legitimeer je je
                  en teken je met je naam. -->
             <div class="card" data-step="6" hidden>
-              <h3 class="card__title">Almost done. Review and sign the agreement.</h3>
+              <h3 class="card__title" data-sign-title>Almost done. Review and sign the agreement.</h3>
               <p class="card__sub" data-sign-lead>The first section is filled in with the details you entered. Read the agreement, confirm your identity and sign with your name.</p>
 
               <!-- Alles wat je invult zit in een omslag. Zodra er getekend is
@@ -3055,7 +3055,6 @@
                     <span class="row__meta">Signed by <b data-signed-who></b> on <span data-signed-when></span></span>
                   </span>
                   <span class="badge badge--active">Sent</span>
-                  <button class="btn btn--ghost btn--sm" type="button" id="sign-undo">Undo</button>
                 </div>
               </div>
             </div>
@@ -5785,6 +5784,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=229"></script>
+  <script src="app.js?v=230"></script>
 </body>
 </html>
