@@ -2267,14 +2267,48 @@
     var SCHERP = "Must be clear, complete and uncropped. Avoid grayscale scans and photos of photos.";
     var TWEE = ["Front", "Back"];
 
+    /* De gegevens die op een stuk moeten staan komen uit de wizard, dus ze
+       worden pas opgehaald als je het venster opent. */
+    function zaakGegevens() {
+      var naam = document.getElementById("biz-name");
+      var kvk = document.getElementById("biz-kvk");
+      var adres = document.querySelector("[data-sum-address]");
+      return {
+        naam: (naam && naam.value.trim()) || "Your business",
+        kvk: (kvk && kvk.value.trim()) || KVK,
+        adres: (adres && adres.textContent.trim()) || ADRES
+      };
+    }
+
     var DOC_SOORTEN = {
       business: {
-        titel: "Upload business document",
+        titel: "Upload Chamber of Commerce extract",
         lead: "Upload a valid government-issued document that includes these exact details:",
-        label: "Business document",
-        uitleg: "An official document from the Chamber of Commerce or the tax authority that shows the details above.",
-        gegevens: [["Registered name", "Opining"], ["Chamber of Commerce registration number (KVK)", KVK], ["Address", ADRES]],
-        keuzes: [{ naam: "Chamber of Commerce extract (KVK)" }, { naam: "Articles of association" }, { naam: "VAT registration certificate" }],
+        label: "Chamber of Commerce extract",
+        uitleg: "An extract from the Chamber of Commerce that shows the details above, no older than three months.",
+        gegevens: function () {
+          var z = zaakGegevens();
+          return [["Registered name", z.naam], ["Chamber of Commerce registration number (KVK)", z.kvk],
+                  ["Address", z.adres]];
+        },
+        keuzes: [{ naam: "Chamber of Commerce extract (KVK)" }, { naam: "Articles of association" },
+                 { naam: "VAT registration certificate" }],
+        standaard: "Chamber of Commerce extract (KVK)",
+        bestand: MET_PDF,
+        regel: SCHERP
+      },
+      ubo: {
+        titel: "Upload UBO register extract",
+        lead: "Upload the extract that includes these exact details:",
+        label: "UBO register extract",
+        uitleg: "The extract from the UBO register that shows who the ultimate beneficial owners are. "
+              + "A sole proprietorship is not in that register, so it is not asked there.",
+        gegevens: function () {
+          var z = zaakGegevens();
+          return [["Registered name", z.naam], ["Chamber of Commerce registration number (KVK)", z.kvk]];
+        },
+        keuzes: [{ naam: "UBO register extract" }],
+        standaard: "UBO register extract",
         bestand: MET_PDF,
         regel: SCHERP
       },
@@ -3727,11 +3761,6 @@
       document.querySelectorAll('[data-people="multi"]').forEach(function (kaart) {
         kaart.dataset.off = enkel ? "ja" : "";
       });
-      /* Het UBO-register bestaat alleen voor een rechtspersoon; een
-         eenmanszaak hoeft dat stuk dus niet aan te leveren. */
-      document.querySelectorAll("[data-ubo-doc]").forEach(function (vak) {
-        vak.hidden = enkel;
-      });
     }
 
     rechtsvorm.addEventListener("change", function () {
@@ -3957,7 +3986,7 @@
 
       var kaart = document.createElement("div");
       kaart.className = "card card--flush";
-      kaart.setAttribute("data-step", "7");
+      kaart.setAttribute("data-step", "6");
       kaart.setAttribute("data-review-people", "");
       kaart.hidden = true;
       kaart.innerHTML =
@@ -3988,6 +4017,19 @@
           openPersoon(null);
         });
         body.appendChild(bij);
+
+        /* Het UBO-register bestaat alleen voor een rechtspersoon; het
+           uittreksel hoort bij de mensen die erin staan. */
+        body.insertAdjacentHTML("beforeend",
+          '<h4 class="card__subtitle">Verification</h4>' +
+          '<p class="card__sub">The extract that shows who the ultimate beneficial owners are.</p>' +
+          '<div class="rows"><div class="row row--static" data-doc="ubo">' +
+            '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
+            '<span class="row__text"><span class="row__title">UBO register extract</span>' +
+            '<span class="row__meta" data-doc-file hidden></span></span>' +
+            '<span class="docrow__name" data-doc-name hidden></span>' +
+            '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
+          '</div></div>');
       }
 
       anker.parentNode.insertBefore(kaart, anker);

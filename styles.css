@@ -498,8 +498,12 @@ legend { padding: 0; }
    zonder deze twee regels liep de betaal-wizard op iOS buiten beeld. */
 select { min-width: 0; max-width: 100%; }
 /* Een datumveld doet in Safari hetzelfde: het houdt een eigen minimumbreedte
-   aan die breder is dan het vak eromheen, en steekt dan buiten de kaart. */
-input[type="date"], input[type="time"] { min-width: 0; max-width: 100%; }
+   aan die breder is dan het vak eromheen, en steekt dan buiten de kaart.
+   Zonder appearance: none blijft die minimumbreedte gelden. */
+input[type="date"], input[type="time"] {
+  min-width: 0; max-width: 100%; width: 100%;
+  appearance: none; -webkit-appearance: none;
+}
 
 /* Tussenkop binnen een kaart: begint een nieuw onderwerp binnen dezelfde
    kaart. Even groot als de kaarttitel, met genoeg lucht erboven om als
