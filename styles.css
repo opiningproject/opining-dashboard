@@ -3226,6 +3226,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* De overeenkomst in het venster: zelfde vak, maar het mag hoger zijn omdat
    er verder weinig in het venster staat. */
 .dialog .contract { max-height: 46vh; }
+/* Onder het contract begint het tekenen; dat mag lucht erboven hebben. */
+.dialog .contract + .field { margin-top: 22px; }
 .dialog__foot.signbar { justify-content: flex-end; }
 .dialog__foot.signbar .signbar__note { margin-right: auto; max-width: 60%; }
 
@@ -3259,12 +3261,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   transform-origin: left bottom;
 }
 .sign__mark[hidden] { display: block; visibility: hidden; }
-/* PAY tekent pas nadat het stuk is opgestuurd; daar staat dus geen naam maar
-   een regel die zegt wat er gaat gebeuren. */
-.sign__mark--wait {
-  font-family: inherit; font-size: var(--fs-sm); font-style: italic;
-  line-height: 42px; color: var(--text-muted); transform: none;
-}
 .sign__facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 10px; margin-top: 12px; }
 .sign__facts dt { font-style: italic; color: var(--text-muted); }
 .sign__facts dd {

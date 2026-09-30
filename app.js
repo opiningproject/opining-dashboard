@@ -4365,7 +4365,9 @@
 
       zetTekst("[data-ct-name]", naam.toUpperCase(), "YOUR BUSINESS");
       zetTekst("[data-ct-city]", stad, "your city");
-      zetTekst("[data-ct-address]", [adres, stad].filter(Boolean).join(", "), "your business address");
+      /* Alleen straat en huisnummer: de plaats staat al in "established in",
+         anders zou die er twee keer staan. */
+      zetTekst("[data-ct-address]", adres, "your business address");
       zetTekst("[data-ct-kvk]", waarde("biz-kvk"), "your Chamber of Commerce number");
       zetTekst("[data-ct-rep]", teken.toUpperCase(), "THE ACCOUNT REPRESENTATIVE");
 
