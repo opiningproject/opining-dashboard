@@ -2167,9 +2167,13 @@
     var knop = document.getElementById("wiz-next");
     if (!wizVak || !knop) return;
     if (!wizVak.classList.contains("is-update")) { knop.disabled = false; return; }
-    var stuk = wizVak.querySelector("[data-doc=\"business\"] [data-doc-file]");
+    /* Opnieuw versturen mag zodra elk gevraagd stuk er is en de gegevens
+       opnieuw zijn opgeslagen. Welke stukken dat zijn hangt van de stap af,
+       dus we kijken naar de regels die er staan. */
+    var stukken = wizVak.querySelectorAll("[data-doc] [data-doc-file]");
+    var compleet = [].every.call(stukken, function (el) { return !el.hidden; });
     knop.textContent = "Submit information";
-    knop.disabled = !(stuk && !stuk.hidden && wizVak.dataset.bijgewerkt === "ja");
+    knop.disabled = !(compleet && wizVak.dataset.bijgewerkt === "ja");
   }
 
   document.addEventListener("click", function (e) {
@@ -2301,9 +2305,17 @@
         titel: "Upload bank statement",
         lead: "Upload a recent statement that includes these exact details:",
         label: "Bank statement",
-        uitleg: "A statement of the business account we pay out to, no older than three months.",
-        gegevens: [["Account holder", "Opining"], ["IBAN", "NL59 INGB 0102 9917 15"]],
+        uitleg: "A statement of the business account we pay out to, from the last three months.",
+        /* De gegevens komen uit wat er is ingevuld, dus ze worden pas bij het
+           openen van het venster opgehaald. */
+        gegevens: function () {
+          var houder = document.getElementById("bank-holder-shown");
+          var adres = document.querySelector("[data-sum-address]");
+          return [["Account holder", (houder && houder.textContent.trim()) || "Your business"],
+                  ["Business address", (adres && adres.textContent.trim()) || ADRES]];
+        },
         keuzes: [{ naam: "Bank statement" }, { naam: "Screenshot from online banking" }],
+        standaard: "Bank statement",
         bestand: MET_PDF,
         regel: SCHERP
       }
@@ -2413,7 +2425,10 @@
 
       var feiten = doc("doc-facts");
       feiten.textContent = "";
-      docSoort.gegevens.forEach(function (paar) {
+      /* Sommige stukken lezen hun gegevens uit de pagina, andere staan vast. */
+      var feitenLijst = typeof docSoort.gegevens === "function"
+        ? docSoort.gegevens() : docSoort.gegevens;
+      feitenLijst.forEach(function (paar) {
         var blok = document.createElement("div");
         var dt = document.createElement("dt");
         var dd = document.createElement("dd");
@@ -2426,7 +2441,10 @@
       var keuze = doc("doc-type");
       keuze.length = 1;
       docSoort.keuzes.forEach(function (k) { keuze.add(new Option(k.naam, k.naam)); });
-      keuze.value = "";
+      /* Staat er een vaste keuze bij, dan is die al gemaakt: bij een
+         bankafschrift valt er weinig te kiezen. */
+      keuze.value = docSoort.standaard || "";
+      keuze.dispatchEvent(new Event("change"));
 
       doc("doc-note").hidden = !docSoort.notitie;
       doc("doc-note-text").textContent = docSoort.notitie || "";
@@ -3894,27 +3912,6 @@
       });
     }
 
-    /* De documenten horen bij degene die tekent: die moet zich legitimeren. */
-    var IDENTITEIT =
-      '<h4 class="card__subtitle">Confirm your identity</h4>' +
-      '<p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>' +
-      '<div class="rows">' +
-        '<div class="row row--static" data-doc="residence">' +
-          '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
-          '<span class="row__text"><span class="row__title">Residential address document</span>' +
-          '<span class="row__meta" data-doc-file hidden></span></span>' +
-          '<span class="docrow__name" data-doc-name hidden></span>' +
-          '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
-        '</div>' +
-        '<div class="row row--static" data-doc="identity">' +
-          '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
-          '<span class="row__text"><span class="row__title">Identity document</span>' +
-          '<span class="row__meta" data-doc-file hidden></span></span>' +
-          '<span class="docrow__name" data-doc-name hidden></span>' +
-          '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
-        '</div>' +
-      '</div>';
-
     function persoonBlok(p) {
       var vak = document.createElement("div");
       vak.className = "rev";
@@ -3979,8 +3976,19 @@
 
       var body = kaart.querySelector(".acct");
       mensen.forEach(function (p) { body.appendChild(persoonBlok(p)); });
-      /* De legitimatie hoort bij de eerste: die tekent de overeenkomst. */
-      body.insertAdjacentHTML("beforeend", IDENTITEIT);
+      /* Er kan er altijd iemand bij; dat gebeurt in stap 3, waar de velden
+         staan. Een eenmanszaak heeft maar een eigenaar, dus daar niet. */
+      if (!alleenEigenaar()) {
+        var bij = document.createElement("button");
+        bij.className = "addrow";
+        bij.type = "button";
+        bij.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add person';
+        bij.addEventListener("click", function () {
+          document.dispatchEvent(new CustomEvent("wiz-ga", { detail: 3 }));
+          openPersoon(null);
+        });
+        body.appendChild(bij);
+      }
 
       anker.parentNode.insertBefore(kaart, anker);
     }
