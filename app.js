@@ -3855,7 +3855,7 @@
       persoonRij = vak || null;
       vulVelden(vak, !vak);
 
-      document.getElementById("person-form-title").hidden = true;
+      document.getElementById("person-form-head").textContent = "Personal details";
       document.querySelector("[data-person-remove]").hidden = true;
       document.querySelector("[data-person-cancel]").hidden = true;
       document.getElementById("person-save").hidden = true;
@@ -3885,16 +3885,16 @@
       var nieuw = vak.hasAttribute("data-person-new");
       vulVelden(vak, nieuw);
 
-      var kop = document.getElementById("person-form-title");
-      kop.textContent = vak.dataset.personName ? "Details of " + vak.dataset.personName : "Add person";
+      /* De tussenkop zegt wat je aan het doen bent: iemand erbij zetten, of
+         de gegevens van iemand die er al staat nalopen. */
+      document.getElementById("person-form-head").textContent =
+        nieuw ? "Add involved person" : "Personal details";
       persoonVak.classList.remove("persform--kaal");
       document.getElementById("person-save").hidden = false;
 
       /* De regel blijft staan waar hij staat: de velden komen eronder, zodat
-         je ziet wie je aan het bewerken bent. De kop in het veldenvak is dan
-         dubbelop, dus die blijft weg. */
+         je ziet wie je aan het bewerken bent. */
       var lees = vak.querySelector(".persrow__read");
-      kop.hidden = !!lees;
       /* Het potlood is even weg; opslaan of annuleren staat onder de velden. */
       var pen = lees && lees.querySelector("[data-person-edit]");
       if (pen) pen.hidden = true;

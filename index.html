@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=242" />
+  <link rel="stylesheet" href="styles.css?v=243" />
 </head>
 <body>
 
@@ -2478,10 +2478,9 @@
                    bewerkt, of naar een nieuw vak onderaan de lijst. Zo staan
                    de velden nooit dubbel in de pagina. -->
               <div class="persform" id="person-form" hidden>
-                <div class="rev__head">
-                  <h4 class="rev__title" id="person-form-title">Add person</h4>
-                </div>
-                <h4 class="card__subtitle card__subtitle--first">Personal details</h4>
+                <!-- De eerste tussenkop zegt waar je mee bezig bent: je eigen
+                     gegevens, of iemand die je erbij zet. -->
+                <h4 class="card__subtitle card__subtitle--first" id="person-form-head">Personal details</h4>
                 <div class="field-row">
                   <div class="field">
                     <label class="label" for="person-first">First name</label>
@@ -5609,6 +5608,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=242"></script>
+  <script src="app.js?v=243"></script>
 </body>
 </html>

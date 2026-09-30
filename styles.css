@@ -3193,7 +3193,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .bankform { margin-top: 14px; }
 /* De eerste keer is het geen apart vak: de velden staan in de kaart zelf,
    zonder kader, zonder kop en zonder eigen knoppen. Next gaat al verder. */
-.bankform--kaal { margin-top: 0; padding: 0; border: 0; background: none; }
+.bankform--kaal { margin-top: 16px; padding: 0; border: 0; background: none; }
 .bankform--kaal .rev__acts { display: none; }
 .bankform .docup { margin-top: 18px; }
 .acct__mark--bank { background: var(--gray-100); color: var(--text-muted); }
