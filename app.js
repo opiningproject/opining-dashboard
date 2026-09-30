@@ -4160,6 +4160,10 @@
       if (!alleenEigenaar() && persoonVak.classList.contains("persform--kaal")
           && !persoonVak.hidden) {
         bewaarPersoon(true);
+      } else if (persoonRij) {
+        /* Een vak dat je openliet en niet opsloeg is geen betrokkene: pas als
+           je echt iemand toevoegt hoort er een regel te staan. */
+        sluitPersoon();
       }
       zetOverzichtPersonen();
       if (e.detail === 3 && !alleenEigenaar()) openZelf();
