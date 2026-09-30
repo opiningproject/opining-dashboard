@@ -4035,7 +4035,9 @@
 
       var kaart = document.createElement("div");
       kaart.className = "card card--flush";
-      kaart.setAttribute("data-step", "6");
+      /* Het stapnummer komt van het blok waar we voor gaan staan, zodat deze
+         sectie altijd bij de samenvatting hoort en niet bij de stap ervoor. */
+      kaart.setAttribute("data-step", anker.dataset.step || "7");
       kaart.setAttribute("data-review-people", "");
       kaart.hidden = true;
       kaart.innerHTML =
