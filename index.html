@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=248" />
+  <link rel="stylesheet" href="styles.css?v=247" />
 </head>
 <body>
 
@@ -2299,15 +2299,17 @@
         <!-- ---------- SETTINGS SUB: online payments onboarding ---------- -->
         <section class="view" data-set-sub="payments-setup" hidden>
           <div class="wiz" id="pay-wiz">
-            <!-- De stappen op een rij, met hun naam erbij: je ziet waar je
-                 bent, wat er al staat en wat er nog komt. Een stap die je
-                 gehad hebt is aanklikbaar. -->
-            <ol class="wsteps" id="wiz-steps"></ol>
+            <div class="wiz__head">
+              <p class="wiz__count">Step <b id="wiz-now">1</b> of <span id="wiz-total">5</span></p>
+              <div class="wiz__track" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" aria-label="Setup progress">
+                <span id="wiz-bar"></span>
+              </div>
+            </div>
 
             <!-- Stap 1 — bedrijfsgegevens. Volgt de onboarding van Pay.nl: één
                  scherm met wie je bent bij de Kamer van Koophandel en waar je
                  staat ingeschreven. -->
-            <div class="card" data-step="1" data-step-name="Business">
+            <div class="card" data-step="1">
               <h3 class="card__title">We need a few more details about your business</h3>
 
               <div class="field">
@@ -2392,7 +2394,7 @@
             <!-- Stap 2 — activiteiten. Pay.nl wil weten in welke hoek je zit en
                  wat je precies verkoopt; die twee bepalen welke betaalmethodes
                  en tarieven mogen. De lijst volgt hun categorieën. -->
-            <div class="card" data-step="2" data-step-name="Activities" hidden>
+            <div class="card" data-step="2" hidden>
               <h3 class="card__title">Tell us a bit more about your business</h3>
 
               <div class="field">
@@ -2469,7 +2471,7 @@
                  de rechtsvorm uit stap 1 welke van de twee je ziet. -->
             <!-- Stap 3 — jezelf. De tekenbevoegde vult hier zijn eigen
                  gegevens in; wie er verder bij hoort komt in de stap erna. -->
-            <div class="card" data-step="3" data-people="multi" data-step-name="Representative" hidden>
+            <div class="card" data-step="3" data-people="multi" hidden>
               <h3 class="card__title">Account representative</h3>
               <p class="card__sub">The account representative signs the agreement on behalf of the business. Start with your own details; anyone else comes in the next step.</p>
               <!-- Dit ene vak met velden verhuist naar de betrokkene die je
@@ -2645,7 +2647,7 @@
             <!-- Stap 4 — de andere betrokkenen. Jezelf staat er al in; hier
                  komen de mensen erbij die ook een belang of tekenbevoegdheid
                  hebben. Een eenmanszaak heeft deze stap niet. -->
-            <div class="card" data-step="4" data-people="multi" data-step-name="People" hidden>
+            <div class="card" data-step="4" data-people="multi" hidden>
               <h3 class="card__title">Which people are involved in your business?</h3>
               <p class="card__sub">
                 Add everyone who is an ultimate beneficial owner (UBO) or an authorised representative of the business.
@@ -2670,7 +2672,7 @@
             </div>
 
             <!-- De eenmanszaak-variant: een eigenaar, geen lijst. -->
-            <div class="card" data-step="3" data-people="single" data-step-name="Representative" hidden>
+            <div class="card" data-step="3" data-people="single" hidden>
               <h3 class="card__title">Account representative</h3>
               <p class="card__sub">The account representative needs to be the owner of the business.</p>
               <div class="field-row">
@@ -2775,7 +2777,7 @@
             <!-- Stap 4 — uitbetaling. Pay.nl laat je de rekening koppelen met
                  een cent-betaling, of met de hand; wij vragen alleen de
                  gegevens, het afschrift komt in de samenvatting. -->
-            <div class="card" data-step="5" data-step-name="Payout" hidden>
+            <div class="card" data-step="5" hidden>
               <h3 class="card__title">Which bank account can we pay out to?</h3>
               <p class="card__sub">This is where we pay out what you earn. It has to be a business account in the name of your business; private accounts are not accepted. We ask for a recent bank statement in the last step.</p>
 
@@ -2817,7 +2819,7 @@
             <!-- Stap 6 — de overeenkomst. De eerste alinea wordt opgemaakt uit
                  wat er in stap 1 en 3 is ingevuld; daaronder legitimeer je je
                  en teken je met je naam. -->
-            <div class="card" data-step="6" data-step-name="Agreement" hidden>
+            <div class="card" data-step="6" hidden>
               <h3 class="card__title" data-sign-title>Almost done. Review and sign the agreement.</h3>
               <p class="card__sub" data-sign-lead>The first section is filled in with the details you entered. Read the agreement, confirm your identity and sign with your name.</p>
 
@@ -2971,7 +2973,7 @@
             <!-- Stap 7 — twee blokken: de zaak en de persoon erachter. Elk
                  gegeven is hier nog te wijzigen: het potlood klapt hetzelfde
                  vakje open als formulier, zodat je de stap niet terug hoeft. -->
-            <div class="card card--flush" data-step="7" data-step-name="Summary" hidden>
+            <div class="card card--flush" data-step="7" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-business">
                 <span class="acct__text">
                   <span class="acct__name" data-sum-name>Your business</span>
@@ -5598,6 +5600,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=248"></script>
+  <script src="app.js?v=247"></script>
 </body>
 </html>

@@ -1920,14 +1920,18 @@
   var resetWiz = null;
 
   if (wiz) {
-    var wizLijst   = document.getElementById("wiz-steps");
+    var wizNu      = document.getElementById("wiz-now");
+    var wizTotaal  = document.getElementById("wiz-total");
+    var wizBalk    = document.getElementById("wiz-bar");
+    var wizTrack   = wizBalk.parentNode;
     var wizVorige  = document.getElementById("wiz-back");
     var wizVolgende = document.getElementById("wiz-next");
     var stap = 1;
 
     /* Welke stappen er zijn hangt van de rechtsvorm af: een eenmanszaak heeft
        maar een betrokkene, dus de stap waarin je er meer toevoegt bestaat daar
-       niet. De reeks wordt daarom elke keer opnieuw bepaald. */
+       niet. De reeks wordt daarom elke keer opnieuw bepaald, en de teller telt
+       de stappen die je werkelijk langsgaat. */
     function wizReeks() {
       var reeks = [];
       wiz.querySelectorAll(".card[data-step]").forEach(function (kaart) {
@@ -1936,60 +1940,6 @@
         if (reeks.indexOf(n) === -1) reeks.push(n);
       });
       return reeks.sort(function (a, b) { return a - b; });
-    }
-
-    /* De naam van een stap staat op de eerste kaart ervan. */
-    function wizNamen() {
-      var namen = {};
-      wiz.querySelectorAll(".card[data-step][data-step-name]").forEach(function (kaart) {
-        if (kaart.dataset.off === "ja") return;
-        if (!namen[kaart.dataset.step]) namen[kaart.dataset.step] = kaart.dataset.stepName;
-      });
-      return namen;
-    }
-
-    /* De rij met stappen opnieuw tekenen: waar je bent, wat je gehad hebt en
-       wat er nog komt. Een stap die je gehad hebt kun je aanklikken. */
-    function tekenStappen() {
-      var reeks = wizReeks();
-      var namen = wizNamen();
-      var nu = reeks.indexOf(stap);
-      wizLijst.textContent = "";
-
-      reeks.forEach(function (s, i) {
-        var gedaan = i < nu;
-        var hier = i === nu;
-        var li = document.createElement("li");
-        li.className = "wstep" + (hier ? " is-now" : "") + (gedaan ? " is-done" : "");
-
-        var knop = document.createElement("button");
-        knop.type = "button";
-        knop.setAttribute("data-wiz-step", s);
-        knop.disabled = !gedaan;
-        if (hier) knop.setAttribute("aria-current", "step");
-
-        var teken = document.createElement("span");
-        teken.className = "wstep__mark";
-        if (gedaan) {
-          teken.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>';
-          knop.setAttribute("aria-label", "Back to step " + (i + 1) + ": " + (namen[s] || ""));
-        } else {
-          teken.textContent = i + 1;
-        }
-
-        var naam = document.createElement("span");
-        naam.className = "wstep__name";
-        naam.textContent = namen[s] || ("Step " + (i + 1));
-
-        knop.append(teken, naam);
-        li.appendChild(knop);
-        wizLijst.appendChild(li);
-      });
-
-      /* Op een smal scherm schuift de rij; de stap waar je bent hoort in
-         beeld te staan. */
-      var actief = wizLijst.querySelector(".is-now");
-      if (actief) wizLijst.scrollLeft = Math.max(0, actief.offsetLeft - 12);
     }
 
     function toonStap(n) {
@@ -2015,7 +1965,11 @@
            die in stap 1 gekozen is. */
         kaart.hidden = anders || kaart.dataset.off === "ja";
       });
-      tekenStappen();
+      wizNu.textContent = i + 1;
+      wizTotaal.textContent = reeks.length;
+      wizBalk.style.width = ((i + 1) / reeks.length * 100) + "%";
+      wizTrack.setAttribute("aria-valuenow", i + 1);
+      wizTrack.setAttribute("aria-valuemax", reeks.length);
       wizVorige.hidden = i === 0;
       /* Laatste stap rondt af in plaats van door te gaan. */
       wizVolgende.textContent = i === reeks.length - 1 ? "Submit for verification" : "Next";
@@ -2029,15 +1983,10 @@
       var reeks = wizReeks();
       var i = reeks.indexOf(stap) + richting;
       if (i >= 0 && i < reeks.length) toonStap(reeks[i]);
+      return i < reeks.length;
     }
 
     wizVorige.addEventListener("click", function () { schuif(-1); });
-
-    /* Terug naar een stap die je gehad hebt. */
-    wizLijst.addEventListener("click", function (e) {
-      var knop = e.target.closest("[data-wiz-step]");
-      if (knop && !knop.disabled) toonStap(Number(knop.dataset.wizStep));
-    });
 
     /* Andersom kan ook: een blok elders vraagt om een stap, bijvoorbeeld het
        potlood in de samenvatting dat je terugbrengt naar de betrokkenen. */
