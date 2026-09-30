@@ -464,7 +464,8 @@ legend { padding: 0; }
 /* Een keuzelijst gevolgd door een veld heeft dezelfde tussenruimte nodig. */
 .choices + .field, .choices + .field-row,
 .choice + .field, .choice + .field-row,
-.card__sub + .field, .card__sub + .field-row { margin-top: 16px; }
+.card__sub + .field, .card__sub + .field-row,
+.card__subtitle + .field, .card__subtitle + .field-row { margin-top: 16px; }
 .field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 /* De regel hierboven mag niet binnen een twee-koloms rij toeslaan, anders
    zakt de rechterkolom een regel omlaag. */

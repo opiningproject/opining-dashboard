@@ -3734,30 +3734,48 @@
     var persoonAnker = persoonVak.nextSibling;
     var persoonKnop = document.querySelector("[data-person-add]");
 
+    /* Zolang er nog niemand staat is er ook geen lijst om aan toe te voegen:
+       je vult eerst je eigen gegevens in, net als bij een eenmanszaak. Pas
+       daarna verschijnt de lijst met de knop eronder. */
+    function heeftBetrokkenen() {
+      return !!lijst.querySelector("[data-person]:not([data-person-new])");
+    }
+
+    function zetLijstStand() {
+      var er = heeftBetrokkenen();
+      lijst.hidden = !er;
+      persoonKnop.hidden = !er || !!persoonRij;
+    }
+
     /* Bewerken gebeurt in het vakje van die persoon zelf: de regel maakt
        plaats voor de velden, net als de blokken in de samenvatting. Een
-       nieuwe betrokkene krijgt een leeg vak onderaan de lijst. */
+       nieuwe betrokkene krijgt een leeg vak onderaan de lijst; de eerste
+       vult gewoon de kaart, want er is nog geen lijst. */
     function openPersoon(vak) {
       if (persoonRij) sluitPersoon();
-      if (!vak) {
+      var eerste = !vak && !heeftBetrokkenen();
+      if (!vak && !eerste) {
         vak = document.createElement("div");
         vak.className = "rev persrow";
         vak.setAttribute("data-person", "");
         vak.setAttribute("data-person-new", "");
         lijst.appendChild(vak);
       }
-      persoonRij = vak;
+      persoonRij = vak || null;
+      var g = vak ? vak.dataset : {};
+      var nieuw = eerste || (vak && vak.hasAttribute("data-person-new"));
 
-      document.getElementById("person-form-title").textContent =
-        vak.dataset.personName ? "Details of " + vak.dataset.personName : "Add person";
+      var kop = document.getElementById("person-form-title");
+      kop.textContent = eerste ? "Your details"
+        : (g.personName ? "Details of " + g.personName : "Add person");
 
       velden.forEach(function (naam) {
         var el = veld(naam);
-        var waarde = vak.dataset["person" + naam.charAt(0).toUpperCase() + naam.slice(1)] || "";
-        if (el.tagName === "SELECT") el.value = waarde || el.options[0].value;
-        else el.value = waarde;
+        var w = g["person" + naam.charAt(0).toUpperCase() + naam.slice(1)] || "";
+        if (el.tagName === "SELECT") el.value = w || el.options[0].value;
+        else el.value = w;
       });
-      if (vak.hasAttribute("data-person-new")) {
+      if (nieuw) {
         veld("country").value = "Netherlands";
         veld("ubo").value = "Financial interest";
         veld("sign").value = "Authorised to sign on their own";
@@ -3768,18 +3786,21 @@
       /* De regel blijft staan waar hij staat: de velden komen eronder, zodat
          je ziet wie je aan het bewerken bent. De kop in het veldenvak is dan
          dubbelop, dus die blijft weg. */
-      var lees = vak.querySelector(".persrow__read");
-      document.getElementById("person-form-title").hidden = !!lees;
+      var lees = vak && vak.querySelector(".persrow__read");
+      kop.hidden = !!lees;
       /* Het potlood is even weg; opslaan of annuleren staat onder de velden. */
       var pen = lees && lees.querySelector("[data-person-edit]");
       if (pen) pen.hidden = true;
       /* Iemand die je zelf bent kun je niet uit de lijst halen. */
       document.querySelector("[data-person-remove]").hidden =
-        !!(vak.hasAttribute("data-person-self") || vak.hasAttribute("data-person-new"));
-      vak.appendChild(persoonVak);
+        !!(eerste || !vak || vak.hasAttribute("data-person-self") || vak.hasAttribute("data-person-new"));
+      /* De eerste keer valt er ook niets af te breken. */
+      document.querySelector("[data-person-cancel]").hidden = eerste;
+
+      if (vak) vak.appendChild(persoonVak);
+      else persoonThuis.insertBefore(persoonVak, persoonAnker);
       persoonVak.hidden = false;
-      /* De knop eronder is even weg: je bent al met iemand bezig. */
-      persoonKnop.hidden = true;
+      zetLijstStand();
       veld("first").focus();
     }
 
@@ -3795,8 +3816,8 @@
           if (pen) pen.hidden = false;
         }
       }
-      persoonKnop.hidden = false;
       persoonRij = null;
+      zetLijstStand();
     }
 
     /* Wat er in de regel komt te staan: hoe iemand tekent, en zijn belang. */
@@ -3892,6 +3913,20 @@
       if (!voor || !achter) { veld("first").focus(); return; }
 
       var vak = persoonRij;
+      /* De eerste betrokkene vulde de kaart zelf; die krijgt nu zijn vak in
+         de lijst. Hij tekent de overeenkomst, dus hij is degene die zich moet
+         legitimeren en het label "you" draagt. */
+      var zelf = false;
+      if (!vak) {
+        vak = document.createElement("div");
+        vak.className = "rev persrow";
+        vak.setAttribute("data-person", "");
+        vak.setAttribute("data-person-new", "");
+        vak.setAttribute("data-person-self", "");
+        lijst.appendChild(vak);
+        persoonRij = vak;
+        zelf = true;
+      }
       var nieuw = vak.hasAttribute("data-person-new");
 
       /* Een nieuw vak heeft nog geen regel; die komt boven de velden te staan
@@ -3906,6 +3941,7 @@
           '<span class="row__meta" data-person-meta></span></span>' +
           /* Legitimeren hoeft alleen de eerste betrokkene, degene die de
              overeenkomst tekent; de rest krijgt dus geen stand mee. */
+          (zelf ? '<span class="badge badge--pending" data-person-status>Identification required</span>' : "") +
           '<button class="icon-btn rev__pen" type="button" data-person-edit hidden>' +
             '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>';
         vak.insertBefore(lees, vak.firstChild);
@@ -3916,7 +3952,14 @@
       });
       vak.dataset.personName = voor + " " + achter;
       lees.querySelector(".acct__mark").textContent = letters(voor, achter);
-      lees.querySelector(".row__title").textContent = voor + " " + achter;
+      var titel = lees.querySelector(".row__title");
+      titel.textContent = voor + " " + achter;
+      if (vak.hasAttribute("data-person-self")) {
+        var pil = document.createElement("span");
+        pil.className = "pill";
+        pil.textContent = "you";
+        titel.appendChild(pil);
+      }
       lees.querySelector("[data-person-meta]").textContent =
         persoonRegel(veld("ubo").value, veld("pct").value, veld("sign").value);
       lees.querySelector("[data-person-edit]").setAttribute("aria-label", "Edit " + voor + " " + achter);
@@ -3927,8 +3970,15 @@
       showToast(nieuw ? voor + " " + achter + " added" : "Details saved");
     });
 
-    /* De samenvatting bijwerken zodra de wizard een stap laat zien. */
-    document.addEventListener("wiz-stap", zetOverzichtPersonen);
+    /* De samenvatting bijwerken zodra de wizard een stap laat zien, en stap 3
+       met de velden laten beginnen als er nog niemand staat. */
+    document.addEventListener("wiz-stap", function (e) {
+      zetOverzichtPersonen();
+      if (e.detail === 3 && !alleenEigenaar() && !heeftBetrokkenen() && !persoonRij) {
+        openPersoon(null);
+      }
+    });
+    zetLijstStand();
 
     document.addEventListener("click", function (e) {
       if (e.target.closest("[data-person-add]")) { openPersoon(null); return; }
@@ -3942,6 +3992,7 @@
         /* Eerst de velden terug op hun plek, anders verdwijnen ze mee. */
         sluitPersoon();
         vak.remove();
+        zetLijstStand();
         showToast(naam + " removed");
       }
     });
@@ -4176,18 +4227,33 @@
   }
 
   /* ---- Uitbetaalrekening in de onboarding ---------------------------------
-     De rekening staat er als regel; Change klapt het vak eronder open waarin
-     je hem met de hand invult, met het bankafschrift erbij. Opslaan schrijft
-     de nieuwe gegevens terug naar die regel en naar de samenvatting. */
+     Je geeft de rekening eerst op; daarna staat hij als regel in de stap en
+     klapt Change het vak weer open. Opslaan schrijft de gegevens terug naar
+     die regel en naar de samenvatting. */
   var bankVak = document.getElementById("bank-form");
 
   if (bankVak) {
+    var bankRij = document.getElementById("bank-row");
     var bankRegel = document.getElementById("bank-iban-shown");
     var bankNaam = document.getElementById("bank-holder-shown");
+    var bankKop = document.getElementById("bank-form-title");
+
+    /* Het merkje voor de regel komt uit de bankcode in het IBAN. */
+    function bankMerk(iban) {
+      var code = iban.replace(/\s+/g, "").slice(4, 8).toUpperCase();
+      var namen = { INGB: "ING", RABO: "RABO", ABNA: "ABN", SNSB: "SNS", ASNB: "ASN",
+                    TRIO: "TRIO", KNAB: "KNAB", BUNQ: "BUNQ", RBRB: "RGRO", REVO: "REVO" };
+      return namen[code] || code || "BANK";
+    }
 
     function zetBankVak(open) {
+      var klaar = bankRij.dataset.klaar === "ja";
       bankVak.hidden = !open;
+      bankRij.hidden = open || !klaar;
       document.querySelector("[data-bank-change]").hidden = open;
+      /* Zolang er nog niets staat valt er niets af te breken. */
+      document.querySelector("[data-bank-cancel]").hidden = !klaar;
+      bankKop.textContent = klaar ? "Enter the account by hand" : "Your payout account";
     }
 
     document.addEventListener("click", function (e) {
@@ -4205,6 +4271,8 @@
         if (!iban || !houder) { document.getElementById("bank-iban").focus(); return; }
         bankRegel.textContent = iban;
         bankNaam.textContent = houder;
+        document.getElementById("bank-mark").textContent = bankMerk(iban);
+        bankRij.dataset.klaar = "ja";
         /* De samenvatting laat dezelfde rekening zien. */
         document.querySelectorAll("[data-payout-iban]").forEach(function (el) { el.textContent = iban; });
         document.querySelectorAll("[data-payout-holder]").forEach(function (el) { el.textContent = houder; });
@@ -4212,5 +4280,7 @@
         showToast("Payout account saved");
       }
     });
+
+    zetBankVak(true);
   }
 })();
