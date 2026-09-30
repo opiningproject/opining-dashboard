@@ -4042,7 +4042,6 @@
       kaart.hidden = true;
       kaart.innerHTML =
         '<button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-people">' +
-          '<span class="acct__mark acct__mark--person" aria-hidden="true"></span>' +
           '<span class="acct__text"><span class="acct__name">People involved</span>' +
           '<span class="acct__role"></span></span>' +
           '<span class="badge badge--active u-normal">Ready to submit</span>' +
@@ -4050,7 +4049,6 @@
           '<svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>' +
         '</button><div class="acct" id="review-people"></div>';
 
-      kaart.querySelector(".acct__mark").textContent = letters(mensen[0].voor, mensen[0].achter);
       kaart.querySelector(".acct__role").textContent = mensen.length === 1
         ? mensen[0].naam : mensen.length + " people";
 

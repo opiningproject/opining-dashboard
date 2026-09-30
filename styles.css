@@ -3196,10 +3196,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .bankform--kaal { margin-top: 16px; padding: 0; border: 0; background: none; }
 .bankform--kaal .rev__acts { display: none; }
 .bankform .docup { margin-top: 18px; }
+/* Het bankvakje voor de rekening: grijs, met het finance-icoon erin. */
 .acct__mark--bank { background: var(--gray-100); color: var(--text-muted); }
-/* Een sectie zonder eigen kleur: grijs vlakje met het icoon erin. */
-.acct__mark--soft { background: var(--gray-100); color: var(--text-muted); }
-.acct__mark--soft .icon { width: 18px; height: 18px; }
 .acct__mark--bank .icon { width: 18px; height: 18px; }
 
 /* De overeenkomst in stap 6: een vak waarin je het stuk doorleest voordat je
