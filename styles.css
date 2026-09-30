@@ -3201,10 +3201,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .acct__mark--soft { background: var(--gray-100); color: var(--text-muted); }
 .acct__mark--soft .icon { width: 18px; height: 18px; }
 .acct__mark--bank .icon { width: 18px; height: 18px; }
-/* De link naar de overeenkomst leest als een bestand, dus met het icoon ervoor. */
-.agreement { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 500; }
-.agreement .icon { width: 18px; height: 18px; }
-.agreement__label { margin-top: 18px; margin-bottom: 8px; }
 
 /* De overeenkomst in stap 6: een vak waarin je het stuk doorleest voordat je
    tekent. Het scrollt zelf, zodat de stap niet eindeloos lang wordt. */
@@ -3235,12 +3231,13 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Het nummer staat voor de alinea, met een vaste breedte zodat de tekst van
    alle artikelen op dezelfde lijn begint. */
 .contract__nr { display: inline-block; min-width: 30px; font-weight: 600; color: var(--text-strong); }
-.contract__foot { margin-top: 10px; text-align: right; }
-.contract__foot .link { display: inline-flex; align-items: center; gap: 8px; }
 
 /* Legitimatie: de keuze bepaalt of er een achterkant bij hoort. */
 .choices--id { margin-top: 22px; }
 .choices--id > .label { margin-bottom: 4px; }
+/* Na de keuze begint het aanleveren; die vakken plakken anders tegen de
+   onderste keuzeregel aan. */
+.choices--id + .rev { margin-top: 18px; }
 /* Na de uploadvakken begint het tekenen; dat mag lucht erboven hebben. */
 .signwork .rev + .field { margin-top: 24px; }
 
