@@ -4419,12 +4419,12 @@
     if (tekenKnop) {
       var tekenWerk = document.querySelector(".signwork");
       var tekenGedaan = document.querySelector("[data-sign-done]");
-      var tekenKop = document.querySelector("[data-sign-title]");
+      var tekenStand = document.querySelector("[data-sign-state]");
       var tekenLead = document.querySelector("[data-sign-lead]");
       var merk = contract.querySelector("[data-sign-mark]");
 
       /* Tekenen is eenmalig: terugdraaien kan niet, want dan is de
-         handtekening niets meer waard. De stap sluit zichzelf af. */
+         handtekening niets meer waard. De sectie sluit zichzelf af. */
       function zetHandtekening(naam) {
         var datum = vandaag();
         merk.textContent = naam;
@@ -4437,14 +4437,14 @@
            stuk de deur uit is. */
         tekenWerk.hidden = true;
         tekenGedaan.hidden = false;
-        tekenKop.textContent = "The agreement is signed and on its way.";
-        tekenLead.textContent = "We check it and let you know as soon as it is approved. "
-          + "You can go on to the summary.";
+        tekenStand.textContent = "Sent";
+        tekenStand.className = "badge badge--active";
+        tekenStand.setAttribute("data-sign-state", "");
+        tekenLead.textContent = "Signed by " + naam + " on " + datum;
         tekenGedaan.querySelector("[data-signed-who]").textContent = naam;
         tekenGedaan.querySelector("[data-signed-when]").textContent = datum;
         tekenNaam.readOnly = true;
       }
-
       tekenKnop.addEventListener("click", function () {
         if (!tekenMag()) return;
         zetHandtekening(tekenNaam.value.trim());
@@ -4462,75 +4462,30 @@
        geweest en klopt de alinea met wat er staat. */
     document.addEventListener("wiz-stap", vulContract);
     vulContract();
-  }
 
+  }
   /* ---- Uitbetaalrekening in de onboarding ---------------------------------
-     Je geeft de rekening eerst op; daarna staat hij als regel in de stap en
-     klapt Change het vak weer open. Opslaan schrijft de gegevens terug naar
-     die regel en naar de samenvatting. */
+     De velden blijven gewoon staan, ook als ze ingevuld zijn: er valt hier
+     niets te bevestigen. Bij elke stapwissel schrijven we wat er staat door
+     naar de samenvatting, zodat die klopt met wat je hebt ingevuld. */
   var bankVak = document.getElementById("bank-form");
 
   if (bankVak) {
-    var bankRij = document.getElementById("bank-row");
-    var bankRegel = document.getElementById("bank-iban-shown");
-    var bankNaam = document.getElementById("bank-holder-shown");
-    var bankKop = document.getElementById("bank-form-title");
-
-    /* De eerste keer staan de twee velden gewoon in de kaart: de stap vraagt
-       al om een rekening en Next gaat al verder, dus een eigen kader met een
-       eigen knop zegt niets extra's. Pas als er een rekening staat wordt het
-       een vak dat je met Change openklapt, met Cancel en Save erin. */
-    function zetBankVak(open) {
-      var klaar = bankRij.dataset.klaar === "ja";
-      bankVak.hidden = !open;
-      bankVak.classList.toggle("bankform--kaal", !klaar);
-      bankRij.hidden = open || !klaar;
-      document.querySelector("[data-bank-change]").hidden = open;
-      document.querySelector("[data-bank-cancel]").hidden = !klaar;
-      bankKop.hidden = !klaar;
-    }
-
-    /* Wat er is ingevuld naar de regel en naar de samenvatting schrijven. */
     function bewaarBank() {
       var iban = document.getElementById("bank-iban").value.trim();
       var houder = document.getElementById("bank-holder").value.trim();
       var bic = document.getElementById("bank-bic").value.trim().toUpperCase();
       if (!iban || !houder) return false;
-      bankRegel.textContent = iban;
-      bankNaam.textContent = houder;
-      bankRij.dataset.bic = bic;
-      bankRij.dataset.klaar = "ja";
       /* In de samenvatting staat de BIC achter het IBAN, als hij is ingevuld. */
       document.querySelectorAll("[data-payout-iban]").forEach(function (el) {
         el.textContent = bic ? iban + " · " + bic : iban;
       });
-      document.querySelectorAll("[data-payout-holder]").forEach(function (el) { el.textContent = houder; });
-      zetBankVak(false);
+      document.querySelectorAll("[data-payout-holder]").forEach(function (el) {
+        el.textContent = houder;
+      });
       return true;
     }
 
-    document.addEventListener("click", function (e) {
-      if (e.target.closest("[data-bank-change]")) {
-        document.getElementById("bank-holder").value = bankNaam.textContent.trim();
-        document.getElementById("bank-iban").value = bankRegel.textContent.trim();
-        document.getElementById("bank-bic").value = bankRij.dataset.bic || "";
-        zetBankVak(true);
-        document.getElementById("bank-holder").focus();
-        return;
-      }
-      if (e.target.closest("[data-bank-cancel]")) { zetBankVak(false); return; }
-      if (e.target.closest("#payout-save")) {
-        if (bewaarBank()) showToast("Payout account saved");
-        else document.getElementById("bank-iban").focus();
-      }
-    });
-
-    /* Doorlopen naar een andere stap legt de ingevulde rekening vast; daarna
-       staat hij er als regel. */
-    document.addEventListener("wiz-stap", function () {
-      if (bankRij.dataset.klaar !== "ja") bewaarBank();
-    });
-
-    zetBankVak(true);
+    document.addEventListener("wiz-stap", bewaarBank);
   }
 })();

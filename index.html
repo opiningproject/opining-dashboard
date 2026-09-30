@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=250" />
+  <link rel="stylesheet" href="styles.css?v=251" />
 </head>
 <body>
 
@@ -2781,25 +2781,9 @@
               <h3 class="card__title">Which bank account can we pay out to?</h3>
               <p class="card__sub">This is where we pay out what you earn. It has to be a business account in the name of your business; private accounts are not accepted. We ask for a recent bank statement in the last step.</p>
 
-              <!-- De regel komt er pas als je de rekening hebt opgegeven; tot
-                   die tijd staan de velden hieronder open. -->
-              <div class="rows rows--menu" id="bank-row" hidden>
-                <div class="row row--static">
-                  <span class="acct__mark acct__mark--bank" aria-hidden="true"><svg class="icon"><use href="#i-finance"/></svg></span>
-                  <span class="row__text">
-                    <span class="row__title" id="bank-iban-shown"></span>
-                    <span class="row__meta" id="bank-holder-shown"></span>
-                  </span>
-                  <span class="badge badge--pending">Verification pending</span>
-                  <button class="btn btn--ghost btn--sm" type="button" data-bank-change>Change</button>
-                </div>
-              </div>
-
-              <!-- Met de hand: twee velden, plus het afschrift. -->
-              <div class="rev bankform" id="bank-form">
-                <div class="rev__head">
-                  <h4 class="rev__title" id="bank-form-title">Your payout account</h4>
-                </div>
+              <!-- De velden blijven staan, ook als ze ingevuld zijn: hier valt
+                   niets te bevestigen, doorlopen legt vast wat er staat. -->
+              <div class="bankform" id="bank-form">
                 <div class="field">
                   <label class="label" for="bank-holder">Account holder</label>
                   <input class="input" id="bank-holder" type="text" />
@@ -2813,19 +2797,243 @@
                   <input class="input" id="bank-bic" type="text" autocapitalize="characters" />
                   <p class="hint">A business account in the name above. We pay out here on the schedule you choose later. For a Dutch IBAN we can look the BIC up ourselves.</p>
                 </div>
-                <div class="rev__acts">
-                  <button class="btn btn--ghost btn--sm" type="button" data-bank-cancel hidden>Cancel</button>
-                  <button class="btn btn--primary btn--sm" type="button" id="payout-save">Save</button>
+              </div>
+
+            </div>
+
+            <!-- De samenvatting: een sectie per onderwerp. Elk gegeven is hier
+                 nog te wijzigen, zodat een afgekeurde aanvraag op één pagina
+                 recht te zetten is. -->
+            <div class="card card--flush" data-step="6" hidden>
+              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-business">
+                <span class="acct__text">
+                  <span class="acct__name" data-sum-name>Your business</span>
+                  <span class="acct__role">Business details</span>
+                </span>
+                <span class="badge badge--active u-normal">Ready to submit</span>
+                <span class="badge badge--danger u-update">Action required</span>
+                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+
+              <div class="acct" id="review-business">
+                <p class="alert alert--danger u-update">
+                  <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>
+                  <span>Information on the account does not match the Chamber of Commerce records. Check the registered name, the KVK number and the address.</span>
+                </p>
+                <div class="rev">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Business type</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit business type">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <div class="rev__read">
+                    <p class="rev__value" data-sum-legal>Not filled in yet</p>
+                  </div>
+                  <div class="rev__form" hidden>
+                    <div class="field">
+                      <label class="label" for="rev-type">I am running my store as</label>
+                      <select class="input" id="rev-type">
+                        <option>Sole proprietorship</option>
+                        <option>Private limited company (BV)</option>
+                        <option>General partnership (VOF)</option>
+                        <option>Partnership (maatschap)</option>
+                        <option>Non-profit</option>
+                      </select>
+                    </div>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="rev">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Business details</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit business details">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <div class="rev__read">
+                    <div class="rev__line">
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-store"/></svg>
+                      <span class="rev__text"><b data-sum-name>Your business</b><span data-sum-ids></span></span>
+                    </div>
+                    <div class="rev__line">
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-pin"/></svg>
+                      <span class="rev__text"><b>Business address</b><span data-sum-address></span></span>
+                    </div>
+                  </div>
+                  <div class="rev__form" hidden>
+                    <div class="field">
+                      <label class="label" for="rev-name">Registered name</label>
+                      <input class="input" id="rev-name" type="text" value="Opining" />
+                    </div>
+                    <div class="field-row">
+                      <div class="field">
+                        <label class="label" for="rev-kvk">KVK number</label>
+                        <input class="input" id="rev-kvk" type="text" inputmode="numeric" value="87651595" />
+                      </div>
+                      <div class="field">
+                        <label class="label" for="rev-vat">VAT number</label>
+                        <input class="input" id="rev-vat" type="text" value="NL863421595B01" />
+                      </div>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="rev-phone">Phone number</label>
+                      <div class="phone">
+                        <label class="sr-only" for="rev-dial2">Country calling code</label>
+                        <select class="input phone__code" id="rev-dial2">
+                          <option>NL +31</option><option>BE +32</option><option>DE +49</option>
+                        </select>
+                        <input class="input phone__nr" id="rev-phone" type="tel" value="6 14522453" />
+                      </div>
+                    </div>
+                    <h5 class="rev__sub">Business address</h5>
+                    <div class="field">
+                      <label class="label" for="rev-street2">Street and house number</label>
+                      <input class="input" id="rev-street2" type="text" value="Lusthofstraat 27A" />
+                    </div>
+                    <div class="field-row">
+                      <div class="field">
+                        <label class="label" for="rev-zip2">Postal code</label>
+                        <input class="input" id="rev-zip2" type="text" value="3062 WB" />
+                      </div>
+                      <div class="field">
+                        <label class="label" for="rev-city2">City</label>
+                        <input class="input" id="rev-city2" type="text" value="Rotterdam" />
+                      </div>
+                    </div>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Het stuk dat de inschrijving bevestigt. Dit werd in een
+                     eigen stap gevraagd; het hoort bij de gegevens waar het
+                     over gaat. -->
+                <h4 class="card__subtitle">Verification</h4>
+                <p class="card__sub">An extract from the Chamber of Commerce, no older than three months.</p>
+                <div class="rows">
+                  <div class="row row--static" data-doc="business">
+                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
+                    <span class="row__text"><span class="row__title">Chamber of Commerce extract</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <span class="docrow__name" data-doc-name hidden></span>
+                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <!-- Stap 6 — de overeenkomst. De eerste alinea wordt opgemaakt uit
-                 wat er in stap 1 en 3 is ingevuld; daaronder legitimeer je je
-                 en teken je met je naam. -->
-            <div class="card" data-step="6" hidden>
-              <h3 class="card__title" data-sign-title>Almost done. Review and sign the agreement.</h3>
-              <p class="card__sub" data-sign-lead>The first section is filled in with the details you entered. Read the agreement, confirm your identity and sign with your name.</p>
+            <!-- Wat de zaak doet, uit stap 2. Wijzigen brengt je terug naar die
+                 stap; de lijst met categorieën staat daar al. -->
+            <div class="card card--flush" data-step="6" hidden>
+              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-activities">
+                <span class="acct__text">
+                  <span class="acct__name">Activities</span>
+                  <span class="acct__role" data-sum-category>Cafe, bar, restaurant</span>
+                </span>
+                <span class="badge badge--active u-normal">Ready to submit</span>
+                <span class="badge badge--muted u-update">Done</span>
+                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+
+              <div class="acct" id="review-activities">
+                <div class="rev">
+                  <div class="rev__head">
+                    <h4 class="rev__title">What your business does</h4>
+                    <button class="icon-btn rev__pen" type="button" data-sum-edit="2" aria-label="Edit activities">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <div class="rev__read">
+                    <div class="rev__line">
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-list"/></svg>
+                      <span class="rev__text"><b>Category</b><span data-sum-category></span></span>
+                    </div>
+                    <div class="rev__line">
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-store"/></svg>
+                      <span class="rev__text"><b>Trade activities</b><span data-sum-desc></span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- De uitbetaalrekening is een eigen sectie: hij hoort niet bij de
+                 zaak of bij de persoon, en het bankafschrift hoort erbij. -->
+            <div class="card card--flush" data-step="6" hidden>
+              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-payout">
+                <span class="acct__text">
+                  <span class="acct__name">Payout account</span>
+                  <span class="acct__role" data-payout-holder>Opining BV</span>
+                </span>
+                <span class="badge badge--active u-normal">Ready to submit</span>
+                <span class="badge badge--muted u-update">Done</span>
+                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+
+              <div class="acct" id="review-payout">
+                <div class="rev">
+                  <div class="rev__head">
+                    <h4 class="rev__title">Account</h4>
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit payout account">
+                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
+                    </button>
+                  </div>
+                  <div class="rev__read">
+                    <div class="rev__line">
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-finance"/></svg>
+                      <span class="rev__text"><b data-payout-holder>Opining BV</b><span data-payout-iban>NL59 INGB 0102 9917 15</span></span>
+                    </div>
+                  </div>
+                  <div class="rev__form" hidden>
+                    <div class="field">
+                      <label class="label" for="rev-holder">Account holder</label>
+                      <input class="input" id="rev-holder" type="text" value="Opining BV" />
+                    </div>
+                    <div class="field">
+                      <label class="label" for="rev-iban">IBAN</label>
+                      <input class="input" id="rev-iban" type="text" value="NL59 INGB 0102 9917 15" />
+                    </div>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
+                    </div>
+                  </div>
+                </div>
+
+                <h4 class="card__subtitle">Verification</h4>
+                <p class="card__sub">A recent statement that shows your business name and the IBAN.</p>
+                <div class="rows">
+                  <div class="row row--static" data-doc="statement">
+                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
+                    <span class="row__text"><span class="row__title">Bank statement</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <span class="docrow__name" data-doc-name hidden></span>
+                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- De overeenkomst hoort bij de samenvatting: wordt de aanvraag
+                 afgekeurd op de legitimatie, dan is dat hier recht te zetten
+                 zonder de hele wizard opnieuw te doorlopen. -->
+            <div class="card card--flush" data-step="6" hidden>
+              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-agreement">
+                <span class="acct__text">
+                  <span class="acct__name">Agreement</span>
+                  <span class="acct__role" data-sign-lead>Read it, confirm your identity and sign with your name</span>
+                </span>
+                <span class="badge badge--pending" data-sign-state>Not signed yet</span>
+                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+
+              <div class="acct" id="review-agreement">
 
               <!-- Alles wat je invult zit in een omslag. Zodra er getekend is
                    gaat die dicht en blijft alleen de regel eronder staan, net
@@ -2972,227 +3180,10 @@
                   <span class="badge badge--active">Sent</span>
                 </div>
               </div>
-            </div>
-
-            <!-- Stap 7 — twee blokken: de zaak en de persoon erachter. Elk
-                 gegeven is hier nog te wijzigen: het potlood klapt hetzelfde
-                 vakje open als formulier, zodat je de stap niet terug hoeft. -->
-            <div class="card card--flush" data-step="7" hidden>
-              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-business">
-                <span class="acct__text">
-                  <span class="acct__name" data-sum-name>Your business</span>
-                  <span class="acct__role">Business details</span>
-                </span>
-                <span class="badge badge--active u-normal">Ready to submit</span>
-                <span class="badge badge--danger u-update">Action required</span>
-                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-              </button>
-
-              <div class="acct" id="review-business">
-                <p class="alert alert--danger u-update">
-                  <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>
-                  <span>Information on the account does not match the Chamber of Commerce records. Check the registered name, the KVK number and the address.</span>
-                </p>
-                <div class="rev">
-                  <div class="rev__head">
-                    <h4 class="rev__title">Business type</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit business type">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
-                  </div>
-                  <div class="rev__read">
-                    <p class="rev__value" data-sum-legal>Not filled in yet</p>
-                  </div>
-                  <div class="rev__form" hidden>
-                    <div class="field">
-                      <label class="label" for="rev-type">I am running my store as</label>
-                      <select class="input" id="rev-type">
-                        <option>Sole proprietorship</option>
-                        <option>Private limited company (BV)</option>
-                        <option>General partnership (VOF)</option>
-                        <option>Partnership (maatschap)</option>
-                        <option>Non-profit</option>
-                      </select>
-                    </div>
-                    <div class="rev__acts">
-                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
-                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="rev">
-                  <div class="rev__head">
-                    <h4 class="rev__title">Business details</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit business details">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
-                  </div>
-                  <div class="rev__read">
-                    <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-store"/></svg>
-                      <span class="rev__text"><b data-sum-name>Your business</b><span data-sum-ids></span></span>
-                    </div>
-                    <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-pin"/></svg>
-                      <span class="rev__text"><b>Business address</b><span data-sum-address></span></span>
-                    </div>
-                  </div>
-                  <div class="rev__form" hidden>
-                    <div class="field">
-                      <label class="label" for="rev-name">Registered name</label>
-                      <input class="input" id="rev-name" type="text" value="Opining" />
-                    </div>
-                    <div class="field-row">
-                      <div class="field">
-                        <label class="label" for="rev-kvk">KVK number</label>
-                        <input class="input" id="rev-kvk" type="text" inputmode="numeric" value="87651595" />
-                      </div>
-                      <div class="field">
-                        <label class="label" for="rev-vat">VAT number</label>
-                        <input class="input" id="rev-vat" type="text" value="NL863421595B01" />
-                      </div>
-                    </div>
-                    <div class="field">
-                      <label class="label" for="rev-phone">Phone number</label>
-                      <div class="phone">
-                        <label class="sr-only" for="rev-dial2">Country calling code</label>
-                        <select class="input phone__code" id="rev-dial2">
-                          <option>NL +31</option><option>BE +32</option><option>DE +49</option>
-                        </select>
-                        <input class="input phone__nr" id="rev-phone" type="tel" value="6 14522453" />
-                      </div>
-                    </div>
-                    <h5 class="rev__sub">Business address</h5>
-                    <div class="field">
-                      <label class="label" for="rev-street2">Street and house number</label>
-                      <input class="input" id="rev-street2" type="text" value="Lusthofstraat 27A" />
-                    </div>
-                    <div class="field-row">
-                      <div class="field">
-                        <label class="label" for="rev-zip2">Postal code</label>
-                        <input class="input" id="rev-zip2" type="text" value="3062 WB" />
-                      </div>
-                      <div class="field">
-                        <label class="label" for="rev-city2">City</label>
-                        <input class="input" id="rev-city2" type="text" value="Rotterdam" />
-                      </div>
-                    </div>
-                    <div class="rev__acts">
-                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
-                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Het stuk dat de inschrijving bevestigt. Dit werd in een
-                     eigen stap gevraagd; het hoort bij de gegevens waar het
-                     over gaat. -->
-                <h4 class="card__subtitle">Verification</h4>
-                <p class="card__sub">An extract from the Chamber of Commerce, no older than three months.</p>
-                <div class="rows">
-                  <div class="row row--static" data-doc="business">
-                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="row__text"><span class="row__title">Chamber of Commerce extract</span><span class="row__meta" data-doc-file hidden></span></span>
-                    <span class="docrow__name" data-doc-name hidden></span>
-                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
-                  </div>
-                </div>
               </div>
             </div>
 
-            <!-- Wat de zaak doet, uit stap 2. Wijzigen brengt je terug naar die
-                 stap; de lijst met categorieën staat daar al. -->
-            <div class="card card--flush" data-step="7" hidden>
-              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-activities">
-                <span class="acct__text">
-                  <span class="acct__name">Activities</span>
-                  <span class="acct__role" data-sum-category>Cafe, bar, restaurant</span>
-                </span>
-                <span class="badge badge--active u-normal">Ready to submit</span>
-                <span class="badge badge--muted u-update">Done</span>
-                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-              </button>
-
-              <div class="acct" id="review-activities">
-                <div class="rev">
-                  <div class="rev__head">
-                    <h4 class="rev__title">What your business does</h4>
-                    <button class="icon-btn rev__pen" type="button" data-sum-edit="2" aria-label="Edit activities">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
-                  </div>
-                  <div class="rev__read">
-                    <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-list"/></svg>
-                      <span class="rev__text"><b>Category</b><span data-sum-category></span></span>
-                    </div>
-                    <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-store"/></svg>
-                      <span class="rev__text"><b>Trade activities</b><span data-sum-desc></span></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- De uitbetaalrekening is een eigen sectie: hij hoort niet bij de
-                 zaak of bij de persoon, en het bankafschrift hoort erbij. -->
-            <div class="card card--flush" data-step="7" hidden>
-              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-payout">
-                <span class="acct__text">
-                  <span class="acct__name">Payout account</span>
-                  <span class="acct__role" data-payout-holder>Opining BV</span>
-                </span>
-                <span class="badge badge--active u-normal">Ready to submit</span>
-                <span class="badge badge--muted u-update">Done</span>
-                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-              </button>
-
-              <div class="acct" id="review-payout">
-                <div class="rev">
-                  <div class="rev__head">
-                    <h4 class="rev__title">Account</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit payout account">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
-                  </div>
-                  <div class="rev__read">
-                    <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-finance"/></svg>
-                      <span class="rev__text"><b data-payout-holder>Opining BV</b><span data-payout-iban>NL59 INGB 0102 9917 15</span></span>
-                    </div>
-                  </div>
-                  <div class="rev__form" hidden>
-                    <div class="field">
-                      <label class="label" for="rev-holder">Account holder</label>
-                      <input class="input" id="rev-holder" type="text" value="Opining BV" />
-                    </div>
-                    <div class="field">
-                      <label class="label" for="rev-iban">IBAN</label>
-                      <input class="input" id="rev-iban" type="text" value="NL59 INGB 0102 9917 15" />
-                    </div>
-                    <div class="rev__acts">
-                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
-                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
-                    </div>
-                  </div>
-                </div>
-
-                <h4 class="card__subtitle">Verification</h4>
-                <p class="card__sub">A recent statement that shows your business name and the IBAN.</p>
-                <div class="rows">
-                  <div class="row row--static" data-doc="statement">
-                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="row__text"><span class="row__title">Bank statement</span><span class="row__meta" data-doc-file hidden></span></span>
-                    <span class="docrow__name" data-doc-name hidden></span>
-                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <p class="wiz__terms" data-step="7" hidden>
+            <p class="wiz__terms" data-step="6" hidden>
               By using Opining Payments you agree to the <a class="link" href="#">terms of service</a> and <a class="link" href="#">applicable fees</a>.
             </p>
 
@@ -5604,6 +5595,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=250"></script>
+  <script src="app.js?v=251"></script>
 </body>
 </html>

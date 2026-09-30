@@ -3188,14 +3188,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .drop__cloud { width: 26px; height: 26px; color: var(--text-muted); }
 .drop__lead { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); text-align: center; }
 
-/* De rekening met de hand invoeren: hetzelfde kader als de andere vakken in
-   de onboarding, met het afschrift eronder. */
-.bankform { margin-top: 14px; }
-/* De eerste keer is het geen apart vak: de velden staan in de kaart zelf,
-   zonder kader, zonder kop en zonder eigen knoppen. Next gaat al verder. */
-.bankform--kaal { margin-top: 16px; padding: 0; border: 0; background: none; }
-.bankform--kaal .rev__acts { display: none; }
-.bankform .docup { margin-top: 18px; }
+/* De rekening opgeven: gewone velden in de kaart, met lucht boven de eerste. */
+.bankform { margin-top: 16px; }
 /* Het bankvakje voor de rekening: grijs, met het finance-icoon erin. */
 .acct__mark--bank { background: var(--gray-100); color: var(--text-muted); }
 .acct__mark--bank .icon { width: 18px; height: 18px; }
