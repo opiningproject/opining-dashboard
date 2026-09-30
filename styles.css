@@ -3236,6 +3236,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Legitimatie: de keuze bepaalt of er een achterkant bij hoort. */
 .choices--id { margin-top: 22px; }
 .choices--id > .label { margin-bottom: 4px; }
+/* Na de uploadvakken begint het tekenen; dat mag lucht erboven hebben. */
+.signwork .rev + .field { margin-top: 24px; }
 
 /* Het slotblok van het contract: twee kolommen, elk met een handtekening en
    de drie gegevens eronder. Zolang er niet getekend is staan er stippellijnen,
