@@ -4414,14 +4414,32 @@
     var bankNaam = document.getElementById("bank-holder-shown");
     var bankKop = document.getElementById("bank-form-title");
 
+    /* De eerste keer staan de twee velden gewoon in de kaart: de stap vraagt
+       al om een rekening en Next gaat al verder, dus een eigen kader met een
+       eigen knop zegt niets extra's. Pas als er een rekening staat wordt het
+       een vak dat je met Change openklapt, met Cancel en Save erin. */
     function zetBankVak(open) {
       var klaar = bankRij.dataset.klaar === "ja";
       bankVak.hidden = !open;
+      bankVak.classList.toggle("bankform--kaal", !klaar);
       bankRij.hidden = open || !klaar;
       document.querySelector("[data-bank-change]").hidden = open;
-      /* Zolang er nog niets staat valt er niets af te breken. */
       document.querySelector("[data-bank-cancel]").hidden = !klaar;
-      bankKop.textContent = klaar ? "Enter the account by hand" : "Your payout account";
+      bankKop.hidden = !klaar;
+    }
+
+    /* Wat er is ingevuld naar de regel en naar de samenvatting schrijven. */
+    function bewaarBank() {
+      var iban = document.getElementById("bank-iban").value.trim();
+      var houder = document.getElementById("bank-holder").value.trim();
+      if (!iban || !houder) return false;
+      bankRegel.textContent = iban;
+      bankNaam.textContent = houder;
+      bankRij.dataset.klaar = "ja";
+      document.querySelectorAll("[data-payout-iban]").forEach(function (el) { el.textContent = iban; });
+      document.querySelectorAll("[data-payout-holder]").forEach(function (el) { el.textContent = houder; });
+      zetBankVak(false);
+      return true;
     }
 
     document.addEventListener("click", function (e) {
@@ -4434,18 +4452,15 @@
       }
       if (e.target.closest("[data-bank-cancel]")) { zetBankVak(false); return; }
       if (e.target.closest("#payout-save")) {
-        var iban = document.getElementById("bank-iban").value.trim();
-        var houder = document.getElementById("bank-holder").value.trim();
-        if (!iban || !houder) { document.getElementById("bank-iban").focus(); return; }
-        bankRegel.textContent = iban;
-        bankNaam.textContent = houder;
-        bankRij.dataset.klaar = "ja";
-        /* De samenvatting laat dezelfde rekening zien. */
-        document.querySelectorAll("[data-payout-iban]").forEach(function (el) { el.textContent = iban; });
-        document.querySelectorAll("[data-payout-holder]").forEach(function (el) { el.textContent = houder; });
-        zetBankVak(false);
-        showToast("Payout account saved");
+        if (bewaarBank()) showToast("Payout account saved");
+        else document.getElementById("bank-iban").focus();
       }
+    });
+
+    /* Doorlopen naar een andere stap legt de ingevulde rekening vast; daarna
+       staat hij er als regel. */
+    document.addEventListener("wiz-stap", function () {
+      if (bankRij.dataset.klaar !== "ja") bewaarBank();
     });
 
     zetBankVak(true);
