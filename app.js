@@ -4384,6 +4384,54 @@
       });
     }
 
+
+    /* De zaak is ook in de samenvatting te wijzigen. Dat mag niet naast de
+       velden van stap 1 gaan leven, dus het potlood haalt ze daar op en
+       opslaan schrijft ze terug. Daarna kloppen de regels, de documenten en
+       de eerste alinea van de overeenkomst weer met elkaar. */
+    var BIZ_PAREN = [["rev-type", "biz-legal"], ["rev-name", "biz-name"],
+                     ["rev-kvk", "biz-kvk"], ["rev-vat", "biz-vat"],
+                     ["rev-zip2", "biz-zip"], ["rev-city2", "biz-city"]];
+
+    function sumVeld(id) { return document.getElementById(id); }
+
+    document.addEventListener("click", function (e) {
+      if (!document.getElementById("review-business")) return;
+
+      if (e.target.closest("#review-business .rev__pen")) {
+        BIZ_PAREN.forEach(function (p) {
+          if (sumVeld(p[0]) && sumVeld(p[1])) sumVeld(p[0]).value = sumVeld(p[1]).value;
+        });
+        var straat = sumVeld("rev-street2");
+        if (straat) {
+          straat.value = [sumWaarde("biz-street"), sumWaarde("biz-nr")].filter(Boolean).join(" ");
+        }
+        return;
+      }
+
+      if (e.target.closest("#review-business .rev__save")) {
+        BIZ_PAREN.forEach(function (p) {
+          if (sumVeld(p[0]) && sumVeld(p[1])) sumVeld(p[1]).value = sumVeld(p[0]).value.trim();
+        });
+        /* Straat en huisnummer staan in stap 1 apart; hier op één regel. */
+        var heel = sumVeld("rev-street2") ? sumVeld("rev-street2").value.trim() : "";
+        var deel = /^(.*?)\s+([0-9]\S*)$/.exec(heel);
+        if (sumVeld("biz-street")) sumVeld("biz-street").value = deel ? deel[1] : heel;
+        if (sumVeld("biz-nr")) sumVeld("biz-nr").value = deel ? deel[2] : "";
+        vulSamenvatting();
+        zetSectieStand();
+        /* De overeenkomst leest dezelfde gegevens. */
+        document.dispatchEvent(new CustomEvent("wiz-bij"));
+      }
+    });
+
+    /* Het contract opnieuw opmaken zodra je het opent: er kan sinds de vorige
+       stapwissel van alles gewijzigd zijn. */
+    document.addEventListener("click", function (e) {
+      if (e.target.closest('[data-dialog="agreement-dialog"]')) {
+        document.dispatchEvent(new CustomEvent("wiz-bij"));
+      }
+    });
     document.addEventListener("wiz-stap", function () {
       vulSamenvatting();
       zetSectieStand();
@@ -4533,6 +4581,8 @@
     /* Bijwerken zodra de wizard een stap laat zien: dan is stap 1 net langs
        geweest en klopt de alinea met wat er staat. */
     document.addEventListener("wiz-stap", vulContract);
+    /* En zodra er elders iets is gewijzigd dat in het contract terugkomt. */
+    document.addEventListener("wiz-bij", vulContract);
     vulContract();
 
   }

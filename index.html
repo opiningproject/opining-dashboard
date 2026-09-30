@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=258" />
+  <link rel="stylesheet" href="styles.css?v=259" />
 </head>
 <body>
 
@@ -2834,11 +2834,14 @@
                     <div class="field">
                       <label class="label" for="rev-type">I am running my store as</label>
                       <select class="input" id="rev-type">
-                        <option>Sole proprietorship</option>
+                        <option value="">Select&hellip;</option>
+                        <option>Sole proprietorship (eenmanszaak)</option>
                         <option>Private limited company (BV)</option>
                         <option>General partnership (VOF)</option>
+                        <option>Limited partnership (CV)</option>
                         <option>Partnership (maatschap)</option>
-                        <option>Non-profit</option>
+                        <option>Foundation (stichting)</option>
+                        <option>Association (vereniging)</option>
                       </select>
                     </div>
                     <div class="rev__acts">
@@ -5528,6 +5531,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=258"></script>
+  <script src="app.js?v=259"></script>
 </body>
 </html>
