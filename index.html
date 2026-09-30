@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=231" />
+  <link rel="stylesheet" href="styles.css?v=232" />
 </head>
 <body>
 
@@ -3201,9 +3201,37 @@
                   </div>
                 </div>
 
+                <h4 class="card__subtitle">Verification</h4>
+                <p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>
+                <div class="rows">
+                  <div class="row row--static" data-doc="business">
+                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
+                    <span class="row__text"><span class="row__title">Business document</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <span class="docrow__name" data-doc-name hidden></span>
+                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- De uitbetaalrekening is een eigen sectie: hij hoort niet bij de
+                 zaak of bij de persoon, en het bankafschrift hoort erbij. -->
+            <div class="card card--flush" data-step="7" hidden>
+              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-payout">
+                <span class="acct__mark acct__mark--bank" aria-hidden="true" data-payout-mark>ING</span>
+                <span class="acct__text">
+                  <span class="acct__name">Payout account</span>
+                  <span class="acct__role" data-payout-holder>Opining BV</span>
+                </span>
+                <span class="badge badge--active u-normal">Ready to submit</span>
+                <span class="badge badge--muted u-update">Done</span>
+                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+
+              <div class="acct" id="review-payout">
                 <div class="rev">
                   <div class="rev__head">
-                    <h4 class="rev__title">Payout account</h4>
+                    <h4 class="rev__title">Account</h4>
                     <button class="icon-btn rev__pen" type="button" aria-label="Edit payout account">
                       <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
                     </button>
@@ -3217,11 +3245,11 @@
                   <div class="rev__form" hidden>
                     <div class="field">
                       <label class="label" for="rev-holder">Account holder</label>
-                      <input class="input" id="rev-holder" type="text" value="Opining" />
+                      <input class="input" id="rev-holder" type="text" value="Opining BV" />
                     </div>
                     <div class="field">
                       <label class="label" for="rev-iban">IBAN</label>
-                      <input class="input" id="rev-iban" type="text" value="NL91 ABNA 0417 1643 00" />
+                      <input class="input" id="rev-iban" type="text" value="NL59 INGB 0102 9917 15" />
                     </div>
                     <div class="rev__acts">
                       <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
@@ -3231,11 +3259,11 @@
                 </div>
 
                 <h4 class="card__subtitle">Verification</h4>
-                <p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>
+                <p class="card__sub">A recent statement that shows your business name and the IBAN.</p>
                 <div class="rows">
-                  <div class="row row--static" data-doc="business">
+                  <div class="row row--static" data-doc="statement">
                     <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="row__text"><span class="row__title">Business document</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <span class="row__text"><span class="row__title">Bank statement</span><span class="row__meta" data-doc-file hidden></span></span>
                     <span class="docrow__name" data-doc-name hidden></span>
                     <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
@@ -5766,6 +5794,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=231"></script>
+  <script src="app.js?v=232"></script>
 </body>
 </html>

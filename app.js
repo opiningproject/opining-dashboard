@@ -4275,6 +4275,7 @@
         bankRij.dataset.klaar = "ja";
         /* De samenvatting laat dezelfde rekening zien. */
         document.querySelectorAll("[data-payout-iban]").forEach(function (el) { el.textContent = iban; });
+        document.querySelectorAll("[data-payout-mark]").forEach(function (el) { el.textContent = bankMerk(iban); });
         document.querySelectorAll("[data-payout-holder]").forEach(function (el) { el.textContent = houder; });
         zetBankVak(false);
         showToast("Payout account saved");
