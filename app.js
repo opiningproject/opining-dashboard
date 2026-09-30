@@ -4494,11 +4494,16 @@
     function bewaarBank() {
       var iban = document.getElementById("bank-iban").value.trim();
       var houder = document.getElementById("bank-holder").value.trim();
+      var bic = document.getElementById("bank-bic").value.trim().toUpperCase();
       if (!iban || !houder) return false;
       bankRegel.textContent = iban;
       bankNaam.textContent = houder;
+      bankRij.dataset.bic = bic;
       bankRij.dataset.klaar = "ja";
-      document.querySelectorAll("[data-payout-iban]").forEach(function (el) { el.textContent = iban; });
+      /* In de samenvatting staat de BIC achter het IBAN, als hij is ingevuld. */
+      document.querySelectorAll("[data-payout-iban]").forEach(function (el) {
+        el.textContent = bic ? iban + " · " + bic : iban;
+      });
       document.querySelectorAll("[data-payout-holder]").forEach(function (el) { el.textContent = houder; });
       zetBankVak(false);
       return true;
@@ -4508,6 +4513,7 @@
       if (e.target.closest("[data-bank-change]")) {
         document.getElementById("bank-holder").value = bankNaam.textContent.trim();
         document.getElementById("bank-iban").value = bankRegel.textContent.trim();
+        document.getElementById("bank-bic").value = bankRij.dataset.bic || "";
         zetBankVak(true);
         document.getElementById("bank-holder").focus();
         return;

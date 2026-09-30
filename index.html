@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=249" />
+  <link rel="stylesheet" href="styles.css?v=250" />
 </head>
 <body>
 
@@ -2807,7 +2807,11 @@
                 <div class="field">
                   <label class="label" for="bank-iban">IBAN</label>
                   <input class="input" id="bank-iban" type="text" />
-                  <p class="hint">A business account in the name above. We pay out here on the schedule you choose later.</p>
+                </div>
+                <div class="field">
+                  <label class="label" for="bank-bic">BIC <span class="label__opt">optional</span></label>
+                  <input class="input" id="bank-bic" type="text" autocapitalize="characters" />
+                  <p class="hint">A business account in the name above. We pay out here on the schedule you choose later. For a Dutch IBAN we can look the BIC up ourselves.</p>
                 </div>
                 <div class="rev__acts">
                   <button class="btn btn--ghost btn--sm" type="button" data-bank-cancel hidden>Cancel</button>
@@ -5600,6 +5604,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=249"></script>
+  <script src="app.js?v=250"></script>
 </body>
 </html>
