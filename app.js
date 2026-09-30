@@ -4238,14 +4238,6 @@
     var bankNaam = document.getElementById("bank-holder-shown");
     var bankKop = document.getElementById("bank-form-title");
 
-    /* Het merkje voor de regel komt uit de bankcode in het IBAN. */
-    function bankMerk(iban) {
-      var code = iban.replace(/\s+/g, "").slice(4, 8).toUpperCase();
-      var namen = { INGB: "ING", RABO: "RABO", ABNA: "ABN", SNSB: "SNS", ASNB: "ASN",
-                    TRIO: "TRIO", KNAB: "KNAB", BUNQ: "BUNQ", RBRB: "RGRO", REVO: "REVO" };
-      return namen[code] || code || "BANK";
-    }
-
     function zetBankVak(open) {
       var klaar = bankRij.dataset.klaar === "ja";
       bankVak.hidden = !open;
@@ -4271,11 +4263,9 @@
         if (!iban || !houder) { document.getElementById("bank-iban").focus(); return; }
         bankRegel.textContent = iban;
         bankNaam.textContent = houder;
-        document.getElementById("bank-mark").textContent = bankMerk(iban);
         bankRij.dataset.klaar = "ja";
         /* De samenvatting laat dezelfde rekening zien. */
         document.querySelectorAll("[data-payout-iban]").forEach(function (el) { el.textContent = iban; });
-        document.querySelectorAll("[data-payout-mark]").forEach(function (el) { el.textContent = bankMerk(iban); });
         document.querySelectorAll("[data-payout-holder]").forEach(function (el) { el.textContent = houder; });
         zetBankVak(false);
         showToast("Payout account saved");

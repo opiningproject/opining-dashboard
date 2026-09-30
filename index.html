@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=232" />
+  <link rel="stylesheet" href="styles.css?v=233" />
 </head>
 <body>
 
@@ -2830,7 +2830,7 @@
                    die tijd staan de velden hieronder open. -->
               <div class="rows rows--menu" id="bank-row" hidden>
                 <div class="row row--static">
-                  <span class="acct__mark acct__mark--bank" id="bank-mark" aria-hidden="true"></span>
+                  <span class="acct__mark acct__mark--bank" aria-hidden="true"><svg class="icon"><use href="#i-finance"/></svg></span>
                   <span class="row__text">
                     <span class="row__title" id="bank-iban-shown"></span>
                     <span class="row__meta" id="bank-holder-shown"></span>
@@ -3218,7 +3218,7 @@
                  zaak of bij de persoon, en het bankafschrift hoort erbij. -->
             <div class="card card--flush" data-step="7" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-payout">
-                <span class="acct__mark acct__mark--bank" aria-hidden="true" data-payout-mark>ING</span>
+                <span class="acct__mark acct__mark--bank" aria-hidden="true"><svg class="icon"><use href="#i-finance"/></svg></span>
                 <span class="acct__text">
                   <span class="acct__name">Payout account</span>
                   <span class="acct__role" data-payout-holder>Opining BV</span>
@@ -5794,6 +5794,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=232"></script>
+  <script src="app.js?v=233"></script>
 </body>
 </html>
