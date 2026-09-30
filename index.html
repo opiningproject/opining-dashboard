@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=251" />
+  <link rel="stylesheet" href="styles.css?v=253" />
 </head>
 <body>
 
@@ -2912,36 +2912,8 @@
                   </div>
                 </div>
 
-                <!-- Het stuk dat de inschrijving bevestigt. Dit werd in een
-                     eigen stap gevraagd; het hoort bij de gegevens waar het
-                     over gaat. -->
-                <h4 class="card__subtitle">Verification</h4>
-                <p class="card__sub">An extract from the Chamber of Commerce, no older than three months.</p>
-                <div class="rows">
-                  <div class="row row--static" data-doc="business">
-                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="row__text"><span class="row__title">Chamber of Commerce extract</span><span class="row__meta" data-doc-file hidden></span></span>
-                    <span class="docrow__name" data-doc-name hidden></span>
-                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Wat de zaak doet, uit stap 2. Wijzigen brengt je terug naar die
-                 stap; de lijst met categorieën staat daar al. -->
-            <div class="card card--flush" data-step="6" hidden>
-              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-activities">
-                <span class="acct__text">
-                  <span class="acct__name">Activities</span>
-                  <span class="acct__role" data-sum-category>Cafe, bar, restaurant</span>
-                </span>
-                <span class="badge badge--active u-normal">Ready to submit</span>
-                <span class="badge badge--muted u-update">Done</span>
-                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-              </button>
-
-              <div class="acct" id="review-activities">
+                <!-- Wat de zaak doet, uit stap 2. Het potlood brengt je terug
+                     naar die stap; de lijst met categorieen staat daar al. -->
                 <div class="rev">
                   <div class="rev__head">
                     <h4 class="rev__title">What your business does</h4>
@@ -2954,10 +2926,20 @@
                       <svg class="icon rev__icon" aria-hidden="true"><use href="#i-list"/></svg>
                       <span class="rev__text"><b>Category</b><span data-sum-category></span></span>
                     </div>
-                    <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-store"/></svg>
-                      <span class="rev__text"><b>Trade activities</b><span data-sum-desc></span></span>
-                    </div>
+                  </div>
+                </div>
+
+                <!-- Het stuk dat de inschrijving bevestigt. Dit werd in een
+                     eigen stap gevraagd; het hoort bij de gegevens waar het
+                     over gaat. -->
+                <h4 class="card__subtitle">Verification</h4>
+                <p class="card__sub">An extract from the Chamber of Commerce, no older than three months.</p>
+                <div class="rows">
+                  <div class="row row--static" data-doc="business">
+                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
+                    <span class="row__text"><span class="row__title">Chamber of Commerce extract</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <span class="docrow__name" data-doc-name hidden></span>
+                    <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
                 </div>
               </div>
@@ -3034,11 +3016,42 @@
               </button>
 
               <div class="acct" id="review-agreement">
+                <div class="rows">
+                  <div class="row row--static">
+                    <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
+                    <span class="row__text">
+                      <span class="row__title">Cooperation agreement</span>
+                      <span class="row__meta" data-sign-meta>Read it and sign with your name</span>
+                    </span>
+                    <button class="btn btn--ghost btn--sm" type="button" data-dialog="agreement-dialog" id="sign-open">Review and sign</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="wiz__terms" data-step="6" hidden>
+              By using Opining Payments you agree to the <a class="link" href="#">terms of service</a> and <a class="link" href="#">applicable fees</a>.
+            </p>
 
-              <!-- Alles wat je invult zit in een omslag. Zodra er getekend is
-                   gaat die dicht en blijft alleen de regel eronder staan, net
-                   als bij Pay.nl: het stuk is weg, er valt niets meer te doen. -->
-              <div class="signwork">
+            <div class="wiz__foot">
+              <button class="btn btn--ghost" type="button" id="wiz-back" hidden>Back</button>
+              <button class="btn btn--primary" type="button" id="wiz-next">Next</button>
+            </div>
+          </div>
+        </section>
+
+          <!-- De overeenkomst lees en tekent je in een venster: de tekst is
+               lang en je hoeft er maar een ding mee te doen. De naam staat er
+               al in, uit de gegevens van de tekenbevoegde. -->
+          <div class="dialog" id="agreement-dialog" hidden>
+            <div class="dialog__scrim" data-dialog-close></div>
+            <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="agreement-dialog-title">
+              <div class="dialog__head">
+                <h2 class="dialog__title" id="agreement-dialog-title">Cooperation agreement</h2>
+                <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+              </div>
+
               <div class="contract" tabindex="0" role="region" aria-label="Cooperation agreement">
                 <h4 class="contract__title">Cooperation agreement</h4>
                 <h5 class="contract__sub">Undersigned</h5>
@@ -3089,61 +3102,6 @@
                   </div>
                 </div>
               </div>
-
-              <fieldset class="choices choices--id">
-                <legend class="label">Identification</legend>
-                <label class="choice"><input type="radio" name="id-kind" value="passport" data-id-one /><span>Passport</span></label>
-                <label class="choice"><input type="radio" name="id-kind" value="id-card" checked /><span>Identity card</span></label>
-                <label class="choice"><input type="radio" name="id-kind" value="licence" /><span>Driving licence (Dutch only)</span></label>
-                <label class="choice"><input type="radio" name="id-kind" value="permit" /><span>Residence permit</span></label>
-              </fieldset>
-
-              <div class="rev docup" data-upload data-id-side="front">
-                <div class="rev__head">
-                  <h4 class="rev__title">Front</h4>
-                  <span class="badge badge--pending" data-upload-status>Data incomplete</span>
-                </div>
-                <p class="rev__value">The side with your photo, in one clear picture.</p>
-                <div class="drop drop--doc">
-                  <input type="file" accept=".pdf,.jpg,.jpeg" hidden aria-label="Front of your identity document" />
-                  <div class="drop__empty">
-                    <svg class="icon drop__cloud" aria-hidden="true"><use href="#i-upload"/></svg>
-                    <p class="drop__lead">Upload the front here</p>
-                    <p class="drop__hint">Drag the file here, or <button class="link link--btn" type="button" data-upload-pick>select a file</button>.</p>
-                  </div>
-                  <div class="drop__file" hidden>
-                    <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="drop__kind"></span><span class="drop__name"></span>
-                  </div>
-                </div>
-                <p class="hint">PDF or JPG, up to 25 MB.</p>
-                <p class="drop__again" hidden>Wrong file? <button class="link link--btn" type="button" data-upload-pick>upload it again</button></p>
-              </div>
-
-              <!-- Een paspoort heeft maar een kant die telt; bij de andere
-                   stukken hoort de achterkant er wel bij. -->
-              <div class="rev docup" data-upload data-id-side="back">
-                <div class="rev__head">
-                  <h4 class="rev__title">Back</h4>
-                  <span class="badge badge--pending" data-upload-status>Data incomplete</span>
-                </div>
-                <p class="rev__value">The other side of the same document.</p>
-                <div class="drop drop--doc">
-                  <input type="file" accept=".pdf,.jpg,.jpeg" hidden aria-label="Back of your identity document" />
-                  <div class="drop__empty">
-                    <svg class="icon drop__cloud" aria-hidden="true"><use href="#i-upload"/></svg>
-                    <p class="drop__lead">Upload the back here</p>
-                    <p class="drop__hint">Drag the file here, or <button class="link link--btn" type="button" data-upload-pick>select a file</button>.</p>
-                  </div>
-                  <div class="drop__file" hidden>
-                    <svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="drop__kind"></span><span class="drop__name"></span>
-                  </div>
-                </div>
-                <p class="hint">PDF or JPG, up to 25 MB.</p>
-                <p class="drop__again" hidden>Wrong file? <button class="link link--btn" type="button" data-upload-pick>upload it again</button></p>
-              </div>
-
               <div class="field">
                 <span class="label label--info">
                   <label for="sign-name">Undersigned</label>
@@ -3161,38 +3119,12 @@
                 <p class="hint">Your name is placed under the agreement as your signature.</p>
               </div>
 
-              <!-- Tekenen met een knop: de naam hierboven komt onder het
-                   contract te staan, met de datum en de plaats erbij. -->
-              <div class="signbar">
-                <button class="btn btn--primary" type="button" id="sign-go" disabled>Sign the agreement</button>
+              <div class="dialog__foot signbar">
                 <p class="signbar__note">Upload your identity document and fill in the name of the undersigned first.</p>
+                <button class="btn btn--primary" type="button" id="sign-go" disabled>Sign the agreement</button>
               </div>
-              </div>
-
-              <!-- Wat er overblijft als het stuk getekend en verstuurd is. -->
-              <div class="rows" data-sign-done hidden>
-                <div class="row row--static">
-                  <svg class="icon row__icon" aria-hidden="true"><use href="#i-file-check"/></svg>
-                  <span class="row__text">
-                    <span class="row__title">Agreement signed</span>
-                    <span class="row__meta">Signed by <b data-signed-who></b> on <span data-signed-when></span></span>
-                  </span>
-                  <span class="badge badge--active">Sent</span>
-                </div>
-              </div>
-              </div>
-            </div>
-
-            <p class="wiz__terms" data-step="6" hidden>
-              By using Opining Payments you agree to the <a class="link" href="#">terms of service</a> and <a class="link" href="#">applicable fees</a>.
-            </p>
-
-            <div class="wiz__foot">
-              <button class="btn btn--ghost" type="button" id="wiz-back" hidden>Back</button>
-              <button class="btn btn--primary" type="button" id="wiz-next">Next</button>
             </div>
           </div>
-        </section>
 
         <!-- ---------- SETTINGS-SUB: betaalmethodes ---------- -->
         <section class="view" data-set-sub="payment-methods" hidden>
@@ -5595,6 +5527,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=251"></script>
+  <script src="app.js?v=253"></script>
 </body>
 </html>

@@ -3223,6 +3223,11 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Het nummer staat voor de alinea, met een vaste breedte zodat de tekst van
    alle artikelen op dezelfde lijn begint. */
 .contract__nr { display: inline-block; min-width: 30px; font-weight: 600; color: var(--text-strong); }
+/* De overeenkomst in het venster: zelfde vak, maar het mag hoger zijn omdat
+   er verder weinig in het venster staat. */
+.dialog .contract { max-height: 46vh; }
+.dialog__foot.signbar { justify-content: flex-end; }
+.dialog__foot.signbar .signbar__note { margin-right: auto; max-width: 60%; }
 
 /* Legitimatie: de keuze bepaalt of er een achterkant bij hoort. */
 .choices--id { margin-top: 32px; }

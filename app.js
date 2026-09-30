@@ -2547,6 +2547,8 @@
       knop.setAttribute("aria-label", "Upload " + docSoort.label.toLowerCase() + " again");
       knop.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>';
       docVenster.hidden = true;
+      /* Elders hangt de tekenknop hiervan af. */
+      document.dispatchEvent(new CustomEvent("upload-stand"));
       showToast("Document uploaded");
     });
   }
@@ -4066,20 +4068,26 @@
           openPersoon(null);
         });
         body.appendChild(bij);
-
-        /* Het UBO-register bestaat alleen voor een rechtspersoon; het
-           uittreksel hoort bij de mensen die erin staan. */
-        body.insertAdjacentHTML("beforeend",
-          '<h4 class="card__subtitle">Verification</h4>' +
-          '<p class="card__sub">The extract that shows who the ultimate beneficial owners are.</p>' +
-          '<div class="rows"><div class="row row--static" data-doc="ubo">' +
-            '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
-            '<span class="row__text"><span class="row__title">UBO register extract</span>' +
-            '<span class="row__meta" data-doc-file hidden></span></span>' +
-            '<span class="docrow__name" data-doc-name hidden></span>' +
-            '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
-          '</div></div>');
       }
+
+      /* De stukken die bij de mensen horen: het identiteitsbewijs van degene
+         die tekent, en bij een rechtspersoon het uittreksel UBO-register. Dat
+         register bestaat niet voor een eenmanszaak. */
+      function docRegel(soort, titel) {
+        return '<div class="row row--static" data-doc="' + soort + '">' +
+          '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
+          '<span class="row__text"><span class="row__title">' + titel + '</span>' +
+          '<span class="row__meta" data-doc-file hidden></span></span>' +
+          '<span class="docrow__name" data-doc-name hidden></span>' +
+          '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
+        '</div>';
+      }
+
+      body.insertAdjacentHTML("beforeend",
+        '<h4 class="card__subtitle">Verification</h4>' +
+        '<p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>' +
+        '<div class="rows">' + docRegel("identity", "Identity document") +
+        (alleenEigenaar() ? "" : docRegel("ubo", "UBO register extract")) + '</div>');
 
       anker.parentNode.insertBefore(kaart, anker);
     }
@@ -4369,20 +4377,6 @@
       tekenNaam.addEventListener("input", function () { this.dataset.getypt = "ja"; });
     }
 
-    /* Een paspoort heeft maar een kant die telt. */
-    function zetKanten() {
-      var paspoort = contract.parentNode.querySelector("[data-id-one]");
-      var achter = contract.parentNode.querySelector('[data-id-side="back"]');
-      if (achter) achter.hidden = !!(paspoort && paspoort.checked);
-      /* Een kant die wegvalt hoeft ook niet meer aangeleverd te zijn. */
-      zetTekenKlaar();
-    }
-
-    contract.parentNode.querySelectorAll('input[name="id-kind"]').forEach(function (keuze) {
-      keuze.addEventListener("change", zetKanten);
-    });
-    zetKanten();
-
     /* ---- Tekenen met een knop ---------------------------------------------
        Ondertekenen is een handeling, geen invulveld: je typt je naam en drukt
        op de knop. Wat je typte komt dan onder het contract te staan, met de
@@ -4396,20 +4390,17 @@
       return twee(d.getDate()) + "-" + twee(d.getMonth() + 1) + "-" + d.getFullYear();
     }
 
-    /* Tekenen kan pas als het stuk compleet is: de naam eronder en de kanten
-       van het legitimatiebewijs die bij de gekozen soort horen. Bij een
-       paspoort staat de achterkant er niet, dus die telt dan ook niet mee. */
+    /* Tekenen kan pas als je naam eronder staat en je identiteitsbewijs is
+       aangeleverd; dat stuk vraag je aan bij de betrokkenen. */
     function tekenMag() {
       if (!tekenNaam.value.trim()) return false;
-      var vakken = contract.parentNode.querySelectorAll("[data-id-side]");
-      return [].every.call(vakken, function (vak) {
-        return vak.hidden || !!vak.querySelector(".drop--filled");
-      });
+      var stuk = document.querySelector('[data-doc="identity"] [data-doc-file]');
+      return !!(stuk && !stuk.hidden);
     }
 
     function zetTekenKlaar() {
       /* Is er al getekend, dan staat de knop er niet meer. */
-      if (!tekenKnop || (tekenWerk && tekenWerk.hidden)) return;
+      if (!tekenKnop || tekenKnop.hidden) return;
       var mag = tekenMag();
       tekenKnop.disabled = !mag;
       var uitleg = document.querySelector(".signbar__note");
@@ -4417,14 +4408,15 @@
     }
 
     if (tekenKnop) {
-      var tekenWerk = document.querySelector(".signwork");
-      var tekenGedaan = document.querySelector("[data-sign-done]");
+      var tekenVenster = document.getElementById("agreement-dialog");
+      var tekenRegel = document.querySelector("[data-sign-meta]");
+      var tekenOpen = document.getElementById("sign-open");
       var tekenStand = document.querySelector("[data-sign-state]");
       var tekenLead = document.querySelector("[data-sign-lead]");
       var merk = contract.querySelector("[data-sign-mark]");
 
       /* Tekenen is eenmalig: terugdraaien kan niet, want dan is de
-         handtekening niets meer waard. De sectie sluit zichzelf af. */
+         handtekening niets meer waard. */
       function zetHandtekening(naam) {
         var datum = vandaag();
         merk.textContent = naam;
@@ -4433,26 +4425,35 @@
         zetTekst("[data-sign-date]", datum, "");
         zetTekst("[data-sign-place]", waarde("biz-city"), "");
 
-        /* Het invulwerk gaat dicht; er blijft een regel over die zegt dat het
-           stuk de deur uit is. */
-        tekenWerk.hidden = true;
-        tekenGedaan.hidden = false;
+        /* Het venster gaat dicht; de regel en de kop zeggen dat het stuk de
+           deur uit is. */
+        var zin = "Signed by " + naam + " on " + datum;
+        tekenVenster.hidden = true;
         tekenStand.textContent = "Sent";
         tekenStand.className = "badge badge--active";
         tekenStand.setAttribute("data-sign-state", "");
-        tekenLead.textContent = "Signed by " + naam + " on " + datum;
-        tekenGedaan.querySelector("[data-signed-who]").textContent = naam;
-        tekenGedaan.querySelector("[data-signed-when]").textContent = datum;
+        tekenLead.textContent = zin;
+        tekenRegel.textContent = zin;
+        tekenOpen.textContent = "View";
+        tekenKnop.hidden = true;
+        /* In het venster blijft staan wie er wanneer tekende. */
+        var uitleg = document.querySelector(".signbar__note");
+        if (uitleg) {
+          uitleg.textContent = zin + ".";
+          uitleg.hidden = false;
+        }
         tekenNaam.readOnly = true;
       }
+
       tekenKnop.addEventListener("click", function () {
         if (!tekenMag()) return;
         zetHandtekening(tekenNaam.value.trim());
         showToast("Agreement signed and sent");
       });
 
-      /* De knop volgt de velden: de naam hierboven en de stukken die je
-         aanlevert. Dat laatste bericht komt uit het uploadblok. */
+      /* De knop volgt de velden: de naam erboven en het identiteitsbewijs dat
+         je bij de betrokkenen aanlevert. Dat bericht komt uit het uploadblok
+         en uit het documentvenster. */
       tekenNaam.addEventListener("input", zetTekenKlaar);
       document.addEventListener("upload-stand", zetTekenKlaar);
       zetTekenKlaar();
