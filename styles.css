@@ -2009,25 +2009,41 @@ select.input {
 
 .wiz { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
 
-.wiz__head { display: flex; align-items: center; gap: 18px; min-width: 0; }
-.wiz__count { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text-muted); }
-.wiz__count b { font-weight: 600; color: var(--text-strong); }
-
-/* De balk vult de rest van de regel; de vulling groeit mee met de stap. */
-.wiz__track {
-  flex: 1 1 auto;
-  height: 6px;
+/* De stappen van de wizard op een rij, met hun naam erbij. Op een smal scherm
+   schuift de rij zelf; de pagina blijft dus even breed als het scherm. */
+.wsteps {
+  display: flex; align-items: center; gap: 2px;
+  margin: 0; padding: 0; list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.wsteps::-webkit-scrollbar { display: none; }
+.wstep > button {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 9px;
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.wstep > button:disabled { cursor: default; }
+/* Het rondje voor de naam: het nummer, of een vinkje als je die stap had. */
+.wstep__mark {
+  display: grid; place-items: center;
+  width: 22px; height: 22px; flex: 0 0 auto;
   border-radius: var(--r-full);
-  background: var(--gray-200);
-  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  font-size: var(--fs-xs); font-weight: 600;
 }
-.wiz__track > span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--accent);
-  transition: width 260ms var(--ease);
-}
+.wstep__mark .icon { width: 13px; height: 13px; }
+/* Waar je nu bent: donkere tekst en een gevuld rondje. */
+.wstep.is-now > button { color: var(--text-strong); font-weight: 600; }
+.wstep.is-now .wstep__mark { background: var(--accent); border-color: var(--accent); color: #fff; }
+/* Wat je gehad hebt: een vinkje, en je kunt er weer heen. */
+.wstep.is-done > button { color: var(--text); }
+.wstep.is-done > button:hover { background: var(--gray-50); }
+.wstep.is-done .wstep__mark { border-color: var(--success); color: var(--success); }
 
 .wiz__foot { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex-wrap: wrap; min-width: 0; }
 
@@ -2037,7 +2053,7 @@ select.input {
 .choices--rich > legend { margin-bottom: 14px; }
 /* De velden in deze wizard staan op 13px; de keuzes en de controleregels
    ernaast horen daar niet bovenuit te steken. */
-.wiz .card__sub, .wiz .choice, .wiz__count { font-size: var(--fs-sm); }
+.wiz .card__sub, .wiz .choice { font-size: var(--fs-sm); }
 .wiz .choice__title, .wiz .row__title { font-size: var(--fs-sm); font-weight: 600; }
 .wiz .choice__desc, .wiz .row__meta { font-size: var(--fs-sm); }
 .choice--rich { align-items: flex-start; gap: 14px; padding: 10px 4px; min-width: 0; }
