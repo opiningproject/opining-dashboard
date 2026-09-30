@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=240" />
+  <link rel="stylesheet" href="styles.css?v=241" />
 </head>
 <body>
 
@@ -2469,25 +2469,11 @@
                  moeten alle UBO's en tekenbevoegden erbij, dus wordt het een
                  lijst waar je mensen aan toevoegt. app.js kiest aan de hand van
                  de rechtsvorm uit stap 1 welke van de twee je ziet. -->
+            <!-- Stap 3 — jezelf. De tekenbevoegde vult hier zijn eigen
+                 gegevens in; wie er verder bij hoort komt in de stap erna. -->
             <div class="card" data-step="3" data-people="multi" hidden>
-              <h3 class="card__title">Which people are involved in your business?</h3>
-              <p class="card__sub">
-                Add everyone who is an ultimate beneficial owner (UBO) or an authorised representative of the business.
-                <span class="explain">
-                  <button class="explain__icon" type="button" aria-label="What does this mean?" aria-describedby="explain-ubo">
-                    <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
-                  </button>
-                  <span class="explain__pop" id="explain-ubo" role="tooltip">
-                    <b>UBO and authorised representative</b>
-                    A UBO owns more than 25% of the business or controls it in another way. An authorised representative may sign on behalf of the business. The law requires us to know who they are before payouts can start.
-                  </span>
-                </span>
-              </p>
-              <!-- De lijst begint leeg: je vult eerst je eigen gegevens in en
-                   pas daarna staat er iemand. Elke betrokkene is een eigen vak;
-                   bewerken gebeurt in dat vak zelf, net als in de samenvatting
-                   van de laatste stap. -->
-              <div class="persons" id="people-list" hidden></div>
+              <h3 class="card__title">Account representative</h3>
+              <p class="card__sub">The account representative signs the agreement on behalf of the business. Start with your own details; anyone else comes in the next step.</p>
               <!-- Dit ene vak met velden verhuist naar de betrokkene die je
                    bewerkt, of naar een nieuw vak onderaan de lijst. Zo staan
                    de velden nooit dubbel in de pagina. -->
@@ -2657,7 +2643,29 @@
                   <button class="btn btn--primary btn--sm" type="button" id="person-save">Save</button>
                 </div>
               </div>
+            </div>
 
+            <!-- Stap 4 — de andere betrokkenen. Jezelf staat er al in; hier
+                 komen de mensen erbij die ook een belang of tekenbevoegdheid
+                 hebben. Een eenmanszaak heeft deze stap niet. -->
+            <div class="card" data-step="4" data-people="multi" hidden>
+              <h3 class="card__title">Which people are involved in your business?</h3>
+              <p class="card__sub">
+                Add everyone who is an ultimate beneficial owner (UBO) or an authorised representative of the business.
+                <span class="explain">
+                  <button class="explain__icon" type="button" aria-label="What does this mean?" aria-describedby="explain-ubo">
+                    <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                  </button>
+                  <span class="explain__pop" id="explain-ubo" role="tooltip">
+                    <b>UBO and authorised representative</b>
+                    A UBO owns more than 25% of the business or controls it in another way. An authorised representative may sign on behalf of the business. The law requires us to know who they are before payouts can start.
+                  </span>
+                </span>
+              </p>
+
+              <!-- Elke betrokkene is een eigen vak; bewerken gebeurt in dat vak
+                   zelf, net als in de samenvatting van de laatste stap. -->
+              <div class="persons" id="people-list" hidden></div>
 
               <button class="addrow" type="button" data-person-add>
                 <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add person
@@ -2770,7 +2778,7 @@
             <!-- Stap 4 — uitbetaling. Pay.nl laat je de rekening koppelen met
                  een cent-betaling, of met de hand; wij vragen alleen de
                  gegevens, het afschrift komt in de samenvatting. -->
-            <div class="card" data-step="4" hidden>
+            <div class="card" data-step="5" hidden>
               <h3 class="card__title">Which bank account can we pay out to?</h3>
               <p class="card__sub">This is where we pay out what you earn. It has to be a business account in the name of your business; private accounts are not accepted. We ask for a recent bank statement in the last step.</p>
 
@@ -2812,7 +2820,7 @@
             <!-- Stap 6 — de overeenkomst. De eerste alinea wordt opgemaakt uit
                  wat er in stap 1 en 3 is ingevuld; daaronder legitimeer je je
                  en teken je met je naam. -->
-            <div class="card" data-step="5" hidden>
+            <div class="card" data-step="6" hidden>
               <h3 class="card__title" data-sign-title>Almost done. Review and sign the agreement.</h3>
               <p class="card__sub" data-sign-lead>The first section is filled in with the details you entered. Read the agreement, confirm your identity and sign with your name.</p>
 
@@ -2971,7 +2979,7 @@
             <!-- Stap 7 — twee blokken: de zaak en de persoon erachter. Elk
                  gegeven is hier nog te wijzigen: het potlood klapt hetzelfde
                  vakje open als formulier, zodat je de stap niet terug hoeft. -->
-            <div class="card card--flush" data-step="6" hidden>
+            <div class="card card--flush" data-step="7" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-business">
                 <span class="acct__mark" aria-hidden="true">O</span>
                 <span class="acct__text">
@@ -3098,7 +3106,7 @@
 
             <!-- Wat de zaak doet, uit stap 2. Wijzigen brengt je terug naar die
                  stap; de lijst met categorieën staat daar al. -->
-            <div class="card card--flush" data-step="6" hidden>
+            <div class="card card--flush" data-step="7" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-activities">
                 <span class="acct__mark acct__mark--soft" aria-hidden="true"><svg class="icon"><use href="#i-store"/></svg></span>
                 <span class="acct__text">
@@ -3134,7 +3142,7 @@
 
             <!-- De uitbetaalrekening is een eigen sectie: hij hoort niet bij de
                  zaak of bij de persoon, en het bankafschrift hoort erbij. -->
-            <div class="card card--flush" data-step="6" hidden>
+            <div class="card card--flush" data-step="7" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-payout">
                 <span class="acct__mark acct__mark--bank" aria-hidden="true"><svg class="icon"><use href="#i-finance"/></svg></span>
                 <span class="acct__text">
@@ -3189,7 +3197,7 @@
               </div>
             </div>
 
-            <p class="wiz__terms" data-step="6" hidden>
+            <p class="wiz__terms" data-step="7" hidden>
               By using Opining Payments you agree to the <a class="link" href="#">terms of service</a> and <a class="link" href="#">applicable fees</a>.
             </p>
 
@@ -5601,6 +5609,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=240"></script>
+  <script src="app.js?v=241"></script>
 </body>
 </html>

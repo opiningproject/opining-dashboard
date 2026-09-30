@@ -3146,6 +3146,11 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Het vak waarin je een betrokkene toevoegt of wijzigt: hetzelfde kader als
    de blokken in de controlestap, met wat lucht boven de lijst erboven. */
 .persform { margin-top: 14px; }
+/* In de stap over jezelf staan de velden gewoon in de kaart: geen kader,
+   geen kop, geen eigen knoppen. Next legt vast wat er staat. */
+.persform--kaal { margin-top: 0; }
+.persform--kaal .rev__acts { display: none; }
+.persform--kaal .card__subtitle--first { margin-top: 0; }
 .persform .card__subtitle { margin-top: 24px; font-size: var(--fs-md); font-weight: 600; }
 .persform .card__subtitle--first { margin-top: 14px; }
 

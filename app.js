@@ -1920,7 +1920,6 @@
   var resetWiz = null;
 
   if (wiz) {
-    var wizStappen = wiz.querySelectorAll("[data-step]");
     var wizNu      = document.getElementById("wiz-now");
     var wizTotaal  = document.getElementById("wiz-total");
     var wizBalk    = document.getElementById("wiz-bar");
@@ -1929,21 +1928,36 @@
     var wizVolgende = document.getElementById("wiz-next");
     var stap = 1;
 
-    /* Een stap kan uit meer dan één kaart bestaan, dus tel de stapnummers en
-       niet de kaarten: anders klopt "stap 3 van 6" niet meer. */
-    var wizLaatste = 1;
-    wizStappen.forEach(function (kaart) {
-      wizLaatste = Math.max(wizLaatste, Number(kaart.dataset.step));
-    });
-    wizTotaal.textContent = wizLaatste;
-    wizTrack.setAttribute("aria-valuemax", wizLaatste);
+    /* Welke stappen er zijn hangt van de rechtsvorm af: een eenmanszaak heeft
+       maar een betrokkene, dus de stap waarin je er meer toevoegt bestaat daar
+       niet. De reeks wordt daarom elke keer opnieuw bepaald, en de teller telt
+       de stappen die je werkelijk langsgaat. */
+    function wizReeks() {
+      var reeks = [];
+      wiz.querySelectorAll(".card[data-step]").forEach(function (kaart) {
+        var n = Number(kaart.dataset.step);
+        if (kaart.dataset.off === "ja") return;
+        if (reeks.indexOf(n) === -1) reeks.push(n);
+      });
+      return reeks.sort(function (a, b) { return a - b; });
+    }
 
     function toonStap(n) {
-      stap = Math.min(Math.max(n, 1), wizLaatste);
       /* De samenvatting krijgt een blok per betrokkene uit stap 3; die blokken
          bestaan pas als je hier komt, dus eerst bijwerken. Dat gebeurt met een
          bericht, want de betrokkenen worden verderop in dit bestand geregeld. */
-      document.dispatchEvent(new CustomEvent("wiz-stap", { detail: stap }));
+      document.dispatchEvent(new CustomEvent("wiz-stap", { detail: n }));
+
+      var reeks = wizReeks();
+      if (!reeks.length) return;
+      /* Een stap die er in deze rechtsvorm niet is: pak de eerstvolgende. */
+      if (reeks.indexOf(n) === -1) {
+        var hoger = reeks.filter(function (s) { return s >= n; });
+        n = hoger.length ? hoger[0] : reeks[reeks.length - 1];
+      }
+      stap = n;
+      var i = reeks.indexOf(stap);
+
       /* Opnieuw opzoeken: er kunnen blokken bij gekomen zijn. */
       wiz.querySelectorAll("[data-step]").forEach(function (kaart) {
         var anders = Number(kaart.dataset.step) !== stap;
@@ -1951,24 +1965,35 @@
            die in stap 1 gekozen is. */
         kaart.hidden = anders || kaart.dataset.off === "ja";
       });
-      wizNu.textContent = stap;
-      wizBalk.style.width = (stap / wizLaatste * 100) + "%";
-      wizTrack.setAttribute("aria-valuenow", stap);
-      wizVorige.hidden = stap === 1;
+      wizNu.textContent = i + 1;
+      wizTotaal.textContent = reeks.length;
+      wizBalk.style.width = ((i + 1) / reeks.length * 100) + "%";
+      wizTrack.setAttribute("aria-valuenow", i + 1);
+      wizTrack.setAttribute("aria-valuemax", reeks.length);
+      wizVorige.hidden = i === 0;
       /* Laatste stap rondt af in plaats van door te gaan. */
-      wizVolgende.textContent = stap === wizLaatste ? "Submit for verification" : "Next";
+      wizVolgende.textContent = i === reeks.length - 1 ? "Submit for verification" : "Next";
       /* Een vakje dat nog openstond hoort dicht als je de stap opnieuw ziet. */
       wiz.querySelectorAll(".rev").forEach(function (vak) { zetRev(vak, false); });
       overlay.scrollTop = 0;
     }
 
-    wizVorige.addEventListener("click", function () { toonStap(stap - 1); });
+    /* Een stap verder of terug in de reeks, niet in de nummering. */
+    function schuif(richting) {
+      var reeks = wizReeks();
+      var i = reeks.indexOf(stap) + richting;
+      if (i >= 0 && i < reeks.length) toonStap(reeks[i]);
+      return i < reeks.length;
+    }
+
+    wizVorige.addEventListener("click", function () { schuif(-1); });
 
     /* Andersom kan ook: een blok elders vraagt om een stap, bijvoorbeeld het
        potlood in de samenvatting dat je terugbrengt naar de betrokkenen. */
     document.addEventListener("wiz-ga", function (e) { toonStap(e.detail); });
     wizVolgende.addEventListener("click", function () {
-      if (stap < wizLaatste) { toonStap(stap + 1); return; }
+      var reeks = wizReeks();
+      if (reeks.indexOf(stap) < reeks.length - 1) { schuif(1); return; }
       backFromSub();
       /* De aanvraag is de deur uit; de betaalpagina laat vanaf nu zien wat je
          te regelen hebt in plaats van waarom je zou beginnen. */
@@ -3790,42 +3815,22 @@
     var persoonThuis = persoonVak.parentNode;
     var persoonAnker = persoonVak.nextSibling;
     var persoonKnop = document.querySelector("[data-person-add]");
-
-    /* Zolang er nog niemand staat is er ook geen lijst om aan toe te voegen:
-       je vult eerst je eigen gegevens in, net als bij een eenmanszaak. Pas
-       daarna verschijnt de lijst met de knop eronder. */
+    /* De lijst staat er pas als er iemand in staat. */
     function heeftBetrokkenen() {
       return !!lijst.querySelector("[data-person]:not([data-person-new])");
     }
 
+    function zelfVak() { return lijst.querySelector("[data-person-self]"); }
+
     function zetLijstStand() {
-      var er = heeftBetrokkenen();
-      lijst.hidden = !er;
-      persoonKnop.hidden = !er || !!persoonRij;
+      lijst.hidden = !heeftBetrokkenen();
+      persoonKnop.hidden = !!persoonRij;
     }
 
-    /* Bewerken gebeurt in het vakje van die persoon zelf: de regel maakt
-       plaats voor de velden, net als de blokken in de samenvatting. Een
-       nieuwe betrokkene krijgt een leeg vak onderaan de lijst; de eerste
-       vult gewoon de kaart, want er is nog geen lijst. */
-    function openPersoon(vak) {
-      if (persoonRij) sluitPersoon();
-      var eerste = !vak && !heeftBetrokkenen();
-      if (!vak && !eerste) {
-        vak = document.createElement("div");
-        vak.className = "rev persrow";
-        vak.setAttribute("data-person", "");
-        vak.setAttribute("data-person-new", "");
-        lijst.appendChild(vak);
-      }
-      persoonRij = vak || null;
+    /* De velden vullen met wat er van iemand bekend is; bij een nieuwe
+       betrokkene met de standen die het vaakst kloppen. */
+    function vulVelden(vak, nieuw) {
       var g = vak ? vak.dataset : {};
-      var nieuw = eerste || (vak && vak.hasAttribute("data-person-new"));
-
-      var kop = document.getElementById("person-form-title");
-      kop.textContent = eerste ? "Your details"
-        : (g.personName ? "Details of " + g.personName : "Add person");
-
       velden.forEach(function (naam) {
         var el = veld(naam);
         var w = g["person" + naam.charAt(0).toUpperCase() + naam.slice(1)] || "";
@@ -3839,23 +3844,67 @@
         veld("pct").value = "0%";
       }
       zetUboVelden();
+    }
+
+    /* Stap 3 gaat over jezelf: de velden staan gewoon in de kaart, zonder
+       kader en zonder eigen knoppen. Next gaat al verder en legt vast wat er
+       staat, net als bij de uitbetaling. */
+    function openZelf() {
+      if (persoonRij) sluitPersoon();
+      var vak = zelfVak();
+      persoonRij = vak || null;
+      vulVelden(vak, !vak);
+
+      document.getElementById("person-form-title").hidden = true;
+      document.querySelector("[data-person-remove]").hidden = true;
+      document.querySelector("[data-person-cancel]").hidden = true;
+      document.getElementById("person-save").hidden = true;
+      persoonVak.classList.add("persform--kaal");
+
+      persoonThuis.insertBefore(persoonVak, persoonAnker);
+      persoonVak.hidden = false;
+      if (vak) {
+        var pen = vak.querySelector("[data-person-edit]");
+        if (pen) pen.hidden = true;
+      }
+    }
+
+    /* In stap 4 bewerk je iemand in zijn eigen vakje: de regel maakt plaats
+       voor de velden, met Cancel en Save eronder. */
+    function openPersoon(vak) {
+      if (persoonRij) sluitPersoon();
+      if (!vak) {
+        vak = document.createElement("div");
+        vak.className = "rev persrow";
+        vak.setAttribute("data-person", "");
+        vak.setAttribute("data-person-new", "");
+        lijst.appendChild(vak);
+        lijst.hidden = false;
+      }
+      persoonRij = vak;
+      var nieuw = vak.hasAttribute("data-person-new");
+      vulVelden(vak, nieuw);
+
+      var kop = document.getElementById("person-form-title");
+      kop.textContent = vak.dataset.personName ? "Details of " + vak.dataset.personName : "Add person";
+      persoonVak.classList.remove("persform--kaal");
+      document.getElementById("person-save").hidden = false;
 
       /* De regel blijft staan waar hij staat: de velden komen eronder, zodat
          je ziet wie je aan het bewerken bent. De kop in het veldenvak is dan
          dubbelop, dus die blijft weg. */
-      var lees = vak && vak.querySelector(".persrow__read");
+      var lees = vak.querySelector(".persrow__read");
       kop.hidden = !!lees;
       /* Het potlood is even weg; opslaan of annuleren staat onder de velden. */
       var pen = lees && lees.querySelector("[data-person-edit]");
       if (pen) pen.hidden = true;
-      /* Iemand die je zelf bent kun je niet uit de lijst halen. */
+      /* Jezelf kun je niet uit de lijst halen, en een vak dat nog niemand
+         voorstelt hoeft ook niet weg. */
       document.querySelector("[data-person-remove]").hidden =
-        !!(eerste || !vak || vak.hasAttribute("data-person-self") || vak.hasAttribute("data-person-new"));
-      /* De eerste keer valt er ook niets af te breken. */
-      document.querySelector("[data-person-cancel]").hidden = eerste;
+        !!(vak.hasAttribute("data-person-self") || nieuw);
+      document.querySelector("[data-person-cancel]").hidden = false;
 
-      if (vak) vak.appendChild(persoonVak);
-      else persoonThuis.insertBefore(persoonVak, persoonAnker);
+      vak.appendChild(persoonVak);
       persoonVak.hidden = false;
       zetLijstStand();
       veld("first").focus();
@@ -4035,15 +4084,19 @@
       anker.parentNode.insertBefore(kaart, anker);
     }
 
-    document.getElementById("person-save").addEventListener("click", function () {
+    /* Wat er is ingevuld vastleggen. In stap 3 gebeurt dat als je doorloopt,
+       in stap 4 met de knop Save; daar hoort dan ook een melding bij. */
+    function bewaarPersoon(stil) {
       var voor = veld("first").value.trim();
       var achter = veld("last").value.trim();
-      if (!voor || !achter) { veld("first").focus(); return; }
+      if (!voor || !achter) {
+        if (!stil) veld("first").focus();
+        return false;
+      }
 
       var vak = persoonRij;
-      /* De eerste betrokkene vulde de kaart zelf; die krijgt nu zijn vak in
-         de lijst. Hij tekent de overeenkomst, dus hij is degene die zich moet
-         legitimeren en het label "you" draagt. */
+      /* Nog geen vak: dit is de eerste betrokkene, degene die tekent. Hij
+         krijgt het label "you" en de stand dat hij zich moet legitimeren. */
       var zelf = false;
       if (!vak) {
         vak = document.createElement("div");
@@ -4057,8 +4110,6 @@
       }
       var nieuw = vak.hasAttribute("data-person-new");
 
-      /* Een nieuw vak heeft nog geen regel; die komt boven de velden te staan
-         en blijft over zodra het vak weer dichtgaat. */
       var lees = vak.querySelector(".persrow__read");
       if (!lees) {
         lees = document.createElement("div");
@@ -4095,16 +4146,23 @@
       /* Het vak stelt nu iemand voor; sluiten mag het niet meer weggooien. */
       vak.removeAttribute("data-person-new");
       sluitPersoon();
-      showToast(nieuw ? voor + " " + achter + " added" : "Details saved");
+      if (!stil) showToast(nieuw ? voor + " " + achter + " added" : "Details saved");
+      return true;
+    }
+
+    document.getElementById("person-save").addEventListener("click", function () {
+      bewaarPersoon(false);
     });
 
-    /* De samenvatting bijwerken zodra de wizard een stap laat zien, en stap 3
-       met de velden laten beginnen als er nog niemand staat. */
+    /* Bij elke stapwissel: eerst vastleggen wat er in stap 3 is ingevuld, dan
+       de samenvatting bijwerken, en in stap 3 de eigen gegevens tonen. */
     document.addEventListener("wiz-stap", function (e) {
-      zetOverzichtPersonen();
-      if (e.detail === 3 && !alleenEigenaar() && !heeftBetrokkenen() && !persoonRij) {
-        openPersoon(null);
+      if (!alleenEigenaar() && persoonVak.classList.contains("persform--kaal")
+          && !persoonVak.hidden) {
+        bewaarPersoon(true);
       }
+      zetOverzichtPersonen();
+      if (e.detail === 3 && !alleenEigenaar()) openZelf();
     });
     zetLijstStand();
 
