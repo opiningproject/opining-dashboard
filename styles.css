@@ -3161,6 +3161,27 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Het venster waarin je een betrokkene invult: het veldenvak komt hierin te
    staan en heeft zelf al ruimte, dus geen dubbele marge erboven. */
 #person-dialog .dialog__body > .persform { margin-top: 0; }
+/* De kop blijft staan en alleen de velden schuiven: anders scroll je de titel
+   weg en loopt het venster met zo'n lang formulier tot buiten het scherm.
+   Het kader knipt af, zodat alle vier de hoeken rond blijven. */
+#person-dialog .dialog__card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  max-height: min(620px, calc(100vh - 48px));
+}
+#person-dialog .dialog__head {
+  flex: 0 0 auto;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+}
+#person-dialog .dialog__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 22px 22px;
+}
 /* In de stap over jezelf staan de velden gewoon in de kaart: geen kader,
    geen kop, geen eigen knoppen. Next legt vast wat er staat. */
 .persform--kaal { margin-top: 0; }
