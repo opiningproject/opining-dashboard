@@ -2065,10 +2065,12 @@ select.input {
 .acct__text { display: flex; flex-direction: column; min-width: 0; margin-right: auto; }
 .acct__name { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
 .acct__role { font-size: var(--fs-sm); color: var(--text-muted); }
-.acct { padding: 20px; }
-/* Een lijst die meteen bovenaan een sectie begint heeft de ruimte van de
-   sectie zelf al; zijn eigen marge komt er dan dubbelop bij. */
-.acct > .rows:first-child { margin-top: 0; }
+/* Boven in de sectie geen ruimte: de blokken eronder hebben hun eigen kader,
+   dus een gat onder de kop trekt de sectie alleen maar uit elkaar. */
+.acct { padding: 0 20px 20px; }
+/* Een lijst heeft geen eigen kop en mag niet tegen de sectiekop aan plakken. */
+.acct > .rows:first-child,
+.acct > .alert:first-child { margin-top: 20px; }
 /* Een tussenkop in een samenvattingssectie staat op dezelfde hoogte als de
    titel van een blok, dus even groot: anders schreeuwt hij over het blok
    erboven heen. */
