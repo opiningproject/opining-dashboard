@@ -1867,9 +1867,15 @@ select.input {
 .crumb:hover .page-head__icon { color: var(--text-strong); }
 .crumb__sep { width: 15px; height: 15px; color: var(--border-strong); }
 /* De naam van de pagina erboven: gedempt, want de pagina waar je bent staat
-   ernaast in het zwart. */
-.crumb__name { font-size: var(--fs-md); font-weight: 500; color: var(--text-muted);
-  white-space: nowrap; transition: color var(--dur) var(--ease); }
+   ernaast in het zwart. Hij komt er alleen bij als die pagina zelf een
+   subpagina is; de settingspagina zelf is het icoon en heeft geen naam nodig. */
+.crumb__name, .crumb__sep--name { display: none; }
+.crumb--named .crumb__sep--name { display: block; }
+.crumb--named .crumb__name {
+  display: block;
+  font-size: var(--fs-md); font-weight: 500; color: var(--text-muted);
+  white-space: nowrap; transition: color var(--dur) var(--ease);
+}
 .crumb:hover .crumb__name { color: var(--text-strong); }
 
 /* Vijf kolommen in de smallere settings-kolom: iets krappere celruimte,
@@ -2836,7 +2842,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
      negatieve marges trekken de balk tot de randen van de overlay. */
   /* Op een telefoon is de regel te smal voor een naam in het kruimelpad; de
      terugknop erboven wijst al de weg. */
-  .crumb__name, .crumb__sep--name { display: none; }
+  .crumb--named .crumb__name, .crumb--named .crumb__sep--name { display: none; }
 
   .set-back {
     position: sticky; top: 0; z-index: 2;

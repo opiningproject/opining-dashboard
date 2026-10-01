@@ -1820,14 +1820,18 @@
 
   /* Het icoon gaat een stap terug, naar de pagina direct erboven: op de
      tarievenpagina dus Payment methods, niet Payments. Daarom onthouden we
-     elke stap. Op een breed scherm staat de naam van die pagina erbij; op een
+     elke stap. Het icoon is de settingspagina zelf; staat daar nog een
+     subpagina tussen, dan komt op een breed scherm ook haar naam erbij. Op een
      telefoon alleen het icoon, want daar is de regel te smal. */
   function toonKruimel() {
     var boven = stapel[stapel.length - 1];
     if (!boven) { setCrumb.hidden = true; setIcon.removeAttribute("hidden"); return; }
     setCrumbIcon.querySelector("use")
       .setAttribute("href", setIcon.querySelector("use").getAttribute("href"));
-    setCrumbName.textContent = boven.titel;
+    /* Alleen een echte subpagina krijgt haar naam erbij; de settingspagina
+       zelf staat er al als icoon. */
+    setCrumbName.textContent = boven.sub ? boven.titel : "";
+    setCrumb.classList.toggle("crumb--named", !!boven.sub);
     setCrumb.setAttribute("aria-label", "Back to " + boven.titel);
     setCrumb.setAttribute("title", "Back to " + boven.titel);
     setCrumb.hidden = false;
