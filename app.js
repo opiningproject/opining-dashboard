@@ -4115,11 +4115,7 @@
       vak.className = "rev";
       vak.innerHTML =
         '<div class="rev__head">' +
-          '<span class="acct__mark acct__mark--person rev__mark" aria-hidden="true"></span>' +
-          '<h4 class="rev__title"></h4>' +
-          /* Alleen de eerste betrokkene moet zich legitimeren; die stand hoort
-             hier net zo zichtbaar te zijn als in de lijst van stap 4. */
-          (p.zelf ? '<span class="badge badge--pending" data-person-status>Identification required</span>' : "") +
+          '<h4 class="rev__title">Review</h4>' +
           '<button class="icon-btn rev__pen" type="button" data-review-edit>' +
             '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button></div>' +
         '<div class="rev__read">' +
@@ -4131,8 +4127,6 @@
             '<span class="rev__text"><b>Involvement</b><span data-r-rol></span></span></div>' +
         '</div>';
 
-      vak.querySelector(".rev__mark").textContent = letters(p.voor, p.achter);
-      vak.querySelector(".rev__title").textContent = p.zelf ? p.naam + " (you)" : p.naam;
       vak.querySelector(".rev__pen").setAttribute("aria-label", "Edit " + p.naam);
       vak.querySelector("[data-r-naam]").textContent = p.naam;
       vak.querySelector("[data-r-persoon]").textContent =
@@ -4158,112 +4152,118 @@
       return vak;
     }
 
+    /* Namen komen uit invoervelden, dus hier langs de HTML-opbouw. */
+    function veilig(t) {
+      return String(t).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    }
+
+    function docRegel(soort, titel, wie) {
+      return '<div class="row row--static" data-doc="' + soort + '">' +
+        '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
+        '<span class="row__text"><span class="row__title">' + titel + '</span>' +
+        /* Het identiteitsbewijs is van degene die tekent; zonder naam erbij
+           is niet te zien wiens document er wordt gevraagd. */
+        (wie ? '<span class="row__meta">' + veilig(wie) + '</span>' : "") +
+        '<span class="row__meta" data-doc-file hidden></span></span>' +
+        '<span class="docrow__name" data-doc-name hidden></span>' +
+        '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
+      '</div>';
+    }
+
+    /* Elke betrokkene is een eigen sectie in de samenvatting, met zijn naam en
+       rol in de kop. Degene die tekent heeft zijn stukken eronder; wie er later
+       bij komt levert niets aan. */
     function zetOverzichtPersonen() {
-      /* De sectie komt voor de overeenkomst te staan: eerst wie de zaak
-         voert, dan wat er getekend wordt. */
       var volgend = document.getElementById("review-agreement");
       var anker = volgend ? volgend.closest(".card") : document.querySelector(".wiz__terms");
       if (!anker) return;
-      /* Staan de eigenaarsvelden nog in dit blok, dan eerst terug naar hun
+      /* Staan de eigenaarsvelden nog in zo'n blok, dan eerst terug naar hun
          kaart; anders verdwijnen ze met de oude sectie. */
       repTerug();
-      var oud = document.querySelector("[data-review-people]");
-      if (oud) oud.remove();
+      document.querySelectorAll("[data-review-person], [data-review-bij]").forEach(function (oud) {
+        oud.remove();
+      });
 
       var mensen = alleenEigenaar() ? [eigenaarAlsPersoon()] : lijstAlsPersonen();
       mensen = mensen.filter(function (p) { return p.naam; });
       if (!mensen.length) return;
 
-      var kaart = document.createElement("div");
-      kaart.className = "card card--flush";
-      /* Het stapnummer komt van het blok waar we voor gaan staan, zodat deze
-         sectie altijd bij de samenvatting hoort en niet bij de stap ervoor. */
-      kaart.setAttribute("data-step", anker.dataset.step || "7");
-      kaart.setAttribute("data-review-people", "");
-      /* Normaal bouwt deze sectie zich op bij een stapwissel en zet toonStap
-         hem daarna aan. Bouwen we midden in de stap opnieuw op (iemand erbij
-         of gewijzigd vanuit de samenvatting), dan komt die wissel niet; het
-         anker staat in dezelfde stap, dus die weet of we zichtbaar zijn. */
-      kaart.hidden = anker.hidden;
-      kaart.innerHTML =
-        '<button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-people">' +
-          '<span class="acct__text"><span class="acct__name">People involved</span>' +
-          '<span class="acct__role"></span></span>' +
-          '<span class="badge badge--active u-normal">Ready to submit</span>' +
-          '<span class="badge badge--muted u-update">Done</span>' +
-          '<svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>' +
-        '</button><div class="acct" id="review-people"></div>';
-
-      kaart.querySelector(".acct__role").textContent = mensen.length === 1
-        ? mensen[0].naam : mensen.length + " people";
-
-      var body = kaart.querySelector(".acct");
-      mensen.forEach(function (p) { body.appendChild(persoonBlok(p)); });
-      /* Er kan er altijd iemand bij; dat gebeurt in stap 3, waar de velden
-         staan. Een eenmanszaak heeft maar een eigenaar, dus daar niet. */
-      if (!alleenEigenaar()) {
-        var bij = document.createElement("button");
-        bij.className = "addrow";
-        bij.type = "button";
-        bij.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add person';
-        /* Zodat zetLijstStand deze knop ook kan wegzetten zolang je met iemand
-           bezig bent. Een eigen naam, want data-person-add zou de gedeelde
-           klikafhandeling een tweede keer laten openen. */
-        bij.setAttribute("data-review-add", "");
-        bij.addEventListener("click", function () {
-          /* De velden klappen hier uit in plaats van je terug te sturen naar
-             de betrokkenenstap; het vak reist mee en belandt bij het opslaan
-             alsnog in de lijst daar (zie sluitPersoon). */
-          openPersoon(null);
-          body.insertBefore(persoonRij, bij);
-          veld("first").focus();
-        });
-        body.appendChild(bij);
-      }
-
-      /* De stukken die bij de mensen horen: het identiteitsbewijs van degene
-         die tekent, en bij een rechtspersoon het uittreksel UBO-register. Dat
-         register bestaat niet voor een eenmanszaak. */
-      /* Namen komen uit invoervelden, dus hier langs de HTML-opbouw. */
-      function veilig(t) {
-        return String(t).replace(/[&<>"]/g, function (c) {
-          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
-        });
-      }
-
-      function docRegel(soort, titel, wie) {
-        return '<div class="row row--static" data-doc="' + soort + '">' +
-          '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
-          '<span class="row__text"><span class="row__title">' + titel + '</span>' +
-          /* Het identiteitsbewijs is van degene die tekent; zonder naam erbij
-             is niet te zien wiens document er wordt gevraagd. */
-          (wie ? '<span class="row__meta">' + veilig(wie) + '</span>' : "") +
-          '<span class="row__meta" data-doc-file hidden></span></span>' +
-          '<span class="docrow__name" data-doc-name hidden></span>' +
-          '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
-        '</div>';
-      }
-
       /* Degene die tekent is de eerste betrokkene; die staat als "you" in de
          lijst en levert het identiteitsbewijs aan. */
       var tekenaar = mensen.filter(function (p) { return p.zelf; })[0] || mensen[0];
+      var stap = anker.dataset.step || "6";
 
-      /* De stukken horen bij degene die tekent, en staan dus onder zijn blok.
-         Wie er later bij komt levert niets aan: de aanvraag loopt op de
-         vertegenwoordiger. */
-      var eersteBlok = body.querySelector(".rev");
-      var stukken = document.createElement("div");
-      stukken.setAttribute("data-review-docs", "");
-      stukken.innerHTML =
-        '<h4 class="card__subtitle">Confirm your identity</h4>' +
-        '<p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>' +
-        '<div class="rows">' +
-        docRegel("identity", "Identity document", tekenaar ? tekenaar.naam + " (you)" : "") +
-        docRegel("statement", "Bank statement", "The account we pay out to") + '</div>';
-      if (eersteBlok) eersteBlok.after(stukken);
-      else body.appendChild(stukken);
+      mensen.forEach(function (p, i) {
+        var kaart = document.createElement("div");
+        kaart.className = "card card--flush";
+        kaart.setAttribute("data-step", stap);
+        kaart.setAttribute("data-review-person", "");
+        /* Normaal bouwt deze sectie zich op bij een stapwissel en zet toonStap
+           hem daarna aan. Bouwen we midden in de stap opnieuw op, dan komt die
+           wissel niet; het anker staat in dezelfde stap en weet dus of we
+           zichtbaar zijn. */
+        kaart.hidden = anker.hidden;
 
-      anker.parentNode.insertBefore(kaart, anker);
+        var id = "review-person-" + (i + 1);
+        kaart.innerHTML =
+          '<button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="' + id + '">' +
+            '<span class="acct__mark acct__mark--person" aria-hidden="true"></span>' +
+            '<span class="acct__text"><span class="acct__name"></span>' +
+            '<span class="acct__role"></span></span>' +
+            '<span class="badge badge--active u-normal">Ready to submit</span>' +
+            '<span class="badge badge--muted u-update">Done</span>' +
+            '<svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>' +
+          '</button><div class="acct" id="' + id + '"></div>';
+
+        kaart.querySelector(".acct__mark").textContent = letters(p.voor, p.achter);
+        kaart.querySelector(".acct__name").textContent = p.zelf ? p.naam + " (you)" : p.naam;
+        kaart.querySelector(".acct__role").textContent = p.zelf ? "Account representative" : p.rol;
+
+        var body = kaart.querySelector(".acct");
+        body.appendChild(persoonBlok(p));
+
+        /* De stukken horen bij degene die tekent, dus onder zijn sectie. */
+        if (p === tekenaar) {
+          body.insertAdjacentHTML("beforeend",
+            '<h4 class="card__subtitle">Confirm your identity</h4>' +
+            '<p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>' +
+            '<div class="rows">' +
+            docRegel("identity", "Identity document", p.naam + " (you)") +
+            docRegel("statement", "Bank statement", "The account we pay out to") + '</div>');
+        }
+
+        anker.parentNode.insertBefore(kaart, anker);
+      });
+
+      /* Er kan er altijd iemand bij. Een eenmanszaak heeft maar een eigenaar,
+         dus daar niet. */
+      if (alleenEigenaar()) return;
+
+      var vak = document.createElement("div");
+      vak.setAttribute("data-review-bij", "");
+      vak.setAttribute("data-step", stap);
+      vak.hidden = anker.hidden;
+
+      var bij = document.createElement("button");
+      bij.className = "addrow";
+      bij.type = "button";
+      bij.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add person';
+      /* Zodat zetLijstStand deze knop ook kan wegzetten zolang je met iemand
+         bezig bent. Een eigen naam, want data-person-add zou de gedeelde
+         klikafhandeling een tweede keer laten openen. */
+      bij.setAttribute("data-review-add", "");
+      bij.addEventListener("click", function () {
+        /* De velden klappen hier uit in plaats van je terug te sturen naar de
+           betrokkenenstap; het vak reist mee en belandt bij het opslaan alsnog
+           in de lijst daar (zie sluitPersoon). */
+        openPersoon(null);
+        vak.insertBefore(persoonRij, bij);
+        veld("first").focus();
+      });
+      vak.appendChild(bij);
+      anker.parentNode.insertBefore(vak, anker);
     }
 
     /* Wat er is ingevuld vastleggen. In stap 3 gebeurt dat als je doorloopt,
@@ -4606,6 +4606,32 @@
       if (e.target.closest('[data-dialog="agreement-dialog"]')) {
         document.dispatchEvent(new CustomEvent("wiz-bij"));
       }
+    });
+
+    /* De rechtsvorm bepaalt de rest van de aanvraag: welke betrokkenen er
+       gevraagd worden, welke stukken erbij horen en of er een stap bij komt.
+       Daarom eerst een bevestiging; pas daarna klapt het vak open. In de
+       opvangfase, zodat de gewone potloodafhandeling niet voorgaat. */
+    document.addEventListener("click", function (e) {
+      var pen = e.target.closest("[data-type-pen]");
+      if (!pen) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var venster = document.getElementById("type-dialog");
+      if (venster) venster.hidden = false;
+    }, true);
+
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest("#type-go")) return;
+      document.getElementById("type-dialog").hidden = true;
+      var blok = document.getElementById("review-type");
+      if (!blok) return;
+      var keuze = document.getElementById("rev-type");
+      var vorm = document.getElementById("biz-legal");
+      if (keuze && vorm) keuze.value = vorm.value;
+      blok.querySelector(".rev__read").hidden = true;
+      blok.querySelector(".rev__form").hidden = false;
+      if (keuze) keuze.focus();
     });
     document.addEventListener("wiz-stap", function () {
       vulSamenvatting();

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=261" />
+  <link rel="stylesheet" href="styles.css?v=263" />
 </head>
 <body>
 
@@ -2829,10 +2829,10 @@
                   <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>
                   <span>Information on the account does not match the Chamber of Commerce records. Check the registered name, the KVK number and the address.</span>
                 </p>
-                <div class="rev">
+                <div class="rev" id="review-type">
                   <div class="rev__head">
                     <h4 class="rev__title">Business type</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit business type">
+                    <button class="icon-btn rev__pen" type="button" data-type-pen aria-label="Edit business type">
                       <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
                     </button>
                   </div>
@@ -3021,6 +3021,26 @@
           </div>
         </section>
 
+
+          <!-- De rechtsvorm bepaalt wat er gevraagd wordt: wie er betrokken
+               zijn, welke stukken erbij horen en of er een stap bij komt.
+               Wijzigen is dus geen kleinigheid, vandaar deze bevestiging. -->
+          <div class="dialog" id="type-dialog" hidden>
+            <div class="dialog__scrim" data-dialog-close></div>
+            <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="type-dialog-title">
+              <div class="dialog__head">
+                <h2 class="dialog__title" id="type-dialog-title">Edit business type</h2>
+                <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+              </div>
+              <p class="dialog__lead">A different business type means we ask for different details. The people you entered may no longer apply, and other documents can be required before we can submit.</p>
+              <div class="dialog__foot">
+                <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+                <button class="btn btn--primary" type="button" id="type-go">Continue</button>
+              </div>
+            </div>
+          </div>
           <!-- De overeenkomst lees en tekent je in een venster: de tekst is
                lang en je hoeft er maar een ding mee te doen. De naam staat er
                al in, uit de gegevens van de tekenbevoegde. -->
@@ -5506,6 +5526,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=261"></script>
+  <script src="app.js?v=263"></script>
 </body>
 </html>

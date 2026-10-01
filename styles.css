@@ -2066,6 +2066,11 @@ select.input {
 .acct__name { font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
 .acct__role { font-size: var(--fs-sm); color: var(--text-muted); }
 .acct { padding: 20px; }
+/* Een tussenkop in een samenvattingssectie staat op dezelfde hoogte als de
+   titel van een blok, dus even groot: anders schreeuwt hij over het blok
+   erboven heen. */
+.acct > .card__subtitle { margin-top: 24px; font-size: var(--fs-sm); font-weight: 600; }
+.acct > .card__subtitle + .card__sub { margin-top: 2px; }
 /* De melding is geen kop van het blok eronder: dezelfde ruimte als tussen
    twee blokken. */
 .acct > .alert { margin: 0 0 14px; }
