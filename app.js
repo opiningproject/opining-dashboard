@@ -4212,13 +4212,10 @@
       mensen.forEach(function (p) {
         var regel = document.createElement("div");
         regel.className = "row row--static";
-        regel.innerHTML =
-          '<span class="acct__mark acct__mark--person rev__mark" aria-hidden="true"></span>' +
-          '<span class="row__text"><span class="row__title"></span>' +
-          '<span class="row__meta"></span></span>';
-        regel.querySelector(".acct__mark").textContent = letters(p.voor, p.achter);
+        /* Alleen de naam: wie het is en wat hij doet staat in zijn eigen
+           sectie hieronder. */
+        regel.innerHTML = '<span class="row__text"><span class="row__title"></span></span>';
         regel.querySelector(".row__title").textContent = p.naam;
-        regel.querySelector(".row__meta").textContent = p.zelf ? "Account representative" : p.rol;
         regels.appendChild(regel);
       });
 
