@@ -1866,6 +1866,11 @@ select.input {
 .crumb .page-head__icon { color: var(--text-muted); transition: color var(--dur) var(--ease); }
 .crumb:hover .page-head__icon { color: var(--text-strong); }
 .crumb__sep { width: 15px; height: 15px; color: var(--border-strong); }
+/* De naam van de pagina erboven: gedempt, want de pagina waar je bent staat
+   ernaast in het zwart. */
+.crumb__name { font-size: var(--fs-md); font-weight: 500; color: var(--text-muted);
+  white-space: nowrap; transition: color var(--dur) var(--ease); }
+.crumb:hover .crumb__name { color: var(--text-strong); }
 
 /* Vijf kolommen in de smallere settings-kolom: iets krappere celruimte,
    en de minimum-tekst mag afbreken in plaats van de tabel op te rekken. */
@@ -2829,6 +2834,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   /* De hele regel blijft staan, niet alleen het kruisje: terug naar
      Settings moet bereikbaar blijven hoe ver je ook doorscrollt. De
      negatieve marges trekken de balk tot de randen van de overlay. */
+  /* Op een telefoon is de regel te smal voor een naam in het kruimelpad; de
+     terugknop erboven wijst al de weg. */
+  .crumb__name, .crumb__sep--name { display: none; }
+
   .set-back {
     position: sticky; top: 0; z-index: 2;
     display: flex; align-items: center; gap: 4px;

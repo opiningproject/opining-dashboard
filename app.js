@@ -1808,6 +1808,7 @@
      terugknop. */
   var setCrumb     = document.getElementById("set-crumb");
   var setCrumbIcon = document.getElementById("set-crumb-icon");
+  var setCrumbName = document.getElementById("set-crumb-name");
   var setLead      = document.getElementById("set-lead");
   var setSubs      = document.querySelectorAll("[data-set-sub]");
   var stapel       = [];   /* pagina's waar we vandaan komen, onderste eerst */
@@ -1819,12 +1820,14 @@
 
   /* Het icoon gaat een stap terug, naar de pagina direct erboven: op de
      tarievenpagina dus Payment methods, niet Payments. Daarom onthouden we
-     elke stap. De naam staat alleen in de tooltip, niet in de kopregel. */
+     elke stap. Op een breed scherm staat de naam van die pagina erbij; op een
+     telefoon alleen het icoon, want daar is de regel te smal. */
   function toonKruimel() {
     var boven = stapel[stapel.length - 1];
     if (!boven) { setCrumb.hidden = true; setIcon.removeAttribute("hidden"); return; }
     setCrumbIcon.querySelector("use")
       .setAttribute("href", setIcon.querySelector("use").getAttribute("href"));
+    setCrumbName.textContent = boven.titel;
     setCrumb.setAttribute("aria-label", "Back to " + boven.titel);
     setCrumb.setAttribute("title", "Back to " + boven.titel);
     setCrumb.hidden = false;
@@ -1908,7 +1911,15 @@
 
   overlay.addEventListener("click", function (e) {
     var rij = e.target.closest("[data-sub]");
-    if (rij) { openSetSub(rij.dataset.sub, rij.dataset.subTitle, rij.dataset.subLead); return; }
+    if (rij) {
+      /* Een rij die in de kaart van een andere pagina staat hangt in het
+         kruimelpad onder die pagina, niet onder de pagina waar je hem
+         toevallig aanklikt. Zo komt Payment methods onder Online payments te
+         staan, waar het ook thuishoort, en loopt terug langs diezelfde weg. */
+      if (rij.dataset.subVia) openSetSub(rij.dataset.subVia, rij.dataset.subViaTitle);
+      openSetSub(rij.dataset.sub, rij.dataset.subTitle, rij.dataset.subLead);
+      return;
+    }
     if (e.target.closest("#set-crumb")) backFromSub();
   });
 
