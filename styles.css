@@ -3148,8 +3148,10 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Straat en huisnummer: de straat krijgt de ruimte, het nummer is kort. */
 .field-row--street { grid-template-columns: minmax(0, 1fr) 120px; }
 
-/* Twee keuzes die elkaar uitsluiten en kort zijn, passen naast elkaar. */
-.choices--row { flex-direction: row; gap: 24px; flex-wrap: wrap; }
+/* Twee keuzes die elkaar uitsluiten en kort zijn, passen naast elkaar. Ze
+   horen bij het veld erboven, maar plakken er anders tegenaan. */
+.choices--row { flex-direction: row; gap: 24px; flex-wrap: wrap; margin-top: 12px; }
+.choices--row + .rev__acts { margin-top: 26px; }
 /* Het eerste kopje in een venster heeft de kop erboven al als scheiding. */
 .card__subtitle--first { margin-top: 0; }
 
