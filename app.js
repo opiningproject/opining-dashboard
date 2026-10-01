@@ -4123,8 +4123,6 @@
             '<span class="rev__text"><b data-r-naam></b><span data-r-persoon></span></span></div>' +
           '<div class="rev__line"><svg class="icon rev__icon" aria-hidden="true"><use href="#i-pin"/></svg>' +
             '<span class="rev__text"><b>Residential address</b><span data-r-adres></span></span></div>' +
-          '<div class="rev__line"><svg class="icon rev__icon" aria-hidden="true"><use href="#i-list"/></svg>' +
-            '<span class="rev__text"><b>Involvement</b><span data-r-rol></span></span></div>' +
         '</div>';
 
       vak.querySelector(".rev__pen").setAttribute("aria-label", "Edit " + p.naam);
@@ -4132,7 +4130,6 @@
       vak.querySelector("[data-r-persoon]").textContent =
         [p.geboren, p.nat].filter(Boolean).join(" · ");
       vak.querySelector("[data-r-adres]").textContent = p.adres;
-      vak.querySelector("[data-r-rol]").textContent = p.rol;
 
       vak.querySelector("[data-review-edit]").addEventListener("click", function () {
         /* Een eenmanszaak heeft geen eigen regel maar velden in de stap zelf;
@@ -4216,10 +4213,13 @@
             '<span class="badge badge--muted u-update">Done</span>' +
             '<svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>' +
           '</button><div class="acct" id="' + id + '"></div>';
-
+        /* De rol staat onder de naam in de kop; in het blok eronder zou die
+           hetzelfde nog een keer zeggen. */
+        kaart.querySelector(".acct__role").textContent = p.zelf
+          ? ["Account representative", p.rol].filter(Boolean).join(" · ")
+          : p.rol;
         kaart.querySelector(".acct__mark").textContent = letters(p.voor, p.achter);
         kaart.querySelector(".acct__name").textContent = p.zelf ? p.naam + " (you)" : p.naam;
-        kaart.querySelector(".acct__role").textContent = p.zelf ? "Account representative" : p.rol;
 
         var body = kaart.querySelector(".acct");
         body.appendChild(persoonBlok(p));
