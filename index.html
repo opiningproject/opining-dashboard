@@ -2679,6 +2679,9 @@
             <div class="card" data-step="3" data-people="single" hidden>
               <h3 class="card__title">Account representative</h3>
               <p class="card__sub">The account representative needs to be the owner of the business.</p>
+              <!-- De velden in een eigen vak, zodat ze ook naar de samenvatting
+                   kunnen verhuizen: de eigenaar heeft daar geen eigen regel. -->
+              <div id="rep-fields">
               <div class="field-row">
                 <div class="field">
                   <label class="label" for="rep-first">First name</label>
@@ -2775,6 +2778,7 @@
                   <label class="label" for="rep-city">City</label>
                   <input class="input" id="rep-city" type="text" required autocomplete="address-level2" />
                 </div>
+              </div>
               </div>
             </div>
 

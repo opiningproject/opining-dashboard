@@ -3947,10 +3947,6 @@
 
       persoonThuis.insertBefore(persoonVak, persoonAnker);
       persoonVak.hidden = false;
-      if (vak) {
-        var pen = vak.querySelector("[data-person-edit]");
-        if (pen) pen.hidden = true;
-      }
     }
 
     /* In stap 4 bewerk je iemand in zijn eigen vakje: de regel maakt plaats
@@ -3984,9 +3980,6 @@
       /* De regel blijft staan waar hij staat: de velden komen eronder, zodat
          je ziet wie je aan het bewerken bent. */
       var lees = vak.querySelector(".persrow__read");
-      /* Het potlood is even weg; opslaan of annuleren staat onder de velden. */
-      var pen = lees && lees.querySelector("[data-person-edit]");
-      if (pen) pen.hidden = true;
       /* Jezelf kun je niet uit de lijst halen, en een vak dat nog niemand
          voorstelt hoeft ook niet weg. */
       document.querySelector("[data-person-remove]").hidden =
@@ -4013,8 +4006,6 @@
             if (persoonTerug) persoonTerug.ouder.insertBefore(persoonRij, persoonTerug.na);
             else { lijst.appendChild(persoonRij); lijst.hidden = false; }
           }
-          var pen = persoonRij.querySelector("[data-person-edit]");
-          if (pen) pen.hidden = false;
         }
       }
       persoonTerug = null;
@@ -4086,6 +4077,34 @@
       });
     }
 
+    /* De eenmanszaak heeft geen eigen regel maar velden in de stap zelf. Die
+       lenen we op dezelfde manier: het vak verhuist naar het blok in de
+       samenvatting en gaat daarna terug naar zijn kaart. */
+    var repVak   = document.getElementById("rep-fields");
+    var repThuis = repVak && repVak.parentNode;
+    var repAnker = repVak && repVak.nextSibling;
+    var repBlok  = null;
+
+    function repTerug() {
+      if (!repVak || !repVak.closest("[data-review-people]")) return;
+      repThuis.insertBefore(repVak, repAnker);
+      repBlok = null;
+    }
+
+    function openEigenaar(blok) {
+      repBlok = blok;
+      blok.querySelector(".rev__read").hidden = true;
+      blok.appendChild(repVak);
+      /* Afronden met een knop in plaats van opslaan: deze velden zijn zelf de
+         bron, er is niets om apart te bewaren. */
+      var acts = document.createElement("div");
+      acts.className = "rev__acts persform__acts";
+      acts.innerHTML = '<button class="btn btn--primary btn--sm" type="button" data-rep-done>Done</button>';
+      blok.appendChild(acts);
+      var eerste = repVak.querySelector("input, select");
+      if (eerste) eerste.focus();
+    }
+
     function persoonBlok(p) {
       var vak = document.createElement("div");
       vak.className = "rev";
@@ -4116,7 +4135,9 @@
       vak.querySelector("[data-review-edit]").addEventListener("click", function () {
         /* Een eenmanszaak heeft geen eigen regel maar velden in de stap zelf;
            daar valt hier niets uit te klappen. */
-        if (!p.vak) { document.dispatchEvent(new CustomEvent("wiz-ga", { detail: 3 })); return; }
+        /* De eenmanszaak heeft geen eigen regel; daar lenen we de velden uit
+           de stap zelf, zodat ook hier ter plekke uitgeklapt wordt. */
+        if (!p.vak) { if (repBlok !== vak) openEigenaar(vak); return; }
         /* De regel uit de betrokkenenstap neemt de plaats van dit blok in, met
            de velden erin. Bij sluiten gaat hij terug naar die stap en wordt
            deze sectie opnieuw opgebouwd. */
@@ -4133,6 +4154,9 @@
       var uitbetaling = document.getElementById("review-payout");
       var anker = uitbetaling ? uitbetaling.closest(".card") : document.querySelector(".wiz__terms");
       if (!anker) return;
+      /* Staan de eigenaarsvelden nog in dit blok, dan eerst terug naar hun
+         kaart; anders verdwijnen ze met de oude sectie. */
+      repTerug();
       var oud = document.querySelector("[data-review-people]");
       if (oud) oud.remove();
 
@@ -4261,7 +4285,7 @@
           /* Legitimeren hoeft alleen de eerste betrokkene, degene die de
              overeenkomst tekent; de rest krijgt dus geen stand mee. */
           (zelf ? '<span class="badge badge--pending" data-person-status>Identification required</span>' : "") +
-          '<button class="icon-btn rev__pen" type="button" data-person-edit hidden>' +
+          '<button class="icon-btn rev__pen" type="button" data-person-edit>' +
             '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>';
         vak.insertBefore(lees, vak.firstChild);
       }
@@ -4328,7 +4352,14 @@
         return;
       }
       var wijzig = e.target.closest("[data-person-edit]");
-      if (wijzig) { openPersoon(wijzig.closest("[data-person]")); return; }
+      if (wijzig) {
+        var rij = wijzig.closest("[data-person]");
+        /* Het potlood blijft staan terwijl je bewerkt; nog eens klikken moet
+           de velden niet opnieuw inlezen en je wijzigingen weggooien. */
+        if (rij !== persoonRij) openPersoon(rij);
+        return;
+      }
+      if (e.target.closest("[data-rep-done]")) { zetOverzichtPersonen(); return; }
       var weg = e.target.closest("[data-person-remove]");
       if (weg) {
         var vak = weg.closest("[data-person]");
