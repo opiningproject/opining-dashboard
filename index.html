@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=287" />
+  <link rel="stylesheet" href="styles.css?v=288" />
 </head>
 <body>
 
@@ -2215,6 +2215,32 @@
         </div>
 
         <section class="view" data-set-view="general">
+          <!-- De zakelijke gegevens komen uit de betaalaanvraag. Ze staan hier
+               ook, want ze gelden voor je facturen, je belasting en je
+               uitbetalingen en niet alleen voor het aanmelden. Zolang er niets
+               is ingevuld, wijst de regel naar de betaalpagina. -->
+          <div class="card">
+            <h3 class="card__title">Business details</h3>
+            <p class="card__sub">The business entity used for payments, invoices and taxes in this store.</p>
+            <div class="rows">
+              <div class="row row--static" id="biz-row">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-store"/></svg>
+                <span class="row__text">
+                  <span class="row__title" data-biz-row-name>Not provided yet</span>
+                  <span class="row__meta" data-biz-row-meta>Complete your payment setup to add your business details</span>
+                </span>
+                <span class="sort">
+                  <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for business details">
+                    <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                  </button>
+                  <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                    <button class="sort__item" type="button" role="menuitem" data-dialog="bizdetails-dialog">Edit</button>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+
           <div class="card">
             <h3 class="card__title">Store details</h3>
             <div class="rows">
@@ -5360,6 +5386,155 @@
   <!-- Iemand toevoegen vanuit de samenvatting gebeurt in een venster:
        de lijst eronder blijft zo in beeld. Het veldenvak uit de
        betrokkenenstap verhuist hierheen en gaat daarna weer terug. -->
+  <!-- Bewerken van de zakelijke gegevens. Dezelfde velden als in de
+       betaalaanvraag: dit venster leest ze bij het openen uit en schrijft ze
+       bij Save terug, zodat er maar een waarheid is. -->
+  <div class="dialog" id="bizdetails-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="bizdetails-dialog-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="bizdetails-dialog-title">Edit business details</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+
+      <div class="dialog__body">
+        <h4 class="card__subtitle">About your business</h4>
+        <div class="field">
+          <label class="label" for="bd-legal">What type of business do you have?</label>
+          <select class="input" id="bd-legal">
+            <option>Sole proprietorship (eenmanszaak)</option>
+            <option>Private limited company (BV)</option>
+            <option>General partnership (VOF)</option>
+            <option>Limited partnership (CV)</option>
+            <option>Partnership (maatschap)</option>
+            <option>Foundation (stichting)</option>
+            <option>Association (vereniging)</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="label" for="bd-first">First name</label>
+            <input class="input" id="bd-first" type="text" autocomplete="given-name" />
+          </div>
+          <div class="field">
+            <label class="label" for="bd-last">Last name</label>
+            <input class="input" id="bd-last" type="text" autocomplete="family-name" />
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="bd-dob-label">Date of birth</span>
+          <div class="dob" role="group" aria-labelledby="bd-dob-label">
+            <label class="sr-only" for="bd-dd">Day</label>
+            <input class="input dob__part" id="bd-dd" type="text" inputmode="numeric" maxlength="2" placeholder="DD" />
+            <label class="sr-only" for="bd-mm">Month</label>
+            <input class="input dob__part" id="bd-mm" type="text" inputmode="numeric" maxlength="2" placeholder="MM" />
+            <label class="sr-only" for="bd-yyyy">Year</label>
+            <input class="input dob__part dob__part--year" id="bd-yyyy" type="text" inputmode="numeric" maxlength="4" placeholder="YYYY" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label" for="bd-mail">Email</label>
+          <input class="input" id="bd-mail" type="email" autocomplete="email" />
+        </div>
+        <div class="field">
+          <label class="label" for="bd-phone">Phone number</label>
+          <div class="phone">
+            <label class="sr-only" for="bd-dial">Country calling code</label>
+            <select class="input phone__code" id="bd-dial">
+              <option>NL +31</option>
+              <option>BE +32</option>
+              <option>DE +49</option>
+            </select>
+            <input class="input phone__nr" id="bd-phone" type="tel" placeholder="6 14522453" autocomplete="tel-national" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label" for="bd-rep-street">Residential address</label>
+          <input class="input" id="bd-rep-street" type="text" autocomplete="street-address" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="label" for="bd-rep-zip">Postal code</label>
+            <input class="input" id="bd-rep-zip" type="text" autocomplete="postal-code" />
+          </div>
+          <div class="field">
+            <label class="label" for="bd-rep-city">City</label>
+            <input class="input" id="bd-rep-city" type="text" autocomplete="address-level2" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label" for="bd-bsn">Citizen service number (BSN)</label>
+          <input class="input" id="bd-bsn" type="text" inputmode="numeric" maxlength="9" />
+          <p class="hint">8 or 9 digits</p>
+        </div>
+
+        <h4 class="card__subtitle">Business verification details</h4>
+        <div class="field">
+          <label class="label" for="bd-name">Registered legal business name</label>
+          <input class="input" id="bd-name" type="text" autocomplete="organization" />
+        </div>
+        <div class="field">
+          <label class="label" for="bd-kvk">Chamber of Commerce number (KVK)</label>
+          <input class="input" id="bd-kvk" type="text" inputmode="numeric" maxlength="8" />
+          <p class="hint">8 digits</p>
+        </div>
+        <div class="field">
+          <label class="label" for="bd-vat">VAT number</label>
+          <input class="input" id="bd-vat" type="text" />
+          <p class="hint">Starts with NL, then 9 digits, a B and 2 digits</p>
+        </div>
+        <div class="field">
+          <label class="label" for="bd-street">Business address</label>
+          <input class="input" id="bd-street" type="text" autocomplete="street-address" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="label" for="bd-zip">Postal code</label>
+            <input class="input" id="bd-zip" type="text" autocomplete="postal-code" />
+          </div>
+          <div class="field">
+            <label class="label" for="bd-city">City</label>
+            <input class="input" id="bd-city" type="text" autocomplete="address-level2" />
+          </div>
+        </div>
+        <!-- Het telefoonnummer van de zaak hoort bij het handelsregister en
+             niet bij de persoon; vandaar hier en niet hierboven. -->
+        <div class="field">
+          <label class="label" for="bd-biz-phone">Phone number</label>
+          <div class="phone">
+            <label class="sr-only" for="bd-biz-dial">Country calling code</label>
+            <select class="input phone__code" id="bd-biz-dial">
+              <option>NL +31</option>
+              <option>BE +32</option>
+              <option>DE +49</option>
+            </select>
+            <input class="input phone__nr" id="bd-biz-phone" type="tel" placeholder="10 1234567" autocomplete="tel-national" />
+          </div>
+        </div>
+
+        <h4 class="card__subtitle">Business verification documents</h4>
+        <p class="card__sub">Documents must be clear, complete and uncropped.</p>
+        <div class="rows">
+          <button class="row" type="button" data-dialog-close data-goto-set="payments">
+            <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
+            <span class="row__text">
+              <span class="row__title">Proof of business registration</span>
+              <span class="row__meta" data-bd-doc>Not uploaded yet</span>
+            </span>
+            <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="bd-save">Save</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dialog" id="person-dialog" hidden>
     <div class="dialog__scrim" data-person-cancel></div>
     <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="person-dialog-title">
@@ -5536,6 +5711,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=287"></script>
+  <script src="app.js?v=288"></script>
 </body>
 </html>

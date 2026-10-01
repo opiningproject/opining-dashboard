@@ -684,6 +684,10 @@ select.input {
 /* Ademruimte boven de titel van een instelling; de linkerkolom begint
    hoger omdat de winkelrij daar zijn eigen band heeft. */
 .set-main { min-width: 0; padding-top: 22px; }
+/* Op de algemene instellingen zijn de kaarttitels kopjes binnen de pagina,
+   geen pagina-titels: even groot als een h4, zodat ze de kaart aankondigen
+   zonder eroverheen te schreeuwen. */
+[data-set-view="general"] .card__title { font-size: var(--fs-sm); font-weight: 600; }
 .set-back { display: none; }
 
 /* ==========================================================================
@@ -3086,6 +3090,10 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   .row--static > .row__link, .row--static > .btn { margin-left: auto; }
   .row--static > .badge:not([hidden]) + .row__link,
   .row--static > .badge:not([hidden]) + .btn { margin-left: auto; }
+  /* Staat er achter de tekst alleen een menuknop, dan breekt de regel niet af:
+     die knop is net zo smal als een pijltje en past er altijd naast. */
+  .row--static > .row__text:has(+ .sort) { flex: 1 1 0; min-width: 0; }
+  .row--static > .sort { flex: 0 0 auto; margin-left: auto; }
   /* Een lang adres kapt af in plaats van de regel op te rekken. */
   .row__title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }

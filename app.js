@@ -5004,4 +5004,93 @@
 
     document.addEventListener("wiz-stap", bewaarBank);
   }
+
+  /* ---- Zakelijke gegevens bij de algemene instellingen --------------------
+     Dezelfde gegevens als in de betaalaanvraag, maar dan waar je ze zoekt als
+     je ze wilt nakijken of wijzigen. De aanvraag blijft de bron: dit venster
+     leest die velden bij het openen uit en schrijft ze bij Save terug. */
+  (function () {
+    var rij = document.getElementById("biz-row");
+    var venster = document.getElementById("bizdetails-dialog");
+    if (!rij || !venster) return;
+
+    function veld(id) { return document.getElementById(id); }
+    function lees(id) { var el = veld(id); return el ? el.value.trim() : ""; }
+    function schrijf(id, tekst) { var el = veld(id); if (el) el.value = tekst; }
+
+    /* Links het venster, rechts de aanvraag. Het adres van de zaak staat daar
+       als straat en huisnummer apart; hier op een regel, zoals je het schrijft. */
+    var PAREN = [
+      ["bd-legal", "biz-legal"], ["bd-first", "rep-first"], ["bd-last", "rep-last"],
+      ["bd-dd", "rep-dd"], ["bd-mm", "rep-mm"], ["bd-yyyy", "rep-yyyy"],
+      ["bd-mail", "rep-mail"], ["bd-dial", "rep-dial"], ["bd-phone", "rep-phone"],
+      ["bd-rep-street", "rep-street"], ["bd-rep-zip", "rep-zip"], ["bd-rep-city", "rep-city"],
+      ["bd-bsn", "rep-bsn"], ["bd-name", "biz-name"], ["bd-kvk", "biz-kvk"],
+      ["bd-vat", "biz-vat"], ["bd-zip", "biz-zip"], ["bd-city", "biz-city"]
+    ];
+
+    function zaakAdres() {
+      var straat = [lees("biz-street"), lees("biz-nr")].filter(Boolean).join(" ");
+      return [straat, lees("biz-city"), lees("biz-zip"), "Netherlands"].filter(Boolean).join(", ");
+    }
+
+    /* De regel vat samen wat er bekend is: de naam uit het handelsregister, en
+       daaronder de rechtsvorm met het adres. Is er nog niets, dan wijst hij de
+       weg naar de betaalpagina in plaats van een lege regel te tonen. */
+    function zetRij() {
+      var naam = lees("biz-name");
+      var vorm = lees("biz-legal");
+      var adres = zaakAdres();
+      var titel = rij.querySelector("[data-biz-row-name]");
+      var onder = rij.querySelector("[data-biz-row-meta]");
+      if (!naam) {
+        titel.textContent = "Not provided yet";
+        onder.textContent = "Complete your payment setup to add your business details";
+        return;
+      }
+      titel.textContent = naam;
+      onder.textContent = [vorm, adres].filter(Boolean).join(" · ");
+    }
+
+    /* Het uittreksel ligt bij de aanvraag; hier staat alleen of het er is. */
+    function zetStuk() {
+      var regel = venster.querySelector("[data-bd-doc]");
+      var stuk = document.querySelector('[data-doc="business"] [data-doc-file]');
+      if (!regel) return;
+      regel.textContent = (stuk && !stuk.hidden && stuk.textContent)
+        ? stuk.textContent
+        : "Not uploaded yet";
+    }
+
+    document.addEventListener("click", function (e) {
+      if (e.target.closest('[data-dialog="bizdetails-dialog"]')) {
+        PAREN.forEach(function (p) { schrijf(p[0], lees(p[1])); });
+        schrijf("bd-street", [lees("biz-street"), lees("biz-nr")].filter(Boolean).join(" "));
+        zetStuk();
+        return;
+      }
+
+      if (!e.target.closest("#bd-save")) return;
+      PAREN.forEach(function (p) { if (veld(p[1])) veld(p[1]).value = lees(p[0]); });
+      /* Straat en huisnummer weer uit elkaar: het laatste woord dat met een
+         cijfer begint is het nummer, de rest de straat. */
+      var heel = lees("bd-street");
+      var deel = /^(.*?)\s+([0-9]\S*)$/.exec(heel);
+      schrijf("biz-street", deel ? deel[1] : heel);
+      schrijf("biz-nr", deel ? deel[2] : "");
+
+      zetRij();
+      venster.hidden = true;
+      /* De samenvatting van de aanvraag en de overeenkomst lezen dezelfde
+         velden; die mogen niet achterlopen. */
+      document.dispatchEvent(new CustomEvent("wiz-bij"));
+      showToast("Business details saved");
+    });
+
+    /* De aanvraag kan de gegevens ook wijzigen; dan klopt de regel weer. */
+    document.addEventListener("wiz-bij", zetRij);
+    document.addEventListener("upload-stand", zetStuk);
+    zetRij();
+  })();
+
 })();
