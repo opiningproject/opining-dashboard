@@ -4493,14 +4493,6 @@
       sumZet("[data-sum-desc]", sumWaarde("act-desc"), "Not described yet");
     }
 
-    /* Het potlood van een sectie brengt je terug naar de stap waar het
-       gegeven vandaan komt; daar staat het veld al. */
-    document.addEventListener("click", function (e) {
-      var pen = e.target.closest("[data-sum-edit]");
-      if (!pen) return;
-      document.dispatchEvent(new CustomEvent("wiz-ga", { detail: Number(pen.dataset.sumEdit) }));
-    });
-
     /* De stand van een sectie hangt af van de stukken die erin gevraagd
        worden: zolang er een ontbreekt is de sectie niet klaar om te versturen.
        De overeenkomst heeft een eigen stand en blijft hier buiten. */
@@ -4517,6 +4509,36 @@
       });
     }
 
+
+    /* Wat de zaak doet, ook hier te wijzigen. De keuzelijst wordt gevuld
+       vanuit stap 2, zodat de categorieen op een plek staan en niet uit elkaar
+       kunnen lopen. */
+    var actKeuze = document.getElementById("rev-category");
+    var actBron  = document.getElementById("act-category");
+    if (actKeuze && actBron) {
+      [].forEach.call(actBron.options, function (o) { actKeuze.add(new Option(o.text, o.value)); });
+    }
+
+    var ACT_PAREN = [["rev-category", "act-category"], ["rev-desc", "act-desc"]];
+
+    document.addEventListener("click", function (e) {
+      if (!document.getElementById("review-activity")) return;
+
+      if (e.target.closest("#review-activity .rev__pen")) {
+        ACT_PAREN.forEach(function (p) {
+          if (sumVeld(p[0]) && sumVeld(p[1])) sumVeld(p[0]).value = sumVeld(p[1]).value;
+        });
+        return;
+      }
+
+      if (e.target.closest("#review-activity .rev__save")) {
+        ACT_PAREN.forEach(function (p) {
+          if (sumVeld(p[0]) && sumVeld(p[1])) sumVeld(p[1]).value = sumVeld(p[0]).value;
+        });
+        vulSamenvatting();
+        zetSectieStand();
+      }
+    });
 
     /* De zaak is ook in de samenvatting te wijzigen. Dat mag niet naast de
        velden van stap 1 gaan leven, dus het potlood haalt ze daar op en

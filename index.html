@@ -2923,12 +2923,13 @@
                   </div>
                 </div>
 
-                <!-- Wat de zaak doet, uit stap 2. Het potlood brengt je terug
-                     naar die stap; de lijst met categorieen staat daar al. -->
-                <div class="rev">
+                <!-- Wat de zaak doet, uit stap 2. Net als de blokken hierboven
+                     klap je het hier open; de keuzelijst wordt bij het laden
+                     gevuld vanuit stap 2, zodat er maar een lijst bestaat. -->
+                <div class="rev" id="review-activity">
                   <div class="rev__head">
                     <h4 class="rev__title">What your business does</h4>
-                    <button class="icon-btn rev__pen" type="button" data-sum-edit="2" aria-label="Edit activities">
+                    <button class="icon-btn rev__pen" type="button" aria-label="Edit activities">
                       <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
                     </button>
                   </div>
@@ -2936,6 +2937,24 @@
                     <div class="rev__line">
                       <svg class="icon rev__icon" aria-hidden="true"><use href="#i-list"/></svg>
                       <span class="rev__text"><b>Category</b><span data-sum-category></span></span>
+                    </div>
+                    <div class="rev__line">
+                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-file"/></svg>
+                      <span class="rev__text"><b>What you sell</b><span data-sum-desc></span></span>
+                    </div>
+                  </div>
+                  <div class="rev__form" hidden>
+                    <div class="field">
+                      <label class="label" for="rev-category">Category</label>
+                      <select class="input" id="rev-category"></select>
+                    </div>
+                    <div class="field">
+                      <label class="label" for="rev-desc">What you sell</label>
+                      <textarea class="input" id="rev-desc" rows="3"></textarea>
+                    </div>
+                    <div class="rev__acts">
+                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
+                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
                     </div>
                   </div>
                 </div>
