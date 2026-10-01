@@ -3187,7 +3187,11 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .persrow > .persform > .rev__head { margin-bottom: 4px; }
 /* Weghalen staat links, los van de twee knoppen rechts. */
 .persform__acts { align-items: center; }
-.persform__remove { color: var(--danger); margin-right: auto; }
+/* Weghalen staat links, als knop in dezelfde maat als Cancel en Save, maar
+   in de kleur die zegt dat het onomkeerbaar is. */
+.persform__remove { margin-right: auto; color: var(--danger); border-color: #f0cfcb; }
+.persform__remove .icon { width: 15px; height: 15px; color: var(--danger); }
+.persform__remove:hover { background: #fdf3f2; border-color: #e4b4ae; }
 
 /* Een document aanleveren in de onboarding: kader met de naam van het stuk en
    de stand, en daaronder het vak waar je het bestand in laat vallen. */
