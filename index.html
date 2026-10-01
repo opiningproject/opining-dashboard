@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=285" />
+  <link rel="stylesheet" href="styles.css?v=286" />
 </head>
 <body>
 
@@ -2827,6 +2827,10 @@
               </button>
 
               <div class="acct" id="review-business">
+                <p class="alert alert--danger u-update">
+                  <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>
+                  <span>Information on the account doesn&rsquo;t match the Chamber of Commerce records. Ensure the registered name, KVK number and address on your account are accurate.</span>
+                </p>
                 <div class="rev" id="review-type">
                   <div class="rev__head">
                     <h4 class="rev__title">Business type</h4>
@@ -5532,6 +5536,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=285"></script>
+  <script src="app.js?v=286"></script>
 </body>
 </html>

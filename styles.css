@@ -2053,7 +2053,9 @@ select.input {
 /* Controlestap: per partij één blok met wat je hebt ingevuld en de papieren
    die erbij horen. De kop is een gewone .cardhead, alleen met een merkteken
    en een stand erin. */
-.acct__head { gap: 14px; }
+/* De koppen van de samenvattingssecties staan wat ruimer dan een gewone
+   kaartkop: er zit een vierkantje met initialen in. */
+.acct__head { gap: 14px; padding-top: 16px; padding-bottom: 16px; }
 .acct__mark {
   display: grid; place-items: center;
   width: 30px; height: 30px; flex: 0 0 auto;
@@ -2079,8 +2081,9 @@ select.input {
 .acct > .card__subtitle { margin-top: 24px; font-size: var(--fs-sm); font-weight: 600; }
 .acct > .card__subtitle + .card__sub { margin-top: 2px; }
 /* De melding is geen kop van het blok eronder: dezelfde ruimte als tussen
-   twee blokken. */
-.acct > .alert { margin: 0 0 14px; }
+   twee blokken. Even groot als de titel van zo'n blok, want het is een
+   mededeling over de sectie en niet over een regel erin. */
+.acct > .alert { margin: 16px 0 14px; font-size: var(--fs-sm); }
 
 /* Een ingevuld gegeven: grijs kadertje met een titel en een potlood om terug
    te springen naar de stap waar het vandaan komt. */
