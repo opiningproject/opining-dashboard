@@ -4219,7 +4219,7 @@
           ? ["Account representative", p.rol].filter(Boolean).join(" · ")
           : p.rol;
         kaart.querySelector(".acct__mark").textContent = letters(p.voor, p.achter);
-        kaart.querySelector(".acct__name").textContent = p.zelf ? p.naam + " (you)" : p.naam;
+        kaart.querySelector(".acct__name").textContent = p.naam;
 
         var body = kaart.querySelector(".acct");
         body.appendChild(persoonBlok(p));
@@ -4230,7 +4230,7 @@
             '<h4 class="card__subtitle">Confirm your identity</h4>' +
             '<p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>' +
             '<div class="rows">' +
-            docRegel("identity", "Identity document", p.naam + " (you)") +
+            docRegel("identity", "Identity document", p.naam) +
             docRegel("statement", "Bank statement", "The account we pay out to") + '</div>');
         }
 
