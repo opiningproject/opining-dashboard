@@ -4353,12 +4353,6 @@
       lees.querySelector(".acct__mark").textContent = letters(voor, achter);
       var titel = lees.querySelector(".row__title");
       titel.textContent = voor + " " + achter;
-      if (vak.hasAttribute("data-person-self")) {
-        var pil = document.createElement("span");
-        pil.className = "pill";
-        pil.textContent = "you";
-        titel.appendChild(pil);
-      }
       lees.querySelector("[data-person-meta]").textContent =
         persoonRegel(veld("ubo").value, veld("pct").value, veld("sign").value);
       lees.querySelector("[data-person-edit]").setAttribute("aria-label", "Edit " + voor + " " + achter);

@@ -3175,16 +3175,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .persons { margin-top: 14px; }
 .persrow { padding: 0; }
 .persrow__read { padding: 14px 16px; }
-/* Het label "you" hangt achter de naam. Als los randje om drie letters ziet
-   dat er rommelig uit; een grijs vlakje staat rustiger. */
-.persrow__read .row__title { display: flex; align-items: center; gap: 8px; }
-.persrow__read .pill {
-  padding: 2px 8px;
-  border: 0;
-  background: var(--gray-100);
-  font-size: var(--fs-xs);
-  line-height: 1.5;
-}
 .persrow > .persform { margin-top: 0; padding: 14px 16px; }
 .persrow > .persform > .rev__head { margin-bottom: 4px; }
 /* Weghalen staat links, los van de twee knoppen rechts. */
