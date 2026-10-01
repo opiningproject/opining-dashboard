@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=300" />
+  <link rel="stylesheet" href="styles.css?v=301" />
 </head>
 <body>
 
@@ -2126,16 +2126,19 @@
         </button>
 
         <div class="page-head">
-          <!-- Binnen een subpagina wordt het pagina-icoon het kruimelpad terug:
-               gedimd icoon, een chevron en de naam van de pagina erboven. Op
-               een telefoon blijft die naam weg: daar staat de terugknop al
+          <!-- Binnen een subpagina wordt het pagina-icoon het kruimelpad terug.
+               Elke stap is een eigen knop: het icoon brengt je naar de
+               settingspagina zelf, de naam ernaast naar de subpagina daarboven.
+               Op een telefoon blijft die naam weg: daar staat de terugknop al
                boven de titel en is de regel te smal. -->
-          <button class="crumb" type="button" id="set-crumb" hidden>
-            <svg class="icon page-head__icon" id="set-crumb-icon" aria-hidden="true"><use href="#i-store"/></svg>
+          <span class="crumb" id="set-crumb" hidden>
+            <button class="crumb__link" type="button" id="set-crumb-root">
+              <svg class="icon page-head__icon" id="set-crumb-icon" aria-hidden="true"><use href="#i-store"/></svg>
+            </button>
             <svg class="icon crumb__sep" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-            <span class="crumb__name" id="set-crumb-name"></span>
+            <button class="crumb__link crumb__name" type="button" id="set-crumb-name"></button>
             <svg class="icon crumb__sep crumb__sep--name" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-          </button>
+          </span>
           <svg class="icon page-head__icon" id="set-icon" aria-hidden="true"><use href="#i-store"/></svg>
           <div class="page-head__text">
             <div class="page-head__line">
@@ -5727,6 +5730,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=300"></script>
+  <script src="app.js?v=301"></script>
 </body>
 </html>

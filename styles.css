@@ -1862,9 +1862,12 @@ select.input {
 
 /* Kruimelpad in de settings-kop: gedimd pagina-icoon dat terugleidt,
    met een chevron naar de naam van de subpagina. */
-.crumb { display: flex; align-items: center; gap: 10px; padding: 2px; border-radius: var(--r-sm); }
+/* Elke stap in het kruimelpad is een eigen knop; de chevrons ertussen horen
+   bij geen van beide. */
+.crumb { display: flex; align-items: center; gap: 10px; }
+.crumb__link { display: flex; align-items: center; padding: 2px; border-radius: var(--r-sm); }
 .crumb .page-head__icon { color: var(--text-muted); transition: color var(--dur) var(--ease); }
-.crumb:hover .page-head__icon { color: var(--text-strong); }
+.crumb__link:hover .page-head__icon { color: var(--text-strong); }
 .crumb__sep { width: 15px; height: 15px; color: var(--border-strong); }
 /* De naam van de pagina erboven: gedempt, want de pagina waar je bent staat
    ernaast in het zwart. Hij komt er alleen bij als die pagina zelf een
@@ -1876,7 +1879,7 @@ select.input {
   font-size: var(--fs-md); font-weight: 500; color: var(--text-muted);
   white-space: nowrap; transition: color var(--dur) var(--ease);
 }
-.crumb:hover .crumb__name { color: var(--text-strong); }
+.crumb__name:hover { color: var(--text-strong); }
 
 /* Vijf kolommen in de smallere settings-kolom: iets krappere celruimte,
    en de minimum-tekst mag afbreken in plaats van de tabel op te rekken. */

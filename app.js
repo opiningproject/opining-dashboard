@@ -1809,6 +1809,7 @@
   var setCrumb     = document.getElementById("set-crumb");
   var setCrumbIcon = document.getElementById("set-crumb-icon");
   var setCrumbName = document.getElementById("set-crumb-name");
+  var setCrumbRoot = document.getElementById("set-crumb-root");
   var setLead      = document.getElementById("set-lead");
   var setSubs      = document.querySelectorAll("[data-set-sub]");
   var stapel       = [];   /* pagina's waar we vandaan komen, onderste eerst */
@@ -1832,8 +1833,12 @@
        zelf staat er al als icoon. */
     setCrumbName.textContent = boven.sub ? boven.titel : "";
     setCrumb.classList.toggle("crumb--named", !!boven.sub);
-    setCrumb.setAttribute("aria-label", "Back to " + boven.titel);
-    setCrumb.setAttribute("title", "Back to " + boven.titel);
+    setCrumbName.setAttribute("aria-label", "Back to " + boven.titel);
+    setCrumbName.setAttribute("title", "Back to " + boven.titel);
+    /* Het icoon gaat altijd naar de settingspagina zelf; die staat onderop de
+       stapel. */
+    setCrumbRoot.setAttribute("aria-label", "Back to " + stapel[0].titel);
+    setCrumbRoot.setAttribute("title", "Back to " + stapel[0].titel);
     setCrumb.hidden = false;
     /* Let op: .hidden is een eigenschap van HTMLElement, niet van SVG. Op een
        <svg> moet je het attribuut zetten, anders gebeurt er niets. */
@@ -1893,6 +1898,23 @@
     setBadge.hidden = true;
   }
 
+  /* Het icoon van het kruimelpad slaat alle tussenstappen over: terug naar de
+     settings-pagina waar je begon. */
+  function naarSetPagina() {
+    var onderste = stapel[0];
+    if (!onderste) return;
+    stapel.length = 0;
+    setSubs.forEach(function (v) { v.hidden = true; });
+    delete root.dataset.settingsFull;
+    delete root.dataset.settingsBare;
+    setCrumb.hidden = true;
+    setIcon.removeAttribute("hidden");
+    setLead.hidden = true;
+    setBadge.hidden = true;
+    var actief = setNav.querySelector(".nav__item.is-active");
+    if (actief) showSetPage(actief.dataset.set, onderste.titel, actief.dataset.icon);
+  }
+
   /* Een stap terug: naar de subpagina eronder, of naar de settings-pagina.
      Geeft terug of er echt iets terugging, zodat de mobiele terugknop weet of
      hij daarna nog naar de lijst moet. */
@@ -1924,7 +1946,8 @@
       openSetSub(rij.dataset.sub, rij.dataset.subTitle, rij.dataset.subLead);
       return;
     }
-    if (e.target.closest("#set-crumb")) backFromSub();
+    if (e.target.closest("#set-crumb-root")) { naarSetPagina(); return; }
+    if (e.target.closest("#set-crumb-name")) backFromSub();
   });
 
   /* ---- Stappenformulier binnen een subpagina ------------------------------
