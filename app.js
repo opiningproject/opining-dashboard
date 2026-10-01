@@ -2269,6 +2269,16 @@
     });
   }
 
+  /* Is dit stuk in orde? Dat is zo zodra er iets is aangeleverd, en bij het
+     bijwerken ook als het al eerder is goedgekeurd (data-doc-ok). De knop
+     Submit, het rode teken en het tekenen kijken alle drie hiernaar. */
+  function stukInOrde(rij) {
+    var stuk = rij.querySelector("[data-doc-file]");
+    if (stuk && !stuk.hidden) return true;
+    var wiz = document.getElementById("pay-wiz");
+    return !!(wiz && wiz.classList.contains("is-update") && rij.hasAttribute("data-doc-ok"));
+  }
+
   function zetWizardStand(update) {
     var wizVak = document.getElementById("pay-wiz");
     if (!wizVak) return;
@@ -2286,10 +2296,14 @@
 
     /* Een document dat nog niet is aangeleverd, valt op met een rood teken. */
     wizVak.querySelectorAll("[data-doc]").forEach(function (rij) {
-      if (!rij.querySelector("[data-doc-file]").hidden) return;
+      if (stukInOrde(rij)) return;
       rij.querySelector(".row__icon use").setAttribute("href", update ? "#i-alert" : "#i-file");
       rij.querySelector(".row__icon").classList.toggle("row__icon--alert", update);
     });
+
+    /* Welke stukken meetellen verandert mee met de stand, dus de overeenkomst
+       moet opnieuw kijken of er getekend kan worden. */
+    document.dispatchEvent(new CustomEvent("upload-stand"));
   }
 
   function zetUpdateKlaar() {
@@ -2305,8 +2319,8 @@
     /* Opnieuw versturen mag zodra elk gevraagd stuk er is en de gegevens
        opnieuw zijn opgeslagen. Welke stukken dat zijn hangt van de stap af,
        dus we kijken naar de regels die er staan. */
-    var stukken = wizVak.querySelectorAll("[data-doc] [data-doc-file]");
-    var compleet = [].every.call(stukken, function (el) { return !el.hidden; });
+    var stukken = wizVak.querySelectorAll("[data-doc]");
+    var compleet = [].every.call(stukken, stukInOrde);
     knop.textContent = "Submit information";
     knop.disabled = !(compleet && wizVak.dataset.bijgewerkt === "ja");
   }
@@ -4188,14 +4202,18 @@
 
     /* Een documentregel is de naam van het stuk en een knop; de sectie waar
        hij in staat zegt al van wie het is. De tweede regel blijft leeg tot er
-       iets is aangeleverd: daar komt dan het soort te staan. */
+       iets is aangeleverd: daar komt dan het soort te staan.
+       Bij het bijwerken na een afwijzing zijn deze stukken al goedgekeurd: dan
+       staat er Verified in plaats van een knop (data-doc-ok, zodat stukInOrde
+       ze meetelt). */
     function docRegel(soort, titel) {
-      return '<div class="row row--static" data-doc="' + soort + '">' +
+      return '<div class="row row--static" data-doc="' + soort + '" data-doc-ok>' +
         '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
         '<span class="row__text"><span class="row__title">' + titel + '</span>' +
         '<span class="row__meta" data-doc-file hidden></span></span>' +
         '<span class="docrow__name" data-doc-name hidden></span>' +
-        '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
+        '<span class="badge badge--active u-update">Verified</span>' +
+        '<button class="btn btn--ghost btn--sm u-normal" type="button" data-doc-upload>Upload</button>' +
       '</div>';
     }
 
@@ -4836,8 +4854,8 @@
        het venster te openen: in de stand van de sectie, in de regel eronder en
        naast de knop in het venster zelf. */
     function tekenReden() {
-      var stuk = document.querySelector('[data-doc="identity"] [data-doc-file]');
-      if (!stuk || stuk.hidden) return "id";
+      var rij = document.querySelector('[data-doc="identity"]');
+      if (!rij || !stukInOrde(rij)) return "id";
       if (!tekenNaam.value.trim()) return "naam";
       return "";
     }
