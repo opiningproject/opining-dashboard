@@ -4828,7 +4828,7 @@
         }
       }
       if (tekenStand) {
-        tekenStand.textContent = reden === "id" ? "Identity document required" : "Not signed yet";
+        tekenStand.textContent = reden === "id" ? "ID required" : "Not signed yet";
       }
       if (tekenRegel) {
         tekenRegel.textContent = reden === "id"
@@ -4852,7 +4852,6 @@
       var tekenRegel = document.querySelector("[data-sign-meta]");
       var tekenOpen = document.getElementById("sign-open");
       var tekenStand = document.querySelector("[data-sign-state]");
-      var tekenLead = document.querySelector("[data-sign-lead]");
       var merk = contract.querySelector("[data-sign-mark]");
 
       /* Tekenen is eenmalig: terugdraaien kan niet, want dan is de
@@ -4872,7 +4871,6 @@
         tekenStand.textContent = "Sent";
         tekenStand.className = "badge badge--active";
         tekenStand.setAttribute("data-sign-state", "");
-        tekenLead.textContent = zin;
         tekenRegel.textContent = zin;
         tekenOpen.textContent = "View";
         tekenKnop.hidden = true;
@@ -4924,7 +4922,6 @@
       tekenStand.textContent = "Not signed yet";
       tekenStand.className = "badge badge--pending";
       tekenStand.setAttribute("data-sign-state", "");
-      tekenLead.textContent = "Read it, confirm your identity and sign with your name";
       zetTekenKlaar();
     });
     vulContract();

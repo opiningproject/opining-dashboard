@@ -2068,9 +2068,9 @@ select.input {
 /* Boven in de sectie geen ruimte: de blokken eronder hebben hun eigen kader,
    dus een gat onder de kop trekt de sectie alleen maar uit elkaar. */
 .acct { padding: 0 20px 20px; }
-/* Een lijst heeft geen eigen kop en mag niet tegen de sectiekop aan plakken. */
-.acct > .rows:first-child,
-.acct > .alert:first-child { margin-top: 20px; }
+/* Ook een lijst begint meteen onder de kop; zijn eigen marge zou er bovenop
+   komen. */
+.acct > .rows:first-child { margin-top: 0; }
 /* Een tussenkop in een samenvattingssectie staat op dezelfde hoogte als de
    titel van een blok, dus even groot: anders schreeuwt hij over het blok
    erboven heen. */
