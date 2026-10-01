@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=269" />
+  <link rel="stylesheet" href="styles.css?v=270" />
 </head>
 <body>
 
@@ -3021,6 +3021,22 @@
             <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="type-dialog-title">
               <div class="dialog__head">
                 <h2 class="dialog__title" id="type-dialog-title">Edit business type</h2>
+
+          <!-- Iemand toevoegen vanuit de samenvatting gebeurt in een venster:
+               de lijst eronder blijft zo in beeld. Het veldenvak uit de
+               betrokkenenstap verhuist hierheen en gaat daarna weer terug. -->
+          <div class="dialog" id="person-dialog" hidden>
+            <div class="dialog__scrim" data-person-cancel></div>
+            <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="person-dialog-title">
+              <div class="dialog__head">
+                <h2 class="dialog__title" id="person-dialog-title">Add involved person</h2>
+                <button class="icon-btn" type="button" data-person-cancel aria-label="Close">
+                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+              </div>
+              <div class="dialog__body"></div>
+            </div>
+          </div>
                 <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
                   <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
                 </button>
@@ -5517,6 +5533,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=269"></script>
+  <script src="app.js?v=270"></script>
 </body>
 </html>

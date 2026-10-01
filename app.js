@@ -4192,6 +4192,53 @@
       var tekenaar = mensen.filter(function (p) { return p.zelf; })[0] || mensen[0];
       var stap = anker.dataset.step || "6";
 
+      /* Boven de losse secties staat de lijst met iedereen die erbij hoort.
+         Daar voeg je er ook een toe, in een venster: de lijst blijft zo in
+         beeld en het veldenvak hoeft niet tussen de secties door te reizen. */
+      var lijstKaart = document.createElement("div");
+      lijstKaart.className = "card card--flush";
+      lijstKaart.setAttribute("data-step", stap);
+      lijstKaart.setAttribute("data-review-person", "");
+      lijstKaart.hidden = anker.hidden;
+      lijstKaart.innerHTML =
+        '<button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-people">' +
+          '<span class="acct__text"><span class="acct__name">People involved</span>' +
+          '<span class="acct__role">Everyone who owns 25% or more of the business, or who may sign for it</span></span>' +
+          '<span class="badge badge--active u-normal">Ready to submit</span>' +
+          '<span class="badge badge--muted u-update">Done</span>' +
+          '<svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>' +
+        '</button><div class="acct" id="review-people"><div class="rows"></div></div>';
+
+      var regels = lijstKaart.querySelector(".rows");
+      mensen.forEach(function (p) {
+        var regel = document.createElement("div");
+        regel.className = "row row--static";
+        regel.innerHTML =
+          '<span class="acct__mark acct__mark--person rev__mark" aria-hidden="true"></span>' +
+          '<span class="row__text"><span class="row__title"></span>' +
+          '<span class="row__meta"></span></span>';
+        regel.querySelector(".acct__mark").textContent = letters(p.voor, p.achter);
+        regel.querySelector(".row__title").textContent = p.naam;
+        regel.querySelector(".row__meta").textContent = p.zelf ? "Account representative" : p.rol;
+        regels.appendChild(regel);
+      });
+
+      /* Een eenmanszaak heeft maar een eigenaar, dus daar niets toe te voegen. */
+      if (!alleenEigenaar()) {
+        var bij = document.createElement("button");
+        bij.className = "row";
+        bij.type = "button";
+        /* Een eigen naam, want data-person-add zou de gedeelde klikafhandeling
+           een tweede keer laten openen. */
+        bij.setAttribute("data-review-add", "");
+        bij.innerHTML = '<svg class="icon row__icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>' +
+          '<span class="row__title">Add person</span>';
+        bij.addEventListener("click", openPersoonVenster);
+        regels.appendChild(bij);
+      }
+
+      anker.parentNode.insertBefore(lijstKaart, anker);
+
       mensen.forEach(function (p, i) {
         var kaart = document.createElement("div");
         kaart.className = "card card--flush";
@@ -4236,36 +4283,28 @@
 
         anker.parentNode.insertBefore(kaart, anker);
       });
-
-      /* Er kan er altijd iemand bij. Een eenmanszaak heeft maar een eigenaar,
-         dus daar niet. */
-      if (alleenEigenaar()) return;
-
-      var vak = document.createElement("div");
-      vak.setAttribute("data-review-bij", "");
-      vak.setAttribute("data-step", stap);
-      vak.hidden = anker.hidden;
-
-      var bij = document.createElement("button");
-      bij.className = "addrow";
-      bij.type = "button";
-      bij.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add person';
-      /* Zodat zetLijstStand deze knop ook kan wegzetten zolang je met iemand
-         bezig bent. Een eigen naam, want data-person-add zou de gedeelde
-         klikafhandeling een tweede keer laten openen. */
-      bij.setAttribute("data-review-add", "");
-      bij.addEventListener("click", function () {
-        /* De velden klappen hier uit in plaats van je terug te sturen naar de
-           betrokkenenstap; het vak reist mee en belandt bij het opslaan alsnog
-           in de lijst daar (zie sluitPersoon). */
-        openPersoon(null);
-        vak.insertBefore(persoonRij, bij);
-        veld("first").focus();
-      });
-      vak.appendChild(bij);
-      anker.parentNode.insertBefore(vak, anker);
     }
 
+    /* Toevoegen vanuit de samenvatting: het veldenvak verhuist naar het
+       venster. De regel zelf staat intussen in de lijst van de betrokkenen-
+       stap, waar hij ook hoort; sluiten brengt het vak weer terug. */
+    function openPersoonVenster() {
+      var venster = document.getElementById("person-dialog");
+      if (!venster) { openPersoon(null); return; }
+      openPersoon(null);
+      venster.querySelector(".dialog__body").appendChild(persoonVak);
+      venster.hidden = false;
+      veld("first").focus();
+    }
+
+    function inPersoonVenster() {
+      return !!(persoonVak && persoonVak.closest("#person-dialog"));
+    }
+
+    function sluitPersoonVenster() {
+      var venster = document.getElementById("person-dialog");
+      if (venster) venster.hidden = true;
+    }
     /* Wat er is ingevuld vastleggen. In stap 3 gebeurt dat als je doorloopt,
        in stap 4 met de knop Save; daar hoort dan ook een melding bij. */
     function bewaarPersoon(stil) {
@@ -4335,8 +4374,10 @@
     document.getElementById("person-save").addEventListener("click", function () {
       /* Voeg je iemand toe vanuit de samenvatting, dan moet die sectie daarna
          opnieuw worden opgebouwd; normaal gebeurt dat alleen bij een stapwissel. */
-      var uitOverzicht = vanuitOverzicht();
-      if (bewaarPersoon(false) && uitOverzicht) zetOverzichtPersonen();
+      var uitOverzicht = vanuitOverzicht() || inPersoonVenster();
+      if (!bewaarPersoon(false)) return;
+      sluitPersoonVenster();
+      if (uitOverzicht) zetOverzichtPersonen();
     });
 
     /* Bij elke stapwissel: eerst vastleggen wat er in stap 3 is ingevuld, dan
@@ -4371,8 +4412,9 @@
     document.addEventListener("click", function (e) {
       if (e.target.closest("[data-person-add]")) { openPersoon(null); return; }
       if (e.target.closest("[data-person-cancel]")) {
-        var uitOverzicht = vanuitOverzicht();
+        var uitOverzicht = vanuitOverzicht() || inPersoonVenster();
         sluitPersoon();
+        sluitPersoonVenster();
         if (uitOverzicht) zetOverzichtPersonen();
         return;
       }
