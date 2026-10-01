@@ -4288,6 +4288,9 @@
       var venster = document.getElementById("person-dialog");
       if (!venster) { openPersoon(null); return; }
       openPersoon(null);
+      /* De kop van het venster zegt het al; die van het veldenvak zou het
+         eronder herhalen. */
+      document.getElementById("person-form-head").hidden = true;
       venster.querySelector(".dialog__body").appendChild(persoonVak);
       venster.hidden = false;
       veld("first").focus();

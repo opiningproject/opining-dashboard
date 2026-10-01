@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=274" />
+  <link rel="stylesheet" href="styles.css?v=275" />
 </head>
 <body>
 
@@ -3021,6 +3021,17 @@
             <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="type-dialog-title">
               <div class="dialog__head">
                 <h2 class="dialog__title" id="type-dialog-title">Edit business type</h2>
+                <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+              </div>
+              <p class="dialog__lead">If you decide to update your business type, you will need to restart the setup process and may be required to provide additional details specific to the new business type.</p>
+              <div class="dialog__foot">
+                <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+                <button class="btn btn--primary" type="button" id="type-go">Continue</button>
+              </div>
+            </div>
+          </div>
 
           <!-- Iemand toevoegen vanuit de samenvatting gebeurt in een venster:
                de lijst eronder blijft zo in beeld. Het veldenvak uit de
@@ -3035,17 +3046,6 @@
                 </button>
               </div>
               <div class="dialog__body"></div>
-            </div>
-          </div>
-                <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
-                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
-                </button>
-              </div>
-              <p class="dialog__lead">If you decide to update your business type, you will need to restart the setup process and may be required to provide additional details specific to the new business type.</p>
-              <div class="dialog__foot">
-                <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
-                <button class="btn btn--primary" type="button" id="type-go">Continue</button>
-              </div>
             </div>
           </div>
           <!-- De overeenkomst lees en tekent je in een venster: de tekst is
@@ -5533,6 +5533,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=274"></script>
+  <script src="app.js?v=275"></script>
 </body>
 </html>
