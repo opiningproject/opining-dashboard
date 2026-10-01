@@ -4422,13 +4422,19 @@
       if (e.target.closest("[data-rep-done]")) { zetOverzichtPersonen(); return; }
       var weg = e.target.closest("[data-person-remove]");
       if (weg) {
-        var vak = weg.closest("[data-person]");
-        var naam = vak.dataset.personName;
-        var uitOverzicht = vanuitOverzicht();
+        /* De knop staat in het veldenvak, en dat vak hoeft niet in de regel
+           van die persoon te staan: bij bewerken vanuit de samenvatting of in
+           het venster staat het ergens anders. De regel waar we mee bezig zijn
+           weten we al. */
+        var vak = persoonRij;
+        if (!vak) return;
+        var naam = vak.dataset.personName || "This person";
+        var uitOverzicht = vanuitOverzicht() || inPersoonVenster();
         /* Eerst de velden terug op hun plek, anders verdwijnen ze mee. */
         sluitPersoon();
         vak.remove();
         zetLijstStand();
+        sluitPersoonVenster();
         if (uitOverzicht) zetOverzichtPersonen();
         showToast(naam + " removed");
       }
