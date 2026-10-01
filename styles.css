@@ -137,6 +137,9 @@ legend { padding: 0; }
      Moet gelijk zijn aan de achtergrond waarop het icoon staat, niet wit. */
   --icon-halo: var(--bg-surface);
 }
+/* Een vlag heeft eigen kleuren en een dun randje; de lijnbreedte van een
+   gewoon icoon is daarvoor te zwaar. */
+.icon--flag { stroke-width: 1; }
 .sprite { display: none; }
 
 .sr-only {
@@ -2582,6 +2585,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .dialog__card--wide { max-width: 620px; }
 @keyframes dialog-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .dialog__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+/* De inhoud van een venster begint onder de kop, niet ertegenaan. */
+.dialog__body { margin-top: 18px; }
 .dialog__title { font-size: var(--fs-lg); font-weight: 600; color: var(--text-strong); }
 .dialog__lead { margin: 6px 0 18px; font-size: var(--fs-md); color: var(--text-muted); }
 /* De knoppen rechts, met afbreken links ervan: bevestigen staat het dichtst
@@ -3194,6 +3199,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   border-bottom: 1px solid var(--border);
 }
 #person-dialog .dialog__body {
+  margin-top: 0;
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
