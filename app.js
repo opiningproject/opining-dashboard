@@ -4226,7 +4226,9 @@
          Daar voeg je er ook een toe, in een venster: de lijst blijft zo in
          beeld en het veldenvak hoeft niet tussen de secties door te reizen. */
       var lijstKaart = document.createElement("div");
-      lijstKaart.className = "card card--flush";
+      /* Bij het bijwerken na een afwijzing telt alleen wat er mis is; een lijst
+         met namen die al in hun eigen sectie staan voegt daar niets aan toe. */
+      lijstKaart.className = "card card--flush u-normal";
       lijstKaart.setAttribute("data-step", stap);
       lijstKaart.setAttribute("data-review-person", "");
       lijstKaart.hidden = anker.hidden;
