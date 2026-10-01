@@ -4355,6 +4355,13 @@
     });
     zetLijstStand();
 
+    /* Opnieuw beginnen: de betrokkenen van de vorige rechtsvorm gaan eruit. */
+    document.addEventListener("wiz-herstart", function () {
+      if (persoonRij) sluitPersoon();
+      lijst.querySelectorAll("[data-person]").forEach(function (rij) { rij.remove(); });
+      zetLijstStand();
+    });
+
     /* Werk je iemand bij vanuit de samenvatting, dan staat die sectie met een
        verborgen blok en een geleende regel; na sluiten moet hij opnieuw. */
     function vanuitOverzicht() {
@@ -4585,6 +4592,13 @@
       }
 
       if (e.target.closest("#review-business .rev__save")) {
+        /* Een andere rechtsvorm betekent andere vragen, andere betrokkenen en
+           andere stukken. Dan is bijwerken niet genoeg: de aanvraag begint
+           opnieuw, zoals het venster ook aankondigt. */
+        var vorm = sumVeld("biz-legal");
+        var nieuweVorm = sumVeld("rev-type") ? sumVeld("rev-type").value.trim() : "";
+        var anders = !!(vorm && nieuweVorm && nieuweVorm !== vorm.value);
+
         BIZ_PAREN.forEach(function (p) {
           if (sumVeld(p[0]) && sumVeld(p[1])) sumVeld(p[1]).value = sumVeld(p[0]).value.trim();
         });
@@ -4593,12 +4607,47 @@
         var deel = /^(.*?)\s+([0-9]\S*)$/.exec(heel);
         if (sumVeld("biz-street")) sumVeld("biz-street").value = deel ? deel[1] : heel;
         if (sumVeld("biz-nr")) sumVeld("biz-nr").value = deel ? deel[2] : "";
+
+        if (anders) { herstartWiz(); return; }
         vulSamenvatting();
         zetSectieStand();
         /* De overeenkomst leest dezelfde gegevens. */
         document.dispatchEvent(new CustomEvent("wiz-bij"));
       }
     });
+
+    /* Opnieuw beginnen: alles wat is ingevuld gaat eruit, behalve de zojuist
+       gekozen rechtsvorm. De blokken die hun eigen gegevens bijhouden ruimen
+       zichzelf op; daarvoor is het bericht. */
+    function herstartWiz() {
+      var wiz = document.getElementById("pay-wiz");
+      if (!wiz) return;
+
+      wiz.querySelectorAll("input, textarea").forEach(function (el) {
+        if (el.type === "file" || el.type === "radio" || el.type === "checkbox") return;
+        /* De rechtsvorm zelf blijft staan: daar begin je mee opnieuw. */
+        el.value = "";
+      });
+      /* Aangeleverde stukken zijn van de vorige rechtsvorm. */
+      wiz.querySelectorAll("[data-doc]").forEach(function (rij) {
+        var stuk = rij.querySelector("[data-doc-file]");
+        var naam = rij.querySelector("[data-doc-name]");
+        var knop = rij.querySelector("[data-doc-upload]");
+        if (stuk) { stuk.textContent = ""; stuk.hidden = true; }
+        if (naam) { naam.textContent = ""; naam.hidden = true; }
+        if (knop) {
+          knop.className = "btn btn--ghost btn--sm";
+          knop.removeAttribute("aria-label");
+          knop.textContent = "Upload";
+        }
+      });
+
+      document.dispatchEvent(new CustomEvent("wiz-herstart"));
+      vulSamenvatting();
+      zetSectieStand();
+      document.dispatchEvent(new CustomEvent("wiz-ga", { detail: 1 }));
+      showToast("Business type changed. Start the setup again.");
+    }
 
     /* Het contract opnieuw opmaken zodra je het opent: er kan sinds de vorige
        stapwissel van alles gewijzigd zijn. */
@@ -4816,6 +4865,27 @@
     document.addEventListener("wiz-stap", vulContract);
     /* En zodra er elders iets is gewijzigd dat in het contract terugkomt. */
     document.addEventListener("wiz-bij", vulContract);
+
+    /* Opnieuw beginnen: de handtekening hoort bij de vorige aanvraag. */
+    document.addEventListener("wiz-herstart", function () {
+      if (!tekenKnop) return;
+      merk.textContent = "";
+      merk.hidden = true;
+      zetTekst("[data-sign-name]", "", "");
+      zetTekst("[data-sign-date]", "", "");
+      zetTekst("[data-sign-place]", "", "");
+      tekenVenster.hidden = true;
+      tekenKnop.hidden = false;
+      tekenOpen.textContent = "Review and sign";
+      tekenNaam.readOnly = false;
+      tekenNaam.value = "";
+      delete tekenNaam.dataset.getypt;
+      tekenStand.textContent = "Not signed yet";
+      tekenStand.className = "badge badge--pending";
+      tekenStand.setAttribute("data-sign-state", "");
+      tekenLead.textContent = "Read it, confirm your identity and sign with your name";
+      zetTekenKlaar();
+    });
     vulContract();
 
   }
