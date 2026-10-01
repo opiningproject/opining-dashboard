@@ -1447,7 +1447,9 @@ select.input {
    geen methode die wij aanzetten, maar een koppeling die jij onderhoudt. */
 .prov { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
 .prov__row .row__text { gap: 8px; }
-.prov__note { margin: 0; border-top: 1px solid var(--border); border-radius: 0; }
+/* De melding hoort bij de regel erboven, maar plakt niet aan de rand: ruimte
+   eromheen, uitgelijnd met de tekst van die regel. */
+.prov__note { margin: 0 16px 16px; }
 
 /* Stand van de online betalingen: twee statussen naast elkaar in een kader,
    met een stip ervoor. Oranje is wachten, grijs is nog niet. */
