@@ -1982,6 +1982,34 @@
     /* Doorlopen kan pas als de stap af is: elk gevraagd veld ingevuld, en op
        de laatste stap ook elk stuk aangeleverd en de overeenkomst getekend.
        Zo kom je niet aan het eind met gaten in je aanvraag. */
+    /* Een KVK-nummer is precies acht cijfers. Dat is hier te controleren
+       zonder het handelsregister; of het nummer ook bestaat, blijkt pas bij
+       de koppeling na het opslaan. */
+    var KVK_VORM = /^\d{8}$/;
+    var kvkVeld  = document.getElementById("biz-kvk");
+    var kvkFout  = document.getElementById("biz-kvk-error");
+
+    function kvkGoed() { return !kvkVeld || KVK_VORM.test(kvkVeld.value.trim()); }
+
+    if (kvkVeld) {
+      kvkVeld.addEventListener("input", function () {
+        /* Het veld is numeriek, dus geplakte punten, spaties of letters
+           worden stil weggehaald in plaats van afgekeurd. */
+        var schoon = kvkVeld.value.replace(/\D/g, "").slice(0, 8);
+        if (schoon !== kvkVeld.value) kvkVeld.value = schoon;
+        kvkFout.hidden = true;
+        kvkVeld.classList.remove("input--error");
+      });
+
+      /* Pas melden als je het veld verlaat: tijdens het typen zijn vier
+         cijfers nog geen fout, alleen nog niet af. */
+      kvkVeld.addEventListener("blur", function () {
+        var fout = !!kvkVeld.value.trim() && !kvkGoed();
+        kvkFout.hidden = !fout;
+        kvkVeld.classList.toggle("input--error", fout);
+      });
+    }
+
     function stapKlaar() {
       var persVak = document.getElementById("person-form");
       /* Het veldenvak van een betrokkene telt alleen mee in de stap over
@@ -1995,6 +2023,11 @@
         if (persVak && persVak.contains(veld) && !persTelt) return;
         if (!String(veld.value).trim()) klaar = false;
       });
+
+      /* Leeg wordt hierboven al afgevangen; dit vangt een nummer dat wel
+         ingevuld is maar nog geen acht cijfers telt. Alleen zolang het veld
+         zichtbaar is, net als de lus hierboven. */
+      if (kvkVeld && !kvkVeld.closest("[hidden]") && !kvkGoed()) klaar = false;
 
       /* De laatste stap: alle stukken binnen en getekend. */
       var reeks = wizReeks();
@@ -2364,7 +2397,6 @@
         },
         keuzes: [{ naam: "Chamber of Commerce extract (KVK)" }, { naam: "Articles of association" },
                  { naam: "VAT registration certificate" }],
-        standaard: "Chamber of Commerce extract (KVK)",
         bestand: MET_PDF,
         regel: SCHERP
       },
@@ -2379,7 +2411,6 @@
           return [["Registered name", z.naam], ["Chamber of Commerce registration number (KVK)", z.kvk]];
         },
         keuzes: [{ naam: "UBO register extract" }],
-        standaard: "UBO register extract",
         bestand: MET_PDF,
         regel: SCHERP
       },
@@ -2420,7 +2451,6 @@
                   ["Business address", (adres && adres.textContent.trim()) || ADRES]];
         },
         keuzes: [{ naam: "Bank statement" }, { naam: "Screenshot from online banking" }],
-        standaard: "Bank statement",
         bestand: MET_PDF,
         regel: SCHERP
       }
@@ -2546,10 +2576,6 @@
       var keuze = doc("doc-type");
       keuze.length = 1;
       docSoort.keuzes.forEach(function (k) { keuze.add(new Option(k.naam, k.naam)); });
-      /* Staat er een vaste keuze bij, dan is die al gemaakt: bij een
-         bankafschrift valt er weinig te kiezen. */
-      keuze.value = docSoort.standaard || "";
-      keuze.dispatchEvent(new Event("change"));
 
       doc("doc-note").hidden = !docSoort.notitie;
       doc("doc-note-text").textContent = docSoort.notitie || "";
@@ -2557,8 +2583,14 @@
       doc("doc-rule-link").textContent = docSoort.regelLink || "";
       doc("doc-rule-link").hidden = !docSoort.regelLink;
 
+      /* Eerst de vakken leegmaken, dan pas de keuze zetten. Andersom wiste dit
+         meteen weg wat de change-afhandeling er net had neergezet, waardoor je
+         opnieuw moest kiezen voordat de uploadvakken verschenen. En beginnen op
+         Select, niet op een optie, zodat je eerste keuze ook echt iets doet. */
       doc("doc-drops").textContent = "";
       doc("doc-drops").hidden = true;
+      keuze.value = "";
+      keuze.dispatchEvent(new Event("change"));
       docFout("");
       zetDocKlaar();
       docVenster.hidden = false;
@@ -3873,6 +3905,10 @@
     function zetLijstStand() {
       lijst.hidden = !heeftBetrokkenen();
       persoonKnop.hidden = !!persoonRij;
+      /* Dezelfde knop onderaan de samenvatting hoort ook weg zolang de velden
+         openstaan; die wordt in zetOverzichtPersonen gemaakt. */
+      var bijOverzicht = document.querySelector("[data-review-add]");
+      if (bijOverzicht) bijOverzicht.hidden = !!persoonRij;
     }
 
     /* De velden vullen met wat er van iemand bekend is; bij een nieuwe
@@ -3919,8 +3955,13 @@
 
     /* In stap 4 bewerk je iemand in zijn eigen vakje: de regel maakt plaats
        voor de velden, met Cancel en Save eronder. */
+    /* Waar een geleende regel vandaan kwam, zodat hij op zijn eigen plek in de
+       lijst terugkomt en de volgorde niet verspringt. */
+    var persoonTerug = null;
+
     function openPersoon(vak) {
       if (persoonRij) sluitPersoon();
+      persoonTerug = null;
       if (!vak) {
         vak = document.createElement("div");
         vak.className = "rev persrow";
@@ -3966,10 +4007,17 @@
       if (persoonRij) {
         if (persoonRij.hasAttribute("data-person-new")) persoonRij.remove();
         else {
+          /* Stond het vak in de samenvatting omdat je daar iemand toevoegde,
+             dan hoort het nu thuis in de lijst van de betrokkenenstap. */
+          if (persoonRij.parentNode !== lijst) {
+            if (persoonTerug) persoonTerug.ouder.insertBefore(persoonRij, persoonTerug.na);
+            else { lijst.appendChild(persoonRij); lijst.hidden = false; }
+          }
           var pen = persoonRij.querySelector("[data-person-edit]");
           if (pen) pen.hidden = false;
         }
       }
+      persoonTerug = null;
       persoonRij = null;
       zetLijstStand();
     }
@@ -4043,6 +4091,9 @@
       vak.className = "rev";
       vak.innerHTML =
         '<div class="rev__head"><h4 class="rev__title"></h4>' +
+          /* Alleen de eerste betrokkene moet zich legitimeren; die stand hoort
+             hier net zo zichtbaar te zijn als in de lijst van stap 4. */
+          (p.zelf ? '<span class="badge badge--pending" data-person-status>Identification required</span>' : "") +
           '<button class="icon-btn rev__pen" type="button" data-review-edit>' +
             '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button></div>' +
         '<div class="rev__read">' +
@@ -4062,10 +4113,18 @@
       vak.querySelector("[data-r-adres]").textContent = p.adres;
       vak.querySelector("[data-r-rol]").textContent = p.rol;
 
-      /* Het potlood brengt je terug naar stap 3, bij die persoon. */
       vak.querySelector("[data-review-edit]").addEventListener("click", function () {
-        document.dispatchEvent(new CustomEvent("wiz-ga", { detail: 3 }));
-        if (p.vak) { openPersoon(p.vak); p.vak.scrollIntoView({ block: "center" }); }
+        /* Een eenmanszaak heeft geen eigen regel maar velden in de stap zelf;
+           daar valt hier niets uit te klappen. */
+        if (!p.vak) { document.dispatchEvent(new CustomEvent("wiz-ga", { detail: 3 })); return; }
+        /* De regel uit de betrokkenenstap neemt de plaats van dit blok in, met
+           de velden erin. Bij sluiten gaat hij terug naar die stap en wordt
+           deze sectie opnieuw opgebouwd. */
+        openPersoon(p.vak);
+        persoonTerug = { ouder: p.vak.parentNode, na: p.vak.nextSibling };
+        vak.parentNode.insertBefore(p.vak, vak);
+        vak.hidden = true;
+        p.vak.scrollIntoView({ block: "center" });
       });
       return vak;
     }
@@ -4087,7 +4146,11 @@
          sectie altijd bij de samenvatting hoort en niet bij de stap ervoor. */
       kaart.setAttribute("data-step", anker.dataset.step || "7");
       kaart.setAttribute("data-review-people", "");
-      kaart.hidden = true;
+      /* Normaal bouwt deze sectie zich op bij een stapwissel en zet toonStap
+         hem daarna aan. Bouwen we midden in de stap opnieuw op (iemand erbij
+         of gewijzigd vanuit de samenvatting), dan komt die wissel niet; het
+         anker staat in dezelfde stap, dus die weet of we zichtbaar zijn. */
+      kaart.hidden = anker.hidden;
       kaart.innerHTML =
         '<button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-people">' +
           '<span class="acct__text"><span class="acct__name">People involved</span>' +
@@ -4109,9 +4172,17 @@
         bij.className = "addrow";
         bij.type = "button";
         bij.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add person';
+        /* Zodat zetLijstStand deze knop ook kan wegzetten zolang je met iemand
+           bezig bent. Een eigen naam, want data-person-add zou de gedeelde
+           klikafhandeling een tweede keer laten openen. */
+        bij.setAttribute("data-review-add", "");
         bij.addEventListener("click", function () {
-          document.dispatchEvent(new CustomEvent("wiz-ga", { detail: 3 }));
+          /* De velden klappen hier uit in plaats van je terug te sturen naar
+             de betrokkenenstap; het vak reist mee en belandt bij het opslaan
+             alsnog in de lijst daar (zie sluitPersoon). */
           openPersoon(null);
+          body.insertBefore(persoonRij, bij);
+          veld("first").focus();
         });
         body.appendChild(bij);
       }
@@ -4119,20 +4190,35 @@
       /* De stukken die bij de mensen horen: het identiteitsbewijs van degene
          die tekent, en bij een rechtspersoon het uittreksel UBO-register. Dat
          register bestaat niet voor een eenmanszaak. */
-      function docRegel(soort, titel) {
+      /* Namen komen uit invoervelden, dus hier langs de HTML-opbouw. */
+      function veilig(t) {
+        return String(t).replace(/[&<>"]/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+        });
+      }
+
+      function docRegel(soort, titel, wie) {
         return '<div class="row row--static" data-doc="' + soort + '">' +
           '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
           '<span class="row__text"><span class="row__title">' + titel + '</span>' +
+          /* Het identiteitsbewijs is van degene die tekent; zonder naam erbij
+             is niet te zien wiens document er wordt gevraagd. */
+          (wie ? '<span class="row__meta">' + veilig(wie) + '</span>' : "") +
           '<span class="row__meta" data-doc-file hidden></span></span>' +
           '<span class="docrow__name" data-doc-name hidden></span>' +
           '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
         '</div>';
       }
 
+      /* Degene die tekent is de eerste betrokkene; die staat als "you" in de
+         lijst en levert het identiteitsbewijs aan. */
+      var tekenaar = mensen.filter(function (p) { return p.zelf; })[0] || mensen[0];
+
       body.insertAdjacentHTML("beforeend",
         '<h4 class="card__subtitle">Verification</h4>' +
         '<p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>' +
-        '<div class="rows">' + docRegel("identity", "Identity document") +
+        '<div class="rows">' +
+        docRegel("identity", "Identity document", tekenaar ? tekenaar.naam + " (you)" : "") +
         (alleenEigenaar() ? "" : docRegel("ubo", "UBO register extract")) + '</div>');
 
       anker.parentNode.insertBefore(kaart, anker);
@@ -4205,7 +4291,10 @@
     }
 
     document.getElementById("person-save").addEventListener("click", function () {
-      bewaarPersoon(false);
+      /* Voeg je iemand toe vanuit de samenvatting, dan moet die sectie daarna
+         opnieuw worden opgebouwd; normaal gebeurt dat alleen bij een stapwissel. */
+      var uitOverzicht = vanuitOverzicht();
+      if (bewaarPersoon(false) && uitOverzicht) zetOverzichtPersonen();
     });
 
     /* Bij elke stapwissel: eerst vastleggen wat er in stap 3 is ingevuld, dan
@@ -4224,19 +4313,32 @@
     });
     zetLijstStand();
 
+    /* Werk je iemand bij vanuit de samenvatting, dan staat die sectie met een
+       verborgen blok en een geleende regel; na sluiten moet hij opnieuw. */
+    function vanuitOverzicht() {
+      return !!(persoonRij && persoonRij.closest("[data-review-people]"));
+    }
+
     document.addEventListener("click", function (e) {
       if (e.target.closest("[data-person-add]")) { openPersoon(null); return; }
-      if (e.target.closest("[data-person-cancel]")) { sluitPersoon(); return; }
+      if (e.target.closest("[data-person-cancel]")) {
+        var uitOverzicht = vanuitOverzicht();
+        sluitPersoon();
+        if (uitOverzicht) zetOverzichtPersonen();
+        return;
+      }
       var wijzig = e.target.closest("[data-person-edit]");
       if (wijzig) { openPersoon(wijzig.closest("[data-person]")); return; }
       var weg = e.target.closest("[data-person-remove]");
       if (weg) {
         var vak = weg.closest("[data-person]");
         var naam = vak.dataset.personName;
+        var uitOverzicht = vanuitOverzicht();
         /* Eerst de velden terug op hun plek, anders verdwijnen ze mee. */
         sluitPersoon();
         vak.remove();
         zetLijstStand();
+        if (uitOverzicht) zetOverzichtPersonen();
         showToast(naam + " removed");
       }
     });

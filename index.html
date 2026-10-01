@@ -2329,7 +2329,11 @@
               <div class="field-row">
                 <div class="field">
                   <label class="label" for="biz-kvk">Chamber of Commerce number (KVK)</label>
-                  <input class="input" id="biz-kvk" type="text" inputmode="numeric" maxlength="8" required />
+                  <input class="input" id="biz-kvk" type="text" inputmode="numeric" maxlength="8" required
+                         autocomplete="off" aria-describedby="biz-kvk-error" />
+                  <p class="field__error" id="biz-kvk-error" hidden>
+                    <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>A KVK number is exactly 8 digits.
+                  </p>
                 </div>
                 <div class="field">
                   <label class="label" for="biz-vat">VAT number <span class="label__opt">optional</span></label>

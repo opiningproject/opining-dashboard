@@ -3172,9 +3172,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 }
 .persrow > .persform { margin-top: 0; padding: 14px 16px; }
 .persrow > .persform > .rev__head { margin-bottom: 4px; }
-/* De regel blijft staan terwijl je bewerkt; een lijn scheidt hem van de
-   velden eronder. */
-.persrow__read + .persform { border-top: 1px solid var(--border); }
 /* Weghalen staat links, los van de twee knoppen rechts. */
 .persform__acts { align-items: center; }
 .persform__remove { color: var(--danger); margin-right: auto; }
@@ -3280,3 +3277,14 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 @media (max-width: 599px) {
   .sign { grid-template-columns: minmax(0, 1fr); gap: 20px; }
 }
+
+/* Het potlood hoort rechts, ook zonder badge ernaast. Alleen de eerste
+   betrokkene heeft een badge, en die krijgt via .row > .badge al margin-left
+   auto; staat die er niet, dan duwt niets het potlood naar de rand. */
+.persrow__read > .rev__pen { margin-left: auto; }
+.persrow__read > .badge:not([hidden]) ~ .rev__pen { margin-left: 0; }
+
+/* De kop van een samenvattingsblok stond op space-between; met een badge
+   erbij zou die midden tussen titel en potlood belanden. De titel neemt de
+   vrije ruimte, zodat badge en potlood samen rechts staan. */
+.rev__head > .rev__title { margin-right: auto; }
