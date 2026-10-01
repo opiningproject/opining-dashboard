@@ -2239,9 +2239,40 @@
      Complete account setup zet de stand terug naar de eerste aanvraag.
      Opnieuw versturen kan pas als het ontbrekende document er is en de
      gegevens opnieuw zijn opgeslagen. */
+  /* Bijwerken begint bij de samenvatting, dus bij een lege wizard staan daar
+     alleen lege secties. Dan is niet te zien hoe een betrokkene eruitziet als
+     hij al in orde is. Vandaar deze demogegevens: alleen als er nog niets is
+     ingevuld, zodat eigen invoer blijft staan. */
+  function vulDemoAanvraag() {
+    var vorm = document.getElementById("biz-legal");
+    /* De bedrijfsnaam en de geboortedatum staan standaard leeg; is er een
+       ingevuld, dan is de aanvraag van de gebruiker en blijft die met rust. */
+    var naam = document.getElementById("biz-name");
+    var dob = document.getElementById("rep-dd");
+    if (!vorm || !naam || !dob) return;
+    if (naam.value.trim() || dob.value.trim()) return;
+
+    /* Een eenmanszaak heeft een eigenaar en geen lijst; die ene persoon komt
+       dan uit deze velden en wordt vanzelf de sectie in de samenvatting. */
+    vorm.value = "Sole proprietorship (eenmanszaak)";
+    vorm.dispatchEvent(new Event("change", { bubbles: true }));
+
+    var demo = {
+      "rep-first": "Serdar", "rep-last": "Orman",
+      "rep-dd": "12", "rep-mm": "04", "rep-yyyy": "1992",
+      "rep-mail": "serdarorman74@gmail.com",
+      "rep-street": "Tochtstraat 40", "rep-zip": "3036 SK", "rep-city": "Rotterdam"
+    };
+    Object.keys(demo).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el && !el.value.trim()) el.value = demo[id];
+    });
+  }
+
   function zetWizardStand(update) {
     var wizVak = document.getElementById("pay-wiz");
     if (!wizVak) return;
+    if (update) vulDemoAanvraag();
     wizVak.classList.toggle("is-update", update);
     delete wizVak.dataset.bijgewerkt;
 
