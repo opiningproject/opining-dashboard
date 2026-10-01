@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=288" />
+  <link rel="stylesheet" href="styles.css?v=289" />
 </head>
 <body>
 
@@ -2222,7 +2222,8 @@
           <div class="card">
             <h3 class="card__title">Business details</h3>
             <p class="card__sub">The business entity used for payments, invoices and taxes in this store.</p>
-            <div class="rows">
+            <!-- Het menu steekt buiten het kader uit, dus dit kader knipt niet af. -->
+            <div class="rows rows--menu">
               <div class="row row--static" id="biz-row">
                 <svg class="icon row__icon" aria-hidden="true"><use href="#i-store"/></svg>
                 <span class="row__text">
@@ -5711,6 +5712,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=288"></script>
+  <script src="app.js?v=289"></script>
 </body>
 </html>

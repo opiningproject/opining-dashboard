@@ -401,6 +401,8 @@ legend { padding: 0; }
 .row__title { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
 .row__meta  { font-size: var(--fs-sm); color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .row__caret { margin-left: auto; width: 18px; height: 18px; color: var(--text-muted); }
+/* Een menuknop achter een regel staat net als een pijltje helemaal rechts. */
+.row > .sort { margin-left: auto; }
 
 .alert {
   display: flex; align-items: flex-start; gap: 10px;
