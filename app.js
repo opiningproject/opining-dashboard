@@ -3959,6 +3959,9 @@
     /* Waar een geleende regel vandaan kwam, zodat hij op zijn eigen plek in de
        lijst terugkomt en de volgorde niet verspringt. */
     var persoonTerug = null;
+    /* Of de velden uit de samenvatting geleend zijn: dan hoort die sectie na
+       sluiten opnieuw opgebouwd te worden. */
+    var overzichtBewerkt = false;
 
     function openPersoon(vak) {
       if (persoonRij) sluitPersoon();
@@ -4014,6 +4017,7 @@
         }
       }
       persoonTerug = null;
+      overzichtBewerkt = false;
       persoonRij = null;
       zetLijstStand();
     }
@@ -4132,37 +4136,32 @@
       vak.querySelector("[data-r-adres]").textContent = p.adres;
 
       vak.querySelector("[data-review-edit]").addEventListener("click", function () {
-        /* Een eenmanszaak heeft geen eigen regel maar velden in de stap zelf;
-           daar valt hier niets uit te klappen. */
         /* De eenmanszaak heeft geen eigen regel; daar lenen we de velden uit
            de stap zelf, zodat ook hier ter plekke uitgeklapt wordt. */
         if (!p.vak) { if (repBlok !== vak) openEigenaar(vak); return; }
-        /* De regel uit de betrokkenenstap neemt de plaats van dit blok in, met
-           de velden erin. Bij sluiten gaat hij terug naar die stap en wordt
-           deze sectie opnieuw opgebouwd. */
+        /* Al open: nog eens klikken zou de velden opnieuw inlezen en je
+           wijzigingen weggooien. */
+        if (persoonVak.closest(".rev") === vak) return;
+        /* Alleen de velden komen hierheen, onder de titel Review. De regel met
+           naam en stand blijft in de betrokkenenstap staan; hier zou hij
+           herhalen wat de kop van de sectie al zegt. */
         openPersoon(p.vak);
-        persoonTerug = { ouder: p.vak.parentNode, na: p.vak.nextSibling };
-        vak.parentNode.insertBefore(p.vak, vak);
-        vak.hidden = true;
-        p.vak.scrollIntoView({ block: "center" });
+        overzichtBewerkt = true;
+        vak.querySelector(".rev__read").hidden = true;
+        document.getElementById("person-form-head").hidden = true;
+        vak.appendChild(persoonVak);
+        veld("first").focus();
       });
       return vak;
     }
 
-    /* Namen komen uit invoervelden, dus hier langs de HTML-opbouw. */
-    function veilig(t) {
-      return String(t).replace(/[&<>"]/g, function (c) {
-        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
-      });
-    }
-
-    function docRegel(soort, titel, wie) {
+    /* Een documentregel is de naam van het stuk en een knop; de sectie waar
+       hij in staat zegt al van wie het is. De tweede regel blijft leeg tot er
+       iets is aangeleverd: daar komt dan het soort te staan. */
+    function docRegel(soort, titel) {
       return '<div class="row row--static" data-doc="' + soort + '">' +
         '<svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>' +
         '<span class="row__text"><span class="row__title">' + titel + '</span>' +
-        /* Het identiteitsbewijs is van degene die tekent; zonder naam erbij
-           is niet te zien wiens document er wordt gevraagd. */
-        (wie ? '<span class="row__meta">' + veilig(wie) + '</span>' : "") +
         '<span class="row__meta" data-doc-file hidden></span></span>' +
         '<span class="docrow__name" data-doc-name hidden></span>' +
         '<button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>' +
@@ -4277,8 +4276,8 @@
             '<h4 class="card__subtitle">Confirm your identity</h4>' +
             '<p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>' +
             '<div class="rows">' +
-            docRegel("identity", "Identity document", p.naam) +
-            docRegel("statement", "Bank statement", "The account we pay out to") + '</div>');
+            docRegel("identity", "Identity document") +
+            docRegel("statement", "Bank statement") + '</div>');
         }
 
         anker.parentNode.insertBefore(kaart, anker);
@@ -4406,7 +4405,7 @@
     /* Werk je iemand bij vanuit de samenvatting, dan staat die sectie met een
        verborgen blok en een geleende regel; na sluiten moet hij opnieuw. */
     function vanuitOverzicht() {
-      return !!(persoonRij && persoonRij.closest("[data-review-people]"));
+      return overzichtBewerkt || !!(persoonRij && persoonRij.closest("[data-review-person]"));
     }
 
     document.addEventListener("click", function (e) {
