@@ -4546,7 +4546,7 @@
       [].forEach.call(actBron.options, function (o) { actKeuze.add(new Option(o.text, o.value)); });
     }
 
-    var ACT_PAREN = [["rev-category", "act-category"], ["rev-desc", "act-desc"]];
+    var ACT_PAREN = [["rev-category", "act-category"]];
 
     document.addEventListener("click", function (e) {
       if (!document.getElementById("review-activity")) return;
