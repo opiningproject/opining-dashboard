@@ -1899,6 +1899,14 @@ select.input {
 .promo { display: flex; align-items: center; gap: 32px; }
 .promo__body { flex: 1 1 auto; min-width: 0; }
 .promo__art { flex: 0 0 auto; width: 200px; height: 150px; }
+/* Wie de betalingen verwerkt, onder de kop. Het logobestand is vierkant met
+   een brede witrand; het vakje toont alleen het merk in het midden. */
+.partner { display: flex; align-items: center; gap: 7px; margin-top: 6px;
+  font-size: var(--fs-md); color: var(--text-muted); }
+/* Het merk beslaat 70% van de breedte en 44,5% van de hoogte van het vierkant
+   en staat in het midden; dit vakje laat precies dat stuk zien. */
+.partner__mark { display: block; width: 36px; height: 24px; overflow: hidden; }
+.partner__mark img { display: block; width: 44px; height: 44px; margin: -10px -4px; }
 
 .feats { display: flex; flex-direction: column; gap: 14px; margin: 22px 0 26px; }
 .feat { display: flex; align-items: center; gap: 16px; font-size: var(--fs-md); color: var(--text-strong); }
