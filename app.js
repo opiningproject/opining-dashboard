@@ -3866,6 +3866,11 @@
       document.querySelectorAll('[data-people="multi"]').forEach(function (kaart) {
         kaart.dataset.off = enkel ? "ja" : "";
       });
+      /* Het UBO-register bestaat alleen voor een rechtspersoon; een
+         eenmanszaak hoeft dat uittreksel dus niet aan te leveren. */
+      document.querySelectorAll("[data-ubo-doc]").forEach(function (rij) {
+        rij.hidden = enkel;
+      });
     }
 
     rechtsvorm.addEventListener("change", function () {
@@ -4109,7 +4114,9 @@
       var vak = document.createElement("div");
       vak.className = "rev";
       vak.innerHTML =
-        '<div class="rev__head"><h4 class="rev__title"></h4>' +
+        '<div class="rev__head">' +
+          '<span class="acct__mark acct__mark--person rev__mark" aria-hidden="true"></span>' +
+          '<h4 class="rev__title"></h4>' +
           /* Alleen de eerste betrokkene moet zich legitimeren; die stand hoort
              hier net zo zichtbaar te zijn als in de lijst van stap 4. */
           (p.zelf ? '<span class="badge badge--pending" data-person-status>Identification required</span>' : "") +
@@ -4124,6 +4131,7 @@
             '<span class="rev__text"><b>Involvement</b><span data-r-rol></span></span></div>' +
         '</div>';
 
+      vak.querySelector(".rev__mark").textContent = letters(p.voor, p.achter);
       vak.querySelector(".rev__title").textContent = p.zelf ? p.naam + " (you)" : p.naam;
       vak.querySelector(".rev__pen").setAttribute("aria-label", "Edit " + p.naam);
       vak.querySelector("[data-r-naam]").textContent = p.naam;
@@ -4151,8 +4159,10 @@
     }
 
     function zetOverzichtPersonen() {
-      var uitbetaling = document.getElementById("review-payout");
-      var anker = uitbetaling ? uitbetaling.closest(".card") : document.querySelector(".wiz__terms");
+      /* De sectie komt voor de overeenkomst te staan: eerst wie de zaak
+         voert, dan wat er getekend wordt. */
+      var volgend = document.getElementById("review-agreement");
+      var anker = volgend ? volgend.closest(".card") : document.querySelector(".wiz__terms");
       if (!anker) return;
       /* Staan de eigenaarsvelden nog in dit blok, dan eerst terug naar hun
          kaart; anders verdwijnen ze met de oude sectie. */
@@ -4238,12 +4248,20 @@
          lijst en levert het identiteitsbewijs aan. */
       var tekenaar = mensen.filter(function (p) { return p.zelf; })[0] || mensen[0];
 
-      body.insertAdjacentHTML("beforeend",
-        '<h4 class="card__subtitle">Verification</h4>' +
+      /* De stukken horen bij degene die tekent, en staan dus onder zijn blok.
+         Wie er later bij komt levert niets aan: de aanvraag loopt op de
+         vertegenwoordiger. */
+      var eersteBlok = body.querySelector(".rev");
+      var stukken = document.createElement("div");
+      stukken.setAttribute("data-review-docs", "");
+      stukken.innerHTML =
+        '<h4 class="card__subtitle">Confirm your identity</h4>' +
         '<p class="card__sub">Upload the <a class="link" href="#">accepted documents</a>.</p>' +
         '<div class="rows">' +
         docRegel("identity", "Identity document", tekenaar ? tekenaar.naam + " (you)" : "") +
-        (alleenEigenaar() ? "" : docRegel("ubo", "UBO register extract")) + '</div>');
+        docRegel("statement", "Bank statement", "The account we pay out to") + '</div>';
+      if (eersteBlok) eersteBlok.after(stukken);
+      else body.appendChild(stukken);
 
       anker.parentNode.insertBefore(kaart, anker);
     }
@@ -4484,6 +4502,8 @@
       var land = sumWaarde("biz-addr-country");
 
       sumZet("[data-sum-name]", naam, "Your business");
+      /* Het vierkantje bij de naam: de eerste letter van de zaak. */
+      sumZet("[data-sum-mark]", (naam || "O").charAt(0).toUpperCase(), "O");
       sumZet("[data-sum-legal]", sumWaarde("biz-legal"), "Not filled in yet");
       sumZet("[data-sum-ids]", [kvk ? "KVK " + kvk : "", btw ? "VAT " + btw : ""]
         .filter(Boolean).join(" · "), "No registration number yet");

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=260" />
+  <link rel="stylesheet" href="styles.css?v=261" />
 </head>
 <body>
 
@@ -2814,6 +2814,7 @@
                  recht te zetten is. -->
             <div class="card card--flush" data-step="6" hidden>
               <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-business">
+                <span class="acct__mark" aria-hidden="true" data-sum-mark>O</span>
                 <span class="acct__text">
                   <span class="acct__name" data-sum-name>Your business</span>
                   <span class="acct__role">Business details</span>
@@ -2963,7 +2964,7 @@
                      eigen stap gevraagd; het hoort bij de gegevens waar het
                      over gaat. -->
                 <h4 class="card__subtitle">Verification</h4>
-                <p class="card__sub">An extract from the Chamber of Commerce, no older than three months.</p>
+                <p class="card__sub">An extract from the Chamber of Commerce, no older than three months. For a legal entity we also need the UBO register extract.</p>
                 <div class="rows">
                   <div class="row row--static" data-doc="business">
                     <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
@@ -2971,70 +2972,17 @@
                     <span class="docrow__name" data-doc-name hidden></span>
                     <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- De uitbetaalrekening is een eigen sectie: hij hoort niet bij de
-                 zaak of bij de persoon, en het bankafschrift hoort erbij. -->
-            <div class="card card--flush" data-step="6" hidden>
-              <button class="cardhead acct__head" type="button" aria-expanded="true" aria-controls="review-payout">
-                <span class="acct__text">
-                  <span class="acct__name">Payout account</span>
-                  <span class="acct__role" data-payout-holder>Opining BV</span>
-                </span>
-                <span class="badge badge--active u-normal">Ready to submit</span>
-                <span class="badge badge--muted u-update">Done</span>
-                <svg class="icon cardhead__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-              </button>
-
-              <div class="acct" id="review-payout">
-                <div class="rev">
-                  <div class="rev__head">
-                    <h4 class="rev__title">Account</h4>
-                    <button class="icon-btn rev__pen" type="button" aria-label="Edit payout account">
-                      <svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>
-                    </button>
-                  </div>
-                  <div class="rev__read">
-                    <div class="rev__line">
-                      <svg class="icon rev__icon" aria-hidden="true"><use href="#i-finance"/></svg>
-                      <span class="rev__text"><b data-payout-holder>Opining BV</b><span data-payout-iban>NL59 INGB 0102 9917 15</span></span>
-                    </div>
-                  </div>
-                  <div class="rev__form" hidden>
-                    <div class="field">
-                      <label class="label" for="rev-holder">Account holder</label>
-                      <input class="input" id="rev-holder" type="text" />
-                    </div>
-                    <div class="field">
-                      <label class="label" for="rev-iban">IBAN</label>
-                      <input class="input" id="rev-iban" type="text" />
-                    </div>
-                    <div class="field">
-                      <label class="label" for="rev-bic">BIC <span class="label__opt">optional</span></label>
-                      <input class="input" id="rev-bic" type="text" autocapitalize="characters" />
-                    </div>
-                    <div class="rev__acts">
-                      <button class="btn btn--ghost btn--sm rev__cancel" type="button">Cancel</button>
-                      <button class="btn btn--primary btn--sm rev__save" type="button">Save</button>
-                    </div>
-                  </div>
-                </div>
-
-                <h4 class="card__subtitle">Verification</h4>
-                <p class="card__sub">A recent statement that shows your business name and the IBAN.</p>
-                <div class="rows">
-                  <div class="row row--static" data-doc="statement">
+                  <!-- Het UBO-register bestaat alleen voor een rechtspersoon;
+                       bij een eenmanszaak blijft deze regel weg. -->
+                  <div class="row row--static" data-doc="ubo" data-ubo-doc>
                     <svg class="icon row__icon" aria-hidden="true"><use href="#i-file"/></svg>
-                    <span class="row__text"><span class="row__title">Bank statement</span><span class="row__meta" data-doc-file hidden></span></span>
+                    <span class="row__text"><span class="row__title">UBO register extract</span><span class="row__meta" data-doc-file hidden></span></span>
                     <span class="docrow__name" data-doc-name hidden></span>
                     <button class="btn btn--ghost btn--sm" type="button" data-doc-upload>Upload</button>
                   </div>
                 </div>
               </div>
             </div>
-
 
             <!-- De overeenkomst hoort bij de samenvatting: wordt de aanvraag
                  afgekeurd op de legitimatie, dan is dat hier recht te zetten
@@ -5558,6 +5506,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=260"></script>
+  <script src="app.js?v=261"></script>
 </body>
 </html>

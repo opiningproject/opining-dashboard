@@ -2081,6 +2081,8 @@ select.input {
 .rev + .rev { margin-top: 14px; }
 .rev__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .rev__title { font-size: var(--fs-sm); font-weight: 600; color: var(--text-strong); }
+/* Het vierkantje met initialen bij een betrokkene in de samenvatting. */
+.rev__mark { width: 26px; height: 26px; font-size: var(--fs-xs); }
 .rev__pen { width: 28px; height: 28px; color: var(--text-muted); }
 .rev__pen .icon { width: 16px; height: 16px; }
 .rev__value { margin-top: 4px; font-size: var(--fs-sm); color: var(--text-strong); }
