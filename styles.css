@@ -1898,11 +1898,7 @@ select.input {
    decoratief en verdwijnt als eerste bij weinig ruimte. */
 .promo { display: flex; align-items: center; gap: 32px; }
 .promo__body { flex: 1 1 auto; min-width: 0; }
-/* De afbeelding is vierkant en heeft een brede witrand; op ware grootte is
-   het merk een postzegel in het vak. Daarom groter getekend dan het vak en
-   met de randen eraf, zodat alleen het merk overblijft. */
-.promo__art { display: block; flex: 0 0 auto; width: 200px; height: 150px; overflow: hidden; }
-.promo__art img { display: block; width: 300px; height: 300px; margin: -75px -50px; }
+.promo__art { flex: 0 0 auto; width: 200px; height: 150px; }
 
 .feats { display: flex; flex-direction: column; gap: 14px; margin: 22px 0 26px; }
 .feat { display: flex; align-items: center; gap: 16px; font-size: var(--fs-md); color: var(--text-strong); }
