@@ -3290,11 +3290,13 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .paper__head { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
 .paper__tag { font-size: var(--fs-sm); font-weight: 700; letter-spacing: -.01em; color: var(--text-strong); }
 .paper__logo { display: block; width: auto; height: 22px; }
-.paper__cols { display: flex; align-items: flex-start; gap: 22px; margin-top: 18px; }
+/* De kolom loopt door tot onderaan het vel, net als op hun briefpapier. */
+.paper__cols { display: flex; align-items: stretch; gap: 22px; margin-top: 18px; }
 .paper__text { flex: 1 1 auto; min-width: 0; }
 /* De kolom hoort bij het papier en niet bij de overeenkomst: eigen vlak, en
    kleiner gezet dan de tekst ernaast. */
 .paper__side {
+  display: flex; flex-direction: column;
   flex: 0 0 180px;
   padding: 14px 16px;
   border-radius: 18px;
@@ -3306,6 +3308,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .paper__facts dt { font-weight: 700; letter-spacing: .03em; color: #5b5bf2; }
 .paper__facts dd { min-width: 0; }
 .paper__loc { margin-top: 16px; }
+/* De vestigingen staan onderaan de kolom; daartussen blijft het vel leeg. */
+.paper__facts + .paper__loc { margin-top: auto; padding-top: 16px; }
 .paper__loc h6 {
   font-size: var(--fs-xs); font-weight: 700; letter-spacing: .04em;
   text-transform: uppercase; color: #5b5bf2;
@@ -3369,29 +3373,37 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Het slotblok van het contract: twee kolommen, elk met een handtekening en
    de drie gegevens eronder. Zolang er niet getekend is staan er stippellijnen,
    net als op het papieren stuk. */
-.sign { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 16px; }
+/* Onder de overeenkomst hoort ruimte om te tekenen, zoals op het papieren
+   stuk: een flink vlak boven de regels en lucht eronder. */
+.sign { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px;
+  margin-top: 24px; padding-bottom: 20px; }
 .sign__col { display: flex; flex-direction: column; min-width: 0; }
 .sign__who { font-style: italic; color: var(--text-muted); }
 /* De handtekening zelf: een schrijfletter, iets scheef, op de lijn. */
 .sign__mark {
-  min-height: 46px;
-  margin-top: 6px;
+  min-height: 66px;
+  margin-top: 10px;
   padding-bottom: 4px;
   font-family: "Segoe Script", "Bradley Hand", "Brush Script MT", "Apple Chancery", cursive;
   font-size: 22px;
-  line-height: 42px;
+  /* De naam staat onderin het vlak, net boven de regel. */
+  line-height: 62px;
   color: var(--text-strong);
   white-space: nowrap;
   overflow: hidden;
   transform: rotate(-1.5deg);
   transform-origin: left bottom;
 }
-.sign__mark[hidden] { display: block; visibility: hidden; }
-.sign__facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 10px; margin-top: 12px; }
+/* Het vlak blijft staan zolang er niet getekend is: daar komt de naam. De
+   algemene regel voor [hidden] hierboven is !important, dus deze ook. */
+.sign__mark[hidden] { display: block !important; visibility: hidden; }
+.sign__facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px 10px; margin-top: 16px; }
 .sign__facts dt { font-style: italic; color: var(--text-muted); }
 .sign__facts dd {
   min-width: 0;
-  border-bottom: 1px dotted var(--gray-400);
+  /* --gray-400 bestaat niet, dus die regel viel weg en er stond nooit een
+     stippellijn onder de gegevens. */
+  border-bottom: 1px dotted var(--gray-300);
   color: var(--text-strong);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
