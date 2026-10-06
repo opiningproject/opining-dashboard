@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=303" />
+  <link rel="stylesheet" href="styles.css?v=306" />
 </head>
 <body>
 
@@ -5574,60 +5574,140 @@
     <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="agreement-dialog-title">
       <div class="dialog__head">
         <h2 class="dialog__title" id="agreement-dialog-title">Cooperation agreement</h2>
+        <!-- Beide talen gelden; wat je hier kiest bepaalt alleen wat je leest. -->
+        <div class="langsw" role="group" aria-label="Agreement language">
+          <button class="langsw__btn is-on" type="button" data-ct-kies="en" aria-pressed="true">EN</button>
+          <button class="langsw__btn" type="button" data-ct-kies="nl" aria-pressed="false">NL</button>
+        </div>
         <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
           <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
         </button>
       </div>
 
+      <!-- Het briefpapier van Pay.: hun merk rechtsboven en een kolom met hun
+           gegevens ernaast, zoals in het Word-bestand dat zij sturen. De tekst
+           staat er in twee talen; de knoppen boven het venster wisselen. -->
       <div class="contract" tabindex="0" role="region" aria-label="Cooperation agreement">
-        <h4 class="contract__title">Cooperation agreement</h4>
-        <!-- Woordelijk de overeenkomst die Pay.nl ons stuurde. De dikgedrukte
-             velden in hun tekst zijn de gegevens van de ondernemer; die vult de
-             wizard hier in via data-ct-*. -->
-        <h5 class="contract__sub">The undersigned,</h5>
-        <p class="contract__p">
-          <b data-ct-name>Your business</b> with its registered office in
-          <span data-ct-city>your city</span>, <span data-ct-address>your business address</span>,
-          registered in the Commercial Register under number
-          <span data-ct-kvk>your Chamber of Commerce number</span>, legally represented herein by
-          <span data-ct-rep>the account representative</span>, hereinafter referred to as
-          &ldquo;Merchant&rdquo;.
-        </p>
-        <p class="contract__p">&amp;</p>
-        <p class="contract__p">
-          TinTel BV, with its registered office in Spijkenisse, registered in the Commercial
-          Register under number 24283498, permit holder payment institution at the Dutch Central
-          Bank, duly represented herein by Mr O.W.H. Kok, an authorised signatory according to the
-          Commercial Register, referred to hereafter as &ldquo;PAY&rdquo;;
-        </p>
-        <h5 class="contract__sub">Declare that they have agreed as follows</h5>
-        <p class="contract__p"><span class="contract__nr">1.1</span> As an alliance shall act: Opining with its registered office in Rotterdam, Tochtstraat 40 registered in the Commercial Register under number 77851595, legally represented herein by Serdar Orman, hereinafter referred to as &ldquo;Alliance&rdquo;.</p>
-        <p class="contract__p"><span class="contract__nr">1.2</span> PAY will make its services as a Payment Service Provider available to the Merchant through Alliance package for an indefinite period of time. The Agreement may be terminated at any time, without notice, using the PAY Administration Panel.</p>
-        <p class="contract__p"><span class="contract__nr">1.3</span> The fees at which PAY offers its services will be charged to Alliance as long as the Agreement with Alliance is in force. Upon termination of the Agreement between the Merchant and Alliance, at the request of Alliance or at the request of the Merchant, this Agreement may be converted into a standard agreement between the Merchant and PAY.</p>
-        <p class="contract__p"><span class="contract__nr">1.4</span> The Merchant declares it agrees to PAY&rsquo;s General Terms and Conditions as these have been filed with the Chamber of Commerce under number 24283498. Any declaration of the applicability of the Merchant&rsquo;s general terms and conditions is explicitly rejected and has no legal effect. The Merchant declares it has read, received and accepted the General Terms and Conditions.</p>
-        <p class="contract__p"><span class="contract__nr">1.5</span> PAY will periodically and integrally pass on the amounts collected for the Merchant to the corporate bank account of the Merchant, as registered in the Administration Panel, held at a financial institution in the EU (SEPA).</p>
-        <p class="contract__p"><span class="contract__nr">1.6</span> Alliance will automatically receive access to the data of the Merchant. The Merchant grants permission to make its book balance available to Alliance and if it desires, to offset the commission invoice of Alliance via this balance. Alliance will establish these fees in a separate agreement. Alliance will send the Merchant a specification of the charged commissions at least three days prior to settlement.</p>
-
-        <!-- Het slotblok van het contract. Rechts tekent PAY, de
-             betaaldienstverlener; dat gebeurt nadat het stuk is opgestuurd.
-             Links komt de ondernemer, ingevuld door de knop onder de stap,
-             zodat hij niets hoeft over te typen. -->
-        <h5 class="contract__sub">Read and approved</h5>
-        <div class="sign">
-          <div class="sign__col" data-sign-side="merchant">
-    <span class="sign__who">Merchant</span>
-    <span class="sign__mark" data-sign-mark hidden></span>
-    <dl class="sign__facts">
-      <dt>Name</dt><dd data-sign-name></dd>
-      <dt>Date</dt><dd data-sign-date></dd>
-      <dt>City</dt><dd data-sign-place></dd>
-    </dl>
+        <div class="paper">
+          <div class="paper__head">
+            <span class="paper__tag">behind every payment</span>
+            <img class="paper__logo" src="img/pay/paynl.png" alt="Pay." />
           </div>
-          <div class="sign__col">
-    <span class="sign__who">PAY</span>
-    <!-- Leeg: dit stuk gaat naar PAY toe en daar wordt het
-         getekend. Er kan hier dus nog niets staan. -->
-    <span class="sign__mark" aria-hidden="true"></span>
+
+          <div class="paper__cols">
+            <div class="paper__text">
+          <div class="ct" data-ct-lang="en">
+            <h4 class="contract__title">Cooperation agreement</h4>
+            <h5 class="contract__sub">The undersigned,</h5>
+            <p class="contract__p">
+              <b data-ct-name>Your business</b> with its registered office in
+              <b data-ct-city>your city</b>, <b data-ct-address>your business address</b>,
+              registered in the Commercial Register under number
+              <b data-ct-kvk>your Chamber of Commerce number</b>, legally represented herein by
+              <b data-ct-rep>the account representative</b>, hereinafter referred to as
+              &ldquo;Merchant&rdquo;.
+            </p>
+            <p class="contract__p">&amp;</p>
+            <p class="contract__p">
+              TinTel BV, with its registered office in Spijkenisse, registered in the Commercial
+              Register under number 24283498, permit holder payment institution at the Dutch Central
+              Bank, duly represented herein by Mr O.W.H. Kok, an authorised signatory according to
+              the Commercial Register, referred to hereafter as &ldquo;PAY&rdquo;;
+            </p>
+            <h5 class="contract__sub">Declare that they have agreed as follows</h5>
+            <p class="contract__p"><span class="contract__nr">1.1</span> As an alliance shall act: Opining with its registered office in Rotterdam, Tochtstraat 40 registered in the Commercial Register under number 77851595, legally represented herein by Serdar Orman, hereinafter referred to as &ldquo;Alliance&rdquo;.</p>
+            <p class="contract__p"><span class="contract__nr">1.2</span> PAY will make its services as a Payment Service Provider available to the Merchant through Alliance package for an indefinite period of time. The Agreement may be terminated at any time, without notice, using the PAY Administration Panel.</p>
+            <p class="contract__p"><span class="contract__nr">1.3</span> The fees at which PAY offers its services will be charged to Alliance as long as the Agreement with Alliance is in force. Upon termination of the Agreement between the Merchant and Alliance, at the request of Alliance or at the request of the Merchant, this Agreement may be converted into a standard agreement between the Merchant and PAY.</p>
+            <p class="contract__p"><span class="contract__nr">1.4</span> The Merchant declares it agrees to PAY&rsquo;s General Terms and Conditions as these have been filed with the Chamber of Commerce under number 24283498. Any declaration of the applicability of the Merchant&rsquo;s general terms and conditions is explicitly rejected and has no legal effect. The Merchant declares it has read, received and accepted the General Terms and Conditions.</p>
+            <p class="contract__p"><span class="contract__nr">1.5</span> PAY will periodically and integrally pass on the amounts collected for the Merchant to the corporate bank account of the Merchant, as registered in the Administration Panel, held at a financial institution in the EU (SEPA).</p>
+            <p class="contract__p"><span class="contract__nr">1.6</span> Alliance will automatically receive access to the data of the Merchant. The Merchant grants permission to make its book balance available to Alliance and if it desires, to offset the commission invoice of Alliance via this balance. Alliance will establish these fees in a separate agreement. Alliance will send the Merchant a specification of the charged commissions at least three days prior to settlement.</p>
+
+            <h5 class="contract__sub">Read and approved</h5>
+            <div class="sign">
+              <div class="sign__col" data-sign-side="merchant">
+                <span class="sign__who">Merchant</span>
+                <span class="sign__mark" data-sign-mark hidden></span>
+                <dl class="sign__facts">
+                  <dt>Name</dt><dd data-sign-name></dd>
+                  <dt>Date</dt><dd data-sign-date></dd>
+                  <dt>City</dt><dd data-sign-place></dd>
+                </dl>
+              </div>
+              <div class="sign__col">
+                <span class="sign__who">PAY</span>
+                <!-- Leeg: dit stuk gaat naar PAY toe en daar wordt het getekend. -->
+                <span class="sign__mark" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ct" data-ct-lang="nl" hidden>
+            <h4 class="contract__title">Samenwerkingsovereenkomst</h4>
+            <h5 class="contract__sub">Ondergetekenden</h5>
+            <p class="contract__p">
+              <b data-ct-name>Uw bedrijf</b>, gevestigd te <b data-ct-city>uw plaats</b>,
+              <b data-ct-address>uw bedrijfsadres</b>, ingeschreven in het handelsregister onder
+              nummer <b data-ct-kvk>uw KvK-nummer</b>, hierbij rechtsgeldig vertegenwoordigd door
+              <b data-ct-rep>de tekenbevoegde</b>, hierna te noemen &ldquo;Merchant&rdquo;;
+            </p>
+            <p class="contract__p">&amp;</p>
+            <p class="contract__p">
+              TinTel BV, gevestigd te Spijkenisse, ingeschreven in het handelsregister onder nummer
+              24283498, vergunninghouder betaalinstelling bij De Nederlandse Bank, hierbij
+              rechtsgeldig vertegenwoordigd door de heer O.W.H. Kok, volgens Handelsregister
+              Tekenbevoegde, hierna te noemen &ldquo;PAY&rdquo;;
+            </p>
+            <h5 class="contract__sub">Verklaren te zijn overeengekomen als volgt</h5>
+            <p class="contract__p"><span class="contract__nr">1.1</span> Als Alliance zal optreden: Opining gevestigd te Rotterdam, Tochtstraat 40 ingeschreven in het handelsregister onder nummer 77851595, hierbij rechtsgeldig vertegenwoordigd door Serdar Orman, hierna te noemen &ldquo;Alliance&rdquo;.</p>
+            <p class="contract__p"><span class="contract__nr">1.2</span> PAY stelt haar dienstverlening als Payment Service Provider via Alliance pakket beschikbaar aan Merchant voor onbeperkte duur. Opzegging van de Overeenkomst is te allen tijde mogelijk, zonder opzegtermijn, via het Administratie paneel van PAY.</p>
+            <p class="contract__p"><span class="contract__nr">1.3</span> PAY zal de vergoedingen, waartegen zij haar diensten levert, doorbelasten aan Alliance zolang overeenkomst met Alliance loopt. Bij ontbinding van de overeenkomst tussen Merchant en Alliance, op verzoek van Alliance of op verzoek van Merchant kan deze overeenkomst worden omgezet in een standaard overeenkomst tussen Merchant en PAY.</p>
+            <p class="contract__p"><span class="contract__nr">1.4</span> Merchant verklaart akkoord te zijn met de Algemene Voorwaarden van PAY zoals deze zijn gedeponeerd bij de Kamer van Koophandel onder nummer 24283498. Toepasselijkheidverklaring van Algemene Voorwaarden van Merchant wordt uitdrukkelijk van de hand gewezen en mist enig rechtsgevolg. Merchant verklaart kennis te hebben genomen van de Algemene Voorwaarden, deze te hebben ontvangen en deze te accepteren.</p>
+            <p class="contract__p"><span class="contract__nr">1.5</span> PAY zal de voor Merchant ge&iuml;nde bedragen periodiek, integraal doorstorten op de zakelijke bankrekening van Merchant, zoals geregistreerd in het Administratie paneel, aangehouden bij een financi&euml;le instelling binnen de EU (SEPA).</p>
+            <p class="contract__p"><span class="contract__nr">1.6</span> Alliance krijgt automatisch toegang tot de gegevens van Merchant. Merchant geeft toestemming om haar boeksaldo inzichtelijk te maken voor Alliance en, indien gewenst, de provisiefactuur van Alliance te verrekenen via dit saldo. Alliance zal in een separate overeenkomst deze vergoedingen schriftelijk vastleggen. Alliance zal een specificatie van de in rekening gebrachte provisie uiterlijk 3 dagen voor verrekening aan Merchant zenden.</p>
+
+            <h5 class="contract__sub">Aldus gelezen en akkoord bevonden</h5>
+            <div class="sign">
+              <div class="sign__col" data-sign-side="merchant">
+                <span class="sign__who">Merchant</span>
+                <span class="sign__mark" data-sign-mark hidden></span>
+                <dl class="sign__facts">
+                  <dt>Naam</dt><dd data-sign-name></dd>
+                  <dt>Datum</dt><dd data-sign-date></dd>
+                  <dt>Plaats</dt><dd data-sign-place></dd>
+                </dl>
+              </div>
+              <div class="sign__col">
+                <span class="sign__who">PAY</span>
+                <span class="sign__mark" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+
+            </div>
+
+            <!-- De gegevens van Pay. staan op elk vel; ze horen bij het papier
+                 en niet bij de overeenkomst. -->
+            <aside class="paper__side">
+              <dl class="paper__facts">
+                <dt>TEL</dt><dd>+31 (0)88 88 666 66</dd>
+                <dt>KVK</dt><dd>24283498</dd>
+                <dt>BTW</dt><dd>NL807960147B01</dd>
+                <dt>IBAN</dt><dd>NL35RABO0117713678</dd>
+                <dt>BIC</dt><dd>RABONL2U</dd>
+              </dl>
+              <div class="paper__loc">
+                <h6>Location Enschede</h6>
+                <p>Hengelosestraat 113<br />7514 AE Enschede<br />The Netherlands</p>
+              </div>
+              <div class="paper__loc">
+                <h6>Location Amsterdam</h6>
+                <p>Dalsteindreef 141<br />1112 XJ Diemen<br />The Netherlands</p>
+              </div>
+              <div class="paper__loc">
+                <h6>Location Spijkenisse</h6>
+                <p>Curieweg 19<br />3208 KJ Spijkenisse<br />The Netherlands</p>
+              </div>
+            </aside>
           </div>
         </div>
       </div>
@@ -5735,6 +5815,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=303"></script>
+  <script src="app.js?v=306"></script>
 </body>
 </html>

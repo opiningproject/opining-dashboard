@@ -4847,9 +4847,35 @@
       return zelf ? (zelf.dataset.personName || "") : "";
     }
 
+    /* Engels of Nederlands lezen. Beide versies gelden; dit bepaalt alleen wat
+       er in beeld staat, dus er wordt niets opnieuw ingevuld. */
+    document.addEventListener("click", function (e) {
+      var knop = e.target.closest("[data-ct-kies]");
+      if (!knop) return;
+      var taal = knop.dataset.ctKies;
+      contract.querySelectorAll("[data-ct-lang]").forEach(function (vak) {
+        vak.hidden = vak.dataset.ctLang !== taal;
+      });
+      document.querySelectorAll("[data-ct-kies]").forEach(function (k) {
+        var aan = k.dataset.ctKies === taal;
+        k.classList.toggle("is-on", aan);
+        k.setAttribute("aria-pressed", String(aan));
+      });
+      /* Het vel begint weer bovenaan, anders kijk je midden in de andere taal. */
+      contract.scrollTop = 0;
+    });
+
+    /* De overeenkomst staat er twee keer, in het Engels en in het Nederlands.
+       Beide versies gelden, dus ze krijgen allebei dezelfde gegevens; alleen de
+       terugvaltekst verschilt per taal en staat in het blok zelf. */
     function zetTekst(kies, tekst, terug) {
-      var el = contract.querySelector(kies);
-      if (el) el.textContent = tekst || terug;
+      contract.querySelectorAll(kies).forEach(function (el) {
+        if (tekst) { el.textContent = tekst; return; }
+        /* Zonder gegevens weer de tekst die er in de HTML stond, zodat de
+           Nederlandse versie geen Engelse plaatshouder laat zien. */
+        if (el.dataset.ctTerug === undefined) el.dataset.ctTerug = el.textContent;
+        el.textContent = el.dataset.ctTerug || terug;
+      });
     }
 
     function vulContract() {
@@ -4941,14 +4967,13 @@
       var tekenRegel = document.querySelector("[data-sign-meta]");
       var tekenOpen = document.getElementById("sign-open");
       var tekenStand = document.querySelector("[data-sign-state]");
-      var merk = contract.querySelector("[data-sign-mark]");
+      var merken = contract.querySelectorAll("[data-sign-side=\"merchant\"] [data-sign-mark]");
 
       /* Tekenen is eenmalig: terugdraaien kan niet, want dan is de
          handtekening niets meer waard. */
       function zetHandtekening(naam) {
         var datum = vandaag();
-        merk.textContent = naam;
-        merk.hidden = false;
+        merken.forEach(function (m) { m.textContent = naam; m.hidden = false; });
         zetTekst("[data-sign-name]", naam, "");
         zetTekst("[data-sign-date]", datum, "");
         zetTekst("[data-sign-place]", waarde("biz-city"), "");
@@ -4997,8 +5022,7 @@
     /* Opnieuw beginnen: de handtekening hoort bij de vorige aanvraag. */
     document.addEventListener("wiz-herstart", function () {
       if (!tekenKnop) return;
-      merk.textContent = "";
-      merk.hidden = true;
+      merken.forEach(function (m) { m.textContent = ""; m.hidden = true; });
       zetTekst("[data-sign-name]", "", "");
       zetTekst("[data-sign-date]", "", "");
       zetTekst("[data-sign-place]", "", "");

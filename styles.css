@@ -3276,12 +3276,65 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   overflow-y: auto;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  background: var(--gray-50);
+  /* Er staat een vel papier in, dus wit en niet grijs. */
+  background: var(--bg-surface);
   font-size: var(--fs-sm);
   line-height: 1.6;
   color: var(--text);
 }
 .contract:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Het briefpapier van Pay.: hun merk rechtsboven, de tekst links en een lila
+   kolom met hun gegevens ernaast. Zo ziet het Word-bestand eruit dat zij
+   sturen; het staat hier als vel in het leesvak. */
+.paper__head { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.paper__tag { font-size: var(--fs-sm); font-weight: 700; letter-spacing: -.01em; color: var(--text-strong); }
+.paper__logo { display: block; width: auto; height: 22px; }
+.paper__cols { display: flex; align-items: flex-start; gap: 22px; margin-top: 18px; }
+.paper__text { flex: 1 1 auto; min-width: 0; }
+/* De kolom hoort bij het papier en niet bij de overeenkomst: eigen vlak, en
+   kleiner gezet dan de tekst ernaast. */
+.paper__side {
+  flex: 0 0 180px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: #ecebff;
+  font-size: 11px; line-height: 1.6;
+  color: var(--text-strong);
+}
+.paper__facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 10px; }
+.paper__facts dt { font-weight: 700; letter-spacing: .03em; color: #5b5bf2; }
+.paper__facts dd { min-width: 0; }
+.paper__loc { margin-top: 16px; }
+.paper__loc h6 {
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: #5b5bf2;
+}
+.paper__loc p { margin-top: 2px; }
+
+/* De gegevenskolom past op een smal scherm niet naast de tekst; hij gaat
+   eronder staan over de volle breedte. Deze regels staan hier en niet bij de
+   andere mobiele regels, want anders wint de basisregel hierboven. */
+@media (max-width: 900px) {
+  .paper__cols { flex-direction: column; gap: 18px; }
+  .paper__side { flex: 1 1 auto; width: 100%; }
+}
+
+/* De taalknoppen boven het venster: beide versies gelden, je kiest alleen wat
+   je leest. */
+/* De overeenkomst is een document met een kolom ernaast; dat leest op een
+   smaller venster te krap. */
+#agreement-dialog .dialog__card { max-width: 740px; }
+.langsw { display: flex; gap: 2px; margin-left: auto; padding: 2px; border-radius: var(--r-sm); background: var(--gray-100); }
+.langsw__btn {
+  padding: 3px 10px;
+  border-radius: calc(var(--r-sm) - 3px);
+  font-size: var(--fs-xs); font-weight: 600;
+  color: var(--text-muted);
+}
+.langsw__btn:hover { color: var(--text-strong); }
+.langsw__btn.is-on { background: var(--bg-surface); color: var(--text-strong); box-shadow: var(--shadow-sm); }
+
 .contract__title {
   font-size: var(--fs-md); font-weight: 600; letter-spacing: .02em;
   text-transform: uppercase; color: var(--text-strong);
