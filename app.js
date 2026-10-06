@@ -4860,8 +4860,8 @@
 
       zetTekst("[data-ct-name]", naam.toUpperCase(), "YOUR BUSINESS");
       zetTekst("[data-ct-city]", stad, "your city");
-      /* Alleen straat en huisnummer: de plaats staat al in "established in",
-         anders zou die er twee keer staan. */
+      /* Alleen straat en huisnummer: de plaats staat er vlak voor al, net als
+         in de tekst van Pay.nl ("City, street + housenumber"). */
       zetTekst("[data-ct-address]", adres, "your business address");
       zetTekst("[data-ct-kvk]", waarde("biz-kvk"), "your Chamber of Commerce number");
       zetTekst("[data-ct-rep]", teken.toUpperCase(), "THE ACCOUNT REPRESENTATIVE");
