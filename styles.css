@@ -870,12 +870,7 @@ select.input {
   color: var(--border-strong);
 }
 .prod__name { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); }
-/* Vaste kolom, ook als er geen tip is: anders schuiven de badges per rij. */
-.prod__tip { display: grid; place-items: center; width: 28px; flex: 0 0 auto; margin-left: 24px; }
 .prod .badge { margin-left: auto; }
-.tip { display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--r-sm); color: var(--warning-fg); }
-.tip:hover { background: var(--warning-bg); }
-.tip .icon { width: 18px; height: 18px; }
 
 .badge {
   flex: 0 0 auto;
