@@ -336,6 +336,22 @@
   /* Alles wissen hoort er alleen te staan zodra er iets te wissen valt. */
   function syncClearAll(psearch) {
     psearch.querySelector(".fclear").hidden = !psearch.querySelector(".fchip");
+    /* Staat elk filter dat deze lijst kent er al, dan valt er niets meer toe te
+       voegen en hoort de knop weg. Bij een lijst met alleen Status is dat na de
+       eerste keuze al zo. */
+    var toevoegen = psearch.querySelector(".fadd");
+    if (toevoegen) toevoegen.hidden = !vrijeFilters(psearch).length;
+  }
+
+  /* De filters die nog niet als chip in de regel staan. */
+  function vrijeFilters(psearch) {
+    var gebruikt = [].map.call(psearch.querySelectorAll(".fchip"), function (chip) {
+      var label = chip.querySelector(".fchip__label");
+      return (label ? label.textContent : chip.textContent).trim().toLowerCase();
+    });
+    return leesFilters(psearch).filter(function (filter) {
+      return gebruikt.indexOf(filter.naam.toLowerCase()) < 0;
+    });
   }
 
   function sluitFilterMenus(behalve) {
@@ -357,8 +373,10 @@
 
   function vulFilterMenu(psearch) {
     var menu = psearch.querySelector(".fmenu");
-    if (menu.childElementCount) return;
-    leesFilters(psearch).forEach(function (filter) {
+    /* Elke keer opnieuw: wat je net hebt toegevoegd hoort er niet meer in te
+       staan. */
+    menu.innerHTML = "";
+    vrijeFilters(psearch).forEach(function (filter) {
       var knop = document.createElement("button");
       knop.type = "button";
       knop.className = "fmenu__item";
@@ -683,6 +701,9 @@
     var toevoegen = e.target.closest(".psearch__filter");
     if (toevoegen) {
       var m = toevoegen.nextElementSibling;
+      /* Opnieuw vullen bij het openen: anders staat een filter dat je net hebt
+         toegevoegd er nog steeds in. */
+      vulFilterMenu(toevoegen.closest(".psearch"));
       var wasDicht = m.hidden;
       sluitFilterMenus(wasDicht ? m : null);
       m.hidden = !wasDicht;
