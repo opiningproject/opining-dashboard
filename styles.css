@@ -341,7 +341,7 @@ legend { padding: 0; }
 
 .tasks { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: var(--fs-md); color: var(--text); }
 .tasks__ring {
-  width: 18px; height: 18px; border-radius: var(--r-full);
+  width: 18px; height: 18px; flex: 0 0 auto; border-radius: var(--r-full);
   /* app.js zet --af op het deel dat af is; 20% is de stand bij een verse winkel. */
   background: conic-gradient(var(--accent) 0 var(--af, 20%), var(--gray-200) 0);
   mask: radial-gradient(circle, transparent 42%, #000 44%);
@@ -2437,6 +2437,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    Zolang er stappen open staan is de gids het eerste wat je ziet. Is hij af,
    dan blijft alleen de telregel staan en gaat de aandacht naar de cijfers. */
 .guide__top { display: flex; align-items: center; gap: 6px; }
+/* De telregel stond ooit los boven de titel en droeg daar zijn eigen marge;
+   in de kop zou die de ring en de tekst onder de chevron duwen. */
+.guide__head .tasks { margin-bottom: 0; }
+/* Die ruimte hoort nu onder de kop, voor de titel die eronder begint. */
+.guide__body { margin-top: 14px; }
 .guide__head {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   flex: 1 1 auto; min-width: 0;
