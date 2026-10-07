@@ -5735,8 +5735,14 @@
       vulPaneel();
     });
 
+    /* Ergens anders klikken sluit het paneel, en het donkere vlak hoort daarbij.
+       Dat vlak is een ::before van de kiezer zelf, dus een klik erop landt op
+       .dpick; vandaar dat we naar het paneel en de knop kijken en niet naar de
+       kiezer als geheel. */
     document.addEventListener("click", function (e) {
-      if (!paneel.hidden && !dpick.contains(e.target)) openPaneel(false);
+      if (paneel.hidden) return;
+      if (paneel.contains(e.target) || knop.contains(e.target)) return;
+      openPaneel(false);
     });
 
     /* Escape sluit eerst dit paneel; anders gaat meteen de hele overlay dicht

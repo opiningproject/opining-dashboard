@@ -2437,6 +2437,15 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    Overgenomen van het dashboard van de producteigenaar, zodat beide op
    dezelfde manier een periode kiezen. */
 .dpick { position: relative; }
+/* Zodra het paneel openstaat dimt de rest van het scherm. Licht genoeg om te
+   zien wat eronder staat, donker genoeg om te zien dat je even niets anders
+   aan het doen bent. Boven de top- en zijbalk, onder een melding. */
+.dpick.is-open::before {
+  content: "";
+  position: fixed; inset: 0;
+  z-index: 55;
+  background: rgba(18, 22, 28, .18);
+}
 .dpick__btn {
   display: inline-flex; align-items: center; gap: 8px;
   height: 36px; padding: 0 12px;
@@ -2446,6 +2455,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   transition: background var(--dur) var(--ease);
 }
 .dpick__btn:hover { background: var(--gray-50); }
+/* De knop zelf blijft helder: hij hoort bij het paneel en niet bij wat je
+   even laat liggen. */
+.dpick.is-open .dpick__btn { position: relative; z-index: 56; }
 .dpick__btn .icon { width: 18px; height: 18px; color: var(--text-muted); }
 .dpick__caret { transition: transform var(--dur) var(--ease); }
 .dpick.is-open .dpick__caret { transform: rotate(180deg); }
@@ -2454,7 +2466,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   /* De knop staat rechts in de kop, dus het paneel klapt naar links open:
      met left: 0 zou het buiten de pagina vallen en kon je opzij slepen. */
   position: absolute; top: calc(100% + 6px); right: 0;
-  z-index: var(--z-topbar);
+  /* Een haartje boven het donkere vlak hierboven. */
+  z-index: 56;
   display: flex;
   border: 1px solid var(--border); border-radius: var(--r-lg);
   background: var(--bg-surface);
