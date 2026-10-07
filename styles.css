@@ -321,7 +321,12 @@ legend { padding: 0; }
 .page-head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
 /* Zelfde 20px als de sidebar, dus ook zonder stroke-correctie meteen 1.72px. */
 .page-head__icon { width: 20px; height: 20px; color: var(--text-strong); }
-.page-head h1, .page-head h2 { font-size: 18px; font-weight: 500; letter-spacing: -.015em; color: var(--text-strong); }
+/* Een naam die niet past eindigt op drie puntjes; hij mag de knoppen ernaast
+   niet wegduwen, vandaar de min-width van nul. */
+.page-head h1, .page-head h2 {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: 18px; font-weight: 500; letter-spacing: -.015em; color: var(--text-strong);
+}
 
 .view { display: flex; flex-direction: column; gap: 20px; }
 
@@ -768,6 +773,12 @@ select.input {
 /* De hoofdactie blijft altijd naast de titel; de rest zit op een klein scherm
    achter de drie puntjes. app.js bouwt dat menu uit dezelfde knoppen. */
 .page-head__more { display: none; }
+/* Dezelfde knop, twee gedaanten: woorden op een breed scherm, drie puntjes op
+   een smal. Welke je ziet staat in de regel voor smalle schermen. */
+.page-head__dots { display: none; }
+/* Een kaart die de titelregel op een telefoon ontlast; op een breed scherm
+   staat hetzelfde veld naast de titel. */
+.card--smal { display: none; }
 /* Twee knoppen die samen een zijn: de gewone actie en een pijltje voor de
    minder gewone weg. De naad ertussen is hun gedeelde rand. */
 .split { display: inline-flex; }
@@ -3325,6 +3336,15 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
      knop past prima naast de titel en hoort daar ook te blijven staan. */
   .page-head__tools:has(select) { width: 100%; margin-left: 0; }
   .page-head__tools .input { flex: 1 1 auto; min-width: 0; }
+  /* Bij een gerecht verhuist de stand naar een kaart in de pagina. Wat er dan
+     naast de titel overblijft is het menu, en dat is hier een tekenknop. */
+  .card--smal { display: block; }
+  .page-head__tools[data-tools="product-edit"] { width: auto; margin-left: auto; }
+  .page-head__tools[data-tools="product-edit"] > .input,
+  .page-head__tools[data-tools="product-edit"] > label { display: none; }
+  .page-head__word { display: none; }
+  .page-head__dots { display: block; }
+  .sort__btn:has(.page-head__dots) { width: 36px; padding: 0; justify-content: center; }
   .search__kbd { display: none; }
   /* Titels zijn nu overal 18px; de verkleining hier bestond alleen om de
      oude 21px op smalle schermen te temperen. */

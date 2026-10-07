@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=342" />
+  <link rel="stylesheet" href="styles.css?v=343" />
 </head>
 <body>
 
@@ -283,8 +283,12 @@
                 <option>Draft</option>
               </select>
               <div class="sort">
-                <button class="btn btn--ghost page-head__action sort__btn" type="button" aria-haspopup="true" aria-expanded="false">
-                  More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                <!-- Op een smal scherm blijft hier alleen het teken over; de
+                     woorden en het pijltje nemen daar te veel plek in. -->
+                <button class="btn btn--ghost page-head__action sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More actions">
+                  <span class="page-head__word">More actions</span>
+                  <svg class="icon page-head__word" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                  <svg class="icon page-head__dots" aria-hidden="true"><use href="#i-dots"/></svg>
                 </button>
                 <div class="sort__menu sort__menu--kort" role="menu" hidden>
                   <button class="sort__item" type="button" role="menuitem" data-created="Product duplicated">Duplicate</button>
@@ -2141,6 +2145,19 @@
                 </button>
               </p>
               <p class="tipcard__body">Missing translation for some languages, English is the fallback language.</p>
+            </div>
+
+            <!-- Naast de titel is op een telefoon geen ruimte voor een
+                 keuzeveld; de stand staat daar als eerste kaart in de pagina.
+                 Beide velden wijzen naar dezelfde stand, app.js houdt ze
+                 gelijk. -->
+            <div class="card card--smal">
+              <h2 class="card__title">Status</h2>
+              <label class="sr-only" for="pe-status-smal">Product status</label>
+              <select class="input" id="pe-status-smal">
+                <option>Active</option>
+                <option>Draft</option>
+              </select>
             </div>
 
             <div class="card">
@@ -6155,6 +6172,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=342"></script>
+  <script src="app.js?v=343"></script>
 </body>
 </html>

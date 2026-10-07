@@ -6216,6 +6216,9 @@
     var fout = vak.querySelector("#pe-title-error");
     var categorie = vak.querySelector("#pe-cat");
     var stand = document.getElementById("pe-status");
+    /* Hetzelfde veld, maar in de pagina: op een telefoon is dat het veld dat
+       je ziet. */
+    var standSmal = document.getElementById("pe-status-smal");
     var merk = document.getElementById("page-badge");
     var tip = vak.querySelector("[data-tip]");
 
@@ -6308,25 +6311,27 @@
           if (o.textContent.trim() === kop) categorie.value = o.value || o.textContent;
         });
       }
-      if (badge && stand) stand.value = badge.textContent.trim();
-      if (merk && badge) {
-        merk.textContent = badge.textContent.trim();
-        merk.className = "badge page-head__badge " + (/draft/i.test(badge.textContent) ? "badge--draft" : "badge--active");
-        merk.hidden = false;
-      }
+      if (badge) zetStand(badge.textContent.trim());
       if (tip) { delete tip.dataset.weg; }
 
       openPageSub("product-edit", naam);
       toonTaal("en", true);
     });
 
-    /* De stand uit de keuzelijst staat ook naast de naam in de kop. */
-    if (stand && merk) {
-      stand.addEventListener("change", function () {
-        merk.textContent = stand.value;
-        merk.className = "badge page-head__badge " + (stand.value === "Draft" ? "badge--draft" : "badge--active");
-      });
+    /* De stand staat op drie plekken: twee keuzevelden en het merk naast de
+       naam. Eén plek beslist wat ze alle drie tonen. */
+    function zetStand(waarde) {
+      if (stand) stand.value = waarde;
+      if (standSmal) standSmal.value = waarde;
+      if (!merk) return;
+      merk.textContent = waarde;
+      merk.className = "badge page-head__badge " + (/draft/i.test(waarde) ? "badge--draft" : "badge--active");
+      merk.hidden = false;
     }
+
+    [stand, standSmal].forEach(function (veld) {
+      if (veld) veld.addEventListener("change", function () { zetStand(veld.value); });
+    });
   })();
 
 })();
