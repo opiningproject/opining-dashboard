@@ -869,11 +869,14 @@ select.input {
   background: var(--gray-25);
   color: var(--border-strong);
 }
-/* De naam houdt minstens de halve rij bezet, zodat de stand erachter bij elke
-   rij op dezelfde hoogte begint in plaats van tegen de rechterrand te plakken.
-   Een lange naam duwt hem verder; afkappen is erger dan een kolom die een keer
-   opschuift. */
-.prod__name { min-width: 50%; font-size: var(--fs-md); color: var(--text-strong); }
+/* De naam krijgt een vaste halve rij, zodat de stand erachter bij elke rij op
+   dezelfde hoogte begint. Past een naam daar niet in, dan kapt hij af met
+   puntjes: een tweede regel zou de rijen ongelijk hoog maken. */
+.prod__name {
+  flex: 0 0 50%; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: var(--fs-md); color: var(--text-strong);
+}
 .prod .badge { margin-left: 0; margin-right: auto; }
 
 .badge {
@@ -951,11 +954,10 @@ select.input {
 /* Een aanwijzing die al geldt voor je iets kiest, als opsomming onder de keuze. */
 .docnote { margin-top: 8px; padding-left: 18px; list-style: disc; font-size: var(--fs-sm); color: var(--text); }
 @media (max-width: 560px) {
-  /* Op een telefoon is de rij te smal om nog vrije ruimte over te houden, dus
-     daar wordt de afstand tot de rand vastgezet in plaats van uitgerekend.
-     De naam wikkelt dan desnoods af. */
-  .prod__name { min-width: 0; }
-  .prod .badge { margin-right: 28px; }
+  /* Op een telefoon past de halve rij er niet naast; daar is de naamkolom
+     smaller, zodat de stand nog steeds op een lijn staat en er ruimte tot de
+     rand overblijft. */
+  .prod__name { flex: 0 0 38%; }
 
   /* Op een telefoon onder elkaar: twee vakken naast elkaar worden te smal. */
   .docdrops--twee { grid-template-columns: minmax(0, 1fr); }
