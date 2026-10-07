@@ -874,7 +874,9 @@ select.input {
    Een lange naam duwt hem verder; afkappen is erger dan een kolom die een keer
    opschuift. */
 .prod__name { min-width: 50%; font-size: var(--fs-md); color: var(--text-strong); }
-.prod .badge { margin-left: 0; margin-right: auto; }
+.prod .badge { margin-left: 0; }
+/* Staan er twee standen naast elkaar, dan duwt alleen de laatste de rest weg. */
+.prod .badge:last-child { margin-right: auto; }
 
 .badge {
   flex: 0 0 auto;
@@ -887,6 +889,8 @@ select.input {
 .badge__dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: var(--r-full); background: currentColor; vertical-align: baseline; }
 .badge--active { background: #e3f5ec; color: var(--success); }
 .badge--draft  { background: #e4eefb; color: #1f5fa8; }
+/* Een gerecht dat in de aanbieding staat; de tab Discount zoekt hierop. */
+.badge--discount { background: #fdf0e3; color: #9a5b18; }
 
 /* ==========================================================================
    8c. ONLINE STORE — sectienavigatie links, paneel rechts
@@ -955,7 +959,7 @@ select.input {
      daar wordt de afstand tot de rand vastgezet in plaats van uitgerekend.
      De naam wikkelt dan desnoods af. */
   .prod__name { min-width: 0; }
-  .prod .badge { margin-right: 28px; }
+  .prod .badge:last-child { margin-right: 28px; }
 
   /* Op een telefoon onder elkaar: twee vakken naast elkaar worden te smal. */
   .docdrops--twee { grid-template-columns: minmax(0, 1fr); }

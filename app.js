@@ -367,6 +367,9 @@
      één waarde in de rij staan. Zoeken op de tekst van de rij is voor deze
      lijsten genoeg; in productie filtert de server op de velden zelf. */
   function rijTekst(rij) {
+    /* De menukaart is geen tabel maar een lijst; daar is de hele regel de
+       tekst waarop gezocht wordt. */
+    if (!rij.cells) return rij.textContent.replace(/\s+/g, " ").trim().toLowerCase();
     var stukken = [];
     [].slice.call(rij.cells).forEach(function (cel) {
       /* De actiekolom is bediening, geen gegeven: zonder deze uitzondering
@@ -387,8 +390,8 @@
       melding.className = "panel__empty";
       melding.textContent = "No results.";
       var wrap = panel.querySelector(".table-wrap");
-      if (!wrap) return;
-      wrap.after(melding);
+      if (wrap) wrap.after(melding);
+      else panel.appendChild(melding);
     }
     melding.hidden = !leeg;
   }
@@ -417,8 +420,10 @@
      chips, want de tab is dan als chip meegenomen. */
   function pasPaneelFilter(kop) {
     var panel = kop && kop.closest(".panel");
-    var tabel = panel && panel.querySelector("table");
-    if (!tabel || !tabel.tBodies[0]) return;
+    if (!panel) return;
+    var tabel = panel.querySelector("table");
+    var groepen = panel.querySelectorAll(".group");
+    if ((!tabel || !tabel.tBodies[0]) && !groepen.length) return;
 
     var zoekt = kop.classList.contains("is-searching");
     var zoek = "";
@@ -440,6 +445,35 @@
     } else {
       var gekozen = actieveInperking(kop);
       if (gekozen && !/^All\b/i.test(gekozen)) eisen.push([gekozen.toLowerCase()]);
+    }
+
+    /* De menukaart: gerechten in groepen in plaats van rijen in een tabel. Een
+       groep waarvan niets overblijft gaat zelf ook weg, anders staat er een
+       kopje boven een leeg vak. */
+    if (!tabel) {
+      var overLijst = 0;
+      groepen.forEach(function (groep) {
+        var zichtbaar = 0;
+        groep.querySelectorAll(".prod").forEach(function (rij) {
+          var tekst = rijTekst(rij);
+          var past = (!zoek || tekst.indexOf(zoek) !== -1) && eisen.every(function (groepEis) {
+            return groepEis.some(function (waarde) { return tekst.indexOf(waarde) !== -1; });
+          });
+          rij.hidden = !past;
+          if (past) zichtbaar++;
+        });
+        groep.hidden = zichtbaar === 0;
+        var teller = groep.querySelector(".group__count");
+        if (teller) {
+          if (teller.dataset.vast === undefined) teller.dataset.vast = teller.textContent;
+          teller.textContent = (zoek || eisen.length)
+            ? zichtbaar + (zichtbaar === 1 ? " product" : " products")
+            : teller.dataset.vast;
+        }
+        overLijst += zichtbaar;
+      });
+      toonGeenResultaten(panel, overLijst === 0);
+      return;
     }
 
     var over = 0;
