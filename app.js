@@ -5188,6 +5188,7 @@
 
     var kop = gids.querySelector(".guide__head");
     var teller = gids.querySelector("[data-guide-count]");
+    var sluit = gids.querySelector("[data-guide-close]");
 
     function zetGids() {
       var stappen = gids.querySelectorAll(".step");
@@ -5197,19 +5198,34 @@
       if (ring) ring.style.setProperty("--af", (stappen.length ? af / stappen.length * 100 : 0) + "%");
       var klaar = af === stappen.length && stappen.length > 0;
       kaart.hidden = !klaar;
+      /* Weggooien kan pas als de gids af is; daarvoor heb je hem nog nodig. */
+      if (sluit) sluit.hidden = !klaar;
       /* Alleen bij het afronden zelf dichtklappen; daarna mag je hem weer
          openzetten zonder dat hij terugspringt. */
       if (klaar && gids.dataset.klaar !== "ja") {
-        kop.setAttribute("aria-expanded", "false");
+        zetOpen(false);
         gids.dataset.klaar = "ja";
       }
       if (klaar) tekenAlles();
     }
 
+    function zetOpen(open) {
+      kop.setAttribute("aria-expanded", String(open));
+      gids.classList.toggle("is-dicht", !open);
+    }
+
     kop.addEventListener("click", function () {
-      var open = kop.getAttribute("aria-expanded") === "true";
-      kop.setAttribute("aria-expanded", String(!open));
+      zetOpen(kop.getAttribute("aria-expanded") !== "true");
     });
+
+    /* Weg met de gids: hij is af en hoeft niet de rest van het jaar op het
+       dashboard te blijven staan. */
+    if (sluit) {
+      sluit.addEventListener("click", function () {
+        gids.hidden = true;
+        showToast("Setup guide dismissed");
+      });
+    }
 
     /* In het echt vinkt een stap zichzelf af zodra je hem hebt gedaan. Hier
        zet je hem met het bolletje aan en uit, zodat je kunt laten zien wat er

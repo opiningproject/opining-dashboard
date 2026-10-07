@@ -2436,14 +2436,18 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* ---- De setup-guide klapt open en dicht --------------------------------
    Zolang er stappen open staan is de gids het eerste wat je ziet. Is hij af,
    dan blijft alleen de telregel staan en gaat de aandacht naar de cijfers. */
+.guide__top { display: flex; align-items: center; gap: 6px; }
 .guide__head {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  width: 100%;
+  flex: 1 1 auto; min-width: 0;
   text-align: left;
 }
+/* Het kruisje hoort bij de kop, dus het schuift mee omhoog met de regel. */
+.guide__close { flex: 0 0 auto; }
 .guide__chev { color: var(--text-muted); transition: transform var(--dur) var(--ease); }
 .guide__head[aria-expanded="false"] .guide__chev { transform: rotate(-90deg); }
-.guide__head[aria-expanded="false"] + .guide__body { display: none; }
+/* De kop en het lichaam zijn geen buren meer, dus de kaart draagt de stand. */
+.guide.is-dicht .guide__body { display: none; }
 
 .cbar { position: relative; flex: 1 1 0; height: 100%; display: flex; flex-direction: column; min-width: 0; }
 .cbar__stack {

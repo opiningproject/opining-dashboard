@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=310" />
+  <link rel="stylesheet" href="styles.css?v=311" />
 </head>
 <body>
 
@@ -382,10 +382,18 @@
                  af zijn blijft alleen die ene regel staan en komt de grafiek
                  hierboven in beeld. -->
             <div class="card guide" id="setup-guide">
-              <button class="guide__head" type="button" aria-expanded="true" aria-controls="guide-body">
-                <span class="tasks"><span class="tasks__ring" aria-hidden="true"></span><span data-guide-count>1 of 5 tasks completed</span></span>
-                <svg class="icon guide__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-              </button>
+              <!-- Het kruisje staat naast de kop en niet erin: een knop in een
+                   knop bestaat niet. Het komt pas in beeld als de gids af is,
+                   want tot die tijd heb je hem nog nodig. -->
+              <div class="guide__top">
+                <button class="guide__head" type="button" aria-expanded="true" aria-controls="guide-body">
+                  <span class="tasks"><span class="tasks__ring" aria-hidden="true"></span><span data-guide-count>1 of 5 tasks completed</span></span>
+                  <svg class="icon guide__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                </button>
+                <button class="icon-btn guide__close" type="button" data-guide-close aria-label="Dismiss setup guide" hidden>
+                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+              </div>
               <div class="guide__body" id="guide-body">
               <h2 class="card__title">Setup guide</h2>
               <p class="card__sub">Use this guide to get your store up and running</p>
@@ -5882,6 +5890,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=310"></script>
+  <script src="app.js?v=311"></script>
 </body>
 </html>
