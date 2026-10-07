@@ -2568,14 +2568,23 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
      die opent als het wiel van het toestel zelf. */
   /* De kiezer is een flexitem in de kop en zou anders net zo breed zijn als
      zijn knop; hij moet de hele kolom beslaan zodat het paneel dat ook kan. */
-  .dpick { flex: 1 1 auto; }
+  /* De twee knoppen staan naast elkaar aan de linkerkant met de gewone
+     tussenruimte; ze rekken niet mee met de kolom. */
+  /* Acht in plaats van tien: met tien past de tweede knop er net niet naast
+     en valt hij op een eigen regel. */
+  .page-head__tools { flex-wrap: wrap; justify-content: flex-start; margin-left: 0; gap: 8px; }
+  /* Het paneel is wel zo breed als de kaarten eronder. Het hangt aan een knop
+     die dat niet is, dus het rekent zijn breedte uit vanaf de rand van de
+     kolom: dezelfde 16px marge als de rest van de pagina. */
   .dpick__panel {
     flex-direction: column;
-    /* Even breed als de kaarten eronder: de kiezer hangt aan de kolom, dus
-       links en rechts uitrekken geeft vanzelf dezelfde marge als de rest. */
-    left: 0; right: 0;
-    width: auto;
+    left: 0; right: auto;
+    width: calc(100vw - 32px);
   }
+  /* Het menu van de vergelijking is smal genoeg om gewoon onder zijn knop te
+     blijven hangen; alleen de kalender erin mag niet breder worden dan de
+     kolom. */
+  .cmp__cal { width: min(290px, calc(100vw - 56px)); }
   .dpick__presets { display: none; }
   /* De keuzelijst is de kop van het paneel en loopt dus over de volle
      breedte, net als in de app waar dit vandaan komt. */
