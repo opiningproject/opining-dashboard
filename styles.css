@@ -2320,11 +2320,12 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    die tegelijk de knoppen zijn waarmee je kiest welke lijn eronder staat. */
 .line { position: absolute; inset: 0 0 24px 0; }
 .line__svg { display: block; width: 100%; height: 100%; overflow: visible; }
-/* De vergelijkingsperiode: dezelfde vorm, maar gestippeld en lichter, zodat
-   hij duidelijk achter de echte lijn ligt. */
+/* De vergelijkingsperiode: dezelfde vorm, maar gestippeld en in een lichte
+   tint van dezelfde blauw, zodat hij bij de lijn hoort en er toch duidelijk
+   achter ligt. */
 .line__cmp {
   fill: none;
-  stroke: #a7adb8;
+  stroke: #8ecbe6;
   stroke-width: 2;
   stroke-dasharray: 4 4;
   stroke-linejoin: round;
@@ -2423,7 +2424,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .chart__range { gap: 18px; flex-wrap: wrap; }
 .chart__leg { display: flex; align-items: center; gap: 8px; }
 .chart__dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: var(--r-full); background: var(--accent); }
-.chart__dot--cmp { background: #a7adb8; }
+.chart__dot--cmp { background: #8ecbe6; }
 /* De tooltip: een kop met de naam van de reeks en daaronder een regel per
    periode, elk met zijn eigen stip. */
 .tip__rij { display: flex; align-items: center; gap: 8px; }
