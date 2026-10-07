@@ -2547,9 +2547,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   /* De kiezer is een flexitem in de kop en zou anders net zo breed zijn als
      zijn knop; hij moet de hele kolom beslaan zodat het paneel dat ook kan. */
   .dpick { flex: 1 1 auto; }
-  /* Over de volle breedte onder de kop, zodat hij even breed is als de
-     kaarten eronder. */
-  .dpick__btn { width: 100%; justify-content: flex-start; }
   .dpick__panel {
     flex-direction: column;
     /* Even breed als de kaarten eronder: de kiezer hangt aan de kolom, dus
