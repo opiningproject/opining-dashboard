@@ -5197,7 +5197,6 @@
       var ring = gids.querySelector(".tasks__ring");
       if (ring) ring.style.setProperty("--af", (stappen.length ? af / stappen.length * 100 : 0) + "%");
       var klaar = af === stappen.length && stappen.length > 0;
-      kaart.hidden = !klaar;
       /* Weggooien kan pas als de gids af is; daarvoor heb je hem nog nodig. */
       if (sluit) sluit.hidden = !klaar;
       /* Alleen bij het afronden zelf dichtklappen; daarna mag je hem weer
@@ -5206,7 +5205,6 @@
         zetOpen(false);
         gids.dataset.klaar = "ja";
       }
-      if (klaar) tekenAlles();
     }
 
     function zetOpen(open) {
@@ -5391,7 +5389,7 @@
     });
 
     /* De breedte van de kaart bepaalt waar de tooltips passen. */
-    window.addEventListener("resize", function () { if (!kaart.hidden) teken(); });
+    window.addEventListener("resize", teken);
 
     /* Alles af, om te laten zien hoe het dashboard er daarna uitziet. */
     var klaarVlag = new URLSearchParams(location.search).get("guide") ||
@@ -5409,6 +5407,8 @@
       });
     }
 
+    /* De grafiek staat er altijd, dus hij wordt meteen getekend. */
+    tekenAlles();
     zetGids();
   })();
 
