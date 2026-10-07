@@ -5330,8 +5330,10 @@
       var gew = [];
       for (var dag = 1; dag <= dagen; dag++) {
         /* Een kleine golf bovenop de weekdrukte, zodat twee zaterdagen niet
-           precies gelijk zijn. Vast per datum, dus elke keer hetzelfde. */
-        var golf = (((dag * 31 + mnd * 13 + jaar) % 7) - 3) * 0.04;
+           precies gelijk zijn. Vast per datum, dus elke keer hetzelfde. De
+           cyclus is dertien dagen en geen zeven: anders zijn twee opeenvolgende
+           weken tot op de cent gelijk en staat er overal nul procent. */
+        var golf = (((dag * 11 + mnd * 17 + jaar) % 13) - 6) * 0.03;
         gew.push(DRUKTE[new Date(jaar, mnd - 1, dag).getDay()] * (1 + golf));
       }
       return (onthouden[sleutel] = {
@@ -5374,7 +5376,27 @@
     /* ---- Van een bereik naar punten --------------------------------------
        Tot 62 dagen een punt per dag; daarboven per maand, met alleen de dagen
        die binnen het bereik vallen. */
+    /* Een dag duurt geen dag in de grafiek maar vierentwintig punten: dan zie
+       je de lunch en het avondeten in plaats van een lijn tussen twee punten.
+       Wanneer er wat binnenkomt weet dit prototype niet, dus deze verdeling
+       staat daarvoor in de plaats: dicht tot elf uur, een boog rond de lunch
+       en een hogere rond het avondeten. */
+    var UURDRUKTE = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                     0.35, 0.90, 0.80, 0.40, 0.25, 0.35, 0.90,
+                     1.60, 1.80, 1.40, 0.90, 0.50, 0.20];
+
+    function uurPunten(dag) {
+      var c = dagCijfers(dag);
+      var orders = verdeel(UURDRUKTE, c.orders);
+      var omzet = verdeel(UURDRUKTE, c.omzet);
+      return UURDRUKTE.map(function (g, u) {
+        var tijd = (u < 10 ? "0" : "") + u + ":00";
+        return { label: tijd, kort: tijd, orders: orders[u], omzet: omzet[u] };
+      });
+    }
+
     function punten(van, tot) {
+      if (zelfdeDag(van, tot)) return uurPunten(van);
       var uit = [], perMaand = Math.round((tot - van) / DAG) > 62;
       var lopend = null;
       /* Loopt het bereik over een maandgrens, dan zegt "4" onder de as niets;
