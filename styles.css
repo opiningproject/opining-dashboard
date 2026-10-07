@@ -2582,7 +2582,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .dpick { position: static; }
   .dpick__panel {
     flex-direction: column;
-    left: 0; right: 0;
+    /* Tot aan de rand van de kaart: de regel met de knoppen staat binnen de
+       padding van 16px, dus die halen we er weer af. */
+    left: -16px; right: -16px;
     width: auto;
   }
   /* Het menu van de vergelijking is smal genoeg om gewoon onder zijn knop te
