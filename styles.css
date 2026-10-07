@@ -2300,6 +2300,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .legend__dot--del  { background: var(--series-delivery); }
 .legend__dot--take { background: var(--series-takeaway); }
 
+/* De twee kiezers bovenin de kaart, op een regel met ruimte eronder. */
+.chart__tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
 .chart { margin-top: 22px; padding-left: 52px; }
 .chart__plot { position: relative; height: 236px; }
 
@@ -2486,9 +2488,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .dpick.is-open .dpick__caret { transform: rotate(180deg); }
 
 .dpick__panel {
-  /* De knop staat rechts in de kop, dus het paneel klapt naar links open:
-     met left: 0 zou het buiten de pagina vallen en kon je opzij slepen. */
-  position: absolute; top: calc(100% + 6px); right: 0;
+  /* De knop staat linksboven in de kaart, dus het paneel hangt aan zijn
+     linkerkant en loopt naar rechts; daar is ruimte genoeg. */
+  position: absolute; top: calc(100% + 6px); left: 0;
   /* Een haartje boven het donkere vlak hierboven. */
   z-index: 56;
   display: flex;
@@ -2573,19 +2575,20 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
      tussenruimte; ze rekken niet mee met de kolom. */
   /* Acht in plaats van tien: met tien past de tweede knop er net niet naast
      en valt hij op een eigen regel. */
-  .page-head__tools { flex-wrap: wrap; justify-content: flex-start; margin-left: 0; gap: 8px; }
-  /* Het paneel is wel zo breed als de kaarten eronder. Het hangt aan een knop
-     die dat niet is, dus het rekent zijn breedte uit vanaf de rand van de
-     kolom: dezelfde 16px marge als de rest van de pagina. */
+  /* Het paneel is zo breed als de kaart. Daarvoor laat de kiezer zijn eigen
+     ankerpunt los: dan rekent het paneel vanaf de regel met de twee knoppen,
+     en die loopt van rand tot rand van de kaart. */
+  .chart__tools { gap: 8px; position: relative; }
+  .dpick { position: static; }
   .dpick__panel {
     flex-direction: column;
-    left: 0; right: auto;
-    width: calc(100vw - 32px);
+    left: 0; right: 0;
+    width: auto;
   }
   /* Het menu van de vergelijking is smal genoeg om gewoon onder zijn knop te
      blijven hangen; alleen de kalender erin mag niet breder worden dan de
-     kolom. */
-  .cmp__cal { width: min(290px, calc(100vw - 56px)); }
+     kaart. */
+  .cmp__cal { width: min(290px, calc(100vw - 80px)); }
   .dpick__presets { display: none; }
   /* De keuzelijst is de kop van het paneel en loopt dus over de volle
      breedte, net als in de app waar dit vandaan komt. */
@@ -2618,7 +2621,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 }
 .cmp.is-open .cmp__btn { position: relative; z-index: 56; }
 .cmp__panel {
-  position: absolute; top: calc(100% + 6px); right: 0;
+  position: absolute; top: calc(100% + 6px); left: 0;
   z-index: 56;
   min-width: 210px;
   padding: 6px;

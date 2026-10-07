@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=324" />
+  <link rel="stylesheet" href="styles.css?v=326" />
 </head>
 <body>
 
@@ -272,130 +272,7 @@
             <button class="btn btn--primary page-head__action" type="button" id="page-action" hidden>
               <svg class="icon" aria-hidden="true"><use href="#i-plus" id="page-action-icon"/></svg><span id="page-action-label"></span>
             </button>
-            <!-- De periode geldt voor de hele dashboardkaart, dus hij staat op
-                 de titelregel, rechts naast de titel, en niet in de kaart zelf.
-                 Overgenomen van het dashboard van de producteigenaar. -->
-            <div class="page-head__tools" data-tools="dashboard" hidden>
-              <div class="dpick" id="dash-range">
-                <button class="dpick__btn" type="button" aria-haspopup="dialog" aria-expanded="false">
-                  <svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>
-                  <span class="dpick__label">Last 30 days</span>
-                  <svg class="icon dpick__caret" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-                </button>
 
-                <div class="dpick__panel" role="dialog" aria-label="Choose a period" hidden>
-                  <div class="dpick__presets">
-                    <button class="dpick__preset" type="button" data-preset="today">Today</button>
-                    <button class="dpick__preset" type="button" data-preset="yesterday">Yesterday</button>
-                    <span class="dpick__sep" aria-hidden="true"></span>
-                    <button class="dpick__preset" type="button" data-preset="7d">Last 7 days</button>
-                    <button class="dpick__preset is-active" type="button" data-preset="30d">Last 30 days</button>
-                    <button class="dpick__preset" type="button" data-preset="90d">Last 90 days</button>
-                    <button class="dpick__preset" type="button" data-preset="12m">Last 12 months</button>
-                    <span class="dpick__sep" aria-hidden="true"></span>
-                    <button class="dpick__preset" type="button" data-preset="wtd">Week to date</button>
-                    <button class="dpick__preset" type="button" data-preset="mtd">Month to date</button>
-                    <button class="dpick__preset" type="button" data-preset="qtd">Quarter to date</button>
-                    <button class="dpick__preset" type="button" data-preset="ytd">Year to date</button>
-                  </div>
-
-                  <div class="dpick__main">
-                    <!-- Dezelfde keuzes als hiernaast, maar als keuzelijst: op een
-                         telefoon is dat het wiel van het toestel zelf. -->
-                    <label class="sr-only" for="dpick-quick">Period</label>
-                    <select class="input dpick__native" id="dpick-quick">
-                      <option value="custom">Custom</option>
-                      <option value="today">Today</option>
-                      <option value="yesterday">Yesterday</option>
-                      <option value="7d">Last 7 days</option>
-                      <option value="30d" selected>Last 30 days</option>
-                      <option value="90d">Last 90 days</option>
-                      <option value="12m">Last 12 months</option>
-                      <option value="wtd">Week to date</option>
-                      <option value="mtd">Month to date</option>
-                      <option value="qtd">Quarter to date</option>
-                      <option value="ytd">Year to date</option>
-                    </select>
-
-                    <div class="dpick__fields">
-                      <label class="sr-only" for="dpick-from">From</label>
-                      <input class="input dpick__field" id="dpick-from" type="text" readonly />
-                      <svg class="icon dpick__arrow" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-                      <label class="sr-only" for="dpick-to">To</label>
-                      <input class="input dpick__field" id="dpick-to" type="text" readonly />
-                    </div>
-
-                    <div class="dpick__cals">
-                      <button class="icon-btn dpick__nav" type="button" data-nav="-1" aria-label="Previous month">
-                        <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>
-                      </button>
-                      <div class="dpick__cal" data-cal="0"></div>
-                      <div class="dpick__cal" data-cal="1"></div>
-                      <button class="icon-btn dpick__nav dpick__nav--next" type="button" data-nav="1" aria-label="Next month">
-                        <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-                      </button>
-                    </div>
-
-                    <div class="dpick__foot">
-                      <p class="dpick__sum"></p>
-                      <button class="btn btn--ghost" type="button" data-dpick="cancel">Cancel</button>
-                      <button class="btn btn--primary" type="button" data-dpick="apply">Apply</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Waartegen je de cijfers afzet. Zonder vergelijking staat er
-                   geen pijltje bij de bedragen; met een periode erbij komt er
-                   ook een gestippelde lijn in de grafiek. -->
-              <div class="cmp" id="dash-compare">
-                <button class="dpick__btn cmp__btn" type="button" aria-haspopup="true" aria-expanded="false">
-                  <svg class="icon" aria-hidden="true"><use href="#i-compare"/></svg>
-                  <span class="cmp__label">Previous period</span>
-                  <svg class="icon dpick__caret" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-                </button>
-
-                <div class="cmp__panel" role="dialog" aria-label="Choose a comparison" hidden>
-                  <div class="cmp__list">
-                    <button class="cmp__item" type="button" data-cmp="none">No comparison</button>
-                    <button class="cmp__item is-active" type="button" data-cmp="prev">Previous period</button>
-                    <button class="cmp__item cmp__item--meer" type="button" data-cmp="custom">Custom
-                      <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-                    </button>
-                  </div>
-
-                  <div class="cmp__cal" hidden>
-                    <button class="cmp__back" type="button" data-cmp-terug>
-                      <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>Back
-                    </button>
-
-                    <div class="dpick__fields">
-                      <label class="sr-only" for="cmp-from">From</label>
-                      <input class="input dpick__field" id="cmp-from" type="text" placeholder="YYYY-MM-DD" readonly />
-                      <svg class="icon dpick__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
-                      <label class="sr-only" for="cmp-to">To</label>
-                      <input class="input dpick__field" id="cmp-to" type="text" placeholder="YYYY-MM-DD" readonly />
-                    </div>
-
-                    <div class="dpick__cals">
-                      <button class="icon-btn dpick__nav" type="button" data-cmp-nav="-1" aria-label="Previous month">
-                        <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>
-                      </button>
-                      <div class="dpick__cal" data-cmp-cal></div>
-                      <button class="icon-btn dpick__nav dpick__nav--next" type="button" data-cmp-nav="1" aria-label="Next month">
-                        <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-                      </button>
-                    </div>
-
-                    <div class="dpick__foot">
-                      <p class="dpick__sum"></p>
-                      <button class="btn btn--ghost" type="button" data-cmp-actie="cancel">Cancel</button>
-                      <button class="btn btn--primary" type="button" data-cmp-actie="apply">Apply</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div class="page-head__tools" data-tools="orders" hidden>
               <button class="btn btn--ghost page-head__action" type="button">
                 More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
@@ -449,6 +326,130 @@
                  eerste dag, ook als de setup-guide nog niet af is: zo blijft
                  het dashboard hetzelfde als de winkel eenmaal loopt. -->
             <div class="card" id="dash-chart">
+              <!-- De periode en de vergelijking gelden voor deze kaart, dus de twee
+                   kiezers staan erin en niet op de titelregel. -->
+              <div class="chart__tools">
+                <div class="dpick" id="dash-range">
+                  <button class="dpick__btn" type="button" aria-haspopup="dialog" aria-expanded="false">
+                    <svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>
+                    <span class="dpick__label">Last 30 days</span>
+                    <svg class="icon dpick__caret" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                  </button>
+
+                  <div class="dpick__panel" role="dialog" aria-label="Choose a period" hidden>
+                    <div class="dpick__presets">
+                      <button class="dpick__preset" type="button" data-preset="today">Today</button>
+                      <button class="dpick__preset" type="button" data-preset="yesterday">Yesterday</button>
+                      <span class="dpick__sep" aria-hidden="true"></span>
+                      <button class="dpick__preset" type="button" data-preset="7d">Last 7 days</button>
+                      <button class="dpick__preset is-active" type="button" data-preset="30d">Last 30 days</button>
+                      <button class="dpick__preset" type="button" data-preset="90d">Last 90 days</button>
+                      <button class="dpick__preset" type="button" data-preset="12m">Last 12 months</button>
+                      <span class="dpick__sep" aria-hidden="true"></span>
+                      <button class="dpick__preset" type="button" data-preset="wtd">Week to date</button>
+                      <button class="dpick__preset" type="button" data-preset="mtd">Month to date</button>
+                      <button class="dpick__preset" type="button" data-preset="qtd">Quarter to date</button>
+                      <button class="dpick__preset" type="button" data-preset="ytd">Year to date</button>
+                    </div>
+
+                    <div class="dpick__main">
+                      <!-- Dezelfde keuzes als hiernaast, maar als keuzelijst: op een
+                           telefoon is dat het wiel van het toestel zelf. -->
+                      <label class="sr-only" for="dpick-quick">Period</label>
+                      <select class="input dpick__native" id="dpick-quick">
+                        <option value="custom">Custom</option>
+                        <option value="today">Today</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="7d">Last 7 days</option>
+                        <option value="30d" selected>Last 30 days</option>
+                        <option value="90d">Last 90 days</option>
+                        <option value="12m">Last 12 months</option>
+                        <option value="wtd">Week to date</option>
+                        <option value="mtd">Month to date</option>
+                        <option value="qtd">Quarter to date</option>
+                        <option value="ytd">Year to date</option>
+                      </select>
+
+                      <div class="dpick__fields">
+                        <label class="sr-only" for="dpick-from">From</label>
+                        <input class="input dpick__field" id="dpick-from" type="text" readonly />
+                        <svg class="icon dpick__arrow" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                        <label class="sr-only" for="dpick-to">To</label>
+                        <input class="input dpick__field" id="dpick-to" type="text" readonly />
+                      </div>
+
+                      <div class="dpick__cals">
+                        <button class="icon-btn dpick__nav" type="button" data-nav="-1" aria-label="Previous month">
+                          <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>
+                        </button>
+                        <div class="dpick__cal" data-cal="0"></div>
+                        <div class="dpick__cal" data-cal="1"></div>
+                        <button class="icon-btn dpick__nav dpick__nav--next" type="button" data-nav="1" aria-label="Next month">
+                          <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                        </button>
+                      </div>
+
+                      <div class="dpick__foot">
+                        <p class="dpick__sum"></p>
+                        <button class="btn btn--ghost" type="button" data-dpick="cancel">Cancel</button>
+                        <button class="btn btn--primary" type="button" data-dpick="apply">Apply</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Waartegen je de cijfers afzet. Zonder vergelijking staat er
+                     geen pijltje bij de bedragen; met een periode erbij komt er
+                     ook een gestippelde lijn in de grafiek. -->
+                <div class="cmp" id="dash-compare">
+                  <button class="dpick__btn cmp__btn" type="button" aria-haspopup="true" aria-expanded="false">
+                    <svg class="icon" aria-hidden="true"><use href="#i-compare"/></svg>
+                    <span class="cmp__label">Previous period</span>
+                    <svg class="icon dpick__caret" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                  </button>
+
+                  <div class="cmp__panel" role="dialog" aria-label="Choose a comparison" hidden>
+                    <div class="cmp__list">
+                      <button class="cmp__item" type="button" data-cmp="none">No comparison</button>
+                      <button class="cmp__item is-active" type="button" data-cmp="prev">Previous period</button>
+                      <button class="cmp__item cmp__item--meer" type="button" data-cmp="custom">Custom
+                        <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                      </button>
+                    </div>
+
+                    <div class="cmp__cal" hidden>
+                      <button class="cmp__back" type="button" data-cmp-terug>
+                        <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>Back
+                      </button>
+
+                      <div class="dpick__fields">
+                        <label class="sr-only" for="cmp-from">From</label>
+                        <input class="input dpick__field" id="cmp-from" type="text" placeholder="YYYY-MM-DD" readonly />
+                        <svg class="icon dpick__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+                        <label class="sr-only" for="cmp-to">To</label>
+                        <input class="input dpick__field" id="cmp-to" type="text" placeholder="YYYY-MM-DD" readonly />
+                      </div>
+
+                      <div class="dpick__cals">
+                        <button class="icon-btn dpick__nav" type="button" data-cmp-nav="-1" aria-label="Previous month">
+                          <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>
+                        </button>
+                        <div class="dpick__cal" data-cmp-cal></div>
+                        <button class="icon-btn dpick__nav dpick__nav--next" type="button" data-cmp-nav="1" aria-label="Next month">
+                          <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                        </button>
+                      </div>
+
+                      <div class="dpick__foot">
+                        <p class="dpick__sum"></p>
+                        <button class="btn btn--ghost" type="button" data-cmp-actie="cancel">Cancel</button>
+                        <button class="btn btn--primary" type="button" data-cmp-actie="apply">Apply</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <!-- Elke tab draagt zijn eigen stand: je ziet de drie cijfers
                    naast elkaar en kiest met dezelfde beweging welke lijn er
                    onder komt te staan. -->
@@ -6018,6 +6019,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=324"></script>
+  <script src="app.js?v=326"></script>
 </body>
 </html>

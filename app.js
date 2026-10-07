@@ -1608,10 +1608,6 @@
     });
   });
 
-  /* Het dashboard staat er al zonder dat showPage heeft gedraaid, dus de kop
-     moet zelf nog even de juiste stand krijgen. */
-  syncPageTools("dashboard");
-
   sidebar.addEventListener("click", function (e) {
     var item = e.target.closest(".nav__item[data-page]");
     if (!item) return;
