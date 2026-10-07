@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=336" />
+  <link rel="stylesheet" href="styles.css?v=338" />
 </head>
 <body>
 
@@ -1982,7 +1982,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status:Active|Draft;Category:Pizza|Drinks|Desserts">
+                <div class="psearch" data-filters="Status:Active|Draft">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -2076,8 +2076,8 @@
                 </ul></div>
               </div>
 
-              <div class="group">
-                <button class="group__head" type="button" aria-expanded="false">
+              <div class="group is-open">
+                <button class="group__head" type="button" aria-expanded="true">
                   <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
                   <span class="group__name">Hot Coffee</span>
                   <span class="group__count">2 products</span>
@@ -2098,8 +2098,8 @@
                 </ul></div>
               </div>
 
-              <div class="group">
-                <button class="group__head" type="button" aria-expanded="false">
+              <div class="group is-open">
+                <button class="group__head" type="button" aria-expanded="true">
                   <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
                   <span class="group__name">Cold Coffee</span>
                   <span class="group__count">2 products</span>
@@ -6007,6 +6007,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=336"></script>
+  <script src="app.js?v=338"></script>
 </body>
 </html>
