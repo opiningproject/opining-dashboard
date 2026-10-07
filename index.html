@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=341" />
+  <link rel="stylesheet" href="styles.css?v=342" />
 </head>
 <body>
 
@@ -615,23 +615,12 @@
 
             <div class="panel panel--scroll">
               <div class="panel__head">
-                <!-- Statusfilter in plaats van tabs: één knop die de lijst
-                     inperkt, met een vinkje bij wat er aanstaat. -->
-                <div class="sfilter">
-                  <button class="sfilter__btn" type="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="sfilter__label">All</span>
-                    <svg class="icon sfilter__caret" aria-hidden="true"><use href="#i-chevrons-y"/></svg>
-                  </button>
-                  <div class="sfilter__menu" role="menu" hidden>
-                    <button class="sfilter__item is-selected" type="button" role="menuitemradio" aria-checked="true">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>All</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>New</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Kitchen</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Delivering</button>
-                  </div>
+                <!-- Tabs, net als op de menukaart: de stand van een bestelling staat zo meteen in beeld. -->
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All</button>
+                  <button class="tab" type="button">New</button>
+                  <button class="tab" type="button">Kitchen</button>
+                  <button class="tab" type="button">Delivering</button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
@@ -742,24 +731,13 @@
           <section class="view" data-view="archive" hidden>
             <div class="panel panel--scroll">
               <div class="panel__head">
-                <!-- Zelfde opzet als Orders: één statusfilter in plaats van tabs. -->
-                <div class="sfilter">
-                  <button class="sfilter__btn" type="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="sfilter__label">All</span>
-                    <svg class="icon sfilter__caret" aria-hidden="true"><use href="#i-chevrons-y"/></svg>
-                  </button>
-                  <div class="sfilter__menu" role="menu" hidden>
-                    <button class="sfilter__item is-selected" type="button" role="menuitemradio" aria-checked="true">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>All</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Today</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Yesterday</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Last 7 days</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Last 30 days</button>
-                  </div>
+                <!-- Tabs, net als op de menukaart: hoe ver je terugkijkt staat zo meteen in beeld. -->
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All</button>
+                  <button class="tab" type="button">Today</button>
+                  <button class="tab" type="button">Yesterday</button>
+                  <button class="tab" type="button">Last 7 days</button>
+                  <button class="tab" type="button">Last 30 days</button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter archive">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
@@ -818,49 +796,49 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr data-filter="today last 7 days last 30 days">
                       <td>Lusthofstraat 27A</td>
                       <td><span class="when"><span class="when__day">Today</span>18:40</span></td>
                       <td>&euro;73.59</td>
                       <td><span class="badge badge--muted">Nina Bakker</span></td>
                     </tr>
-                    <tr>
+                    <tr data-filter="today last 7 days last 30 days">
                       <td>Tochtstraat 40</td>
                       <td><span class="when"><span class="when__day">Today</span>18:02</span></td>
                       <td>&euro;73.59</td>
                       <td><span class="badge badge--muted">Tarik Yildiz</span></td>
                     </tr>
-                    <tr>
+                    <tr data-filter="today last 7 days last 30 days">
                       <td>Restaurant</td>
                       <td><span class="when"><span class="when__day">Today</span>17:31</span></td>
                       <td>&euro;73.59</td>
                       <td><span class="badge badge--muted">Collected</span></td>
                     </tr>
-                    <tr>
+                    <tr data-filter="today last 7 days last 30 days">
                       <td>Zwaanshals 299</td>
                       <td><span class="when"><span class="when__day">Today</span>17:20</span></td>
                       <td>&euro;73.59</td>
                       <td><span class="badge badge--muted">Emma Post</span></td>
                     </tr>
-                    <tr>
+                    <tr data-filter="today last 7 days last 30 days">
                       <td>1e Pijnackerstraat 120B</td>
                       <td><span class="when"><span class="when__day">Today</span>17:05</span></td>
                       <td>&euro;73.59</td>
                       <td><span class="badge badge--muted">Ruben de Wit</span></td>
                     </tr>
-                    <tr>
+                    <tr data-filter="yesterday last 7 days last 30 days">
                       <td>Lusthofstraat 27A</td>
                       <td><span class="when"><span class="when__day">Yesterday</span>16:58</span></td>
                       <td>&euro;73.59</td>
                       <td><span class="badge badge--muted">Nina Bakker</span></td>
                     </tr>
-                    <tr>
+                    <tr data-filter="yesterday last 7 days last 30 days">
                       <td>Collection order</td>
                       <td><span class="when"><span class="when__day">Yesterday</span>16:35</span></td>
                       <td>&euro;73.59</td>
                       <td><span class="badge badge--muted">Collected</span></td>
                     </tr>
-                    <tr>
+                    <tr data-filter="last 30 days">
                       <td>Tochtstraat 40</td>
                       <td><span class="when"><span class="when__day">17 Aug</span>16:12</span></td>
                       <td>&euro;73.59</td>
@@ -6177,6 +6155,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=341"></script>
+  <script src="app.js?v=342"></script>
 </body>
 </html>
