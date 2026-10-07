@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=330" />
+  <link rel="stylesheet" href="styles.css?v=331" />
 </head>
 <body>
 
@@ -5227,12 +5227,15 @@
     <div class="searchpanel__slot" id="search-slot"></div>
     <div class="searchpanel__body">
     <div class="chips">
+      <button class="chip" type="button">Pages</button>
       <button class="chip" type="button">Orders</button>
       <button class="chip" type="button">Products</button>
       <button class="chip" type="button">Customers</button>
       <button class="chip" type="button">Deliverers</button>
       <button class="chip" type="button">Settings</button>
     </div>
+    <!-- De treffers komen hier; app.js vult ze bij elke toetsaanslag. -->
+    <ul class="sresults" id="search-results" hidden></ul>
     <div class="searchpanel__empty">
       <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
       <p>Find anything in Opining</p>
@@ -6005,6 +6008,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=330"></script>
+  <script src="app.js?v=331"></script>
 </body>
 </html>

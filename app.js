@@ -2992,9 +2992,19 @@
          header en levert dat de linkerrand, breedte en bovenrand van het
          paneel. */
       var vak = searchEl.getBoundingClientRect();
-      searchPanel.style.left  = vak.left + "px";
-      searchPanel.style.top   = vak.top + "px";
-      searchPanel.style.width = vak.width + "px";
+      if (window.matchMedia("(max-width: 900px)").matches) {
+        /* Op een telefoon is het paneel de hele breedte en zit het veld erin,
+           met ruimte eromheen; strak om het veld staat daar te benauwd. */
+        searchPanel.style.left  = "12px";
+        searchPanel.style.right = "12px";
+        searchPanel.style.top   = "12px";
+        searchPanel.style.width = "auto";
+      } else {
+        searchPanel.style.left  = vak.left + "px";
+        searchPanel.style.right = "auto";
+        searchPanel.style.top   = vak.top + "px";
+        searchPanel.style.width = vak.width + "px";
+      }
 
       /* Eerst de vlag, dan pas verplaatsen: het opnieuw focussen hieronder
          vuurt weer een focus-event af, en dat moet zien dat we al open zijn. */
@@ -3044,6 +3054,154 @@
     searchPanel.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("is-active"); });
     if (!stondAan) chip.classList.add("is-active");
   });
+
+  /* ---- Wat de zoekbalk vindt ---------------------------------------------
+     Het paneel liet alleen chips en een lege staat zien. Nu zoekt hij echt:
+     door de pagina's, de settingspagina's en wat er in de lijsten staat. De
+     lijst wordt bij elke toetsaanslag opnieuw uit de pagina gelezen, zodat er
+     nergens een tweede kopie van de gegevens hoeft te bestaan. */
+  (function () {
+    var resultaten = document.getElementById("search-results");
+    var leeg = searchPanel.querySelector(".searchpanel__empty");
+    if (!resultaten || !leeg) return;
+
+    function uitTabel(view, kolom, soort, icoon, naarPagina) {
+      var vak = document.querySelector('[data-view="' + view + '"]');
+      if (!vak) return [];
+      return [].map.call(vak.querySelectorAll("tbody tr"), function (rij) {
+        var cel = rij.cells[kolom];
+        if (!cel) return null;
+        /* De eerste cel draagt soms een knop of een vinkje; alleen de tekst. */
+        var naam = cel.textContent.trim().split("\n")[0].trim();
+        if (!naam) return null;
+        var bij = rij.cells[kolom + 1];
+        return {
+          soort: soort, icoon: icoon, naam: naam,
+          meta: bij ? bij.textContent.trim() : "",
+          doe: function () { naarPagina(); }
+        };
+      }).filter(Boolean);
+    }
+
+    function naar(pagina) {
+      return function () {
+        var item = sidebar.querySelector('.nav__item[data-page="' + pagina + '"]');
+        if (item) item.click();
+      };
+    }
+
+    function bouwIndex() {
+      var uit = [];
+
+      /* De pagina's uit het menu: de snelste manier om ergens te komen. */
+      sidebar.querySelectorAll(".nav__item[data-page]").forEach(function (item) {
+        uit.push({
+          soort: "Pages", icoon: item.dataset.icon || "i-home",
+          naam: item.dataset.title || item.textContent.trim(), meta: "",
+          doe: function () { item.click(); }
+        });
+      });
+
+      /* De settingspagina's zitten achter de overlay; die gaat dus eerst open. */
+      setNav.querySelectorAll(".nav__item[data-set]").forEach(function (item) {
+        uit.push({
+          soort: "Settings", icoon: item.dataset.icon || "i-cog",
+          naam: item.dataset.title || item.textContent.trim(), meta: "Settings",
+          doe: function () {
+            if (root.dataset.settings !== "open") btnSettings.click();
+            item.click();
+          }
+        });
+      });
+
+      var menu = document.querySelector('[data-view="products"]');
+      if (menu) {
+        menu.querySelectorAll(".prod__name").forEach(function (naam) {
+          var rij = naam.closest(".prod");
+          var stand = rij ? rij.querySelector(".badge") : null;
+          uit.push({
+            soort: "Products", icoon: "i-menu-item",
+            naam: naam.textContent.trim(),
+            meta: stand ? stand.textContent.trim() : "",
+            doe: naar("products")
+          });
+        });
+      }
+
+      uit = uit.concat(uitTabel("customers", 0, "Customers", "i-customers", naar("customers")));
+      uit = uit.concat(uitTabel("deliverers", 0, "Deliverers", "i-deliverers", naar("deliverers")));
+      uit = uit.concat(uitTabel("orders", 0, "Orders", "i-orders", naar("orders")));
+      return uit;
+    }
+
+    /* Welke chip er aanstaat beperkt de soort; zonder chip zoekt hij overal. */
+    function actieveSoort() {
+      var chip = searchPanel.querySelector(".chip.is-active");
+      return chip ? chip.textContent.trim() : null;
+    }
+
+    function toonResultaten() {
+      var woord = searchInput.value.trim().toLowerCase();
+      var soort = actieveSoort();
+      resultaten.innerHTML = "";
+
+      if (!woord) {
+        leeg.hidden = false;
+        resultaten.hidden = true;
+        return;
+      }
+
+      var treffers = bouwIndex().filter(function (r) {
+        if (soort && r.soort !== soort) return false;
+        return r.naam.toLowerCase().indexOf(woord) >= 0;
+      }).slice(0, 8);
+
+      leeg.hidden = !!treffers.length;
+      resultaten.hidden = !treffers.length;
+
+      if (!treffers.length) {
+        leeg.hidden = false;
+        leeg.querySelector("p").textContent = "Nothing found for “" + searchInput.value.trim() + "”";
+        return;
+      }
+      leeg.querySelector("p").textContent = "Find anything in Opining";
+
+      treffers.forEach(function (r) {
+        var li = document.createElement("li");
+        var knop = document.createElement("button");
+        knop.className = "sresult";
+        knop.type = "button";
+        knop.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#' + r.icoon + '"/></svg>' +
+          '<span class="sresult__text"><span class="sresult__name"></span>' +
+          '<span class="sresult__meta"></span></span>' +
+          '<span class="sresult__soort"></span>';
+        knop.querySelector(".sresult__name").textContent = r.naam;
+        knop.querySelector(".sresult__meta").textContent = r.meta;
+        knop.querySelector(".sresult__soort").textContent = r.soort;
+        knop.addEventListener("click", function () {
+          closeSearch();
+          searchInput.value = "";
+          toonResultaten();
+          r.doe();
+        });
+        li.appendChild(knop);
+        resultaten.appendChild(li);
+      });
+    }
+
+    searchInput.addEventListener("input", toonResultaten);
+    /* Een chip aanzetten of uitzetten verandert waar je in zoekt. */
+    searchPanel.addEventListener("click", function (e) {
+      if (e.target.closest(".chip")) toonResultaten();
+    });
+    /* Enter opent de bovenste treffer: dan hoef je niet te mikken. */
+    searchInput.addEventListener("keydown", function (e) {
+      if (e.key !== "Enter") return;
+      var eerste = resultaten.querySelector(".sresult");
+      if (eerste) { e.preventDefault(); eerste.click(); }
+    });
+  })();
+
   /* ========================================================================
      8. PAGINERING — <table data-page="5">
      De rijen staan gewoon in de HTML; hier gaat alles buiten de huidige
