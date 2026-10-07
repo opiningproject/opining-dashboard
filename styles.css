@@ -547,7 +547,16 @@ input[type="date"], input[type="time"] {
   position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
   width: 15px; height: 15px; color: var(--text-muted); pointer-events: none;
 }
+/* Een euroteken of andere eenheid vooraan in het veld; hij staat vast, dus de
+   tekst begint erachter. */
+.infield__unit {
+  position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+  font-size: var(--fs-md); color: var(--text-muted); pointer-events: none;
+}
 .infield__input { padding-left: 30px; }
+/* Een keuze met korte antwoorden hoeft de hele kolom niet te vullen. */
+.input--kort { max-width: 300px; }
+
 
 /* Een veld dat vastligt blijft leesbaar, maar nodigt niet uit. */
 /* background-color, geen background: anders veegt de shorthand het pijltje
@@ -890,6 +899,43 @@ select.input {
 .badge__dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: var(--r-full); background: currentColor; vertical-align: baseline; }
 .badge--active { background: #e3f5ec; color: var(--success); }
 .badge--draft  { background: #e4eefb; color: #1f5fa8; }
+
+/* ==========================================================================
+   8b2. EEN GERECHT BEWERKEN — tip bovenaan, daarna de kaarten met gegevens
+   ========================================================================== */
+/* De tip is een balk in de kleur van een opmerking, met daaronder wat er aan
+   dit gerecht nog ontbreekt. Weg te klikken: het is een suggestie. */
+.tipcard { overflow: hidden; }
+.tipbar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px;
+  background: #7a5a16;
+  color: #fff;
+  font-size: var(--fs-md); font-weight: 500;
+}
+.tipbar .icon { width: 18px; height: 18px; flex: 0 0 auto; }
+.tipbar__close { margin-left: auto; color: #fff; }
+.tipbar__close:hover { background: rgba(255, 255, 255, .14); }
+.tipcard__body { padding: 16px; font-size: var(--fs-md); color: var(--text); }
+
+/* De foto van het gerecht. Zolang er geen foto's zijn staat er hetzelfde teken
+   als in de lijst, maar dan op formaat. */
+.prodimg {
+  display: grid; place-items: center;
+  width: 110px; height: 110px;
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  background: var(--gray-50);
+}
+.prodimg:hover { background: var(--gray-100); }
+.prodimg .icon { width: 28px; height: 28px; color: var(--text-muted); }
+
+/* De talen boven naam en omschrijving: dezelfde knopjes als in het zoekpaneel.
+   Het teken erachter zegt dat die taal nog leeg is. */
+.langtabs { margin-top: 20px; }
+.chip__warn { width: 15px; height: 15px; margin-left: 6px; color: var(--warning-fg); }
+.chip.is-active .chip__warn { color: #e8b964; }
+/* Een taal die compleet is hoeft geen waarschuwing. */
+.chip[data-vol] .chip__warn { display: none; }
 
 /* ==========================================================================
    8c. ONLINE STORE — sectienavigatie links, paneel rechts

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=338" />
+  <link rel="stylesheet" href="styles.css?v=340" />
 </head>
 <body>
 
@@ -269,10 +269,30 @@
             </button>
             <svg class="icon page-head__icon" id="page-icon" aria-hidden="true"><use href="#i-home"/></svg>
             <h1 id="page-title">Dashboard</h1>
+            <!-- De stand van wat je bekijkt, naast de naam; app.js vult hem. -->
+            <span class="badge badge--active page-head__badge" id="page-badge" hidden></span>
             <button class="btn btn--primary page-head__action" type="button" id="page-action" hidden>
               <svg class="icon" aria-hidden="true"><use href="#i-plus" id="page-action-icon"/></svg><span id="page-action-label"></span>
             </button>
 
+            <!-- Bij een gerecht hoort de stand en wat je er verder mee kunt. -->
+            <div class="page-head__tools" data-tools="product-edit" hidden>
+              <label class="sr-only" for="pe-status">Product status</label>
+              <select class="input" id="pe-status">
+                <option>Active</option>
+                <option>Draft</option>
+              </select>
+              <div class="sort">
+                <button class="btn btn--ghost page-head__action sort__btn" type="button" aria-haspopup="true" aria-expanded="false">
+                  More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                </button>
+                <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                  <button class="sort__item" type="button" role="menuitem" data-created="Product duplicated">Duplicate</button>
+                  <button class="sort__item" type="button" role="menuitem" data-created="Product archived">Archive</button>
+                  <button class="sort__item" type="button" role="menuitem" data-created="Product deleted">Delete</button>
+                </div>
+              </div>
+            </div>
             <div class="page-head__tools" data-tools="orders" hidden>
               <button class="btn btn--ghost page-head__action" type="button">
                 More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
@@ -2127,6 +2147,156 @@
                rechts. Zelfde patroon als de settings-overlay, maar
                binnen de pagina (app.js §3b).
                ==================================================== -->
+          <!-- ====================================================
+               VIEW: een gerecht bewerken. Je komt hier vanaf een regel
+               in de menukaart; de kop draagt de naam en de stand.
+               ==================================================== -->
+          <section class="view" data-view="product-edit" hidden>
+            <!-- Een tip van ons, met daaronder wat er aan dit gerecht nog
+                 ontbreekt. De tip mag weg; de melding hoort bij het gerecht. -->
+            <div class="card card--flush tipcard" data-tip hidden>
+              <p class="tipbar">
+                <svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>
+                <span>Increase your conversion rate</span>
+                <button class="icon-btn tipbar__close" type="button" data-tip-close aria-label="Dismiss this tip">
+                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                </button>
+              </p>
+              <p class="tipcard__body">Missing translation for some languages, English is the fallback language.</p>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Product information</h2>
+
+              <div class="field">
+                <span class="label">Image</span>
+                <!-- Nog geen foto's in dit prototype; hetzelfde plaatsvervangend
+                     teken als in de lijst, maar dan op formaat. -->
+                <button class="prodimg" type="button" aria-label="Change image">
+                  <svg class="icon" aria-hidden="true"><use href="#i-image"/></svg>
+                </button>
+              </div>
+
+              <div class="field">
+                <label class="label" for="pe-cat">Categorie</label>
+                <select class="input" id="pe-cat">
+                  <option>Protein Beverages</option>
+                  <option>Sandwiches</option>
+                  <option>Hot Coffee</option>
+                  <option>Cold Coffee</option>
+                </select>
+              </div>
+
+              <!-- Naam en omschrijving staan per taal apart; het teken naast een
+                   taal zegt dat daar nog niets is ingevuld. -->
+              <div class="chips langtabs" role="group" aria-label="Language">
+                <button class="chip is-active" type="button" data-lang="en" aria-pressed="true">English</button>
+                <button class="chip" type="button" data-lang="nl" aria-pressed="false">Nederlands
+                  <svg class="icon chip__warn" aria-hidden="true"><use href="#i-info"/></svg>
+                </button>
+                <button class="chip" type="button" data-lang="uz" aria-pressed="false">Uzbek
+                  <svg class="icon chip__warn" aria-hidden="true"><use href="#i-info"/></svg>
+                </button>
+              </div>
+
+              <div class="field">
+                <label class="label" for="pe-title">Title</label>
+                <input class="input" id="pe-title" type="text" aria-describedby="pe-title-error" />
+                <p class="field__error" id="pe-title-error" hidden>
+                  <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>Enter a product title
+                </p>
+              </div>
+
+              <div class="field">
+                <label class="label" for="pe-desc">Description</label>
+                <textarea class="input" id="pe-desc" rows="3"></textarea>
+              </div>
+
+              <p class="hint">*Make sure to fill in all languages. If a translation is missing, we&rsquo;ll automatically use the English version.</p>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Product prices</h2>
+              <p class="alert alert--info">
+                <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>Prices are including tax rate
+              </p>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="pe-price-delivery">Delivery price</label>
+                  <span class="infield">
+                    <span class="infield__unit">&euro;</span>
+                    <input class="input infield__input" id="pe-price-delivery" type="text" inputmode="decimal" value="9,55" />
+                  </span>
+                </div>
+                <div class="field">
+                  <label class="label" for="pe-price-takeaway">Takeaway price</label>
+                  <span class="infield">
+                    <span class="infield__unit">&euro;</span>
+                    <input class="input infield__input" id="pe-price-takeaway" type="text" inputmode="decimal" value="9,55" />
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="pe-tax">Tax rate</label>
+                <select class="input input--kort" id="pe-tax">
+                  <option>Food (9%)</option>
+                  <option>Drinks (21%)</option>
+                  <option>Zero rate (0%)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="label" for="pe-deposit">Deposit</label>
+                <select class="input input--kort" id="pe-deposit">
+                  <option>None</option>
+                  <option>&euro; 0,15 can</option>
+                  <option>&euro; 0,25 bottle</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Choices menu</h2>
+              <!-- Dezelfde groepen als op de keuzekaart; hier bepaal je welke
+                   bij dit gerecht horen en in welke volgorde ze staan. -->
+              <div class="rows" id="pe-choices">
+                <div class="row row--static">
+                  <span class="prod__handle" aria-hidden="true"><svg class="icon"><use href="#i-drag"/></svg></span>
+                  <span class="row__title">Vegetables</span>
+                  <button class="icon-btn" type="button" data-choice-remove aria-label="Remove Vegetables">
+                    <svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>
+                  </button>
+                </div>
+                <div class="row row--static">
+                  <span class="prod__handle" aria-hidden="true"><svg class="icon"><use href="#i-drag"/></svg></span>
+                  <span class="row__title">Meat toppings</span>
+                  <button class="icon-btn" type="button" data-choice-remove aria-label="Remove Meat toppings">
+                    <svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>
+                  </button>
+                </div>
+                <button class="row addrow" type="button" data-choice-add>
+                  <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add group
+                </button>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Allergens</h2>
+              <div class="rows">
+                <button class="row" type="button" data-allergens>
+                  <span class="row__title" id="pe-allergens">Select allergens</span>
+                  <svg class="icon row__caret" aria-hidden="true"><use href="#i-edit"/></svg>
+                </button>
+              </div>
+              <p class="hint">*Add allergen information. If left empty, it will be shown as &ldquo;no allergen information provided&rdquo;.</p>
+            </div>
+
+            <!-- Opslaan hoort bij het formulier, niet bij de titelregel. -->
+            <div class="formfoot">
+              <button class="btn btn--ghost" type="button" data-back-view>Discard</button>
+              <button class="btn btn--primary" type="button" data-created="Product saved">Save</button>
+            </div>
+          </section>
+
           <section class="view" data-view="online-store" hidden>
             <div class="store">
               <aside class="store__nav" aria-label="Store sections">
@@ -6007,6 +6177,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=338"></script>
+  <script src="app.js?v=340"></script>
 </body>
 </html>

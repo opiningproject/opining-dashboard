@@ -95,6 +95,8 @@
     swapIcon(pageIcon, icon);
     /* Een gewone paginawissel verlaat altijd een eventueel aanmaakscherm. */
     pageCrumb.hidden = true;
+    var merkje = document.getElementById("page-badge");
+    if (merkje) merkje.hidden = true;
     pageIcon.removeAttribute("hidden");
     pageOuder = { page: page, title: title, icon: icon };
 
@@ -133,12 +135,19 @@
     pageIcon.setAttribute("hidden", "");
     pageTitle.textContent = titel;
     pageAction.hidden = true;
-    syncPageTools(null);
+    /* Een subpagina mag zijn eigen bediening op de titelregel zetten; heeft hij
+       die niet, dan blijven alle blokken gewoon weg. */
+    syncPageTools(view);
     document.getElementById("content").scrollTop = 0;
     pageOuder = terug;          /* showPage heeft hem niet overschreven */
   }
 
-  function backToList() { showPage(pageOuder.page, pageOuder.title, pageOuder.icon); }
+  function backToList() {
+    /* De stand hoort bij het gerecht, niet bij de lijst. */
+    var merkje = document.getElementById("page-badge");
+    if (merkje) merkje.hidden = true;
+    showPage(pageOuder.page, pageOuder.title, pageOuder.icon);
+  }
 
   /* Op document-niveau: de openende knop staat vaak in de paginakop, buiten
      de content. data-open-view botst niet met het data-sub van settings. */
@@ -6169,6 +6178,134 @@
     bereik = { van: kies.van, tot: kies.tot };
     toon();
     zetGids();
+  })();
+
+
+  /* ---- Een gerecht bewerken ----------------------------------------------
+     Je komt hier door op een regel in de menukaart te klikken. Naam en
+     omschrijving staan per taal apart; het teken naast een taal zegt dat daar
+     nog niets staat. Wat je typt blijft per taal bewaard zolang je op de
+     pagina bent. */
+  (function () {
+    var vak = document.querySelector('[data-view="product-edit"]');
+    if (!vak) return;
+
+    var titelVeld = vak.querySelector("#pe-title");
+    var omschrijving = vak.querySelector("#pe-desc");
+    var fout = vak.querySelector("#pe-title-error");
+    var categorie = vak.querySelector("#pe-cat");
+    var stand = document.getElementById("pe-status");
+    var merk = document.getElementById("page-badge");
+    var tip = vak.querySelector("[data-tip]");
+
+    var taal = "en";
+    var tekst = { en: { titel: "", uitleg: "" }, nl: { titel: "", uitleg: "" }, uz: { titel: "", uitleg: "" } };
+
+    function zetFout() {
+      fout.hidden = !!titelVeld.value.trim();
+      titelVeld.classList.toggle("input--error", !titelVeld.value.trim());
+    }
+
+    /* Een taal zonder titel krijgt een teken; zodra er iets staat gaat dat weg.
+       Zo zie je aan de knoppen welke vertaling nog mist. */
+    function zetTaalTekens() {
+      vak.querySelectorAll("[data-lang]").forEach(function (knop) {
+        var vol = !!(tekst[knop.dataset.lang] && tekst[knop.dataset.lang].titel.trim());
+        if (vol) knop.setAttribute("data-vol", "");
+        else knop.removeAttribute("data-vol");
+      });
+      /* De tip bovenaan gaat over diezelfde vertalingen. */
+      var mist = Object.keys(tekst).some(function (k) { return !tekst[k].titel.trim(); });
+      if (tip && !tip.dataset.weg) tip.hidden = !mist;
+    }
+
+    /* Bij het openen van een ander gerecht staat er nog niets in de velden; dan
+       zou bewaren juist overschrijven wat er net is klaargezet. */
+    function toonTaal(nieuw, vers) {
+      if (!vers) tekst[taal] = { titel: titelVeld.value, uitleg: omschrijving.value };
+      taal = nieuw;
+      titelVeld.value = tekst[taal].titel;
+      omschrijving.value = tekst[taal].uitleg;
+      vak.querySelectorAll("[data-lang]").forEach(function (knop) {
+        var aan = knop.dataset.lang === taal;
+        knop.classList.toggle("is-active", aan);
+        knop.setAttribute("aria-pressed", String(aan));
+      });
+      zetFout();
+      zetTaalTekens();
+    }
+
+    vak.addEventListener("click", function (e) {
+      var knop = e.target.closest("[data-lang]");
+      if (knop) { toonTaal(knop.dataset.lang); return; }
+
+      if (e.target.closest("[data-tip-close]")) {
+        tip.hidden = true;
+        tip.dataset.weg = "ja";
+        return;
+      }
+
+      var weg = e.target.closest("[data-choice-remove]");
+      if (weg) {
+        var rij = weg.closest(".row");
+        var naam = rij.querySelector(".row__title").textContent;
+        rij.remove();
+        showToast(naam + " removed");
+        return;
+      }
+
+      if (e.target.closest("[data-choice-add]")) { showToast("Choose a group to add"); return; }
+      if (e.target.closest("[data-allergens]")) { showToast("Allergens are set per product"); }
+    });
+
+    titelVeld.addEventListener("input", function () {
+      tekst[taal].titel = titelVeld.value;
+      zetFout();
+      zetTaalTekens();
+    });
+    omschrijving.addEventListener("input", function () { tekst[taal].uitleg = omschrijving.value; });
+
+    /* Vanaf de menukaart: de regel die je aanklikt bepaalt wat er in staat. */
+    document.addEventListener("click", function (e) {
+      var rij = e.target.closest(".prod");
+      /* De greep is om te slepen, niet om te openen. */
+      if (!rij || e.target.closest(".prod__handle")) return;
+
+      var naam = rij.querySelector(".prod__name").textContent.trim();
+      var badge = rij.querySelector(".badge");
+      var groep = rij.closest(".group");
+
+      tekst = {
+        en: { titel: naam, uitleg: "Steamed semi-skimmed milk mixed with a chocolate sauce, topped with a sweet preparation based on milk with white chocolate and pistachio." },
+        nl: { titel: "", uitleg: "" },
+        uz: { titel: "", uitleg: "" }
+      };
+      taal = "en";
+      if (groep) {
+        var kop = groep.querySelector(".group__name").textContent.trim();
+        [].slice.call(categorie.options).forEach(function (o) {
+          if (o.textContent.trim() === kop) categorie.value = o.value || o.textContent;
+        });
+      }
+      if (badge && stand) stand.value = badge.textContent.trim();
+      if (merk && badge) {
+        merk.textContent = badge.textContent.trim();
+        merk.className = "badge page-head__badge " + (/draft/i.test(badge.textContent) ? "badge--draft" : "badge--active");
+        merk.hidden = false;
+      }
+      if (tip) { delete tip.dataset.weg; }
+
+      openPageSub("product-edit", naam);
+      toonTaal("en", true);
+    });
+
+    /* De stand uit de keuzelijst staat ook naast de naam in de kop. */
+    if (stand && merk) {
+      stand.addEventListener("change", function () {
+        merk.textContent = stand.value;
+        merk.className = "badge page-head__badge " + (stand.value === "Draft" ? "badge--draft" : "badge--active");
+      });
+    }
   })();
 
 })();
