@@ -5439,6 +5439,31 @@
       return Math.ceil(derde / macht) * macht * 3;
     }
 
+    /* Hoe de getoonde reeks heet; die staat al op de actieve tab. */
+    function metriekNaam() {
+      var tab = tabs.querySelector('.metric[data-metric="' + soort + '"] .metric__label');
+      return tab ? tab.textContent : "";
+    }
+
+    /* Een regel in de tooltip: een stip in de kleur van de lijn, de datum en
+       het bedrag. */
+    function tipRegel(welke, wanneer, wat) {
+      var rij = document.createElement("span");
+      rij.className = "tip__rij";
+      var stip = document.createElement("span");
+      stip.className = "chart__dot" + (welke === "cmp" ? " chart__dot--cmp" : "");
+      var tekst = document.createElement("span");
+      tekst.className = "tip__wanneer";
+      tekst.textContent = wanneer;
+      var waarde = document.createElement("b");
+      waarde.className = "tip__wat";
+      waarde.textContent = wat;
+      rij.appendChild(stip);
+      rij.appendChild(tekst);
+      rij.appendChild(waarde);
+      return rij;
+    }
+
     /* ---- Tekenen ---------------------------------------------------------- */
     function teken(rij, vergRij) {
       var n = rij.length;
@@ -5499,17 +5524,28 @@
         li.style.setProperty("--y", y(waardeVan(p)).toFixed(2) + "%");
         li.tabIndex = 0;
 
-        var onder = soort === "revenue" ? getal(p.orders) + " orders"
-                  : soort === "orders" ? bedrag(p.omzet)
-                  : getal(p.orders) + " orders · " + bedrag(p.omzet);
         var tip = document.createElement("span");
         tip.className = "cbar__tip";
-        var b = document.createElement("b");
-        b.textContent = p.label + " · " + alsTekst(waardeVan(p));
-        var sub = document.createElement("span");
-        sub.textContent = onder;
-        tip.appendChild(b);
-        tip.appendChild(sub);
+        var kop = document.createElement("b");
+        kop.textContent = metriekNaam();
+        tip.appendChild(kop);
+        tip.appendChild(tipRegel("", p.label, alsTekst(waardeVan(p))));
+
+        if (vergRij && vergRij.length) {
+          /* De vergelijking kan meer of minder punten tellen; we pakken het
+             punt dat op dezelfde plek in die periode valt. */
+          var j = n < 2 ? 0 : Math.round(i * (vergRij.length - 1) / (n - 1));
+          var q = vergRij[j];
+          if (q) tip.appendChild(tipRegel("cmp", q.label, alsTekst(waardeVan(q))));
+        } else {
+          /* Zonder vergelijking is er ruimte voor wat er achter het getal zit. */
+          var onder = document.createElement("span");
+          onder.className = "tip__onder";
+          onder.textContent = soort === "orders" ? bedrag(p.omzet)
+                            : soort === "aov" ? getal(p.orders) + " orders · " + bedrag(p.omzet)
+                            : getal(p.orders) + " orders";
+          tip.appendChild(onder);
+        }
         li.appendChild(tip);
         pts.appendChild(li);
 
@@ -5530,6 +5566,20 @@
           else if (t.left < kr.left + 4) li.classList.add("lpt--links");
         });
       }
+    }
+
+    /* Een bolletje met de periode erachter, onder de as. */
+    function legenda(welke, tekst) {
+      var vak = document.createElement("span");
+      vak.className = "chart__leg";
+      var stip = document.createElement("span");
+      stip.className = "chart__dot" + (welke === "cmp" ? " chart__dot--cmp" : "");
+      stip.setAttribute("aria-hidden", "true");
+      var woord = document.createElement("span");
+      woord.textContent = tekst;
+      vak.appendChild(stip);
+      vak.appendChild(woord);
+      return vak;
     }
 
     /* ---- Alles bijwerken voor het gekozen bereik -------------------------- */
@@ -5585,9 +5635,14 @@
 
       teken(punten(bereik.van, bereik.tot), verg ? punten(verg.van, verg.tot) : null);
       dpick.querySelector(".dpick__label").textContent = knopTekst();
+
       /* Onder de as staat welke dagen je ziet; de knop bovenaan zegt vaak
-         alleen "Last 30 days", en dan weet je nog niet wélke dertig. */
-      kaart.querySelector(".chart__period").textContent = bereikTekst(bereik.van, bereik.tot);
+         alleen "Last 30 days", en dan weet je nog niet wélke dertig. Wordt er
+         vergeleken, dan staat die periode er met zijn eigen stip naast. */
+      var onderaan = kaart.querySelector(".chart__range");
+      onderaan.innerHTML = "";
+      onderaan.appendChild(legenda("", bereikTekst(bereik.van, bereik.tot)));
+      if (verg) onderaan.appendChild(legenda("cmp", bereikTekst(verg.van, verg.tot)));
     }
 
     tabs.addEventListener("click", function (e) {

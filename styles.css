@@ -2418,7 +2418,18 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   margin-top: 14px;
   font-size: var(--fs-sm); color: var(--text-muted);
 }
+/* Twee bolletjes zodra er vergeleken wordt: een in de kleur van de lijn en
+   een in die van de stippellijn. */
+.chart__range { gap: 18px; flex-wrap: wrap; }
+.chart__leg { display: flex; align-items: center; gap: 8px; }
 .chart__dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: var(--r-full); background: var(--accent); }
+.chart__dot--cmp { background: #a7adb8; }
+/* De tooltip: een kop met de naam van de reeks en daaronder een regel per
+   periode, elk met zijn eigen stip. */
+.tip__rij { display: flex; align-items: center; gap: 8px; }
+.tip__wanneer { color: rgba(255, 255, 255, .72); }
+.tip__wat { margin-left: auto; font-weight: 600; }
+.tip__onder { color: rgba(255, 255, 255, .72); }
 
 @media (max-width: 560px) {
   /* Drie bedragen even groot naast elkaar past niet op een telefoon. De tegels
