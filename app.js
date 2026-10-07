@@ -1554,10 +1554,6 @@
       el.hidden = !match;
       if (match) eigen = true;
     });
-    /* Op het dashboard zegt de titel niets wat het menu niet al zegt; daar is
-       de kop een regel bediening met de periodekiezer erin. */
-    var kop = document.querySelector(".page-head");
-    if (kop) kop.classList.toggle("page-head--kaal", page === "dashboard");
     return eigen;
   }
 
