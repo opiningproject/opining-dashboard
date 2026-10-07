@@ -5175,4 +5175,225 @@
     zetRij();
   })();
 
+
+  /* ---- Setup-guide en de cijfers op het dashboard -------------------------
+     De gids klapt open en dicht aan zijn kop. Zijn alle stappen af, dan vouwt
+     hij zichzelf dicht tot die ene regel en komt de grafiek erboven in beeld:
+     vanaf dat moment valt er iets te meten. Met ?guide=done in de link staat
+     die stand er meteen, om te laten zien hoe het dashboard er daarna uitziet. */
+  (function () {
+    var gids = document.getElementById("setup-guide");
+    var kaart = document.getElementById("dash-chart");
+    if (!gids || !kaart) return;
+
+    var kop = gids.querySelector(".guide__head");
+    var teller = gids.querySelector("[data-guide-count]");
+
+    function zetGids() {
+      var stappen = gids.querySelectorAll(".step");
+      var af = gids.querySelectorAll(".step__dot--done").length;
+      teller.textContent = af + " of " + stappen.length + " tasks completed";
+      var ring = gids.querySelector(".tasks__ring");
+      if (ring) ring.style.setProperty("--af", (stappen.length ? af / stappen.length * 100 : 0) + "%");
+      var klaar = af === stappen.length && stappen.length > 0;
+      kaart.hidden = !klaar;
+      /* Alleen bij het afronden zelf dichtklappen; daarna mag je hem weer
+         openzetten zonder dat hij terugspringt. */
+      if (klaar && gids.dataset.klaar !== "ja") {
+        kop.setAttribute("aria-expanded", "false");
+        gids.dataset.klaar = "ja";
+      }
+      if (klaar) tekenAlles();
+    }
+
+    kop.addEventListener("click", function () {
+      var open = kop.getAttribute("aria-expanded") === "true";
+      kop.setAttribute("aria-expanded", String(!open));
+    });
+
+    /* In het echt vinkt een stap zichzelf af zodra je hem hebt gedaan. Hier
+       zet je hem met het bolletje aan en uit, zodat je kunt laten zien wat er
+       met het dashboard gebeurt als de gids af is. */
+    gids.addEventListener("click", function (e) {
+      var dot = e.target.closest(".step__dot");
+      if (!dot) return;
+      var af = dot.classList.toggle("step__dot--done");
+      dot.innerHTML = af ? '<svg class="icon"><use href="#i-check"/></svg>' : "";
+      if (af) {
+        var stap = dot.closest(".step");
+        stap.classList.remove("is-open");
+        var titel = stap.querySelector(".step__title");
+        if (titel) titel.setAttribute("aria-expanded", "false");
+      }
+      zetGids();
+    });
+
+    /* ---- De lijn ---------------------------------------------------------
+       Een rij per dag: datum, bestellingen en omzet. De drie tabs lezen uit
+       dezelfde rijen; de gemiddelde orderwaarde is omzet gedeeld door
+       bestellingen. */
+    var lijn = kaart.querySelector(".line[data-series]");
+    var reeks = JSON.parse(lijn.dataset.series).map(function (r) {
+      return { datum: r[0], orders: r[1], omzet: r[2] };
+    });
+    var soort = "revenue";
+
+    var MAAND = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    function getal(n) {
+      return Math.round(n).toLocaleString("nl-NL");
+    }
+
+    function bedrag(n, centen) {
+      return "€ " + n.toLocaleString("nl-NL",
+        { minimumFractionDigits: centen ? 2 : 0, maximumFractionDigits: centen ? 2 : 0 });
+    }
+
+    function waardeVan(r) {
+      if (soort === "orders") return r.orders;
+      if (soort === "aov") return r.orders ? r.omzet / r.orders : 0;
+      return r.omzet;
+    }
+
+    function alsTekst(v) {
+      if (soort === "orders") return getal(v);
+      if (soort === "aov") return bedrag(v, true);
+      return bedrag(v);
+    }
+
+    /* Een ronde bovenkant voor de as. Er staan drie lijnen boven nul, dus de
+       bovenkant moet door drie deelbaar zijn: anders lees je 1.333 en 667 in
+       plaats van 1.200 en 600. */
+    function asMax(top) {
+      if (top <= 0) return 3;
+      var derde = top / 3;
+      var macht = Math.pow(10, Math.floor(Math.log(derde) / Math.LN10));
+      return Math.ceil(derde / macht) * macht * 3;
+    }
+
+    function kortDatum(datum) {
+      var d = datum.split("-");
+      return Number(d[2]) + " " + MAAND[Number(d[1]) - 1];
+    }
+
+    function teken() {
+      var n = reeks.length;
+      if (!n) return;
+
+      var top = reeks.reduce(function (m, r) { return Math.max(m, waardeVan(r)); }, 0);
+      var max = asMax(top);
+      var x = function (i) { return n < 2 ? 0 : i * 100 / (n - 1); };
+      var y = function (v) { return 100 - v / max * 100; };
+
+      var d = reeks.map(function (r, i) {
+        return (i ? "L" : "M") + x(i).toFixed(2) + "," + y(waardeVan(r)).toFixed(2);
+      }).join(" ");
+
+      lijn.querySelector(".line__stroke").setAttribute("d", d);
+      lijn.querySelector(".line__area").setAttribute("d", d + " L100,100 L0,100 Z");
+
+      /* De as hoort bij de getoonde lijn: bij bestellingen staan er andere
+         getallen dan bij omzet. */
+      var raster = lijn.parentNode.querySelectorAll(".chart__grid span");
+      [max, max * 2 / 3, max / 3, 0].forEach(function (v, i) {
+        if (raster[i]) raster[i].setAttribute("data-v", alsTekst(v));
+      });
+
+      var pts = lijn.querySelector(".line__pts");
+      var as = lijn.querySelector(".line__x");
+      pts.innerHTML = "";
+      as.innerHTML = "";
+
+      /* Hoogstens zes labels onder de as; veertien dagnamen naast elkaar wordt
+         een grijze streep. De laatste krijgt altijd zijn naam. */
+      var stap = Math.ceil(n / 6);
+
+      reeks.forEach(function (r, i) {
+        /* Vlak bij de randen wordt de tooltip aan die kant vastgezet, anders
+           steekt hij buiten de kaart uit. */
+        var px = x(i);
+        var li = document.createElement("li");
+        li.className = "lpt" + (i === n - 1 ? " lpt--last" : "") +
+                       (px <= 12 ? " lpt--links" : "") + (px >= 88 ? " lpt--rechts" : "");
+        li.style.setProperty("--x", px.toFixed(2) + "%");
+        li.style.setProperty("--y", y(waardeVan(r)).toFixed(2) + "%");
+        li.tabIndex = 0;
+
+        var onder = soort === "orders" ? bedrag(r.omzet)
+                  : soort === "aov" ? getal(r.orders) + " orders"
+                  : getal(r.orders) + " orders";
+        var tip = document.createElement("span");
+        tip.className = "cbar__tip";
+        var b = document.createElement("b");
+        b.textContent = kortDatum(r.datum) + " · " + alsTekst(waardeVan(r));
+        var sub = document.createElement("span");
+        sub.textContent = onder;
+        tip.appendChild(b);
+        tip.appendChild(sub);
+        li.appendChild(tip);
+        pts.appendChild(li);
+
+        var label = document.createElement("li");
+        /* Modulo vanaf achteren, zodat het laatste label er altijd staat. */
+        if ((n - 1 - i) % stap === 0) label.textContent = kortDatum(r.datum);
+        as.appendChild(label);
+      });
+
+      /* De schatting hierboven werkt op de plek van het punt, maar hoe breed
+         een tooltip wordt hangt van zijn tekst af. Even narekenen dus, zolang
+         de kaart in beeld staat. */
+      var kr = kaart.getBoundingClientRect();
+      if (kr.width) {
+        pts.querySelectorAll(".lpt").forEach(function (li) {
+          var t = li.querySelector(".cbar__tip").getBoundingClientRect();
+          if (t.right > kr.right - 4) li.classList.add("lpt--rechts");
+          else if (t.left < kr.left + 4) li.classList.add("lpt--links");
+        });
+      }
+    }
+
+    function zetPeriode() {
+      var eerste = kortDatum(reeks[0].datum);
+      var laatste = kortDatum(reeks[reeks.length - 1].datum);
+      var regel = kaart.querySelector(".chart__period");
+      if (regel) regel.textContent = eerste + " – " + laatste;
+    }
+
+    function tekenAlles() { teken(); zetPeriode(); }
+
+    kaart.addEventListener("click", function (e) {
+      var tab = e.target.closest("[data-metric]");
+      if (!tab) return;
+      soort = tab.dataset.metric;
+      kaart.querySelectorAll("[data-metric]").forEach(function (t) {
+        var aan = t === tab;
+        t.classList.toggle("is-active", aan);
+        t.setAttribute("aria-pressed", String(aan));
+      });
+      teken();
+    });
+
+    /* De breedte van de kaart bepaalt waar de tooltips passen. */
+    window.addEventListener("resize", function () { if (!kaart.hidden) teken(); });
+
+    /* Alles af, om te laten zien hoe het dashboard er daarna uitziet. */
+    var klaarVlag = new URLSearchParams(location.search).get("guide") ||
+                    new URLSearchParams(location.hash.slice(1)).get("guide");
+    if (klaarVlag === "done") {
+      gids.querySelectorAll(".step").forEach(function (stap) {
+        var dot = stap.querySelector(".step__dot");
+        dot.classList.add("step__dot--done");
+        if (!dot.querySelector(".icon")) {
+          dot.innerHTML = '<svg class="icon"><use href="#i-check"/></svg>';
+        }
+        stap.classList.remove("is-open");
+        var titel = stap.querySelector(".step__title");
+        if (titel) titel.setAttribute("aria-expanded", "false");
+      });
+    }
+
+    zetGids();
+  })();
+
 })();

@@ -51,6 +51,9 @@
 
   --success: #067a4e;
   --danger:  #c0342b;
+  /* Zachte varianten, als vlak achter een stijging of daling. */
+  --success-soft: #e4f2ea;
+  --danger-soft:  #fbeae9;
   --warning-bg: #fdf6e3;
   --warning-fg: #8a6d1f;
 
@@ -339,7 +342,8 @@ legend { padding: 0; }
 .tasks { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: var(--fs-md); color: var(--text); }
 .tasks__ring {
   width: 18px; height: 18px; border-radius: var(--r-full);
-  background: conic-gradient(var(--accent) 0 20%, var(--gray-200) 0);
+  /* app.js zet --af op het deel dat af is; 20% is de stand bij een verse winkel. */
+  background: conic-gradient(var(--accent) 0 var(--af, 20%), var(--gray-200) 0);
   mask: radial-gradient(circle, transparent 42%, #000 44%);
   -webkit-mask: radial-gradient(circle, transparent 42%, #000 44%);
 }
@@ -2310,6 +2314,137 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 }
 
 .chart__bars { position: relative; z-index: 1; display: flex; align-items: flex-end; gap: 7px; height: 100%; }
+
+/* ---- Lijngrafiek op het dashboard --------------------------------------
+   Dezelfde opbouw als op het dashboard van de producteigenaar: drie cijfers
+   die tegelijk de knoppen zijn waarmee je kiest welke lijn eronder staat. */
+.line { position: absolute; inset: 0 0 24px 0; }
+.line__svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.line__stroke {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  /* Zonder dit rekt de lijn mee met het vak en wordt hij links dunner dan
+     rechts; de SVG schaalt immers in beide richtingen apart. */
+  vector-effect: non-scaling-stroke;
+}
+
+.line__pts { position: absolute; inset: 0; }
+/* Het raakvlak is groter dan de stip: aanwijzen moet lukken zonder te mikken. */
+.lpt {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  width: 24px; height: 24px;
+  margin: -12px 0 0 -12px;
+}
+.lpt::after {
+  content: "";
+  position: absolute; inset: 8px;
+  border-radius: var(--r-full);
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.lpt:hover::after, .lpt:focus-visible::after { opacity: 1; }
+/* Het laatste punt staat altijd aan: dat is de stand van nu. */
+.lpt--last::after { opacity: 1; box-shadow: 0 0 0 3px var(--bg-surface); }
+.lpt:focus-visible { outline: none; }
+
+.lpt .cbar__tip { bottom: calc(100% + 2px); }
+.lpt:hover .cbar__tip, .lpt:focus-visible .cbar__tip { opacity: 1; }
+/* Aan de randen zou de tooltip buiten de kaart vallen, en alles wat buiten de
+   kaart uitsteekt maakt de pagina zijwaarts sleepbaar, ook als je het niet
+   ziet staan. app.js hangt deze klassen aan de buitenste punten. */
+.lpt--links .cbar__tip  { left: 0; transform: none; }
+.lpt--rechts .cbar__tip { left: auto; right: 0; transform: none; }
+
+.line__x {
+  position: absolute; top: 100%; left: 0; right: 0;
+  height: 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: var(--fs-xs); color: var(--text-muted);
+}
+
+/* Drie standen naast elkaar, en tegelijk de knoppen waarmee je kiest welke
+   lijn eronder komt te staan. */
+.metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; align-items: start; }
+.metric {
+  padding: 10px 12px 12px;
+  border-radius: var(--r-md);
+  text-align: left;
+  transition: background var(--dur) var(--ease);
+}
+.metric:hover { background: var(--gray-50); }
+.metric.is-active { background: var(--gray-100); }
+.metric__label { display: block; font-size: var(--fs-sm); color: var(--text-muted); }
+.metric.is-active .metric__label { color: var(--text); }
+.metric__row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.metric__value {
+  font-size: 21px; font-weight: 600; letter-spacing: -.02em;
+  color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Het verschil als pil, rechts van het cijfer. De pijl zegt hetzelfde als de
+   kleur, zodat kleur alleen nooit de hele boodschap draagt. */
+.delta {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px 3px 7px;
+  border-radius: var(--r-full);
+  font-size: var(--fs-sm); font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.delta--up   { color: var(--success); background: var(--success-soft); }
+.delta--down { color: var(--danger);  background: var(--danger-soft); }
+.delta__icon { width: 14px; height: 14px; stroke-width: 2.4; }
+
+.chart__range {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 14px;
+  font-size: var(--fs-sm); color: var(--text-muted);
+}
+.chart__dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: var(--r-full); background: var(--accent); }
+
+@media (max-width: 560px) {
+  /* Drie bedragen even groot naast elkaar past niet op een telefoon. De tegels
+     worden een strook die je opzij schuift; de volgende staat er half naast en
+     wijst zo de weg. Het grijze vlak van de actieve valt bij daglicht toch weg,
+     dus die staat voluit en de andere twee treden terug. */
+  .metrics {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .metrics::-webkit-scrollbar { display: none; }
+  .metric { flex: 0 0 auto; min-width: 150px; scroll-snap-align: start; }
+  .metric:hover, .metric.is-active { background: none; }
+  .metric.is-active .metric__value { font-size: 25px; }
+  /* 0,6 houdt de tekst nog boven de contrastgrens op wit. */
+  .metric:not(.is-active) { opacity: .6; }
+  .metric:not(.is-active) .metric__value { font-size: 17px; }
+  /* Het verschil blijft naast het bedrag staan; daar is nu ruimte voor. */
+  .metric__row { flex-wrap: nowrap; }
+}
+
+/* ---- De setup-guide klapt open en dicht --------------------------------
+   Zolang er stappen open staan is de gids het eerste wat je ziet. Is hij af,
+   dan blijft alleen de telregel staan en gaat de aandacht naar de cijfers. */
+.guide__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%;
+  text-align: left;
+}
+.guide__chev { color: var(--text-muted); transition: transform var(--dur) var(--ease); }
+.guide__head[aria-expanded="false"] .guide__chev { transform: rotate(-90deg); }
+.guide__head[aria-expanded="false"] + .guide__body { display: none; }
+
 .cbar { position: relative; flex: 1 1 0; height: 100%; display: flex; flex-direction: column; min-width: 0; }
 .cbar__stack {
   /* column-reverse: de eerste serie uit de legenda staat onderaan. */

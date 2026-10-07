@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=308" />
+  <link rel="stylesheet" href="styles.css?v=310" />
 </head>
 <body>
 
@@ -319,8 +319,74 @@
           </div>
 
           <section class="view" data-view="dashboard">
-            <div class="card">
-              <p class="tasks"><span class="tasks__ring" aria-hidden="true"></span>1 of 5 tasks completed</p>
+            <!-- De cijfers waar de zaak op draait. Deze kaart komt pas in beeld
+                 als de setup-guide af is: tot die tijd valt er niets te meten
+                 en leidt een lege grafiek alleen maar af. -->
+            <div class="card" id="dash-chart" hidden>
+              <!-- Elke tab draagt zijn eigen stand: je ziet de drie cijfers
+                   naast elkaar en kiest met dezelfde beweging welke lijn er
+                   onder komt te staan. -->
+              <div class="metrics">
+                <button class="metric is-active" type="button" data-metric="revenue" aria-pressed="true">
+                  <span class="metric__label">Revenue</span>
+                  <span class="metric__row"><span class="metric__value">&euro; 16.350</span><span class="delta delta--up"><svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>9,4%</span></span>
+                </button>
+                <button class="metric" type="button" data-metric="orders" aria-pressed="false">
+                  <span class="metric__label">Orders</span>
+                  <span class="metric__row"><span class="metric__value">574</span><span class="delta delta--up"><svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>6,1%</span></span>
+                </button>
+                <button class="metric" type="button" data-metric="aov" aria-pressed="false">
+                  <span class="metric__label">Average order value</span>
+                  <span class="metric__row"><span class="metric__value">&euro; 28,48</span><span class="delta delta--up"><svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>3,1%</span></span>
+                </button>
+              </div>
+
+              <div class="chart">
+                <div class="chart__plot">
+                  <div class="chart__grid" aria-hidden="true">
+                    <span data-v="" style="bottom:100%"></span>
+                    <span data-v="" style="bottom:66.7%"></span>
+                    <span data-v="" style="bottom:33.3%"></span>
+                    <span data-v="" style="bottom:0"></span>
+                  </div>
+
+                  <!-- Een rij per dag: de datum, het aantal bestellingen en de
+                       omzet. Alle drie de lijnen komen daaruit; de gemiddelde
+                       orderwaarde is omzet gedeeld door bestellingen. De punten
+                       in de SVG staan in procenten (0-100 in beide richtingen),
+                       zodat hij met het vak meeschaalt; app.js vult ze in. -->
+                  <div class="line" data-series='[["2026-09-17",41,1182],["2026-09-18",55,1508],["2026-09-19",59,1668],["2026-09-20",25,735],["2026-09-21",35,979],["2026-09-22",35,1019],["2026-09-23",37,1109],["2026-09-24",41,1136],["2026-09-25",55,1570],["2026-09-26",59,1668],["2026-09-27",25,742],["2026-09-28",35,950],["2026-09-29",35,1009],["2026-09-30",37,1075]]'>
+                    <svg class="line__svg" viewBox="0 0 100 100" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true" focusable="false">
+                      <defs>
+                        <linearGradient id="dash-fill" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#0172af" stop-opacity=".16" />
+                          <stop offset="100%" stop-color="#0172af" stop-opacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <path class="line__area" fill="url(#dash-fill)" d="M0,100 L100,100 Z" />
+                      <path class="line__stroke" d="M0,100 L100,100" />
+                    </svg>
+
+                    <ol class="line__pts"></ol>
+                    <ol class="line__x" aria-hidden="true"></ol>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Welke periode je ziet, onder de as. Het bolletje in de
+                   lijnkleur koppelt het aan de lijn erboven. -->
+              <p class="chart__range"><span class="chart__dot" aria-hidden="true"></span><span class="chart__period"></span></p>
+            </div>
+
+            <!-- De gids klapt open en dicht aan zijn kop; zodra alle stappen
+                 af zijn blijft alleen die ene regel staan en komt de grafiek
+                 hierboven in beeld. -->
+            <div class="card guide" id="setup-guide">
+              <button class="guide__head" type="button" aria-expanded="true" aria-controls="guide-body">
+                <span class="tasks"><span class="tasks__ring" aria-hidden="true"></span><span data-guide-count>1 of 5 tasks completed</span></span>
+                <svg class="icon guide__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+              <div class="guide__body" id="guide-body">
               <h2 class="card__title">Setup guide</h2>
               <p class="card__sub">Use this guide to get your store up and running</p>
               <!-- Elke stap heeft dezelfde opbouw: bolletje, titel als knop en
@@ -379,6 +445,7 @@
                   </div>
                 </li>
               </ol>
+              </div>
             </div>
             <p class="note"><svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>New insights and guides will appear here as we learn more about your store</p>
           </section>
@@ -5815,6 +5882,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=308"></script>
+  <script src="app.js?v=310"></script>
 </body>
 </html>
