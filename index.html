@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=313" />
+  <link rel="stylesheet" href="styles.css?v=314" />
 </head>
 <body>
 
@@ -54,6 +54,7 @@
     <!-- Settings-iconen: tweede aangeleverde sprite, 20×362, zelfde opzet als
          hierboven (9 werd 10, pitch opnieuw 38, centers 10/48/86/…/352). -->
     <symbol id="i-store" viewBox="0 0 20 20"><path d="M3.92188 9.07143V15.1456C3.92188 15.8936 4.46485 16.5 5.13461 16.5H8.65153V13.7912C8.65153 13.0432 9.1945 12.4368 9.86426 12.4368C10.5341 12.4368 11.077 13.0432 11.077 13.7912V16.5H14.5939C15.2637 16.5 15.8066 15.8936 15.8066 15.1456V9.07143"/><path d="M17.8951 6.1391V6.87218C17.8951 8.08902 17.1326 9.07143 16.0222 9.07143C14.9118 9.07143 14.0155 8.08902 14.0155 6.87218C14.0155 8.08902 13.1193 9.07143 12.0089 9.07143C10.8985 9.07143 10.0022 8.08902 10.0022 6.87218C10.0022 8.08902 9.10596 9.07143 7.99557 9.07143C6.88519 9.07143 5.98891 8.08902 5.98891 6.87218C5.98891 8.08902 5.09264 9.07143 3.98226 9.07143C2.87187 9.07143 2.10938 8.08902 2.10938 6.87218V6.1391L3.44715 3.5H16.5573L17.8951 6.1391Z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.4" y="5.2" width="17.2" height="15.4" rx="2"/><path d="M3.4 9.8h17.2M8.2 3.4v3.6M15.8 3.4v3.6"/></symbol>
     <symbol id="i-clock" viewBox="0 38 20 20"><circle cx="10" cy="48" r="7.7"/><path d="M10 44.9961V48.9227L11.5707 50.1007"/></symbol>
     <symbol id="i-pin" viewBox="0 76 20 20"><path d="M9.16406 77.873C9.6219 77.8266 10.0836 77.8242 10.542 77.8652L10.7832 77.8867C11.216 77.9255 11.6451 78.0023 12.0645 78.1162L12.1104 78.1289C12.5998 78.2619 13.0735 78.4478 13.5225 78.6836C13.8859 78.8745 14.2315 79.0978 14.5557 79.3496L14.7148 79.4727C15.0248 79.7135 15.3145 79.9795 15.5811 80.2676L15.6582 80.3506C15.8759 80.5858 16.0739 80.8386 16.25 81.1064C16.4898 81.4713 16.6874 81.8624 16.8398 82.2715L16.9072 82.4531L17.1113 83.2803L17.2002 83.917V84.4971L17.1084 85.3311C17.0224 85.7333 16.9087 86.129 16.7656 86.5146L16.7617 86.5244L16.7588 86.5342L16.7549 86.5439L16.5234 87.2197L16.2871 87.7383L15.875 88.4678L15.3574 89.2061L14.3633 90.3564L13.2578 91.4629L10.4082 93.7148L10.0176 94.0059L7.82812 92.3652L6.14648 90.8398L5.1084 89.7979L4.51465 89.0146C4.22746 88.6353 3.97048 88.2252 3.75293 87.8008C3.49381 87.2952 3.28589 86.7573 3.13867 86.21L3.10645 86.0889C3.005 85.7117 2.9361 85.3266 2.90234 84.9375L2.89258 84.8145C2.8371 84.1748 2.88571 83.53 3.03809 82.9062C3.15865 82.4127 3.34334 81.9366 3.58594 81.4902L3.62207 81.4229C3.90762 80.8975 4.26463 80.4139 4.68262 79.9863L4.71875 79.9502C5.07478 79.586 5.46978 79.2619 5.89746 78.9854L6.15039 78.8213L6.64355 78.5879C7.00594 78.4156 7.38117 78.2712 7.76562 78.1562L7.81934 78.1396C8.25798 78.0085 8.70859 77.9192 9.16406 77.873Z"/><path d="M10 82.7998C11.215 82.7998 12.2002 83.785 12.2002 85C12.2002 86.215 11.215 87.2002 10 87.2002C8.78497 87.2002 7.7998 86.215 7.7998 85C7.7998 83.785 8.78497 82.7998 10 82.7998Z"/></symbol>
     <symbol id="i-card" viewBox="0 114 20 20"><rect x="2.3" y="118.3" width="15.4" height="11.4" rx="1.2"/><path d="M2.75 122.2H17.75"/><path d="M11.8 126.876H14.9059"/></symbol>
@@ -270,6 +271,79 @@
             <button class="btn btn--primary page-head__action" type="button" id="page-action" hidden>
               <svg class="icon" aria-hidden="true"><use href="#i-plus" id="page-action-icon"/></svg><span id="page-action-label"></span>
             </button>
+            <!-- De periode geldt voor de hele dashboardkaart, dus hij staat op
+                 de titelregel en niet in de kaart zelf. Overgenomen van het
+                 dashboard van de producteigenaar. -->
+            <div class="page-head__tools page-head__tools--breed" data-tools="dashboard" hidden>
+              <div class="dpick" id="dash-range">
+                <button class="dpick__btn" type="button" aria-haspopup="dialog" aria-expanded="false">
+                  <svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>
+                  <span class="dpick__label">Last 30 days</span>
+                  <svg class="icon dpick__caret" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                </button>
+
+                <div class="dpick__panel" role="dialog" aria-label="Choose a period" hidden>
+                  <div class="dpick__presets">
+                    <button class="dpick__preset" type="button" data-preset="today">Today</button>
+                    <button class="dpick__preset" type="button" data-preset="yesterday">Yesterday</button>
+                    <span class="dpick__sep" aria-hidden="true"></span>
+                    <button class="dpick__preset" type="button" data-preset="7d">Last 7 days</button>
+                    <button class="dpick__preset is-active" type="button" data-preset="30d">Last 30 days</button>
+                    <button class="dpick__preset" type="button" data-preset="90d">Last 90 days</button>
+                    <button class="dpick__preset" type="button" data-preset="12m">Last 12 months</button>
+                    <span class="dpick__sep" aria-hidden="true"></span>
+                    <button class="dpick__preset" type="button" data-preset="wtd">Week to date</button>
+                    <button class="dpick__preset" type="button" data-preset="mtd">Month to date</button>
+                    <button class="dpick__preset" type="button" data-preset="qtd">Quarter to date</button>
+                    <button class="dpick__preset" type="button" data-preset="ytd">Year to date</button>
+                  </div>
+
+                  <div class="dpick__main">
+                    <!-- Dezelfde keuzes als hiernaast, maar als keuzelijst: op een
+                         telefoon is dat het wiel van het toestel zelf. -->
+                    <label class="sr-only" for="dpick-quick">Period</label>
+                    <select class="input dpick__native" id="dpick-quick">
+                      <option value="custom">Custom</option>
+                      <option value="today">Today</option>
+                      <option value="yesterday">Yesterday</option>
+                      <option value="7d">Last 7 days</option>
+                      <option value="30d" selected>Last 30 days</option>
+                      <option value="90d">Last 90 days</option>
+                      <option value="12m">Last 12 months</option>
+                      <option value="wtd">Week to date</option>
+                      <option value="mtd">Month to date</option>
+                      <option value="qtd">Quarter to date</option>
+                      <option value="ytd">Year to date</option>
+                    </select>
+
+                    <div class="dpick__fields">
+                      <label class="sr-only" for="dpick-from">From</label>
+                      <input class="input dpick__field" id="dpick-from" type="text" readonly />
+                      <svg class="icon dpick__arrow" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                      <label class="sr-only" for="dpick-to">To</label>
+                      <input class="input dpick__field" id="dpick-to" type="text" readonly />
+                    </div>
+
+                    <div class="dpick__cals">
+                      <button class="icon-btn dpick__nav" type="button" data-nav="-1" aria-label="Previous month">
+                        <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>
+                      </button>
+                      <div class="dpick__cal" data-cal="0"></div>
+                      <div class="dpick__cal" data-cal="1"></div>
+                      <button class="icon-btn dpick__nav dpick__nav--next" type="button" data-nav="1" aria-label="Next month">
+                        <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                      </button>
+                    </div>
+
+                    <div class="dpick__foot">
+                      <p class="dpick__sum"></p>
+                      <button class="btn btn--ghost" type="button" data-dpick="cancel">Cancel</button>
+                      <button class="btn btn--primary" type="button" data-dpick="apply">Apply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="page-head__tools" data-tools="orders" hidden>
               <button class="btn btn--ghost page-head__action" type="button">
                 More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
@@ -350,12 +424,12 @@
                     <span data-v="" style="bottom:0"></span>
                   </div>
 
-                  <!-- Een rij per dag: de datum, het aantal bestellingen en de
-                       omzet. Alle drie de lijnen komen daaruit; de gemiddelde
-                       orderwaarde is omzet gedeeld door bestellingen. De punten
-                       in de SVG staan in procenten (0-100 in beide richtingen),
-                       zodat hij met het vak meeschaalt; app.js vult ze in. -->
-                  <div class="line" data-series='[["2026-09-17",41,1182],["2026-09-18",55,1508],["2026-09-19",59,1668],["2026-09-20",25,735],["2026-09-21",35,979],["2026-09-22",35,1019],["2026-09-23",37,1109],["2026-09-24",41,1136],["2026-09-25",55,1570],["2026-09-26",59,1668],["2026-09-27",25,742],["2026-09-28",35,950],["2026-09-29",35,1009],["2026-09-30",37,1075]]'>
+                  <!-- Een rij per maand: bestellingen en omzet. app.js verdeelt die
+                       over de dagen naar de drukte van de week, zodat elke
+                       periode uit de kiezer uitgerekend kan worden. De punten in
+                       de SVG staan in procenten (0-100 in beide richtingen),
+                       zodat hij met het vak meeschaalt. -->
+                  <div class="line" data-series='[["2025-08",870,24100],["2025-09",905,25200],["2025-10",940,26300],["2025-11",965,27200],["2025-12",1040,29800],["2026-01",935,26400],["2026-02",960,27300],["2026-03",1010,28800],["2026-04",1055,30200],["2026-05",1090,31300],["2026-06",1120,32200],["2026-07",1145,33000],["2026-08",1180,34000],["2026-09",1230,35050]]'>
                     <svg class="line__svg" viewBox="0 0 100 100" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true" focusable="false">
                       <defs>
                         <linearGradient id="dash-fill" x1="0" y1="0" x2="0" y2="1">
@@ -5890,6 +5964,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=313"></script>
+  <script src="app.js?v=314"></script>
 </body>
 </html>
