@@ -869,8 +869,12 @@ select.input {
   background: var(--gray-25);
   color: var(--border-strong);
 }
-.prod__name { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); }
-.prod .badge { margin-left: auto; }
+/* De naam houdt minstens de halve rij bezet, zodat de stand erachter bij elke
+   rij op dezelfde hoogte begint in plaats van tegen de rechterrand te plakken.
+   Een lange naam duwt hem verder; afkappen is erger dan een kolom die een keer
+   opschuift. */
+.prod__name { min-width: 50%; font-size: var(--fs-md); color: var(--text-strong); }
+.prod .badge { margin-left: 0; margin-right: auto; }
 
 .badge {
   flex: 0 0 auto;
@@ -947,6 +951,12 @@ select.input {
 /* Een aanwijzing die al geldt voor je iets kiest, als opsomming onder de keuze. */
 .docnote { margin-top: 8px; padding-left: 18px; list-style: disc; font-size: var(--fs-sm); color: var(--text); }
 @media (max-width: 560px) {
+  /* Op een telefoon is de rij te smal om nog vrije ruimte over te houden, dus
+     daar wordt de afstand tot de rand vastgezet in plaats van uitgerekend.
+     De naam wikkelt dan desnoods af. */
+  .prod__name { min-width: 0; }
+  .prod .badge { margin-right: 28px; }
+
   /* Op een telefoon onder elkaar: twee vakken naast elkaar worden te smal. */
   .docdrops--twee { grid-template-columns: minmax(0, 1fr); }
 }
