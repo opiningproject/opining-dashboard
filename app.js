@@ -5579,12 +5579,12 @@
     }
 
     /* ---- Alles bijwerken voor het gekozen bereik -------------------------- */
-    var bereik = { van: plusDagen(VANDAAG, -29), tot: VANDAAG };
+    var bereik = { van: VANDAAG, tot: VANDAAG };
     var tabs = kaart.querySelector(".metrics");
 
     /* Waartegen de cijfers worden afgezet: niets, de vorige even lange periode,
        of een zelfgekozen bereik. */
-    var vergSoort = "prev";
+    var vergSoort = "none";
     var vergEigen = { van: null, tot: null };
 
     function vergBereik() {
@@ -5660,7 +5660,7 @@
     var cals = dpick.querySelectorAll(".dpick__cal");
 
     /* Wat er in het paneel staat zolang je nog niet op Apply hebt gedrukt. */
-    var kies = { van: bereik.van, tot: bereik.tot, snel: "30d" };
+    var kies = { van: bereik.van, tot: bereik.tot, snel: "today" };
     var toon1 = new Date(VANDAAG.getFullYear(), VANDAAG.getMonth() - 1, 1);
     var mqSmal = window.matchMedia("(max-width: 900px)");
 
@@ -5973,7 +5973,7 @@
       });
     }
 
-    zetSnel("30d");
+    zetSnel("today");
     bereik = { van: kies.van, tot: kies.tot };
     toon();
     zetGids();
