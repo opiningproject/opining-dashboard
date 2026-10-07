@@ -5440,11 +5440,14 @@
     }
 
     /* ---- Tekenen ---------------------------------------------------------- */
-    function teken(rij) {
+    function teken(rij, vergRij) {
       var n = rij.length;
       if (!n) return;
 
       var top = rij.reduce(function (m, p) { return Math.max(m, waardeVan(p)); }, 0);
+      /* De as moet allebei de lijnen aankunnen, anders loopt de vergelijking
+         boven de bovenste rasterlijn uit. */
+      if (vergRij) top = vergRij.reduce(function (m, p) { return Math.max(m, waardeVan(p)); }, top);
       var max = asMax(top);
       var x = function (i) { return n < 2 ? 50 : i * 100 / (n - 1); };
       var y = function (v) { return 100 - v / max * 100; };
@@ -5455,6 +5458,19 @@
 
       lijn.querySelector(".line__stroke").setAttribute("d", d);
       lijn.querySelector(".line__area").setAttribute("d", d + " L100,100 L0,100 Z");
+
+      /* De vergelijking loopt over dezelfde breedte, ook als die periode meer
+         of minder dagen telt: het gaat om het verloop, niet om de datums. */
+      var cmpPad = lijn.querySelector(".line__cmp");
+      if (vergRij && vergRij.length > 1) {
+        var m = vergRij.length;
+        cmpPad.setAttribute("d", vergRij.map(function (p, i) {
+          return (i ? "L" : "M") + (i * 100 / (m - 1)).toFixed(2) + "," + y(waardeVan(p)).toFixed(2);
+        }).join(" "));
+        cmpPad.removeAttribute("hidden");
+      } else {
+        cmpPad.setAttribute("hidden", "");
+      }
 
       /* De as hoort bij de getoonde lijn: bij bestellingen staan er andere
          getallen dan bij omzet. */
@@ -5520,10 +5536,23 @@
     var bereik = { van: plusDagen(VANDAAG, -29), tot: VANDAAG };
     var tabs = kaart.querySelector(".metrics");
 
-    function toon() {
+    /* Waartegen de cijfers worden afgezet: niets, de vorige even lange periode,
+       of een zelfgekozen bereik. */
+    var vergSoort = "prev";
+    var vergEigen = { van: null, tot: null };
+
+    function vergBereik() {
+      if (vergSoort === "none") return null;
+      if (vergSoort === "custom") {
+        return (vergEigen.van && vergEigen.tot) ? vergEigen : null;
+      }
       var lengte = Math.round((bereik.tot - bereik.van) / DAG) + 1;
-      var vorigeTot = plusDagen(bereik.van, -1);
-      var vorigeVan = plusDagen(vorigeTot, -(lengte - 1));
+      var tot = plusDagen(bereik.van, -1);
+      return { van: plusDagen(tot, -(lengte - 1)), tot: tot };
+    }
+
+    function toon() {
+      var verg = vergBereik();
 
       /* Alle drie de tabs bijwerken, niet alleen de actieve: ze staan naast
          elkaar en horen alle drie bij dezelfde periode. */
@@ -5531,16 +5560,22 @@
       tabs.querySelectorAll(".metric").forEach(function (knop) {
         soort = knop.dataset.metric;
         var nu = totaal(bereik.van, bereik.tot);
-        var toen = totaal(vorigeVan, vorigeTot);
-        var pct = toen ? (nu / toen - 1) * 100 : 0;
-        var omhoog = pct >= 0;
-
         knop.querySelector(".metric__value").textContent = alsTekst(nu);
+
         var pil = knop.querySelector(".delta");
-        pil.className = "delta " + (omhoog ? "delta--up" : "delta--down");
-        pil.innerHTML = '<svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-' +
-                        (omhoog ? "up" : "down") + '"/></svg>' +
-                        Math.abs(pct).toFixed(1).replace(".", ",") + "%";
+        /* Zonder vergelijking valt er niets te zeggen over stijgen of dalen. */
+        if (!verg) {
+          pil.hidden = true;
+        } else {
+          var toen = totaal(verg.van, verg.tot);
+          var pct = toen ? (nu / toen - 1) * 100 : 0;
+          var omhoog = pct >= 0;
+          pil.hidden = false;
+          pil.className = "delta " + (omhoog ? "delta--up" : "delta--down");
+          pil.innerHTML = '<svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-' +
+                          (omhoog ? "up" : "down") + '"/></svg>' +
+                          Math.abs(pct).toFixed(1).replace(".", ",") + "%";
+        }
 
         var actief = soort === bewaard;
         knop.classList.toggle("is-active", actief);
@@ -5548,7 +5583,7 @@
       });
       soort = bewaard;
 
-      teken(punten(bereik.van, bereik.tot));
+      teken(punten(bereik.van, bereik.tot), verg ? punten(verg.van, verg.tot) : null);
       dpick.querySelector(".dpick__label").textContent = knopTekst();
       /* Onder de as staat welke dagen je ziet; de knop bovenaan zegt vaak
          alleen "Last 30 days", en dan weet je nog niet wélke dertig. */
@@ -5612,7 +5647,8 @@
       return p && kies.snel !== "custom" ? p.naam : bereikTekst(bereik.van, bereik.tot);
     }
 
-    function tekenKalender(vak, eersteVanMaand) {
+    function tekenKalender(vak, eersteVanMaand, sel) {
+      sel = sel || kies;
       var jaar = eersteVanMaand.getFullYear(), mnd = eersteVanMaand.getMonth();
       var kop = document.createElement("p");
       kop.className = "dcal__head";
@@ -5640,9 +5676,9 @@
         b.dataset.datum = jaar + "-" + (mnd + 1) + "-" + d;
 
         if (datum > laatsteDag || datum < eersteDag) b.disabled = true;
-        if (kies.van && kies.tot && datum > kies.van && datum < kies.tot) b.classList.add("is-in");
-        if (kies.van && zelfdeDag(datum, kies.van)) b.classList.add("is-end");
-        if (kies.tot && zelfdeDag(datum, kies.tot)) b.classList.add("is-end");
+        if (sel.van && sel.tot && datum > sel.van && datum < sel.tot) b.classList.add("is-in");
+        if (sel.van && zelfdeDag(datum, sel.van)) b.classList.add("is-end");
+        if (sel.tot && zelfdeDag(datum, sel.tot)) b.classList.add("is-end");
         raster.appendChild(b);
       }
 
@@ -5755,8 +5791,120 @@
       }
     }, true);
 
+    /* ====================================================================
+       Vergelijkingskiezer
+       ==================================================================== */
+    var cmp = document.getElementById("dash-compare");
+    if (cmp) {
+      var cmpKnop = cmp.querySelector(".cmp__btn");
+      var cmpPaneel = cmp.querySelector(".cmp__panel");
+      var cmpLijst = cmp.querySelector(".cmp__list");
+      var cmpKal = cmp.querySelector(".cmp__cal");
+      var cmpLabel = cmp.querySelector(".cmp__label");
+      var cmpVan = cmp.querySelector("#cmp-from");
+      var cmpTot = cmp.querySelector("#cmp-to");
+      var cmpSom = cmpKal.querySelector(".dpick__sum");
+      var cmpVak = cmp.querySelector("[data-cmp-cal]");
+      var cmpKies = { van: null, tot: null };
+      var cmpMaand = new Date(VANDAAG.getFullYear(), VANDAAG.getMonth(), 1);
+      var CMP_NAAM = { none: "No comparison", prev: "Previous period", custom: "Custom" };
+
+      function cmpVul() {
+        tekenKalender(cmpVak, cmpMaand, cmpKies);
+        cmpVan.value = cmpKies.van ? datumTekst(cmpKies.van) : "";
+        cmpTot.value = cmpKies.tot ? datumTekst(cmpKies.tot) : "";
+        var compleet = !!(cmpKies.van && cmpKies.tot);
+        cmpSom.textContent = compleet ? bereikTekst(cmpKies.van, cmpKies.tot) : "Pick an end date";
+        cmpKal.querySelector('[data-cmp-actie="apply"]').disabled = !compleet;
+      }
+
+      function cmpZetLabel() {
+        cmpLabel.textContent = vergSoort === "custom" && vergEigen.van && vergEigen.tot
+          ? bereikTekst(vergEigen.van, vergEigen.tot)
+          : CMP_NAAM[vergSoort];
+        cmp.querySelectorAll("[data-cmp]").forEach(function (i) {
+          i.classList.toggle("is-active", i.dataset.cmp === vergSoort);
+        });
+      }
+
+      /* Het paneel heeft twee gezichten: de lijst, en de kalender achter
+         Custom. Opengaan begint altijd bij de lijst. */
+      function cmpOpen(open, bijKalender) {
+        cmpPaneel.hidden = !open;
+        cmpKnop.setAttribute("aria-expanded", String(open));
+        cmp.classList.toggle("is-open", open);
+        cmpLijst.hidden = !!bijKalender;
+        cmpKal.hidden = !bijKalender;
+        if (open && bijKalender) {
+          cmpKies = { van: vergEigen.van, tot: vergEigen.tot };
+          if (cmpKies.tot) cmpMaand = new Date(cmpKies.tot.getFullYear(), cmpKies.tot.getMonth(), 1);
+          cmpVul();
+        }
+      }
+
+      cmpKnop.addEventListener("click", function () { cmpOpen(cmpPaneel.hidden, false); });
+
+      cmpPaneel.addEventListener("click", function (e) {
+        var keuze = e.target.closest("[data-cmp]");
+        if (keuze) {
+          if (keuze.dataset.cmp === "custom") { cmpOpen(true, true); return; }
+          vergSoort = keuze.dataset.cmp;
+          cmpZetLabel();
+          cmpOpen(false, false);
+          toon();
+          return;
+        }
+
+        if (e.target.closest("[data-cmp-terug]")) { cmpOpen(true, false); return; }
+
+        var nav = e.target.closest("[data-cmp-nav]");
+        if (nav) {
+          cmpMaand = new Date(cmpMaand.getFullYear(), cmpMaand.getMonth() + Number(nav.dataset.cmpNav), 1);
+          cmpVul();
+          return;
+        }
+
+        var dag = e.target.closest(".dcal__day");
+        if (dag && !dag.disabled) {
+          var deel = dag.dataset.datum.split("-");
+          var datum = new Date(Number(deel[0]), Number(deel[1]) - 1, Number(deel[2]));
+          if (!cmpKies.van || cmpKies.tot) { cmpKies.van = datum; cmpKies.tot = null; }
+          else if (datum < cmpKies.van) { cmpKies.van = datum; }
+          else { cmpKies.tot = datum; }
+          cmpVul();
+          return;
+        }
+
+        var actie = e.target.closest("[data-cmp-actie]");
+        if (!actie) return;
+        if (actie.dataset.cmpActie === "apply" && cmpKies.van && cmpKies.tot) {
+          vergEigen = { van: cmpKies.van, tot: cmpKies.tot };
+          vergSoort = "custom";
+          cmpZetLabel();
+          toon();
+        }
+        cmpOpen(false, false);
+      });
+
+      document.addEventListener("click", function (e) {
+        if (cmpPaneel.hidden) return;
+        if (cmpPaneel.contains(e.target) || cmpKnop.contains(e.target)) return;
+        cmpOpen(false, false);
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !cmpPaneel.hidden) {
+          e.stopPropagation();
+          cmpOpen(false, false);
+          cmpKnop.focus();
+        }
+      }, true);
+
+      cmpZetLabel();
+    }
+
     /* De breedte van de kaart bepaalt waar de tooltips passen. */
-    window.addEventListener("resize", function () { teken(punten(bereik.van, bereik.tot)); });
+    window.addEventListener("resize", function () { toon(); });
 
     /* Alles af, om te laten zien hoe het dashboard er daarna uitziet. */
     var klaarVlag = new URLSearchParams(location.search).get("guide") ||

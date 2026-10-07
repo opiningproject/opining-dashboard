@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=320" />
+  <link rel="stylesheet" href="styles.css?v=321" />
 </head>
 <body>
 
@@ -54,6 +54,7 @@
     <!-- Settings-iconen: tweede aangeleverde sprite, 20×362, zelfde opzet als
          hierboven (9 werd 10, pitch opnieuw 38, centers 10/48/86/…/352). -->
     <symbol id="i-store" viewBox="0 0 20 20"><path d="M3.92188 9.07143V15.1456C3.92188 15.8936 4.46485 16.5 5.13461 16.5H8.65153V13.7912C8.65153 13.0432 9.1945 12.4368 9.86426 12.4368C10.5341 12.4368 11.077 13.0432 11.077 13.7912V16.5H14.5939C15.2637 16.5 15.8066 15.8936 15.8066 15.1456V9.07143"/><path d="M17.8951 6.1391V6.87218C17.8951 8.08902 17.1326 9.07143 16.0222 9.07143C14.9118 9.07143 14.0155 8.08902 14.0155 6.87218C14.0155 8.08902 13.1193 9.07143 12.0089 9.07143C10.8985 9.07143 10.0022 8.08902 10.0022 6.87218C10.0022 8.08902 9.10596 9.07143 7.99557 9.07143C6.88519 9.07143 5.98891 8.08902 5.98891 6.87218C5.98891 8.08902 5.09264 9.07143 3.98226 9.07143C2.87187 9.07143 2.10938 8.08902 2.10938 6.87218V6.1391L3.44715 3.5H16.5573L17.8951 6.1391Z"/></symbol>
+    <symbol id="i-compare" viewBox="0 0 24 24"><path d="M4 9h13M13.5 5.5 17 9l-3.5 3.5"/><path d="M20 15H7M10.5 11.5 7 15l3.5 3.5"/></symbol>
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.4" y="5.2" width="17.2" height="15.4" rx="2"/><path d="M3.4 9.8h17.2M8.2 3.4v3.6M15.8 3.4v3.6"/></symbol>
     <symbol id="i-clock" viewBox="0 38 20 20"><circle cx="10" cy="48" r="7.7"/><path d="M10 44.9961V48.9227L11.5707 50.1007"/></symbol>
     <symbol id="i-pin" viewBox="0 76 20 20"><path d="M9.16406 77.873C9.6219 77.8266 10.0836 77.8242 10.542 77.8652L10.7832 77.8867C11.216 77.9255 11.6451 78.0023 12.0645 78.1162L12.1104 78.1289C12.5998 78.2619 13.0735 78.4478 13.5225 78.6836C13.8859 78.8745 14.2315 79.0978 14.5557 79.3496L14.7148 79.4727C15.0248 79.7135 15.3145 79.9795 15.5811 80.2676L15.6582 80.3506C15.8759 80.5858 16.0739 80.8386 16.25 81.1064C16.4898 81.4713 16.6874 81.8624 16.8398 82.2715L16.9072 82.4531L17.1113 83.2803L17.2002 83.917V84.4971L17.1084 85.3311C17.0224 85.7333 16.9087 86.129 16.7656 86.5146L16.7617 86.5244L16.7588 86.5342L16.7549 86.5439L16.5234 87.2197L16.2871 87.7383L15.875 88.4678L15.3574 89.2061L14.3633 90.3564L13.2578 91.4629L10.4082 93.7148L10.0176 94.0059L7.82812 92.3652L6.14648 90.8398L5.1084 89.7979L4.51465 89.0146C4.22746 88.6353 3.97048 88.2252 3.75293 87.8008C3.49381 87.2952 3.28589 86.7573 3.13867 86.21L3.10645 86.0889C3.005 85.7117 2.9361 85.3266 2.90234 84.9375L2.89258 84.8145C2.8371 84.1748 2.88571 83.53 3.03809 82.9062C3.15865 82.4127 3.34334 81.9366 3.58594 81.4902L3.62207 81.4229C3.90762 80.8975 4.26463 80.4139 4.68262 79.9863L4.71875 79.9502C5.07478 79.586 5.46978 79.2619 5.89746 78.9854L6.15039 78.8213L6.64355 78.5879C7.00594 78.4156 7.38117 78.2712 7.76562 78.1562L7.81934 78.1396C8.25798 78.0085 8.70859 77.9192 9.16406 77.873Z"/><path d="M10 82.7998C11.215 82.7998 12.2002 83.785 12.2002 85C12.2002 86.215 11.215 87.2002 10 87.2002C8.78497 87.2002 7.7998 86.215 7.7998 85C7.7998 83.785 8.78497 82.7998 10 82.7998Z"/></symbol>
@@ -343,6 +344,57 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Waartegen je de cijfers afzet. Zonder vergelijking staat er
+                   geen pijltje bij de bedragen; met een periode erbij komt er
+                   ook een gestippelde lijn in de grafiek. -->
+              <div class="cmp" id="dash-compare">
+                <button class="dpick__btn cmp__btn" type="button" aria-haspopup="true" aria-expanded="false">
+                  <svg class="icon" aria-hidden="true"><use href="#i-compare"/></svg>
+                  <span class="cmp__label">Previous period</span>
+                  <svg class="icon dpick__caret" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                </button>
+
+                <div class="cmp__panel" role="dialog" aria-label="Choose a comparison" hidden>
+                  <div class="cmp__list">
+                    <button class="cmp__item" type="button" data-cmp="none">No comparison</button>
+                    <button class="cmp__item is-active" type="button" data-cmp="prev">Previous period</button>
+                    <button class="cmp__item cmp__item--meer" type="button" data-cmp="custom">Custom
+                      <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                    </button>
+                  </div>
+
+                  <div class="cmp__cal" hidden>
+                    <button class="cmp__back" type="button" data-cmp-terug>
+                      <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>Back
+                    </button>
+
+                    <div class="dpick__fields">
+                      <label class="sr-only" for="cmp-from">From</label>
+                      <input class="input dpick__field" id="cmp-from" type="text" placeholder="YYYY-MM-DD" readonly />
+                      <svg class="icon dpick__arrow" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+                      <label class="sr-only" for="cmp-to">To</label>
+                      <input class="input dpick__field" id="cmp-to" type="text" placeholder="YYYY-MM-DD" readonly />
+                    </div>
+
+                    <div class="dpick__cals">
+                      <button class="icon-btn dpick__nav" type="button" data-cmp-nav="-1" aria-label="Previous month">
+                        <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>
+                      </button>
+                      <div class="dpick__cal" data-cmp-cal></div>
+                      <button class="icon-btn dpick__nav dpick__nav--next" type="button" data-cmp-nav="1" aria-label="Next month">
+                        <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                      </button>
+                    </div>
+
+                    <div class="dpick__foot">
+                      <p class="dpick__sum"></p>
+                      <button class="btn btn--ghost" type="button" data-cmp-actie="cancel">Cancel</button>
+                      <button class="btn btn--primary" type="button" data-cmp-actie="apply">Apply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="page-head__tools" data-tools="orders" hidden>
               <button class="btn btn--ghost page-head__action" type="button">
@@ -438,6 +490,8 @@
                         </linearGradient>
                       </defs>
                       <path class="line__area" fill="url(#dash-fill)" d="M0,100 L100,100 Z" />
+                      <!-- De vergelijkingsperiode, gestippeld achter de lijn. -->
+                      <path class="line__cmp" d="" hidden />
                       <path class="line__stroke" d="M0,100 L100,100" />
                     </svg>
 
@@ -5964,6 +6018,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=320"></script>
+  <script src="app.js?v=321"></script>
 </body>
 </html>
