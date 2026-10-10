@@ -460,9 +460,20 @@
      die suggereert een server met meer rijen dan hier staan. Zodra je filtert
      klopt dat niet meer, dus dan vertelt de teller wat er écht overblijft en
      zijn de bladerknoppen uit. Filter weg, oude tekst terug. */
+  /* Bladeren heeft pas zin voorbij een volle pagina. De vaste teller doet alsof
+     er meer op de server staan, maar of je kunt bladeren hangt af van wat er
+     werkelijk in de lijst staat. */
+  var PAGINA = 20;
+
+  function zetPagerZichtbaar(panel, aantal) {
+    var voet = panel.querySelector(".pager");
+    if (voet) voet.hidden = aantal <= PAGINA;
+  }
+
   function syncVastePager(panel, actief, aantal) {
     var voet = panel.querySelector(".pager");
     if (!voet) return;
+    zetPagerZichtbaar(panel, actief ? aantal : panel.querySelectorAll("tbody tr").length);
     var teller = voet.querySelector(".pager__count");
     if (!teller) return;
     if (teller.dataset.vast === undefined) teller.dataset.vast = teller.innerHTML;
@@ -1636,6 +1647,14 @@
   }
 
   zetTabTellers();
+
+  /* Bij het laden draait pasPaneelFilter niet voor elk paneel, dus de pagers
+     hier een keer langs; anders staat er een voet onder een korte lijst. */
+  document.querySelectorAll(".panel").forEach(function (panel) {
+    if (panel.querySelector(".pager")) {
+      zetPagerZichtbaar(panel, panel.querySelectorAll("tbody tr").length);
+    }
+  });
 
   /* De actieve tab is hier een echte status, geen "alles": zonder dit staat de
      lijst bij het openen vol terwijl de tab iets anders belooft. */
