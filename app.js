@@ -90,6 +90,23 @@
     item.setAttribute("aria-current", "page");
   }
 
+  /* Het dashboard en de statistiekenpagina tonen dezelfde grafiek. Hij blijft
+     een kaart die meeverhuist naar de pagina die je bekijkt: een tweede kopie
+     zou dezelfde id's nog eens neerzetten, en de grafiekcode hangt daaraan. */
+  var dashKaart  = document.getElementById("dash-chart");
+  var dashThuis  = dashKaart && dashKaart.parentNode;
+  var dashAnker  = dashKaart && dashKaart.nextSibling;
+  var statsSlot  = document.getElementById("stats-chart-slot");
+
+  function zetGrafiekOp(page) {
+    if (!dashKaart || !statsSlot) return;
+    if (page === "analytics") statsSlot.appendChild(dashKaart);
+    else dashThuis.insertBefore(dashKaart, dashAnker);
+    /* In een verborgen view meet de kaart 0 breed, dus de tooltips konden hun
+       plek niet bepalen; na de verhuizing opnieuw laten tekenen. */
+    document.dispatchEvent(new CustomEvent("chart-herteken"));
+  }
+
   function showPage(page, title, icon) {
     pageTitle.textContent = title;
     swapIcon(pageIcon, icon);
@@ -99,6 +116,8 @@
     if (merkje) merkje.hidden = true;
     pageIcon.removeAttribute("hidden");
     pageOuder = { page: page, title: title, icon: icon };
+
+    zetGrafiekOp(page);
 
     var found = false;
     views.forEach(function (v) {
@@ -6178,6 +6197,9 @@
 
     /* De breedte van de kaart bepaalt waar de tooltips passen. */
     window.addEventListener("resize", function () { toon(); });
+    /* De kaart wordt tussen het dashboard en de statistiekenpagina verplaatst;
+       daarna moet hij opnieuw tekenen, net als bij een resize. */
+    document.addEventListener("chart-herteken", function () { toon(); });
 
     /* Alles af, om te laten zien hoe het dashboard er daarna uitziet. */
     var klaarVlag = new URLSearchParams(location.search).get("guide") ||
