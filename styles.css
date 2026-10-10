@@ -3929,3 +3929,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    waarde van de 900px-regel buiten de deur. */
 .stat--spark .stat__label { color: var(--text-strong); }
 .stat--spark .stat__value { margin-top: 2px; font-size: var(--fs-sm); color: var(--text-strong); }
+
+/* Op de statistiekenpagina is alleen de omzet nog een keuze: Orders staat al
+   als tegel boven de grafiek, en de kaart is gedeeld met het dashboard, dus
+   dit geldt alleen zolang hij hier staat. */
+#stats-chart-slot .metrics { grid-template-columns: max-content; }
+#stats-chart-slot .metric:not([data-metric="revenue"]) { display: none; }

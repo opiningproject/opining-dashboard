@@ -108,6 +108,10 @@
       statsSlot.appendChild(dashKaart);
       /* De kiezer hoort hier bij de pagina, boven de tegels, niet in de kaart. */
       if (dashTools && statsTools) statsTools.appendChild(dashTools);
+      /* Hier is omzet de enige keuze; stond de grafiek op een andere metriek,
+         dan zou de verborgen keuze blijven staan. */
+      var omzet = dashKaart.querySelector('.metric[data-metric="revenue"]');
+      if (omzet && !omzet.classList.contains("is-active")) omzet.click();
     } else {
       if (dashTools && toolsAnker) dashKaart.insertBefore(dashTools, toolsAnker);
       dashThuis.insertBefore(dashKaart, dashAnker);
