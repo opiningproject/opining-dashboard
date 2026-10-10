@@ -1623,20 +1623,26 @@
   /* ---- Aantallen in de tabs van de live bestellingen ----------------------
      De tabs filteren op de status die elke rij in data-filter draagt; het
      aantal komt uit diezelfde rijen in plaats van in de HTML te staan, zodat
-     teller en lijst niet uit elkaar kunnen lopen. "all" telt alles. */
+     teller en lijst niet uit elkaar kunnen lopen. */
   function zetTabTellers() {
     var paneel = document.querySelector('[data-view="orders"] .panel');
     if (!paneel) return;
     var rijen = [].slice.call(paneel.querySelectorAll("tbody tr[data-filter]"));
     paneel.querySelectorAll(".tab[data-count]").forEach(function (tab) {
       var soort = tab.dataset.count;
-      var n = soort === "all" ? rijen.length
-            : rijen.filter(function (r) { return r.dataset.filter === soort; }).length;
-      tab.querySelector(".tab__count").textContent = n;
+      tab.querySelector(".tab__count").textContent =
+        rijen.filter(function (r) { return r.dataset.filter === soort; }).length;
     });
   }
 
   zetTabTellers();
+
+  /* De actieve tab is hier een echte status, geen "alles": zonder dit staat de
+     lijst bij het openen vol terwijl de tab iets anders belooft. */
+  (function () {
+    var kop = document.querySelector('[data-view="orders"] .panel__head');
+    if (kop && kop.querySelector(".tab.is-active")) pasPaneelFilter(kop);
+  }());
 
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
   var pageAction = document.getElementById("page-action");
