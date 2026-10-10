@@ -3893,6 +3893,14 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* De tegels op de statistiekenpagina dragen een lijntje met het verloop.
    Alleen deze variant: de tegels bij kortingen en campagnes blijven zoals ze
    zijn, die tonen een percentage in plaats van een reeks. */
+/* Altijd twee bij twee. De inhoudskolom is afgetopt op --content-max (900px),
+   dus vier naast elkaar levert hoogstens 214px per tegel op en dan breekt
+   "Returning customer rate" over drie regels. Ook geen auto-fit: die maakt er
+   op tussenbreedtes drie van, en dan staat de vierde alleen op een rij. */
+.stats--spark { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 479px) {
+  .stats--spark { grid-template-columns: minmax(0, 1fr); }
+}
 .stat--spark { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; }
 .stat--spark .stat__body { min-width: 0; }
 .spark { width: 88px; height: 28px; flex: 0 0 auto; }
@@ -3908,5 +3916,13 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .stats__tools .chart__tools { margin-bottom: 0; }
 
 @media (max-width: 719px) {
-  .stats { grid-template-columns: minmax(0, 1fr); }
+  /* De tegels elders tellen nog wel op de vensterbreedte; .stats--spark regelt
+     zichzelf hierboven en moet daar niet door overruled worden. */
+  .stats:not(.stats--spark) { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Titel en waarde even groot en allebei zwart. Het verschil zit in het
+   gewicht, niet in de grootte; de hogere specificiteit houdt ook de kleinere
+   waarde van de 900px-regel buiten de deur. */
+.stat--spark .stat__label { color: var(--text-strong); }
+.stat--spark .stat__value { margin-top: 2px; font-size: var(--fs-sm); color: var(--text-strong); }
