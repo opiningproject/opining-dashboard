@@ -3898,7 +3898,10 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    "Returning customer rate" over drie regels. Ook geen auto-fit: die maakt er
    op tussenbreedtes drie van, en dan staat de vierde alleen op een rij. */
 .stats--spark { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-@media (max-width: 479px) {
+/* Een kolom zodra twee kolommen het label niet meer op een regel houden: dat
+   gebeurt onder ongeveer 600px inhoud, en zonder sidebar is dat een venster
+   van zo'n 632. Net erboven past het nog precies. */
+@media (max-width: 639px) {
   .stats--spark { grid-template-columns: minmax(0, 1fr); }
 }
 .stat--spark { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; }
