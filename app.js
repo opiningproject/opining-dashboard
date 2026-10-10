@@ -98,10 +98,20 @@
   var dashAnker  = dashKaart && dashKaart.nextSibling;
   var statsSlot  = document.getElementById("stats-chart-slot");
 
+  var statsTools = document.getElementById("stats-tools-slot");
+  var dashTools  = dashKaart && dashKaart.querySelector(".chart__tools");
+  var toolsAnker = dashTools && dashTools.nextSibling;
+
   function zetGrafiekOp(page) {
     if (!dashKaart || !statsSlot) return;
-    if (page === "analytics") statsSlot.appendChild(dashKaart);
-    else dashThuis.insertBefore(dashKaart, dashAnker);
+    if (page === "analytics") {
+      statsSlot.appendChild(dashKaart);
+      /* De kiezer hoort hier bij de pagina, boven de tegels, niet in de kaart. */
+      if (dashTools && statsTools) statsTools.appendChild(dashTools);
+    } else {
+      if (dashTools && toolsAnker) dashKaart.insertBefore(dashTools, toolsAnker);
+      dashThuis.insertBefore(dashKaart, dashAnker);
+    }
     /* In een verborgen view meet de kaart 0 breed, dus de tooltips konden hun
        plek niet bepalen; na de verhuizing opnieuw laten tekenen. */
     document.dispatchEvent(new CustomEvent("chart-herteken"));

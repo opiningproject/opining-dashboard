@@ -3889,3 +3889,24 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    erbij zou die midden tussen titel en potlood belanden. De titel neemt de
    vrije ruimte, zodat badge en potlood samen rechts staan. */
 .rev__head > .rev__title { margin-right: auto; }
+
+/* De tegels op de statistiekenpagina dragen een lijntje met het verloop.
+   Alleen deze variant: de tegels bij kortingen en campagnes blijven zoals ze
+   zijn, die tonen een percentage in plaats van een reeks. */
+.stat--spark { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; }
+.stat--spark .stat__body { min-width: 0; }
+.spark { width: 88px; height: 28px; flex: 0 0 auto; }
+/* De lijn schaalt mee met het vak, maar mag daardoor niet dikker worden. */
+.spark__line {
+  fill: none; stroke: var(--accent); stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* De periodekiezer staat hier boven de tegels; leeg is hij niets waard. */
+.stats__tools:empty { display: none; }
+.stats__tools .chart__tools { margin-bottom: 0; }
+
+@media (max-width: 719px) {
+  .stats { grid-template-columns: minmax(0, 1fr); }
+}
