@@ -72,6 +72,8 @@
     <!-- Zelfde lijndikte als i-search-filter ernaast: die staat op een 31x13
          raster en krimpt naar 26x11, waardoor zijn 1.6 als 1.34 uitkomt. Hier
          is de schaal 1, dus staat die 1.34 er gewoon. -->
+    <symbol id="i-view-board" viewBox="0 0 20 20"><rect x="2.6" y="3.4" width="4" height="13.2" rx="1.2"/><rect x="8" y="3.4" width="4" height="13.2" rx="1.2"/><rect x="13.4" y="3.4" width="4" height="13.2" rx="1.2"/></symbol>
+    <symbol id="i-view-list" viewBox="0 0 20 20"><rect x="3.4" y="2.6" width="13.2" height="4" rx="1.2"/><rect x="3.4" y="8" width="13.2" height="4" rx="1.2"/><rect x="3.4" y="13.4" width="13.2" height="4" rx="1.2"/></symbol>
     <symbol id="i-sort" viewBox="0 0 20 20" style="stroke-width:1.34"><path d="M6.3 4.6v10.8M3.7 12.8l2.6 2.6 2.6-2.6M13.7 15.4V4.6M11.1 7.2l2.6-2.6 2.6 2.6"/></symbol>
     <symbol id="i-arrow-up" viewBox="0 0 20 20"><path d="M10 16.2V4.4M5.4 9l4.6-4.6L14.6 9"/></symbol>
     <symbol id="i-arrow-down" viewBox="0 0 20 20"><path d="M10 3.8v11.8M5.4 11l4.6 4.6L14.6 11"/></symbol>
@@ -301,9 +303,16 @@
               </div>
             </div>
             <div class="page-head__tools" data-tools="orders" hidden>
-              <button class="btn btn--ghost page-head__action" type="button">
-                More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-              </button>
+              <!-- Twee standen voor dezelfde bestellingen: naast elkaar per status, of
+                   alles onder elkaar. -->
+              <div class="vswitch" role="group" aria-label="Layout">
+                <button class="vswitch__btn is-active" type="button" data-layout="board" aria-pressed="true" aria-label="Columns per status">
+                  <svg class="icon" aria-hidden="true"><use href="#i-view-board"/></svg>
+                </button>
+                <button class="vswitch__btn" type="button" data-layout="list" aria-pressed="false" aria-label="One list">
+                  <svg class="icon" aria-hidden="true"><use href="#i-view-list"/></svg>
+                </button>
+              </div>
             </div>
             <div class="page-head__tools" data-tools="analytics" hidden>
               <button class="btn btn--ghost page-head__action" type="button">
@@ -615,14 +624,6 @@
 
             <div class="panel panel--scroll">
               <div class="panel__head">
-                <!-- Tabs, net als op de menukaart: de stand van een bestelling staat zo meteen in beeld. -->
-                <div class="tabs">
-                  <!-- De aantallen komen uit de rijen zelf (app.js vult ze), zodat ze
-                       niet los van de lijst gaan leven. -->
-                  <button class="tab is-active" type="button" data-count="new">New <span class="tab__count"></span></button>
-                  <button class="tab" type="button" data-count="kitchen">Kitchen <span class="tab__count"></span></button>
-                  <button class="tab" type="button" data-count="delivering">Delivering <span class="tab__count"></span></button>
-                </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
@@ -647,75 +648,65 @@
                 </div>
               </div>
 
-              <div class="table-wrap">
-                <table class="table table--orders">
-                  <thead>
-                    <tr>
-                      <th>Destination</th>
-                      <th>Wished time</th>
-                      <th>Type</th>
-                      <th>Payment</th>
-                      <th>Move status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr data-filter="new">
-                      <td>Tochtstraat 40</td>
-                      <td><span class="when when--late">17:21<svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg></span></td>
-                      <td><span class="badge badge--muted">ASAP</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A36"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="new">
-                      <td>Collection order</td>
-                      <td><span class="when when--soon">17:32</span></td>
-                      <td><span class="badge badge--muted">ASAP</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A37"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="new">
-                      <td>Lusthofstraat 27A</td>
-                      <td><span class="when when--soon">17:32</span></td>
-                      <td><span class="badge badge--sched">Scheduled</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A26"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="kitchen">
-                      <td>1e Pijnackerstraat 120B</td>
-                      <td><span class="when">17:47</span></td>
-                      <td><span class="badge badge--muted">ASAP</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A38"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="kitchen">
-                      <td>Zwaanshals 299</td>
-                      <td><span class="when">17:51</span></td>
-                      <td><span class="badge badge--muted">ASAP</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A39"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="kitchen">
-                      <td>Restaurant</td>
-                      <td><span class="when">17:58</span></td>
-                      <td><span class="badge badge--muted">ASAP</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A40"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="delivering">
-                      <td>Tochtstraat 40</td>
-                      <td><span class="when">19:59</span></td>
-                      <td><span class="badge badge--sched">Scheduled</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A12"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="delivering">
-                      <td>Lusthofstraat 27A</td>
-                      <td><span class="when">21:30</span></td>
-                      <td><span class="badge badge--sched">Scheduled</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A07"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                </table>
+              <!-- Bestellingen als kaartjes, zodat dezelfde opbouw zowel naast
+                   elkaar (bord) als onder elkaar (lijst) kan staan; app.js wisselt
+                   alleen data-layout. -->
+              <div class="oboard" data-layout="board">
+                <section class="ocol group" data-status="new" data-noun="order">
+                  <h3 class="ocol__head">New <span class="group__count ocol__count">3</span></h3>
+                  <ul class="ocol__list">
+                  <li class="ocard" data-filter="new">
+                    <p class="ocard__dest">Tochtstraat 40</p>
+                    <p class="ocard__meta"><span class="when when--late">17:21<svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg></span><span class="badge badge--muted">ASAP</span><span class="ocard__pay">&euro;73.59</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A36"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  <li class="ocard" data-filter="new">
+                    <p class="ocard__dest">Collection order</p>
+                    <p class="ocard__meta"><span class="when when--soon">17:32</span><span class="badge badge--muted">ASAP</span><span class="ocard__pay">&euro;73.59</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A37"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  <li class="ocard" data-filter="new">
+                    <p class="ocard__dest">Lusthofstraat 27A</p>
+                    <p class="ocard__meta"><span class="when when--soon">17:32</span><span class="badge badge--sched">Scheduled</span><span class="ocard__pay">&euro;73.59</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A26"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  </ul>
+                </section>
+                <section class="ocol group" data-status="kitchen" data-noun="order">
+                  <h3 class="ocol__head">Kitchen <span class="group__count ocol__count">3</span></h3>
+                  <ul class="ocol__list">
+                  <li class="ocard" data-filter="kitchen">
+                    <p class="ocard__dest">1e Pijnackerstraat 120B</p>
+                    <p class="ocard__meta"><span class="when">17:47</span><span class="badge badge--muted">ASAP</span><span class="ocard__pay">&euro;73.59</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A38"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  <li class="ocard" data-filter="kitchen">
+                    <p class="ocard__dest">Zwaanshals 299</p>
+                    <p class="ocard__meta"><span class="when">17:51</span><span class="badge badge--muted">ASAP</span><span class="ocard__pay">&euro;73.59</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A39"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  <li class="ocard" data-filter="kitchen">
+                    <p class="ocard__dest">Restaurant</p>
+                    <p class="ocard__meta"><span class="when">17:58</span><span class="badge badge--muted">ASAP</span><span class="ocard__pay">&euro;73.59</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A40"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  </ul>
+                </section>
+                <section class="ocol group" data-status="delivering" data-noun="order">
+                  <h3 class="ocol__head">Delivering <span class="group__count ocol__count">2</span></h3>
+                  <ul class="ocol__list">
+                  <li class="ocard" data-filter="delivering">
+                    <p class="ocard__dest">Tochtstraat 40</p>
+                    <p class="ocard__meta"><span class="when">19:59</span><span class="badge badge--sched">Scheduled</span><span class="ocard__pay">&euro;73.59</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A12"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  <li class="ocard" data-filter="delivering">
+                    <p class="ocard__dest">Lusthofstraat 27A</p>
+                    <p class="ocard__meta"><span class="when">21:30</span><span class="badge badge--sched">Scheduled</span><span class="ocard__pay">&euro;73.59</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A07"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  </ul>
+                </section>
               </div>
 
               <nav class="panel__foot pager" aria-label="Order pages">

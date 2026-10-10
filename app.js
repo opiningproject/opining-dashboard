@@ -525,7 +525,9 @@
       var overLijst = 0;
       groepen.forEach(function (groep) {
         var zichtbaar = 0;
-        groep.querySelectorAll(".prod").forEach(function (rij) {
+        /* De menukaart heeft .prod, de bestellingen .ocard; verder is het
+           filteren identiek. */
+        groep.querySelectorAll(".prod, .ocard").forEach(function (rij) {
           var tekst = rijTekst(rij);
           var past = (!zoek || tekst.indexOf(zoek) !== -1) && eisen.every(function (groepEis) {
             return groepEis.some(function (waarde) { return tekst.indexOf(waarde) !== -1; });
@@ -537,8 +539,10 @@
         var teller = groep.querySelector(".group__count");
         if (teller) {
           if (teller.dataset.vast === undefined) teller.dataset.vast = teller.textContent;
+          /* De bestellingen noemen zichzelf anders dan de menukaart. */
+          var woord = groep.dataset.noun || "product";
           teller.textContent = (zoek || eisen.length)
-            ? zichtbaar + (zichtbaar === 1 ? " product" : " products")
+            ? zichtbaar + " " + woord + (zichtbaar === 1 ? "" : "s")
             : teller.dataset.vast;
         }
         overLijst += zichtbaar;
@@ -1631,50 +1635,44 @@
     if (kop) pasPaneelFilter(kop);
   });
 
-  /* ---- Aantallen in de tabs van de live bestellingen ----------------------
-     De tabs filteren op de status die elke rij in data-filter draagt; het
-     aantal komt uit diezelfde rijen in plaats van in de HTML te staan, zodat
-     teller en lijst niet uit elkaar kunnen lopen. */
-  function zetTabTellers() {
-    var paneel = document.querySelector('[data-view="orders"] .panel');
-    if (!paneel) return;
-    var rijen = [].slice.call(paneel.querySelectorAll("tbody tr[data-filter]"));
-    paneel.querySelectorAll(".tab[data-count]").forEach(function (tab) {
-      var soort = tab.dataset.count;
-      tab.querySelector(".tab__count").textContent =
-        rijen.filter(function (r) { return r.dataset.filter === soort; }).length;
+  /* ---- Live bestellingen: bord of lijst ----------------------------------
+     Beide standen tonen dezelfde kaartjes; alleen de richting van het rooster
+     verschilt. De schakelaar in de titelregel zet data-layout. */
+  var bord = document.querySelector(".oboard");
+
+  document.addEventListener("click", function (e) {
+    var knop = e.target.closest(".vswitch__btn");
+    if (!knop || !bord) return;
+    knop.closest(".vswitch").querySelectorAll(".vswitch__btn").forEach(function (b) {
+      b.classList.remove("is-active");
+      b.setAttribute("aria-pressed", "false");
+    });
+    knop.classList.add("is-active");
+    knop.setAttribute("aria-pressed", "true");
+    bord.dataset.layout = knop.dataset.layout;
+  });
+
+  /* Het aantal per kolom komt uit de kaartjes zelf, zodat kop en lijst niet
+     uit elkaar kunnen lopen. */
+  function zetKolomTellers() {
+    if (!bord) return;
+    bord.querySelectorAll(".ocol").forEach(function (kolom) {
+      var teller = kolom.querySelector(".ocol__count");
+      if (teller) teller.textContent = kolom.querySelectorAll(".ocard").length;
     });
   }
 
-  zetTabTellers();
-
-  /* Bij het laden draait pasPaneelFilter niet voor elk paneel, dus de pagers
-     hier een keer langs; anders staat er een voet onder een korte lijst. */
-  document.querySelectorAll(".panel").forEach(function (panel) {
-    if (panel.querySelector(".pager")) {
-      zetPagerZichtbaar(panel, panel.querySelectorAll("tbody tr").length);
-    }
-  });
-
-  /* De actieve tab is hier een echte status, geen "alles": zonder dit staat de
-     lijst bij het openen vol terwijl de tab iets anders belooft. */
-  (function () {
-    var kop = document.querySelector('[data-view="orders"] .panel__head');
-    if (kop && kop.querySelector(".tab.is-active")) pasPaneelFilter(kop);
-  }());
-
   /* ---- Een bestelling een stap verder zetten ------------------------------
-     De knop in de kolom Move status zegt waar de bestelling naartoe gaat, niet
-     waar hij nu staat: vanuit New naar Kitchen, vanuit Kitchen naar Delivering,
-     en vanuit Delivering het archief in. Het label komt uit de status van de
-     rij, zodat knop en rij niet uit elkaar kunnen lopen. */
+     De knop zegt waar de bestelling naartoe gaat, niet waar hij nu staat:
+     vanuit New naar Kitchen, vanuit Kitchen naar Delivering, en vanuit
+     Delivering het archief in. Het label komt uit de kaart zelf. */
   var VOLGENDE = { "new": "kitchen", kitchen: "delivering", delivering: "archief" };
   var STAPNAAM = { kitchen: "Kitchen", delivering: "Delivering", archief: "Archive" };
 
-  function zetStapKnop(rij) {
-    var knop = rij.querySelector(".rowact .btn--accent");
+  function zetStapKnop(kaart) {
+    var knop = kaart.querySelector(".rowact .btn--accent");
     if (!knop) return;
-    var doel = VOLGENDE[rij.dataset.filter];
+    var doel = VOLGENDE[kaart.dataset.filter];
     if (!doel) { knop.hidden = true; return; }
     knop.hidden = false;
     /* Alleen het tekstdeel vervangen; de chevron erachter blijft staan. */
@@ -1683,12 +1681,13 @@
   }
 
   /* Het archief toont andere kolommen dan de live lijst, dus de rij wordt daar
-     opnieuw opgebouwd uit wat we hebben. Wie de bezorger was weten we op dit
-     punt niet, vandaar een streepje in plaats van een verzonnen naam. */
-  function naarArchief(rij) {
+     opnieuw opgebouwd uit wat de kaart draagt. Wie bezorgd heeft weten we op
+     dit punt niet, vandaar een streepje in plaats van een verzonnen naam. */
+  function naarArchief(kaart) {
     var romp = document.querySelector('[data-view="archive"] tbody');
     if (!romp) return;
-    var tijd = (rij.cells[1].textContent.match(/\d{1,2}:\d{2}/) || [""])[0];
+    var meta = kaart.querySelector(".ocard__meta");
+    var tijd = (meta.textContent.match(/\d{1,2}:\d{2}/) || [""])[0];
     var nieuw = document.createElement("tr");
     nieuw.setAttribute("data-filter", "today last 7 days last 30 days");
     nieuw.innerHTML =
@@ -1696,37 +1695,41 @@
       '<td><span class="when"><span class="when__day">Today</span></span></td>' +
       '<td></td>' +
       '<td><span class="badge badge--muted">&mdash;</span></td>';
-    nieuw.cells[0].textContent = rij.cells[0].textContent.trim();
+    nieuw.cells[0].textContent = kaart.querySelector(".ocard__dest").textContent.trim();
     nieuw.cells[1].querySelector(".when").append(tijd);
-    nieuw.cells[2].textContent = rij.cells[3].textContent.trim();
+    nieuw.cells[2].textContent = kaart.querySelector(".ocard__pay").textContent.trim();
     romp.insertBefore(nieuw, romp.firstChild);
   }
 
   document.addEventListener("click", function (e) {
-    var knop = e.target.closest('[data-view="orders"] .rowact .btn--accent');
+    var knop = e.target.closest(".ocard .rowact .btn--accent");
     if (!knop) return;
-    var rij = knop.closest("tr[data-filter]");
-    var doel = VOLGENDE[rij.dataset.filter];
+    var kaart = knop.closest(".ocard");
+    var doel = VOLGENDE[kaart.dataset.filter];
     if (!doel) return;
 
-    var naam = rij.cells[0].textContent.trim();
+    var naam = kaart.querySelector(".ocard__dest").textContent.trim();
     if (doel === "archief") {
-      naarArchief(rij);
-      rij.remove();
+      naarArchief(kaart);
+      kaart.remove();
     } else {
-      rij.dataset.filter = doel;
-      zetStapKnop(rij);
+      /* De kaart verhuist naar de kolom van zijn nieuwe status; in de
+         lijststand is dat dezelfde beweging, alleen verticaal. */
+      kaart.dataset.filter = doel;
+      zetStapKnop(kaart);
+      var lijst = bord.querySelector('.ocol[data-status="' + doel + '"] .ocol__list');
+      if (lijst) lijst.appendChild(kaart);
     }
 
-    zetTabTellers();
-    var kop = document.querySelector('[data-view="orders"] .panel__head');
-    if (kop) pasPaneelFilter(kop);
+    zetKolomTellers();
     showToast(doel === "archief" ? naam + " archived" : naam + " moved to " + STAPNAAM[doel]);
   });
 
-  /* Na de declaraties hierboven: de labels staan in de HTML allemaal op
-     Kitchen en moeten bij het laden al kloppen met de status van hun rij. */
-  document.querySelectorAll('[data-view="orders"] tbody tr[data-filter]').forEach(zetStapKnop);
+  if (bord) {
+    bord.querySelectorAll(".ocard").forEach(zetStapKnop);
+    zetKolomTellers();
+  }
+
 
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
   var pageAction = document.getElementById("page-action");

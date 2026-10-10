@@ -3943,3 +3943,55 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 #stats-chart-slot .metric:hover,
 #stats-chart-slot .metric.is-active { background: none; }
 #stats-chart-slot .metric { padding-left: 0; cursor: default; }
+
+/* ==========================================================================
+   LIVE BESTELLINGEN — bord of lijst
+   Dezelfde kaartjes in beide standen; alleen de richting van het rooster
+   verschilt, zodat er niet twee opbouwen naast elkaar bestaan.
+   ========================================================================== */
+.oboard { display: grid; gap: 14px; padding: 14px; }
+.oboard[data-layout="board"] { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+.oboard[data-layout="list"]  { grid-template-columns: minmax(0, 1fr); }
+/* Drie smalle kolommen worden onleesbaar op een klein scherm; daar altijd
+   onder elkaar, wat de schakelaar daar ook zegt. */
+@media (max-width: 899px) {
+  .oboard[data-layout="board"] { grid-template-columns: minmax(0, 1fr); }
+}
+
+.ocol { min-width: 0; }
+.ocol__head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 8px; padding: 0 2px;
+  font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
+}
+.ocol__count { font-weight: 500; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.ocol__list { display: flex; flex-direction: column; gap: 8px; }
+.ocol:has(.ocard[hidden]:only-child) .ocol__list { display: none; }
+
+.ocard {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  transition: border-color var(--dur) var(--ease);
+}
+.ocard:hover { border-color: var(--border-strong); }
+.ocard__dest { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.ocard__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: var(--fs-sm); color: var(--text-muted); }
+.ocard__pay { font-variant-numeric: tabular-nums; color: var(--text); }
+/* De knoppen onderaan de kaart, met de puntjes helemaal rechts. */
+.ocard .rowact { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+.ocard .rowact .btn--accent { margin-right: auto; }
+
+/* De schakelaar in de titelregel: twee standen in een omhulsel. */
+.vswitch { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--bg-surface); }
+.vswitch__btn {
+  display: grid; place-items: center;
+  width: 32px; height: 30px;
+  border-radius: calc(var(--r-md) - 3px);
+  color: var(--text-muted);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.vswitch__btn:hover { background: var(--gray-50); color: var(--text); }
+.vswitch__btn.is-active { background: var(--gray-100); color: var(--text-strong); }
