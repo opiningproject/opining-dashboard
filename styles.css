@@ -3935,3 +3935,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    dit geldt alleen zolang hij hier staat. */
 #stats-chart-slot .metrics { grid-template-columns: max-content; }
 #stats-chart-slot .metric:not([data-metric="revenue"]) { display: none; }
+/* Met een keuze valt er niets te kiezen: geen vlak, geen hover, en links
+   uitgelijnd op de rest van de kaart in plaats van ingesprongen. */
+#stats-chart-slot .metric,
+#stats-chart-slot .metric:hover,
+#stats-chart-slot .metric.is-active { background: none; }
+#stats-chart-slot .metric { padding-left: 0; cursor: default; }
