@@ -1644,6 +1644,71 @@
     if (kop && kop.querySelector(".tab.is-active")) pasPaneelFilter(kop);
   }());
 
+  /* ---- Een bestelling een stap verder zetten ------------------------------
+     De knop in de kolom Move status zegt waar de bestelling naartoe gaat, niet
+     waar hij nu staat: vanuit New naar Kitchen, vanuit Kitchen naar Delivering,
+     en vanuit Delivering het archief in. Het label komt uit de status van de
+     rij, zodat knop en rij niet uit elkaar kunnen lopen. */
+  var VOLGENDE = { "new": "kitchen", kitchen: "delivering", delivering: "archief" };
+  var STAPNAAM = { kitchen: "Kitchen", delivering: "Delivering", archief: "Archive" };
+
+  function zetStapKnop(rij) {
+    var knop = rij.querySelector(".rowact .btn--accent");
+    if (!knop) return;
+    var doel = VOLGENDE[rij.dataset.filter];
+    if (!doel) { knop.hidden = true; return; }
+    knop.hidden = false;
+    /* Alleen het tekstdeel vervangen; de chevron erachter blijft staan. */
+    knop.firstChild.nodeValue = STAPNAAM[doel] + " ";
+    knop.setAttribute("aria-label", "Move to " + STAPNAAM[doel]);
+  }
+
+  /* Het archief toont andere kolommen dan de live lijst, dus de rij wordt daar
+     opnieuw opgebouwd uit wat we hebben. Wie de bezorger was weten we op dit
+     punt niet, vandaar een streepje in plaats van een verzonnen naam. */
+  function naarArchief(rij) {
+    var romp = document.querySelector('[data-view="archive"] tbody');
+    if (!romp) return;
+    var tijd = (rij.cells[1].textContent.match(/\d{1,2}:\d{2}/) || [""])[0];
+    var nieuw = document.createElement("tr");
+    nieuw.setAttribute("data-filter", "today last 7 days last 30 days");
+    nieuw.innerHTML =
+      '<td></td>' +
+      '<td><span class="when"><span class="when__day">Today</span></span></td>' +
+      '<td></td>' +
+      '<td><span class="badge badge--muted">&mdash;</span></td>';
+    nieuw.cells[0].textContent = rij.cells[0].textContent.trim();
+    nieuw.cells[1].querySelector(".when").append(tijd);
+    nieuw.cells[2].textContent = rij.cells[3].textContent.trim();
+    romp.insertBefore(nieuw, romp.firstChild);
+  }
+
+  document.addEventListener("click", function (e) {
+    var knop = e.target.closest('[data-view="orders"] .rowact .btn--accent');
+    if (!knop) return;
+    var rij = knop.closest("tr[data-filter]");
+    var doel = VOLGENDE[rij.dataset.filter];
+    if (!doel) return;
+
+    var naam = rij.cells[0].textContent.trim();
+    if (doel === "archief") {
+      naarArchief(rij);
+      rij.remove();
+    } else {
+      rij.dataset.filter = doel;
+      zetStapKnop(rij);
+    }
+
+    zetTabTellers();
+    var kop = document.querySelector('[data-view="orders"] .panel__head');
+    if (kop) pasPaneelFilter(kop);
+    showToast(doel === "archief" ? naam + " archived" : naam + " moved to " + STAPNAAM[doel]);
+  });
+
+  /* Na de declaraties hierboven: de labels staan in de HTML allemaal op
+     Kitchen en moeten bij het laden al kloppen met de status van hun rij. */
+  document.querySelectorAll('[data-view="orders"] tbody tr[data-filter]').forEach(zetStapKnop);
+
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
   var pageAction = document.getElementById("page-action");
   var pageActionLabel = document.getElementById("page-action-label");
