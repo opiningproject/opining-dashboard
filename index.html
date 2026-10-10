@@ -617,10 +617,12 @@
               <div class="panel__head">
                 <!-- Tabs, net als op de menukaart: de stand van een bestelling staat zo meteen in beeld. -->
                 <div class="tabs">
-                  <button class="tab is-active" type="button">All</button>
-                  <button class="tab" type="button">New</button>
-                  <button class="tab" type="button">Kitchen</button>
-                  <button class="tab" type="button">Delivering</button>
+                  <!-- De aantallen komen uit de rijen zelf (app.js vult ze), zodat ze
+                       niet los van de lijst gaan leven. -->
+                  <button class="tab is-active" type="button" data-count="all">All <span class="tab__count"></span></button>
+                  <button class="tab" type="button" data-count="new">New <span class="tab__count"></span></button>
+                  <button class="tab" type="button" data-count="kitchen">Kitchen <span class="tab__count"></span></button>
+                  <button class="tab" type="button" data-count="delivering">Delivering <span class="tab__count"></span></button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
