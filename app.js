@@ -148,6 +148,8 @@
       swapIcon(document.getElementById("empty-icon"), icon);
     }
     syncPageAction(page);
+    /* Wie op een bepaalde pagina iets te regelen heeft, hoort het hier. */
+    document.dispatchEvent(new CustomEvent("pagina", { detail: page }));
     /* Archive hangt onder Orders: de groep staat open zodra je op een van
        beide staat. Anders dan Menu navigeert de ouder hier wél zelf. */
     ordersGroup.classList.toggle("is-open", page === "orders" || page === "archive");
@@ -1661,7 +1663,18 @@
     knop.classList.add("is-active");
     knop.setAttribute("aria-pressed", "true");
     bord.dataset.layout = knop.dataset.layout;
+    zetBordStand();
   });
+
+  /* Naast elkaar schuift elke kolom apart in plaats van de pagina als geheel.
+     Dat raakt de hele opmaak van .content tot de lijst, dus het staat als
+     stand op <html>, net als de lade en de zoekstand. */
+  function zetBordStand() {
+    var view = bord && bord.closest(".view");
+    var aan = !!view && !view.hidden && bord.dataset.layout === "board";
+    document.documentElement.toggleAttribute("data-board", aan);
+  }
+  document.addEventListener("pagina", zetBordStand);
 
   /* Het aantal per kolom komt uit de kaartjes zelf, zodat kop en lijst niet
      uit elkaar kunnen lopen. */
@@ -1739,6 +1752,7 @@
   if (bord) {
     bord.querySelectorAll(".ocard").forEach(zetStapKnop);
     zetKolomTellers();
+    zetBordStand();
   }
 
 

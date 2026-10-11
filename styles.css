@@ -4008,3 +4008,42 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    brede icoon houdt zijn verhouding. */
 .page-head__tools .panel__tool { margin-left: 0; }
 .page-head__tools .icon--wide { width: 26px; height: 11px; }
+
+/* De status en zijn aantal horen bij elkaar; ze stonden aan weerszijden van
+   de kolom uit elkaar getrokken. */
+.ocol__tag { display: inline-flex; align-items: center; gap: 6px; }
+.ocol__count {
+  margin-left: 0;
+  padding: 0 7px;
+  border-radius: var(--r-full);
+  background: var(--gray-100);
+  font-size: var(--fs-sm);
+  line-height: 20px;
+}
+
+/* ---- Elke kolom zijn eigen schuifbalk ------------------------------------
+   Naast elkaar schuift niet de pagina maar elke kolom apart: de drie koppen
+   blijven in beeld en een lange kolom duwt de andere niet weg. Schuiven kan
+   alleen binnen een vaste hoogte, dus die loopt van .content tot de lijst.
+   Onder elkaar vervalt het: dan is de pagina zelf de lijst. */
+@media (min-width: 900px) {
+  [data-board] .content { display: flex; flex-direction: column; overflow: hidden; }
+  [data-board] .content__inner { display: flex; flex-direction: column; flex: 1 1 auto; width: 100%; min-height: 0; }
+  [data-board] .view[data-view="orders"] { flex: 1 1 auto; min-height: 0; }
+  [data-board] .view[data-view="orders"] > .panel { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+  [data-board] .oboard { flex: 1 1 auto; min-height: 0; }
+  /* De kolommen lopen tot onderaan in plaats van tot hun laatste kaartje. */
+  [data-board] .oboard[data-layout="board"] { align-items: stretch; }
+  [data-board] .ocol { display: flex; flex-direction: column; min-height: 0; }
+  /* Een schuifbalk neemt breedte van de inhoud af. stable houdt die ruimte in
+     elke kolom vrij, ook de kolommen die niet schuiven, anders zouden de
+     kaartjes per kolom verschillen; de negatieve marge legt die ruimte in de
+     tussenruimte, zodat de kaartjes hun breedte houden. */
+  [data-board] .ocol__list {
+    flex: 1 1 auto; min-height: 0;
+    overflow-y: auto;
+    margin-right: -10px;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+}
