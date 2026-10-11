@@ -1710,8 +1710,8 @@
   function naarArchief(kaart) {
     var romp = document.querySelector('[data-view="archive"] tbody');
     if (!romp) return;
-    var meta = kaart.querySelector(".ocard__meta");
-    var tijd = (meta.textContent.match(/\d{1,2}:\d{2}/) || [""])[0];
+    /* Een ASAP-kaart noemt geen tijd; de bestelling heeft er wel een. */
+    var tijd = kaart.dataset.when || "";
     var nieuw = document.createElement("tr");
     nieuw.setAttribute("data-filter", "today last 7 days last 30 days");
     nieuw.innerHTML =
