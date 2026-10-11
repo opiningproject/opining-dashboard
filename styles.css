@@ -3979,7 +3979,17 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .ocard:hover { border-color: var(--border-strong); }
 .ocard__dest { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
 .ocard__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: var(--fs-sm); color: var(--text-muted); }
-.ocard__pay { font-variant-numeric: tabular-nums; color: var(--text); }
+/* Dezelfde twee merkjes als in de POS-app, en op dezelfde plek: direct onder
+   het adres, zodat nu-of-later het eerste is wat je per kaart ziet. Wit voor
+   zo snel mogelijk, paars voor een afgesproken tijd. */
+.ocard__when {
+  padding: 2px 6px;
+  border: 1.5px solid transparent;
+  border-radius: 4px;
+  font-size: 12px; font-weight: 600; line-height: 1.3;
+}
+.ocard__when--asap  { border-color: #f0f0f0; background: #fff; color: #888; }
+.ocard__when--sched { background: #faedff; color: #220038; }
 /* De knoppen onderaan de kaart, met de puntjes helemaal rechts. */
 .ocard .rowact { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
 .ocard .rowact .btn--accent { margin-right: auto; }

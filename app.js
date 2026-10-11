@@ -1721,7 +1721,8 @@
       '<td><span class="badge badge--muted">&mdash;</span></td>';
     nieuw.cells[0].textContent = kaart.querySelector(".ocard__dest").textContent.trim();
     nieuw.cells[1].querySelector(".when").append(tijd);
-    nieuw.cells[2].textContent = kaart.querySelector(".ocard__pay").textContent.trim();
+    /* De kaart toont het bedrag niet meer; het staat er wel op. */
+    nieuw.cells[2].textContent = kaart.dataset.pay || "";
     romp.insertBefore(nieuw, romp.firstChild);
   }
 
