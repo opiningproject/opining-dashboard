@@ -3957,6 +3957,12 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 @media (max-width: 899px) {
   .oboard[data-layout="board"] { grid-template-columns: minmax(0, 1fr); }
 }
+/* Een kolom is ook een .group, en die trekt een streep tussen opeenvolgende
+   groepen. Onder elkaar scheidt die streep de statussen; naast elkaar doet de
+   tussenruimte dat al en liep hij dwars over het bord. */
+@media (min-width: 900px) {
+  .oboard[data-layout="board"] .ocol + .ocol { border-top: 0; }
+}
 
 .ocol { min-width: 0; }
 .ocol__head {
@@ -3983,13 +3989,20 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    het adres, zodat nu-of-later het eerste is wat je per kaart ziet. Wit voor
    zo snel mogelijk, paars voor een afgesproken tijd. */
 .ocard__when {
+  display: inline-flex; align-items: center; gap: 4px;
   padding: 2px 6px;
   border: 1.5px solid transparent;
   border-radius: 4px;
   font-size: 12px; font-weight: 600; line-height: 1.3;
+  font-variant-numeric: tabular-nums;
 }
+.ocard__when .icon { width: 14px; height: 14px; }
 .ocard__when--asap  { border-color: #f0f0f0; background: #fff; color: #888; }
 .ocard__when--sched { background: #faedff; color: #220038; }
+/* Bij zo snel mogelijk zegt de tijd zelf hoe dringend het is; een afgesproken
+   tijd is geen haast, dus die blijft paars. */
+.ocard__when--soon { color: #9c4d16; }
+.ocard__when--late { border-color: #f6d9d7; color: var(--danger); }
 /* De knoppen onderaan de kaart, met de puntjes helemaal rechts. */
 .ocard .rowact { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
 .ocard .rowact .btn--accent { margin-right: auto; }
