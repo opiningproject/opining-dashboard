@@ -3995,3 +3995,16 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 }
 .vswitch__btn:hover { background: var(--gray-50); color: var(--text); }
 .vswitch__btn.is-active { background: var(--gray-100); color: var(--text-strong); }
+
+/* Zonder vlak eromheen: de kolommen staan rechtstreeks op de pagina, zodat de
+   kop- en voetbalk vervallen en de kaartjes de volle breedte krijgen. */
+.panel--bare { border: 0; border-radius: 0; background: none; overflow: visible; }
+.panel--bare > .oboard { padding: 0; }
+/* De balk bestaat alleen nog als plek voor de zoekstand. */
+.panel__head--bare:not(.is-searching) { display: none; }
+.panel__head--bare.is-searching { padding: 0 0 14px; border-bottom: 0; }
+
+/* De zoekknop verhuisde naar de titelregel: daar geen eigen uitlijning, en het
+   brede icoon houdt zijn verhouding. */
+.page-head__tools .panel__tool { margin-left: 0; }
+.page-head__tools .icon--wide { width: 26px; height: 11px; }

@@ -303,6 +303,11 @@
               </div>
             </div>
             <div class="page-head__tools" data-tools="orders" hidden>
+              <!-- De zoekstand hoort bij de lijst eronder; data-head wijst naar de
+                   balk waarin hij openklapt. -->
+              <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders" data-head="#orders-search">
+                <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+              </button>
               <!-- Twee standen voor dezelfde bestellingen: naast elkaar per status, of
                    alles onder elkaar. -->
               <div class="vswitch" role="group" aria-label="Layout">
@@ -622,12 +627,10 @@
           <!-- ---------- VIEW: orders ---------- -->
           <section class="view" data-view="orders" hidden>
 
-            <div class="panel panel--scroll">
-              <div class="panel__head">
-                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders">
-                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
-                </button>
-                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
+            <div class="panel panel--bare">
+              <div class="panel__head panel__head--bare" id="orders-search">
+                <!-- Alleen zichtbaar zolang er gezocht wordt; de knop ervoor staat
+                     op de titelregel. -->
                 <div class="psearch" data-filters="Payment:Paid online|Cash;Order type:Delivery|Takeaway">
                   <div class="psearch__top">
                     <span class="psearch__field">
@@ -708,14 +711,6 @@
                   </ul>
                 </section>
               </div>
-
-              <nav class="panel__foot pager" aria-label="Order pages">
-                <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled>
-                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
-                <button class="icon-btn pager__btn" type="button" aria-label="Next page">
-                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
-                <p class="pager__count"><b>1&ndash;8</b> of 12</p>
-              </nav>
             </div>
           </section>
 

@@ -397,6 +397,17 @@
   }
 
   /* De actieve inperking: bij Orders een statusfilter, elders de gekozen tab. */
+  /* De zoekknop staat meestal in de kopbalk zelf; bij de bestellingen staat hij
+     op de titelregel en wijst hij met data-head naar de balk die hij opent. */
+  function kopVan(knop) {
+    return knop.dataset.head ? document.querySelector(knop.dataset.head)
+                             : knop.closest(".panel__head");
+  }
+  function knopVan(kop) {
+    return kop.querySelector(".panel__tool")
+        || document.querySelector('.panel__tool[data-head="#' + kop.id + '"]');
+  }
+
   function actieveInperking(kop) {
     var s = kop.querySelector(".sfilter__label");
     if (s) return s.textContent.trim();
@@ -595,13 +606,13 @@
     sluitFilterMenus();
     syncClearAll(kop.querySelector(".psearch"));
     pasPaneelFilter(kop);
-    kop.querySelector(".panel__tool").focus();
+    knopVan(kop).focus();
   }
 
   document.addEventListener("click", function (e) {
     var open = e.target.closest(".panel__tool");
     if (open) {
-      var kop = open.closest(".panel__head");
+      var kop = kopVan(open);
       var psearch = kop.querySelector(".psearch");
       kop.classList.add("is-searching");
 
