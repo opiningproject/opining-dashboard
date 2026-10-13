@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=362" />
+  <link rel="stylesheet" href="styles.css?v=363" />
 </head>
 <body>
 
@@ -374,7 +374,7 @@
             <div class="card" id="dash-chart">
               <!-- De periode en de vergelijking gelden voor deze kaart, dus de twee
                    kiezers staan erin en niet op de titelregel. -->
-              <div class="chart__tools">
+              <div class="chart__tools" hidden>
                 <div class="dpick" id="dash-range">
                   <button class="dpick__btn" type="button" aria-haspopup="dialog" aria-expanded="false">
                     <svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>
@@ -501,7 +501,7 @@
                    onder komt te staan. -->
               <div class="metrics">
                 <button class="metric is-active" type="button" data-metric="revenue" aria-pressed="true">
-                  <span class="metric__label">Revenue</span>
+                  <span class="metric__label">Earned today</span>
                   <span class="metric__row"><span class="metric__value">&euro; 16.350</span><span class="delta delta--up"><svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>9,4%</span></span>
                 </button>
                 <button class="metric" type="button" data-metric="orders" aria-pressed="false">
@@ -6116,6 +6116,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=362"></script>
+  <script src="app.js?v=363"></script>
 </body>
 </html>

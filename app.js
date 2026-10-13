@@ -104,17 +104,34 @@
 
   function zetGrafiekOp(page) {
     if (!dashKaart || !statsSlot) return;
+    /* Omzet heet op het dashboard naar wat het daar is: wat er vandaag is
+       binnengekomen. Op Analytics kan de periode een jaar zijn, dus daar heet
+       het weer gewoon omzet. */
+    var omzetTab = dashKaart.querySelector('.metric[data-metric="revenue"]');
+    var omzetNaam = omzetTab && omzetTab.querySelector(".metric__label");
+
     if (page === "analytics") {
       statsSlot.appendChild(dashKaart);
-      /* De kiezer hoort hier bij de pagina, boven de tegels, niet in de kaart. */
-      if (dashTools && statsTools) statsTools.appendChild(dashTools);
+      /* De kiezer hoort hier bij de pagina, boven de tegels, niet in de kaart.
+         Op het dashboard staat hij er niet, dus daar is hij ook verborgen. */
+      if (dashTools && statsTools) { statsTools.appendChild(dashTools); dashTools.hidden = false; }
+      if (omzetNaam) omzetNaam.textContent = "Revenue";
       /* Hier is omzet de enige keuze; stond de grafiek op een andere metriek,
          dan zou de verborgen keuze blijven staan. */
-      var omzet = dashKaart.querySelector('.metric[data-metric="revenue"]');
-      if (omzet && !omzet.classList.contains("is-active")) omzet.click();
+      if (omzetTab && !omzetTab.classList.contains("is-active")) omzetTab.click();
     } else {
       if (dashTools && toolsAnker) dashKaart.insertBefore(dashTools, toolsAnker);
       dashThuis.insertBefore(dashKaart, dashAnker);
+      if (omzetNaam) omzetNaam.textContent = "Earned today";
+      /* Zonder kiezers hoort de grafiek hier vandaag te laten zien. Wat je op
+         Analytics koos blijft anders staan, en dat kun je hier niet zien en
+         niet terugzetten. */
+      if (dashTools) {
+        dashTools.hidden = true;
+        var geenVerg = dashTools.querySelector('[data-cmp="none"]');
+        if (geenVerg && !geenVerg.classList.contains("is-active")) geenVerg.click();
+        document.dispatchEvent(new CustomEvent("grafiek-vandaag"));
+      }
     }
     /* In een verborgen view meet de kaart 0 breed, dus de tooltips konden hun
        plek niet bepalen; na de verhuizing opnieuw laten tekenen. */
@@ -6520,6 +6537,15 @@
     }
 
     knop.addEventListener("click", function () { openPaneel(paneel.hidden); });
+
+    /* Het dashboard toont geen kiezers, dus hoort de grafiek daar weer over
+       vandaag te gaan. Een preset aanklikken zet de keuze alleen klaar in het
+       paneel; hier gaat hij meteen in. */
+    document.addEventListener("grafiek-vandaag", function () {
+      zetSnel("today");
+      bereik = { van: kies.van, tot: kies.tot };
+      toon();
+    });
 
     paneel.addEventListener("click", function (e) {
       var preset = e.target.closest(".dpick__preset");
