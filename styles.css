@@ -599,14 +599,14 @@ select.input {
    maar één ding in. */
 .taking { display: flex; align-items: center; gap: 16px; padding: 16px 20px; }
 /* Wat er ligt, met het teken van de bestellingenpagina ervoor. */
-.taking__open { display: flex; align-items: center; gap: 10px; font-size: var(--fs-md); color: var(--text-strong); }
+.taking__open { display: flex; align-items: center; gap: 10px; width: 100%; font-size: var(--fs-md); color: var(--text-strong); }
+/* Het pijltje helemaal rechts, zoals overal waar een regel je ergens heen
+   brengt. */
+.taking__go { margin-left: auto; width: 18px; height: 18px; color: var(--text-muted); }
 .taking__open .icon { width: 20px; height: 20px; color: var(--text-muted); }
 .taking__open b { font-weight: 600; }
 .taking__open:hover { color: var(--accent); }
 .taking__open:hover .icon { color: var(--accent); }
-/* Neemt de zaak niets meer aan, dan is wat er ligt ook niet meer in beweging. */
-.taking.is-off .taking__open { color: var(--text-muted); }
-.taking .switch { margin-left: auto; }
 
 .choices { display: flex; flex-direction: column; gap: 2px; }
 .choice { display: flex; align-items: center; gap: 12px; padding: 9px 4px; font-size: var(--fs-md); color: var(--text-strong); cursor: pointer; }
@@ -2425,6 +2425,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 
 /* De twee kiezers bovenin de kaart, op een regel met ruimte eronder. */
 .chart__tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+/* De snelkeuze staat links en mag de rij vullen; de twee kiezers schuiven dan
+   naar de volgende regel in plaats van de tabs in te drukken. */
+.chart__tabs { flex: 1 1 auto; }
 .chart { margin-top: 22px; padding-left: 52px; }
 .chart__plot { position: relative; height: 236px; }
 
@@ -2520,13 +2523,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .metric__label { display: block; font-size: var(--fs-sm); color: var(--text-muted); }
 .metric.is-active .metric__label { color: var(--text); }
 .metric__row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-/* Waartegen het cijfer is afgezet. Het percentage ernaast zegt hoeveel, deze
-   regel zegt waarmee; zonder die datum weet je niet wat je vergelijkt. */
 /* Het aantal bestellingen hoort bij het bedrag erboven: dezelfde dag, andere
    eenheid. Daarom eronder en niet als tweede lijn in de grafiek. */
 .metric__sub { display: block; margin-top: 2px; font-size: var(--fs-md); color: var(--text); }
-.metric__vs { display: block; margin-top: 4px; font-size: var(--fs-sm); color: var(--text-muted); }
-.metric__vs[hidden] { display: none; }
 .metric__value {
   font-size: 21px; font-weight: 600; letter-spacing: -.02em;
   color: var(--text-strong);

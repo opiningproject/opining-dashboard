@@ -2510,18 +2510,6 @@
   (function () {
     var takingKaart = document.getElementById("taking-orders");
     if (!takingKaart) return;
-    var takingKnop = document.getElementById("taking-switch");
-    var takingNaam = document.getElementById("taking-label");
-
-    takingKnop.addEventListener("change", function () {
-      var aan = takingKnop.checked;
-      takingKaart.classList.toggle("is-off", !aan);
-      /* De kaart toont het aantal bestellingen, niet de stand van de
-         schakelaar. Wat die schakelaar doet staat in zijn naam en in de
-         melding; dat is waar een schermlezer het ook vandaan haalt. */
-      if (takingNaam) takingNaam.textContent = aan ? "Taking orders" : "Not taking orders";
-      showToast(aan ? "Your store is taking orders" : "Your store stopped taking orders");
-    });
 
     /* Het aantal komt van dezelfde plek als het getal in de zijbalk, zodat de
        twee niet uit elkaar kunnen lopen. */
@@ -6452,17 +6440,11 @@
         knop.querySelector(".metric__value").textContent = alsTekst(nu);
 
         var pil = knop.querySelector(".delta");
-        var tegen = knop.querySelector(".metric__vs");
         /* Zonder vergelijking valt er niets te zeggen over stijgen of dalen. */
         if (!verg) {
           pil.hidden = true;
-          if (tegen) tegen.hidden = true;
         } else {
           var toen = totaal(verg.van, verg.tot);
-          if (tegen) {
-            tegen.hidden = false;
-            tegen.textContent = "vs " + bereikTekst(verg.van, verg.tot) + ": " + alsTekst(toen);
-          }
           var pct = toen ? (nu / toen - 1) * 100 : 0;
           var omhoog = pct >= 0;
           pil.hidden = false;
@@ -6627,12 +6609,36 @@
 
     knop.addEventListener("click", function () { openPaneel(paneel.hidden); });
 
+    /* De snelkeuze boven de grafiek. Hij zet dezelfde periode als het paneel,
+       dus hij gaat door dezelfde functie heen; wat je daar kiest zet de tab
+       weer uit, want anders zou er een periode aanstaan die er niet is. */
+    var snelTabs = kaart.querySelector(".chart__tabs");
+
+    function zetSnelTabs(sleutel) {
+      if (!snelTabs) return;
+      snelTabs.querySelectorAll(".tab").forEach(function (t) {
+        t.classList.toggle("is-active", t.dataset.snel === sleutel);
+      });
+    }
+
+    if (snelTabs) {
+      snelTabs.addEventListener("click", function (e) {
+        var tab = e.target.closest(".tab");
+        if (!tab) return;
+        zetSnel(tab.dataset.snel);
+        bereik = { van: kies.van, tot: kies.tot };
+        zetSnelTabs(tab.dataset.snel);
+        toon();
+      });
+    }
+
     /* Het dashboard toont geen kiezers, dus hoort de grafiek daar weer over
        vandaag te gaan. Een preset aanklikken zet de keuze alleen klaar in het
        paneel; hier gaat hij meteen in. */
     document.addEventListener("grafiek-vandaag", function () {
       zetSnel("today");
       bereik = { van: kies.van, tot: kies.tot };
+      zetSnelTabs("today");
       toon();
     });
 
@@ -6665,6 +6671,7 @@
       if (!actie) return;
       if (actie.dataset.dpick === "apply" && kies.van && kies.tot) {
         bereik = { van: kies.van, tot: kies.tot };
+        zetSnelTabs(kies.snel);
         toon();
       }
       openPaneel(false);

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=381" />
+  <link rel="stylesheet" href="styles.css?v=384" />
 </head>
 <body>
 
@@ -204,7 +204,7 @@
               <svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span>Dashboard</span></a></li>
             <li class="nav__group" id="orders-group">
               <a class="nav__item" href="#" data-page="orders" data-title="Orders" data-icon="i-orders">
-                <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg><span>Orders</span><span class="nav__count">12</span></a>
+                <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg><span>Orders</span><span class="nav__count">8</span></a>
               <div class="nav__sub" id="orders-sub"><ul class="nav__sub-list">
                 <li><a class="nav__item nav__sub-item" href="#" data-page="archive" data-title="Archive" data-icon="i-archive"><span>Archive</span></a></li>
               </ul></div>
@@ -352,16 +352,9 @@
                    doorklikken naar de bestellingen zelf. -->
               <button class="taking__open" type="button" data-goto-page="orders">
                 <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg>
-                <span><b data-open-orders>12</b> open orders</span>
+                <span><b data-open-orders>8</b> open orders</span>
+                <svg class="icon taking__go" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
-              <!-- De schakelaar zegt of de zaak nog bestellingen aanneemt; de
-                   naam ervan staat alleen voor een schermlezer, want naast het
-                   aantal zou een tweede regel tekst er een rij van maken. -->
-              <label class="switch">
-                <input type="checkbox" id="taking-switch" checked />
-                <span class="switch__track" aria-hidden="true"></span>
-                <span class="sr-only" id="taking-label">Taking orders</span>
-              </label>
             </div>
 
             <!-- De cijfers waar de zaak op draait. Deze kaart staat er vanaf de
@@ -371,6 +364,15 @@
               <!-- De periode en de vergelijking gelden voor deze kaart, dus de twee
                    kiezers staan erin en niet op de titelregel. -->
               <div class="chart__tools" hidden>
+                <!-- De vier perioden die je het vaakst wilt zien. Alles daar
+                     buiten kies je met de datumknop ernaast; die twee tonen
+                     dezelfde keuze, dus ze houden elkaar bij. -->
+                <div class="tabs chart__tabs">
+                  <button class="tab is-active" type="button" data-snel="today">Today</button>
+                  <button class="tab" type="button" data-snel="yesterday">Yesterday</button>
+                  <button class="tab" type="button" data-snel="wtd">This week</button>
+                  <button class="tab" type="button" data-snel="mtd">This month</button>
+                </div>
                 <div class="dpick" id="dash-range">
                   <button class="dpick__btn" type="button" aria-haspopup="dialog" aria-expanded="false">
                     <svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>
@@ -500,10 +502,9 @@
                    diezelfde dag vanuit een andere hoek. -->
               <div class="metrics">
                 <div class="metric metric--vast is-active" data-metric="revenue">
-                  <span class="metric__label">Earned today</span>
-                  <span class="metric__row"><span class="metric__value">&euro; 1.479</span><span class="delta delta--up"><svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>9,4%</span></span>
-                  <span class="metric__sub" data-dag-orders>51 orders</span>
-                  <span class="metric__vs" hidden></span>
+                  <span class="metric__label">Total sales</span>
+                  <span class="metric__row"><span class="metric__value">&euro; 148</span><span class="delta delta--up"><svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>9,4%</span></span>
+                  <span class="metric__sub" data-dag-orders>5 orders</span>
                 </div>
               </div>
 
@@ -521,7 +522,7 @@
                        periode uit de kiezer uitgerekend kan worden. De punten in
                        de SVG staan in procenten (0-100 in beide richtingen),
                        zodat hij met het vak meeschaalt. -->
-                  <div class="line" data-series='[["2025-08",1479,40970],["2025-09",1539,42840],["2025-10",1598,44710],["2025-11",1641,46240],["2025-12",1768,50660],["2026-01",1590,44880],["2026-02",1632,46410],["2026-03",1717,48960],["2026-04",1794,51340],["2026-05",1853,53210],["2026-06",1904,54740],["2026-07",1947,56100],["2026-08",2006,57800],["2026-09",2091,59585]]'>
+                  <div class="line" data-series='[["2025-08",124,3441],["2025-09",129,3599],["2025-10",134,3756],["2025-11",138,3884],["2025-12",149,4255],["2026-01",134,3770],["2026-02",137,3898],["2026-03",144,4113],["2026-04",150,4313],["2026-05",155,4470],["2026-06",160,4598],["2026-07",164,4712],["2026-08",169,4855],["2026-09",176,5006]]'>
                     <svg class="line__svg" viewBox="0 0 100 100" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true" focusable="false">
                       <defs>
                         <linearGradient id="dash-fill" x1="0" y1="0" x2="0" y2="1">
@@ -1736,7 +1737,7 @@
               <li class="stat stat--spark">
                 <div class="stat__body">
                   <p class="stat__label"><span class="explain"><span class="explain__label" tabindex="0">Gross sales</span><span class="explain__pop" role="tooltip"><b>Gross sales</b>Everything customers paid, before refunds and before costs are taken off.</span></span></p>
-                  <p class="stat__value">&euro; 27.800</p>
+                  <p class="stat__value">&euro; 2.335</p>
                 </div>
                 <svg class="spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true"><path class="spark__line" d="M0,22 L14,19 L28,21 L42,14 L57,16 L71,9 L85,11 L100,5" /></svg>
               </li>
@@ -1750,14 +1751,14 @@
               <li class="stat stat--spark">
                 <div class="stat__body">
                   <p class="stat__label"><span class="explain"><span class="explain__label" tabindex="0">Orders fulfilled</span><span class="explain__pop" role="tooltip"><b>Orders fulfilled</b>Orders that were handed to the customer or the courier in this period.</span></span></p>
-                  <p class="stat__value">954</p>
+                  <p class="stat__value">80</p>
                 </div>
                 <svg class="spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true"><path class="spark__line" d="M0,20 L14,16 L28,18 L42,12 L57,13 L71,8 L85,10 L100,6" /></svg>
               </li>
               <li class="stat stat--spark">
                 <div class="stat__body">
                   <p class="stat__label"><span class="explain"><span class="explain__label" tabindex="0">Orders</span><span class="explain__pop" role="tooltip"><b>Orders</b>Every order placed in this period, fulfilled or not.</span></span></p>
-                  <p class="stat__value">976</p>
+                  <p class="stat__value">82</p>
                 </div>
                 <svg class="spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true"><path class="spark__line" d="M0,21 L14,17 L28,19 L42,13 L57,15 L71,9 L85,12 L100,7" /></svg>
               </li>
@@ -1784,13 +1785,13 @@
                   <span class="legend__dot legend__dot--del" aria-hidden="true"></span>
                   <span class="payitem__name">Paid online</span>
                   <span class="payitem__share">68%</span>
-                  <span class="payitem__val">&euro; 18.904</span>
+                  <span class="payitem__val">&euro; 1.588</span>
                 </li>
                 <li class="payitem">
                   <span class="legend__dot legend__dot--soft" aria-hidden="true"></span>
                   <span class="payitem__name">Paid in cash</span>
                   <span class="payitem__share">32%</span>
-                  <span class="payitem__val">&euro; 8.896</span>
+                  <span class="payitem__val">&euro; 747</span>
                 </li>
               </ul>
             </div>
@@ -6114,6 +6115,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=381"></script>
+  <script src="app.js?v=384"></script>
 </body>
 </html>
