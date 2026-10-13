@@ -856,7 +856,9 @@ select.input {
 .group__list { overflow: hidden; }
 .group__list > li { border-top: 1px solid var(--border); }
 
-.prod { display: flex; align-items: center; gap: 14px; padding: 10px 16px; transition: background var(--dur) var(--ease); }
+/* De hele regel opent het gerecht, dus de muis hoort dat te zeggen. De greep
+   is de uitzondering: die sleept en houdt zijn eigen aanwijzer. */
+.prod { display: flex; align-items: center; gap: 14px; padding: 10px 16px; cursor: pointer; transition: background var(--dur) var(--ease); }
 .prod:hover { background: var(--gray-25); }
 /* De greep. touch-action:none, anders scrollt de pagina bij het slepen op touch. */
 .prod__handle { display: grid; place-items: center; flex: 0 0 auto; color: var(--border-strong); cursor: grab; touch-action: none; }
