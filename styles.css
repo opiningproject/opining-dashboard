@@ -928,7 +928,10 @@ select.input {
 .prodimg .icon { width: 28px; height: 28px; color: var(--text-muted); }
 
 /* De talen boven naam en omschrijving: dezelfde knopjes als in het zoekpaneel. */
+/* De taalkeuze staat los boven de velden waar hij over gaat; eronder dezelfde
+   tussenruimte als tussen twee velden. */
 .langtabs { margin-top: 20px; }
+.langtabs + .field { margin-top: 16px; }
 
 /* ==========================================================================
    8c. ONLINE STORE — sectienavigatie links, paneel rechts
