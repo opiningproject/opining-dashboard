@@ -2795,6 +2795,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   z-index: var(--z-toast);
   display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
 }
+/* De instellingen vervangen het scherm; de gids stuurt je juist dáárheen, dus
+   daar staat hij alleen maar in de weg. */
+[data-settings="open"] .gdock { display: none; }
 .gdock__btn {
   display: flex; align-items: center; gap: 12px;
   max-width: 100%;
@@ -3451,10 +3454,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 @media (max-width: 560px) {
   /* Alleen een blok mét keuzeveld heeft een eigen regel nodig; een losse
      knop past prima naast de titel en hoort daar ook te blijven staan. */
-  /* Op een telefoon staat de knop boven de onderrand van het scherm, en vult
-     het paneel de breedte die er is. */
-  .gdock { right: 16px; bottom: 16px; left: 16px; align-items: stretch; }
-  .gdock__panel { width: auto; max-height: calc(100vh - 120px); }
+  /* Op een telefoon staat hij dichter op de hoek. De knop blijft zo breed als
+     zijn tekst; alleen het paneel pakt de breedte die er is. */
+  .gdock { right: 16px; bottom: 16px; }
+  .gdock__panel { max-height: calc(100vh - 120px); }
   .page-head__tools:has(select) { width: 100%; margin-left: 0; }
   .page-head__tools .input { flex: 1 1 auto; min-width: 0; }
   /* Bij een gerecht verhuist de stand naar een kaart in de pagina. Wat er dan
