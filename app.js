@@ -2285,6 +2285,9 @@
   /* Buiten het blok gedeclareerd zodat openSetSub het formulier kan
      terugzetten als je de wizard opnieuw binnenkomt. */
   var resetWiz = null;
+  /* Waar je nu staat in de aanvraag. Blokken verderop moeten dat kunnen
+     opvragen zonder de wizard te verzetten. */
+  var wizStapNu = null;
 
   if (wiz) {
     var wizNu      = document.getElementById("wiz-now");
@@ -2466,6 +2469,7 @@
     });
 
     resetWiz = toonStap;
+    wizStapNu = function () { return stap; };
     toonStap(1);
   }
 
@@ -4727,8 +4731,11 @@
 
     rechtsvorm.addEventListener("change", function () {
       zetBetrokkenen();
-      /* De stap opnieuw tekenen, zodat de juiste kaart meteen in beeld komt. */
-      if (resetWiz) resetWiz(3);
+      /* Opnieuw tekenen waar je staat, niet doorsturen: de rechtsvorm kies je
+         in stap 1. Hij bepaalt wel hoeveel stappen er zijn, dus de teller moet
+         meteen kloppen; sta je toevallig op stap 3, dan wisselt daar ook de
+         juiste kaart. */
+      if (resetWiz && wizStapNu) resetWiz(wizStapNu());
     });
     zetBetrokkenen();
 
