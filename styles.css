@@ -2395,6 +2395,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 :root {
   --series-delivery: #0172af;
   --series-takeaway: #ce7514;
+  /* Dezelfde kleur in het licht: de vergelijkingslijn, en het tweede deel van
+     een verhouding die binnen één onderwerp blijft. */
+  --series-soft: #8ecbe6;
 }
 
 
@@ -2405,6 +2408,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .legend__dot { width: 10px; height: 10px; flex: 0 0 auto; border-radius: 3px; }
 .legend__dot--del  { background: var(--series-delivery); }
 .legend__dot--take { background: var(--series-takeaway); }
+.legend__dot--soft { background: var(--series-soft); }
 
 /* Online of contant betaald: twee delen van hetzelfde geheel. Een balk met
    twee stukken leest de verhouding in een oogopslag; de regels eronder
@@ -2418,7 +2422,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 }
 .paybar__part { display: block; height: 100%; }
 .paybar__part--online { background: var(--series-delivery); }
-.paybar__part--cash   { background: var(--series-takeaway); }
+.paybar__part--cash   { background: var(--series-soft); }
 .paylist { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
 .payitem { display: flex; align-items: center; gap: 10px; font-size: var(--fs-md); }
 .payitem__name { color: var(--text-strong); }
@@ -2454,7 +2458,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    achter ligt. */
 .line__cmp {
   fill: none;
-  stroke: #8ecbe6;
+  stroke: var(--series-soft);
   stroke-width: 2;
   stroke-dasharray: 4 4;
   stroke-linejoin: round;
@@ -2553,7 +2557,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .chart__range { gap: 18px; flex-wrap: wrap; }
 .chart__leg { display: flex; align-items: center; gap: 8px; }
 .chart__dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: var(--r-full); background: var(--accent); }
-.chart__dot--cmp { background: #8ecbe6; }
+.chart__dot--cmp { background: var(--series-soft); }
 /* De tooltip: een kop met de naam van de reeks en daaronder een regel per
    periode, elk met zijn eigen stip. */
 .tip__rij { display: flex; align-items: center; gap: 8px; }
