@@ -604,6 +604,28 @@ select.input {
 .taking.is-off .taking__state { color: var(--text-muted); }
 .taking .switch { margin-left: auto; }
 
+/* Vier plekken waar je vanaf het dashboard meestal heen wilt. Twee naast
+   elkaar; het pijltje rechts zegt dat je de pagina verlaat. */
+.links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.linkcard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "icon name go" ".    text go";
+  align-items: center;
+  gap: 4px 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  text-align: left;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.linkcard:hover { background: var(--gray-25); border-color: var(--border-strong); }
+.linkcard__icon { grid-area: icon; width: 18px; height: 18px; color: var(--accent); }
+.linkcard__name { grid-area: name; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
+.linkcard__text { grid-area: text; font-size: var(--fs-sm); color: var(--text-muted); }
+.linkcard__go   { grid-area: go; width: 18px; height: 18px; color: var(--text-muted); }
+
 .choices { display: flex; flex-direction: column; gap: 2px; }
 .choice { display: flex; align-items: center; gap: 12px; padding: 9px 4px; font-size: var(--fs-md); color: var(--text-strong); cursor: pointer; }
 .choice input {
@@ -3426,6 +3448,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 @media (max-width: 560px) {
   /* Alleen een blok mét keuzeveld heeft een eigen regel nodig; een losse
      knop past prima naast de titel en hoort daar ook te blijven staan. */
+  .links { grid-template-columns: minmax(0, 1fr); }
   .page-head__tools:has(select) { width: 100%; margin-left: 0; }
   .page-head__tools .input { flex: 1 1 auto; min-width: 0; }
   /* Bij een gerecht verhuist de stand naar een kaart in de pagina. Wat er dan
