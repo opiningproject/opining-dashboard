@@ -768,18 +768,14 @@
       return;
     }
 
-    /* Wat je met een bezorggebied kunt. Het scherm om er een in te stellen
-       bestaat nog niet, dus bewerken zegt alleen waar het heen gaat;
-       verwijderen haalt de regel wel echt uit de lijst. */
+    /* Wat je met een bezorggebied kunt. Bewerken opent het venster — dat
+       regelt het blok daarvoor; hier gaat alleen het menu dicht. */
     var zoneActie = e.target.closest("[data-zone-edit], [data-zone-del]");
     if (zoneActie) {
-      var zoneRij = zoneActie.closest("tr");
-      var codes = zoneRij.querySelector(".codes");
-      var zoneNaam = codes ? codes.textContent.trim() : "Zone";
       sluitFilterMenus();
-      if (zoneActie.hasAttribute("data-zone-edit")) {
-        showToast("Edit zone " + zoneNaam);
-      } else {
+      if (zoneActie.hasAttribute("data-zone-del")) {
+        var zoneRij = zoneActie.closest("tr");
+        var zoneNaam = zoneNaamVan(zoneRij);
         zoneRij.remove();
         showToast("Zone " + zoneNaam + " deleted");
       }
@@ -3704,7 +3700,10 @@
 
   /* Postcodes achter de teller: dezelfde kiezer, maar er valt niets te
      kiezen. De lijst springt terug naar de kop zodra je iets aantikt. */
-  document.querySelectorAll("[data-codes]").forEach(function (knop) {
+  function voorzieCodes(knop) {
+    /* Een gebied dat net is bijgewerkt krijgt een nieuwe teller; die mag niet
+       een tweede keer worden ingepakt. */
+    if (knop.closest(".codes__wrap")) return;
     var codes = knop.dataset.codes.split(",").map(function (c) { return c.trim(); });
 
     var vak = document.createElement("span");
@@ -3725,7 +3724,268 @@
     });
     sel.addEventListener("change", function () { sel.selectedIndex = 0; });
     vak.appendChild(sel);
-  });
+  }
+  document.querySelectorAll("[data-codes]").forEach(voorzieCodes);
+
+  /* De naam van een gebied is zijn eerste postcode. In de cel staat meer dan
+     dat — een teller, en de lijst die daarbij hoort — dus lezen we hem van de
+     plek waar hij als gegeven staat. */
+  function zoneNaamVan(rij) {
+    var cel = rij.cells[1];
+    var teller = cel.querySelector("[data-codes]");
+    if (teller) return teller.dataset.codes.split(",")[0].trim();
+    var codes = cel.querySelector(".codes");
+    return (codes ? codes.textContent : cel.textContent).trim();
+  }
+
+  /* ========================================================================
+     11. EEN BEZORGGEBIED — het venster achter Add zone en Edit
+     Postcodes staan los van elkaar, want je haalt er zelden een hele reeks
+     tegelijk uit. De bedragen staan in het venster met een komma, zoals je ze
+     intikt; in de lijst staan ze zoals de lijst de rest ook toont.
+     ======================================================================== */
+  (function () {
+    var venster = document.getElementById("zone-dialog");
+    if (!venster) return;
+
+    var titel = document.getElementById("zone-dialog-title");
+    var vak = document.getElementById("zone-codes");
+    var veld = document.getElementById("zone-code");
+    var fout = document.getElementById("zone-code-error");
+    var foutTekst = fout.querySelector("span");
+    var minimum = document.getElementById("zone-min");
+    var tarief = document.getElementById("zone-fee");
+    var gratis = document.getElementById("zone-fee-free");
+    var vanafKnop = document.getElementById("zone-from-toggle");
+    var vanafVak = document.getElementById("zone-from-field");
+    var vanaf = document.getElementById("zone-from");
+    var bewaar = document.getElementById("zone-save");
+    var huidig = null;   /* de rij die je bewerkt, of niets bij een nieuwe */
+
+    /* ---- Bedragen heen en weer -------------------------------------------- */
+    function naarGetal(tekst) {
+      var n = parseFloat(String(tekst).replace(/[^\d,.-]/g, "").replace(",", "."));
+      return isNaN(n) ? 0 : n;
+    }
+    function alsVeld(n) { return n.toFixed(2).replace(".", ","); }
+    function alsLijst(n) { return "€ " + n.toFixed(2); }
+
+    function zegFout(tekst) {
+      fout.hidden = !tekst;
+      if (tekst) foutTekst.textContent = tekst;
+    }
+
+    /* ---- De codes in het vak ---------------------------------------------- */
+    function codes() {
+      return [].map.call(vak.querySelectorAll(".token__code"), function (t) { return t.textContent; });
+    }
+
+    function zetCode(code) {
+      if (!/^\d{4}$/.test(code) || codes().indexOf(code) >= 0) return false;
+      var token = document.createElement("span");
+      token.className = "token";
+      token.innerHTML = '<span class="token__code"></span>' +
+        '<button class="token__x" type="button" aria-label="Remove postal code ' + code + '">' +
+        '<svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>';
+      token.querySelector(".token__code").textContent = code;
+      vak.insertBefore(token, veld);
+      return true;
+    }
+
+    /* Wat er in het veld staat kan een hele reeks zijn. Alles wat geen vier
+       cijfers is blijft staan, zodat je ziet wat er niet klopte. */
+    function neemOver() {
+      var rest = [];
+      veld.value.split(/[,;\s]+/).forEach(function (deel) {
+        if (!deel) return;
+        if (!zetCode(deel) && !/^\d{4}$/.test(deel)) rest.push(deel);
+      });
+      veld.value = rest.join(", ");
+      zegFout(rest.length ? "A postal code is four digits." : "");
+    }
+
+    /* ---- Het venster vullen ----------------------------------------------- */
+    function leesRij(rij) {
+      var cel = rij.cells[1];
+      var teller = cel.querySelector("[data-codes]");
+      var lijst = teller
+        ? teller.dataset.codes.split(",").map(function (c) { return c.trim(); })
+        : [cel.textContent.trim()];
+
+      var min = rij.cells[2].textContent.trim();
+      var merk = rij.cells[3].querySelector(".badge");
+      var vanafTekst = rij.cells[3].querySelector(".fee__from");
+      return {
+        codes: lijst,
+        minimum: /no minimum/i.test(min) ? 0 : naarGetal(min),
+        tarief: /free/i.test(merk ? merk.textContent : "") ? 0 : naarGetal(merk.textContent),
+        vanaf: vanafTekst ? naarGetal(vanafTekst.textContent) : null
+      };
+    }
+
+    function zetVanaf(aan) {
+      vanafVak.hidden = !aan;
+      vanafKnop.textContent = aan ? "Remove free-from price" : "Add free-from price";
+      vanafKnop.setAttribute("aria-expanded", String(aan));
+    }
+
+    /* Nul is gratis; het plaatje in het veld zegt dat, zodat je het niet uit
+       het bedrag hoeft op te maken. */
+    function zetGratis() { gratis.hidden = naarGetal(tarief.value) !== 0; }
+
+    function vul(gegevens) {
+      vak.querySelectorAll(".token").forEach(function (t) { t.remove(); });
+      gegevens.codes.forEach(zetCode);
+      veld.value = "";
+      zegFout("");
+      minimum.value = alsVeld(gegevens.minimum);
+      tarief.value = alsVeld(gegevens.tarief);
+      zetVanaf(gegevens.vanaf !== null);
+      vanaf.value = gegevens.vanaf === null ? "" : alsVeld(gegevens.vanaf);
+      zetGratis();
+    }
+
+    function openVenster(rij) {
+      huidig = rij || null;
+      titel.textContent = rij ? "Edit zone" : "Add zone";
+      vul(rij ? leesRij(rij) : { codes: [], minimum: 0, tarief: 0, vanaf: null });
+      venster.hidden = false;
+      veld.focus();
+    }
+
+    /* ---- Opslaan ---------------------------------------------------------- */
+    /* De cel met postcodes: de eerste staat er voluit, de rest achter een
+       teller die de volledige reeks opent. */
+    function vulCodeCel(cel, lijst) {
+      cel.textContent = "";
+      var span = document.createElement("span");
+      span.className = "codes";
+      span.textContent = lijst[0];
+      if (lijst.length > 1) {
+        var knop = document.createElement("button");
+        knop.className = "codes__more";
+        knop.type = "button";
+        knop.setAttribute("aria-expanded", "false");
+        knop.setAttribute("aria-label", "Show all " + lijst.length + " postal codes");
+        knop.dataset.codes = lijst.join(", ");
+        knop.textContent = "+" + (lijst.length - 1);
+        span.appendChild(knop);
+      }
+      cel.appendChild(span);
+      if (lijst.length > 1) voorzieCodes(span.querySelector("[data-codes]"));
+    }
+
+    function vulTariefCel(cel, gegevens) {
+      cel.textContent = "";
+      var vakje = document.createElement("span");
+      vakje.className = "fee";
+      var merk = document.createElement("span");
+      merk.className = "badge badge--muted";
+      merk.textContent = gegevens.tarief === 0 ? "Free" : alsLijst(gegevens.tarief);
+      vakje.appendChild(merk);
+      /* Gratis vanaf een bedrag zegt niets bij een gebied dat al gratis is. */
+      if (gegevens.vanaf !== null && gegevens.tarief !== 0) {
+        var van = document.createElement("span");
+        van.className = "fee__from";
+        van.textContent = "Free from " + alsLijst(gegevens.vanaf);
+        vakje.appendChild(van);
+      }
+      cel.appendChild(vakje);
+    }
+
+    /* Een nieuwe regel krijgt dezelfde onderdelen als de regels die er al
+       staan, menu inbegrepen. */
+    function nieuweRij() {
+      var rij = document.createElement("tr");
+      rij.innerHTML =
+        '<td><label class="switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Zone active</span></label></td>' +
+        '<td></td><td></td><td></td>' +
+        '<td><span class="rowact"><span class="sort">' +
+          '<button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for zone">' +
+            '<svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>' +
+          '<div class="sort__menu sort__menu--kort" role="menu" hidden>' +
+            '<button class="sort__item" type="button" role="menuitem" data-zone-edit>' +
+              '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>Edit</button>' +
+            '<button class="sort__item sort__item--danger" type="button" role="menuitem" data-zone-del>' +
+              '<svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>Delete</button>' +
+          '</div></span></span></td>';
+      return rij;
+    }
+
+    bewaar.addEventListener("click", function () {
+      neemOver();
+      var lijst = codes();
+      if (!lijst.length) { zegFout("Enter at least one postal code."); veld.focus(); return; }
+      if (!fout.hidden) { veld.focus(); return; }
+
+      var gegevens = {
+        codes: lijst,
+        minimum: naarGetal(minimum.value),
+        tarief: naarGetal(tarief.value),
+        vanaf: vanafVak.hidden ? null : naarGetal(vanaf.value)
+      };
+
+      var rij = huidig;
+      if (!rij) {
+        var lichaam = document.querySelector('[data-set-view="zones"] tbody');
+        if (!lichaam) return;
+        rij = nieuweRij();
+        lichaam.appendChild(rij);
+      }
+
+      vulCodeCel(rij.cells[1], gegevens.codes);
+      rij.cells[2].textContent = gegevens.minimum === 0
+        ? "No minimum"
+        : alsLijst(gegevens.minimum) + " minimum order";
+      vulTariefCel(rij.cells[3], gegevens);
+
+      var naam = gegevens.codes[0];
+      rij.querySelector(".sort__btn").setAttribute("aria-label", "Actions for zone " + naam);
+      var stand = rij.querySelector(".switch .sr-only");
+      if (stand) stand.textContent = "Zone " + naam + " active";
+
+      venster.hidden = true;
+      showToast("Zone " + naam + (huidig ? " updated" : " added"));
+      huidig = null;
+    });
+
+    /* ---- Bediening -------------------------------------------------------- */
+    veld.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === "," || e.key === ";") { e.preventDefault(); neemOver(); return; }
+      /* Backspace in een leeg veld haalt de laatste code weg, zoals bij de
+         geadresseerden van een mail. */
+      if (e.key === "Backspace" && !veld.value) {
+        var staand = vak.querySelectorAll(".token");
+        if (staand.length) staand[staand.length - 1].remove();
+      }
+    });
+    veld.addEventListener("blur", neemOver);
+    /* Plakken levert vaak een hele reeks tegelijk. */
+    veld.addEventListener("input", function () {
+      if (/[,;\s]/.test(veld.value)) neemOver();
+      else zegFout("");
+    });
+
+    vak.addEventListener("click", function (e) {
+      var x = e.target.closest(".token__x");
+      if (x) { x.closest(".token").remove(); return; }
+      if (e.target === vak) veld.focus();
+    });
+
+    tarief.addEventListener("input", zetGratis);
+    vanafKnop.addEventListener("click", function () {
+      var aan = vanafVak.hidden;
+      zetVanaf(aan);
+      if (aan) vanaf.focus();
+      else vanaf.value = "";
+    });
+
+    document.addEventListener("click", function (e) {
+      if (e.target.closest("#zone-add")) { openVenster(null); return; }
+      var bewerk = e.target.closest("[data-zone-edit]");
+      if (bewerk) openVenster(bewerk.closest("tr"));
+    });
+  })();
 
   /* ========================================================================
      12. TOETSENBORD

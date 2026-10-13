@@ -3094,6 +3094,59 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    bij de duim. */
 .dialog__foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
 
+/* ==========================================================================
+   8n2. EEN BEZORGGEBIED INVULLEN — losse postcodes en twee bedragen
+   ========================================================================== */
+/* Een vak met losse waarden erin. De codes staan als eigen plaatjes zodat je
+   er een tussenuit kunt halen; het invoerveld schuift achter de laatste aan
+   en vult de rest van de regel. */
+.tokens {
+  display: flex; flex-wrap: wrap; align-content: flex-start;
+  align-items: center; gap: 6px;
+  min-height: 84px;
+  padding: 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+}
+/* Het vak hoort te reageren alsof het zelf het invoerveld is. */
+.tokens:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px #dceaf4; }
+.token {
+  display: inline-flex; align-items: center; gap: 2px;
+  height: 26px; padding: 0 4px 0 10px;
+  border-radius: var(--r-sm);
+  background: var(--gray-100);
+  font-size: var(--fs-sm); color: var(--text-strong);
+}
+.token__x { display: grid; place-items: center; width: 18px; height: 18px; border-radius: var(--r-sm); color: var(--text-muted); }
+.token__x:hover { background: var(--gray-200); color: var(--text-strong); }
+.token__x .icon { width: 12px; height: 12px; }
+.tokens__input {
+  flex: 1 1 110px; min-width: 110px;
+  height: 26px;
+  border: 0; background: transparent;
+  font-size: 16px;   /* onder 16 zoomt iOS in bij focus */
+  color: var(--text-strong);
+}
+.tokens__input:focus { outline: none; }
+.tokens__input::placeholder { color: var(--text-muted); }
+
+/* Een plaatje rechts in een veld. Het vangt geen klikken: je blijft gewoon in
+   het veld typen. */
+.infield__badge { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.infield__badge[hidden] { display: none; }
+.infield__input--badge { padding-right: 58px; }
+
+/* Een regel die een veld erbij haalt of weghaalt. Zelfde behandeling als
+   Clear All in de filterrij: het is tekst die iets doet. */
+.linkbtn {
+  display: block; margin-top: 16px;
+  font-size: var(--fs-md); font-weight: 500;
+  color: var(--accent);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.linkbtn + .field { margin-top: 16px; }
+
 @media (max-width: 560px) {
   /* Ook op een telefoon gecentreerd; alleen krapper, en de twee knoppen
      verdelen de breedte. */
