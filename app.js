@@ -6155,11 +6155,36 @@
                      0.35, 0.90, 0.80, 0.40, 0.25, 0.35, 0.90,
                      1.60, 1.80, 1.40, 0.90, 0.50, 0.20];
 
+    /* Elke dag heeft zijn eigen avond: de ene keer loopt het om zeven uur vol,
+       de andere keer pas om negen. Zonder die variatie liggen de dag en de dag
+       waarmee je vergelijkt in de grafiek bijna op elkaar, en dan lijkt het
+       nergens op. Twee golven van verschillende lengte, vast per datum, dus
+       elke keer hetzelfde beeld. De gesloten uren blijven nul. */
+    function uurGewichten(dag) {
+      var zaad = dag.getFullYear() * 10000 + (dag.getMonth() + 1) * 100 + dag.getDate();
+      /* Niet elke dag verloopt gelijk: de ene dag loopt de lunch goed en blijft
+         de avond rustig, de andere andersom, en de avondpiek valt de ene keer
+         om zeven uur en de andere keer om negen. */
+      var lunch = 1 + 0.50 * Math.sin(zaad * 0.7);
+      var avond = 1 + 0.40 * Math.sin(zaad * 1.3 + 2);
+      var piek  = 0.22 * Math.sin(zaad * 0.37);
+      return UURDRUKTE.map(function (g, u) {
+        if (!g) return 0;
+        var deel = u < 16 ? lunch : avond;
+        var schuif = 1 + piek * Math.sin((u - 19) * 0.8);
+        /* Klein genoeg om de lijn vloeiend te houden: een piek van een uur die
+           uit het niets komt ziet er niet uit als een avond. */
+        var ruis = 1 + 0.10 * Math.sin(zaad % 89 + u * 1.7);
+        return Math.max(0.03, g * deel * schuif * ruis);
+      });
+    }
+
     function uurPunten(dag) {
       var c = dagCijfers(dag);
-      var orders = verdeel(UURDRUKTE, c.orders);
-      var omzet = verdeel(UURDRUKTE, c.omzet);
-      return UURDRUKTE.map(function (g, u) {
+      var gew = uurGewichten(dag);
+      var orders = verdeel(gew, c.orders);
+      var omzet = verdeel(gew, c.omzet);
+      return gew.map(function (g, u) {
         var tijd = (u < 10 ? "0" : "") + u + ":00";
         return { label: tijd, kort: tijd, orders: orders[u], omzet: omzet[u] };
       });
