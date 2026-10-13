@@ -594,6 +594,16 @@ select.input {
 .switch input:checked + .switch__track::after { transform: translateX(16px); }
 .switch input:focus-visible + .switch__track { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+/* Open voor bestellingen, of niet. Eén regel in een kaart: de stand links in
+   woorden, de schakelaar rechts. Krapper dan een gewone kaart, want er staat
+   maar één ding in. */
+.taking { display: flex; align-items: center; gap: 16px; padding: 16px 20px; }
+.taking__state { font-size: var(--fs-md); font-weight: 600; color: var(--success); }
+/* Dicht is geen fout, dus geen alarmkleur; het hoort wel op te vallen dat er
+   niets binnenkomt. */
+.taking.is-off .taking__state { color: var(--text-muted); }
+.taking .switch { margin-left: auto; }
+
 .choices { display: flex; flex-direction: column; gap: 2px; }
 .choice { display: flex; align-items: center; gap: 12px; padding: 9px 4px; font-size: var(--fs-md); color: var(--text-strong); cursor: pointer; }
 .choice input {

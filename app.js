@@ -2491,6 +2491,24 @@
     saveZin = "";
   });
 
+  /* ---- Open voor bestellingen --------------------------------------------
+     De schakelaar bovenaan het dashboard. Hij zegt in woorden wat hij doet:
+     de kleur alleen is geen boodschap, en groen tegen grijs is op een
+     telefoon in de zon nauwelijks te zien. */
+  (function () {
+    var takingKaart = document.getElementById("taking-orders");
+    if (!takingKaart) return;
+    var takingKnop = document.getElementById("taking-switch");
+    var takingTekst = takingKaart.querySelector(".taking__state");
+
+    takingKnop.addEventListener("change", function () {
+      var aan = takingKnop.checked;
+      takingKaart.classList.toggle("is-off", !aan);
+      takingTekst.textContent = aan ? "Taking orders" : "Not taking orders";
+      showToast(aan ? "Your store is taking orders" : "Your store stopped taking orders");
+    });
+  })();
+
   /* ========================================================================
      5. SETUP-GUIDE — accordeon: er staat er hooguit één open
      ======================================================================== */
