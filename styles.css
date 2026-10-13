@@ -1301,6 +1301,26 @@ select.input {
    en de rij 18px ertussen; met de rand erbij legt de knop er zelf 3px bij. */
 .psearch__cancel { flex: 0 0 auto; padding-right: 3px; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
 .psearch__cancel:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Een kop die niet omwisselt maar altijd een zoekveld is. Er valt hier niets
+   te kiezen, dus hoeft het grijze vlak er ook niet: een rand zegt genoeg. */
+.panel__head--zoek .psearch__field input {
+  padding-right: 38px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+}
+.panel__head--zoek .psearch__field input:focus { background: var(--bg-surface); }
+/* Het kruisje bestaat alleen zolang er iets staat om weg te halen. */
+.psearch__clear {
+  position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+  display: grid; place-items: center;
+  width: 26px; height: 26px;
+  border-radius: var(--r-full);
+  color: var(--text-muted);
+}
+.psearch__clear[hidden] { display: none; }
+.psearch__clear:hover { background: var(--bg-hover); color: var(--text-strong); }
+.psearch__clear .icon { width: 15px; height: 15px; }
 /* Filterrij: de meegekomen tab-chip, eventuele extra filters, en de
    knop die er meer bij zet. */
 .psearch__filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }

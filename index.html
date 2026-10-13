@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=347" />
+  <link rel="stylesheet" href="styles.css?v=348" />
 </head>
 <body>
 
@@ -4070,32 +4070,21 @@
         <!-- ---------- SETTINGS: delivery zones ---------- -->
         <section class="view" data-set-view="zones" hidden>
           <div class="panel">
-            <div class="panel__head">
-              <div class="tabs">
-                <button class="tab" type="button">All</button>
-                <button class="tab is-active" type="button">Active</button>
-                <button class="tab" type="button">Inactive</button>
-              </div>
-              <button class="icon-btn panel__tool" type="button" aria-label="Search and filter zones">
-                <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
-              </button>
-              <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-              <div class="psearch" data-filters="Minimum order:No minimum|From 50,00;Delivery fee:Free|Paid">
+            <!-- Geen tabs en geen filters: een gebied zoek je op zijn postcode,
+                 en die kan achter een +6 verstopt zitten. Het veld staat er
+                 daarom meteen; is-searching is hier geen stand maar de kop
+                 zelf. -->
+            <div class="panel__head is-searching panel__head--zoek">
+              <div class="psearch">
                 <div class="psearch__top">
                   <span class="psearch__field">
                     <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                    <input type="search" placeholder="search" aria-label="Search this list" />
-                  </span>
-                  <button class="psearch__cancel" type="button">Cancel</button>
-                </div>
-                <div class="psearch__filters">
-                  <div class="fadd">
-                    <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
-                      Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                    <input type="search" placeholder="Search postcode" aria-label="Search postal codes" />
+                    <!-- Pas zichtbaar als er iets staat om weg te halen. -->
+                    <button class="psearch__clear" type="button" hidden aria-label="Clear search">
+                      <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
                     </button>
-                    <div class="fmenu" role="menu" hidden></div>
-                  </div>
-                <button class="fclear" type="button" hidden>Clear All</button>
+                  </span>
                 </div>
               </div>
             </div>
@@ -6068,6 +6057,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=347"></script>
+  <script src="app.js?v=348"></script>
 </body>
 </html>

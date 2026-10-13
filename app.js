@@ -370,7 +370,10 @@
 
   /* Alles wissen hoort er alleen te staan zodra er iets te wissen valt. */
   function syncClearAll(psearch) {
-    psearch.querySelector(".fclear").hidden = !psearch.querySelector(".fchip");
+    /* Een kop die alleen zoekt heeft geen filterrij, en dus ook geen knop om
+       die leeg te maken. */
+    var leeg = psearch.querySelector(".fclear");
+    if (leeg) leeg.hidden = !psearch.querySelector(".fchip");
     /* Staat elk filter dat deze lijst kent er al, dan valt er niets meer toe te
        voegen en hoort de knop weg. Bij een lijst met alleen Status is dat na de
        eerste keuze al zo. */
@@ -477,6 +480,9 @@
       if (cel.querySelector(".rowact")) return;
       stukken.push(cel.textContent);
     });
+    /* Een bezorggebied toont maar één postcode; de rest zit achter de +6. Op
+       die verborgen codes moet je net zo goed kunnen zoeken. */
+    rij.querySelectorAll("[data-codes]").forEach(function (n) { stukken.push(n.dataset.codes); });
     /* Staat de waarde nergens in de tekst — een status die alleen als knop
        bestaat — dan draagt de rij hem in data-filter. */
     if (rij.dataset.filter) stukken.push(rij.dataset.filter);
@@ -615,10 +621,18 @@
     toonGeenResultaten(panel, over === 0);
   }
 
+  /* Het kruisje bestaat alleen zolang er iets staat om weg te halen. */
+  function zetKruis(veld) {
+    var kruis = veld.parentElement.querySelector(".psearch__clear");
+    if (kruis) kruis.hidden = !veld.value;
+  }
+
   /* Tikken in het veld, vinkjes zetten en van tab wisselen werken meteen door. */
   document.addEventListener("input", function (e) {
     var veld = e.target.closest(".psearch input[type='search']");
-    if (veld) pasPaneelFilter(veld.closest(".panel__head"));
+    if (!veld) return;
+    zetKruis(veld);
+    pasPaneelFilter(veld.closest(".panel__head"));
   });
   document.addEventListener("change", function (e) {
     var vink = e.target.closest(".fchip__menu input");
@@ -656,6 +670,16 @@
       /* De meegenomen tab is een echt filter, dus die past hij meteen toe. */
       pasPaneelFilter(kop);
       psearch.querySelector("input[type='search']").focus();
+      return;
+    }
+
+    var kruis = e.target.closest(".psearch__clear");
+    if (kruis) {
+      var veldK = kruis.closest(".psearch").querySelector("input[type='search']");
+      veldK.value = "";
+      zetKruis(veldK);
+      pasPaneelFilter(kruis.closest(".panel__head"));
+      veldK.focus();
       return;
     }
 
