@@ -354,8 +354,35 @@
     });
   }
 
+  /* Een menu in een schuivende tabel wordt door die tabel afgeknipt. Het komt
+     daarom los in het venster te hangen, met de rechterkant onder de knop. Valt
+     het onderaan buiten beeld, dan klapt het boven de knop open. */
+  function zetMenuVast(knop, menu) {
+    menu.classList.remove("sort__menu--vast");
+    menu.style.top = menu.style.left = "";
+    if (!menu.closest(".table-wrap")) return;
+
+    /* Eerst losmaken, dan meten: zolang hij in de cel hangt knijpt de tabel
+       hem smal, en dan klopt de berekende plek niet. */
+    menu.classList.add("sort__menu--vast");
+    var k = knop.getBoundingClientRect();
+    var m = menu.getBoundingClientRect();
+    var links = Math.min(Math.max(8, k.right - m.width), innerWidth - m.width - 8);
+    var boven = k.bottom + 6;
+    if (boven + m.height > innerHeight - 8) boven = Math.max(8, k.top - 6 - m.height);
+    menu.style.left = Math.round(links) + "px";
+    menu.style.top = Math.round(boven) + "px";
+
+    /* Hij hangt op een vaste plek, dus schuiven zou hem laten zweven. */
+    addEventListener("scroll", function () { sluitFilterMenus(); }, { capture: true, once: true });
+  }
+
   function sluitFilterMenus(behalve) {
     document.querySelectorAll(".fmenu, .fchip__menu, .sfilter__menu, .sort__menu, .umenu__list").forEach(function (m) {
+      if (m !== behalve && m.classList.contains("sort__menu--vast")) {
+        m.classList.remove("sort__menu--vast");
+        m.style.top = m.style.left = "";
+      }
       if (m !== behalve) m.hidden = true;
     });
     document.querySelectorAll(".psearch__filter, .fchip__label, .sfilter__btn, .sort__btn, .umenu__btn").forEach(function (b) {
@@ -652,6 +679,25 @@
       sluitFilterMenus(dichtSort ? som : null);
       som.hidden = !dichtSort;
       sortKnop.setAttribute("aria-expanded", String(dichtSort));
+      if (dichtSort) zetMenuVast(sortKnop, som);
+      return;
+    }
+
+    /* Wat je met een bezorggebied kunt. Het scherm om er een in te stellen
+       bestaat nog niet, dus bewerken zegt alleen waar het heen gaat;
+       verwijderen haalt de regel wel echt uit de lijst. */
+    var zoneActie = e.target.closest("[data-zone-edit], [data-zone-del]");
+    if (zoneActie) {
+      var zoneRij = zoneActie.closest("tr");
+      var codes = zoneRij.querySelector(".codes");
+      var zoneNaam = codes ? codes.textContent.trim() : "Zone";
+      sluitFilterMenus();
+      if (zoneActie.hasAttribute("data-zone-edit")) {
+        showToast("Edit zone " + zoneNaam);
+      } else {
+        zoneRij.remove();
+        showToast("Zone " + zoneNaam + " deleted");
+      }
       return;
     }
 

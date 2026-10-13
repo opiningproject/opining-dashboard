@@ -1099,6 +1099,10 @@ select.input {
 /* position: relative houdt absoluut geplaatste kinderen (de sr-only labels in
    de cellen) binnen het vak; anders duwen die de pagina zijwaarts open. */
 .table-wrap { position: relative; overflow-x: auto; }
+/* Een wikkel die horizontaal schuift is ook verticaal een venster, en knipt
+   een openstaand menu af. De wikkel ruimer maken zou het schuiven slopen, dus
+   krijgt zo'n menu een vaste plek in het venster; app.js rekent die uit. */
+.sort__menu.sort__menu--vast { position: fixed; inset: auto; }
 .table { width: 100%; border-collapse: collapse; font-size: var(--fs-md); }
 .table th {
   background: var(--gray-50);
@@ -1499,6 +1503,10 @@ select.input {
 .sort__item[data-sort="dir"].is-selected { background: var(--bg-active); font-weight: 500; }
 .sort__item[data-sort="dir"].is-selected .icon { color: var(--text-strong); }
 .sort__sep { height: 1px; margin: 6px 4px; background: var(--border); }
+/* Een regel die iets weghaalt leest als een waarschuwing, net als uitloggen
+   in het gebruikersmenu. */
+.sort__item--danger, .sort__item--danger .icon { color: var(--danger); }
+.sort__item--danger:hover { background: var(--danger-soft); }
 
 .panel__tool {
   width: auto; height: 34px;
