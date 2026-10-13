@@ -2487,7 +2487,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 
 /* Drie standen naast elkaar, en tegelijk de knoppen waarmee je kiest welke
    lijn eronder komt te staan. */
-.metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; align-items: start; }
+.metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; align-items: start; }
 .metric {
   padding: 10px 12px 12px;
   border-radius: var(--r-md);
@@ -2539,20 +2539,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .tip__onder { color: rgba(255, 255, 255, .72); }
 
 @media (max-width: 560px) {
-  /* Drie bedragen even groot naast elkaar past niet op een telefoon. De tegels
-     worden een strook die je opzij schuift; de volgende staat er half naast en
-     wijst zo de weg. Het grijze vlak van de actieve valt bij daglicht toch weg,
-     dus die staat voluit en de andere twee treden terug. */
-  .metrics {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-  }
-  .metrics::-webkit-scrollbar { display: none; }
-  .metric { flex: 0 0 auto; min-width: 150px; scroll-snap-align: start; }
+  /* Twee bedragen passen ook op een telefoon naast elkaar; ze delen de
+     breedte. Het grijze vlak van de actieve valt bij daglicht toch weg, dus
+     die staat voluit en de ander treedt terug. */
+  .metrics { display: flex; gap: 6px; }
+  .metric { flex: 1 1 0; min-width: 0; }
   .metric:hover, .metric.is-active { background: none; }
   .metric.is-active .metric__value { font-size: 25px; }
   /* 0,6 houdt de tekst nog boven de contrastgrens op wit. */

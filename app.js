@@ -6078,12 +6078,8 @@
       return { orders: c.orders[i] || 0, omzet: c.omzet[i] || 0 };
     }
 
-    /* De gemiddelde orderwaarde is geen optelsom: over een periode is het de
-       omzet gedeeld door de bestellingen van die hele periode. */
     function waardeVan(c) {
-      if (soort === "orders") return c.orders;
-      if (soort === "aov") return c.orders ? c.omzet / c.orders : 0;
-      return c.omzet;
+      return soort === "orders" ? c.orders : c.omzet;
     }
 
     function totaal(van, tot) {
@@ -6092,15 +6088,11 @@
         var c = dagCijfers(d);
         o += c.orders; r += c.omzet;
       }
-      if (soort === "orders") return o;
-      if (soort === "aov") return o ? r / o : 0;
-      return r;
+      return soort === "orders" ? o : r;
     }
 
     function alsTekst(v) {
-      if (soort === "orders") return getal(v);
-      if (soort === "aov") return bedrag(v, true);
-      return bedrag(v);
+      return soort === "orders" ? getal(v) : bedrag(v);
     }
 
     /* ---- Van een bereik naar punten --------------------------------------
@@ -6272,7 +6264,6 @@
           var onder = document.createElement("span");
           onder.className = "tip__onder";
           onder.textContent = soort === "orders" ? bedrag(p.omzet)
-                            : soort === "aov" ? getal(p.orders) + " orders · " + bedrag(p.omzet)
                             : getal(p.orders) + " orders";
           tip.appendChild(onder);
         }
