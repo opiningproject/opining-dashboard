@@ -2425,9 +2425,12 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 
 /* De twee kiezers bovenin de kaart, op een regel met ruimte eronder. */
 .chart__tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
-/* De snelkeuze staat links en mag de rij vullen; de twee kiezers schuiven dan
-   naar de volgende regel in plaats van de tabs in te drukken. */
-.chart__tabs { flex: 1 1 auto; }
+/* De snelkeuze staat boven in de kaart, met dezelfde ruimte eronder als de
+   kiezers die daar op de statistiekenpagina staan. */
+.chart__tabs { margin-bottom: 18px; }
+/* Daar kies je de periode bovenaan de pagina; twee plekken voor dezelfde
+   keuze is er een te veel. */
+#stats-chart-slot .chart__tabs { display: none; }
 .chart { margin-top: 22px; padding-left: 52px; }
 .chart__plot { position: relative; height: 236px; }
 

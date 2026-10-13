@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=384" />
+  <link rel="stylesheet" href="styles.css?v=385" />
 </head>
 <body>
 
@@ -363,16 +363,17 @@
             <div class="card" id="dash-chart">
               <!-- De periode en de vergelijking gelden voor deze kaart, dus de twee
                    kiezers staan erin en niet op de titelregel. -->
+              <!-- De vier perioden die je het vaakst wilt zien. Op het
+                   dashboard is dit de hele keuze; op de statistiekenpagina
+                   staat de datumkiezer bovenaan en zijn ze overbodig. -->
+              <div class="tabs chart__tabs">
+                <button class="tab is-active" type="button" data-snel="today">Today</button>
+                <button class="tab" type="button" data-snel="yesterday">Yesterday</button>
+                <button class="tab" type="button" data-snel="wtd">This week</button>
+                <button class="tab" type="button" data-snel="mtd">This month</button>
+              </div>
+
               <div class="chart__tools" hidden>
-                <!-- De vier perioden die je het vaakst wilt zien. Alles daar
-                     buiten kies je met de datumknop ernaast; die twee tonen
-                     dezelfde keuze, dus ze houden elkaar bij. -->
-                <div class="tabs chart__tabs">
-                  <button class="tab is-active" type="button" data-snel="today">Today</button>
-                  <button class="tab" type="button" data-snel="yesterday">Yesterday</button>
-                  <button class="tab" type="button" data-snel="wtd">This week</button>
-                  <button class="tab" type="button" data-snel="mtd">This month</button>
-                </div>
                 <div class="dpick" id="dash-range">
                   <button class="dpick__btn" type="button" aria-haspopup="dialog" aria-expanded="false">
                     <svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>
@@ -6115,6 +6116,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=384"></script>
+  <script src="app.js?v=385"></script>
 </body>
 </html>
