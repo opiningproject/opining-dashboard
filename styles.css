@@ -2514,6 +2514,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .metric__label { display: block; font-size: var(--fs-sm); color: var(--text-muted); }
 .metric.is-active .metric__label { color: var(--text); }
 .metric__row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+/* Waartegen het cijfer is afgezet. Het percentage ernaast zegt hoeveel, deze
+   regel zegt waarmee; zonder die datum weet je niet wat je vergelijkt. */
+.metric__vs { display: block; margin-top: 4px; font-size: var(--fs-sm); color: var(--text-muted); }
+.metric__vs[hidden] { display: none; }
 .metric__value {
   font-size: 21px; font-weight: 600; letter-spacing: -.02em;
   color: var(--text-strong);

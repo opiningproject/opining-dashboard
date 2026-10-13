@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=376" />
+  <link rel="stylesheet" href="styles.css?v=377" />
 </head>
 <body>
 
@@ -438,13 +438,16 @@
                 <div class="cmp" id="dash-compare">
                   <button class="dpick__btn cmp__btn" type="button" aria-haspopup="true" aria-expanded="false">
                     <svg class="icon" aria-hidden="true"><use href="#i-compare"/></svg>
-                    <span class="cmp__label">No comparison</span>
+                    <span class="cmp__label">Same day last week</span>
                     <svg class="icon dpick__caret" aria-hidden="true"><use href="#i-chevron-down"/></svg>
                   </button>
 
                   <div class="cmp__panel" role="dialog" aria-label="Choose a comparison" hidden>
                     <div class="cmp__list">
-                      <button class="cmp__item is-active" type="button" data-cmp="none">No comparison</button>
+                      <button class="cmp__item" type="button" data-cmp="none">No comparison</button>
+                      <!-- Dezelfde dag een week eerder: op het dashboard de stand, want een
+                           dinsdag vergelijk je met een dinsdag. -->
+                      <button class="cmp__item is-active" type="button" data-cmp="week">Same day last week</button>
                       <button class="cmp__item" type="button" data-cmp="prev">Previous period</button>
                       <button class="cmp__item cmp__item--meer" type="button" data-cmp="custom">Custom
                         <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg>
@@ -491,10 +494,12 @@
                 <button class="metric is-active" type="button" data-metric="revenue" aria-pressed="true">
                   <span class="metric__label">Earned today</span>
                   <span class="metric__row"><span class="metric__value">&euro; 16.350</span><span class="delta delta--up"><svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>9,4%</span></span>
+                  <span class="metric__vs" hidden></span>
                 </button>
                 <button class="metric" type="button" data-metric="orders" aria-pressed="false">
                   <span class="metric__label">Orders</span>
                   <span class="metric__row"><span class="metric__value">574</span><span class="delta delta--up"><svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>6,1%</span></span>
+                  <span class="metric__vs" hidden></span>
                 </button>
               </div>
 
@@ -6105,6 +6110,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=376"></script>
+  <script src="app.js?v=377"></script>
 </body>
 </html>

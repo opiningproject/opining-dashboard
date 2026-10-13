@@ -128,8 +128,6 @@
          niet terugzetten. */
       if (dashTools) {
         dashTools.hidden = true;
-        var geenVerg = dashTools.querySelector('[data-cmp="none"]');
-        if (geenVerg && !geenVerg.classList.contains("is-active")) geenVerg.click();
         document.dispatchEvent(new CustomEvent("grafiek-vandaag"));
       }
     }
@@ -6359,13 +6357,21 @@
 
     /* Waartegen de cijfers worden afgezet: niets, de vorige even lange periode,
        of een zelfgekozen bereik. */
-    var vergSoort = "none";
+    /* Het dashboard begint met de vergelijking aan: zonder iets ernaast zegt
+       een omzet van vandaag nog niets. */
+    var vergSoort = "week";
     var vergEigen = { van: null, tot: null };
 
     function vergBereik() {
       if (vergSoort === "none") return null;
       if (vergSoort === "custom") {
         return (vergEigen.van && vergEigen.tot) ? vergEigen : null;
+      }
+      /* Dezelfde periode een week eerder. Op het dashboard gaat het over
+         vandaag, en een dinsdag vergelijk je met een dinsdag: de vorige dag
+         zegt weinig als de week een vast ritme heeft. */
+      if (vergSoort === "week") {
+        return { van: plusDagen(bereik.van, -7), tot: plusDagen(bereik.tot, -7) };
       }
       var lengte = Math.round((bereik.tot - bereik.van) / DAG) + 1;
       var tot = plusDagen(bereik.van, -1);
@@ -6384,11 +6390,17 @@
         knop.querySelector(".metric__value").textContent = alsTekst(nu);
 
         var pil = knop.querySelector(".delta");
+        var tegen = knop.querySelector(".metric__vs");
         /* Zonder vergelijking valt er niets te zeggen over stijgen of dalen. */
         if (!verg) {
           pil.hidden = true;
+          if (tegen) tegen.hidden = true;
         } else {
           var toen = totaal(verg.van, verg.tot);
+          if (tegen) {
+            tegen.hidden = false;
+            tegen.textContent = "vs " + bereikTekst(verg.van, verg.tot) + ": " + alsTekst(toen);
+          }
           var pct = toen ? (nu / toen - 1) * 100 : 0;
           var omhoog = pct >= 0;
           pil.hidden = false;
@@ -6642,7 +6654,16 @@
       var cmpVak = cmp.querySelector("[data-cmp-cal]");
       var cmpKies = { van: null, tot: null };
       var cmpMaand = new Date(VANDAAG.getFullYear(), VANDAAG.getMonth(), 1);
-      var CMP_NAAM = { none: "No comparison", prev: "Previous period", custom: "Custom" };
+      var CMP_NAAM = { none: "No comparison", prev: "Previous period",
+                       week: "Same day last week", custom: "Custom" };
+
+      /* Terug op het dashboard: daar is vergelijken met vorige week de stand,
+         en de knop moet dat ook zeggen als je hem op Analytics weer ziet. */
+      document.addEventListener("grafiek-vandaag", function () {
+        vergSoort = "week";
+        cmpZetLabel();
+        toon();
+      });
 
       function cmpVul() {
         tekenKalender(cmpVak, cmpMaand, cmpKies);
