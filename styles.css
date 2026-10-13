@@ -626,7 +626,9 @@ select.input {
   transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 .linkcard:hover { background: var(--gray-25); border-color: var(--border-strong); }
-.linkcard__icon { grid-area: icon; width: 18px; height: 18px; color: var(--accent); }
+/* Groter dan een icoon in een regel: hier is het het eerste wat je ziet, en
+   het moet de naam ernaast aankunnen. */
+.linkcard__icon { grid-area: icon; width: 24px; height: 24px; color: var(--accent); }
 .linkcard__name { grid-area: name; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
 .linkcard__text { grid-area: text; font-size: var(--fs-sm); color: var(--text-muted); }
 .linkcard__go   { grid-area: go; width: 18px; height: 18px; color: var(--text-muted); }
