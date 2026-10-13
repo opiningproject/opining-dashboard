@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=359" />
+  <link rel="stylesheet" href="styles.css?v=360" />
 </head>
 <body>
 
@@ -1835,6 +1835,32 @@
                  bekijkt. Twee keer dezelfde opbouw zou ook twee keer dezelfde
                  id's betekenen, en de grafiekcode hangt daaraan. -->
             <div id="stats-chart-slot"></div>
+
+            <!-- Hoe er betaald is. Twee delen van hetzelfde geheel, dus een
+                 balk in plaats van twee: de verhouding is wat je wilt zien,
+                 de bedragen eronder zeggen waar hij vandaan komt. -->
+            <div class="card">
+              <h2 class="card__title">Online and cash payments</h2>
+              <p class="card__sub">Share of gross sales in this period.</p>
+              <div class="paybar" aria-hidden="true">
+                <span class="paybar__part paybar__part--online" style="width:68%"></span>
+                <span class="paybar__part paybar__part--cash" style="width:32%"></span>
+              </div>
+              <ul class="paylist">
+                <li class="payitem">
+                  <span class="legend__dot legend__dot--del" aria-hidden="true"></span>
+                  <span class="payitem__name">Paid online</span>
+                  <span class="payitem__share">68%</span>
+                  <span class="payitem__val">&euro; 11.118</span>
+                </li>
+                <li class="payitem">
+                  <span class="legend__dot legend__dot--take" aria-hidden="true"></span>
+                  <span class="payitem__name">Paid in cash</span>
+                  <span class="payitem__share">32%</span>
+                  <span class="payitem__val">&euro; 5.232</span>
+                </li>
+              </ul>
+            </div>
 
           </section>
 
@@ -6077,6 +6103,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=359"></script>
+  <script src="app.js?v=360"></script>
 </body>
 </html>

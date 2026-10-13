@@ -2406,6 +2406,27 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .legend__dot--del  { background: var(--series-delivery); }
 .legend__dot--take { background: var(--series-takeaway); }
 
+/* Online of contant betaald: twee delen van hetzelfde geheel. Een balk met
+   twee stukken leest de verhouding in een oogopslag; de regels eronder
+   dragen de getallen, want kleur alleen is geen identificatie. */
+.paybar {
+  display: flex;
+  height: 12px; margin-top: 18px;
+  border-radius: var(--r-full);
+  background: var(--gray-100);
+  overflow: hidden;
+}
+.paybar__part { display: block; height: 100%; }
+.paybar__part--online { background: var(--series-delivery); }
+.paybar__part--cash   { background: var(--series-takeaway); }
+.paylist { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+.payitem { display: flex; align-items: center; gap: 10px; font-size: var(--fs-md); }
+.payitem__name { color: var(--text-strong); }
+/* Het aandeel staat rechts van de naam, het bedrag erachter in een eigen
+   kolom, zodat de cijfers onder elkaar uitlijnen. */
+.payitem__share { margin-left: auto; font-weight: 500; color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.payitem__val { width: 86px; text-align: right; font-size: var(--fs-sm); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
 /* De twee kiezers bovenin de kaart, op een regel met ruimte eronder. */
 .chart__tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
 .chart { margin-top: 22px; padding-left: 52px; }
