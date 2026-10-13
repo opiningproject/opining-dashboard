@@ -1267,7 +1267,10 @@ select.input {
 /* Zelfde bovenruimte als de gesloten kop, zodat de zoekbalk precies de
    plek van de tabs inneemt. */
 .panel__head.is-searching { flex-direction: column; align-items: stretch; padding: 12px 14px; }
+/* Sorteren hoort bij de lijst zoals hij staat; zodra je zoekt gaat het over
+   wat je zoekt, dus die knop wijkt met de zoekknop mee. */
 .panel__head.is-searching .tabsbox,
+.panel__head.is-searching > .sort,
 .panel__head.is-searching .panel__tool { display: none; }
 .panel__head.is-searching .psearch { display: flex; }
 
