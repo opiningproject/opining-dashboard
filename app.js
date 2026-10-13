@@ -6160,22 +6160,39 @@
        waarmee je vergelijkt in de grafiek bijna op elkaar, en dan lijkt het
        nergens op. Twee golven van verschillende lengte, vast per datum, dus
        elke keer hetzelfde beeld. De gesloten uren blijven nul. */
+    /* Een dag bestaat uit twee drukke momenten: de lunch en het avondeten.
+       Waar ze liggen, hoe hoog ze komen en hoe lang ze duren verschilt per dag,
+       en dát maakt twee dagen van elkaar te onderscheiden — een percentage op
+       dezelfde vorm levert twee lijnen op die over elkaar heen lopen. Vast per
+       datum, dus elke keer hetzelfde beeld; de uren dat de zaak dicht is
+       blijven nul. */
     function uurGewichten(dag) {
       var zaad = dag.getFullYear() * 10000 + (dag.getMonth() + 1) * 100 + dag.getDate();
-      /* Niet elke dag verloopt gelijk: de ene dag loopt de lunch goed en blijft
-         de avond rustig, de andere andersom, en de avondpiek valt de ene keer
-         om zeven uur en de andere keer om negen. */
-      var lunch = 1 + 0.50 * Math.sin(zaad * 0.7);
-      var avond = 1 + 0.40 * Math.sin(zaad * 1.3 + 2);
-      var piek  = 0.22 * Math.sin(zaad * 0.37);
-      return UURDRUKTE.map(function (g, u) {
-        if (!g) return 0;
-        var deel = u < 16 ? lunch : avond;
-        var schuif = 1 + piek * Math.sin((u - 19) * 0.8);
-        /* Klein genoeg om de lijn vloeiend te houden: een piek van een uur die
-           uit het niets komt ziet er niet uit als een avond. */
-        var ruis = 1 + 0.10 * Math.sin(zaad % 89 + u * 1.7);
-        return Math.max(0.03, g * deel * schuif * ruis);
+      function wiebel(n, breedte) { return breedte * Math.sin(zaad * n); }
+
+      var lunchUur   = 12.8 + wiebel(0.71, 1.0);
+      var lunchHoog  = 0.85 + wiebel(1.13, 0.55);
+      var lunchBreed = 1.30 + wiebel(0.47, 0.5);
+
+      var dinerUur   = 19.3 + wiebel(0.29, 1.6);
+      var dinerHoog  = 1.65 + wiebel(0.83, 0.55);
+      var dinerBreed = 1.90 + wiebel(1.51, 0.7);
+
+      /* Een drukte-moment loopt op en weer af; een klok is daar de simpelste
+         vorm voor die geen hoeken oplevert. */
+      function heuvel(u, mid, hoog, breed) {
+        var t = (u - mid) / breed;
+        return hoog * Math.exp(-0.5 * t * t);
+      }
+
+      return UURDRUKTE.map(function (basis, u) {
+        if (!basis) return 0;
+        /* De bodem is geen nul: ook buiten de spits komt er af en toe iets
+           binnen, en een uur met nul bestellingen hoort niet bij een zaak die
+           open is. */
+        return Math.max(0.22, 0.28
+          + heuvel(u, lunchUur, lunchHoog, lunchBreed)
+          + heuvel(u, dinerUur, dinerHoog, dinerBreed));
       });
     }
 
