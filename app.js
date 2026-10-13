@@ -122,6 +122,11 @@
   }
 
   function showPage(page, title, icon) {
+    /* Een stand die je niet hebt bewaard geldt niet, en de balk hoort niet mee
+       naar de volgende pagina. Het gerechtblok zet hem zelf terug. */
+    var gerecht = document.querySelector('[data-view="product-edit"]');
+    if (gerecht && !gerecht.hidden) document.dispatchEvent(new CustomEvent("gerecht-weg"));
+
     pageTitle.textContent = title;
     swapIcon(pageIcon, icon);
     /* Een gewone paginawissel verlaat altijd een eventueel aanmaakscherm. */
@@ -6791,7 +6796,10 @@
           if (o.textContent.trim() === kop) categorie.value = o.value || o.textContent;
         });
       }
-      if (badge) zetStand(badge.textContent.trim());
+      if (badge) {
+        standBewaard = badge.textContent.trim();
+        zetStand(standBewaard);
+      }
       openPageSub("product-edit", naam);
       toonTaal("en", true);
     });
@@ -6807,8 +6815,34 @@
       merk.hidden = false;
     }
 
+    /* De stand staat in de kop, buiten het formulier met zijn eigen knoppen.
+       Wijzigen vraagt daarom via de balk in de header om bewaren; terug op de
+       bewaarde stand valt er niets meer te bewaren. */
+    var standBewaard = "Active";
+
     [stand, standSmal].forEach(function (veld) {
-      if (veld) veld.addEventListener("change", function () { zetStand(veld.value); });
+      if (!veld) return;
+      veld.addEventListener("change", function () {
+        zetStand(veld.value);
+        if (veld.value === standBewaard) hideSavebar();
+        else markUnsaved("Product status");
+      });
+    });
+
+    /* Bewaren legt de nieuwe stand vast, weggooien zet hem terug. Alleen op
+       deze pagina: de balk is van iedereen. */
+    savebar.addEventListener("click", function (e) {
+      var actie = e.target.closest("[data-save]");
+      if (!actie || vak.hidden) return;
+      if (actie.dataset.save === "save") standBewaard = (stand || standSmal).value;
+      else zetStand(standBewaard);
+    });
+
+    /* Weg van de pagina zonder te bewaren: hetzelfde als weggooien. */
+    document.addEventListener("gerecht-weg", function () {
+      if ((stand || standSmal).value === standBewaard) return;
+      zetStand(standBewaard);
+      hideSavebar();
     });
   })();
 
