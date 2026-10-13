@@ -2426,11 +2426,21 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* De twee kiezers bovenin de kaart, op een regel met ruimte eronder. */
 .chart__tools { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
 /* De snelkeuze staat boven in de kaart, met dezelfde ruimte eronder als de
-   kiezers die daar op de statistiekenpagina staan. */
-.chart__tabs { margin-bottom: 18px; }
+   kiezers die daar op de statistiekenpagina staan.
+
+   De schuifbalk eronder hoort er niet. scrollbar-width en ::-webkit-scrollbar
+   worden niet overal opgevolgd; wat buiten de wikkel valt is altijd weg, dus
+   de rij krijgt ruimte onder zich waar de balk in verdwijnt en haalt die met
+   een negatieve marge weer weg. */
+.chart__tabswrap { overflow: hidden; margin-bottom: 18px; }
+.chart__tabs { padding-bottom: 20px; margin-bottom: -20px; scroll-behavior: smooth; }
+/* app.js zet onder elke tabrij een streepje dat laat zien dat er meer tabs
+   zijn. Hier niet: de gekozen periode schuift zichzelf naar het midden, dus
+   je ziet al dat er links en rechts meer staat. */
+.chart__tabswrap .tabscroll { display: none; }
 /* Daar kies je de periode bovenaan de pagina; twee plekken voor dezelfde
    keuze is er een te veel. */
-#stats-chart-slot .chart__tabs { display: none; }
+#stats-chart-slot .chart__tabswrap { display: none; }
 .chart { margin-top: 22px; padding-left: 52px; }
 .chart__plot { position: relative; height: 236px; }
 

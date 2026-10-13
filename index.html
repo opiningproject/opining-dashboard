@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=386" />
+  <link rel="stylesheet" href="styles.css?v=389" />
 </head>
 <body>
 
@@ -343,20 +343,6 @@
           </div>
 
           <section class="view" data-view="dashboard">
-            <!-- De eerste vraag van de dag: staat de zaak open voor
-                 bestellingen. Hij staat bovenaan omdat hij alles eronder
-                 bepaalt, en omdat je hem op een drukke avond in een tel moet
-                 kunnen omzetten. -->
-            <div class="card taking" id="taking-orders">
-              <!-- Wat er nu ligt. Het is een knop: hier wil je meestal
-                   doorklikken naar de bestellingen zelf. -->
-              <button class="taking__open" type="button" data-goto-page="orders">
-                <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg>
-                <span><b data-open-orders>8</b> open orders</span>
-                <svg class="icon taking__go" aria-hidden="true"><use href="#i-chevron-right"/></svg>
-              </button>
-            </div>
-
             <!-- De cijfers waar de zaak op draait. Deze kaart staat er vanaf de
                  eerste dag, ook als de setup-guide nog niet af is: zo blijft
                  het dashboard hetzelfde als de winkel eenmaal loopt. -->
@@ -366,11 +352,13 @@
               <!-- De vier perioden die je het vaakst wilt zien. Op het
                    dashboard is dit de hele keuze; op de statistiekenpagina
                    staat de datumkiezer bovenaan en zijn ze overbodig. -->
-              <div class="tabs chart__tabs">
-                <button class="tab is-active" type="button" data-snel="today">Today</button>
-                <button class="tab" type="button" data-snel="yesterday">Yesterday</button>
-                <button class="tab" type="button" data-snel="wtd">This week</button>
-                <button class="tab" type="button" data-snel="mtd">This month</button>
+              <div class="chart__tabswrap">
+                <div class="tabs chart__tabs">
+                  <button class="tab is-active" type="button" data-snel="today">Today</button>
+                  <button class="tab" type="button" data-snel="yesterday">Yesterday</button>
+                  <button class="tab" type="button" data-snel="wtd">This week</button>
+                  <button class="tab" type="button" data-snel="mtd">This month</button>
+                </div>
               </div>
 
               <div class="chart__tools" hidden>
@@ -546,6 +534,18 @@
               <!-- Welke periode je ziet, onder de as. Het bolletje in de
                    lijnkleur koppelt het aan de lijn erboven. -->
               <p class="chart__range"><span class="chart__dot" aria-hidden="true"></span><span class="chart__period"></span></p>
+            </div>
+
+            <!-- Wat er nu ligt, onder de cijfers: eerst zie je hoe de dag
+                 loopt, daarna waar je nog wat mee moet. -->
+            <div class="card taking" id="taking-orders">
+              <!-- Wat er nu ligt. Het is een knop: hier wil je meestal
+                   doorklikken naar de bestellingen zelf. -->
+              <button class="taking__open" type="button" data-goto-page="orders">
+                <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg>
+                <span><b data-open-orders>8</b> open orders</span>
+                <svg class="icon taking__go" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+              </button>
             </div>
 
           </section>
@@ -6116,6 +6116,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=386"></script>
+  <script src="app.js?v=389"></script>
 </body>
 </html>

@@ -6608,11 +6608,24 @@
        weer uit, want anders zou er een periode aanstaan die er niet is. */
     var snelTabs = kaart.querySelector(".chart__tabs");
 
+    /* De gekozen periode komt in het midden te staan, zodat je ziet wat er
+       links en rechts van staat in plaats van tegen een rand aan te kijken. */
+    function centreerTab(tab) {
+      if (!tab || snelTabs.scrollWidth <= snelTabs.clientWidth) return;
+      var doel = tab.offsetLeft - (snelTabs.clientWidth - tab.offsetWidth) / 2;
+      var uiterste = snelTabs.scrollWidth - snelTabs.clientWidth;
+      snelTabs.scrollLeft = Math.max(0, Math.min(doel, uiterste));
+    }
+
     function zetSnelTabs(sleutel) {
       if (!snelTabs) return;
+      var gekozen = null;
       snelTabs.querySelectorAll(".tab").forEach(function (t) {
-        t.classList.toggle("is-active", t.dataset.snel === sleutel);
+        var aan = t.dataset.snel === sleutel;
+        t.classList.toggle("is-active", aan);
+        if (aan) gekozen = t;
       });
+      centreerTab(gekozen);
     }
 
     if (snelTabs) {
@@ -6623,6 +6636,9 @@
         bereik = { van: kies.van, tot: kies.tot };
         zetSnelTabs(tab.dataset.snel);
         toon();
+        /* De aandacht blijft op de tab die je koos, maar zonder dat de browser
+           hem naar de rand schuift: het midden is juist waar hij hoort. */
+        tab.focus({ preventScroll: true });
       });
     }
 
