@@ -69,7 +69,12 @@
     <!-- Op het 20-raster, net als de sidebar- en settings-sets. -->
     <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4.2v11.6M4.2 10h11.6"/></symbol>
     <symbol id="i-plus-circle" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><path d="M10 6.7v6.6M6.7 10h6.6"/></symbol>
-    <symbol id="i-sort" viewBox="0 0 20 20"><path d="M6.3 4.6v10.8M3.7 12.8l2.6 2.6 2.6-2.6M13.7 15.4V4.6M11.1 7.2l2.6-2.6 2.6 2.6"/></symbol>
+    <!-- Zelfde lijndikte als i-search-filter ernaast: die staat op een 31x13
+         raster en krimpt naar 26x11, waardoor zijn 1.6 als 1.34 uitkomt. Hier
+         is de schaal 1, dus staat die 1.34 er gewoon. -->
+    <symbol id="i-view-board" viewBox="0 0 20 20"><rect x="2.6" y="3.4" width="4" height="13.2" rx="1.2"/><rect x="8" y="3.4" width="4" height="13.2" rx="1.2"/><rect x="13.4" y="3.4" width="4" height="13.2" rx="1.2"/></symbol>
+    <symbol id="i-view-list" viewBox="0 0 20 20"><rect x="3.4" y="2.6" width="13.2" height="4" rx="1.2"/><rect x="3.4" y="8" width="13.2" height="4" rx="1.2"/><rect x="3.4" y="13.4" width="13.2" height="4" rx="1.2"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 20 20" style="stroke-width:1.34"><path d="M6.3 4.6v10.8M3.7 12.8l2.6 2.6 2.6-2.6M13.7 15.4V4.6M11.1 7.2l2.6-2.6 2.6 2.6"/></symbol>
     <symbol id="i-arrow-up" viewBox="0 0 20 20"><path d="M10 16.2V4.4M5.4 9l4.6-4.6L14.6 9"/></symbol>
     <symbol id="i-arrow-down" viewBox="0 0 20 20"><path d="M10 3.8v11.8M5.4 11l4.6 4.6L14.6 11"/></symbol>
     <!-- Compacte op-en-neer chevron voor een keuzeknop; i-sort heeft stelen. -->
@@ -298,18 +303,23 @@
               </div>
             </div>
             <div class="page-head__tools" data-tools="orders" hidden>
-              <button class="btn btn--ghost page-head__action" type="button">
-                More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              <!-- De zoekstand hoort bij de lijst eronder; data-head wijst naar de
+                   balk waarin hij openklapt. -->
+              <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders" data-head="#orders-search">
+                <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
               </button>
+              <!-- Twee standen voor dezelfde bestellingen: naast elkaar per status, of
+                   alles onder elkaar. -->
+              <div class="vswitch" role="group" aria-label="Layout">
+                <button class="vswitch__btn is-active" type="button" data-layout="board" aria-pressed="true" aria-label="Columns per status">
+                  <svg class="icon" aria-hidden="true"><use href="#i-view-board"/></svg>
+                </button>
+                <button class="vswitch__btn" type="button" data-layout="list" aria-pressed="false" aria-label="One list">
+                  <svg class="icon" aria-hidden="true"><use href="#i-view-list"/></svg>
+                </button>
+              </div>
             </div>
             <div class="page-head__tools" data-tools="analytics" hidden>
-              <label class="sr-only" for="ana-range">Date range</label>
-              <select class="input" id="ana-range">
-                <option>Last 14 days</option>
-                <option>Last 30 days</option>
-                <option>This month</option>
-                <option>Last quarter</option>
-              </select>
               <button class="btn btn--ghost page-head__action" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
               </button>
@@ -617,19 +627,10 @@
           <!-- ---------- VIEW: orders ---------- -->
           <section class="view" data-view="orders" hidden>
 
-            <div class="panel panel--scroll">
-              <div class="panel__head">
-                <!-- Tabs, net als op de menukaart: de stand van een bestelling staat zo meteen in beeld. -->
-                <div class="tabs">
-                  <button class="tab is-active" type="button">All</button>
-                  <button class="tab" type="button">New</button>
-                  <button class="tab" type="button">Kitchen</button>
-                  <button class="tab" type="button">Delivering</button>
-                </div>
-                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders">
-                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
-                </button>
-                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
+            <div class="panel panel--bare">
+              <div class="panel__head panel__head--bare" id="orders-search">
+                <!-- Alleen zichtbaar zolang er gezocht wordt; de knop ervoor staat
+                     op de titelregel. -->
                 <div class="psearch" data-filters="Payment:Paid online|Cash;Order type:Delivery|Takeaway">
                   <div class="psearch__top">
                     <span class="psearch__field">
@@ -650,84 +651,66 @@
                 </div>
               </div>
 
-              <div class="table-wrap">
-                <table class="table table--orders">
-                  <thead>
-                    <tr>
-                      <th>Destination</th>
-                      <th>Wished time</th>
-                      <th>Type</th>
-                      <th>Payment</th>
-                      <th>Move status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr data-filter="new">
-                      <td>Tochtstraat 40</td>
-                      <td><span class="when when--late">17:21<svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg></span></td>
-                      <td><span class="badge badge--muted">ASAP</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A36"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="new">
-                      <td>Collection order</td>
-                      <td><span class="when when--soon">17:32</span></td>
-                      <td><span class="badge badge--muted">ASAP</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A37"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="new">
-                      <td>Lusthofstraat 27A</td>
-                      <td><span class="when when--soon">17:32</span></td>
-                      <td><span class="badge badge--sched">Scheduled</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A26"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="kitchen">
-                      <td>1e Pijnackerstraat 120B</td>
-                      <td><span class="when">17:47</span></td>
-                      <td><span class="badge badge--muted">ASAP</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A38"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="kitchen">
-                      <td>Zwaanshals 299</td>
-                      <td><span class="when">17:51</span></td>
-                      <td><span class="badge badge--muted">ASAP</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A39"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="kitchen">
-                      <td>Restaurant</td>
-                      <td><span class="when">17:58</span></td>
-                      <td><span class="badge badge--muted">ASAP</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A40"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="delivering">
-                      <td>Tochtstraat 40</td>
-                      <td><span class="when">19:59</span></td>
-                      <td><span class="badge badge--sched">Scheduled</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A12"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                    <tr data-filter="delivering">
-                      <td>Lusthofstraat 27A</td>
-                      <td><span class="when">21:30</span></td>
-                      <td><span class="badge badge--sched">Scheduled</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A07"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span></td>
-                    </tr>
-                </table>
+              <!-- Bestellingen als kaartjes, zodat dezelfde opbouw zowel naast
+                   elkaar (bord) als onder elkaar (lijst) kan staan; app.js wisselt
+                   alleen data-layout. -->
+              <div class="oboard" data-layout="board">
+                <section class="ocol group" data-status="new" data-noun="order">
+                  <h3 class="ocol__head"><span class="ocol__tag">New <span class="group__count ocol__count">3</span></span></h3>
+                  <ul class="ocol__list">
+                  <li class="ocard" data-when="17:21" data-pay="&euro;73.59" data-filter="new">
+                    <p class="ocard__dest">Tochtstraat 40</p>
+                    <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A36"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  <li class="ocard" data-when="17:32" data-pay="&euro;73.59" data-filter="new">
+                    <p class="ocard__dest">Collection order</p>
+                    <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A37"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  <li class="ocard" data-when="17:32" data-pay="&euro;73.59" data-filter="new">
+                    <p class="ocard__dest">Lusthofstraat 27A</p>
+                    <p class="ocard__meta"><span class="ocard__when ocard__when--sched"><span class="sr-only">Scheduled </span>17:32</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A26"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  </ul>
+                </section>
+                <section class="ocol group" data-status="kitchen" data-noun="order">
+                  <h3 class="ocol__head"><span class="ocol__tag">Kitchen <span class="group__count ocol__count">3</span></span></h3>
+                  <ul class="ocol__list">
+                  <li class="ocard" data-when="17:47" data-pay="&euro;73.59" data-filter="kitchen">
+                    <p class="ocard__dest">1e Pijnackerstraat 120B</p>
+                    <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A38"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  <li class="ocard" data-when="17:51" data-pay="&euro;73.59" data-filter="kitchen">
+                    <p class="ocard__dest">Zwaanshals 299</p>
+                    <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A39"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  <li class="ocard" data-when="17:58" data-pay="&euro;73.59" data-filter="kitchen">
+                    <p class="ocard__dest">Restaurant</p>
+                    <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A40"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  </ul>
+                </section>
+                <section class="ocol group" data-status="delivering" data-noun="order">
+                  <h3 class="ocol__head"><span class="ocol__tag">Delivering <span class="group__count ocol__count">2</span></span></h3>
+                  <ul class="ocol__list">
+                  <li class="ocard" data-when="19:59" data-pay="&euro;73.59" data-filter="delivering">
+                    <p class="ocard__dest">Tochtstraat 40</p>
+                    <p class="ocard__meta"><span class="ocard__when ocard__when--sched"><span class="sr-only">Scheduled </span>19:59</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A12"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  <li class="ocard" data-when="21:30" data-pay="&euro;73.59" data-filter="delivering">
+                    <p class="ocard__dest">Lusthofstraat 27A</p>
+                    <p class="ocard__meta"><span class="ocard__when ocard__when--sched"><span class="sr-only">Scheduled </span>21:30</span></p>
+                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A07"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
+                  </li>
+                  </ul>
+                </section>
               </div>
-
-              <nav class="panel__foot pager" aria-label="Order pages">
-                <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled>
-                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
-                <button class="icon-btn pager__btn" type="button" aria-label="Next page">
-                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
-                <p class="pager__count"><b>1&ndash;8</b> of 12</p>
-              </nav>
             </div>
           </section>
 
@@ -1814,136 +1797,49 @@
               <button class="btn btn--primary" type="button" data-created="Campaign sent">Send to <span id="camp-count-btn">1.284</span> customers</button>
             </div>
           </section>
-
           <!-- ---------- VIEW: analytics ---------- -->
           <section class="view" data-view="analytics" hidden>
-            <ul class="stats">
-              <li class="stat"><p class="stat__label">Revenue</p><p class="stat__value">&euro; 16.350</p><p class="stat__delta is-up">+9,4% vs. previous 14 days</p></li>
-              <li class="stat"><p class="stat__label">Orders</p><p class="stat__value">574</p><p class="stat__delta is-up">+6,1%</p></li>
-              <li class="stat"><p class="stat__label">Average order value</p><p class="stat__value">&euro; 28,48</p><p class="stat__delta is-up">+3,1%</p></li>
-              <li class="stat"><p class="stat__label">Repeat rate</p><p class="stat__value">42%</p><p class="stat__delta is-down">&minus;1,2pp</p></li>
+            <!-- De periodekiezer hoort hier bij de hele pagina, niet bij een
+                 kaart. app.js haalt hem uit de grafiek en zet hem hier zolang
+                 je op deze pagina bent. -->
+            <div class="stats__tools" id="stats-tools-slot"></div>
+
+            <ul class="stats stats--spark">
+              <li class="stat stat--spark">
+                <div class="stat__body">
+                  <p class="stat__label"><span class="explain"><span class="explain__label" tabindex="0">Gross sales</span><span class="explain__pop" role="tooltip"><b>Gross sales</b>Everything customers paid, before refunds and before costs are taken off.</span></span></p>
+                  <p class="stat__value">&euro; 16.350</p>
+                </div>
+                <svg class="spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true"><path class="spark__line" d="M0,22 L14,19 L28,21 L42,14 L57,16 L71,9 L85,11 L100,5" /></svg>
+              </li>
+              <li class="stat stat--spark">
+                <div class="stat__body">
+                  <p class="stat__label"><span class="explain"><span class="explain__label" tabindex="0">Returning customer rate</span><span class="explain__pop" role="tooltip"><b>Returning customer rate</b>Share of orders placed by someone who had ordered from you before.</span></span></p>
+                  <p class="stat__value">42%</p>
+                </div>
+                <svg class="spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true"><path class="spark__line" d="M0,12 L14,10 L28,14 L42,13 L57,17 L71,15 L85,19 L100,18" /></svg>
+              </li>
+              <li class="stat stat--spark">
+                <div class="stat__body">
+                  <p class="stat__label"><span class="explain"><span class="explain__label" tabindex="0">Orders fulfilled</span><span class="explain__pop" role="tooltip"><b>Orders fulfilled</b>Orders that were handed to the customer or the courier in this period.</span></span></p>
+                  <p class="stat__value">561</p>
+                </div>
+                <svg class="spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true"><path class="spark__line" d="M0,20 L14,16 L28,18 L42,12 L57,13 L71,8 L85,10 L100,6" /></svg>
+              </li>
+              <li class="stat stat--spark">
+                <div class="stat__body">
+                  <p class="stat__label"><span class="explain"><span class="explain__label" tabindex="0">Orders</span><span class="explain__pop" role="tooltip"><b>Orders</b>Every order placed in this period, fulfilled or not.</span></span></p>
+                  <p class="stat__value">574</p>
+                </div>
+                <svg class="spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true"><path class="spark__line" d="M0,21 L14,17 L28,19 L42,13 L57,15 L71,9 L85,12 L100,7" /></svg>
+              </li>
             </ul>
 
-            <div class="card">
-              <div class="card__headrow">
-                <div>
-                  <h2 class="card__title">Revenue per day</h2>
-                  <p class="card__sub">Last 14 days, split by how the order was collected.</p>
-                </div>
-                <ul class="legend">
-                  <li class="legend__item"><span class="legend__dot legend__dot--del" aria-hidden="true"></span>Delivery</li>
-                  <li class="legend__item"><span class="legend__dot legend__dot--take" aria-hidden="true"></span>Takeaway</li>
-                </ul>
-              </div>
-
-              <div class="chart">
-                <div class="chart__plot">
-                  <div class="chart__grid" aria-hidden="true">
-                    <span data-v="&euro; 2.400" style="bottom:100%"></span>
-                    <span data-v="&euro; 1.600" style="bottom:66.7%"></span>
-                    <span data-v="&euro; 800" style="bottom:33.3%"></span>
-                    <span data-v="&euro; 0" style="bottom:0"></span>
-                  </div>
-                  <ol class="chart__bars">
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:32.5%"></span><span class="cbar__seg cbar__seg--take" style="height:11.3%"></span></span>
-                      <span class="cbar__x">4</span>
-                      <span class="cbar__tip"><b>Mon 4 Aug &middot; &euro; 1.050</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 780</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 270</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:26.7%"></span><span class="cbar__seg cbar__seg--take" style="height:8.8%"></span></span>
-                      <span class="cbar__x">5</span>
-                      <span class="cbar__tip"><b>Tue 5 Aug &middot; &euro; 850</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 640</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 210</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:30%"></span><span class="cbar__seg cbar__seg--take" style="height:10.4%"></span></span>
-                      <span class="cbar__x">6</span>
-                      <span class="cbar__tip"><b>Wed 6 Aug &middot; &euro; 970</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 720</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 250</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:37.9%"></span><span class="cbar__seg cbar__seg--take" style="height:12.5%"></span></span>
-                      <span class="cbar__x">7</span>
-                      <span class="cbar__tip"><b>Thu 7 Aug &middot; &euro; 1.210</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 910</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 300</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:55.8%"></span><span class="cbar__seg cbar__seg--take" style="height:19.2%"></span></span>
-                      <span class="cbar__x">8</span>
-                      <span class="cbar__tip"><b>Fri 8 Aug &middot; &euro; 1.800</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 1.340</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 460</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:63.3%"></span><span class="cbar__seg cbar__seg--take" style="height:21.7%"></span></span>
-                      <span class="cbar__x">9</span>
-                      <span class="cbar__tip"><b>Sat 9 Aug &middot; &euro; 2.040</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 1.520</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 520</span></span>
-                    </li>
-                    <li class="cbar cbar--closed" tabindex="0">
-                      <span class="cbar__stack"></span>
-                      <span class="cbar__x">10</span>
-                      <span class="cbar__tip"><b>Sun 10 Aug</b><span>Closed</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:33.8%"></span><span class="cbar__seg cbar__seg--take" style="height:10.8%"></span></span>
-                      <span class="cbar__x">11</span>
-                      <span class="cbar__tip"><b>Mon 11 Aug &middot; &euro; 1.070</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 810</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 260</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:29.2%"></span><span class="cbar__seg cbar__seg--take" style="height:10%"></span></span>
-                      <span class="cbar__x">12</span>
-                      <span class="cbar__tip"><b>Tue 12 Aug &middot; &euro; 940</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 700</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 240</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:31.7%"></span><span class="cbar__seg cbar__seg--take" style="height:11.7%"></span></span>
-                      <span class="cbar__x">13</span>
-                      <span class="cbar__tip"><b>Wed 13 Aug &middot; &euro; 1.040</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 760</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 280</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:40.8%"></span><span class="cbar__seg cbar__seg--take" style="height:13.8%"></span></span>
-                      <span class="cbar__x">14</span>
-                      <span class="cbar__tip"><b>Thu 14 Aug &middot; &euro; 1.310</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 980</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 330</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:58.8%"></span><span class="cbar__seg cbar__seg--take" style="height:20.8%"></span></span>
-                      <span class="cbar__x">15</span>
-                      <span class="cbar__tip"><b>Fri 15 Aug &middot; &euro; 1.910</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 1.410</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 500</span></span>
-                    </li>
-                    <li class="cbar" tabindex="0">
-                      <span class="cbar__stack"><span class="cbar__seg cbar__seg--del" style="height:66.7%"></span><span class="cbar__seg cbar__seg--take" style="height:23.3%"></span></span>
-                      <span class="cbar__x">16</span>
-                      <span class="cbar__tip"><b>Sat 16 Aug &middot; &euro; 2.160</b><span><i class="legend__dot legend__dot--del"></i>Delivery &euro; 1.600</span><span><i class="legend__dot legend__dot--take"></i>Takeaway &euro; 560</span></span>
-                    </li>
-                    <li class="cbar cbar--closed" tabindex="0">
-                      <span class="cbar__stack"></span>
-                      <span class="cbar__x">17</span>
-                      <span class="cbar__tip"><b>Sun 17 Aug</b><span>Closed</span></span>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-
-              <details class="tableview">
-                <summary>Show as table</summary>
-                <div class="table-wrap">
-                  <table class="table">
-                    <thead><tr><th>Day</th><th>Delivery</th><th>Takeaway</th><th>Total</th></tr></thead>
-                    <tbody>
-                      <tr><td>Mon 4 Aug</td><td>&euro; 780</td><td>&euro; 270</td><td>&euro; 1.050</td></tr>
-                      <tr><td>Tue 5 Aug</td><td>&euro; 640</td><td>&euro; 210</td><td>&euro; 850</td></tr>
-                      <tr><td>Wed 6 Aug</td><td>&euro; 720</td><td>&euro; 250</td><td>&euro; 970</td></tr>
-                      <tr><td>Thu 7 Aug</td><td>&euro; 910</td><td>&euro; 300</td><td>&euro; 1.210</td></tr>
-                      <tr><td>Fri 8 Aug</td><td>&euro; 1.340</td><td>&euro; 460</td><td>&euro; 1.800</td></tr>
-                      <tr><td>Sat 9 Aug</td><td>&euro; 1.520</td><td>&euro; 520</td><td>&euro; 2.040</td></tr>
-                      <tr><td>Sun 10 Aug</td><td colspan="3">Closed</td></tr>
-                      <tr><td>Mon 11 Aug</td><td>&euro; 810</td><td>&euro; 260</td><td>&euro; 1.070</td></tr>
-                      <tr><td>Tue 12 Aug</td><td>&euro; 700</td><td>&euro; 240</td><td>&euro; 940</td></tr>
-                      <tr><td>Wed 13 Aug</td><td>&euro; 760</td><td>&euro; 280</td><td>&euro; 1.040</td></tr>
-                      <tr><td>Thu 14 Aug</td><td>&euro; 980</td><td>&euro; 330</td><td>&euro; 1.310</td></tr>
-                      <tr><td>Fri 15 Aug</td><td>&euro; 1.410</td><td>&euro; 500</td><td>&euro; 1.910</td></tr>
-                      <tr><td>Sat 16 Aug</td><td>&euro; 1.600</td><td>&euro; 560</td><td>&euro; 2.160</td></tr>
-                      <tr><td>Sun 17 Aug</td><td colspan="3">Closed</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </details>
-            </div>
+            <!-- Dezelfde grafiek als op het dashboard. Het is een kaart, geen
+                 kopie: app.js verhuist hem hierheen zolang je deze pagina
+                 bekijkt. Twee keer dezelfde opbouw zou ook twee keer dezelfde
+                 id's betekenen, en de grafiekcode hangt daaraan. -->
+            <div id="stats-chart-slot"></div>
 
             <div class="grid2">
               <div class="card">

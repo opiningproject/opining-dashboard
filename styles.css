@@ -1465,7 +1465,9 @@ select.input {
 /* Sorteren staat naast de zoek-en-filterknop: eerst waarop, daaronder in
    welke richting. Het menu hangt rechts uit, want de knop staat rechts. */
 .sort { position: relative; flex: 0 0 auto; }
-.panel__head .sort { margin-left: 8px; }
+/* De afstand tussen de twee knoppen komt al van de gap van de kop; de extra
+   marge maakte er 20px van. */
+.panel__head .sort { margin-left: 0; }
 /* In een panel-kop staat hij naast de zoek-en-filterknop en krijgt hij
    dezelfde vorm; in een kaartkop is het gewoon een menuknop zonder rand. */
 .panel__head .sort__btn { width: auto; height: 34px; padding: 0 10px; border: 1px solid var(--border); border-radius: var(--r-md); }
@@ -3897,3 +3899,177 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    erbij zou die midden tussen titel en potlood belanden. De titel neemt de
    vrije ruimte, zodat badge en potlood samen rechts staan. */
 .rev__head > .rev__title { margin-right: auto; }
+
+/* De tegels op de statistiekenpagina dragen een lijntje met het verloop.
+   Alleen deze variant: de tegels bij kortingen en campagnes blijven zoals ze
+   zijn, die tonen een percentage in plaats van een reeks. */
+/* Altijd twee bij twee. De inhoudskolom is afgetopt op --content-max (900px),
+   dus vier naast elkaar levert hoogstens 214px per tegel op en dan breekt
+   "Returning customer rate" over drie regels. Ook geen auto-fit: die maakt er
+   op tussenbreedtes drie van, en dan staat de vierde alleen op een rij. */
+.stats--spark { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* Een kolom zodra twee kolommen het label niet meer op een regel houden: dat
+   gebeurt onder ongeveer 600px inhoud, en zonder sidebar is dat een venster
+   van zo'n 632. Net erboven past het nog precies. */
+@media (max-width: 639px) {
+  .stats--spark { grid-template-columns: minmax(0, 1fr); }
+}
+.stat--spark { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; }
+.stat--spark .stat__body { min-width: 0; }
+.spark { width: 88px; height: 28px; flex: 0 0 auto; }
+/* De lijn schaalt mee met het vak, maar mag daardoor niet dikker worden. */
+.spark__line {
+  fill: none; stroke: var(--accent); stroke-width: 1.6;
+  stroke-linecap: round; stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* De periodekiezer staat hier boven de tegels; leeg is hij niets waard. */
+.stats__tools:empty { display: none; }
+.stats__tools .chart__tools { margin-bottom: 0; }
+
+@media (max-width: 719px) {
+  /* De tegels elders tellen nog wel op de vensterbreedte; .stats--spark regelt
+     zichzelf hierboven en moet daar niet door overruled worden. */
+  .stats:not(.stats--spark) { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Titel en waarde even groot en allebei zwart. Het verschil zit in het
+   gewicht, niet in de grootte; de hogere specificiteit houdt ook de kleinere
+   waarde van de 900px-regel buiten de deur. */
+.stat--spark .stat__label { color: var(--text-strong); }
+.stat--spark .stat__value { margin-top: 2px; font-size: var(--fs-sm); color: var(--text-strong); }
+
+/* Op de statistiekenpagina is alleen de omzet nog een keuze: Orders staat al
+   als tegel boven de grafiek, en de kaart is gedeeld met het dashboard, dus
+   dit geldt alleen zolang hij hier staat. */
+#stats-chart-slot .metrics { grid-template-columns: max-content; }
+#stats-chart-slot .metric:not([data-metric="revenue"]) { display: none; }
+/* Met een keuze valt er niets te kiezen: geen vlak, geen hover, en links
+   uitgelijnd op de rest van de kaart in plaats van ingesprongen. */
+#stats-chart-slot .metric,
+#stats-chart-slot .metric:hover,
+#stats-chart-slot .metric.is-active { background: none; }
+#stats-chart-slot .metric { padding-left: 0; cursor: default; }
+
+/* ==========================================================================
+   LIVE BESTELLINGEN — bord of lijst
+   Dezelfde kaartjes in beide standen; alleen de richting van het rooster
+   verschilt, zodat er niet twee opbouwen naast elkaar bestaan.
+   ========================================================================== */
+.oboard { display: grid; gap: 14px; padding: 14px; }
+.oboard[data-layout="board"] { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+.oboard[data-layout="list"]  { grid-template-columns: minmax(0, 1fr); }
+/* Drie smalle kolommen worden onleesbaar op een klein scherm; daar altijd
+   onder elkaar, wat de schakelaar daar ook zegt. */
+@media (max-width: 899px) {
+  .oboard[data-layout="board"] { grid-template-columns: minmax(0, 1fr); }
+}
+/* Een kolom is ook een .group, en die trekt een streep tussen opeenvolgende
+   groepen. Onder elkaar scheidt die streep de statussen; naast elkaar doet de
+   tussenruimte dat al en liep hij dwars over het bord. */
+@media (min-width: 900px) {
+  .oboard[data-layout="board"] .ocol + .ocol { border-top: 0; }
+}
+
+.ocol { min-width: 0; }
+.ocol__head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 8px; padding: 0 2px;
+  font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
+}
+.ocol__count { font-weight: 500; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.ocol__list { display: flex; flex-direction: column; gap: 8px; }
+.ocol:has(.ocard[hidden]:only-child) .ocol__list { display: none; }
+
+.ocard {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  transition: border-color var(--dur) var(--ease);
+}
+.ocard:hover { border-color: var(--border-strong); }
+.ocard__dest { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.ocard__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: var(--fs-sm); color: var(--text-muted); }
+/* Dezelfde twee merkjes als in de POS-app, en op dezelfde plek: direct onder
+   het adres, zodat nu-of-later het eerste is wat je per kaart ziet. Wit zegt
+   zo snel mogelijk, paars draagt de afgesproken tijd zelf. */
+.ocard__when {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 6px;
+  border: 1.5px solid transparent;
+  border-radius: 4px;
+  font-size: 12px; font-weight: 600; line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+.ocard__when--asap  { border-color: #f0f0f0; background: #fff; color: #888; }
+.ocard__when--sched { background: #faedff; color: #220038; }
+/* De knoppen onderaan de kaart, met de puntjes helemaal rechts. */
+.ocard .rowact { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+.ocard .rowact .btn--accent { margin-right: auto; }
+
+/* De schakelaar in de titelregel: twee standen in een omhulsel. */
+.vswitch { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--bg-surface); }
+.vswitch__btn {
+  display: grid; place-items: center;
+  width: 32px; height: 30px;
+  border-radius: calc(var(--r-md) - 3px);
+  color: var(--text-muted);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.vswitch__btn:hover { background: var(--gray-50); color: var(--text); }
+.vswitch__btn.is-active { background: var(--gray-100); color: var(--text-strong); }
+
+/* Zonder vlak eromheen: de kolommen staan rechtstreeks op de pagina, zodat de
+   kop- en voetbalk vervallen en de kaartjes de volle breedte krijgen. */
+.panel--bare { border: 0; border-radius: 0; background: none; overflow: visible; }
+.panel--bare > .oboard { padding: 0; }
+/* De balk bestaat alleen nog als plek voor de zoekstand. */
+.panel__head--bare:not(.is-searching) { display: none; }
+.panel__head--bare.is-searching { padding: 0 0 14px; border-bottom: 0; }
+
+/* De zoekknop verhuisde naar de titelregel: daar geen eigen uitlijning, en het
+   brede icoon houdt zijn verhouding. */
+.page-head__tools .panel__tool { margin-left: 0; }
+.page-head__tools .icon--wide { width: 26px; height: 11px; }
+
+/* De status en zijn aantal horen bij elkaar; ze stonden aan weerszijden van
+   de kolom uit elkaar getrokken. */
+.ocol__tag { display: inline-flex; align-items: center; gap: 6px; }
+.ocol__count {
+  margin-left: 0;
+  padding: 0 7px;
+  border-radius: var(--r-full);
+  background: var(--gray-100);
+  font-size: var(--fs-sm);
+  line-height: 20px;
+}
+
+/* ---- Elke kolom zijn eigen schuifbalk ------------------------------------
+   Naast elkaar schuift niet de pagina maar elke kolom apart: de drie koppen
+   blijven in beeld en een lange kolom duwt de andere niet weg. Schuiven kan
+   alleen binnen een vaste hoogte, dus die loopt van .content tot de lijst.
+   Onder elkaar vervalt het: dan is de pagina zelf de lijst. */
+@media (min-width: 900px) {
+  [data-board] .content { display: flex; flex-direction: column; overflow: hidden; }
+  [data-board] .content__inner { display: flex; flex-direction: column; flex: 1 1 auto; width: 100%; min-height: 0; }
+  [data-board] .view[data-view="orders"] { flex: 1 1 auto; min-height: 0; }
+  [data-board] .view[data-view="orders"] > .panel { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+  [data-board] .oboard { flex: 1 1 auto; min-height: 0; }
+  /* De kolommen lopen tot onderaan in plaats van tot hun laatste kaartje. */
+  [data-board] .oboard[data-layout="board"] { align-items: stretch; }
+  [data-board] .ocol { display: flex; flex-direction: column; min-height: 0; }
+  /* Een schuifbalk neemt breedte van de inhoud af. stable houdt die ruimte in
+     elke kolom vrij, ook de kolommen die niet schuiven, anders zouden de
+     kaartjes per kolom verschillen; de negatieve marge legt die ruimte in de
+     tussenruimte, zodat de kaartjes hun breedte houden. */
+  [data-board] .ocol__list {
+    flex: 1 1 auto; min-height: 0;
+    overflow-y: auto;
+    margin-right: -10px;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+  }
+}

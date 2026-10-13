@@ -90,6 +90,37 @@
     item.setAttribute("aria-current", "page");
   }
 
+  /* Het dashboard en de statistiekenpagina tonen dezelfde grafiek. Hij blijft
+     een kaart die meeverhuist naar de pagina die je bekijkt: een tweede kopie
+     zou dezelfde id's nog eens neerzetten, en de grafiekcode hangt daaraan. */
+  var dashKaart  = document.getElementById("dash-chart");
+  var dashThuis  = dashKaart && dashKaart.parentNode;
+  var dashAnker  = dashKaart && dashKaart.nextSibling;
+  var statsSlot  = document.getElementById("stats-chart-slot");
+
+  var statsTools = document.getElementById("stats-tools-slot");
+  var dashTools  = dashKaart && dashKaart.querySelector(".chart__tools");
+  var toolsAnker = dashTools && dashTools.nextSibling;
+
+  function zetGrafiekOp(page) {
+    if (!dashKaart || !statsSlot) return;
+    if (page === "analytics") {
+      statsSlot.appendChild(dashKaart);
+      /* De kiezer hoort hier bij de pagina, boven de tegels, niet in de kaart. */
+      if (dashTools && statsTools) statsTools.appendChild(dashTools);
+      /* Hier is omzet de enige keuze; stond de grafiek op een andere metriek,
+         dan zou de verborgen keuze blijven staan. */
+      var omzet = dashKaart.querySelector('.metric[data-metric="revenue"]');
+      if (omzet && !omzet.classList.contains("is-active")) omzet.click();
+    } else {
+      if (dashTools && toolsAnker) dashKaart.insertBefore(dashTools, toolsAnker);
+      dashThuis.insertBefore(dashKaart, dashAnker);
+    }
+    /* In een verborgen view meet de kaart 0 breed, dus de tooltips konden hun
+       plek niet bepalen; na de verhuizing opnieuw laten tekenen. */
+    document.dispatchEvent(new CustomEvent("chart-herteken"));
+  }
+
   function showPage(page, title, icon) {
     pageTitle.textContent = title;
     swapIcon(pageIcon, icon);
@@ -99,6 +130,8 @@
     if (merkje) merkje.hidden = true;
     pageIcon.removeAttribute("hidden");
     pageOuder = { page: page, title: title, icon: icon };
+
+    zetGrafiekOp(page);
 
     var found = false;
     views.forEach(function (v) {
@@ -115,6 +148,8 @@
       swapIcon(document.getElementById("empty-icon"), icon);
     }
     syncPageAction(page);
+    /* Wie op een bepaalde pagina iets te regelen heeft, hoort het hier. */
+    document.dispatchEvent(new CustomEvent("pagina", { detail: page }));
     /* Archive hangt onder Orders: de groep staat open zodra je op een van
        beide staat. Anders dan Menu navigeert de ouder hier wél zelf. */
     ordersGroup.classList.toggle("is-open", page === "orders" || page === "archive");
@@ -391,6 +426,17 @@
   }
 
   /* De actieve inperking: bij Orders een statusfilter, elders de gekozen tab. */
+  /* De zoekknop staat meestal in de kopbalk zelf; bij de bestellingen staat hij
+     op de titelregel en wijst hij met data-head naar de balk die hij opent. */
+  function kopVan(knop) {
+    return knop.dataset.head ? document.querySelector(knop.dataset.head)
+                             : knop.closest(".panel__head");
+  }
+  function knopVan(kop) {
+    return kop.querySelector(".panel__tool")
+        || document.querySelector('.panel__tool[data-head="#' + kop.id + '"]');
+  }
+
   function actieveInperking(kop) {
     var s = kop.querySelector(".sfilter__label");
     if (s) return s.textContent.trim();
@@ -454,9 +500,20 @@
      die suggereert een server met meer rijen dan hier staan. Zodra je filtert
      klopt dat niet meer, dus dan vertelt de teller wat er écht overblijft en
      zijn de bladerknoppen uit. Filter weg, oude tekst terug. */
+  /* Bladeren heeft pas zin voorbij een volle pagina. De vaste teller doet alsof
+     er meer op de server staan, maar of je kunt bladeren hangt af van wat er
+     werkelijk in de lijst staat. */
+  var PAGINA = 20;
+
+  function zetPagerZichtbaar(panel, aantal) {
+    var voet = panel.querySelector(".pager");
+    if (voet) voet.hidden = aantal <= PAGINA;
+  }
+
   function syncVastePager(panel, actief, aantal) {
     var voet = panel.querySelector(".pager");
     if (!voet) return;
+    zetPagerZichtbaar(panel, actief ? aantal : panel.querySelectorAll("tbody tr").length);
     var teller = voet.querySelector(".pager__count");
     if (!teller) return;
     if (teller.dataset.vast === undefined) teller.dataset.vast = teller.innerHTML;
@@ -508,7 +565,9 @@
       var overLijst = 0;
       groepen.forEach(function (groep) {
         var zichtbaar = 0;
-        groep.querySelectorAll(".prod").forEach(function (rij) {
+        /* De menukaart heeft .prod, de bestellingen .ocard; verder is het
+           filteren identiek. */
+        groep.querySelectorAll(".prod, .ocard").forEach(function (rij) {
           var tekst = rijTekst(rij);
           var past = (!zoek || tekst.indexOf(zoek) !== -1) && eisen.every(function (groepEis) {
             return groepEis.some(function (waarde) { return tekst.indexOf(waarde) !== -1; });
@@ -520,8 +579,10 @@
         var teller = groep.querySelector(".group__count");
         if (teller) {
           if (teller.dataset.vast === undefined) teller.dataset.vast = teller.textContent;
+          /* De bestellingen noemen zichzelf anders dan de menukaart. */
+          var woord = groep.dataset.noun || "product";
           teller.textContent = (zoek || eisen.length)
-            ? zichtbaar + (zichtbaar === 1 ? " product" : " products")
+            ? zichtbaar + " " + woord + (zichtbaar === 1 ? "" : "s")
             : teller.dataset.vast;
         }
         overLijst += zichtbaar;
@@ -574,13 +635,13 @@
     sluitFilterMenus();
     syncClearAll(kop.querySelector(".psearch"));
     pasPaneelFilter(kop);
-    kop.querySelector(".panel__tool").focus();
+    knopVan(kop).focus();
   }
 
   document.addEventListener("click", function (e) {
     var open = e.target.closest(".panel__tool");
     if (open) {
-      var kop = open.closest(".panel__head");
+      var kop = kopVan(open);
       var psearch = kop.querySelector(".psearch");
       kop.classList.add("is-searching");
 
@@ -1632,6 +1693,115 @@
     var kop = tab.closest(".panel__head");
     if (kop) pasPaneelFilter(kop);
   });
+
+  /* ---- Live bestellingen: bord of lijst ----------------------------------
+     Beide standen tonen dezelfde kaartjes; alleen de richting van het rooster
+     verschilt. De schakelaar in de titelregel zet data-layout. */
+  var bord = document.querySelector(".oboard");
+
+  document.addEventListener("click", function (e) {
+    var knop = e.target.closest(".vswitch__btn");
+    if (!knop || !bord) return;
+    knop.closest(".vswitch").querySelectorAll(".vswitch__btn").forEach(function (b) {
+      b.classList.remove("is-active");
+      b.setAttribute("aria-pressed", "false");
+    });
+    knop.classList.add("is-active");
+    knop.setAttribute("aria-pressed", "true");
+    bord.dataset.layout = knop.dataset.layout;
+    zetBordStand();
+  });
+
+  /* Naast elkaar schuift elke kolom apart in plaats van de pagina als geheel.
+     Dat raakt de hele opmaak van .content tot de lijst, dus het staat als
+     stand op <html>, net als de lade en de zoekstand. */
+  function zetBordStand() {
+    var view = bord && bord.closest(".view");
+    var aan = !!view && !view.hidden && bord.dataset.layout === "board";
+    document.documentElement.toggleAttribute("data-board", aan);
+  }
+  document.addEventListener("pagina", zetBordStand);
+
+  /* Het aantal per kolom komt uit de kaartjes zelf, zodat kop en lijst niet
+     uit elkaar kunnen lopen. */
+  function zetKolomTellers() {
+    if (!bord) return;
+    bord.querySelectorAll(".ocol").forEach(function (kolom) {
+      var teller = kolom.querySelector(".ocol__count");
+      if (teller) teller.textContent = kolom.querySelectorAll(".ocard").length;
+    });
+  }
+
+  /* ---- Een bestelling een stap verder zetten ------------------------------
+     De knop zegt waar de bestelling naartoe gaat, niet waar hij nu staat:
+     vanuit New naar Kitchen, vanuit Kitchen naar Delivering, en vanuit
+     Delivering het archief in. Het label komt uit de kaart zelf. */
+  var VOLGENDE = { "new": "kitchen", kitchen: "delivering", delivering: "archief" };
+  var STAPNAAM = { kitchen: "Kitchen", delivering: "Delivering", archief: "Archive" };
+
+  function zetStapKnop(kaart) {
+    var knop = kaart.querySelector(".rowact .btn--accent");
+    if (!knop) return;
+    var doel = VOLGENDE[kaart.dataset.filter];
+    if (!doel) { knop.hidden = true; return; }
+    knop.hidden = false;
+    /* Alleen het tekstdeel vervangen; de chevron erachter blijft staan. */
+    knop.firstChild.nodeValue = STAPNAAM[doel] + " ";
+    knop.setAttribute("aria-label", "Move to " + STAPNAAM[doel]);
+  }
+
+  /* Het archief toont andere kolommen dan de live lijst, dus de rij wordt daar
+     opnieuw opgebouwd uit wat de kaart draagt. Wie bezorgd heeft weten we op
+     dit punt niet, vandaar een streepje in plaats van een verzonnen naam. */
+  function naarArchief(kaart) {
+    var romp = document.querySelector('[data-view="archive"] tbody');
+    if (!romp) return;
+    /* Een ASAP-kaart noemt geen tijd; de bestelling heeft er wel een. */
+    var tijd = kaart.dataset.when || "";
+    var nieuw = document.createElement("tr");
+    nieuw.setAttribute("data-filter", "today last 7 days last 30 days");
+    nieuw.innerHTML =
+      '<td></td>' +
+      '<td><span class="when"><span class="when__day">Today</span></span></td>' +
+      '<td></td>' +
+      '<td><span class="badge badge--muted">&mdash;</span></td>';
+    nieuw.cells[0].textContent = kaart.querySelector(".ocard__dest").textContent.trim();
+    nieuw.cells[1].querySelector(".when").append(tijd);
+    /* De kaart toont het bedrag niet meer; het staat er wel op. */
+    nieuw.cells[2].textContent = kaart.dataset.pay || "";
+    romp.insertBefore(nieuw, romp.firstChild);
+  }
+
+  document.addEventListener("click", function (e) {
+    var knop = e.target.closest(".ocard .rowact .btn--accent");
+    if (!knop) return;
+    var kaart = knop.closest(".ocard");
+    var doel = VOLGENDE[kaart.dataset.filter];
+    if (!doel) return;
+
+    var naam = kaart.querySelector(".ocard__dest").textContent.trim();
+    if (doel === "archief") {
+      naarArchief(kaart);
+      kaart.remove();
+    } else {
+      /* De kaart verhuist naar de kolom van zijn nieuwe status; in de
+         lijststand is dat dezelfde beweging, alleen verticaal. */
+      kaart.dataset.filter = doel;
+      zetStapKnop(kaart);
+      var lijst = bord.querySelector('.ocol[data-status="' + doel + '"] .ocol__list');
+      if (lijst) lijst.appendChild(kaart);
+    }
+
+    zetKolomTellers();
+    showToast(doel === "archief" ? naam + " archived" : naam + " moved to " + STAPNAAM[doel]);
+  });
+
+  if (bord) {
+    bord.querySelectorAll(".ocard").forEach(zetStapKnop);
+    zetKolomTellers();
+    zetBordStand();
+  }
+
 
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
   var pageAction = document.getElementById("page-action");
@@ -6224,6 +6394,9 @@
 
     /* De breedte van de kaart bepaalt waar de tooltips passen. */
     window.addEventListener("resize", function () { toon(); });
+    /* De kaart wordt tussen het dashboard en de statistiekenpagina verplaatst;
+       daarna moet hij opnieuw tekenen, net als bij een resize. */
+    document.addEventListener("chart-herteken", function () { toon(); });
 
     /* Alles af, om te laten zien hoe het dashboard er daarna uitziet. */
     var klaarVlag = new URLSearchParams(location.search).get("guide") ||
