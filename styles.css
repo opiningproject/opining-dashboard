@@ -415,6 +415,9 @@ legend { padding: 0; }
 .row__caret { margin-left: auto; width: 18px; height: 18px; color: var(--text-muted); }
 /* Een menuknop achter een regel staat net als een pijltje helemaal rechts. */
 .row > .sort { margin-left: auto; }
+/* En een knop die de regel weghaalt ook: wat de regel doet staat links, wat
+   je ermee kunt rechts. */
+.row__del { margin-left: auto; }
 
 .alert {
   display: flex; align-items: flex-start; gap: 10px;
@@ -861,10 +864,11 @@ select.input {
 /* De greep. touch-action:none, anders scrollt de pagina bij het slepen op touch. */
 .prod__handle { display: grid; place-items: center; flex: 0 0 auto; color: var(--border-strong); cursor: grab; touch-action: none; }
 /* Over de rij bewegen maakt de greep donkerder: hier pak je hem vast. */
-.prod:hover .prod__handle { color: var(--text-muted); }
+.prod:hover .prod__handle,
+.row:hover .prod__handle { color: var(--text-muted); }
 /* De rij die je vasthebt zweeft boven de lijst en volgt de pointer. Een
    schaduw tilt hem op; de rest van de lijst blijft gewoon staan. */
-.prod.is-floating {
+.prod.is-floating, .row.is-floating {
   position: fixed; z-index: 50;
   border-top: 0;
   border-radius: var(--r-md);

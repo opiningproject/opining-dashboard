@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=356" />
+  <link rel="stylesheet" href="styles.css?v=357" />
 </head>
 <body>
 
@@ -2126,27 +2126,31 @@
             </div>
 
             <div class="card">
-              <h2 class="card__title">Choices menu</h2>
+              <!-- Erbij halen hoort bij de kaart, niet onder de lijst: zo blijft
+                   de lijst zelf alleen de groepen, en kun je er tussenin
+                   slepen zonder langs een knop te moeten. -->
+              <div class="card__headrow">
+                <h2 class="card__title">Choices menu</h2>
+                <button class="btn btn--ghost btn--sm" type="button" data-choice-add>Add</button>
+              </div>
               <!-- Dezelfde groepen als op de keuzekaart; hier bepaal je welke
-                   bij dit gerecht horen en in welke volgorde ze staan. -->
+                   bij dit gerecht horen en in welke volgorde ze staan. Slepen
+                   gaat net als in de menukaart, aan de greep links. -->
               <div class="rows" id="pe-choices">
                 <div class="row row--static">
                   <span class="prod__handle" aria-hidden="true"><svg class="icon"><use href="#i-drag"/></svg></span>
                   <span class="row__title">Vegetables</span>
-                  <button class="icon-btn" type="button" data-choice-remove aria-label="Remove Vegetables">
+                  <button class="icon-btn row__del" type="button" data-choice-remove aria-label="Remove Vegetables">
                     <svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>
                   </button>
                 </div>
                 <div class="row row--static">
                   <span class="prod__handle" aria-hidden="true"><svg class="icon"><use href="#i-drag"/></svg></span>
                   <span class="row__title">Meat toppings</span>
-                  <button class="icon-btn" type="button" data-choice-remove aria-label="Remove Meat toppings">
+                  <button class="icon-btn row__del" type="button" data-choice-remove aria-label="Remove Meat toppings">
                     <svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>
                   </button>
                 </div>
-                <button class="row addrow" type="button" data-choice-add>
-                  <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add group
-                </button>
               </div>
             </div>
 
@@ -6102,6 +6106,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=356"></script>
+  <script src="app.js?v=357"></script>
 </body>
 </html>

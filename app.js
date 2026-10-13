@@ -1605,15 +1605,19 @@
     var greep = e.target.closest(".prod__handle");
     if (!greep || e.button > 0) return;
 
-    var rij = greep.closest(".prod");
+    /* Een gerecht in de menukaart, of een keuzegroep bij een gerecht: dezelfde
+       greep, dezelfde manier van slepen. */
+    var rij = greep.closest(".prod, .row");
+    if (!rij) return;
     var lijst = rij.parentElement;
     var vak = rij.getBoundingClientRect();
     /* Waar je de rij vastpakte, zodat hij niet naar de pointer toe springt. */
     var grip = e.clientY - vak.top;
     e.preventDefault();
 
-    /* Het grijze vak houdt de plek vast waar de rij landt, op ware grootte. */
-    var plek = document.createElement("li");
+    /* Het grijze vak houdt de plek vast waar de rij landt, op ware grootte.
+       Van dezelfde soort als de rijen eromheen, anders klopt de lijst niet. */
+    var plek = document.createElement(rij.tagName);
     plek.className = "prod-slot";
     plek.style.height = vak.height + "px";
     plek.setAttribute("aria-hidden", "true");
@@ -1686,7 +1690,10 @@
       }
 
       /* Afwijkend van wat bewaard is: vragen om te bewaren. Terug op de
-         bewaarde volgorde: niets te bewaren, dus de savebar weg. */
+         bewaarde volgorde: niets te bewaren, dus de savebar weg. Alleen de
+         menukaart kent een bewaarde volgorde; de keuzegroepen bij een gerecht
+         horen bij het formulier met zijn eigen knoppen eronder. */
+      if (!bewaardeVolgorde.has(lijst)) return;
       if (volgordeGewijzigd()) markUnsavedZin("Product order saved");
       else hideSavebar();
     }
