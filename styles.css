@@ -1304,12 +1304,17 @@ select.input {
 
 /* Een kop die niet omwisselt maar altijd een zoekveld is. Er valt hier niets
    te kiezen, dus hoeft het grijze vlak er ook niet: een rand zegt genoeg. */
+/* Geen vlak en geen rand: het vergrootglas zegt al waar je typt. De tekst
+   krijgt twee pixels onder zich, anders hangt hij optisch net onder het
+   midden van het icoon ernaast. */
 .panel__head--zoek .psearch__field input {
-  padding-right: 38px;
-  border: 1px solid var(--border);
-  background: var(--bg-surface);
+  padding: 0 38px 2px;
+  border: 0;
+  background: transparent;
 }
-.panel__head--zoek .psearch__field input:focus { background: var(--bg-surface); }
+/* De ring bij toetsenbordgebruik blijft: zonder vlak en zonder rand is dat het
+   enige dat laat zien waar je bent. */
+.panel__head--zoek .psearch__field input:focus { background: transparent; }
 /* Het kruisje bestaat alleen zolang er iets staat om weg te halen. */
 .psearch__clear {
   position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
