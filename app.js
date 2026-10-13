@@ -6723,27 +6723,13 @@
        je ziet. */
     var standSmal = document.getElementById("pe-status-smal");
     var merk = document.getElementById("page-badge");
-    var tip = vak.querySelector("[data-tip]");
 
     var taal = "en";
-    var tekst = { en: { titel: "", uitleg: "" }, nl: { titel: "", uitleg: "" }, uz: { titel: "", uitleg: "" } };
+    var tekst = { en: { titel: "", uitleg: "" }, nl: { titel: "", uitleg: "" } };
 
     function zetFout() {
       fout.hidden = !!titelVeld.value.trim();
       titelVeld.classList.toggle("input--error", !titelVeld.value.trim());
-    }
-
-    /* Een taal zonder titel krijgt een teken; zodra er iets staat gaat dat weg.
-       Zo zie je aan de knoppen welke vertaling nog mist. */
-    function zetTaalTekens() {
-      vak.querySelectorAll("[data-lang]").forEach(function (knop) {
-        var vol = !!(tekst[knop.dataset.lang] && tekst[knop.dataset.lang].titel.trim());
-        if (vol) knop.setAttribute("data-vol", "");
-        else knop.removeAttribute("data-vol");
-      });
-      /* De tip bovenaan gaat over diezelfde vertalingen. */
-      var mist = Object.keys(tekst).some(function (k) { return !tekst[k].titel.trim(); });
-      if (tip && !tip.dataset.weg) tip.hidden = !mist;
     }
 
     /* Bij het openen van een ander gerecht staat er nog niets in de velden; dan
@@ -6759,18 +6745,11 @@
         knop.setAttribute("aria-pressed", String(aan));
       });
       zetFout();
-      zetTaalTekens();
     }
 
     vak.addEventListener("click", function (e) {
       var knop = e.target.closest("[data-lang]");
       if (knop) { toonTaal(knop.dataset.lang); return; }
-
-      if (e.target.closest("[data-tip-close]")) {
-        tip.hidden = true;
-        tip.dataset.weg = "ja";
-        return;
-      }
 
       var weg = e.target.closest("[data-choice-remove]");
       if (weg) {
@@ -6788,7 +6767,6 @@
     titelVeld.addEventListener("input", function () {
       tekst[taal].titel = titelVeld.value;
       zetFout();
-      zetTaalTekens();
     });
     omschrijving.addEventListener("input", function () { tekst[taal].uitleg = omschrijving.value; });
 
@@ -6804,8 +6782,7 @@
 
       tekst = {
         en: { titel: naam, uitleg: "Steamed semi-skimmed milk mixed with a chocolate sauce, topped with a sweet preparation based on milk with white chocolate and pistachio." },
-        nl: { titel: "", uitleg: "" },
-        uz: { titel: "", uitleg: "" }
+        nl: { titel: "", uitleg: "" }
       };
       taal = "en";
       if (groep) {
@@ -6815,8 +6792,6 @@
         });
       }
       if (badge) zetStand(badge.textContent.trim());
-      if (tip) { delete tip.dataset.weg; }
-
       openPageSub("product-edit", naam);
       toonTaal("en", true);
     });

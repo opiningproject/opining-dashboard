@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=351" />
+  <link rel="stylesheet" href="styles.css?v=352" />
 </head>
 <body>
 
@@ -131,7 +131,6 @@
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol>
     <symbol id="i-user-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="10" r="2.7"/><path d="M6.6 18.6a6 6 0 0 1 10.8 0"/></symbol>
     <symbol id="i-logout" viewBox="0 0 24 24"><path d="M10 20.4H6.2a1.8 1.8 0 0 1-1.8-1.8V5.4a1.8 1.8 0 0 1 1.8-1.8H10M16.2 16.2 20.4 12l-4.2-4.2M20.4 12H9.6"/></symbol>
-    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.6 18h4.8M10.2 20.8h3.6M12 3.4a5.4 5.4 0 0 1 3.2 9.7c-.6.5-1 1.2-1 2H9.8c0-.8-.4-1.5-1-2A5.4 5.4 0 0 1 12 3.4Z"/></symbol>
     <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4.2 21 19.4H3zM12 10v4M12 16.6h.01"/></symbol>
     <symbol id="i-unsaved" viewBox="0 0 16 16"><path style="stroke-width:1.2" d="M2 5.51172C2 3.30258 3.79086 1.51172 6 1.51172H10C12.2091 1.51172 14 3.30258 14 5.51172V9.41876C14 11.1258 12.6141 12.5085 10.907 12.5045C9.73828 12.5017 8.66403 13.168 8.13888 14.2122C8.08166 14.3259 7.91839 14.327 7.8609 14.2133C7.33382 13.1715 6.26398 12.5117 5.09642 12.5117C3.38631 12.5117 2 11.1254 2 9.4153V5.51172Z"/><circle cx="8" cy="10" r="1" style="fill:currentColor;stroke:none"/><rect x="7" y="4" width="2" height="4" rx="1" style="fill:currentColor;stroke:none"/></symbol>
     <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.6v5M12 16.2h.01"/></symbol>
@@ -2030,19 +2029,6 @@
                in de menukaart; de kop draagt de naam en de stand.
                ==================================================== -->
           <section class="view" data-view="product-edit" hidden>
-            <!-- Een tip van ons, met daaronder wat er aan dit gerecht nog
-                 ontbreekt. De tip mag weg; de melding hoort bij het gerecht. -->
-            <div class="card card--flush tipcard" data-tip hidden>
-              <p class="tipbar">
-                <svg class="icon" aria-hidden="true"><use href="#i-bulb"/></svg>
-                <span>Increase your conversion rate</span>
-                <button class="icon-btn tipbar__close" type="button" data-tip-close aria-label="Dismiss this tip">
-                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
-                </button>
-              </p>
-              <p class="tipcard__body">Missing translation for some languages, English is the fallback language.</p>
-            </div>
-
             <!-- Naast de titel is op een telefoon geen ruimte voor een
                  keuzeveld; de stand staat daar als eerste kaart in de pagina.
                  Beide velden wijzen naar dezelfde stand, app.js houdt ze
@@ -2078,16 +2064,10 @@
                 </select>
               </div>
 
-              <!-- Naam en omschrijving staan per taal apart; het teken naast een
-                   taal zegt dat daar nog niets is ingevuld. -->
+              <!-- Naam en omschrijving staan per taal apart. -->
               <div class="chips langtabs" role="group" aria-label="Language">
                 <button class="chip is-active" type="button" data-lang="en" aria-pressed="true">English</button>
-                <button class="chip" type="button" data-lang="nl" aria-pressed="false">Nederlands
-                  <svg class="icon chip__warn" aria-hidden="true"><use href="#i-info"/></svg>
-                </button>
-                <button class="chip" type="button" data-lang="uz" aria-pressed="false">Uzbek
-                  <svg class="icon chip__warn" aria-hidden="true"><use href="#i-info"/></svg>
-                </button>
+                <button class="chip" type="button" data-lang="nl" aria-pressed="false">Nederlands</button>
               </div>
 
               <div class="field">
@@ -6122,6 +6102,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=351"></script>
+  <script src="app.js?v=352"></script>
 </body>
 </html>

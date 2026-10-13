@@ -916,21 +916,6 @@ select.input {
 /* ==========================================================================
    8b2. EEN GERECHT BEWERKEN — tip bovenaan, daarna de kaarten met gegevens
    ========================================================================== */
-/* De tip is een balk in de kleur van een opmerking, met daaronder wat er aan
-   dit gerecht nog ontbreekt. Weg te klikken: het is een suggestie. */
-.tipcard { overflow: hidden; }
-.tipbar {
-  display: flex; align-items: center; gap: 10px;
-  padding: 14px 16px;
-  background: #7a5a16;
-  color: #fff;
-  font-size: var(--fs-md); font-weight: 500;
-}
-.tipbar .icon { width: 18px; height: 18px; flex: 0 0 auto; }
-.tipbar__close { margin-left: auto; color: #fff; }
-.tipbar__close:hover { background: rgba(255, 255, 255, .14); }
-.tipcard__body { padding: 16px; font-size: var(--fs-md); color: var(--text); }
-
 /* De foto van het gerecht. Zolang er geen foto's zijn staat er hetzelfde teken
    als in de lijst, maar dan op formaat. */
 .prodimg {
@@ -942,13 +927,8 @@ select.input {
 .prodimg:hover { background: var(--gray-100); }
 .prodimg .icon { width: 28px; height: 28px; color: var(--text-muted); }
 
-/* De talen boven naam en omschrijving: dezelfde knopjes als in het zoekpaneel.
-   Het teken erachter zegt dat die taal nog leeg is. */
+/* De talen boven naam en omschrijving: dezelfde knopjes als in het zoekpaneel. */
 .langtabs { margin-top: 20px; }
-.chip__warn { width: 15px; height: 15px; margin-left: 6px; color: var(--warning-fg); }
-.chip.is-active .chip__warn { color: #e8b964; }
-/* Een taal die compleet is hoeft geen waarschuwing. */
-.chip[data-vol] .chip__warn { display: none; }
 
 /* ==========================================================================
    8c. ONLINE STORE — sectienavigatie links, paneel rechts
