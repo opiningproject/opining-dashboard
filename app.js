@@ -2511,14 +2511,23 @@
     var takingKaart = document.getElementById("taking-orders");
     if (!takingKaart) return;
     var takingKnop = document.getElementById("taking-switch");
-    var takingTekst = takingKaart.querySelector(".taking__state");
+    var takingNaam = document.getElementById("taking-label");
 
     takingKnop.addEventListener("change", function () {
       var aan = takingKnop.checked;
       takingKaart.classList.toggle("is-off", !aan);
-      takingTekst.textContent = aan ? "Taking orders" : "Not taking orders";
+      /* De kaart toont het aantal bestellingen, niet de stand van de
+         schakelaar. Wat die schakelaar doet staat in zijn naam en in de
+         melding; dat is waar een schermlezer het ook vandaan haalt. */
+      if (takingNaam) takingNaam.textContent = aan ? "Taking orders" : "Not taking orders";
       showToast(aan ? "Your store is taking orders" : "Your store stopped taking orders");
     });
+
+    /* Het aantal komt van dezelfde plek als het getal in de zijbalk, zodat de
+       twee niet uit elkaar kunnen lopen. */
+    var teller = document.querySelector('.nav__item[data-page="orders"] .nav__count');
+    var open = takingKaart.querySelector("[data-open-orders]");
+    if (teller && open) open.textContent = teller.textContent.trim();
   })();
 
   /* ========================================================================
@@ -6426,6 +6435,17 @@
       /* Alle drie de tabs bijwerken, niet alleen de actieve: ze staan naast
          elkaar en horen alle drie bij dezelfde periode. */
       var bewaard = soort;
+
+      /* Het aantal bestellingen hoort bij het bedrag erboven, dus het wordt
+         los uitgerekend: de grafiek eronder gaat alleen over de omzet. */
+      var dagTeller = tabs.querySelector("[data-dag-orders]");
+      if (dagTeller) {
+        soort = "orders";
+        var aantal = totaal(bereik.van, bereik.tot);
+        dagTeller.textContent = getal(aantal) + (aantal === 1 ? " order" : " orders");
+        soort = bewaard;
+      }
+
       tabs.querySelectorAll(".metric").forEach(function (knop) {
         soort = knop.dataset.metric;
         var nu = totaal(bereik.van, bereik.tot);

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=380" />
+  <link rel="stylesheet" href="styles.css?v=381" />
 </head>
 <body>
 
@@ -348,11 +348,19 @@
                  bepaalt, en omdat je hem op een drukke avond in een tel moet
                  kunnen omzetten. -->
             <div class="card taking" id="taking-orders">
-              <span class="taking__state">Taking orders</span>
+              <!-- Wat er nu ligt. Het is een knop: hier wil je meestal
+                   doorklikken naar de bestellingen zelf. -->
+              <button class="taking__open" type="button" data-goto-page="orders">
+                <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg>
+                <span><b data-open-orders>12</b> open orders</span>
+              </button>
+              <!-- De schakelaar zegt of de zaak nog bestellingen aanneemt; de
+                   naam ervan staat alleen voor een schermlezer, want naast het
+                   aantal zou een tweede regel tekst er een rij van maken. -->
               <label class="switch">
                 <input type="checkbox" id="taking-switch" checked />
                 <span class="switch__track" aria-hidden="true"></span>
-                <span class="sr-only">Take orders</span>
+                <span class="sr-only" id="taking-label">Taking orders</span>
               </label>
             </div>
 
@@ -487,20 +495,16 @@
                 </div>
               </div>
 
-              <!-- Elke tab draagt zijn eigen stand: je ziet beide cijfers
-                   naast elkaar en kiest met dezelfde beweging welke lijn er
-                   onder komt te staan. -->
+              <!-- Eén cijfer: wat er binnenkwam. Het aantal bestellingen staat
+                   eronder en niet naast een tweede lijn, want het gaat over
+                   diezelfde dag vanuit een andere hoek. -->
               <div class="metrics">
-                <button class="metric is-active" type="button" data-metric="revenue" aria-pressed="true">
+                <div class="metric metric--vast is-active" data-metric="revenue">
                   <span class="metric__label">Earned today</span>
                   <span class="metric__row"><span class="metric__value">&euro; 1.479</span><span class="delta delta--up"><svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>9,4%</span></span>
+                  <span class="metric__sub" data-dag-orders>51 orders</span>
                   <span class="metric__vs" hidden></span>
-                </button>
-                <button class="metric" type="button" data-metric="orders" aria-pressed="false">
-                  <span class="metric__label">Orders</span>
-                  <span class="metric__row"><span class="metric__value">51</span><span class="delta delta--up"><svg class="icon delta__icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>6,1%</span></span>
-                  <span class="metric__vs" hidden></span>
-                </button>
+                </div>
               </div>
 
               <div class="chart">
@@ -6110,6 +6114,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=380"></script>
+  <script src="app.js?v=381"></script>
 </body>
 </html>
