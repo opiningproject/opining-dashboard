@@ -104,25 +104,19 @@
 
   function zetGrafiekOp(page) {
     if (!dashKaart || !statsSlot) return;
-    /* Omzet heet op het dashboard naar wat het daar is: wat er vandaag is
-       binnengekomen. Op Analytics kan de periode een jaar zijn, dus daar heet
-       het weer gewoon omzet. */
     var omzetTab = dashKaart.querySelector('.metric[data-metric="revenue"]');
-    var omzetNaam = omzetTab && omzetTab.querySelector(".metric__label");
 
     if (page === "analytics") {
       statsSlot.appendChild(dashKaart);
       /* De kiezer hoort hier bij de pagina, boven de tegels, niet in de kaart.
          Op het dashboard staat hij er niet, dus daar is hij ook verborgen. */
       if (dashTools && statsTools) { statsTools.appendChild(dashTools); dashTools.hidden = false; }
-      if (omzetNaam) omzetNaam.textContent = "Revenue";
       /* Hier is omzet de enige keuze; stond de grafiek op een andere metriek,
          dan zou de verborgen keuze blijven staan. */
       if (omzetTab && !omzetTab.classList.contains("is-active")) omzetTab.click();
     } else {
       if (dashTools && toolsAnker) dashKaart.insertBefore(dashTools, toolsAnker);
       dashThuis.insertBefore(dashKaart, dashAnker);
-      if (omzetNaam) omzetNaam.textContent = "Earned today";
       /* Zonder kiezers hoort de grafiek hier vandaag te laten zien. Wat je op
          Analytics koos blijft anders staan, en dat kun je hier niet zien en
          niet terugzetten. */
