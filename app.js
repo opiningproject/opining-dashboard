@@ -5950,8 +5950,7 @@
     var dpick = document.getElementById("dash-range");
     if (!gids || !kaart || !dpick) return;
 
-    var kopGids = gids.querySelector("#guide-toggle");
-    var gidsPaneel = gids.querySelector("#guide-panel");
+    var kopGids = gids.querySelector(".guide__head");
     var teller = gids.querySelector("[data-guide-count]");
     var sluit = gids.querySelector("[data-guide-close]");
 
@@ -5962,6 +5961,8 @@
       var ring = gids.querySelector(".tasks__ring");
       if (ring) ring.style.setProperty("--af", (stappen.length ? af / stappen.length * 100 : 0) + "%");
       var klaar = af === stappen.length && stappen.length > 0;
+      /* Weggooien kan pas als de gids af is; daarvoor heb je hem nog nodig. */
+      if (sluit) sluit.hidden = !klaar;
       /* Alleen bij het afronden zelf dichtklappen; daarna mag je hem weer
          openzetten zonder dat hij terugspringt. */
       if (klaar && gids.dataset.klaar !== "ja") {
@@ -5972,35 +5973,19 @@
 
     function zetOpen(open) {
       kopGids.setAttribute("aria-expanded", String(open));
-      gidsPaneel.hidden = !open;
+      gids.classList.toggle("is-dicht", !open);
     }
 
     kopGids.addEventListener("click", function () {
       zetOpen(kopGids.getAttribute("aria-expanded") !== "true");
     });
 
-    gids.addEventListener("click", function (e) {
-      if (e.target.closest("[data-guide-dicht]")) zetOpen(false);
-    });
-
-    /* Buiten het paneel klikken doet hem dicht, net als bij de andere menu's
-       op de pagina. De knop zelf niet: die klapt hem al om. */
-    document.addEventListener("click", function (e) {
-      if (gidsPaneel.hidden || gids.contains(e.target)) return;
-      zetOpen(false);
-    });
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !gidsPaneel.hidden) { zetOpen(false); kopGids.focus(); }
-    });
-
-    /* Weg met de knop. Dat kan altijd: wie de gids niet wil, hoeft hem niet
-       eerst af te maken. Hij is daarna ook nergens anders meer in beeld, want
-       hij stond maar op één plek. */
+    /* Weg met de gids: hij is af en hoeft niet de rest van het jaar op het
+       dashboard te blijven staan. */
     if (sluit) {
       sluit.addEventListener("click", function () {
-        gids.remove();
-        showToast("Setup guide removed");
+        gids.hidden = true;
+        showToast("Setup guide dismissed");
       });
     }
 
