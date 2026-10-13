@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=358" />
+  <link rel="stylesheet" href="styles.css?v=359" />
 </head>
 <body>
 
@@ -319,9 +319,9 @@
               </div>
             </div>
             <div class="page-head__tools" data-tools="analytics" hidden>
-              <button class="btn btn--ghost page-head__action" type="button">
-                <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
-              </button>
+              <!-- Geen knop maar een mededeling: de cijfers lopen een paar
+                   minuten achter op wat er binnenkomt. -->
+              <p class="page-head__note">Last updated 5 minutes ago</p>
             </div>
             <!-- Paginagebonden bediening op de titelregel; app.js toont het
                  blok waarvan data-tools gelijk is aan de actieve pagina. -->
@@ -1836,31 +1836,6 @@
                  id's betekenen, en de grafiekcode hangt daaraan. -->
             <div id="stats-chart-slot"></div>
 
-            <div class="grid2">
-              <div class="card">
-                <h2 class="card__title">Best selling products</h2>
-                <p class="card__sub">By number of orders, last 14 days.</p>
-                <ol class="hbars">
-                  <li class="hbar"><span class="hbar__name">Margherita</span><span class="hbar__track"><span class="hbar__fill" style="width:100%"></span></span><span class="hbar__val">184</span></li>
-                  <li class="hbar"><span class="hbar__name">Pepperoni</span><span class="hbar__track"><span class="hbar__fill" style="width:84.8%"></span></span><span class="hbar__val">156</span></li>
-                  <li class="hbar"><span class="hbar__name">Tiramisu</span><span class="hbar__track"><span class="hbar__fill" style="width:53.3%"></span></span><span class="hbar__val">98</span></li>
-                  <li class="hbar"><span class="hbar__name">Cola 1,5L</span><span class="hbar__track"><span class="hbar__fill" style="width:47.3%"></span></span><span class="hbar__val">87</span></li>
-                  <li class="hbar"><span class="hbar__name">Garlic bread</span><span class="hbar__track"><span class="hbar__fill" style="width:39.1%"></span></span><span class="hbar__val">72</span></li>
-                </ol>
-              </div>
-
-              <div class="card">
-                <h2 class="card__title">Busiest hours</h2>
-                <p class="card__sub">Share of orders per hour, averaged over the period.</p>
-                <ol class="hbars">
-                  <li class="hbar"><span class="hbar__name">17:00</span><span class="hbar__track"><span class="hbar__fill" style="width:34%"></span></span><span class="hbar__val">8%</span></li>
-                  <li class="hbar"><span class="hbar__name">18:00</span><span class="hbar__track"><span class="hbar__fill" style="width:79%"></span></span><span class="hbar__val">19%</span></li>
-                  <li class="hbar"><span class="hbar__name">19:00</span><span class="hbar__track"><span class="hbar__fill" style="width:100%"></span></span><span class="hbar__val">24%</span></li>
-                  <li class="hbar"><span class="hbar__name">20:00</span><span class="hbar__track"><span class="hbar__fill" style="width:75%"></span></span><span class="hbar__val">18%</span></li>
-                  <li class="hbar"><span class="hbar__name">21:00</span><span class="hbar__track"><span class="hbar__fill" style="width:46%"></span></span><span class="hbar__val">11%</span></li>
-                </ol>
-              </div>
-            </div>
           </section>
 
           <section class="view" data-view="products" hidden>
@@ -6102,6 +6077,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=358"></script>
+  <script src="app.js?v=359"></script>
 </body>
 </html>

@@ -774,6 +774,9 @@ select.input {
 /* De hoofdactie blijft altijd naast de titel; de rest zit op een klein scherm
    achter de drie puntjes. app.js bouwt dat menu uit dezelfde knoppen. */
 .page-head__more { display: none; }
+/* Een mededeling naast de titel in plaats van een knop: hij leest mee, maar
+   trekt geen aandacht. */
+.page-head__note { font-size: var(--fs-sm); color: var(--text-muted); }
 /* Dezelfde knop, twee gedaanten: woorden op een breed scherm, drie puntjes op
    een smal. Welke je ziet staat in de regel voor smalle schermen. */
 .page-head__dots { display: none; }
@@ -2394,7 +2397,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   --series-takeaway: #ce7514;
 }
 
-.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
 
 /* Legenda hoort er altijd bij vanaf twee series; kleur alleen is geen
    identificatie. */
@@ -2820,14 +2822,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 }
 .tableview .table th, .tableview .table td { padding-left: 0; }
 
-/* Horizontale staven: één serie, dus één tint en een label per staaf. */
-.hbars { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
-.hbar { display: grid; grid-template-columns: 96px minmax(0, 1fr) 46px; align-items: center; gap: 12px; }
-.hbar__name { font-size: var(--fs-md); color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.hbar__track { height: 10px; border-radius: var(--r-full); background: var(--gray-100); }
-.hbar__fill { display: block; height: 100%; border-radius: var(--r-full); background: var(--series-delivery); }
-.hbar__val { font-size: var(--fs-sm); color: var(--text-muted); text-align: right; font-variant-numeric: tabular-nums; }
-
 /* ==========================================================================
    8o. DOMEIN KOPEN
    Wat je invult links, wat het kost rechts. De samenvatting blijft in beeld
@@ -3154,12 +3148,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .table--list td { width: auto; padding: 0; border: 0; white-space: normal; font-size: var(--fs-sm); color: var(--text-muted); }
   .table--list td:first-child { flex: 1 1 100%; font-size: var(--fs-md); }
   .table--list td:last-child { margin-left: auto; }
-  /* Analytics: twee kaarten naast elkaar past niet meer. */
-  .grid2 { grid-template-columns: minmax(0, 1fr); }
   .chart { padding-left: 44px; }
   .chart__plot { height: 190px; }
   .chart__bars { gap: 4px; }
-  .hbar { grid-template-columns: 84px minmax(0, 1fr) 42px; gap: 10px; }
   /* Legenda onder de titel in plaats van ernaast. */
   .card__headrow { flex-wrap: wrap; }
   .card__action { width: 100%; }
