@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=364" />
+  <link rel="stylesheet" href="styles.css?v=365" />
 </head>
 <body>
 
@@ -627,12 +627,13 @@
               </div>
             </div>
 
-            <!-- Waar je vanaf het dashboard meestal heen wilt. Elke tegel zegt
-                 in één zin waar hij voor is, en gaat naar een plek die er ook
-                 echt is. Onderaan, want de setup-guide erboven verdwijnt zodra
-                 hij af is; deze vier blijven. -->
-            <div class="card">
-              <h2 class="card__title">Useful links</h2>
+            <!-- Waar je vanaf het dashboard meestal heen wilt. Vier losse
+                 kaarten: het zijn vier bestemmingen, niet één onderwerp. Elke
+                 tegel zegt in één zin waar hij voor is en gaat naar een plek
+                 die er ook echt is. Onderaan, want de setup-guide erboven
+                 verdwijnt zodra hij af is; deze vier blijven. -->
+            <section class="useful">
+              <h2 class="view__title">Useful links</h2>
               <div class="links">
                 <button class="linkcard" type="button" data-goto-page="discounts">
                   <svg class="icon linkcard__icon" aria-hidden="true"><use href="#i-discount"/></svg>
@@ -659,7 +660,7 @@
                   <svg class="icon linkcard__go" aria-hidden="true"><use href="#i-chevron-right"/></svg>
                 </button>
               </div>
-            </div>
+            </section>
           </section>
 
           <!-- ====================================================
@@ -6150,6 +6151,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=364"></script>
+  <script src="app.js?v=365"></script>
 </body>
 </html>

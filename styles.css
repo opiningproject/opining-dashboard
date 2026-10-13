@@ -604,18 +604,23 @@ select.input {
 .taking.is-off .taking__state { color: var(--text-muted); }
 .taking .switch { margin-left: auto; }
 
-/* Vier plekken waar je vanaf het dashboard meestal heen wilt. Twee naast
-   elkaar; het pijltje rechts zegt dat je de pagina verlaat. */
-.links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+/* Een kop boven een reeks kaarten, dus niet in een kaart. Zelfde maat als een
+   kaarttitel: het is dezelfde soort kop, alleen een niveau hoger. */
+.view__title { margin-bottom: 14px; font-size: 18px; font-weight: 500; letter-spacing: -.01em; color: var(--text-strong); }
+
+/* Vier plekken waar je vanaf het dashboard meestal heen wilt. Elke tegel is
+   zelf een kaart, want het zijn vier bestemmingen en niet één onderwerp. Twee
+   naast elkaar; het pijltje rechts zegt dat je de pagina verlaat. */
+.links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .linkcard {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   grid-template-areas: "icon name go" ".    text go";
   align-items: center;
   gap: 4px 10px;
-  padding: 14px 16px;
+  padding: 18px 20px;
   border: 1px solid var(--border);
-  border-radius: var(--r-md);
+  border-radius: var(--r-lg);
   background: var(--bg-surface);
   text-align: left;
   transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
