@@ -4079,6 +4079,17 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 }
 .ocol__count { font-weight: 500; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .ocol__list { display: flex; flex-direction: column; gap: 8px; }
+/* In de lijststand staan de drie statussen onder elkaar, maar hun kaarten
+   hoeven niet elk een hele regel: er passen er drie naast elkaar, en dan zie
+   je er meer in een oogopslag. Op een smal scherm is die ruimte er niet en
+   blijven ze onder elkaar staan. */
+@media (min-width: 900px) {
+  .oboard[data-layout="list"] .ocol__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+  }
+}
 .ocol:has(.ocard[hidden]:only-child) .ocol__list { display: none; }
 
 .ocard {
