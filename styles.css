@@ -4046,7 +4046,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .oboard[data-layout="board"] { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
 .oboard[data-layout="list"]  { grid-template-columns: minmax(0, 1fr); }
 /* Drie smalle kolommen worden onleesbaar op een klein scherm; daar altijd
-   onder elkaar, wat de schakelaar daar ook zegt. */
+   onder elkaar. De schakelaar zegt daar dus niets meer, en staat er daarom
+   ook niet. */
 @media (max-width: 899px) {
   .oboard[data-layout="board"] { grid-template-columns: minmax(0, 1fr); }
 }
@@ -4106,6 +4107,12 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 }
 .vswitch__btn:hover { background: var(--gray-50); color: var(--text); }
 .vswitch__btn.is-active { background: var(--gray-100); color: var(--text-strong); }
+/* Onder de 900px staat het bord sowieso onder elkaar, dus zegt de schakelaar
+   daar niets meer. Deze regel staat hier en niet bij die van het bord: daar
+   zou de .vswitch hieronder er weer overheen gaan. */
+@media (max-width: 899px) {
+  .vswitch { display: none; }
+}
 
 /* Zonder vlak eromheen: de kolommen staan rechtstreeks op de pagina, zodat de
    kop- en voetbalk vervallen en de kaartjes de volle breedte krijgen. */
