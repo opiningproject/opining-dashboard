@@ -1916,9 +1916,21 @@
     groep.querySelector(".nav__parent").setAttribute("aria-expanded", String(open));
   }
 
+  /* Orders hoort open te staan zolang je daar bent. Klap je ergens anders een
+     groep open, dan laat hij los — net als de andere groepen doen zodra je
+     buiten hun eigen pagina's komt. showPage regelt dat bij een paginawissel;
+     de ouders hieronder navigeren niet, dus die zeggen het zelf. */
+  function sluitOrders() {
+    if (!ordersGroup) return;
+    if (!ordersGroup.querySelector(".nav__item.is-active")) {
+      ordersGroup.classList.remove("is-open");
+    }
+  }
+
   toggleGroups.forEach(function (groep) {
     groep.querySelector(".nav__parent").addEventListener("click", function () {
       setGroup(groep, !groep.classList.contains("is-open"));
+      sluitOrders();
     });
   });
 
