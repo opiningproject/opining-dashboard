@@ -290,8 +290,13 @@ legend { padding: 0; }
   transition: background var(--dur) var(--ease);
 }
 .nav__item .icon { color: var(--text-muted); transition: color var(--dur) var(--ease); }
-.nav__item:hover { background: var(--bg-hover); }
-.nav__item:hover .icon { color: var(--text); --icon-halo: var(--bg-hover); }
+/* Een tik op een touchscreen laat de muis-stand achter: dan blijft er grijs
+   staan onder je vinger nadat je al losgelaten hebt. Daarom alleen waar er
+   echt een muis is. */
+@media (hover: hover) {
+  .nav__item:hover { background: var(--bg-hover); }
+  .nav__item:hover .icon { color: var(--text); --icon-halo: var(--bg-hover); }
+}
 .nav__item.is-active { background: var(--bg-active); font-weight: 600; }
 .nav__item.is-active .icon { color: var(--accent); --icon-halo: var(--bg-active); }
 
