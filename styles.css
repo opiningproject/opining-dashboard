@@ -4112,6 +4112,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    zou de .vswitch hieronder er weer overheen gaan. */
 @media (max-width: 899px) {
   .vswitch { display: none; }
+  /* Onder elkaar is de kop van een kolom de scheiding tussen twee statussen,
+     en geen kopje boven een smalle baan. Dan mag hij ook zwaarder wegen. */
+  .ocol__head { font-size: 17px; }
 }
 
 /* Zonder vlak eromheen: de kolommen staan rechtstreeks op de pagina, zodat de

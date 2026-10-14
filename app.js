@@ -1768,10 +1768,10 @@
 
   /* ---- Een bestelling een stap verder zetten ------------------------------
      De knop zegt waar de bestelling naartoe gaat, niet waar hij nu staat:
-     vanuit New naar Kitchen, vanuit Kitchen naar Delivering, en vanuit
-     Delivering het archief in. Het label komt uit de kaart zelf. */
-  var VOLGENDE = { "new": "kitchen", kitchen: "delivering", delivering: "archief" };
-  var STAPNAAM = { kitchen: "Kitchen", delivering: "Delivering", archief: "Archive" };
+     vanuit New naar Kitchen, vanuit Kitchen naar Outgoing, en vanuit
+     Outgoing het archief in. Het label komt uit de kaart zelf. */
+  var VOLGENDE = { "new": "kitchen", kitchen: "outgoing", outgoing: "archief" };
+  var STAPNAAM = { kitchen: "Kitchen", outgoing: "Outgoing", archief: "Archive" };
 
   function zetStapKnop(kaart) {
     var knop = kaart.querySelector(".rowact .btn--accent");
