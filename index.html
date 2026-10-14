@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=397" />
+  <link rel="stylesheet" href="styles.css?v=398" />
 </head>
 <body>
 
@@ -209,7 +209,7 @@
                  (app.js §2). Vandaar ook Orders zelf als subregel. -->
             <li class="nav__group" id="orders-group">
               <a class="nav__item" href="#" data-page="orders" data-title="Orders" data-icon="i-orders">
-                <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg><span>Orders</span><span class="nav__count">8</span></a>
+                <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg><span>Orders</span><span class="nav__count">7</span></a>
               <div class="nav__sub" id="orders-sub"><ul class="nav__sub-list">
                 <li><a class="nav__item nav__sub-item" href="#" data-page="orders" data-title="Orders" data-icon="i-orders"><span>Orders</span></a></li>
                 <li><a class="nav__item nav__sub-item" href="#" data-page="archive" data-title="Archive" data-icon="i-archive"><span>Archive</span></a></li>
@@ -549,7 +549,7 @@
                    doorklikken naar de bestellingen zelf. -->
               <button class="taking__open" type="button" data-goto-page="orders">
                 <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg>
-                <span><b data-open-orders>8</b> open orders</span>
+                <span><b data-open-orders>7</b> open orders</span>
                 <svg class="icon taking__go" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
             </div>
@@ -687,7 +687,7 @@
                   </ul>
                 </section>
                 <section class="ocol group" data-status="kitchen" data-noun="order">
-                  <h3 class="ocol__head"><span class="ocol__tag">Kitchen <span class="group__count ocol__count">3</span></span></h3>
+                  <h3 class="ocol__head"><span class="ocol__tag">Kitchen <span class="group__count ocol__count">2</span></span></h3>
                   <ul class="ocol__list">
                   <li class="ocard" data-when="17:47" data-pay="&euro;73.59" data-filter="kitchen">
                     <p class="ocard__dest">1e Pijnackerstraat 120B</p>
@@ -698,11 +698,6 @@
                     <p class="ocard__dest">Zwaanshals 299</p>
                     <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
                     <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A39"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
-                  </li>
-                  <li class="ocard" data-when="17:58" data-pay="&euro;73.59" data-filter="kitchen">
-                    <p class="ocard__dest">Restaurant</p>
-                    <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
-                    <span class="rowact"><button class="btn btn--ghost btn--sm btn--accent" type="button">Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button><button class="icon-btn" type="button" aria-label="More actions for order 260909A40"><svg class="icon" aria-hidden="true"><use href="#i-dots-v"/></svg></button></span>
                   </li>
                   </ul>
                 </section>
@@ -805,12 +800,6 @@
                       <td><span class="when"><span class="when__day">Today</span>18:02</span></td>
                       <td>&euro;73.59</td>
                       <td><span class="badge badge--muted">Tarik Yildiz</span></td>
-                    </tr>
-                    <tr data-filter="today last 7 days last 30 days">
-                      <td>Restaurant</td>
-                      <td><span class="when"><span class="when__day">Today</span>17:31</span></td>
-                      <td>&euro;73.59</td>
-                      <td><span class="badge badge--muted">Collected</span></td>
                     </tr>
                     <tr data-filter="today last 7 days last 30 days">
                       <td>Zwaanshals 299</td>
@@ -6118,6 +6107,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=397"></script>
+  <script src="app.js?v=398"></script>
 </body>
 </html>
