@@ -1772,6 +1772,9 @@
      Outgoing het archief in. Het label komt uit de kaart zelf. */
   var VOLGENDE = { "new": "kitchen", kitchen: "outgoing", outgoing: "archief" };
   var STAPNAAM = { kitchen: "Kitchen", outgoing: "Outgoing", archief: "Archive" };
+  /* De stap de keuken uit heet naar wat er dan gebeurt: een afhaalbestelling
+     ligt klaar voor de klant, een bezorgbestelling gaat mee de deur uit. */
+  var UITNAAM = { collection: "Ready for takeaway", delivery: "Move to delivery" };
 
   function zetStapKnop(kaart) {
     var knop = kaart.querySelector(".rowact .btn--accent");
@@ -1780,8 +1783,12 @@
     if (!doel) { knop.hidden = true; return; }
     knop.hidden = false;
     /* Alleen het tekstdeel vervangen; de chevron erachter blijft staan. */
-    knop.firstChild.nodeValue = STAPNAAM[doel] + " ";
-    knop.setAttribute("aria-label", "Move to " + STAPNAAM[doel]);
+    var eigen = doel === "outgoing" && UITNAAM[kaart.dataset.type];
+    var naam = eigen || STAPNAAM[doel];
+    knop.firstChild.nodeValue = naam + " ";
+    /* "Move to Ready for takeaway" leest nergens naar; die twee zeggen zelf al
+       wat de knop doet. */
+    knop.setAttribute("aria-label", eigen ? naam : "Move to " + naam);
   }
 
   /* Het archief toont andere kolommen dan de live lijst, dus de rij wordt daar
