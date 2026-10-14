@@ -781,6 +781,14 @@ select.input {
 .nav__sub-list > li:first-child { margin-top: 2px; }
 /* Uitgelijnd op de tekst van de ouder: 12 padding + 20 icoon + 12 gap. */
 .nav__sub-item { padding-left: 44px; font-weight: 500; color: var(--text-muted); }
+/* Orders staat alleen op een telefoon ook als subregel: daar klapt de ouder
+   open in plaats van te navigeren, dus moet de pagina zelf er ook staan. Met
+   de drawer ernaast is die ouder gewoon een link en zou de regel er twee keer
+   staan. */
+.nav__sub-item[data-page="orders"] { display: none; }
+@media (max-width: 900px) {
+  .nav__sub-item[data-page="orders"] { display: flex; }
+}
 .nav__sub-item.is-active { color: var(--text-strong); }
 
 .page-head__action { margin-left: auto; height: 36px; padding: 0 16px; font-size: var(--fs-md); }
