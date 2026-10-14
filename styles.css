@@ -4073,7 +4073,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .ocol { min-width: 0; }
 .ocol__head {
   display: flex; align-items: center; gap: 8px;
-  margin-bottom: 8px; padding: 0 2px;
+  margin-bottom: 0; padding: 0 2px 14px;
   font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
 }
 .ocol__count { font-weight: 500; color: var(--text-muted); font-variant-numeric: tabular-nums; }
@@ -4139,7 +4139,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
      en geen kopje boven een smalle baan. Dan mag hij zwaarder wegen en lucht
      boven en onder zich krijgen; de marge eronder vervalt, anders staat er
      onder meer ruimte dan erboven. */
-  .ocol__head { font-size: 17px; padding: 12px 2px; margin-bottom: 0; }
+  .ocol__head { font-size: 17px; padding: 12px 2px 18px; margin-bottom: 0; }
 }
 
 /* Zonder vlak eromheen: de kolommen staan rechtstreeks op de pagina, zodat de
