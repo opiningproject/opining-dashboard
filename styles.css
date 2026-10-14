@@ -718,12 +718,6 @@ select.input {
 .nav__chev { display: none; margin-left: auto; width: 19px; height: 19px; color: var(--border-strong); }
 .nav__item:hover .nav__chev { color: var(--text-muted); }
 .nav__item.is-active .nav__chev { color: var(--text-muted); }
-/* Een pijl die naar beneden wijst klapt open; staat de groep open, dan wijst
-   hij terug omhoog. */
-.nav__chev--down { transition: transform var(--dur) var(--ease); }
-.nav__group.is-open .nav__chev--down { transform: rotate(180deg); }
-/* De teller schuift op naar de pijl in plaats van helemaal naar rechts. */
-.nav__count + .nav__chev { margin-left: 8px; }
 
 /* Ademruimte boven de titel van een instelling; de linkerkolom begint
    hoger omdat de winkelrij daar zijn eigen band heeft. */
