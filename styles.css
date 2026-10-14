@@ -4113,8 +4113,10 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 @media (max-width: 899px) {
   .vswitch { display: none; }
   /* Onder elkaar is de kop van een kolom de scheiding tussen twee statussen,
-     en geen kopje boven een smalle baan. Dan mag hij ook zwaarder wegen. */
-  .ocol__head { font-size: 17px; }
+     en geen kopje boven een smalle baan. Dan mag hij zwaarder wegen en lucht
+     boven en onder zich krijgen; de marge eronder vervalt, anders staat er
+     onder meer ruimte dan erboven. */
+  .ocol__head { font-size: 17px; padding: 12px 2px; margin-bottom: 0; }
 }
 
 /* Zonder vlak eromheen: de kolommen staan rechtstreeks op de pagina, zodat de
