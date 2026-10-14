@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=391" />
+  <link rel="stylesheet" href="styles.css?v=392" />
 </head>
 <body>
 
@@ -202,10 +202,16 @@
           <ul class="nav__list">
             <li><a class="nav__item is-active" href="#" data-page="dashboard" data-title="Dashboard" data-icon="i-home" aria-current="page">
               <svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span>Dashboard</span></a></li>
+            <!-- Orders is zelf een pagina en heeft een subpagina. Op een breed
+                 scherm brengt deze regel je er meteen heen en staat Archive er
+                 onder. Op een telefoon is de drawer het hele scherm: daar
+                 klapt hij open, zodat je in één keer ziet waar je heen kunt
+                 (app.js §2). Vandaar ook Orders zelf als subregel. -->
             <li class="nav__group" id="orders-group">
               <a class="nav__item" href="#" data-page="orders" data-title="Orders" data-icon="i-orders">
-                <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg><span>Orders</span><span class="nav__count">8</span></a>
+                <svg class="icon" aria-hidden="true"><use href="#i-orders"/></svg><span>Orders</span><span class="nav__count">8</span><svg class="icon nav__chev nav__chev--down" aria-hidden="true"><use href="#i-chevron-down"/></svg></a>
               <div class="nav__sub" id="orders-sub"><ul class="nav__sub-list">
+                <li><a class="nav__item nav__sub-item" href="#" data-page="orders" data-title="Orders" data-icon="i-orders"><span>Orders</span></a></li>
                 <li><a class="nav__item nav__sub-item" href="#" data-page="archive" data-title="Archive" data-icon="i-archive"><span>Archive</span></a></li>
               </ul></div>
             </li>
@@ -6112,6 +6118,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=391"></script>
+  <script src="app.js?v=392"></script>
 </body>
 </html>

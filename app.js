@@ -1922,10 +1922,24 @@
     });
   });
 
+  /* De regel Orders in de zijbalk: op een breed scherm een gewone link, op een
+     telefoon de kop van zijn groep. */
+  var ordersKop = ordersGroup && ordersGroup.querySelector(".nav__item[data-page]");
+
   sidebar.addEventListener("click", function (e) {
     var item = e.target.closest(".nav__item[data-page]");
     if (!item) return;
     e.preventDefault();
+
+    /* Op een telefoon neemt de drawer het hele scherm, en na een keuze gaat
+       hij dicht. Zou Orders meteen navigeren, dan moest je hem opnieuw openen
+       om bij Archive te komen. Hij klapt daar dus alleen open; de subregel
+       Orders brengt je naar de pagina. */
+    if (mqMobile.matches && item === ordersKop) {
+      ordersGroup.classList.toggle("is-open");
+      return;
+    }
+
     activate(item, sidebar);
     lastPageItem = item;
     showPage(item.dataset.page, item.dataset.title, item.dataset.icon);
