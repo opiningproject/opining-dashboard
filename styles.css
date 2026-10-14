@@ -4065,11 +4065,10 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   .oboard[data-layout="board"] { grid-template-columns: minmax(0, 1fr); }
 }
 /* Een kolom is ook een .group, en die trekt een streep tussen opeenvolgende
-   groepen. Onder elkaar scheidt die streep de statussen; naast elkaar doet de
-   tussenruimte dat al en liep hij dwars over het bord. */
-@media (min-width: 900px) {
-  .oboard[data-layout="board"] .ocol + .ocol { border-top: 0; }
-}
+   groepen. Bij de bestellingen niet: de kop van een status en de ruimte
+   eromheen scheiden ze al. Zo'n streep liep dwars over het bord, en onder
+   elkaar las hij als een scheur door de lijst. */
+.ocol + .ocol { border-top: 0; }
 
 .ocol { min-width: 0; }
 .ocol__head {
