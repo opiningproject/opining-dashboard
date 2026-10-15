@@ -786,14 +786,13 @@
       return;
     }
 
-    /* Automatisch archiveren staat aan of uit; het vinkje in het menu zegt
-       welke van de twee. */
+    /* Automatisch archiveren is meer dan aan of uit: er hoort een tijd bij.
+       Het menu opent dus een venster, en het vinkje volgt wat je daar
+       bewaart. */
     var autoArch = e.target.closest("[data-auto-archive]");
     if (autoArch) {
-      var aan = autoArch.getAttribute("aria-checked") !== "true";
-      autoArch.setAttribute("aria-checked", String(aan));
       sluitFilterMenus();
-      showToast(aan ? "Orders are archived automatically" : "Orders stay until you archive them");
+      openArchiefVenster(autoArch);
       return;
     }
 
@@ -1846,6 +1845,143 @@
     zetKolomTellers();
   }
 
+
+  /* ---- Automatisch archiveren --------------------------------------------
+     Aan of uit, en hoeveel minuten na de bezorgtijd. Het menu-item draagt de
+     stand, zodat het vinkje en het venster niet uit elkaar kunnen lopen. */
+  var archVenster = document.getElementById("autoarch-dialog");
+  var archItem = null;
+  var ARCH_STANDAARD = 15;
+
+  function openArchiefVenster(item) {
+    if (!archVenster) return;
+    archItem = item;
+    var aan = item.getAttribute("aria-checked") === "true";
+    var minuten = item.dataset.archMins || ARCH_STANDAARD;
+    archVenster.querySelector("#autoarch-on").checked = aan;
+    archVenster.querySelector("#autoarch-mins").value = minuten;
+    archVenster.querySelector("#autoarch-error").hidden = true;
+    zetArchVeld();
+    archVenster.hidden = false;
+  }
+
+  /* Staat het uit, dan valt er niets in te stellen. */
+  function zetArchVeld() {
+    if (!archVenster) return;
+    var aan = archVenster.querySelector("#autoarch-on").checked;
+    archVenster.querySelector("#autoarch-mins").disabled = !aan;
+  }
+
+  if (archVenster) {
+    archVenster.addEventListener("change", function (e) {
+      if (e.target.id === "autoarch-on") zetArchVeld();
+    });
+
+    archVenster.querySelector("#autoarch-save").addEventListener("click", function () {
+      var aan = archVenster.querySelector("#autoarch-on").checked;
+      var veld = archVenster.querySelector("#autoarch-mins");
+      var minuten = parseInt(veld.value, 10);
+      /* Een lege of onzinnige tijd zou stilletjes iets anders doen dan er
+         staat, dus die gaat niet door. */
+      if (aan && (!isFinite(minuten) || minuten < 1 || minuten > 240)) {
+        archVenster.querySelector("#autoarch-error").hidden = false;
+        veld.focus();
+        return;
+      }
+      if (archItem) {
+        archItem.setAttribute("aria-checked", String(aan));
+        if (aan) archItem.dataset.archMins = minuten;
+      }
+      archVenster.hidden = true;
+      showToast(aan
+        ? "Orders are archived " + minuten + " minutes after their time"
+        : "Orders stay until you archive them");
+    });
+  }
+
+  /* ---- Een bestelling opengeslagen ---------------------------------------
+     De live lijst en het archief openen hetzelfde venster. Wat erin staat
+     komt van de regel waarop je klikt: een kaartje draagt zijn gegevens in
+     data-attributen, een archiefrij deels in zijn cellen. */
+  var orderVenster = document.getElementById("order-dialog");
+
+  function leesBestelling(rij) {
+    var kaart = rij.classList.contains("ocard");
+    var bestemming = kaart
+      ? rij.querySelector(".ocard__dest").textContent.trim()
+      : rij.cells[0].textContent.trim();
+    /* Afhalen heeft geen adres en geen bezorger; dat scheelt ook de
+       bezorgkosten onder de regels. */
+    var afhalen = kaart ? rij.dataset.type === "collection" : bestemming === "Collection";
+    var merk = kaart && rij.querySelector(".badge");
+    return {
+      nr: rij.dataset.order || "",
+      naam: rij.dataset.name || "",
+      adres: afhalen ? "Pickup in store" : bestemming,
+      tel: rij.dataset.phone || "",
+      mail: rij.dataset.mail || "",
+      geplaatst: rij.dataset.placed || "",
+      /* Het merkje op de kaart zegt al of het zo snel mogelijk moet of op een
+         tijd; het archief draagt dat in data-wish. */
+      wens: merk ? merk.textContent.replace(/Scheduled/i, "").trim() : (rij.dataset.wish || ""),
+      eta: rij.dataset.eta || "",
+      wijze: rij.dataset.method || "",
+      bezorger: (afhalen || kaart || !rij.cells[3]) ? "" : rij.cells[3].textContent.trim(),
+      bedrag: rij.dataset.pay || (rij.cells && rij.cells[2] ? rij.cells[2].textContent.trim() : ""),
+      afhalen: afhalen
+    };
+  }
+
+  function zetVeld(naam, waarde) {
+    var vak = orderVenster.querySelector('[data-oveld="' + naam + '"]');
+    if (vak) vak.textContent = waarde;
+  }
+
+  function zetOrderRij(naam, aan) {
+    var rij = orderVenster.querySelector('[data-orow="' + naam + '"]');
+    if (rij) rij.hidden = !aan;
+  }
+
+  function toonOrderPaneel(naam) {
+    orderVenster.querySelectorAll("[data-opane]").forEach(function (paneel) {
+      paneel.hidden = paneel.dataset.opane !== naam;
+    });
+    orderVenster.querySelectorAll("[data-otab]").forEach(function (tab) {
+      var aan = tab.dataset.otab === naam;
+      tab.classList.toggle("is-active", aan);
+      tab.setAttribute("aria-selected", String(aan));
+    });
+  }
+
+  function openBestelling(rij) {
+    var b = leesBestelling(rij);
+    orderVenster.querySelector(".dialog__title").textContent = "Order #" + b.nr;
+    zetVeld("name", b.naam);
+    zetVeld("address", b.adres);
+    zetVeld("phone", b.tel);
+    zetVeld("mail", b.mail);
+    zetVeld("placed", b.geplaatst);
+    zetVeld("wish", b.wens);
+    zetVeld("eta", b.eta);
+    zetVeld("method", b.wijze);
+    zetVeld("courier", b.bezorger);
+    zetVeld("total", b.bedrag);
+    zetOrderRij("courier", !!b.bezorger);
+    zetOrderRij("fee", !b.afhalen);
+    /* Een volgende bestelling begint weer bij wie het is. */
+    toonOrderPaneel("customer");
+    orderVenster.hidden = false;
+  }
+
+  if (orderVenster) {
+    document.addEventListener("click", function (e) {
+      var rij = e.target.closest(".ocard, .table--archive tbody tr");
+      if (rij) { openBestelling(rij); return; }
+      var tab = e.target.closest("#order-dialog [data-otab]");
+      if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
+      if (e.target.closest("[data-print-label]")) showToast("Label sent to printer");
+    });
+  }
 
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
   var pageAction = document.getElementById("page-action");

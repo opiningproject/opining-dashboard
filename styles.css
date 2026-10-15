@@ -567,6 +567,13 @@ input[type="date"], input[type="time"] {
   font-size: var(--fs-md); color: var(--text-muted); pointer-events: none;
 }
 .infield__input { padding-left: 30px; }
+/* Een eenheid achteraan in het veld, zoals het woord achter een aantal. Hij
+   staat vast, dus de tekst houdt er ruimte voor vrij. */
+.infield__after {
+  position: absolute; right: 11px; top: 50%; transform: translateY(-50%);
+  font-size: var(--fs-md); color: var(--text-muted); pointer-events: none;
+}
+.infield__input--after { padding-right: 66px; }
 
 
 /* Een veld dat vastligt blijft leesbaar, maar nodigt niet uit. */
@@ -1145,6 +1152,8 @@ select.input {
 }
 .table td { padding: 14px 20px; border-top: 1px solid var(--border); color: var(--text); white-space: nowrap; }
 .table tbody tr { transition: background var(--dur) var(--ease); }
+/* Ook een rij in het archief slaat zijn bestelling open. */
+.table--archive tbody tr { cursor: pointer; }
 .table tbody tr:hover { background: var(--gray-25); }
 
 .badge--muted { background: var(--gray-100); color: var(--text-muted); }
@@ -3135,6 +3144,45 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    bij de duim. */
 .dialog__foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
 
+/* Een stand in een venster: in woorden links, de schakelaar rechts, met een
+   streep eronder omdat eronder het veld staat dat erbij hoort. */
+.archrow {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding-bottom: 16px; margin-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.archrow__text { font-size: var(--fs-md); color: var(--text-strong); }
+
+/* ---- Een bestelling opengeslagen ----------------------------------------
+   Links wie het is, rechts wanneer het moet: twee lijsten naast elkaar, elk
+   een label met zijn waarde. Op een telefoon is daar geen ruimte voor en
+   komen ze onder elkaar als een doorlopende lijst. */
+.odlg__tabs { margin-top: 18px; }
+.odlg__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
+.odlg__list { min-width: 0; }
+.odlg__row { display: grid; grid-template-columns: minmax(0, 104px) minmax(0, 1fr); gap: 12px; padding: 9px 0; }
+.odlg__row + .odlg__row { border-top: 1px solid var(--border); }
+.odlg__row dt { font-size: var(--fs-sm); color: var(--text-muted); }
+/* Een adres of mailadres mag afbreken; het venster rekt er niet voor uit. */
+.odlg__row dd { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow-wrap: anywhere; }
+@media (max-width: 560px) {
+  .odlg__cols { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .odlg__cols .odlg__list + .odlg__list .odlg__row:first-child { border-top: 1px solid var(--border); }
+}
+
+/* Wat er besteld is: aantal, naam en wat die regel kost. */
+.oitem { display: flex; align-items: baseline; gap: 12px; padding: 10px 0; }
+.oitem + .oitem { border-top: 1px solid var(--border); }
+.oitem__qty { flex: 0 0 auto; min-width: 20px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.oitem__name { flex: 1 1 auto; min-width: 0; font-size: var(--fs-md); color: var(--text-strong); }
+.oitem__sum { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.osum { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+.osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-size: var(--fs-md); color: var(--text-muted); }
+.osum__row dd { font-variant-numeric: tabular-nums; }
+/* Het bedrag onderaan is waar het om gaat, dus dat weegt zwaarder. */
+.osum__row--tot { margin-top: 6px; color: var(--text-strong); font-weight: 600; }
+
 /* ==========================================================================
    8n2. EEN BEZORGGEBIED INVULLEN — losse postcodes en twee bedragen
    ========================================================================== */
@@ -4078,6 +4126,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .ocard {
   display: flex; align-items: center; gap: 12px;
   padding: 10px 16px;
+  cursor: pointer;
   transition: background var(--dur) var(--ease);
 }
 .ocard:hover { background: var(--gray-25); }
