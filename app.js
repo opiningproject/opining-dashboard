@@ -1564,10 +1564,10 @@
     if (doel) doel.hidden = true;
   });
 
-  /* ---- Groepen klappen los van elkaar open -------------------------------
-     De menukaart groepeert per categorie, de bestellingen per status; verder
-     doen ze hetzelfde. */
-  document.querySelectorAll('[data-view="products"] .panel, [data-view="orders"] .panel').forEach(function (productPanel) {
+  /* ---- Productenlijst: groepen klappen los van elkaar open ----------------
+     Alleen de menukaart: bij de bestellingen is de kop van een status een
+     opschrift, geen knop. */
+  document.querySelectorAll('[data-view="products"] .panel').forEach(function (productPanel) {
     productPanel.addEventListener("click", function (e) {
       var kop = e.target.closest(".group__head");
       if (!kop) return;
@@ -1753,20 +1753,6 @@
      bestaan niet meer. */
   var bord = document.getElementById("orders-panel");
 
-  /* ---- De klok op een kaart ------------------------------------------------
-     Hoeveel tijd er nog is, als tekst rechtsboven. De minuten staan op de
-     kaart; in het echt rekent de kassa ze uit de gewenste tijd. */
-
-  function zetKlok(kaart) {
-    var plek = kaart.querySelector(".ocard__mins");
-    if (!plek) return;
-    var minuten = Number(kaart.dataset.mins);
-    if (!isFinite(minuten)) minuten = 0;
-    plek.textContent = minuten + "m";
-    if (minuten < 5) kaart.setAttribute("data-krap", "");
-    else kaart.removeAttribute("data-krap");
-  }
-
   /* Het aantal per status komt uit de regels zelf, zodat kop en lijst niet
      uit elkaar kunnen lopen. Het filter leest dat getal later terug, vandaar
      dat het ook als vaste waarde wordt vastgelegd. */
@@ -1855,7 +1841,6 @@
 
   if (bord) {
     bord.querySelectorAll(".ocard").forEach(zetStapKnop);
-    bord.querySelectorAll(".ocard").forEach(zetKlok);
     zetKolomTellers();
   }
 

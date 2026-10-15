@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=415" />
+  <link rel="stylesheet" href="styles.css?v=416" />
 </head>
 <body>
 
@@ -306,23 +306,6 @@
               </div>
             </div>
             <div class="page-head__tools" data-tools="orders" hidden>
-              <!-- Zoeken staat hier en niet achter een knop: in een lijst die
-                   de hele dag verandert wil je er meteen in kunnen tikken.
-                   data-list wijst de lijst aan die hij doorzoekt, want die
-                   staat niet om hem heen. -->
-              <div class="panel__head panel__head--bare is-searching osearch" data-list="#orders-panel">
-                <div class="psearch">
-                  <div class="psearch__top">
-                    <span class="psearch__field">
-                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                      <input type="search" placeholder="Search orders" aria-label="Search orders" />
-                      <button class="psearch__clear" type="button" hidden aria-label="Clear search">
-                        <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
-                      </button>
-                    </span>
-                  </div>
-                </div>
-              </div>
               <!-- Wat er met de bestellingen in hun geheel te doen valt, niet
                    met een ervan; zelfde menu als elders op de pagina. -->
               <div class="sort">
@@ -666,90 +649,98 @@
                   <button class="tab" type="button">Delivery</button>
                   <button class="tab" type="button">Collection</button>
                 </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
+                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. De
+                     chips perken in op wat een bestelling draagt maar niet
+                     toont; betaalwijze staat er niet bij, want die kent een
+                     regel hier niet. -->
+                <div class="psearch" data-filters="Order type:Delivery|Collection;Status:New|Kitchen|Outgoing">
+                  <div class="psearch__top">
+                    <span class="psearch__field">
+                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                      <input type="search" placeholder="search" aria-label="Search this list" />
+                    </span>
+                    <button class="psearch__cancel" type="button">Cancel</button>
+                </div>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                    <button class="fclear" type="button" hidden>Clear All</button>
+                </div>
+                </div>
               </div>
 
               <div class="group is-open" data-status="new" data-noun="order">
-                <button class="group__head" type="button" aria-expanded="true">
-                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                <div class="group__head group__head--vast">
                   <span class="group__name">New</span>
                   <span class="group__count">3 orders</span>
-                </button>
+                </div>
                 <div class="group__panel"><ul class="group__list">
-                  <li class="ocard" data-when="17:21" data-pay="&euro;73.59" data-filter="new" data-type="delivery" data-mins="12">
+                  <li class="ocard" data-when="17:21" data-pay="&euro;73.59" data-filter="new" data-type="delivery">
                     <div class="ocard__body">
                       <p class="ocard__dest">Tochtstraat 40</p>
-                      <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
+                      <p class="ocard__meta"><span class="badge badge--muted">ASAP</span></p>
                     </div>
-                    <span class="ocard__mins">12m</span>
-                    <span class="sr-only">12 minutes left</span>
                   </li>
-                  <li class="ocard" data-when="17:32" data-pay="&euro;73.59" data-filter="new" data-type="collection" data-mins="23">
+                  <li class="ocard" data-when="17:32" data-pay="&euro;73.59" data-filter="new" data-type="collection">
                     <div class="ocard__body">
                       <p class="ocard__dest">Collection</p>
-                      <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
+                      <p class="ocard__meta"><span class="badge badge--muted">ASAP</span></p>
                     </div>
-                    <span class="ocard__mins">23m</span>
-                    <span class="sr-only">23 minutes left</span>
                   </li>
-                  <li class="ocard" data-when="17:32" data-pay="&euro;73.59" data-filter="new" data-type="delivery" data-mins="26">
+                  <li class="ocard" data-when="17:32" data-pay="&euro;73.59" data-filter="new" data-type="delivery">
                     <div class="ocard__body">
                       <p class="ocard__dest">Lusthofstraat 27A</p>
-                      <p class="ocard__meta"><span class="ocard__when ocard__when--sched"><span class="sr-only">Scheduled </span>17:32</span></p>
+                      <p class="ocard__meta"><span class="badge badge--sched"><span class="sr-only">Scheduled </span>17:32</span></p>
                     </div>
-                    <span class="ocard__mins">26m</span>
-                    <span class="sr-only">26 minutes left</span>
                   </li>
                 </ul></div>
               </div>
 
               <div class="group is-open" data-status="kitchen" data-noun="order">
-                <button class="group__head" type="button" aria-expanded="true">
-                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                <div class="group__head group__head--vast">
                   <span class="group__name">Kitchen</span>
                   <span class="group__count">2 orders</span>
-                </button>
+                </div>
                 <div class="group__panel"><ul class="group__list">
-                  <li class="ocard" data-when="17:47" data-pay="&euro;73.59" data-filter="kitchen" data-type="delivery" data-mins="8">
+                  <li class="ocard" data-when="17:47" data-pay="&euro;73.59" data-filter="kitchen" data-type="delivery">
                     <div class="ocard__body">
                       <p class="ocard__dest">1e Pijnackerstraat 120B</p>
-                      <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
+                      <p class="ocard__meta"><span class="badge badge--muted">ASAP</span></p>
                     </div>
-                    <span class="ocard__mins">8m</span>
-                    <span class="sr-only">8 minutes left</span>
                   </li>
-                  <li class="ocard" data-when="17:51" data-pay="&euro;73.59" data-filter="kitchen" data-type="delivery" data-mins="4">
+                  <li class="ocard" data-when="17:51" data-pay="&euro;73.59" data-filter="kitchen" data-type="delivery">
                     <div class="ocard__body">
                       <p class="ocard__dest">Zwaanshals 299</p>
-                      <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
+                      <p class="ocard__meta"><span class="badge badge--muted">ASAP</span></p>
                     </div>
-                    <span class="ocard__mins">4m</span>
-                    <span class="sr-only">4 minutes left</span>
                   </li>
                 </ul></div>
               </div>
 
               <div class="group is-open" data-status="outgoing" data-noun="order">
-                <button class="group__head" type="button" aria-expanded="true">
-                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                <div class="group__head group__head--vast">
                   <span class="group__name">Outgoing</span>
                   <span class="group__count">2 orders</span>
-                </button>
+                </div>
                 <div class="group__panel"><ul class="group__list">
-                  <li class="ocard" data-when="19:59" data-pay="&euro;73.59" data-filter="outgoing" data-type="delivery" data-mins="19">
+                  <li class="ocard" data-when="19:59" data-pay="&euro;73.59" data-filter="outgoing" data-type="delivery">
                     <div class="ocard__body">
                       <p class="ocard__dest">Tochtstraat 40</p>
-                      <p class="ocard__meta"><span class="ocard__when ocard__when--sched"><span class="sr-only">Scheduled </span>19:59</span></p>
+                      <p class="ocard__meta"><span class="badge badge--sched"><span class="sr-only">Scheduled </span>19:59</span></p>
                     </div>
-                    <span class="ocard__mins">19m</span>
-                    <span class="sr-only">19 minutes left</span>
                   </li>
-                  <li class="ocard" data-when="21:30" data-pay="&euro;73.59" data-filter="outgoing" data-type="delivery" data-mins="31">
+                  <li class="ocard" data-when="21:30" data-pay="&euro;73.59" data-filter="outgoing" data-type="delivery">
                     <div class="ocard__body">
                       <p class="ocard__dest">Lusthofstraat 27A</p>
-                      <p class="ocard__meta"><span class="ocard__when ocard__when--sched"><span class="sr-only">Scheduled </span>21:30</span></p>
+                      <p class="ocard__meta"><span class="badge badge--sched"><span class="sr-only">Scheduled </span>21:30</span></p>
                     </div>
-                    <span class="ocard__mins">31m</span>
-                    <span class="sr-only">31 minutes left</span>
                   </li>
                 </ul></div>
               </div>
@@ -6143,6 +6134,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=415"></script>
+  <script src="app.js?v=416"></script>
 </body>
 </html>
