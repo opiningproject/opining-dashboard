@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=412" />
+  <link rel="stylesheet" href="styles.css?v=414" />
 </head>
 <body>
 
@@ -666,6 +666,17 @@
           <section class="view" data-view="orders" hidden>
 
             <div class="panel panel--bare" id="orders-panel">
+              <!-- Op een smal scherm passen de drie statussen niet naast
+                   elkaar, en onder elkaar is onduidelijk waar de ene ophoudt.
+                   Daar staan ze achter elkaar: deze tabrij bovenaan, en je
+                   ziet er een tegelijk. Op een breed scherm staat hij er niet;
+                   daar zie je alle drie de kolommen. -->
+              <div class="tabs ordertabs" role="tablist">
+                <button class="tab is-active" type="button" role="tab" aria-selected="true" data-status-tab="new">New <span class="tab__count">3</span></button>
+                <button class="tab" type="button" role="tab" aria-selected="false" data-status-tab="kitchen">Kitchen <span class="tab__count">2</span></button>
+                <button class="tab" type="button" role="tab" aria-selected="false" data-status-tab="outgoing">Outgoing <span class="tab__count">2</span></button>
+              </div>
+
               <!-- Bestellingen als kaartjes, zodat dezelfde opbouw zowel naast
                    elkaar (bord) als onder elkaar (lijst) kan staan; app.js wisselt
                    alleen data-layout. -->
@@ -678,12 +689,7 @@
                       <p class="ocard__dest">Tochtstraat 40</p>
                       <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
                     </div>
-                    <svg class="otimer" viewBox="0 0 48 48" aria-hidden="true">
-                      <circle class="otimer__track" cx="24" cy="24" r="22" />
-                      <circle class="otimer__ring" cx="24" cy="24" r="22" />
-                      <text class="otimer__num" x="24" y="25">12</text>
-                      <text class="otimer__unit" x="24" y="35">m</text>
-                    </svg>
+                    <span class="ocard__mins">12m</span>
                     <span class="sr-only">12 minutes left</span>
                   </li>
                   <li class="ocard" data-when="17:32" data-pay="&euro;73.59" data-filter="new" data-type="collection" data-mins="23">
@@ -691,12 +697,7 @@
                       <p class="ocard__dest">Collection</p>
                       <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
                     </div>
-                    <svg class="otimer" viewBox="0 0 48 48" aria-hidden="true">
-                      <circle class="otimer__track" cx="24" cy="24" r="22" />
-                      <circle class="otimer__ring" cx="24" cy="24" r="22" />
-                      <text class="otimer__num" x="24" y="25">23</text>
-                      <text class="otimer__unit" x="24" y="35">m</text>
-                    </svg>
+                    <span class="ocard__mins">23m</span>
                     <span class="sr-only">23 minutes left</span>
                   </li>
                   <li class="ocard" data-when="17:32" data-pay="&euro;73.59" data-filter="new" data-type="delivery" data-mins="26">
@@ -704,12 +705,7 @@
                       <p class="ocard__dest">Lusthofstraat 27A</p>
                       <p class="ocard__meta"><span class="ocard__when ocard__when--sched"><span class="sr-only">Scheduled </span>17:32</span></p>
                     </div>
-                    <svg class="otimer" viewBox="0 0 48 48" aria-hidden="true">
-                      <circle class="otimer__track" cx="24" cy="24" r="22" />
-                      <circle class="otimer__ring" cx="24" cy="24" r="22" />
-                      <text class="otimer__num" x="24" y="25">26</text>
-                      <text class="otimer__unit" x="24" y="35">m</text>
-                    </svg>
+                    <span class="ocard__mins">26m</span>
                     <span class="sr-only">26 minutes left</span>
                   </li>
                   </ul>
@@ -722,12 +718,7 @@
                       <p class="ocard__dest">1e Pijnackerstraat 120B</p>
                       <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
                     </div>
-                    <svg class="otimer" viewBox="0 0 48 48" aria-hidden="true">
-                      <circle class="otimer__track" cx="24" cy="24" r="22" />
-                      <circle class="otimer__ring" cx="24" cy="24" r="22" />
-                      <text class="otimer__num" x="24" y="25">8</text>
-                      <text class="otimer__unit" x="24" y="35">m</text>
-                    </svg>
+                    <span class="ocard__mins">8m</span>
                     <span class="sr-only">8 minutes left</span>
                   </li>
                   <li class="ocard" data-when="17:51" data-pay="&euro;73.59" data-filter="kitchen" data-type="delivery" data-mins="4">
@@ -735,12 +726,7 @@
                       <p class="ocard__dest">Zwaanshals 299</p>
                       <p class="ocard__meta"><span class="ocard__when ocard__when--asap">ASAP</span></p>
                     </div>
-                    <svg class="otimer" viewBox="0 0 48 48" aria-hidden="true">
-                      <circle class="otimer__track" cx="24" cy="24" r="22" />
-                      <circle class="otimer__ring" cx="24" cy="24" r="22" />
-                      <text class="otimer__num" x="24" y="25">4</text>
-                      <text class="otimer__unit" x="24" y="35">m</text>
-                    </svg>
+                    <span class="ocard__mins">4m</span>
                     <span class="sr-only">4 minutes left</span>
                   </li>
                   </ul>
@@ -753,12 +739,7 @@
                       <p class="ocard__dest">Tochtstraat 40</p>
                       <p class="ocard__meta"><span class="ocard__when ocard__when--sched"><span class="sr-only">Scheduled </span>19:59</span></p>
                     </div>
-                    <svg class="otimer" viewBox="0 0 48 48" aria-hidden="true">
-                      <circle class="otimer__track" cx="24" cy="24" r="22" />
-                      <circle class="otimer__ring" cx="24" cy="24" r="22" />
-                      <text class="otimer__num" x="24" y="25">19</text>
-                      <text class="otimer__unit" x="24" y="35">m</text>
-                    </svg>
+                    <span class="ocard__mins">19m</span>
                     <span class="sr-only">19 minutes left</span>
                   </li>
                   <li class="ocard" data-when="21:30" data-pay="&euro;73.59" data-filter="outgoing" data-type="delivery" data-mins="31">
@@ -766,12 +747,7 @@
                       <p class="ocard__dest">Lusthofstraat 27A</p>
                       <p class="ocard__meta"><span class="ocard__when ocard__when--sched"><span class="sr-only">Scheduled </span>21:30</span></p>
                     </div>
-                    <svg class="otimer" viewBox="0 0 48 48" aria-hidden="true">
-                      <circle class="otimer__track" cx="24" cy="24" r="22" />
-                      <circle class="otimer__ring" cx="24" cy="24" r="22" />
-                      <text class="otimer__num" x="24" y="25">31</text>
-                      <text class="otimer__unit" x="24" y="35">m</text>
-                    </svg>
+                    <span class="ocard__mins">31m</span>
                     <span class="sr-only">31 minutes left</span>
                   </li>
                   </ul>
@@ -6167,6 +6143,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=412"></script>
+  <script src="app.js?v=414"></script>
 </body>
 </html>

@@ -4102,6 +4102,15 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    eromheen scheiden ze al. Zo'n streep liep dwars over het bord, en onder
    elkaar las hij als een scheur door de lijst. */
 .ocol + .ocol { border-top: 0; }
+/* De tabrij boven de bestellingen bestaat alleen op een smal scherm; daar
+   staan de drie statussen achter elkaar in plaats van naast of onder elkaar.
+   Welke je ziet zet app.js met is-shown. */
+.ordertabs { display: none; }
+@media (max-width: 899px) {
+  .ordertabs { display: flex; margin: 0 0 14px; }
+  .oboard .ocol { display: none; }
+  .oboard .ocol.is-shown { display: block; }
+}
 
 .ocol { min-width: 0; }
 /* Het vak om de titel: dat draagt de ruimte, de titel zelf alleen de letter. */
@@ -4112,6 +4121,11 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .ocol__title {
   display: inline-flex; align-items: center; gap: 8px;
   font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
+}
+/* Op een smal scherm zegt de tabrij al welke status je ziet; dan hoeft de kop
+   erboven niet nog een keer. */
+@media (max-width: 899px) {
+  .ocol__head { display: none; }
 }
 /* Het aantal leest als de titel: dezelfde letter, alleen gedempt, zodat het
    een bijzin blijft en geen tweede kop. */
@@ -4133,7 +4147,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Het adres links, de klok rechts: zo zie je per kaart in een oogopslag waar
    hij heen moet en hoeveel tijd er nog is. */
 .ocard {
-  display: flex; align-items: center; gap: 12px;
+  display: flex; align-items: flex-start; gap: 12px;
   padding: 12px 14px;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
@@ -4158,19 +4172,16 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .ocard__when--asap  { border-color: #f0f0f0; background: #fff; color: #888; }
 .ocard__when--sched { background: #faedff; color: #220038; }
 /* De knoppen onderaan de kaart, met de puntjes helemaal rechts. */
-/* De klok uit de kassa-app: een grijze baan met daarop hoeveel er nog over
-   is. De ring begint bovenaan, vandaar de draai van een kwartslag. Hoeveel er
-   gevuld staat rekent app.js uit; die kent de minuten die de kaart draagt. */
-.otimer { flex: 0 0 auto; width: 56px; height: 56px; }
-.otimer__track { fill: none; stroke: var(--gray-100); stroke-width: 2.5; }
-.otimer__ring {
-  fill: none; stroke: var(--success); stroke-width: 2.5; stroke-linecap: round;
-  transform: rotate(-90deg); transform-origin: 24px 24px;
+/* Hoeveel tijd er nog is, rechtsboven op de kaart: dezelfde letter als het
+   adres ernaast, zodat het meeleest en geen apart ding wordt. */
+.ocard__mins {
+  align-self: flex-start; flex: 0 0 auto;
+  font-size: var(--fs-md); font-weight: 500;
+  color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
 }
 /* Minder dan vijf minuten: dan is het geen melding meer maar haast. */
-.ocard[data-krap] .otimer__ring { stroke: var(--danger); }
-.otimer__num { font-size: 14px; font-weight: 600; fill: var(--text-strong); text-anchor: middle; }
-.otimer__unit { font-size: 9px; font-weight: 500; fill: var(--text-muted); text-anchor: middle; }
+.ocard[data-krap] .ocard__mins { color: var(--danger); }
 
 /* De schakelaar in de titelregel: twee standen in een omhulsel. */
 .vswitch { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--bg-surface); }
@@ -4192,7 +4203,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
      en geen kopje boven een smalle baan. Dan mag hij zwaarder wegen en lucht
      boven en onder zich krijgen; de marge eronder vervalt, anders staat er
      onder meer ruimte dan erboven. */
-  .ocol__head { padding: 12px 2px 18px; margin-bottom: 0; }
   .ocol__title { font-size: 17px; }
 }
 

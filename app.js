@@ -1777,21 +1777,15 @@
   document.addEventListener("pagina", zetBordStand);
 
   /* ---- De klok op een kaart ------------------------------------------------
-     Een ring die laat zien hoeveel van het halfuur er nog over is. De minuten
-     staan op de kaart; in het echt rekent de kassa ze uit de gewenste tijd.
-     De omtrek rekenen we hier uit in plaats van hem als getal in de CSS te
-     zetten: dan blijft hij kloppen als de straal ooit verandert. */
-  var KLOKRAAM = 30;   /* minuten die een volle ring voorstelt */
+     Hoeveel tijd er nog is, als tekst rechtsboven. De minuten staan op de
+     kaart; in het echt rekent de kassa ze uit de gewenste tijd. */
 
   function zetKlok(kaart) {
-    var ring = kaart.querySelector(".otimer__ring");
-    if (!ring) return;
+    var plek = kaart.querySelector(".ocard__mins");
+    if (!plek) return;
     var minuten = Number(kaart.dataset.mins);
     if (!isFinite(minuten)) minuten = 0;
-    var omtrek = 2 * Math.PI * Number(ring.getAttribute("r"));
-    var deel = Math.max(0, Math.min(1, minuten / KLOKRAAM));
-    ring.setAttribute("stroke-dasharray", omtrek);
-    ring.setAttribute("stroke-dashoffset", omtrek * (1 - deel));
+    plek.textContent = minuten + "m";
     if (minuten < 5) kaart.setAttribute("data-krap", "");
     else kaart.removeAttribute("data-krap");
   }
@@ -1801,9 +1795,38 @@
   function zetKolomTellers() {
     if (!bord) return;
     bord.querySelectorAll(".ocol").forEach(function (kolom) {
+      var aantal = kolom.querySelectorAll(".ocard").length;
       var teller = kolom.querySelector(".ocol__count");
-      if (teller) teller.textContent = kolom.querySelectorAll(".ocard").length;
+      if (teller) teller.textContent = aantal;
+      /* Dezelfde telling op de tab, zodat je ziet waar wat ligt zonder te
+         hoeven wisselen. */
+      var tab = statusTabs && statusTabs.querySelector('[data-status-tab="' + kolom.dataset.status + '"] .tab__count');
+      if (tab) tab.textContent = aantal;
     });
+  }
+
+  /* Welke status je op een smal scherm ziet. De CSS laat alleen de kolom met
+     is-shown staan; op een breed scherm doet die klasse niets. */
+  var statusTabs = document.querySelector(".ordertabs");
+
+  function zetStatusTab(status) {
+    if (!statusTabs || !bord) return;
+    statusTabs.querySelectorAll("[data-status-tab]").forEach(function (t) {
+      var aan = t.dataset.statusTab === status;
+      t.classList.toggle("is-active", aan);
+      t.setAttribute("aria-selected", String(aan));
+    });
+    bord.querySelectorAll(".ocol").forEach(function (kolom) {
+      kolom.classList.toggle("is-shown", kolom.dataset.status === status);
+    });
+  }
+
+  if (statusTabs) {
+    statusTabs.addEventListener("click", function (e) {
+      var tab = e.target.closest("[data-status-tab]");
+      if (tab) zetStatusTab(tab.dataset.statusTab);
+    });
+    zetStatusTab("new");
   }
 
   /* ---- Een bestelling een stap verder zetten ------------------------------
