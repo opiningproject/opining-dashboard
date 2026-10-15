@@ -4091,14 +4091,17 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 }
 .ocol:has(.ocard[hidden]:only-child) .ocol__list { display: none; }
 
+/* Het adres links, de klok rechts: zo zie je per kaart in een oogopslag waar
+   hij heen moet en hoeveel tijd er nog is. */
 .ocard {
-  display: flex; flex-direction: column; gap: 6px;
+  display: flex; align-items: center; gap: 12px;
   padding: 12px 14px;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
   background: var(--bg-surface);
   transition: border-color var(--dur) var(--ease);
 }
+.ocard__body { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1 1 auto; }
 .ocard:hover { border-color: var(--border-strong); }
 .ocard__dest { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
 .ocard__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: var(--fs-sm); color: var(--text-muted); }
@@ -4116,8 +4119,19 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .ocard__when--asap  { border-color: #f0f0f0; background: #fff; color: #888; }
 .ocard__when--sched { background: #faedff; color: #220038; }
 /* De knoppen onderaan de kaart, met de puntjes helemaal rechts. */
-.ocard .rowact { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
-.ocard .rowact .btn--accent { margin-right: auto; }
+/* De klok uit de kassa-app: een grijze baan met daarop hoeveel er nog over
+   is. De ring begint bovenaan, vandaar de draai van een kwartslag. Hoeveel er
+   gevuld staat rekent app.js uit; die kent de minuten die de kaart draagt. */
+.otimer { flex: 0 0 auto; width: 56px; height: 56px; }
+.otimer__track { fill: none; stroke: var(--gray-100); stroke-width: 2.5; }
+.otimer__ring {
+  fill: none; stroke: var(--success); stroke-width: 2.5; stroke-linecap: round;
+  transform: rotate(-90deg); transform-origin: 24px 24px;
+}
+/* Minder dan vijf minuten: dan is het geen melding meer maar haast. */
+.ocard[data-krap] .otimer__ring { stroke: var(--danger); }
+.otimer__num { font-size: 14px; font-weight: 600; fill: var(--text-strong); text-anchor: middle; }
+.otimer__unit { font-size: 9px; font-weight: 500; fill: var(--text-muted); text-anchor: middle; }
 
 /* De schakelaar in de titelregel: twee standen in een omhulsel. */
 .vswitch { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--bg-surface); }

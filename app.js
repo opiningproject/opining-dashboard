@@ -1756,6 +1756,26 @@
   }
   document.addEventListener("pagina", zetBordStand);
 
+  /* ---- De klok op een kaart ------------------------------------------------
+     Een ring die laat zien hoeveel van het halfuur er nog over is. De minuten
+     staan op de kaart; in het echt rekent de kassa ze uit de gewenste tijd.
+     De omtrek rekenen we hier uit in plaats van hem als getal in de CSS te
+     zetten: dan blijft hij kloppen als de straal ooit verandert. */
+  var KLOKRAAM = 30;   /* minuten die een volle ring voorstelt */
+
+  function zetKlok(kaart) {
+    var ring = kaart.querySelector(".otimer__ring");
+    if (!ring) return;
+    var minuten = Number(kaart.dataset.mins);
+    if (!isFinite(minuten)) minuten = 0;
+    var omtrek = 2 * Math.PI * Number(ring.getAttribute("r"));
+    var deel = Math.max(0, Math.min(1, minuten / KLOKRAAM));
+    ring.setAttribute("stroke-dasharray", omtrek);
+    ring.setAttribute("stroke-dashoffset", omtrek * (1 - deel));
+    if (minuten < 5) kaart.setAttribute("data-krap", "");
+    else kaart.removeAttribute("data-krap");
+  }
+
   /* Het aantal per kolom komt uit de kaartjes zelf, zodat kop en lijst niet
      uit elkaar kunnen lopen. */
   function zetKolomTellers() {
@@ -1839,6 +1859,7 @@
 
   if (bord) {
     bord.querySelectorAll(".ocard").forEach(zetStapKnop);
+    bord.querySelectorAll(".ocard").forEach(zetKlok);
     zetKolomTellers();
     zetBordStand();
   }
