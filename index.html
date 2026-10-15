@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=407" />
+  <link rel="stylesheet" href="styles.css?v=408" />
 </head>
 <body>
 
@@ -679,7 +679,7 @@
                    alleen data-layout. -->
               <div class="oboard" data-layout="board">
                 <section class="ocol group" data-status="new" data-noun="order">
-                  <h3 class="ocol__head"><span class="ocol__tag">New <span class="group__count ocol__count">3</span></span></h3>
+                  <div class="ocol__head"><h3 class="ocol__title">New <span class="ocol__count">3</span></h3></div>
                   <ul class="ocol__list">
                   <li class="ocard" data-when="17:21" data-pay="&euro;73.59" data-filter="new" data-type="delivery" data-mins="12">
                     <div class="ocard__body">
@@ -723,7 +723,7 @@
                   </ul>
                 </section>
                 <section class="ocol group" data-status="kitchen" data-noun="order">
-                  <h3 class="ocol__head"><span class="ocol__tag">Kitchen <span class="group__count ocol__count">2</span></span></h3>
+                  <div class="ocol__head"><h3 class="ocol__title">Kitchen <span class="ocol__count">2</span></h3></div>
                   <ul class="ocol__list">
                   <li class="ocard" data-when="17:47" data-pay="&euro;73.59" data-filter="kitchen" data-type="delivery" data-mins="8">
                     <div class="ocard__body">
@@ -754,7 +754,7 @@
                   </ul>
                 </section>
                 <section class="ocol group" data-status="outgoing" data-noun="order">
-                  <h3 class="ocol__head"><span class="ocol__tag">Outgoing <span class="group__count ocol__count">2</span></span></h3>
+                  <div class="ocol__head"><h3 class="ocol__title">Outgoing <span class="ocol__count">2</span></h3></div>
                   <ul class="ocol__list">
                   <li class="ocard" data-when="19:59" data-pay="&euro;73.59" data-filter="outgoing" data-type="delivery" data-mins="19">
                     <div class="ocard__body">
@@ -6175,6 +6175,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=407"></script>
+  <script src="app.js?v=408"></script>
 </body>
 </html>

@@ -4075,12 +4075,18 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .ocol + .ocol { border-top: 0; }
 
 .ocol { min-width: 0; }
+/* Het vak om de titel: dat draagt de ruimte, de titel zelf alleen de letter. */
 .ocol__head {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center;
   margin-bottom: 0; padding: 0 2px 14px;
+}
+.ocol__title {
+  display: inline-flex; align-items: center; gap: 8px;
   font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
 }
-.ocol__count { font-weight: 500; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+/* Het aantal leest als de titel: dezelfde letter, alleen gedempt, zodat het
+   een bijzin blijft en geen tweede kop. */
+.ocol__count { font: inherit; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .ocol__list { display: flex; flex-direction: column; gap: 8px; }
 /* In de lijststand staan de drie statussen onder elkaar, maar hun kaarten
    hoeven niet elk een hele regel: er passen er drie naast elkaar, en dan zie
@@ -4157,7 +4163,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
      en geen kopje boven een smalle baan. Dan mag hij zwaarder wegen en lucht
      boven en onder zich krijgen; de marge eronder vervalt, anders staat er
      onder meer ruimte dan erboven. */
-  .ocol__head { font-size: 17px; padding: 12px 2px 18px; margin-bottom: 0; }
+  .ocol__head { padding: 12px 2px 18px; margin-bottom: 0; }
+  .ocol__title { font-size: 17px; }
 }
 
 /* Zonder vlak eromheen: de kolommen staan rechtstreeks op de pagina, zodat de
@@ -4173,17 +4180,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .page-head__tools .panel__tool { margin-left: 0; }
 .page-head__tools .icon--wide { width: 26px; height: 11px; }
 
-/* De status en zijn aantal horen bij elkaar; ze stonden aan weerszijden van
-   de kolom uit elkaar getrokken. */
-.ocol__tag { display: inline-flex; align-items: center; gap: 6px; }
-.ocol__count {
-  margin-left: 0;
-  padding: 0 7px;
-  border-radius: var(--r-full);
-  background: var(--gray-100);
-  font-size: var(--fs-sm);
-  line-height: 20px;
-}
 
 /* ---- Elke kolom zijn eigen schuifbalk ------------------------------------
    Naast elkaar schuift niet de pagina maar elke kolom apart: de drie koppen
