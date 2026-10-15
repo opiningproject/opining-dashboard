@@ -1550,6 +1550,10 @@ select.input {
 .sort__item[data-sort="dir"].is-selected { background: var(--bg-active); font-weight: 500; }
 .sort__item[data-sort="dir"].is-selected .icon { color: var(--text-strong); }
 .sort__sep { height: 1px; margin: 6px 4px; background: var(--border); }
+/* Een regel die een stand draagt in plaats van een handeling: het vinkje
+   rechts zegt of hij aanstaat, en houdt zijn plek vrij als hij uit staat. */
+.sort__check { margin-left: auto; opacity: 0; }
+.sort__item[aria-checked="true"] .sort__check { opacity: 1; color: var(--accent); }
 /* Een regel die iets weghaalt leest als een waarschuwing, net als uitloggen
    in het gebruikersmenu. */
 .sort__item--danger, .sort__item--danger .icon { color: var(--danger); }

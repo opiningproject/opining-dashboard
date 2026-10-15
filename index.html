@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=406" />
+  <link rel="stylesheet" href="styles.css?v=407" />
 </head>
 <body>
 
@@ -308,11 +308,23 @@
               </div>
             </div>
             <div class="page-head__tools" data-tools="orders" hidden>
-              <!-- De zoekstand hoort bij de lijst eronder; data-head wijst naar de
-                   balk waarin hij openklapt. -->
-              <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders" data-head="#orders-search">
-                <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
-              </button>
+              <!-- Wat er met de bestellingen in hun geheel te doen valt, niet
+                   met een ervan; zelfde menu als elders op de pagina. -->
+              <div class="sort">
+                <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More actions for orders">
+                  <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                </button>
+                <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                  <button class="sort__item" type="button" role="menuitem" data-goto-set="general">
+                    <svg class="icon" aria-hidden="true"><use href="#i-cog"/></svg>Manage
+                  </button>
+                  <!-- Een stand, geen handeling: het vinkje zegt of hij aanstaat. -->
+                  <button class="sort__item" type="button" role="menuitemcheckbox" aria-checked="false" data-auto-archive>
+                    <svg class="icon" aria-hidden="true"><use href="#i-archive"/></svg>Auto archive
+                    <svg class="icon sort__check" aria-hidden="true"><use href="#i-check"/></svg>
+                  </button>
+                </div>
+              </div>
               <!-- Twee standen voor dezelfde bestellingen: naast elkaar per status, of
                    alles onder elkaar. -->
               <div class="vswitch" role="group" aria-label="Layout">
@@ -6163,6 +6175,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=406"></script>
+  <script src="app.js?v=407"></script>
 </body>
 </html>

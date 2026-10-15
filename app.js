@@ -775,6 +775,17 @@
       return;
     }
 
+    /* Automatisch archiveren staat aan of uit; het vinkje in het menu zegt
+       welke van de twee. */
+    var autoArch = e.target.closest("[data-auto-archive]");
+    if (autoArch) {
+      var aan = autoArch.getAttribute("aria-checked") !== "true";
+      autoArch.setAttribute("aria-checked", String(aan));
+      sluitFilterMenus();
+      showToast(aan ? "Orders are archived automatically" : "Orders stay until you archive them");
+      return;
+    }
+
     /* Wat je met een bezorggebied kunt. Bewerken opent het venster — dat
        regelt het blok daarvoor; hier gaat alleen het menu dicht. */
     var zoneActie = e.target.closest("[data-zone-edit], [data-zone-del]");
