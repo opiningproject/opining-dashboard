@@ -543,7 +543,11 @@
      de gekozen tab of het statusfilter; erbinnen zijn het het zoekwoord en de
      chips, want de tab is dan als chip meegenomen. */
   function pasPaneelFilter(kop) {
-    var panel = kop && kop.closest(".panel");
+    /* Een zoekbalk hoeft niet boven de lijst te staan die hij doorzoekt: met
+       data-list wijst hij hem aan. */
+    var panel = kop && (kop.dataset.list
+      ? document.querySelector(kop.dataset.list)
+      : kop.closest(".panel"));
     if (!panel) return;
     var tabel = panel.querySelector("table");
     var groepen = panel.querySelectorAll(".group");
@@ -1745,14 +1749,19 @@
   var bord = document.querySelector(".oboard");
 
   document.addEventListener("click", function (e) {
-    var knop = e.target.closest(".vswitch__btn");
+    /* De keuze staat in het puntjesmenu; de oude schakelaar naast de titel
+       deed hetzelfde en mag er nog zijn. */
+    var knop = e.target.closest("[data-layout]");
     if (!knop || !bord) return;
-    knop.closest(".vswitch").querySelectorAll(".vswitch__btn").forEach(function (b) {
-      b.classList.remove("is-active");
-      b.setAttribute("aria-pressed", "false");
-    });
-    knop.classList.add("is-active");
-    knop.setAttribute("aria-pressed", "true");
+    var groep = knop.closest(".vswitch, .sort__menu");
+    if (groep) {
+      groep.querySelectorAll("[data-layout]").forEach(function (b) {
+        var aan = b === knop;
+        b.classList.toggle("is-active", aan && b.classList.contains("vswitch__btn"));
+        b.classList.toggle("is-selected", aan && b.classList.contains("sort__item"));
+        b.setAttribute(b.hasAttribute("aria-checked") ? "aria-checked" : "aria-pressed", String(aan));
+      });
+    }
     bord.dataset.layout = knop.dataset.layout;
     zetBordStand();
   });

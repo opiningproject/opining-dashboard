@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=408" />
+  <link rel="stylesheet" href="styles.css?v=412" />
 </head>
 <body>
 
@@ -308,13 +308,38 @@
               </div>
             </div>
             <div class="page-head__tools" data-tools="orders" hidden>
+              <!-- Zoeken staat hier en niet achter een knop: in een lijst die
+                   de hele dag verandert wil je er meteen in kunnen tikken.
+                   data-list wijst de lijst aan die hij doorzoekt, want die
+                   staat niet om hem heen. -->
+              <div class="panel__head panel__head--bare is-searching osearch" data-list="#orders-panel">
+                <div class="psearch">
+                  <div class="psearch__top">
+                    <span class="psearch__field">
+                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                      <input type="search" placeholder="Search orders" aria-label="Search orders" />
+                      <button class="psearch__clear" type="button" hidden aria-label="Clear search">
+                        <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
               <!-- Wat er met de bestellingen in hun geheel te doen valt, niet
                    met een ervan; zelfde menu als elders op de pagina. -->
               <div class="sort">
-                <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More actions for orders">
+                <button class="icon-btn icon-btn--vlak sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More actions for orders">
                   <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                 </button>
-                <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                <div class="sort__menu" role="menu" hidden>
+                  <p class="sort__head">View</p>
+                  <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-layout="board">
+                    <svg class="icon" aria-hidden="true"><use href="#i-view-board"/></svg>Columns per status
+                  </button>
+                  <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-layout="list">
+                    <svg class="icon" aria-hidden="true"><use href="#i-view-list"/></svg>One list
+                  </button>
+                  <span class="sort__sep" aria-hidden="true"></span>
                   <button class="sort__item" type="button" role="menuitem" data-goto-set="general">
                     <svg class="icon" aria-hidden="true"><use href="#i-cog"/></svg>Manage
                   </button>
@@ -324,16 +349,6 @@
                     <svg class="icon sort__check" aria-hidden="true"><use href="#i-check"/></svg>
                   </button>
                 </div>
-              </div>
-              <!-- Twee standen voor dezelfde bestellingen: naast elkaar per status, of
-                   alles onder elkaar. -->
-              <div class="vswitch" role="group" aria-label="Layout">
-                <button class="vswitch__btn is-active" type="button" data-layout="board" aria-pressed="true" aria-label="Columns per status">
-                  <svg class="icon" aria-hidden="true"><use href="#i-view-board"/></svg>
-                </button>
-                <button class="vswitch__btn" type="button" data-layout="list" aria-pressed="false" aria-label="One list">
-                  <svg class="icon" aria-hidden="true"><use href="#i-view-list"/></svg>
-                </button>
               </div>
             </div>
             <div class="page-head__tools" data-tools="analytics" hidden>
@@ -650,30 +665,7 @@
           <!-- ---------- VIEW: orders ---------- -->
           <section class="view" data-view="orders" hidden>
 
-            <div class="panel panel--bare">
-              <div class="panel__head panel__head--bare" id="orders-search">
-                <!-- Alleen zichtbaar zolang er gezocht wordt; de knop ervoor staat
-                     op de titelregel. -->
-                <div class="psearch" data-filters="Payment:Paid online|Cash;Order type:Delivery|Takeaway">
-                  <div class="psearch__top">
-                    <span class="psearch__field">
-                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                      <input type="search" placeholder="search" aria-label="Search this list" />
-                    </span>
-                    <button class="psearch__cancel" type="button">Cancel</button>
-                  </div>
-                  <div class="psearch__filters">
-                    <div class="fadd">
-                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
-                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                      </button>
-                      <div class="fmenu" role="menu" hidden></div>
-                    </div>
-                  <button class="fclear" type="button" hidden>Clear All</button>
-                  </div>
-                </div>
-              </div>
-
+            <div class="panel panel--bare" id="orders-panel">
               <!-- Bestellingen als kaartjes, zodat dezelfde opbouw zowel naast
                    elkaar (bord) als onder elkaar (lijst) kan staan; app.js wisselt
                    alleen data-layout. -->
@@ -6175,6 +6167,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=408"></script>
+  <script src="app.js?v=412"></script>
 </body>
 </html>
