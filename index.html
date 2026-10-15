@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=414" />
+  <link rel="stylesheet" href="styles.css?v=415" />
 </head>
 <body>
 
@@ -72,8 +72,6 @@
     <!-- Zelfde lijndikte als i-search-filter ernaast: die staat op een 31x13
          raster en krimpt naar 26x11, waardoor zijn 1.6 als 1.34 uitkomt. Hier
          is de schaal 1, dus staat die 1.34 er gewoon. -->
-    <symbol id="i-view-board" viewBox="0 0 20 20"><rect x="2.6" y="3.4" width="4" height="13.2" rx="1.2"/><rect x="8" y="3.4" width="4" height="13.2" rx="1.2"/><rect x="13.4" y="3.4" width="4" height="13.2" rx="1.2"/></symbol>
-    <symbol id="i-view-list" viewBox="0 0 20 20"><rect x="3.4" y="2.6" width="13.2" height="4" rx="1.2"/><rect x="3.4" y="8" width="13.2" height="4" rx="1.2"/><rect x="3.4" y="13.4" width="13.2" height="4" rx="1.2"/></symbol>
     <symbol id="i-sort" viewBox="0 0 20 20" style="stroke-width:1.34"><path d="M6.3 4.6v10.8M3.7 12.8l2.6 2.6 2.6-2.6M13.7 15.4V4.6M11.1 7.2l2.6-2.6 2.6 2.6"/></symbol>
     <symbol id="i-arrow-up" viewBox="0 0 20 20"><path d="M10 16.2V4.4M5.4 9l4.6-4.6L14.6 9"/></symbol>
     <symbol id="i-arrow-down" viewBox="0 0 20 20"><path d="M10 3.8v11.8M5.4 11l4.6 4.6L14.6 11"/></symbol>
@@ -332,14 +330,6 @@
                   <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                 </button>
                 <div class="sort__menu" role="menu" hidden>
-                  <p class="sort__head">View</p>
-                  <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-layout="board">
-                    <svg class="icon" aria-hidden="true"><use href="#i-view-board"/></svg>Columns per status
-                  </button>
-                  <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-layout="list">
-                    <svg class="icon" aria-hidden="true"><use href="#i-view-list"/></svg>One list
-                  </button>
-                  <span class="sort__sep" aria-hidden="true"></span>
                   <button class="sort__item" type="button" role="menuitem" data-goto-set="general">
                     <svg class="icon" aria-hidden="true"><use href="#i-cog"/></svg>Manage
                   </button>
@@ -662,28 +652,29 @@
                PRODUCTS — gegroepeerd per categorie, groepen klappen
                open zoals de setup-guide (app.js §5).
                ==================================================== -->
-          <!-- ---------- VIEW: orders ---------- -->
+          <!-- ---------- VIEW: orders ----------
+               Dezelfde opbouw als de menukaart: een paneel met groepen die
+               open- en dichtklappen. Daar is een groep een categorie, hier
+               een status. Er is dus nog maar een weergave; de tabs bovenin
+               perken in op het soort bestelling, en lopen door dezelfde
+               filtercode als de tabs van de menukaart (app.js). -->
           <section class="view" data-view="orders" hidden>
-
-            <div class="panel panel--bare" id="orders-panel">
-              <!-- Op een smal scherm passen de drie statussen niet naast
-                   elkaar, en onder elkaar is onduidelijk waar de ene ophoudt.
-                   Daar staan ze achter elkaar: deze tabrij bovenaan, en je
-                   ziet er een tegelijk. Op een breed scherm staat hij er niet;
-                   daar zie je alle drie de kolommen. -->
-              <div class="tabs ordertabs" role="tablist">
-                <button class="tab is-active" type="button" role="tab" aria-selected="true" data-status-tab="new">New <span class="tab__count">3</span></button>
-                <button class="tab" type="button" role="tab" aria-selected="false" data-status-tab="kitchen">Kitchen <span class="tab__count">2</span></button>
-                <button class="tab" type="button" role="tab" aria-selected="false" data-status-tab="outgoing">Outgoing <span class="tab__count">2</span></button>
+            <div class="panel" id="orders-panel">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All</button>
+                  <button class="tab" type="button">Delivery</button>
+                  <button class="tab" type="button">Collection</button>
+                </div>
               </div>
 
-              <!-- Bestellingen als kaartjes, zodat dezelfde opbouw zowel naast
-                   elkaar (bord) als onder elkaar (lijst) kan staan; app.js wisselt
-                   alleen data-layout. -->
-              <div class="oboard" data-layout="board">
-                <section class="ocol group" data-status="new" data-noun="order">
-                  <div class="ocol__head"><h3 class="ocol__title">New <span class="ocol__count">3</span></h3></div>
-                  <ul class="ocol__list">
+              <div class="group is-open" data-status="new" data-noun="order">
+                <button class="group__head" type="button" aria-expanded="true">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">New</span>
+                  <span class="group__count">3 orders</span>
+                </button>
+                <div class="group__panel"><ul class="group__list">
                   <li class="ocard" data-when="17:21" data-pay="&euro;73.59" data-filter="new" data-type="delivery" data-mins="12">
                     <div class="ocard__body">
                       <p class="ocard__dest">Tochtstraat 40</p>
@@ -708,11 +699,16 @@
                     <span class="ocard__mins">26m</span>
                     <span class="sr-only">26 minutes left</span>
                   </li>
-                  </ul>
-                </section>
-                <section class="ocol group" data-status="kitchen" data-noun="order">
-                  <div class="ocol__head"><h3 class="ocol__title">Kitchen <span class="ocol__count">2</span></h3></div>
-                  <ul class="ocol__list">
+                </ul></div>
+              </div>
+
+              <div class="group is-open" data-status="kitchen" data-noun="order">
+                <button class="group__head" type="button" aria-expanded="true">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">Kitchen</span>
+                  <span class="group__count">2 orders</span>
+                </button>
+                <div class="group__panel"><ul class="group__list">
                   <li class="ocard" data-when="17:47" data-pay="&euro;73.59" data-filter="kitchen" data-type="delivery" data-mins="8">
                     <div class="ocard__body">
                       <p class="ocard__dest">1e Pijnackerstraat 120B</p>
@@ -729,11 +725,16 @@
                     <span class="ocard__mins">4m</span>
                     <span class="sr-only">4 minutes left</span>
                   </li>
-                  </ul>
-                </section>
-                <section class="ocol group" data-status="outgoing" data-noun="order">
-                  <div class="ocol__head"><h3 class="ocol__title">Outgoing <span class="ocol__count">2</span></h3></div>
-                  <ul class="ocol__list">
+                </ul></div>
+              </div>
+
+              <div class="group is-open" data-status="outgoing" data-noun="order">
+                <button class="group__head" type="button" aria-expanded="true">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">Outgoing</span>
+                  <span class="group__count">2 orders</span>
+                </button>
+                <div class="group__panel"><ul class="group__list">
                   <li class="ocard" data-when="19:59" data-pay="&euro;73.59" data-filter="outgoing" data-type="delivery" data-mins="19">
                     <div class="ocard__body">
                       <p class="ocard__dest">Tochtstraat 40</p>
@@ -750,8 +751,7 @@
                     <span class="ocard__mins">31m</span>
                     <span class="sr-only">31 minutes left</span>
                   </li>
-                  </ul>
-                </section>
+                </ul></div>
               </div>
             </div>
           </section>
@@ -6143,6 +6143,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=414"></script>
+  <script src="app.js?v=415"></script>
 </body>
 </html>

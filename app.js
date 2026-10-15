@@ -479,7 +479,12 @@
   function rijTekst(rij) {
     /* De menukaart is geen tabel maar een lijst; daar is de hele regel de
        tekst waarop gezocht wordt. */
-    if (!rij.cells) return rij.textContent.replace(/\s+/g, " ").trim().toLowerCase();
+    if (!rij.cells) {
+      /* Wat een regel is maar niet toont — de status en het soort van een
+         bestelling — telt net zo goed mee als wat erop staat. */
+      var los = [rij.textContent, rij.dataset.filter || "", rij.dataset.type || ""];
+      return los.join(" ").replace(/\s+/g, " ").trim().toLowerCase();
+    }
     var stukken = [];
     [].slice.call(rij.cells).forEach(function (cel) {
       /* De actiekolom is bediening, geen gegeven: zonder deze uitzondering
@@ -1559,10 +1564,10 @@
     if (doel) doel.hidden = true;
   });
 
-  /* ---- Productenlijst: groepen klappen los van elkaar open ---------------- */
-  var productPanel = document.querySelector('[data-view="products"] .panel');
-
-  if (productPanel) {
+  /* ---- Groepen klappen los van elkaar open -------------------------------
+     De menukaart groepeert per categorie, de bestellingen per status; verder
+     doen ze hetzelfde. */
+  document.querySelectorAll('[data-view="products"] .panel, [data-view="orders"] .panel').forEach(function (productPanel) {
     productPanel.addEventListener("click", function (e) {
       var kop = e.target.closest(".group__head");
       if (!kop) return;
@@ -1571,7 +1576,7 @@
       groep.classList.toggle("is-open", open);
       kop.setAttribute("aria-expanded", String(open));
     });
-  }
+  });
 
   /* ---- Producten slepen om de volgorde te bepalen ------------------------
      Pointer-events in plaats van HTML5 drag-and-drop: dat laatste doet op
@@ -1743,38 +1748,10 @@
     if (kop) pasPaneelFilter(kop);
   });
 
-  /* ---- Live bestellingen: bord of lijst ----------------------------------
-     Beide standen tonen dezelfde kaartjes; alleen de richting van het rooster
-     verschilt. De schakelaar in de titelregel zet data-layout. */
-  var bord = document.querySelector(".oboard");
-
-  document.addEventListener("click", function (e) {
-    /* De keuze staat in het puntjesmenu; de oude schakelaar naast de titel
-       deed hetzelfde en mag er nog zijn. */
-    var knop = e.target.closest("[data-layout]");
-    if (!knop || !bord) return;
-    var groep = knop.closest(".vswitch, .sort__menu");
-    if (groep) {
-      groep.querySelectorAll("[data-layout]").forEach(function (b) {
-        var aan = b === knop;
-        b.classList.toggle("is-active", aan && b.classList.contains("vswitch__btn"));
-        b.classList.toggle("is-selected", aan && b.classList.contains("sort__item"));
-        b.setAttribute(b.hasAttribute("aria-checked") ? "aria-checked" : "aria-pressed", String(aan));
-      });
-    }
-    bord.dataset.layout = knop.dataset.layout;
-    zetBordStand();
-  });
-
-  /* Naast elkaar schuift elke kolom apart in plaats van de pagina als geheel.
-     Dat raakt de hele opmaak van .content tot de lijst, dus het staat als
-     stand op <html>, net als de lade en de zoekstand. */
-  function zetBordStand() {
-    var view = bord && bord.closest(".view");
-    var aan = !!view && !view.hidden && bord.dataset.layout === "board";
-    document.documentElement.toggleAttribute("data-board", aan);
-  }
-  document.addEventListener("pagina", zetBordStand);
+  /* ---- Live bestellingen --------------------------------------------------
+     Een paneel met groepen, net als de menukaart; bord en lijst naast elkaar
+     bestaan niet meer. */
+  var bord = document.getElementById("orders-panel");
 
   /* ---- De klok op een kaart ------------------------------------------------
      Hoeveel tijd er nog is, als tekst rechtsboven. De minuten staan op de
@@ -1790,43 +1767,19 @@
     else kaart.removeAttribute("data-krap");
   }
 
-  /* Het aantal per kolom komt uit de kaartjes zelf, zodat kop en lijst niet
-     uit elkaar kunnen lopen. */
+  /* Het aantal per status komt uit de regels zelf, zodat kop en lijst niet
+     uit elkaar kunnen lopen. Het filter leest dat getal later terug, vandaar
+     dat het ook als vaste waarde wordt vastgelegd. */
   function zetKolomTellers() {
     if (!bord) return;
-    bord.querySelectorAll(".ocol").forEach(function (kolom) {
-      var aantal = kolom.querySelectorAll(".ocard").length;
-      var teller = kolom.querySelector(".ocol__count");
-      if (teller) teller.textContent = aantal;
-      /* Dezelfde telling op de tab, zodat je ziet waar wat ligt zonder te
-         hoeven wisselen. */
-      var tab = statusTabs && statusTabs.querySelector('[data-status-tab="' + kolom.dataset.status + '"] .tab__count');
-      if (tab) tab.textContent = aantal;
+    bord.querySelectorAll(".group[data-status]").forEach(function (groep) {
+      var aantal = groep.querySelectorAll(".ocard").length;
+      var teller = groep.querySelector(".group__count");
+      if (!teller) return;
+      var woord = groep.dataset.noun || "order";
+      teller.textContent = aantal + " " + woord + (aantal === 1 ? "" : "s");
+      teller.dataset.vast = teller.textContent;
     });
-  }
-
-  /* Welke status je op een smal scherm ziet. De CSS laat alleen de kolom met
-     is-shown staan; op een breed scherm doet die klasse niets. */
-  var statusTabs = document.querySelector(".ordertabs");
-
-  function zetStatusTab(status) {
-    if (!statusTabs || !bord) return;
-    statusTabs.querySelectorAll("[data-status-tab]").forEach(function (t) {
-      var aan = t.dataset.statusTab === status;
-      t.classList.toggle("is-active", aan);
-      t.setAttribute("aria-selected", String(aan));
-    });
-    bord.querySelectorAll(".ocol").forEach(function (kolom) {
-      kolom.classList.toggle("is-shown", kolom.dataset.status === status);
-    });
-  }
-
-  if (statusTabs) {
-    statusTabs.addEventListener("click", function (e) {
-      var tab = e.target.closest("[data-status-tab]");
-      if (tab) zetStatusTab(tab.dataset.statusTab);
-    });
-    zetStatusTab("new");
   }
 
   /* ---- Een bestelling een stap verder zetten ------------------------------
@@ -1892,7 +1845,7 @@
          lijststand is dat dezelfde beweging, alleen verticaal. */
       kaart.dataset.filter = doel;
       zetStapKnop(kaart);
-      var lijst = bord.querySelector('.ocol[data-status="' + doel + '"] .ocol__list');
+      var lijst = bord.querySelector('.group[data-status="' + doel + '"] .group__list');
       if (lijst) lijst.appendChild(kaart);
     }
 
@@ -1904,7 +1857,6 @@
     bord.querySelectorAll(".ocard").forEach(zetStapKnop);
     bord.querySelectorAll(".ocard").forEach(zetKlok);
     zetKolomTellers();
-    zetBordStand();
   }
 
 

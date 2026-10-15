@@ -4084,82 +4084,23 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 #stats-chart-slot .metric { padding-left: 0; cursor: default; }
 
 /* ==========================================================================
-   LIVE BESTELLINGEN — bord of lijst
-   Dezelfde kaartjes in beide standen; alleen de richting van het rooster
-   verschilt, zodat er niet twee opbouwen naast elkaar bestaan.
+   LIVE BESTELLINGEN
+   Dezelfde opbouw als de menukaart: een paneel met groepen die open- en
+   dichtklappen, waarbij een groep hier een status is. Er is dus nog maar
+   een weergave. Alleen de regel zelf wijkt af: een bestelling draagt een
+   adres en een tijd waar een gerecht een naam en een stand draagt.
    ========================================================================== */
-.oboard { display: grid; gap: 14px; padding: 14px; }
-.oboard[data-layout="board"] { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
-.oboard[data-layout="list"]  { grid-template-columns: minmax(0, 1fr); }
-/* Drie smalle kolommen worden onleesbaar op een klein scherm; daar altijd
-   onder elkaar. De schakelaar zegt daar dus niets meer, en staat er daarom
-   ook niet. */
-@media (max-width: 899px) {
-  .oboard[data-layout="board"] { grid-template-columns: minmax(0, 1fr); }
-}
-/* Een kolom is ook een .group, en die trekt een streep tussen opeenvolgende
-   groepen. Bij de bestellingen niet: de kop van een status en de ruimte
-   eromheen scheiden ze al. Zo'n streep liep dwars over het bord, en onder
-   elkaar las hij als een scheur door de lijst. */
-.ocol + .ocol { border-top: 0; }
-/* De tabrij boven de bestellingen bestaat alleen op een smal scherm; daar
-   staan de drie statussen achter elkaar in plaats van naast of onder elkaar.
-   Welke je ziet zet app.js met is-shown. */
-.ordertabs { display: none; }
-@media (max-width: 899px) {
-  .ordertabs { display: flex; margin: 0 0 14px; }
-  .oboard .ocol { display: none; }
-  .oboard .ocol.is-shown { display: block; }
-}
-
-.ocol { min-width: 0; }
-/* Het vak om de titel: dat draagt de ruimte, de titel zelf alleen de letter. */
-.ocol__head {
-  display: flex; align-items: center;
-  margin-bottom: 0; padding: 0 2px 14px;
-}
-.ocol__title {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
-}
-/* Op een smal scherm zegt de tabrij al welke status je ziet; dan hoeft de kop
-   erboven niet nog een keer. */
-@media (max-width: 899px) {
-  .ocol__head { display: none; }
-}
-/* Het aantal leest als de titel: dezelfde letter, alleen gedempt, zodat het
-   een bijzin blijft en geen tweede kop. */
-.ocol__count { font: inherit; color: var(--text-muted); font-variant-numeric: tabular-nums; }
-.ocol__list { display: flex; flex-direction: column; gap: 8px; }
-/* In de lijststand staan de drie statussen onder elkaar, maar hun kaarten
-   hoeven niet elk een hele regel: er passen er drie naast elkaar, en dan zie
-   je er meer in een oogopslag. Op een smal scherm is die ruimte er niet en
-   blijven ze onder elkaar staan. */
-@media (min-width: 900px) {
-  .oboard[data-layout="list"] .ocol__list {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: start;
-  }
-}
-.ocol:has(.ocard[hidden]:only-child) .ocol__list { display: none; }
-
-/* Het adres links, de klok rechts: zo zie je per kaart in een oogopslag waar
-   hij heen moet en hoeveel tijd er nog is. */
 .ocard {
   display: flex; align-items: flex-start; gap: 12px;
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  background: var(--bg-surface);
-  transition: border-color var(--dur) var(--ease);
+  padding: 12px 16px;
+  transition: background var(--dur) var(--ease);
 }
+.ocard:hover { background: var(--gray-25); }
 .ocard__body { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1 1 auto; }
-.ocard:hover { border-color: var(--border-strong); }
 .ocard__dest { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
 .ocard__meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: var(--fs-sm); color: var(--text-muted); }
 /* Dezelfde twee merkjes als in de POS-app, en op dezelfde plek: direct onder
-   het adres, zodat nu-of-later het eerste is wat je per kaart ziet. Wit zegt
+   het adres, zodat nu-of-later het eerste is wat je per regel ziet. Wit zegt
    zo snel mogelijk, paars draagt de afgesproken tijd zelf. */
 .ocard__when {
   display: inline-flex; align-items: center; gap: 4px;
@@ -4171,8 +4112,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 }
 .ocard__when--asap  { border-color: #f0f0f0; background: #fff; color: #888; }
 .ocard__when--sched { background: #faedff; color: #220038; }
-/* De knoppen onderaan de kaart, met de puntjes helemaal rechts. */
-/* Hoeveel tijd er nog is, rechtsboven op de kaart: dezelfde letter als het
+/* Hoeveel tijd er nog is, rechtsboven op de regel: dezelfde letter als het
    adres ernaast, zodat het meeleest en geen apart ding wordt. */
 .ocard__mins {
   align-self: flex-start; flex: 0 0 auto;
@@ -4183,33 +4123,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Minder dan vijf minuten: dan is het geen melding meer maar haast. */
 .ocard[data-krap] .ocard__mins { color: var(--danger); }
 
-/* De schakelaar in de titelregel: twee standen in een omhulsel. */
-.vswitch { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--bg-surface); }
-.vswitch__btn {
-  display: grid; place-items: center;
-  width: 32px; height: 30px;
-  border-radius: calc(var(--r-md) - 3px);
-  color: var(--text-muted);
-  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
-}
-.vswitch__btn:hover { background: var(--gray-50); color: var(--text); }
-.vswitch__btn.is-active { background: var(--gray-100); color: var(--text-strong); }
-/* Onder de 900px staat het bord sowieso onder elkaar, dus zegt de schakelaar
-   daar niets meer. Deze regel staat hier en niet bij die van het bord: daar
-   zou de .vswitch hieronder er weer overheen gaan. */
-@media (max-width: 899px) {
-  .vswitch { display: none; }
-  /* Onder elkaar is de kop van een kolom de scheiding tussen twee statussen,
-     en geen kopje boven een smalle baan. Dan mag hij zwaarder wegen en lucht
-     boven en onder zich krijgen; de marge eronder vervalt, anders staat er
-     onder meer ruimte dan erboven. */
-  .ocol__title { font-size: 17px; }
-}
-
-/* Zonder vlak eromheen: de kolommen staan rechtstreeks op de pagina, zodat de
-   kop- en voetbalk vervallen en de kaartjes de volle breedte krijgen. */
-.panel--bare { border: 0; border-radius: 0; background: none; overflow: visible; }
-.panel--bare > .oboard { padding: 0; }
 /* De balk bestaat alleen nog als plek voor de zoekstand. */
 .panel__head--bare:not(.is-searching) { display: none; }
 .panel__head--bare.is-searching { padding: 0 0 14px; border-bottom: 0; }
@@ -4220,29 +4133,3 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .page-head__tools .icon--wide { width: 26px; height: 11px; }
 
 
-/* ---- Elke kolom zijn eigen schuifbalk ------------------------------------
-   Naast elkaar schuift niet de pagina maar elke kolom apart: de drie koppen
-   blijven in beeld en een lange kolom duwt de andere niet weg. Schuiven kan
-   alleen binnen een vaste hoogte, dus die loopt van .content tot de lijst.
-   Onder elkaar vervalt het: dan is de pagina zelf de lijst. */
-@media (min-width: 900px) {
-  [data-board] .content { display: flex; flex-direction: column; overflow: hidden; }
-  [data-board] .content__inner { display: flex; flex-direction: column; flex: 1 1 auto; width: 100%; min-height: 0; }
-  [data-board] .view[data-view="orders"] { flex: 1 1 auto; min-height: 0; }
-  [data-board] .view[data-view="orders"] > .panel { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
-  [data-board] .oboard { flex: 1 1 auto; min-height: 0; }
-  /* De kolommen lopen tot onderaan in plaats van tot hun laatste kaartje. */
-  [data-board] .oboard[data-layout="board"] { align-items: stretch; }
-  [data-board] .ocol { display: flex; flex-direction: column; min-height: 0; }
-  /* Een schuifbalk neemt breedte van de inhoud af. stable houdt die ruimte in
-     elke kolom vrij, ook de kolommen die niet schuiven, anders zouden de
-     kaartjes per kolom verschillen; de negatieve marge legt die ruimte in de
-     tussenruimte, zodat de kaartjes hun breedte houden. */
-  [data-board] .ocol__list {
-    flex: 1 1 auto; min-height: 0;
-    overflow-y: auto;
-    margin-right: -10px;
-    scrollbar-gutter: stable;
-    scrollbar-width: thin;
-  }
-}
