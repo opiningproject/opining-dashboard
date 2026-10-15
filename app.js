@@ -278,7 +278,9 @@
          je een pagina aan die je niet ziet. */
       if (root.dataset.settings === "open") closeSettings();
       var pagina = sidebar.querySelector('.nav__item[data-page="' + naar.dataset.gotoPage + '"]');
-      if (pagina) pagina.click();
+      /* Niet klikken maar navigeren: op een telefoon klapt een klik op de
+         regel Orders alleen zijn groep open, en dan kom je er niet. */
+      if (pagina) gaNaarPagina(pagina);
       return;
     }
 
@@ -1960,6 +1962,12 @@
       return;
     }
 
+    gaNaarPagina(item);
+  });
+
+  /* Wat navigeren inhoudt, los van de klik erop: ook een knop in de pagina
+     stuurt je naar een pagina, en dat moet overal hetzelfde lopen. */
+  function gaNaarPagina(item) {
     activate(item, sidebar);
     lastPageItem = item;
     showPage(item.dataset.page, item.dataset.title, item.dataset.icon);
@@ -1973,7 +1981,7 @@
        pagina die je niet te zien krijgt. */
     if (root.dataset.settings === "open") closeSettings();
     if (mqMobile.matches) setDrawer(false);
-  });
+  }
 
   /* ========================================================================
      3. SETTINGS-OVERLAY

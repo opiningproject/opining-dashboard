@@ -4081,15 +4081,17 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   transition: background var(--dur) var(--ease);
 }
 .ocard:hover { background: var(--gray-25); }
-/* Alles op een regel: het adres neemt de ruimte die overblijft, het merkje
-   ernaast houdt zijn eigen breedte. Een straatnaam die niet past eindigt met
-   drie puntjes in plaats van door te lopen op een tweede regel. */
+/* Alles op een regel. Het adres krijgt een vaste halve rij, net als de naam
+   van een gerecht in de menukaart, zodat het merkje erachter bij elke regel
+   op dezelfde hoogte begint. Past een straatnaam daar niet in, dan kapt hij
+   af met puntjes; een tweede regel zou de regels ongelijk hoog maken. */
 .ocard__body { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1 1 auto; }
 .ocard__dest {
-  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  flex: 0 0 50%; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   font-size: var(--fs-md); font-weight: 500; color: var(--text-strong);
 }
-.ocard__meta { display: flex; align-items: center; flex: 0 0 auto; gap: 8px; font-size: var(--fs-sm); color: var(--text-muted); }
+.ocard__meta { display: flex; align-items: center; flex: 0 0 auto; margin-right: auto; gap: 8px; font-size: var(--fs-sm); color: var(--text-muted); }
 /* Nu-of-later staat als merkje naast het adres, in dezelfde vorm als de stand
    van een gerecht in de menukaart: grijs voor zo snel mogelijk, paars voor een
    afgesproken tijd. Dat tijdstip leest als cijfers op een rij. */
