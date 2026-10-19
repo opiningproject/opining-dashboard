@@ -484,7 +484,7 @@
     if (!rij.cells) {
       /* Wat een regel is maar niet toont — de status en het soort van een
          bestelling — telt net zo goed mee als wat erop staat. */
-      var los = [rij.textContent, rij.dataset.filter || "", rij.dataset.type || ""];
+      var los = [rij.textContent, rij.dataset.filter || "", rij.dataset.type || "", rij.dataset.wish || ""];
       return los.join(" ").replace(/\s+/g, " ").trim().toLowerCase();
     }
     var stukken = [];
@@ -1913,7 +1913,6 @@
     /* Afhalen heeft geen adres en geen bezorger; dat scheelt ook de
        bezorgkosten onder de regels. */
     var afhalen = kaart ? rij.dataset.type === "collection" : bestemming === "Collection";
-    var merk = kaart && rij.querySelector(".badge");
     return {
       nr: rij.dataset.order || "",
       naam: rij.dataset.name || "",
@@ -1921,9 +1920,9 @@
       tel: rij.dataset.phone || "",
       mail: rij.dataset.mail || "",
       geplaatst: rij.dataset.placed || "",
-      /* Het merkje op de kaart zegt al of het zo snel mogelijk moet of op een
-         tijd; het archief draagt dat in data-wish. */
-      wens: merk ? merk.textContent.replace(/Scheduled/i, "").trim() : (rij.dataset.wish || ""),
+      /* Wat de klant wilde staat op de regel: het merkje toont wat wij denken
+         te halen, en dat is iets anders. */
+      wens: rij.dataset.wish || "",
       eta: rij.dataset.eta || "",
       wijze: rij.dataset.method || "",
       bezorger: (afhalen || kaart || !rij.cells[3]) ? "" : rij.cells[3].textContent.trim(),
