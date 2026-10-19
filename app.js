@@ -1759,7 +1759,11 @@
      tijd waarop hij klaar moet zijn: de verwachte tijd bij zo snel mogelijk,
      de afgesproken tijd bij een geplande bestelling. In het echt komt NU van
      de klok; in deze opzet staat hij vast, anders zou een lijst met tijden
-     van vanmiddag op elk ander moment alleen maar rood zijn. */
+     van vanmiddag op elk ander moment alleen maar rood zijn.
+
+     Een afgesproken tijd valt altijd op een kwartier -- :00, :15, :30 of
+     :45 -- want zo kiest een klant hem. Een verwachte tijd komt uit de
+     bereidtijd en valt dus op elke minuut. */
   var NU = 17 * 60 + 35;
 
   function inMinuten(tijd) {
@@ -1779,6 +1783,26 @@
       else if (over < 45) soort = "ok";
     }
     stip.className = "badge__dot badge__dot--" + soort;
+  }
+
+  /* Binnen een status staat de krapste bestelling bovenaan: wie het eerst
+     klaar moet zijn staat vooraan, en wie te laat is dus helemaal bovenaan.
+     Per status apart, want een bestelling die net binnen is hoort niet tussen
+     de bestellingen die al de deur uit gaan. (Een tijd na middernacht zou
+     hier vooraan belanden; dat telt pas als de lijst over de dag heen loopt,
+     en dan draagt een bestelling een datum in plaats van alleen een tijd.) */
+  function sorteerOpTijd(groep) {
+    var lijst = groep.querySelector(".group__list");
+    if (!lijst) return;
+    [].slice.call(lijst.querySelectorAll(".ocard"))
+      .sort(function (a, b) {
+        var ta = inMinuten(a.dataset.eta);
+        var tb = inMinuten(b.dataset.eta);
+        if (ta === null) return 1;
+        if (tb === null) return -1;
+        return ta - tb;
+      })
+      .forEach(function (kaart) { lijst.appendChild(kaart); });
   }
 
   /* Het aantal per status komt uit de regels zelf, zodat kop en lijst niet
@@ -1859,8 +1883,9 @@
          lijststand is dat dezelfde beweging, alleen verticaal. */
       kaart.dataset.filter = doel;
       zetStapKnop(kaart);
-      var lijst = bord.querySelector('.group[data-status="' + doel + '"] .group__list');
-      if (lijst) lijst.appendChild(kaart);
+      var groep = bord.querySelector('.group[data-status="' + doel + '"]');
+      var lijst = groep && groep.querySelector(".group__list");
+      if (lijst) { lijst.appendChild(kaart); sorteerOpTijd(groep); }
     }
 
     zetKolomTellers();
@@ -1870,6 +1895,7 @@
   if (bord) {
     bord.querySelectorAll(".ocard").forEach(zetStapKnop);
     bord.querySelectorAll(".ocard").forEach(zetStip);
+    bord.querySelectorAll(".group[data-status]").forEach(sorteerOpTijd);
     zetKolomTellers();
   }
 
