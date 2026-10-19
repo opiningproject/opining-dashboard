@@ -963,10 +963,12 @@ select.input {
    drie kwartier. Staat het verder weg, dan hoeft er nog niets en blijft het
    grijs. Het hele merkje draagt die kleur, maar zo licht dat de tijd erin
    leesbaar blijft; de stip ervoor is dezelfde kleur op volle sterkte. */
-.ocard__badge--late { background: rgba(192, 52, 43, .10); color: var(--danger); }
-.ocard__badge--soon { background: rgba(245, 152, 0, .10); color: var(--warning-fg); }
-.ocard__badge--ok   { background: rgba(6, 122, 78, .10);  color: var(--success); }
-.ocard__badge--far  { background: var(--gray-100);        color: var(--text-muted); }
+/* De tekst staat een slag donkerder dan de kleur van de stip: op een vlak van
+   tien procent moet een tijd gelezen worden, niet aangekondigd. */
+.ocard__badge--late { background: rgba(192, 52, 43, .10); color: #8c2520; }
+.ocard__badge--soon { background: rgba(245, 152, 0, .10); color: #7a4f00; }
+.ocard__badge--ok   { background: rgba(6, 122, 78, .10);  color: #045436; }
+.ocard__badge--far  { background: var(--gray-100);        color: var(--text); }
 .ocard__badge--late .badge__dot { background: var(--danger); }
 .ocard__badge--soon .badge__dot { background: var(--warning); }
 .ocard__badge--ok .badge__dot   { background: var(--success); }
