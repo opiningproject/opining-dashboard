@@ -821,6 +821,10 @@ select.input {
   color: #fff;
 }
 .icon-btn--accent:hover { background: var(--accent-hover); color: #fff; }
+/* Een menu met een regel hoeft geen breedte te houden voor regels die er
+   niet zijn: het is zo breed als wat erin staat. */
+.page-head__tools[data-tools="orders"] .sort__menu { min-width: 0; }
+.page-head__tools[data-tools="orders"] .sort__item { white-space: nowrap; padding-right: 16px; }
 /* Boven de telefoonbreedte past de handeling uitgeschreven, en is een menu
    met een regel overbodig. Daaronder is het andersom. */
 .sort__breed { display: none; }
