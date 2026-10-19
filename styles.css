@@ -51,8 +51,10 @@
 
   --success: #067a4e;
   --danger:  #c0342b;
-  /* Tussen de twee in: bijna, maar nog niet mis. */
-  --warning: #d97706;
+  /* Tussen de twee in: bijna, maar nog niet mis. Dezelfde oranje als de
+     klok in de kassa-app, zodat een bestelling daar en hier hetzelfde
+     zegt. */
+  --warning: #f59800;
   /* Zachte varianten, als vlak achter een stijging of daling. */
   --success-soft: #e4f2ea;
   --danger-soft:  #fbeae9;
