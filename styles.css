@@ -963,9 +963,9 @@ select.input {
    drie kwartier. Staat het verder weg, dan hoeft er nog niets en blijft het
    grijs. Het hele merkje draagt die kleur, maar zo licht dat de tijd erin
    leesbaar blijft; de stip ervoor is dezelfde kleur op volle sterkte. */
-.ocard__badge--late { background: rgba(192, 52, 43, .16); color: var(--danger); }
-.ocard__badge--soon { background: rgba(245, 152, 0, .20); color: var(--warning-fg); }
-.ocard__badge--ok   { background: rgba(6, 122, 78, .14);  color: var(--success); }
+.ocard__badge--late { background: rgba(192, 52, 43, .10); color: var(--danger); }
+.ocard__badge--soon { background: rgba(245, 152, 0, .10); color: var(--warning-fg); }
+.ocard__badge--ok   { background: rgba(6, 122, 78, .10);  color: var(--success); }
 .ocard__badge--far  { background: var(--gray-100);        color: var(--text-muted); }
 .ocard__badge--late .badge__dot { background: var(--danger); }
 .ocard__badge--soon .badge__dot { background: var(--warning); }
