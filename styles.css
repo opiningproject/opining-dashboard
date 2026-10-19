@@ -812,26 +812,6 @@ select.input {
    trekt geen aandacht. */
 .page-head__note { font-size: var(--fs-sm); color: var(--text-muted); }
 
-/* Dezelfde knop als de blauwe op een breed scherm, alleen samengeknepen tot
-   zijn puntjes: hij draagt de handeling van de pagina en staat daarom in de
-   accentkleur in plaats van als kale tekenknop. */
-.icon-btn--accent {
-  border-radius: var(--r-md);
-  background: var(--accent);
-  color: #fff;
-}
-.icon-btn--accent:hover { background: var(--accent-hover); color: #fff; }
-/* Een menu met een regel hoeft geen breedte te houden voor regels die er
-   niet zijn: het is zo breed als wat erin staat. */
-.page-head__tools[data-tools="orders"] .sort__menu { min-width: 0; }
-.page-head__tools[data-tools="orders"] .sort__item { white-space: nowrap; padding-right: 16px; }
-/* Boven de telefoonbreedte past de handeling uitgeschreven, en is een menu
-   met een regel overbodig. Daaronder is het andersom. */
-.sort__breed { display: none; }
-@media (min-width: 561px) {
-  .sort__breed { display: inline-flex; }
-  .page-head__tools[data-tools="orders"] .sort__btn { display: none; }
-}
 /* Dezelfde knop, twee gedaanten: woorden op een breed scherm, drie puntjes op
    een smal. Welke je ziet staat in de regel voor smalle schermen. */
 .page-head__dots { display: none; }
