@@ -958,14 +958,19 @@ select.input {
 /* Een stipje voor de tekst: de stand is niet iets wat jij hebt gezet, maar
    iets wat draait. */
 .badge__dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: var(--r-full); background: currentColor; vertical-align: baseline; }
-/* Bij een bestelling zegt de stip hoeveel lucht er nog is tot de bezorg- of
-   afhaaltijd: rood is eroverheen, oranje binnen een kwartier, groen binnen
-   drie kwartier. Staat het verder weg, dan hoeft er nog niets en blijft hij
-   grijs. */
-.badge__dot--late { background: var(--danger); }
-.badge__dot--soon { background: var(--warning); }
-.badge__dot--ok   { background: var(--success); }
-.badge__dot--far  { background: var(--gray-300); }
+/* Bij een bestelling zegt het merkje hoeveel lucht er nog is tot de bezorg-
+   of afhaaltijd: rood is eroverheen, oranje binnen een kwartier, groen binnen
+   drie kwartier. Staat het verder weg, dan hoeft er nog niets en blijft het
+   grijs. Het hele merkje draagt die kleur, maar zo licht dat de tijd erin
+   leesbaar blijft; de stip ervoor is dezelfde kleur op volle sterkte. */
+.ocard__badge--late { background: rgba(192, 52, 43, .16); color: var(--danger); }
+.ocard__badge--soon { background: rgba(245, 152, 0, .20); color: var(--warning-fg); }
+.ocard__badge--ok   { background: rgba(6, 122, 78, .14);  color: var(--success); }
+.ocard__badge--far  { background: var(--gray-100);        color: var(--text-muted); }
+.ocard__badge--late .badge__dot { background: var(--danger); }
+.ocard__badge--soon .badge__dot { background: var(--warning); }
+.ocard__badge--ok .badge__dot   { background: var(--success); }
+.ocard__badge--far .badge__dot  { background: var(--gray-300); }
 .badge--active { background: #e3f5ec; color: var(--success); }
 .badge--draft  { background: #e4eefb; color: #1f5fa8; }
 

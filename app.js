@@ -1772,8 +1772,8 @@
   }
 
   function zetStip(kaart) {
-    var stip = kaart.querySelector(".badge__dot");
-    if (!stip) return;
+    var merk = kaart.querySelector(".ocard__badge");
+    if (!merk) return;
     var doel = inMinuten(kaart.dataset.eta);
     var over = doel === null ? null : doel - NU;
     var soort = "far";
@@ -1782,7 +1782,7 @@
       else if (over < 15) soort = "soon";
       else if (over < 45) soort = "ok";
     }
-    stip.className = "badge__dot badge__dot--" + soort;
+    merk.className = "badge ocard__badge ocard__badge--" + soort;
   }
 
   /* Binnen een status staat de krapste bestelling bovenaan: wie het eerst
