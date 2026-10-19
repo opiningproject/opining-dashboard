@@ -812,15 +812,22 @@ select.input {
    trekt geen aandacht. */
 .page-head__note { font-size: var(--fs-sm); color: var(--text-muted); }
 
-/* Een knop met een vlak eronder: hij hoort bij het veld ernaast en niet bij
-   de titel, dus hij mag zwaarder staan dan een kale tekenknop. */
-.icon-btn--vlak {
-  width: 36px; height: 36px; flex: 0 0 auto;
-  border: 1px solid var(--border);
+/* Dezelfde knop als de blauwe op een breed scherm, alleen samengeknepen tot
+   zijn puntjes: hij draagt de handeling van de pagina en staat daarom in de
+   accentkleur in plaats van als kale tekenknop. */
+.icon-btn--accent {
   border-radius: var(--r-md);
-  background: var(--gray-50);
+  background: var(--accent);
+  color: #fff;
 }
-.icon-btn--vlak:hover { background: var(--gray-100); }
+.icon-btn--accent:hover { background: var(--accent-hover); color: #fff; }
+/* Boven de telefoonbreedte past de handeling uitgeschreven, en is een menu
+   met een regel overbodig. Daaronder is het andersom. */
+.sort__breed { display: none; }
+@media (min-width: 561px) {
+  .sort__breed { display: inline-flex; }
+  .page-head__tools[data-tools="orders"] .sort__btn { display: none; }
+}
 /* Dezelfde knop, twee gedaanten: woorden op een breed scherm, drie puntjes op
    een smal. Welke je ziet staat in de regel voor smalle schermen. */
 .page-head__dots { display: none; }

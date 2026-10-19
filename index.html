@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=418" />
+  <link rel="stylesheet" href="styles.css?v=419" />
 </head>
 <body>
 
@@ -306,21 +306,17 @@
               </div>
             </div>
             <div class="page-head__tools" data-tools="orders" hidden>
-              <!-- Wat er met de bestellingen in hun geheel te doen valt, niet
-                   met een ervan; zelfde menu als elders op de pagina. -->
+              <!-- Beheren is wat je met de bestellingen in hun geheel doet.
+                   Er is ruimte zat om dat uit te schrijven, dus staat het als
+                   knop op de titelregel. Op een telefoon is die ruimte er
+                   niet; daar zit hij achter de puntjes. -->
               <div class="sort">
-                <button class="icon-btn icon-btn--vlak sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More actions for orders">
+                <button class="btn btn--primary sort__breed" type="button" data-goto-set="general">Manage</button>
+                <button class="icon-btn icon-btn--accent sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More actions for orders">
                   <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
                 </button>
                 <div class="sort__menu" role="menu" hidden>
-                  <button class="sort__item" type="button" role="menuitem" data-goto-set="general">
-                    <svg class="icon" aria-hidden="true"><use href="#i-cog"/></svg>Manage
-                  </button>
-                  <!-- Een stand, geen handeling: het vinkje zegt of hij aanstaat. -->
-                  <button class="sort__item" type="button" role="menuitemcheckbox" aria-checked="false" data-auto-archive>
-                    <svg class="icon" aria-hidden="true"><use href="#i-archive"/></svg>Auto archive
-                    <svg class="icon sort__check" aria-hidden="true"><use href="#i-check"/></svg>
-                  </button>
+                  <button class="sort__item" type="button" role="menuitem" data-goto-set="general">Manage</button>
                 </div>
               </div>
             </div>
@@ -6282,6 +6278,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=418"></script>
+  <script src="app.js?v=419"></script>
 </body>
 </html>
