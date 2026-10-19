@@ -1754,6 +1754,33 @@
      bestaan niet meer. */
   var bord = document.getElementById("orders-panel");
 
+  /* ---- Hoeveel lucht er nog is -------------------------------------------
+     De stip voor de tijd zegt hoe krap een bestelling zit, gemeten aan de
+     tijd waarop hij klaar moet zijn: de verwachte tijd bij zo snel mogelijk,
+     de afgesproken tijd bij een geplande bestelling. In het echt komt NU van
+     de klok; in deze opzet staat hij vast, anders zou een lijst met tijden
+     van vanmiddag op elk ander moment alleen maar rood zijn. */
+  var NU = 17 * 60 + 35;
+
+  function inMinuten(tijd) {
+    var deel = /^(\d{1,2}):(\d{2})$/.exec(tijd || "");
+    return deel ? Number(deel[1]) * 60 + Number(deel[2]) : null;
+  }
+
+  function zetStip(kaart) {
+    var stip = kaart.querySelector(".badge__dot");
+    if (!stip) return;
+    var doel = inMinuten(kaart.dataset.eta);
+    var over = doel === null ? null : doel - NU;
+    var soort = "far";
+    if (over !== null) {
+      if (over < 0) soort = "late";
+      else if (over < 15) soort = "soon";
+      else if (over < 45) soort = "ok";
+    }
+    stip.className = "badge__dot badge__dot--" + soort;
+  }
+
   /* Het aantal per status komt uit de regels zelf, zodat kop en lijst niet
      uit elkaar kunnen lopen. Het filter leest dat getal later terug, vandaar
      dat het ook als vaste waarde wordt vastgelegd. */
@@ -1842,6 +1869,7 @@
 
   if (bord) {
     bord.querySelectorAll(".ocard").forEach(zetStapKnop);
+    bord.querySelectorAll(".ocard").forEach(zetStip);
     zetKolomTellers();
   }
 

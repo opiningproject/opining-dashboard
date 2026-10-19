@@ -51,6 +51,8 @@
 
   --success: #067a4e;
   --danger:  #c0342b;
+  /* Tussen de twee in: bijna, maar nog niet mis. */
+  --warning: #d97706;
   /* Zachte varianten, als vlak achter een stijging of daling. */
   --success-soft: #e4f2ea;
   --danger-soft:  #fbeae9;
@@ -954,6 +956,14 @@ select.input {
 /* Een stipje voor de tekst: de stand is niet iets wat jij hebt gezet, maar
    iets wat draait. */
 .badge__dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: var(--r-full); background: currentColor; vertical-align: baseline; }
+/* Bij een bestelling zegt de stip hoeveel lucht er nog is tot de bezorg- of
+   afhaaltijd: rood is eroverheen, oranje binnen een kwartier, groen binnen
+   drie kwartier. Staat het verder weg, dan hoeft er nog niets en blijft hij
+   grijs. */
+.badge__dot--late { background: var(--danger); }
+.badge__dot--soon { background: var(--warning); }
+.badge__dot--ok   { background: var(--success); }
+.badge__dot--far  { background: var(--gray-300); }
 .badge--active { background: #e3f5ec; color: var(--success); }
 .badge--draft  { background: #e4eefb; color: #1f5fa8; }
 
@@ -4135,7 +4145,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Nu-of-later staat als merkje naast het adres, in dezelfde vorm als de stand
    van een gerecht in de menukaart: grijs voor zo snel mogelijk, paars voor een
    afgesproken tijd. Dat tijdstip leest als cijfers op een rij. */
-.ocard__meta .badge { font-variant-numeric: tabular-nums; }
+.ocard__meta .badge { display: inline-flex; align-items: center; font-variant-numeric: tabular-nums; }
 
 
 /* ---- Opzeggen bevestigen -------------------------------------------------
