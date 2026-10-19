@@ -4146,3 +4146,31 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    afgesproken tijd. Dat tijdstip leest als cijfers op een rij. */
 .ocard__meta .badge { font-variant-numeric: tabular-nums; }
 
+
+/* ---- Opzeggen bevestigen -------------------------------------------------
+   Een merkteken boven de titel in plaats van ernaast, zodat de kop van het
+   venster meteen laat zien dat dit iets afbreekt. */
+.dialog__head--mark { align-items: flex-start; margin-bottom: 16px; }
+.dialog__mark {
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  border-radius: var(--r-md);
+}
+.dialog__mark .icon { width: 22px; height: 22px; }
+.dialog__mark--danger { background: #fbeae9; color: var(--danger); }
+
+/* Wat er wegvalt: een regel per onderdeel, met een merkje dat hetzelfde is
+   als in de zijbalk, zodat je herkent waar het over gaat. */
+.loss__head { margin-bottom: 10px; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
+.loss { display: flex; flex-direction: column; gap: 12px; }
+.loss__item { display: flex; align-items: flex-start; gap: 12px; }
+.loss__mark {
+  display: grid; place-items: center;
+  flex: 0 0 auto;
+  width: 36px; height: 36px;
+  border-radius: var(--r-md);
+  background: var(--gray-100);
+  color: var(--text-muted);
+}
+.loss__name { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.loss__desc { font-size: var(--fs-sm); line-height: 1.45; color: var(--text-muted); }

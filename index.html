@@ -4666,7 +4666,7 @@
           <div class="card">
             <h3 class="card__title">Cancellation</h3>
             <p class="card__sub">Cancelling stops your subscription at the end of the current billing period. Your store goes offline, and your order history stays available for export for 90 days.</p>
-            <button class="btn btn--danger card__action" type="button">Cancel plan</button>
+            <button class="btn btn--danger card__action" type="button" data-dialog="cancel-dialog">Cancel plan</button>
           </div>
         </section>
 
@@ -5309,6 +5309,52 @@
        De datumvelden zijn gewone <input type="date">, dus op een telefoon komt
        de kiezer van het toestel zelf tevoorschijn. -->
 
+  <!-- Opzeggen is niet terug te draaien zonder opnieuw te beginnen, dus eerst
+       zwart op wit wat er stopt en wanneer. De zachte knop houdt het plan; de
+       rode zegt op, en staat als enige in de rode kleur. -->
+  <div class="dialog" id="cancel-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cancel-dialog-title">
+      <div class="dialog__head dialog__head--mark">
+        <span class="dialog__mark dialog__mark--danger" aria-hidden="true">
+          <svg class="icon"><use href="#i-warning"/></svg>
+        </span>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <h2 class="dialog__title" id="cancel-dialog-title">Cancel plan</h2>
+      <p class="dialog__lead">Cancel to stop recurring billing. You can keep using Opining until 1 September 2026, the end of the period you have paid for.</p>
+      <h3 class="loss__head">You&rsquo;ll lose access to</h3>
+      <ul class="loss">
+        <li class="loss__item">
+          <span class="loss__mark" aria-hidden="true"><svg class="icon"><use href="#i-store-online"/></svg></span>
+          <div>
+            <p class="loss__name">Your online store</p>
+            <p class="loss__desc">The store goes offline and customers can no longer place an order.</p>
+          </div>
+        </li>
+        <li class="loss__item">
+          <span class="loss__mark" aria-hidden="true"><svg class="icon"><use href="#i-orders"/></svg></span>
+          <div>
+            <p class="loss__name">Live orders</p>
+            <p class="loss__desc">The board here and the POS app stop receiving new orders.</p>
+          </div>
+        </li>
+        <li class="loss__item">
+          <span class="loss__mark" aria-hidden="true"><svg class="icon"><use href="#i-analytics"/></svg></span>
+          <div>
+            <p class="loss__name">Statistics and reports</p>
+            <p class="loss__desc">Your order history stays available to export for 90 days.</p>
+          </div>
+        </li>
+      </ul>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Keep your plan</button>
+        <button class="btn btn--danger" type="button" data-dialog-close data-toast="Plan cancelled. Your store stays online until 1 September 2026.">Cancel plan</button>
+      </div>
+    </div>
+  </div>
   <!-- Uitbetaalritme en de naam die op het afschrift komt. Klein genoeg voor
        een venster: twee velden, en je bent terug waar je was. -->
   <div class="dialog" id="payout-dialog" hidden>
