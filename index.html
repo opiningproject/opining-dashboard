@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=437" />
+  <link rel="stylesheet" href="styles.css?v=438" />
 </head>
 <body>
 
@@ -2295,10 +2295,49 @@
                   </div>
                 </div>
 
-                <div class="card card--empty" data-store-view="faq" hidden>
-                  <svg class="icon empty__icon" aria-hidden="true"><use href="#i-faq"/></svg>
-                  <h2 class="card__title">Faq</h2>
-                  <p class="card__sub">This section has not been built yet.</p>
+                <!-- De drie vragen die er standaard staan, in allebei de talen:
+                     wat in het veld staat is de Engelse, data-nl draagt de
+                     Nederlandse. Vragen bijmaken kan hier nog niet; de sectie
+                     op de site heeft er drie. -->
+                <div class="card" data-store-view="faq" hidden>
+                  <div class="chips langtabs" role="group" aria-label="Language">
+                    <button class="chip is-active" type="button" data-lang="en" aria-pressed="true">English</button>
+                    <button class="chip" type="button" data-lang="nl" aria-pressed="false">Nederlands</button>
+                  </div>
+                  <div class="field">
+                    <label class="label" for="faq-title">Section heading</label>
+                    <input class="input" id="faq-title" type="text" value="Your Food Questions, Answered" data-nl="Uw vragen over eten beantwoord" />
+                  </div>
+
+                  <hr class="rule" />
+                  <div class="field">
+                    <label class="label" for="faq-q1">Question 1</label>
+                    <input class="input" id="faq-q1" type="text" value="How can I place an order?" data-nl="Hoe kan ik een bestelling plaatsen?" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="faq-a1">Answer 1</label>
+                    <textarea class="input" id="faq-a1" rows="4" data-nl="U kunt eenvoudig een bestelling plaatsen door door ons menu te bladeren, uw favoriete gerechten aan uw winkelwagen toe te voegen en door te gaan naar het afrekenen. Vul uw bezorggegevens in, kies een betaalmethode en bevestig uw bestelling.">You can easily place an order by browsing our menu, adding your favorite dishes to the cart, and proceeding to checkout. Fill in your delivery details, choose a payment method, and confirm your order.</textarea>
+                  </div>
+
+                  <hr class="rule" />
+                  <div class="field">
+                    <label class="label" for="faq-q2">Question 2</label>
+                    <input class="input" id="faq-q2" type="text" value="Can I choose a delivery or pickup time?" data-nl="Kan ik een bezorg- of ophaaltijd kiezen?" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="faq-a2">Answer 2</label>
+                    <textarea class="input" id="faq-a2" rows="4" data-nl="Ja! Tijdens het afrekenen kunt u selecteren of u wilt laten bezorgen of wilt afhalen en kunt u het gewenste beschikbare tijdslot kiezen dat u het beste uitkomt.">Yes! During checkout you can choose whether you want delivery or collection, and pick the available time slot that suits you best.</textarea>
+                  </div>
+
+                  <hr class="rule" />
+                  <div class="field">
+                    <label class="label" for="faq-q3">Question 3</label>
+                    <input class="input" id="faq-q3" type="text" value="How can I pay for my order?" data-nl="Hoe kan ik mijn bestelling betalen?" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="faq-a3">Answer 3</label>
+                    <textarea class="input" id="faq-a3" rows="4" data-nl="We ondersteunen meerdere betaalmethoden, waaronder online betalingsopties (iDeal, creditcards) en contante betaling bij bezorging/afhalen, afhankelijk van uw voorkeur.">We support several payment methods, including online options (iDeal, credit cards) and cash on delivery or collection, depending on your preference.</textarea>
+                  </div>
                 </div>
 
                 <div class="card card--empty" data-store-view="socials" hidden>
@@ -6351,6 +6390,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=437"></script>
+  <script src="app.js?v=438"></script>
 </body>
 </html>
