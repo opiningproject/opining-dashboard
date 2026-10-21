@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=443" />
+  <link rel="stylesheet" href="styles.css?v=444" />
 </head>
 <body>
 
@@ -2209,7 +2209,22 @@
                   <a class="link" href="#">Manage store name</a>
                   <div class="srow">
                     <span class="label">Store logo</span>
-                    <div class="drop drop--filled"><span class="drop__logo">STARBUCKS</span></div>
+                    <div class="drop drop--beeld drop--filled">
+                      <input type="file" hidden accept="image/png,image/jpeg,image/svg+xml,image/webp" aria-label="Store logo" />
+                      <div class="drop__empty">
+                        <span class="drop__logo">STARBUCKS</span>
+                        <button class="btn btn--soft btn--sm" type="button" data-beeld-kies>Replace</button>
+                        <p class="drop__hint">PNG, JPG, SVG or WebP, up to 5 MB</p>
+                      </div>
+                      <div class="drop__beeld" hidden>
+                        <img alt="" />
+                        <span class="drop__name"></span>
+                        <span class="drop__acties">
+                          <button class="link link--btn" type="button" data-beeld-kies>Replace</button>
+                          <button class="link link--btn" type="button" data-beeld-weg>Remove</button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   <div class="srow">
                     <label class="label" for="logo-desktop">Logo Height desktop</label>
@@ -2228,7 +2243,20 @@
                   <div class="srow">
                     <span class="label">Favicon</span>
                     <div>
-                      <div class="drop"><button class="btn btn--soft" type="button">Select</button></div>
+                      <div class="drop drop--beeld">
+                        <input type="file" hidden accept="image/png,image/jpeg,image/svg+xml,image/webp" aria-label="Favicon" />
+                        <div class="drop__empty">
+                          <button class="btn btn--soft btn--sm" type="button" data-beeld-kies>Select</button>
+                        </div>
+                        <div class="drop__beeld" hidden>
+                          <img alt="" />
+                          <span class="drop__name"></span>
+                          <span class="drop__acties">
+                            <button class="link link--btn" type="button" data-beeld-kies>Replace</button>
+                            <button class="link link--btn" type="button" data-beeld-weg>Remove</button>
+                          </span>
+                        </div>
+                      </div>
                       <p class="hint">Will be scaled down to 32 x 32px</p>
                     </div>
                   </div>
@@ -2254,7 +2282,21 @@
                 <div class="card" data-store-view="img1" hidden>
                   <div class="srow">
                     <span class="label">Image</span>
-                    <div class="drop"><button class="btn btn--soft" type="button">Select</button></div>
+                    <div class="drop drop--beeld">
+                      <input type="file" hidden accept="image/png,image/jpeg,image/svg+xml,image/webp" aria-label="Image for the first text section" />
+                      <div class="drop__empty">
+                        <button class="btn btn--soft btn--sm" type="button" data-beeld-kies>Select</button>
+                        <p class="drop__hint">PNG, JPG, SVG or WebP, up to 5 MB</p>
+                      </div>
+                      <div class="drop__beeld" hidden>
+                        <img alt="" />
+                        <span class="drop__name"></span>
+                        <span class="drop__acties">
+                          <button class="link link--btn" type="button" data-beeld-kies>Replace</button>
+                          <button class="link link--btn" type="button" data-beeld-weg>Remove</button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   <hr class="rule" />
                   <!-- Elke taal heeft zijn eigen tekst. Wat er staat is de
@@ -2278,7 +2320,21 @@
                 <div class="card" data-store-view="img2" hidden>
                   <div class="srow">
                     <span class="label">Image</span>
-                    <div class="drop"><button class="btn btn--soft" type="button">Select</button></div>
+                    <div class="drop drop--beeld">
+                      <input type="file" hidden accept="image/png,image/jpeg,image/svg+xml,image/webp" aria-label="Image for the second text section" />
+                      <div class="drop__empty">
+                        <button class="btn btn--soft btn--sm" type="button" data-beeld-kies>Select</button>
+                        <p class="drop__hint">PNG, JPG, SVG or WebP, up to 5 MB</p>
+                      </div>
+                      <div class="drop__beeld" hidden>
+                        <img alt="" />
+                        <span class="drop__name"></span>
+                        <span class="drop__acties">
+                          <button class="link link--btn" type="button" data-beeld-kies>Replace</button>
+                          <button class="link link--btn" type="button" data-beeld-weg>Remove</button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   <hr class="rule" />
                   <div class="chips langtabs" role="group" aria-label="Language">
@@ -6411,6 +6467,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=443"></script>
+  <script src="app.js?v=444"></script>
 </body>
 </html>

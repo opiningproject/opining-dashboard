@@ -1050,6 +1050,16 @@ select.input {
 .drop--filled { border-style: solid; border-color: var(--border); }
 .drop__logo { font-weight: 700; letter-spacing: .04em; color: var(--text-strong); }
 
+/* Een vak voor een afbeelding: eerst wat er nu staat met de knop eronder, na
+   het kiezen het beeld zelf. Het beeld krijgt de ruimte die er is en houdt
+   zijn verhouding, want een logo is breed en een favicon vierkant. */
+.drop--beeld { transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.drop--beeld .drop__empty { gap: 10px; }
+.drop__beeld { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; max-width: 100%; }
+.drop__beeld img { max-width: 100%; max-height: 140px; border-radius: var(--r-sm); object-fit: contain; }
+.drop__name { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-sm); color: var(--text-muted); }
+.drop__acties { display: flex; gap: 14px; }
+
 /* Document uploaden in de controlestap: welke gegevens er letterlijk op
    moeten staan, en daaronder het vak voor het bestand. */
 .docfacts {
@@ -1063,7 +1073,7 @@ select.input {
 .drop--doc { min-height: 124px; transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease); }
 .drop--doc.drop--filled { min-height: 170px; }
 /* Er hangt een bestand boven het vak: laat zien dat loslaten hier kan. */
-.drop--doc.is-over { border-color: var(--accent); background: var(--accent-soft); }
+.drop.is-over { border-color: var(--accent); background: var(--accent-soft); }
 .drop__empty { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .drop__hint { font-size: var(--fs-sm); color: var(--text-muted); }
 /* Gekozen bestand: een voorbeeld in het midden van het vak, zoals een

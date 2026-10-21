@@ -1362,6 +1362,58 @@
       });
     });
 
+    /* ---- Een afbeelding kiezen -------------------------------------------
+       Kiezen of erin slepen; het beeld blijft in de browser, want een
+       prototype heeft geen plek om het heen te sturen. Daarom leest hij het
+       bestand uit en zet hij het beeld er zelf in: zo zie je meteen wat je
+       gekozen hebt. */
+    var BEELD_MAX = 5 * 1048576;
+
+    function toonBeeld(vak, bestand) {
+      if (!bestand) return;
+      if (!/^image\//.test(bestand.type)) { showToast("Choose an image file"); return; }
+      if (bestand.size > BEELD_MAX) { showToast("This image is larger than 5 MB"); return; }
+
+      var lezer = new FileReader();
+      lezer.onload = function () {
+        var beeld = vak.querySelector(".drop__beeld");
+        beeld.querySelector("img").src = lezer.result;
+        beeld.querySelector(".drop__name").textContent = bestand.name;
+        beeld.hidden = false;
+        vak.querySelector(".drop__empty").hidden = true;
+        vak.classList.add("drop--filled");
+        markUnsaved("Online store");
+      };
+      lezer.readAsDataURL(bestand);
+    }
+
+    storeView.querySelectorAll(".drop--beeld").forEach(function (vak) {
+      var kiezer = vak.querySelector("input[type='file']");
+      var leegStand = vak.classList.contains("drop--filled");
+
+      ["dragenter", "dragover"].forEach(function (t) {
+        vak.addEventListener(t, function (e) { e.preventDefault(); vak.classList.add("is-over"); });
+      });
+      ["dragleave", "drop"].forEach(function (t) {
+        vak.addEventListener(t, function (e) { e.preventDefault(); vak.classList.remove("is-over"); });
+      });
+      vak.addEventListener("drop", function (e) { toonBeeld(vak, e.dataTransfer.files[0]); });
+
+      vak.addEventListener("click", function (e) {
+        if (e.target.closest("[data-beeld-kies]")) { kiezer.click(); return; }
+        if (!e.target.closest("[data-beeld-weg]")) return;
+        /* Terug naar wat er stond voordat je koos. */
+        vak.querySelector(".drop__beeld").hidden = true;
+        vak.querySelector(".drop__beeld img").removeAttribute("src");
+        vak.querySelector(".drop__empty").hidden = false;
+        vak.classList.toggle("drop--filled", leegStand);
+        kiezer.value = "";
+        markUnsaved("Online store");
+      });
+
+      kiezer.addEventListener("change", function () { toonBeeld(vak, kiezer.files[0]); });
+    });
+
     /* ---- Faq: een lijst vragen, en een ervan open ------------------------
        De volgorde sleep je met dezelfde greep als een gerecht; dat regelt de
        sleepcode verderop. Hier gaat het om welke vraag openstaat, wat erin
