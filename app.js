@@ -2648,10 +2648,53 @@
      meteen geldt (data-instant) hoeft er niet om te vragen, en de onboarding
      heeft onderaan zijn eigen knoppen. In al die gevallen zwijgt de balk. */
   function showSavebar(e) {
+    /* Terugzetten gebeurt met dezelfde gebeurtenissen als wijzigen; zonder
+       deze regel zou Discard de balk meteen weer aanzetten. */
+    if (herstelt) return;
     if (e && e.target.closest && e.target.closest(".rev__form, [data-instant], .wiz")) return;
     if (zoekGebaar(e)) return;
     if (root.dataset.settings === "open") markUnsaved(setTitle.textContent);
   }
+
+  /* ---- Discard zet terug wat je hebt veranderd ---------------------------
+     Een schakelaar die omstaat is pas echt als je bewaart, dus moet hij bij
+     Discard terugspringen. Wat de stand was bij het laatst bewaren ligt vast
+     in een momentopname; die vernieuwt bij elke Save. Zoekvelden tellen niet
+     mee -- die veranderen niets -- en wat meteen geldt evenmin: dat is al
+     gebeurd en valt hier niet meer terug te draaien. */
+  var standen = new Map();
+  var herstelt = false;
+
+  function besturingen() {
+    return [].filter.call(overlay.querySelectorAll("input, select, textarea"), function (el) {
+      return el.type !== "search" && !el.closest(ZOEKPLEKKEN) && !el.closest("[data-instant]");
+    });
+  }
+
+  function legStandenVast() {
+    standen.clear();
+    besturingen().forEach(function (el) {
+      standen.set(el, el.type === "checkbox" || el.type === "radio" ? el.checked : el.value);
+    });
+  }
+
+  function zetStandenTerug() {
+    herstelt = true;
+    standen.forEach(function (waarde, el) {
+      /* Een rij die ondertussen weg is hoeft niets terug te krijgen. */
+      if (!el.isConnected) return;
+      var vink = el.type === "checkbox" || el.type === "radio";
+      if (vink ? el.checked === waarde : el.value === waarde) return;
+      if (vink) el.checked = waarde;
+      else el.value = waarde;
+      /* De pagina luistert mee om zichzelf bij te werken; zonder dat springt
+         alleen de besturing terug en blijft de tekst ernaast staan. */
+      el.dispatchEvent(new Event(vink || el.tagName === "SELECT" ? "change" : "input", { bubbles: true }));
+    });
+    herstelt = false;
+  }
+
+  legStandenVast();
   function hideSavebar() { setSavebar(false); }
 
   /* Weg willen terwijl er iets niet bewaard is. De balk trilt in plaats van
@@ -2675,9 +2718,15 @@
   savebar.addEventListener("click", function (e) {
     var actie = e.target.closest("[data-save]");
     if (!actie) return;
+    if (actie.dataset.save === "save") {
+      /* Vanaf nu is dit de stand waar Discard naar teruggaat. */
+      legStandenVast();
+      /* De melding benoemt wat er bewaard is; de settings-kop weet dat al. */
+      showToast(saveZin || saveLabel + " saved");
+    } else {
+      zetStandenTerug();
+    }
     hideSavebar();
-    /* De melding benoemt wat er bewaard is; de settings-kop weet dat al. */
-    if (actie.dataset.save === "save") showToast(saveZin || saveLabel + " saved");
     saveZin = "";
   });
 
