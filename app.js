@@ -2144,7 +2144,7 @@
     discounts:      { label: "Create discount", icon: "i-plus", zacht: false, opent: "discount-new" },
     vouchers:       { label: "Create voucher",  icon: "i-plus", zacht: false, opent: "voucher-new" },
     "email-campaigns": { label: "New campaign", icon: "i-plus", zacht: false, opent: "campaign-new" },
-    "online-store": { label: "View store",    icon: "i-eye",  zacht: true }
+    "online-store": { label: "View store",    zacht: false }
   };
 
   /* Sommige pagina's hebben meer nodig dan één knop (Orders: een filter plus
