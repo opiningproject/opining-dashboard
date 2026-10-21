@@ -543,7 +543,7 @@ input[type="date"], input[type="time"] {
 }
 
 /* Een label met een vraagteken ernaast: de twee horen op één regel. */
-.label--info { display: flex; align-items: center; gap: 6px; }
+.label--info { position: relative; display: flex; align-items: center; gap: 6px; }
 .explain__icon { display: flex; color: var(--text-muted); cursor: help; }
 .explain__icon .icon { width: 16px; height: 16px; }
 .explain__icon:hover { color: var(--text); }
@@ -2129,6 +2129,13 @@ select.input {
   text-align: left;
 }
 .explain:hover .explain__pop, .explain:focus-within .explain__pop { display: block; }
+/* Een vak van 288px naast een icoontje dat halverwege de regel staat valt
+   op een telefoon rechts buiten beeld. Daar hangt de uitleg daarom aan het
+   label en krijgt hij de breedte van het veld eronder. */
+@media (max-width: 560px) {
+  .label--info .explain { position: static; }
+  .label--info .explain__pop { left: 0; right: 0; width: auto; max-width: none; }
+}
 .explain__pop b { display: block; margin-bottom: 6px; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
 /* De rekensom is de kern van de uitleg en mag opvallen. */
 .explain__sum { display: block; margin-top: 10px; color: var(--accent); }
