@@ -3863,6 +3863,10 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
      Daarom breekt hij af: eerst de tekst over de volle breedte, daarna de
      stand en de knop op een eigen regel. */
   .row--static { flex-wrap: wrap; }
+  /* Een vraag is een greep, een naam en een prullenbak: drie smalle dingen
+     die altijd op een regel passen. Die breekt dus niet af; een naam die niet
+     past kapt af achter de greep in plaats van eronder te beginnen. */
+  .faqrow { flex-wrap: nowrap; }
   /* Het icoon blijft naast de tekst staan; de rest breekt eronder af. */
   .row--static > .row__icon { flex: 0 0 auto; }
   .row--static > .row__text { flex: 1 1 calc(100% - 34px); }
