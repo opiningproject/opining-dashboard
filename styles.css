@@ -766,6 +766,20 @@ select.input {
   animation: savebar-in 200ms var(--ease);
 }
 @keyframes savebar-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+/* Wegklikken terwijl er iets openstaat: dan trilt de balk. Geen venster dat
+   een vraag stelt -- Discard en Save staan er al -- maar een beweging die je
+   blik terugtrekt naar die twee knoppen. De rand kleurt even mee, want een
+   beweging alleen zegt niets tegen wie hem niet ziet. */
+@keyframes savebar-trilt {
+  0%, 100% { transform: translateX(0); }
+  15%, 45%, 75% { transform: translateX(-5px); }
+  30%, 60%, 90% { transform: translateX(5px); }
+}
+.savebar--trilt { animation: savebar-trilt 420ms var(--ease); border-color: var(--border-strong); }
+/* Zonder beweging blijft de rand over; die houdt hij dan even vast. */
+@media (prefers-reduced-motion: reduce) {
+  .savebar--trilt { animation: none; }
+}
 .savebar__text {
   display: flex; align-items: center; gap: 8px;
   min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;

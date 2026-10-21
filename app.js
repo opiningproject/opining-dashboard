@@ -2251,6 +2251,9 @@
     var item = e.target.closest(".nav__item[data-set]");
     if (!item) return;
     e.preventDefault();
+    /* Van pagina wisselen zou de wijziging weggooien; eerst bewaren of
+       weggooien, dan pas verder. */
+    if (savebarTrilt()) return;
     activate(item, setNav);
     closeSetSub();
     showSetPage(item.dataset.set, item.dataset.title, item.dataset.icon);
@@ -2627,6 +2630,22 @@
     if (root.dataset.settings === "open") markUnsaved(setTitle.textContent);
   }
   function hideSavebar() { setSavebar(false); }
+
+  /* Weg willen terwijl er iets niet bewaard is. De balk trilt in plaats van
+     stil te verdwijnen: zo raak je niet kwijt wat je net hebt gezet zonder
+     het te merken. Antwoorden hoeft niet -- Discard en Save staan er al.
+     Opnieuw toevoegen pakt alleen als de browser er tussendoor naar gekeken
+     heeft, vandaar het meten van offsetWidth. */
+  function savebarTrilt() {
+    if (root.dataset.savebar !== "open") return false;
+    savebar.classList.remove("savebar--trilt");
+    void savebar.offsetWidth;
+    savebar.classList.add("savebar--trilt");
+    return true;
+  }
+  savebar.addEventListener("animationend", function (e) {
+    if (e.animationName === "savebar-trilt") savebar.classList.remove("savebar--trilt");
+  });
 
   overlay.addEventListener("change", showSavebar);
   overlay.addEventListener("input", showSavebar);
