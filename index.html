@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=435" />
+  <link rel="stylesheet" href="styles.css?v=436" />
 </head>
 <body>
 
@@ -2257,17 +2257,21 @@
                     <div class="drop"><button class="btn btn--soft" type="button">Select</button></div>
                   </div>
                   <hr class="rule" />
+                  <!-- Elke taal heeft zijn eigen tekst. Wat er staat is de
+                       Engelse; de Nederlandse staat in data-nl, zodat beide
+                       standaardteksten hier bij elkaar staan en app.js ze
+                       alleen hoeft om te wisselen. -->
                   <div class="langs">
-                    <button class="lang is-active" type="button">English</button>
-                    <button class="lang" type="button">Nederlands</button>
+                    <button class="lang is-active" type="button" data-lang="en">English</button>
+                    <button class="lang" type="button" data-lang="nl">Nederlands</button>
                   </div>
                   <div class="field">
                     <label class="label" for="img1-heading">Heading</label>
-                    <input class="input" id="img1-heading" type="text" value="Delivery" />
+                    <input class="input" id="img1-heading" type="text" value="Delivery" data-nl="Bezorgen" />
                   </div>
                   <div class="field">
                     <label class="label" for="img1-text">Text</label>
-                    <textarea class="input" id="img1-text" rows="4">Order online in just a few clicks and have your food delivered when it suits you. Secure online payment makes it fast, easy, and completely hassle-free.</textarea>
+                    <textarea class="input" id="img1-text" rows="4" data-nl="Bestel online in slechts een paar klikken en laat uw eten bezorgen wanneer het u uitkomt. Veilig online betalen maakt het snel, eenvoudig en volledig zorgeloos.">Order online in just a few clicks and have your food delivered when it suits you. Secure online payment makes it fast, easy, and completely hassle-free.</textarea>
                   </div>
                 </div>
 
@@ -2278,16 +2282,16 @@
                   </div>
                   <hr class="rule" />
                   <div class="langs">
-                    <button class="lang is-active" type="button">English</button>
-                    <button class="lang" type="button">Nederlands</button>
+                    <button class="lang is-active" type="button" data-lang="en">English</button>
+                    <button class="lang" type="button" data-lang="nl">Nederlands</button>
                   </div>
                   <div class="field">
                     <label class="label" for="img2-heading">Heading</label>
-                    <input class="input" id="img2-heading" type="text" value="Collection" />
+                    <input class="input" id="img2-heading" type="text" value="Collection" data-nl="Afhalen" />
                   </div>
                   <div class="field">
                     <label class="label" for="img2-text">Text</label>
-                    <textarea class="input" id="img2-text" rows="4">Order ahead and pick it up whenever you like. No queue, no waiting, just walk in and collect.</textarea>
+                    <textarea class="input" id="img2-text" rows="4" data-nl="Bestel online, kies uw ophaaltijd en we hebben alles voor u klaarstaan wanneer u aankomt. Snel en veilig online betalen voor een soepel en eenvoudig afhalen.">Order ahead and pick it up whenever you like. No queue, no waiting, just walk in and collect.</textarea>
                   </div>
                 </div>
 
@@ -6347,6 +6351,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=435"></script>
+  <script src="app.js?v=436"></script>
 </body>
 </html>

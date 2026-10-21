@@ -1327,6 +1327,37 @@
       getal.addEventListener("input", function () { range.value = getal.value; });
     });
 
+    /* ---- Dezelfde sectie, twee talen -------------------------------------
+       De knoppen boven de velden wisselen om wat erin staat. De Engelse tekst
+       staat in het veld zelf, de Nederlandse in data-nl; vanaf dan houdt elke
+       taal bij wat je er zelf van maakt, zolang je op de pagina bent. Zelfde
+       aanpak als bij een gerecht. */
+    storeView.querySelectorAll(".langs").forEach(function (knoppen) {
+      var kaart = knoppen.closest("[data-store-view]");
+      var velden = [].slice.call(kaart.querySelectorAll(".field .input"));
+      if (!velden.length) return;
+
+      var taal = "en";
+      var tekst = { en: [], nl: [] };
+      velden.forEach(function (veld) {
+        tekst.en.push(veld.value);
+        tekst.nl.push(veld.dataset.nl || "");
+      });
+
+      knoppen.addEventListener("click", function (e) {
+        var knop = e.target.closest("[data-lang]");
+        if (!knop || knop.dataset.lang === taal) return;
+        /* Eerst vastleggen wat er nu staat, anders raak je het kwijt zodra je
+           omwisselt. */
+        velden.forEach(function (veld, i) { tekst[taal][i] = veld.value; });
+        taal = knop.dataset.lang;
+        velden.forEach(function (veld, i) { veld.value = tekst[taal][i]; });
+        knoppen.querySelectorAll("[data-lang]").forEach(function (b) {
+          b.classList.toggle("is-active", b === knop);
+        });
+      });
+    });
+
     /* Wijzigen hier zet dezelfde savebar in de header aan als de settings;
        zoeken en filteren hier net zo min als daar. */
     function storeWijziging(e) {
