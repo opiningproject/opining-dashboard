@@ -3252,7 +3252,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   color: var(--accent);
   text-decoration: underline; text-underline-offset: 3px;
 }
-.linkbtn + .field { margin-top: 16px; }
+/* De melding staat tussen de knop en het veld, ook als hij weg is; vandaar
+   ~ in plaats van +, anders valt de ruimte eronder weg zodra hij er staat. */
+.linkbtn ~ .field { margin-top: 16px; }
 .linkbtn + .field__error { margin-top: 8px; }
 
 @media (max-width: 560px) {
