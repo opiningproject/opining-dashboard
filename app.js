@@ -4057,6 +4057,7 @@
     var gratis = document.getElementById("zone-fee-free");
     var vanafKnop = document.getElementById("zone-from-toggle");
     var vanafVak = document.getElementById("zone-from-field");
+    var vanafUitleg = document.getElementById("zone-from-hint");
     var vanaf = document.getElementById("zone-from");
     var bewaar = document.getElementById("zone-save");
     var huidig = null;   /* de rij die je bewerkt, of niets bij een nieuwe */
@@ -4129,8 +4130,17 @@
     }
 
     /* Nul is gratis; het plaatje in het veld zegt dat, zodat je het niet uit
-       het bedrag hoeft op te maken. */
-    function zetGratis() { gratis.hidden = naarGetal(tarief.value) !== 0; }
+       het bedrag hoeft op te maken. Gratis vanaf een bedrag zegt dan niets
+       meer: die keuze gaat op slot, met de reden eronder, en een veld dat al
+       openstond gaat dicht in plaats van een bedrag te bewaren dat nergens
+       op slaat. */
+    function zetGratis() {
+      var nul = naarGetal(tarief.value) === 0;
+      gratis.hidden = !nul;
+      if (nul) { zetVanaf(false); vanaf.value = ""; }
+      vanafKnop.disabled = nul;
+      vanafUitleg.hidden = !nul;
+    }
 
     function vul(gegevens) {
       vak.querySelectorAll(".token").forEach(function (t) { t.remove(); });
