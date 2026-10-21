@@ -1031,7 +1031,10 @@ select.input {
   background: var(--bg-surface);
 }
 .store__nav .nav__item { padding: 11px 12px; }
-.store__main > .card + .card { margin-top: 16px; }
+/* Ruimte tussen twee kaarten die allebei te zien zijn. Een verborgen kaart
+   telt niet mee: anders begint elke sectie behalve de eerste lager dan de
+   navigatie ernaast. */
+.store__main > .card:not([hidden]) + .card:not([hidden]) { margin-top: 16px; }
 
 /* Label links, bediening rechts — zoals in het ontwerp. */
 .srow { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 16px; align-items: start; padding: 14px 0; }
