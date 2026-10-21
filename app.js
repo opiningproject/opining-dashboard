@@ -1380,6 +1380,14 @@
       var kopTekst = { en: kopVeld.value, nl: kopVeld.dataset.nl || "" };
       var open = null;
 
+      /* De sectie op de site laat er drie zien; onder dat aantal valt er niets
+         meer weg te halen, en dan staat de prullenbak er dus ook niet. */
+      var MINIMUM = 3;
+
+      function zetMinimum() {
+        lijst.toggleAttribute("data-minimum", lijst.querySelectorAll(".faqrow").length <= MINIMUM);
+      }
+
       function sleutels() {
         return taal === "nl" ? ["nlQ", "nlA"] : ["enQ", "enA"];
       }
@@ -1445,6 +1453,7 @@
 
         var weg = e.target.closest("[data-faq-del]");
         if (weg) {
+          if (lijst.querySelectorAll(".faqrow").length <= MINIMUM) return;
           var rij = weg.closest(".faqrow");
           var naam = naamVan(rij);
           /* De vraag die je weghaalt kan degene zijn die openstaat; dan gaat
@@ -1453,6 +1462,7 @@
           rij.remove();
           if (open === rij) { open = null; kies(volgende); }
           if (!open) toonOpen();
+          zetMinimum();
           markUnsaved("Online store");
           showToast(naam + " removed");
           return;
@@ -1468,6 +1478,7 @@
           lijst.appendChild(nieuw);
           kies(nieuw);
           zetNamen();
+          zetMinimum();
           markUnsaved("Online store");
           vraagVeld.focus();
         }
@@ -1482,6 +1493,7 @@
       open = lijst.querySelector(".faqrow.is-active") || lijst.querySelector(".faqrow");
       if (open) open.classList.add("is-active");
       zetNamen();
+      zetMinimum();
       toonOpen();
     })();
 

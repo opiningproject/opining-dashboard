@@ -2103,6 +2103,10 @@ select.input {
 .faqrow:hover { background: var(--gray-50); }
 .faqrow.is-active { background: var(--accent-soft); }
 .faqrow.is-active .faqrow__pick { color: var(--accent); font-weight: 600; }
+/* Bij het minimum valt er niets weg te halen; dan staat de prullenbak er niet,
+   ook niet bij het aanwijzen van de regel. Een knop die toch niets doet is
+   erger dan geen knop. */
+#faq-list[data-minimum] .row__del { display: none; }
 /* De kop boven de lijst hoort bij de lijst eronder, niet bij het veld erboven. */
 .faqhead { margin-top: 24px; margin-bottom: 10px; }
 .row__switch { margin-left: auto; }
