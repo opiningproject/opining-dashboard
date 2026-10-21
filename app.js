@@ -1332,7 +1332,7 @@
        staat in het veld zelf, de Nederlandse in data-nl; vanaf dan houdt elke
        taal bij wat je er zelf van maakt, zolang je op de pagina bent. Zelfde
        aanpak als bij een gerecht. */
-    storeView.querySelectorAll(".langs").forEach(function (knoppen) {
+    storeView.querySelectorAll(".langtabs").forEach(function (knoppen) {
       var kaart = knoppen.closest("[data-store-view]");
       var velden = [].slice.call(kaart.querySelectorAll(".field .input"));
       if (!velden.length) return;
@@ -1353,7 +1353,11 @@
         taal = knop.dataset.lang;
         velden.forEach(function (veld, i) { veld.value = tekst[taal][i]; });
         knoppen.querySelectorAll("[data-lang]").forEach(function (b) {
-          b.classList.toggle("is-active", b === knop);
+          var aan = b === knop;
+          b.classList.toggle("is-active", aan);
+          /* De stand staat niet alleen in de kleur: wie laat voorlezen hoort
+             welke taal aanstaat. */
+          b.setAttribute("aria-pressed", String(aan));
         });
       });
     });

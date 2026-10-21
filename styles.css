@@ -1013,6 +1013,9 @@ select.input {
    tussenruimte als tussen twee velden. */
 .langtabs { margin-top: 20px; }
 .langtabs + .field { margin-top: 16px; }
+/* In de online store staat het blokje onder een streep in plaats van onder
+   een kop; dan hoort de ruimte erboven bij de streep. */
+.rule + .langtabs { margin-top: 18px; }
 
 /* ==========================================================================
    8c. ONLINE STORE — sectienavigatie links, paneel rechts
@@ -1112,17 +1115,6 @@ select.input {
 /* De knop draagt de merkkleur; app.js §3b zet 'm live mee. */
 #brand-preview-btn { background: var(--accent); color: #fff; }
 
-.langs { display: flex; gap: 8px; margin-bottom: 18px; }
-.lang {
-  padding: 7px 16px;
-  border: 1px solid var(--border);
-  border-radius: var(--r-full);
-  font-size: var(--fs-md); font-weight: 500;
-  color: var(--text);
-  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
-}
-.lang:hover { background: var(--gray-50); }
-.lang.is-active { background: var(--gray-900); border-color: var(--gray-900); color: #fff; }
 
 .btn--soft { background: var(--gray-100); color: var(--text-strong); }
 .btn--soft:hover { background: var(--gray-150); }

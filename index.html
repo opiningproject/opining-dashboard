@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=436" />
+  <link rel="stylesheet" href="styles.css?v=437" />
 </head>
 <body>
 
@@ -2261,9 +2261,9 @@
                        Engelse; de Nederlandse staat in data-nl, zodat beide
                        standaardteksten hier bij elkaar staan en app.js ze
                        alleen hoeft om te wisselen. -->
-                  <div class="langs">
-                    <button class="lang is-active" type="button" data-lang="en">English</button>
-                    <button class="lang" type="button" data-lang="nl">Nederlands</button>
+                  <div class="chips langtabs" role="group" aria-label="Language">
+                    <button class="chip is-active" type="button" data-lang="en" aria-pressed="true">English</button>
+                    <button class="chip" type="button" data-lang="nl" aria-pressed="false">Nederlands</button>
                   </div>
                   <div class="field">
                     <label class="label" for="img1-heading">Heading</label>
@@ -2281,9 +2281,9 @@
                     <div class="drop"><button class="btn btn--soft" type="button">Select</button></div>
                   </div>
                   <hr class="rule" />
-                  <div class="langs">
-                    <button class="lang is-active" type="button" data-lang="en">English</button>
-                    <button class="lang" type="button" data-lang="nl">Nederlands</button>
+                  <div class="chips langtabs" role="group" aria-label="Language">
+                    <button class="chip is-active" type="button" data-lang="en" aria-pressed="true">English</button>
+                    <button class="chip" type="button" data-lang="nl" aria-pressed="false">Nederlands</button>
                   </div>
                   <div class="field">
                     <label class="label" for="img2-heading">Heading</label>
@@ -6351,6 +6351,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=436"></script>
+  <script src="app.js?v=437"></script>
 </body>
 </html>
