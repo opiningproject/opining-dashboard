@@ -1770,9 +1770,11 @@
      de klok; in deze opzet staat hij vast, anders zou een lijst met tijden
      van vanmiddag op elk ander moment alleen maar rood zijn.
 
-     Een afgesproken tijd valt altijd op een kwartier -- :00, :15, :30 of
-     :45 -- want zo kiest een klant hem. Een verwachte tijd komt uit de
-     bereidtijd en valt dus op elke minuut. */
+     Een afgesproken tijd valt altijd op een kwartier — :00, :15, :30 of
+     :45 — want zo kiest een klant hem. Een verwachte tijd komt uit de
+     bereidtijd en wordt op vijf minuten afgerond, zodat de klant een tijd
+     hoort die hij kan onthouden. Geen van beide valt dus op een losse
+     minuut. */
   var NU = 17 * 60 + 35;
 
   function inMinuten(tijd) {
