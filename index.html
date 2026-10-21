@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=429" />
+  <link rel="stylesheet" href="styles.css?v=430" />
 </head>
 <body>
 
@@ -2511,9 +2511,9 @@
                 <span class="row__text"><span class="row__title">Opining</span><span class="row__meta">info@restaurantname.nl · +31614522453</span></span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
-              <button class="row" type="button" data-sub="address" data-sub-title="Store address">
+              <button class="row" type="button" data-dialog="store-address-dialog">
                 <svg class="icon row__icon" aria-hidden="true"><use href="#i-pin"/></svg>
-                <span class="row__text"><span class="row__title">Store Address</span><span class="row__meta">The Netherlands</span></span>
+                <span class="row__text"><span class="row__title">Store address</span><span class="row__meta" id="store-address">Lusthofstraat 27A, 3062 WB Rotterdam</span></span>
                 <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
               </button>
             </div>
@@ -5498,6 +5498,59 @@
   <!-- Het adres waarop de factuur van Opining staat. Het land ligt vast bij de
        inschrijving van het bedrijf, dus dat veld staat vast; de rest mag je
        wijzigen. Save gaat pas aan als er iets veranderd is. -->
+  <!-- Het adres van de zaak: dit is wat een klant te zien krijgt. Een adres
+       vul je in een keer in, dus staat het in een venster en niet op een
+       eigen pagina. Het land hoort bij de bedrijfsgegevens en ligt hier dus
+       vast; de straat zoekt postcode en plaats erbij. -->
+  <div class="dialog" id="store-address-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="store-address-dialog-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="store-address-dialog-title">Edit store address</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead">Your customers can see this information.</p>
+
+      <div class="field">
+        <label class="label" for="store-addr-company">Company name</label>
+        <input class="input" id="store-addr-company" type="text" value="Opining" autocomplete="organization" />
+      </div>
+      <div class="field">
+        <label class="label" for="store-addr-country">Country/region</label>
+        <select class="input" id="store-addr-country" disabled>
+          <option selected>Netherlands</option>
+        </select>
+        <p class="hint">Set with your business details. Email us to change it.</p>
+      </div>
+      <div class="field">
+        <label class="label" for="store-addr-street">Street and house number</label>
+        <span class="infield">
+          <svg class="icon infield__icon" aria-hidden="true"><use href="#i-search"/></svg>
+          <input class="input infield__input" id="store-addr-street" type="text" value="Lusthofstraat 27A" autocomplete="address-line1"
+                 data-lookup data-lookup-zip="store-addr-zip" data-lookup-city="store-addr-city" data-lookup-note="store-addr-note" />
+        </span>
+        <p class="hint" id="store-addr-note" hidden></p>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="store-addr-zip">Postal code</label>
+          <input class="input" id="store-addr-zip" type="text" value="3062 WB" autocomplete="postal-code" />
+        </div>
+        <div class="field">
+          <label class="label" for="store-addr-city">City</label>
+          <input class="input" id="store-addr-city" type="text" value="Rotterdam" autocomplete="address-level2" />
+        </div>
+      </div>
+
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="store-addr-save" disabled>Save</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dialog" id="address-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="address-dialog-title">
@@ -6294,6 +6347,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=429"></script>
+  <script src="app.js?v=430"></script>
 </body>
 </html>

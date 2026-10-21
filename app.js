@@ -4664,6 +4664,42 @@
     });
   }
 
+  /* Het adres van de zaak. Zelfde afspraak als bij het factuuradres: Save
+     gaat pas aan als er iets veranderd is en het nodige is ingevuld. De regel
+     in de lijst draagt daarna wat er staat, zodat je het ziet zonder het
+     venster te openen. */
+  var winkelVenster = document.getElementById("store-address-dialog");
+
+  if (winkelVenster) {
+    var winkelVelden = ["store-addr-company", "store-addr-street", "store-addr-zip", "store-addr-city"]
+      .map(function (id) { return document.getElementById(id); });
+    var winkelKnop = document.getElementById("store-addr-save");
+
+    function winkelStand() {
+      return winkelVelden.map(function (v) { return v.value.trim(); }).join("|");
+    }
+
+    var winkelBewaard = winkelStand();
+
+    /* Een adres zonder straat of plaats is geen adres; de naam van de zaak
+       staat elders al, dus die mag leeg blijven. */
+    winkelVenster.addEventListener("input", function () {
+      winkelKnop.disabled = winkelStand() === winkelBewaard ||
+        !winkelVelden[1].value.trim() || !winkelVelden[3].value.trim();
+    });
+
+    winkelKnop.addEventListener("click", function () {
+      var post = winkelVelden[2].value.trim().toUpperCase();
+      document.getElementById("store-address").textContent =
+        [winkelVelden[1].value.trim(), (post + " " + winkelVelden[3].value.trim()).trim()]
+          .filter(Boolean).join(", ");
+      winkelBewaard = winkelStand();
+      winkelKnop.disabled = true;
+      winkelVenster.hidden = true;
+      showToast("Store address saved");
+    });
+  }
+
   /* Het factuuradres. Save gaat pas aan als er iets veranderd is, anders is
      het een knop die niets doet. Het land ligt vast en telt dus niet mee. */
   var adresVenster = document.getElementById("address-dialog");
