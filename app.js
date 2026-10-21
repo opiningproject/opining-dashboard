@@ -302,9 +302,15 @@
   }
 
   /* De tab die je meenam: alleen wegklikbaar, want de waarde ligt al vast. */
-  function chipVanTab(label) {
+  function chipVanTab(psearch, label) {
     var chip = document.createElement("span");
     chip.className = "fchip";
+    /* De tab noemt een waarde, niet een filter; het filter dat die waarde
+       kent is daarmee vergeven, dus daar hoort deze chip bij. */
+    var van = leesFilters(psearch).filter(function (f) {
+      return f.waarden.some(function (w) { return w.toLowerCase() === label.toLowerCase(); });
+    })[0];
+    if (van) chip.dataset.naam = van.naam;
     chip.append(label);
     var weg = document.createElement("button");
     weg.type = "button";
@@ -392,9 +398,10 @@
 
   /* De filters die nog niet als chip in de regel staan. */
   function vrijeFilters(psearch) {
+    /* Welk filter een chip bezet staat op de chip zelf; zijn label toont de
+       gekozen waarden, dus daaraan was het filter niet te herkennen. */
     var gebruikt = [].map.call(psearch.querySelectorAll(".fchip"), function (chip) {
-      var label = chip.querySelector(".fchip__label");
-      return (label ? label.textContent : chip.textContent).trim().toLowerCase();
+      return (chip.dataset.naam || chip.textContent).trim().toLowerCase();
     });
     return leesFilters(psearch).filter(function (filter) {
       return gebruikt.indexOf(filter.naam.toLowerCase()) < 0;
@@ -681,7 +688,7 @@
          stilletjes over de hele lijst gaan. "All" is geen filter. */
       if (!psearch.querySelector(".fchip")) {
         var label = actieveInperking(kop);
-        if (label && !/^All\b/.test(label)) psearch.querySelector(".fadd").before(chipVanTab(label));
+        if (label && !/^All\b/.test(label)) psearch.querySelector(".fadd").before(chipVanTab(psearch, label));
       }
       vulFilterMenu(psearch);
       syncClearAll(psearch);
