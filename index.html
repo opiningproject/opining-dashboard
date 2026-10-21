@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=444" />
+  <link rel="stylesheet" href="styles.css?v=445" />
 </head>
 <body>
 
@@ -2417,10 +2417,24 @@
                   </div>
                 </div>
 
-                <div class="card card--empty" data-store-view="socials" hidden>
-                  <svg class="icon empty__icon" aria-hidden="true"><use href="#i-socials"/></svg>
-                  <h2 class="card__title">Socials</h2>
-                  <p class="card__sub">This section has not been built yet.</p>
+                <!-- Drie adressen, meer niet. Ze zijn niet verplicht: een zaak
+                     zonder Instagram hoort geen leeg vak op zijn site te
+                     krijgen. De taalknoppen staan er daarom ook niet -- een
+                     adres vertaalt niet. -->
+                <div class="card" data-store-view="socials" hidden>
+                  <p class="card__sub">Optional. A link you fill in appears in the footer of your store.</p>
+                  <div class="field">
+                    <label class="label" for="soc-facebook">Facebook</label>
+                    <input class="input" id="soc-facebook" type="url" inputmode="url" autocomplete="off" placeholder="https://www.facebook.com/" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="soc-instagram">Instagram</label>
+                    <input class="input" id="soc-instagram" type="url" inputmode="url" autocomplete="off" placeholder="https://www.instagram.com/" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="soc-tiktok">TikTok</label>
+                    <input class="input" id="soc-tiktok" type="url" inputmode="url" autocomplete="off" placeholder="https://www.tiktok.com/" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -6467,6 +6481,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=444"></script>
+  <script src="app.js?v=445"></script>
 </body>
 </html>
