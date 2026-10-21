@@ -1327,9 +1327,14 @@
       getal.addEventListener("input", function () { range.value = getal.value; });
     });
 
-    /* Wijzigen hier zet dezelfde savebar in de header aan als de settings. */
-    storeView.addEventListener("input",  function () { markUnsaved("Online store"); });
-    storeView.addEventListener("change", function () { markUnsaved("Online store"); });
+    /* Wijzigen hier zet dezelfde savebar in de header aan als de settings;
+       zoeken en filteren hier net zo min als daar. */
+    function storeWijziging(e) {
+      if (zoekGebaar(e)) return;
+      markUnsaved("Online store");
+    }
+    storeView.addEventListener("input", storeWijziging);
+    storeView.addEventListener("change", storeWijziging);
   }
 
   /* ---- Openingstijden: diensten per dag, en de gesloten-stand ------------- */
@@ -2618,6 +2623,17 @@
     savebar.hidden = !open;
     root.dataset.savebar = open ? "open" : "closed";
   }
+  /* Zoeken en filteren verandert niets aan de zaak, alleen aan wat je ziet:
+     een postcode opzoeken of een rekening terugvinden hoort dus niet in de
+     balk. Dat gebeurt in een zoekbalk, in de kop van een lijst of in een
+     sorteermenu; alles daarbinnen laat de balk met rust. */
+  var ZOEKPLEKKEN = ".psearch, .panel__head, .sort__menu";
+
+  function zoekGebaar(e) {
+    if (!e || !e.target || !e.target.closest) return false;
+    return !!e.target.closest(ZOEKPLEKKEN) || e.target.type === "search";
+  }
+
   /* Onthoudt wat er te bewaren valt, zodat de melding na Save kan benoemen
      waar het over ging. */
   var saveLabel = "Changes";
@@ -2633,6 +2649,7 @@
      heeft onderaan zijn eigen knoppen. In al die gevallen zwijgt de balk. */
   function showSavebar(e) {
     if (e && e.target.closest && e.target.closest(".rev__form, [data-instant], .wiz")) return;
+    if (zoekGebaar(e)) return;
     if (root.dataset.settings === "open") markUnsaved(setTitle.textContent);
   }
   function hideSavebar() { setSavebar(false); }
