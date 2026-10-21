@@ -3140,30 +3140,53 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    ========================================================================== */
 .dialog { position: fixed; inset: 0; z-index: var(--z-toast); display: grid; place-items: center; padding: 20px; }
 .dialog__scrim { position: absolute; inset: 0; background: rgba(18, 22, 28, .38); }
+/* De kop met de titel en de voet met de knoppen blijven staan; alleen het
+   midden schuift. Zo scroll je de titel niet weg en weet je bij een lang
+   formulier nog waar je bent. De kaart zelf knipt af in plaats van te
+   schuiven, want een schuifbalk over de volle hoogte maakt de hoeken vierkant.
+   De ruimte eromheen zit daarom op de drie delen en niet op de kaart. */
 .dialog__card {
   position: relative;
+  display: flex; flex-direction: column;
   width: 100%; max-width: 460px;
-  padding: 20px 22px 22px;
   border-radius: var(--r-lg);
   background: var(--bg-surface);
   box-shadow: var(--shadow-lg);
-  /* Een lang formulier mag niet buiten het scherm vallen; dan scrollt het
-     venster zelf. */
   max-height: calc(100vh - 48px);
-  overflow-y: auto;
+  overflow: hidden;
   animation: dialog-in 200ms var(--ease);
 }
 /* Breder venster voor wie meer te lezen krijgt, zoals de gegevens bij een upload. */
 .dialog__card--wide { max-width: 620px; }
 @keyframes dialog-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.dialog__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-/* De inhoud van een venster begint onder de kop, niet ertegenaan. */
-.dialog__body { margin-top: 18px; }
+.dialog__head {
+  flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+}
+/* Alleen dit deel schuift. min-height 0 hoort erbij: zonder die regel weigert
+   een flex-kind kleiner te worden dan zijn inhoud en schuift er niets. */
+.dialog__body {
+  flex: 1 1 auto; min-height: 0;
+  overflow-y: auto; scrollbar-width: thin;
+  padding: 18px 22px 22px;
+}
+/* De aanhef draagt zijn eigen ruimte al niet meer; die zit in het vak. */
+.dialog__body > .dialog__lead:first-child { margin-top: 0; }
+/* Wat tussen de kop en het midden staat -- de tabs van een bestelling -- moet
+   zijn ruimte zelf dragen, want de kaart heeft die niet meer. */
+.dialog__card > .tabs,
+.dialog__card > .tabsbox { flex: 0 0 auto; padding: 14px 22px 0; }
 .dialog__title { font-size: var(--fs-lg); font-weight: 600; color: var(--text-strong); }
 .dialog__lead { margin: 6px 0 18px; font-size: var(--fs-md); color: var(--text-muted); }
 /* De knoppen rechts, met afbreken links ervan: bevestigen staat het dichtst
    bij de duim. */
-.dialog__foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
+.dialog__foot {
+  flex: 0 0 auto;
+  display: flex; justify-content: flex-end; gap: 10px;
+  padding: 0 22px 22px;
+}
 
 /* Een stand in een venster: in woorden links, de schakelaar rechts, met een
    streep eronder omdat eronder het veld staat dat erbij hoort. */
@@ -3179,7 +3202,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    Links wie het is, rechts wanneer het moet: twee lijsten naast elkaar, elk
    een label met zijn waarde. Op een telefoon is daar geen ruimte voor en
    komen ze onder elkaar als een doorlopende lijst. */
-.odlg__tabs { margin-top: 18px; }
+.odlg__tabs { margin-top: 0; }
 .odlg__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
 .odlg__list { min-width: 0; }
 .odlg__row { display: grid; grid-template-columns: minmax(0, 104px) minmax(0, 1fr); gap: 12px; padding: 9px 0; }
@@ -3272,7 +3295,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 @media (max-width: 560px) {
   /* Ook op een telefoon gecentreerd; alleen krapper, en de twee knoppen
      verdelen de breedte. */
-  .dialog__card { padding: 18px; }
+  .dialog__head { padding: 14px 18px; }
+  .dialog__body { padding: 16px 18px 18px; }
+  .dialog__foot { padding: 0 18px 18px; }
+  .dialog__card > .tabs,
+  .dialog__card > .tabsbox { padding: 12px 18px 0; }
   .dialog__foot .btn { flex: 1 1 0; }
 }
 
@@ -3845,7 +3872,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .dayopen__label { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
 
 /* Lucht tussen de naam van de dag en de velden eronder. */
-#day-dialog .dialog__head { margin-bottom: 20px; }
 
 
 /* Elk tijdveld met zijn eigen kopje: de twee velden zeggen los van elkaar
@@ -3873,28 +3899,10 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Het venster waarin je een betrokkene invult: het veldenvak komt hierin te
    staan en heeft zelf al ruimte, dus geen dubbele marge erboven. */
 #person-dialog .dialog__body > .persform { margin-top: 0; }
-/* De kop blijft staan en alleen de velden schuiven: anders scroll je de titel
-   weg en loopt het venster met zo'n lang formulier tot buiten het scherm.
-   Het kader knipt af, zodat alle vier de hoeken rond blijven. */
-#person-dialog .dialog__card {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  overflow: hidden;
-  max-height: min(620px, calc(100vh - 48px));
-}
-#person-dialog .dialog__head {
-  flex: 0 0 auto;
-  padding: 16px 22px;
-  border-bottom: 1px solid var(--border);
-}
-#person-dialog .dialog__body {
-  margin-top: 0;
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  padding: 18px 22px 22px;
-}
+/* Een lijst mensen wordt zo lang als hij is; dit venster houdt daarom een
+   eigen maximum aan, korter dan het scherm. De rest -- kop die blijft staan,
+   midden dat schuift -- doet elk venster. */
+#person-dialog .dialog__card { max-height: min(620px, calc(100vh - 48px)); }
 /* In de stap over jezelf staan de velden gewoon in de kaart: geen kader,
    geen kop, geen eigen knoppen. Next legt vast wat er staat. */
 .persform--kaal { margin-top: 0; }

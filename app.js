@@ -3247,9 +3247,31 @@
   });
 
   /* ---- Kleine vensters en losse bevestigingen -----------------------------
+     Het midden van een venster krijgt een eigen vak, want alleen dat deel
+     schuift -- de kop en de voet blijven staan. Dat vak zetten we hier neer
+     in plaats van het in elk venster met de hand te schrijven: twintig keer
+     met de hand is twintig kansen om het te vergeten, en een nieuw venster
+     krijgt het vanzelf.
+
      Een knop met data-dialog opent het venster met dat id; alles met
      data-dialog-close erin doet het weer dicht. Het exportvenster regelt dat
      zelf, want dat zet de focus ook terug. */
+  document.querySelectorAll(".dialog__card").forEach(function (kaart) {
+    if (kaart.querySelector(":scope > .dialog__body")) return;
+    var vak = document.createElement("div");
+    vak.className = "dialog__body";
+    var kop = kaart.querySelector(":scope > .dialog__head");
+    var voet = kaart.querySelector(":scope > .dialog__foot");
+    var nu = kop ? kop.nextSibling : kaart.firstChild;
+    while (nu && nu !== voet) {
+      var volgende = nu.nextSibling;
+      vak.appendChild(nu);
+      nu = volgende;
+    }
+    if (voet) kaart.insertBefore(vak, voet);
+    else kaart.appendChild(vak);
+  });
+
   document.addEventListener("click", function (e) {
     var opener = e.target.closest("[data-dialog]");
     if (opener) {
