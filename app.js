@@ -3956,10 +3956,26 @@
       return [].map.call(vak.querySelectorAll(".token__code"), function (t) { return t.textContent; });
     }
 
+    /* Elke code die al aan een ander gebied hangt. Het gebied dat je nu
+       bewerkt telt niet mee: zijn eigen codes zijn niet bezet. */
+    function bezet() {
+      var uit = [];
+      document.querySelectorAll('[data-set-view="zones"] tbody tr').forEach(function (rij) {
+        if (rij === huidig) return;
+        var cel = rij.cells[1];
+        var alle = cel.querySelector("[data-codes]");
+        var lijst = alle ? alle.dataset.codes.split(",") : [cel.textContent];
+        lijst.forEach(function (c) { uit.push(c.trim()); });
+      });
+      return uit;
+    }
+
     function zetCode(code) {
       if (!/^\d{4}$/.test(code) || codes().indexOf(code) >= 0) return false;
       var token = document.createElement("span");
-      token.className = "token";
+      /* Een code die elders al bezorgd wordt mag je zien staan, maar hij
+         houdt het opslaan tegen tot je hem weghaalt. */
+      token.className = bezet().indexOf(code) >= 0 ? "token token--bezet" : "token";
       token.innerHTML = '<span class="token__code"></span>' +
         '<button class="token__x" type="button" aria-label="Remove postal code ' + code + '">' +
         '<svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>';
@@ -3978,6 +3994,19 @@
       });
       veld.value = rest.join(", ");
       zegFout(rest.length ? "A postal code is four digits." : "");
+      meldBezet();
+    }
+
+    /* Een code die elders in gebruik is weegt zwaarder dan een tikfout: hij
+       blokkeert het opslaan, dus die melding gaat voor. */
+    function meldBezet() {
+      var dubbel = [].map.call(vak.querySelectorAll(".token--bezet .token__code"),
+        function (t) { return t.textContent; });
+      if (dubbel.length) {
+        zegFout(dubbel.join(", ") + (dubbel.length === 1 ? " already belongs" : " already belong")
+          + " to another zone.");
+      }
+      bewaar.disabled = dubbel.length > 0;
     }
 
     /* ---- Het venster vullen ----------------------------------------------- */
@@ -4022,6 +4051,7 @@
       gegevens.codes.forEach(zetCode);
       veld.value = "";
       zegFout("");
+      meldBezet();
       minimum.value = alsVeld(gegevens.minimum);
       tarief.value = alsVeld(gegevens.tarief);
       vanafFout.hidden = true;
@@ -4153,7 +4183,12 @@
 
     vak.addEventListener("click", function (e) {
       var x = e.target.closest(".token__x");
-      if (x) { x.closest(".token").remove(); return; }
+      if (x) {
+        x.closest(".token").remove();
+        zegFout("");
+        meldBezet();
+        return;
+      }
       if (e.target === vak) veld.focus();
     });
 

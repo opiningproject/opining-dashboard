@@ -3231,6 +3231,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   background: var(--gray-100);
   font-size: var(--fs-sm); color: var(--text-strong);
 }
+/* Al in gebruik bij een ander gebied: dezelfde rode tint als een bestelling
+   die over tijd is, zodat rood overal hetzelfde betekent. */
+.token--bezet { background: rgba(192, 52, 43, .10); color: #8c2520; }
+.token--bezet .token__x { color: #8c2520; }
+.token--bezet .token__x:hover { background: rgba(192, 52, 43, .16); color: #8c2520; }
 .token__x { display: grid; place-items: center; width: 18px; height: 18px; border-radius: var(--r-sm); color: var(--text-muted); }
 .token__x:hover { background: var(--gray-200); color: var(--text-strong); }
 .token__x .icon { width: 12px; height: 12px; }
