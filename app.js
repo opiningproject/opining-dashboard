@@ -648,6 +648,36 @@
     toonGeenResultaten(panel, over === 0);
   }
 
+  /* ---- Bedragen -----------------------------------------------------------
+     Een bedrag is cijfers met hooguit twee cijfers achter de komma. Alles wat
+     daar niet in past komt er niet in: letters, een tweede komma, of een
+     derde decimaal. Een punt telt als komma, want op een cijfertoetsenbord
+     staat vaak alleen die. Wat je wist of halverwege typt blijft werken, dus
+     een leeg veld en een losse komma mogen tijdens het typen. */
+  function alsBedrag(tekst) {
+    var schoon = "";
+    for (var n = 0; n < tekst.length; n++) {
+      var teken = tekst.charAt(n);
+      if (teken >= "0" && teken <= "9") schoon += teken;
+      else if (teken === "." || teken === ",") schoon += ",";
+    }
+    var deel = schoon.split(",");
+    if (deel.length === 1) return deel[0];
+    return deel[0] + "," + deel.slice(1).join("").slice(0, 2);
+  }
+
+  document.addEventListener("input", function (e) {
+    var veld = e.target;
+    if (!veld.matches || !veld.matches('input[inputmode="decimal"]')) return;
+    var schoon = alsBedrag(veld.value);
+    if (schoon === veld.value) return;
+    /* De cursor blijft staan waar hij stond, min wat ervoor wegviel. */
+    var plek = veld.selectionStart;
+    var weg = veld.value.slice(0, plek).length - alsBedrag(veld.value.slice(0, plek)).length;
+    veld.value = schoon;
+    veld.setSelectionRange(plek - weg, plek - weg);
+  });
+
   /* Het kruisje bestaat alleen zolang er iets staat om weg te halen. */
   function zetKruis(veld) {
     var kruis = veld.parentElement.querySelector(".psearch__clear");
