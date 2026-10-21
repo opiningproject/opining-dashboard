@@ -1998,6 +1998,17 @@
     };
   }
 
+  /* Contant aan de deur tegenover vooraf afgerekend: twee tekens, en een pas
+     als een bestelling iets anders draagt. */
+  var BETAALICOON = { cash: "i-cash", "paid online": "i-card" };
+  function zetBetaalIcoon(wijze) {
+    var merk = document.getElementById("order-pay-icon");
+    if (!merk) return;
+    var naam = BETAALICOON[(wijze || "").toLowerCase()];
+    merk.hidden = !naam;
+    if (naam) swapIcon(merk, naam);
+  }
+
   function zetVeld(naam, waarde) {
     var vak = orderVenster.querySelector('[data-oveld="' + naam + '"]');
     if (vak) vak.textContent = waarde;
@@ -2030,6 +2041,7 @@
     zetVeld("wish", b.wens);
     zetVeld("eta", b.eta);
     zetVeld("method", b.wijze);
+    zetBetaalIcoon(b.wijze);
     zetVeld("courier", b.bezorger);
     zetVeld("total", b.bedrag);
     zetOrderRij("courier", !!b.bezorger);

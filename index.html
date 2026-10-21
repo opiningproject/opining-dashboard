@@ -5601,7 +5601,9 @@
               <div class="odlg__row"><dt>Order placed</dt><dd data-oveld="placed"></dd></div>
               <div class="odlg__row"><dt>Wished time</dt><dd data-oveld="wish"></dd></div>
               <div class="odlg__row"><dt>Estimated time</dt><dd data-oveld="eta"></dd></div>
-              <div class="odlg__row"><dt>Payment</dt><dd data-oveld="method"></dd></div>
+              <!-- De wijze van betalen herken je sneller aan het teken dan aan
+                   het woord; app.js wisselt het icoon mee. -->
+              <div class="odlg__row"><dt>Payment</dt><dd class="odlg__pay"><svg class="icon" id="order-pay-icon" aria-hidden="true"><use href="#i-card"/></svg><span data-oveld="method"></span></dd></div>
               <!-- Wie het gebracht heeft weet het archief; een bestelling die
                    nog loopt of wordt afgehaald niet. -->
               <div class="odlg__row" data-orow="courier" hidden><dt>Deliverer</dt><dd data-oveld="courier"></dd></div>
