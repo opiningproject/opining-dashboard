@@ -1048,7 +1048,6 @@ select.input {
   border-radius: var(--r-md);
 }
 .drop--filled { border-style: solid; border-color: var(--border); }
-.drop__logo { font-weight: 700; letter-spacing: .04em; color: var(--text-strong); }
 
 /* Een vak voor een afbeelding: eerst wat er nu staat met de knop eronder, na
    het kiezen het beeld zelf. Het beeld krijgt de ruimte die er is en houdt
