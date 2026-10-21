@@ -5679,9 +5679,11 @@
           <label class="label" for="zone-code">Postal code (4 digits)</label>
           <!-- Elke code staat los in het vak, zodat je er een tussenuit kunt
                halen zonder de rest over te typen. Het invoerveld schuift
-               achter de laatste aan. -->
+               achter de laatste aan. Geen cijfertoetsenbord: je mag hier
+               meerdere codes achter elkaar zetten en daar is een komma
+               voor nodig, die een cijferbord op een telefoon niet heeft. -->
           <div class="tokens" id="zone-codes">
-            <input class="tokens__input" id="zone-code" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter code..." aria-describedby="zone-code-hint" />
+            <input class="tokens__input" id="zone-code" type="text" autocomplete="off" placeholder="Enter code..." aria-describedby="zone-code-hint" />
           </div>
           <p class="hint" id="zone-code-hint">Enter postal codes separated by a comma.</p>
           <p class="field__error" id="zone-code-error" hidden>
