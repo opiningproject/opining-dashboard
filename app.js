@@ -1362,6 +1362,129 @@
       });
     });
 
+    /* ---- Faq: een lijst vragen, en een ervan open ------------------------
+       De volgorde sleep je met dezelfde greep als een gerecht; dat regelt de
+       sleepcode verderop. Hier gaat het om welke vraag openstaat, wat erin
+       staat en in welke taal. Elke vraag draagt zijn eigen tekst in beide
+       talen op de regel zelf, zodat de lijst en de velden niet uit elkaar
+       kunnen lopen. */
+    (function () {
+      var kaart = storeView.querySelector('[data-store-view="faq"]');
+      if (!kaart) return;
+
+      var lijst = kaart.querySelector("#faq-list");
+      var kopVeld = kaart.querySelector("#faq-title");
+      var vraagVeld = kaart.querySelector("#faq-q");
+      var antwoordVeld = kaart.querySelector("#faq-a");
+      var taal = "en";
+      var kopTekst = { en: kopVeld.value, nl: kopVeld.dataset.nl || "" };
+      var open = null;
+
+      function sleutels() {
+        return taal === "nl" ? ["nlQ", "nlA"] : ["enQ", "enA"];
+      }
+
+      /* Een vraag zonder tekst in deze taal is nog niet leeg: hij bestaat,
+         maar in de andere taal. Dan hoort er iets te staan waar je hem aan
+         herkent. */
+      function naamVan(rij) {
+        return rij.dataset[sleutels()[0]] || "Untitled question";
+      }
+
+      function zetNamen() {
+        lijst.querySelectorAll(".faqrow").forEach(function (rij) {
+          rij.querySelector(".faqrow__pick").textContent = naamVan(rij);
+        });
+      }
+
+      /* Wat in de velden staat hoort bij de vraag die openstaat; voordat er
+         iets anders komt leggen we het terug. */
+      function bewaarOpen() {
+        if (!open || !open.isConnected) return;
+        var s = sleutels();
+        open.dataset[s[0]] = vraagVeld.value;
+        open.dataset[s[1]] = antwoordVeld.value;
+        open.querySelector(".faqrow__pick").textContent = naamVan(open);
+      }
+
+      function toonOpen() {
+        var s = sleutels();
+        vraagVeld.value = open ? (open.dataset[s[0]] || "") : "";
+        antwoordVeld.value = open ? (open.dataset[s[1]] || "") : "";
+        vraagVeld.disabled = antwoordVeld.disabled = !open;
+      }
+
+      function kies(rij) {
+        if (rij === open) return;
+        bewaarOpen();
+        open = rij;
+        lijst.querySelectorAll(".faqrow").forEach(function (r) {
+          r.classList.toggle("is-active", r === open);
+        });
+        toonOpen();
+      }
+
+      function wisselTaal(nieuw) {
+        if (nieuw === taal) return;
+        bewaarOpen();
+        kopTekst[taal] = kopVeld.value;
+        taal = nieuw;
+        kopVeld.value = kopTekst[taal];
+        kaart.querySelectorAll("[data-faq-lang]").forEach(function (knop) {
+          var aan = knop.dataset.faqLang === taal;
+          knop.classList.toggle("is-active", aan);
+          knop.setAttribute("aria-pressed", String(aan));
+        });
+        zetNamen();
+        toonOpen();
+      }
+
+      kaart.addEventListener("click", function (e) {
+        var taalKnop = e.target.closest("[data-faq-lang]");
+        if (taalKnop) { wisselTaal(taalKnop.dataset.faqLang); return; }
+
+        var weg = e.target.closest("[data-faq-del]");
+        if (weg) {
+          var rij = weg.closest(".faqrow");
+          var naam = naamVan(rij);
+          /* De vraag die je weghaalt kan degene zijn die openstaat; dan gaat
+             de eerstvolgende open, zodat de velden niet leeg achterblijven. */
+          var volgende = rij.nextElementSibling || rij.previousElementSibling;
+          rij.remove();
+          if (open === rij) { open = null; kies(volgende); }
+          if (!open) toonOpen();
+          markUnsaved("Online store");
+          showToast(naam + " removed");
+          return;
+        }
+
+        var pick = e.target.closest(".faqrow__pick");
+        if (pick) { kies(pick.closest(".faqrow")); return; }
+
+        if (e.target.closest("[data-faq-add]")) {
+          var nieuw = lijst.firstElementChild.cloneNode(true);
+          ["enQ", "enA", "nlQ", "nlA"].forEach(function (s) { nieuw.dataset[s] = ""; });
+          nieuw.classList.remove("is-active");
+          lijst.appendChild(nieuw);
+          kies(nieuw);
+          zetNamen();
+          markUnsaved("Online store");
+          vraagVeld.focus();
+        }
+      });
+
+      /* Tikken in het veld verandert meteen de naam in de lijst: anders zie je
+         pas bij het wisselen van vraag wat je hebt geschreven. */
+      kaart.addEventListener("input", function (e) {
+        if (e.target === vraagVeld || e.target === antwoordVeld) bewaarOpen();
+      });
+
+      open = lijst.querySelector(".faqrow.is-active") || lijst.querySelector(".faqrow");
+      if (open) open.classList.add("is-active");
+      zetNamen();
+      toonOpen();
+    })();
+
     /* Wijzigen hier zet dezelfde savebar in de header aan als de settings;
        zoeken en filteren hier net zo min als daar. */
     function storeWijziging(e) {
@@ -1802,7 +1925,12 @@
          bewaarde volgorde: niets te bewaren, dus de savebar weg. Alleen de
          menukaart kent een bewaarde volgorde; de keuzegroepen bij een gerecht
          horen bij het formulier met zijn eigen knoppen eronder. */
-      if (!bewaardeVolgorde.has(lijst)) return;
+      if (!bewaardeVolgorde.has(lijst)) {
+        /* Een lijst buiten de menukaart heeft geen bewaarde volgorde om mee
+           te vergelijken; daar is verslepen gewoon een wijziging. */
+        if (lijst.closest('[data-view="online-store"]')) markUnsaved("Online store");
+        return;
+      }
       if (volgordeGewijzigd()) markUnsavedZin("Product order saved");
       else hideSavebar();
     }
