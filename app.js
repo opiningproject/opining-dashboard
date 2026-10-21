@@ -2068,6 +2068,9 @@
   /* Wat navigeren inhoudt, los van de klik erop: ook een knop in de pagina
      stuurt je naar een pagina, en dat moet overal hetzelfde lopen. */
   function gaNaarPagina(item) {
+    /* Hetzelfde als binnen de settings: met iets onbewaards blijf je staan
+       waar je bent en wijst de balk zichzelf aan. */
+    if (savebarTrilt()) return;
     activate(item, sidebar);
     lastPageItem = item;
     showPage(item.dataset.page, item.dataset.title, item.dataset.icon);
@@ -2153,6 +2156,7 @@
 
   function closeSettings() {
     if (overlay.hidden || "closing" in overlay.dataset) return;
+    if (savebarTrilt()) return;
 
     root.dataset.settings = "closed";
     /* Markering terug naar de pagina die eronder ligt. Klik je vanuit de
@@ -2240,6 +2244,8 @@
   /* Terug-knop bestaat alleen op mobiel. Sta je in een subpagina, dan gaat die
      eerst een niveau omhoog voordat hij naar de lijst terugkeert. */
   btnSetBack.addEventListener("click", function () {
+    /* Terug zonder te bewaren gooit de wijziging weg; eerst de balk. */
+    if (savebarTrilt()) return;
     if (backFromSub()) return;
     root.dataset.settingsView = "list";
     clearSetActive();
