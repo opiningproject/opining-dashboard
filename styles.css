@@ -2119,7 +2119,9 @@ select.input {
   font: inherit; color: inherit;
 }
 .faqrow:hover { background: var(--gray-50); }
-.faqrow.is-active { background: var(--accent-soft); }
+/* De vraag die openstaat zegt dat in zijn naam: blauw en zwaarder. Een vlak
+   eromheen is daar te veel voor -- de velden eronder laten al zien welke het
+   is. */
 .faqrow.is-active .faqrow__pick { color: var(--accent); font-weight: 600; }
 /* De prullenbak hoort bij de regel die je aanwijst: bij elke vraag een knop
    die je zelden nodig hebt maakt de lijst onrustig. Alleen waar een muis is,
