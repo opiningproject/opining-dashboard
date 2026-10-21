@@ -5713,9 +5713,12 @@
 
         <!-- Gratis vanaf een bedrag hoort niet bij elk gebied; het veld komt
              pas als je erom vraagt. -->
-        <button class="linkbtn" type="button" id="zone-from-toggle" aria-expanded="false" aria-controls="zone-from-field" aria-describedby="zone-from-hint">Add free-from price</button>
-        <!-- Waarom de keuze op slot staat; anders lijkt de knop stuk. -->
-        <p class="hint" id="zone-from-hint" hidden>Delivery in this zone is already free.</p>
+        <button class="linkbtn" type="button" id="zone-from-toggle" aria-expanded="false" aria-controls="zone-from-field">Add free-from price</button>
+        <!-- Pas na een klik: bij een gebied dat al gratis bezorgt valt er
+             niets vanaf een bedrag gratis te maken. -->
+        <p class="field__error" id="zone-from-error" hidden role="status">
+          <svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><span>Delivery here is already free, so there is nothing to make free from an amount.</span>
+        </p>
         <div class="field" id="zone-from-field" hidden>
           <label class="label" for="zone-from">Free delivery from</label>
           <span class="infield">

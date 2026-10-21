@@ -3247,14 +3247,13 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    Clear All in de filterrij: het is tekst die iets doet. */
 .linkbtn {
   display: block; margin-top: 16px;
-  font-size: var(--fs-md); font-weight: 500;
+  /* Even groot als een label; groter leest hij als een kopje. */
+  font-size: var(--fs-sm); font-weight: 500;
   color: var(--accent);
   text-decoration: underline; text-underline-offset: 3px;
 }
 .linkbtn + .field { margin-top: 16px; }
-/* Op slot: geen accentkleur en geen streep, want er valt niets te volgen. */
-.linkbtn:disabled { color: var(--text-muted); text-decoration: none; cursor: default; }
-.linkbtn + .hint { margin-top: 6px; }
+.linkbtn + .field__error { margin-top: 8px; }
 
 @media (max-width: 560px) {
   /* Ook op een telefoon gecentreerd; alleen krapper, en de twee knoppen

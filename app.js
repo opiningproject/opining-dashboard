@@ -4057,7 +4057,7 @@
     var gratis = document.getElementById("zone-fee-free");
     var vanafKnop = document.getElementById("zone-from-toggle");
     var vanafVak = document.getElementById("zone-from-field");
-    var vanafUitleg = document.getElementById("zone-from-hint");
+    var vanafFout = document.getElementById("zone-from-error");
     var vanaf = document.getElementById("zone-from");
     var bewaar = document.getElementById("zone-save");
     var huidig = null;   /* de rij die je bewerkt, of niets bij een nieuwe */
@@ -4131,15 +4131,14 @@
 
     /* Nul is gratis; het plaatje in het veld zegt dat, zodat je het niet uit
        het bedrag hoeft op te maken. Gratis vanaf een bedrag zegt dan niets
-       meer: die keuze gaat op slot, met de reden eronder, en een veld dat al
-       openstond gaat dicht in plaats van een bedrag te bewaren dat nergens
-       op slaat. */
+       meer, dus een veld dat openstond gaat dicht in plaats van een bedrag te
+       bewaren dat nergens op slaat. De keuze zelf blijft een gewone link: dat
+       hij nu niet kan hoor je pas als je hem probeert. */
     function zetGratis() {
       var nul = naarGetal(tarief.value) === 0;
       gratis.hidden = !nul;
       if (nul) { zetVanaf(false); vanaf.value = ""; }
-      vanafKnop.disabled = nul;
-      vanafUitleg.hidden = !nul;
+      else vanafFout.hidden = true;
     }
 
     function vul(gegevens) {
@@ -4149,6 +4148,7 @@
       zegFout("");
       minimum.value = alsVeld(gegevens.minimum);
       tarief.value = alsVeld(gegevens.tarief);
+      vanafFout.hidden = true;
       zetVanaf(gegevens.vanaf !== null);
       vanaf.value = gegevens.vanaf === null ? "" : alsVeld(gegevens.vanaf);
       zetGratis();
@@ -4283,6 +4283,8 @@
 
     tarief.addEventListener("input", zetGratis);
     vanafKnop.addEventListener("click", function () {
+      if (naarGetal(tarief.value) === 0) { vanafFout.hidden = false; return; }
+      vanafFout.hidden = true;
       var aan = vanafVak.hidden;
       zetVanaf(aan);
       if (aan) vanaf.focus();
