@@ -1988,6 +1988,8 @@
       wens: rij.dataset.wish || "",
       eta: rij.dataset.eta || "",
       wijze: rij.dataset.method || "",
+      km: rij.dataset.km || "",
+      rit: rij.dataset.ride || "",
       bezorger: (afhalen || kaart || !rij.cells[3]) ? "" : rij.cells[3].textContent.trim(),
       bedrag: rij.dataset.pay || (rij.cells && rij.cells[2] ? rij.cells[2].textContent.trim() : ""),
       afhalen: afhalen
@@ -2030,6 +2032,16 @@
     zetVeld("total", b.bedrag);
     zetOrderRij("courier", !!b.bezorger);
     zetOrderRij("fee", !b.afhalen);
+
+    /* Wie afhaalt legt geen route af; dan is er niets te plannen. */
+    var routeTab = orderVenster.querySelector('[data-otab="route"]');
+    if (routeTab) routeTab.hidden = b.afhalen;
+    zetVeld("route-to", b.adres);
+    zetVeld("route-eta", b.eta ? "Arrive by " + b.eta : "");
+    /* Afstand en rijtijd komen straks van de kaart; een regel zonder beide
+       zegt niets en blijft dus weg. */
+    zetVeld("route-leg", b.km && b.rit ? b.km + " · " + b.rit + " by bike" : "");
+    zetOrderRij("leg", !!(b.km && b.rit));
     /* Een volgende bestelling begint weer bij wie het is. */
     toonOrderPaneel("customer");
     orderVenster.hidden = false;

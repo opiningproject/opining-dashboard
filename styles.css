@@ -4194,3 +4194,49 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 }
 .loss__name { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
 .loss__desc { font-size: var(--fs-sm); line-height: 1.45; color: var(--text-muted); }
+
+/* ---- Routeplanner in het bestelvenster -----------------------------------
+   Het kaartvak houdt zijn verhouding, zodat de kaart van Google er straks in
+   past zonder dat de rest van het venster verspringt. De schets erin gebruikt
+   dezelfde kleuren als de rest: grijs voor straten, de accentkleur voor de
+   rit zelf. */
+.oroute__map {
+  overflow: hidden;
+  aspect-ratio: 7 / 3;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--gray-50);
+}
+.oroute__map svg { display: block; width: 100%; height: 100%; }
+.oroute__land   { fill: var(--gray-50); }
+.oroute__street { stroke: var(--gray-200); stroke-width: 6; fill: none; }
+.oroute__water  { stroke: #dbe7f1; stroke-width: 18; fill: none; }
+.oroute__line   { stroke: var(--accent); stroke-width: 5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.oroute__from   { fill: var(--bg-surface); stroke: var(--text-strong); stroke-width: 3; }
+.oroute__to     { fill: var(--accent); stroke: var(--bg-surface); stroke-width: 3; }
+
+/* De twee haltes onder elkaar, met de rit als streep ertussen. */
+.oroute { display: flex; flex-direction: column; }
+.oroute__stop { display: flex; align-items: center; gap: 12px; }
+.oroute__mark {
+  display: grid; place-items: center;
+  flex: 0 0 auto;
+  width: 34px; height: 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+}
+.oroute__mark--end { border-color: var(--accent); color: var(--accent); }
+.oroute__mark .icon { width: 18px; height: 18px; }
+.oroute__text { display: flex; flex-direction: column; }
+.oroute__text b { font-weight: 500; color: var(--text-strong); }
+.oroute__sub { font-size: var(--fs-sm); color: var(--text-muted); }
+/* De streep loopt door het midden van de merkjes, zodat het een lijn blijft. */
+.oroute__leg {
+  margin-left: 17px;
+  padding: 8px 0 8px 29px;
+  border-left: 1px solid var(--border);
+  font-size: var(--fs-sm); color: var(--text-muted);
+}
