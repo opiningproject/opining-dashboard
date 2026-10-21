@@ -2179,6 +2179,113 @@
     zetKolomTellers();
   }
 
+  /* ---- Een bestelling opengeslagen ---------------------------------------
+     De live lijst en het archief openen hetzelfde venster. Wat erin staat
+     komt van de regel waarop je klikt: een kaartje draagt zijn gegevens in
+     data-attributen, een archiefrij deels in zijn cellen. */
+  var orderVenster = document.getElementById("order-dialog");
+
+  function leesBestelling(rij) {
+    var kaart = rij.classList.contains("ocard");
+    var bestemming = kaart
+      ? rij.querySelector(".ocard__dest").textContent.trim()
+      : rij.cells[0].textContent.trim();
+    /* Afhalen heeft geen adres en geen bezorger; dat scheelt ook de
+       bezorgkosten onder de regels. */
+    var afhalen = kaart ? rij.dataset.type === "collection" : bestemming === "Collection";
+    return {
+      nr: rij.dataset.order || "",
+      naam: rij.dataset.name || "",
+      adres: afhalen ? "Pickup in store" : bestemming,
+      tel: rij.dataset.phone || "",
+      mail: rij.dataset.mail || "",
+      geplaatst: rij.dataset.placed || "",
+      /* Wat de klant wilde staat op de regel: het merkje toont wat wij denken
+         te halen, en dat is iets anders. */
+      wens: rij.dataset.wish || "",
+      eta: rij.dataset.eta || "",
+      wijze: rij.dataset.method || "",
+      km: rij.dataset.km || "",
+      rit: rij.dataset.ride || "",
+      bezorger: (afhalen || kaart || !rij.cells[3]) ? "" : rij.cells[3].textContent.trim(),
+      bedrag: rij.dataset.pay || (rij.cells && rij.cells[2] ? rij.cells[2].textContent.trim() : ""),
+      afhalen: afhalen
+    };
+  }
+
+  /* Contant aan de deur tegenover vooraf afgerekend: twee tekens, en een pas
+     als een bestelling iets anders draagt. */
+  var BETAALICOON = { cash: "i-cash", "paid online": "i-card" };
+  function zetBetaalIcoon(wijze) {
+    var merk = document.getElementById("order-pay-icon");
+    if (!merk) return;
+    var naam = BETAALICOON[(wijze || "").toLowerCase()];
+    merk.hidden = !naam;
+    if (naam) swapIcon(merk, naam);
+  }
+
+  function zetVeld(naam, waarde) {
+    var vak = orderVenster.querySelector('[data-oveld="' + naam + '"]');
+    if (vak) vak.textContent = waarde;
+  }
+
+  function zetOrderRij(naam, aan) {
+    var rij = orderVenster.querySelector('[data-orow="' + naam + '"]');
+    if (rij) rij.hidden = !aan;
+  }
+
+  function toonOrderPaneel(naam) {
+    orderVenster.querySelectorAll("[data-opane]").forEach(function (paneel) {
+      paneel.hidden = paneel.dataset.opane !== naam;
+    });
+    orderVenster.querySelectorAll("[data-otab]").forEach(function (tab) {
+      var aan = tab.dataset.otab === naam;
+      tab.classList.toggle("is-active", aan);
+      tab.setAttribute("aria-selected", String(aan));
+    });
+  }
+
+  function openBestelling(rij) {
+    var b = leesBestelling(rij);
+    orderVenster.querySelector(".dialog__title").textContent = "Order #" + b.nr;
+    zetVeld("name", b.naam);
+    zetVeld("address", b.adres);
+    zetVeld("phone", b.tel);
+    zetVeld("mail", b.mail);
+    zetVeld("placed", b.geplaatst);
+    zetVeld("wish", b.wens);
+    zetVeld("eta", b.eta);
+    zetVeld("method", b.wijze);
+    zetBetaalIcoon(b.wijze);
+    zetVeld("courier", b.bezorger);
+    zetVeld("total", b.bedrag);
+    zetOrderRij("courier", !!b.bezorger);
+    zetOrderRij("fee", !b.afhalen);
+
+    /* Wie afhaalt legt geen route af; dan is er niets te plannen. */
+    var routeTab = orderVenster.querySelector('[data-otab="route"]');
+    if (routeTab) routeTab.hidden = b.afhalen;
+    zetVeld("route-to", b.adres);
+    zetVeld("route-eta", b.eta ? "Arrive by " + b.eta : "");
+    /* Afstand en rijtijd komen straks van de kaart; een regel zonder beide
+       zegt niets en blijft dus weg. */
+    zetVeld("route-leg", b.km && b.rit ? b.km + " · " + b.rit + " by bike" : "");
+    zetOrderRij("leg", !!(b.km && b.rit));
+    /* Een volgende bestelling begint weer bij wie het is. */
+    toonOrderPaneel("customer");
+    orderVenster.hidden = false;
+  }
+
+  if (orderVenster) {
+    document.addEventListener("click", function (e) {
+      var rij = e.target.closest(".ocard, .table--archive tbody tr");
+      if (rij) { openBestelling(rij); return; }
+      var tab = e.target.closest("#order-dialog [data-otab]");
+      if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
+      if (e.target.closest("[data-print-label]")) showToast("Label sent to printer");
+    });
+  }
+
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
   var pageAction = document.getElementById("page-action");
   var pageActionLabel = document.getElementById("page-action-label");
