@@ -967,21 +967,15 @@ select.input {
    of afhaaltijd: rood is eroverheen, oranje binnen een kwartier, groen binnen
    drie kwartier. Staat het verder weg, dan hoeft er nog niets en blijft het
    grijs. Het hele merkje draagt die kleur, maar zo licht dat de tijd erin
-   leesbaar blijft; de stip ervoor is dezelfde kleur op volle sterkte. */
-/* De tekst staat een slag donkerder dan de kleur van de stip: op een vlak van
-   tien procent moet een tijd gelezen worden, niet aangekondigd. */
+   leesbaar blijft, met de tekst een slag donkerder: op een vlak van tien
+   procent moet een tijd gelezen worden, niet aangekondigd. */
 .ocard__badge--late { background: rgba(192, 52, 43, .10); color: #8c2520; }
 .ocard__badge--soon { background: rgba(245, 152, 0, .10); color: #7a4f00; }
 .ocard__badge--ok   { background: rgba(6, 122, 78, .10);  color: #045436; }
 .ocard__badge--far  { background: var(--gray-100);        color: var(--text); }
-.ocard__badge--late .badge__dot { background: var(--danger); }
-.ocard__badge--soon .badge__dot { background: var(--warning); }
-.ocard__badge--ok .badge__dot   { background: var(--success); }
-.ocard__badge--far .badge__dot  { background: var(--gray-300); }
 /* Een afgesproken tijd staat vast; een verwachte tijd schuift mee met de
-   keuken. Het klokje neemt de plek van de stip in plaats van ernaast te
-   komen: zo blijft de regel even breed, en de kleur van het merkje blijft
-   zeggen hoe krap het is. */
+   keuken. Alleen die eerste krijgt een klokje voor de tijd; bij een verwachte
+   tijd zegt de kleur van het merkje al genoeg en blijft er niets voor staan. */
 .ocard__fixed { width: 14px; height: 14px; margin-right: 6px; vertical-align: -3px; }
 .badge--active { background: #e3f5ec; color: var(--success); }
 .badge--draft  { background: #e4eefb; color: #1f5fa8; }
