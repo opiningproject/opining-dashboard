@@ -327,7 +327,10 @@ legend { padding: 0; }
 }
 .content__inner { max-width: var(--content-max); margin-inline: auto; }
 
-.page-head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+/* Een vaste ondergrens houdt de titelregel op elke pagina even hoog: met een
+   knop ernaast bepaalt die knop de hoogte, zonder knop zou alleen de titel
+   overblijven en zou de pagina eronder hoger beginnen. */
+.page-head { display: flex; align-items: center; gap: 12px; min-height: 36px; margin-bottom: 22px; }
 /* Zelfde 20px als de sidebar, dus ook zonder stroke-correctie meteen 1.72px. */
 .page-head__icon { width: 20px; height: 20px; color: var(--text-strong); }
 /* Een naam die niet past eindigt op drie puntjes; hij mag de knoppen ernaast
@@ -812,6 +815,8 @@ select.input {
 /* De hoofdactie blijft altijd naast de titel; de rest zit op een klein scherm
    achter de drie puntjes. app.js bouwt dat menu uit dezelfde knoppen. */
 .page-head__more { display: none; }
+/* Een icon-btn is 40px; op de titelregel hoort hij bij de andere knoppen. */
+.page-head__more .sort__btn { width: 36px; height: 36px; }
 /* Een mededeling naast de titel in plaats van een knop: hij leest mee, maar
    trekt geen aandacht. */
 .page-head__note { font-size: var(--fs-sm); color: var(--text-muted); }
