@@ -978,6 +978,11 @@ select.input {
 .ocard__badge--soon .badge__dot { background: var(--warning); }
 .ocard__badge--ok .badge__dot   { background: var(--success); }
 .ocard__badge--far .badge__dot  { background: var(--gray-300); }
+/* Een afgesproken tijd staat vast; een verwachte tijd schuift mee met de
+   keuken. Het klokje neemt de plek van de stip in plaats van ernaast te
+   komen: zo blijft de regel even breed, en de kleur van het merkje blijft
+   zeggen hoe krap het is. */
+.ocard__fixed { width: 14px; height: 14px; margin-right: 6px; vertical-align: -3px; }
 .badge--active { background: #e3f5ec; color: var(--success); }
 .badge--draft  { background: #e4eefb; color: #1f5fa8; }
 
