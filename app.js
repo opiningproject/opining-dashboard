@@ -489,9 +489,11 @@
     /* De menukaart is geen tabel maar een lijst; daar is de hele regel de
        tekst waarop gezocht wordt. */
     if (!rij.cells) {
-      /* Wat een regel is maar niet toont — de status en het soort van een
-         bestelling — telt net zo goed mee als wat erop staat. */
-      var los = [rij.textContent, rij.dataset.filter || "", rij.dataset.type || "", rij.dataset.wish || ""];
+      /* Wat een regel is maar niet toont — de status, het soort en de
+         betaalwijze van een bestelling — telt net zo goed mee als wat erop
+         staat. */
+      var los = [rij.textContent, rij.dataset.filter || "", rij.dataset.type || "",
+                 rij.dataset.wish || "", rij.dataset.method || ""];
       return los.join(" ").replace(/\s+/g, " ").trim().toLowerCase();
     }
     var stukken = [];
