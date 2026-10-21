@@ -287,7 +287,24 @@
     openSettings();
     var rij = setNav.querySelector('.nav__item[data-set="' + naar.dataset.gotoSet + '"]');
     if (rij) rij.click();
+
+    /* Een pagina met meerdere kaarten kan ergens halverwege bedoeld zijn:
+       data-goto-anchor zegt bij welke. Pas in het volgende beeld, want de
+       overlay staat nu nog op zijn plek te komen. */
+    var anker = naar.dataset.gotoAnchor && document.getElementById(naar.dataset.gotoAnchor);
+    if (anker) requestAnimationFrame(function () { schuifNaar(anker); });
   });
+
+  /* Niet helemaal bovenaan tegen de rand, maar met dezelfde lucht erboven als
+     een kaart elders op de pagina heeft. Op een telefoon plakt de terugknop
+     aan de bovenkant; wat daaronder valt is niet te zien, dus die hoogte
+     telt mee. */
+  function schuifNaar(el) {
+    var kaart = el.closest(".card") || el;
+    var balk = overlay.querySelector(".set-back");
+    var dek = balk && getComputedStyle(balk).position === "sticky" ? balk.offsetHeight : 0;
+    overlay.scrollTop += kaart.getBoundingClientRect().top - overlay.getBoundingClientRect().top - dek - 16;
+  }
   /* ---- Zoeken binnen een paneel ------------------------------------------
      De knop rechts in de panel-kop wisselt die kop om naar een zoekveld met
      een filterknop. De tabelkop blijft staan: je zoekt in dezelfde lijst,
