@@ -4286,7 +4286,9 @@
     pop = document.createElement("div");
     pop.className = "codepop";
     pop.setAttribute("role", "dialog");
-    pop.setAttribute("aria-label", "Postal codes");
+    /* Dezelfde teller draagt postcodes of adressen; het woord staat erbij. */
+    var woord = knop.dataset.codesNoun || "postal codes";
+    pop.setAttribute("aria-label", woord.charAt(0).toUpperCase() + woord.slice(1));
     knop.dataset.codes.split(",").forEach(function (code) {
       var chip = document.createElement("span");
       chip.textContent = code.trim();
@@ -4319,6 +4321,30 @@
   /* Meescrollen zou hem naast de knop laten zweven; dan liever weg. */
   window.addEventListener("resize", sluitPop);
   document.addEventListener("scroll", sluitPop, true);
+
+  /* ---- Regels aankruisen -------------------------------------------------
+     Het vakje in de kop volgt de regels eronder: alles aan, alles uit, of
+     half zolang er een deel aanstaat. */
+  function zetKopVakje(tabel) {
+    var kop = tabel.querySelector("[data-pick-all]");
+    if (!kop) return;
+    var vakjes = [].slice.call(tabel.querySelectorAll("[data-pick]"));
+    var aan = vakjes.filter(function (v) { return v.checked; }).length;
+    kop.checked = aan > 0 && aan === vakjes.length;
+    kop.indeterminate = aan > 0 && aan < vakjes.length;
+  }
+
+  document.addEventListener("change", function (e) {
+    var kop = e.target.closest("[data-pick-all]");
+    if (kop) {
+      var tabel = kop.closest("table");
+      tabel.querySelectorAll("[data-pick]").forEach(function (v) { v.checked = kop.checked; });
+      zetKopVakje(tabel);
+      return;
+    }
+    var een = e.target.closest("[data-pick]");
+    if (een) zetKopVakje(een.closest("table"));
+  });
 
   /* ========================================================================
      11. SYSTEEMKIEZER — op een telefoon kiest de telefoon
@@ -4374,7 +4400,7 @@
     sel.className = "codes__native";
     sel.setAttribute("aria-label", knop.getAttribute("aria-label") || "Postal codes");
     var kop = document.createElement("option");
-    kop.textContent = codes.length + " postal codes";
+    kop.textContent = codes.length + " " + (knop.dataset.codesNoun || "postal codes");
     sel.appendChild(kop);
     codes.forEach(function (code) {
       var opt = document.createElement("option");

@@ -4318,3 +4318,26 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   #order-dialog .dialog__card { max-width: 760px; }
   #order-dialog .dialog__body { min-height: 340px; }
 }
+
+/* ---- Regels aankruisen ---------------------------------------------------
+   Het vakje staat vooraan in de regel, en in de kop staat hetzelfde vakje
+   voor alle regels tegelijk. Het is dezelfde vorm als in de filtermenu's,
+   met een streepje zolang er maar een deel aanstaat. */
+.rowpick { width: 1px; padding-right: 0 !important; }
+.rowpick__box { display: grid; place-items: center; cursor: pointer; }
+.rowpick__box input {
+  appearance: none;
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+}
+.rowpick__box input:checked {
+  border-color: var(--accent);
+  background: var(--accent) url("data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27white%27 stroke-width=%273%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27><path d=%27m5 12.5 4.5 4.5L19 7%27/></svg>") center / 12px no-repeat;
+}
+.rowpick__box input:indeterminate {
+  border-color: var(--accent);
+  background: var(--accent) url("data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27white%27 stroke-width=%273%27 stroke-linecap=%27round%27><path d=%27M6 12h12%27/></svg>") center / 12px no-repeat;
+}
+.rowpick__box input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

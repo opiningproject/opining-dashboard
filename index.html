@@ -958,6 +958,28 @@
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter customers">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
+                <!-- Sorteren: eerst waarop, daaronder in welke richting. -->
+                <div class="sort">
+                  <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Sort customers">
+                    <svg class="icon" aria-hidden="true"><use href="#i-sort"/></svg>
+                  </button>
+                  <div class="sort__menu" role="menu" hidden>
+                    <p class="sort__head">Sort by</p>
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field">
+                      <span class="sort__dot" aria-hidden="true"></span>Customer name</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                      <span class="sort__dot" aria-hidden="true"></span>Last order date</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                      <span class="sort__dot" aria-hidden="true"></span>First order date</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                      <span class="sort__dot" aria-hidden="true"></span>Total orders</button>
+                    <div class="sort__sep" role="separator"></div>
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>Ascending</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg>Descending</button>
+                  </div>
+                </div>
                 <!-- Zoekstand: vervangt het filter zolang hij openstaat. -->
                 <div class="psearch" data-filters="Orders:1-5|6-20|20+;Total spent:Under 100|100-500|500+;Last order:This week|This month|Older">
                   <div class="psearch__top">
@@ -983,7 +1005,10 @@
                 <table class="table table--customers">
                   <thead>
                     <tr>
+                      <!-- Het vakje in de kop zet alle regels tegelijk aan of uit. -->
+                      <th class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick-all /><span class="sr-only">Select all customers</span></label></th>
                       <th>Customer</th>
+                      <th>Address</th>
                       <th>Email</th>
                       <th>Orders</th>
                       <th>Total spent</th>
@@ -993,7 +1018,9 @@
                   </thead>
                   <tbody>
                     <tr>
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Thomas Jefferson</span></label></td>
                       <td>Thomas Jefferson</td>
+                      <td><span class="codes">Tochtstraat 40<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Thomas Jefferson" data-codes-noun="addresses" data-codes="Tochtstraat 40, Zwaanshals 299, 1e Pijnackerstraat 120B">+2</button></span></td>
                       <td>thomas@example.nl</td>
                       <td>24</td>
                       <td>&euro; 681,20</td>
@@ -1001,7 +1028,9 @@
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Thomas Jefferson"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Sanne de Vries</span></label></td>
                       <td>Sanne de Vries</td>
+                      <td>Lusthofstraat 27A</td>
                       <td>sanne@example.nl</td>
                       <td>18</td>
                       <td>&euro; 512,75</td>
@@ -1009,7 +1038,9 @@
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Sanne de Vries"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Mo El Amrani</span></label></td>
                       <td>Mo El Amrani</td>
+                      <td><span class="codes">Noordplein 7<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Mo El Amrani" data-codes-noun="addresses" data-codes="Noordplein 7, Zaagmolenkade 32">+1</button></span></td>
                       <td>mo@example.nl</td>
                       <td>12</td>
                       <td>&euro; 348,60</td>
@@ -1017,7 +1048,9 @@
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Mo El Amrani"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Lisa Bakker</span></label></td>
                       <td>Lisa Bakker</td>
+                      <td>Bergweg 118</td>
                       <td>lisa@example.nl</td>
                       <td>9</td>
                       <td>&euro; 254,10</td>
@@ -1025,7 +1058,9 @@
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Lisa Bakker"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Kevin Groot</span></label></td>
                       <td>Kevin Groot</td>
+                      <td>Benthuizerstraat 54</td>
                       <td>kevin@example.nl</td>
                       <td>7</td>
                       <td>&euro; 198,45</td>
@@ -1033,7 +1068,9 @@
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Kevin Groot"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Fatima Yilmaz</span></label></td>
                       <td>Fatima Yilmaz</td>
+                      <td><span class="codes">Schieweg 203<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Fatima Yilmaz" data-codes-noun="addresses" data-codes="Schieweg 203, Hofdijk 9">+1</button></span></td>
                       <td>fatima@example.nl</td>
                       <td>5</td>
                       <td>&euro; 142,30</td>
@@ -1041,7 +1078,9 @@
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Fatima Yilmaz"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Daan Visser</span></label></td>
                       <td>Daan Visser</td>
+                      <td>Crooswijksestraat 61</td>
                       <td>daan@example.nl</td>
                       <td>3</td>
                       <td>&euro; 87,90</td>
@@ -1049,7 +1088,9 @@
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Daan Visser"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Iris Smit</span></label></td>
                       <td>Iris Smit</td>
+                      <td>Vijverhofstraat 88</td>
                       <td>iris@example.nl</td>
                       <td>1</td>
                       <td>&euro; 24,50</td>
