@@ -544,6 +544,9 @@
     /* Staat de waarde nergens in de tekst — een status die alleen als knop
        bestaat — dan draagt de rij hem in data-filter. */
     if (rij.dataset.filter) stukken.push(rij.dataset.filter);
+    /* Een klant toont zijn mailadres niet meer in de lijst; zoeken erop
+       hoort gewoon te blijven werken. */
+    if (rij.dataset.mail) stukken.push(rij.dataset.mail);
     return stukken.join(" ").replace(/\s+/g, " ").trim().toLowerCase();
   }
 
@@ -2473,7 +2476,7 @@
 
       zet("initials", naam.split(" ").map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase());
       zet("name", naam);
-      zet("mail", rij.cells[3].textContent.trim());
+      zet("mail", rij.dataset.mail || "");
       zet("since", "Customer for " + rij.dataset.since + " days");
       zet("spend", geld(besteed));
       zet("orders", aantal + (aantal === 1 ? " order" : " orders"));

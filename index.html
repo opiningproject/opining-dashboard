@@ -1003,84 +1003,77 @@
                       <th class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick-all /><span class="sr-only">Select all customers</span></label></th>
                       <th>Customer</th>
                       <th>Address</th>
-                      <th>Email</th>
                       <th>Orders</th>
-                      <th>Total spent</th>
                       <th>Last order</th>
+                      <!-- Een bedrag leest van rechts naar links; daarom staat het
+                           rechts, en als laatste. -->
+                      <th class="ta-right">Total spent</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr data-since="412" data-orders="24" data-spent="1204.60" data-lastdays="0" data-blocked="no">
+                    <tr data-mail="thomas@example.nl" data-since="412" data-orders="24" data-spent="1204.60" data-lastdays="0" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Thomas Jefferson</span></label></td>
                       <td>Thomas Jefferson</td>
                       <td><span class="codes">Tochtstraat 40<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Thomas Jefferson" data-codes-noun="addresses" data-codes="Tochtstraat 40, Zwaanshals 299, 1e Pijnackerstraat 120B">+2</button></span></td>
-                      <td>thomas@example.nl</td>
                       <td>24</td>
-                      <td>&euro; 1.204,60</td>
                       <td>Today</td>
+                      <td class="ta-right">&euro; 1.204,60</td>
                     </tr>
-                    <tr data-since="286" data-orders="18" data-spent="512.75" data-lastdays="1" data-blocked="no">
+                    <tr data-mail="sanne@example.nl" data-since="286" data-orders="18" data-spent="512.75" data-lastdays="1" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Sanne de Vries</span></label></td>
                       <td>Sanne de Vries</td>
                       <td>Lusthofstraat 27A</td>
-                      <td>sanne@example.nl</td>
                       <td>18</td>
-                      <td>&euro; 512,75</td>
                       <td>Yesterday</td>
+                      <td class="ta-right">&euro; 512,75</td>
                     </tr>
-                    <tr data-since="193" data-orders="12" data-spent="348.60" data-lastdays="3" data-blocked="no">
+                    <tr data-mail="mo@example.nl" data-since="193" data-orders="12" data-spent="348.60" data-lastdays="3" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Mo El Amrani</span></label></td>
                       <td>Mo El Amrani</td>
                       <td><span class="codes">Noordplein 7<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Mo El Amrani" data-codes-noun="addresses" data-codes="Noordplein 7, Zaagmolenkade 32">+1</button></span></td>
-                      <td>mo@example.nl</td>
                       <td>12</td>
-                      <td>&euro; 348,60</td>
                       <td>3 days ago</td>
+                      <td class="ta-right">&euro; 348,60</td>
                     </tr>
-                    <tr data-since="154" data-orders="9" data-spent="254.10" data-lastdays="5" data-blocked="no">
+                    <tr data-mail="lisa@example.nl" data-since="154" data-orders="9" data-spent="254.10" data-lastdays="5" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Lisa Bakker</span></label></td>
                       <td>Lisa Bakker</td>
                       <td>Bergweg 118</td>
-                      <td>lisa@example.nl</td>
                       <td>9</td>
-                      <td>&euro; 254,10</td>
                       <td>5 days ago</td>
+                      <td class="ta-right">&euro; 254,10</td>
                     </tr>
-                    <tr data-since="98" data-orders="7" data-spent="198.45" data-lastdays="7" data-blocked="yes">
+                    <tr data-mail="kevin@example.nl" data-since="98" data-orders="7" data-spent="198.45" data-lastdays="7" data-blocked="yes">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Kevin Groot</span></label></td>
                       <td><span class="cname">Kevin Groot<svg class="icon cname__block" aria-hidden="true"><use href="#i-lock"/></svg><span class="sr-only">Blocked</span></span></td>
                       <td>Benthuizerstraat 54</td>
-                      <td>kevin@example.nl</td>
                       <td>7</td>
-                      <td>&euro; 198,45</td>
                       <td>1 week ago</td>
+                      <td class="ta-right">&euro; 198,45</td>
                     </tr>
-                    <tr data-since="64" data-orders="5" data-spent="142.30" data-lastdays="14" data-blocked="no">
+                    <tr data-mail="fatima@example.nl" data-since="64" data-orders="5" data-spent="142.30" data-lastdays="14" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Fatima Yilmaz</span></label></td>
                       <td>Fatima Yilmaz</td>
                       <td><span class="codes">Schieweg 203<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Fatima Yilmaz" data-codes-noun="addresses" data-codes="Schieweg 203, Hofdijk 9">+1</button></span></td>
-                      <td>fatima@example.nl</td>
                       <td>5</td>
-                      <td>&euro; 142,30</td>
                       <td>2 weeks ago</td>
+                      <td class="ta-right">&euro; 142,30</td>
                     </tr>
-                    <tr data-since="41" data-orders="3" data-spent="87.90" data-lastdays="60" data-blocked="no">
+                    <tr data-mail="daan@example.nl" data-since="41" data-orders="3" data-spent="87.90" data-lastdays="60" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Daan Visser</span></label></td>
                       <td>Daan Visser</td>
                       <td>Crooswijksestraat 61</td>
-                      <td>daan@example.nl</td>
                       <td>3</td>
-                      <td>&euro; 87,90</td>
                       <td>2 months ago</td>
+                      <td class="ta-right">&euro; 87,90</td>
                     </tr>
-                    <tr data-since="22" data-orders="1" data-spent="24.50" data-lastdays="200" data-blocked="no">
+                    <tr data-mail="iris@example.nl" data-since="22" data-orders="1" data-spent="24.50" data-lastdays="200" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Iris Smit</span></label></td>
                       <td>Iris Smit</td>
                       <td>Vijverhofstraat 88</td>
-                      <td>iris@example.nl</td>
                       <td>1</td>
-                      <td>&euro; 24,50</td>
                       <td>7 months ago</td>
+                      <td class="ta-right">&euro; 24,50</td>
                     </tr>
                   </tbody>
                 </table>

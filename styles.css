@@ -4386,3 +4386,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .panel__title { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
 /* Een regel in de klantenlijst gaat ergens heen. */
 .table--customers tbody tr { cursor: pointer; }
+
+/* De kop van een tabel lijnt standaard links uit; een kolom met bedragen
+   wint het van die regel alleen met dezelfde zwaarte. */
+.table th.ta-right, .table td.ta-right { text-align: right; }
