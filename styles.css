@@ -4323,3 +4323,11 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   border-left: 1px solid var(--border);
   font-size: var(--fs-sm); color: var(--text-muted);
 }
+
+/* Een bestelling heeft meer te tonen dan de meeste vensters: op een scherm met
+   ruimte krijgt het venster die ook. De drie tabs houden daarbij één maat,
+   zodat wisselen geen sprong is. */
+@media (min-width: 561px) {
+  #order-dialog .dialog__card { max-width: 760px; }
+  #order-dialog .dialog__body { min-height: 340px; }
+}
