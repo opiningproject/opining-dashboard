@@ -2226,15 +2226,23 @@
     };
   }
 
-  /* Contant aan de deur tegenover vooraf afgerekend: twee tekens, en een pas
-     als een bestelling iets anders draagt. */
-  var BETAALICOON = { cash: "i-cash", "paid online": "i-card" };
+  /* Dezelfde merkjes als op de betaalpagina, zodat iDEAL er in een bestelling
+     uitziet als iDEAL. Contant heeft geen merk; daar staat het teken uit de
+     sprite. Een wijze die we geen van beide kennen laat de plek leeg. */
+  var BETAALMERK = {
+    ideal: "idealwero.svg", visa: "visa.svg", mastercard: "mastercard.svg",
+    maestro: "maestro.svg", paypal: "paypal.svg", klarna: "klarna.svg",
+    "apple pay": "apple.svg", "google pay": "google.svg"
+  };
   function zetBetaalIcoon(wijze) {
-    var merk = document.getElementById("order-pay-icon");
-    if (!merk) return;
-    var naam = BETAALICOON[(wijze || "").toLowerCase()];
-    merk.hidden = !naam;
-    if (naam) swapIcon(merk, naam);
+    var teken = document.getElementById("order-pay-icon");
+    var merk = document.getElementById("order-pay-mark");
+    if (!teken || !merk) return;
+    var naam = (wijze || "").toLowerCase();
+    var plaatje = BETAALMERK[naam];
+    merk.hidden = !plaatje;
+    if (plaatje) merk.querySelector("img").src = "img/pay/" + plaatje;
+    teken.hidden = naam !== "cash";
   }
 
   function zetVeld(naam, waarde) {
@@ -2301,6 +2309,9 @@
       if (rij) { openBestelling(rij); return; }
       var tab = e.target.closest("#order-dialog [data-otab]");
       if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
+      /* Naar de klant toe: de paginawissel regelt data-goto-page, hier gaat
+         alleen het venster dicht. */
+      if (e.target.closest("[data-close-order]")) { orderVenster.hidden = true; return; }
       if (e.target.closest("#order-step") && orderRegel) {
         /* Doorzetten sluit het venster: de bestelling staat daarna ergens
            anders, en wat je hier las klopt dan niet meer. */

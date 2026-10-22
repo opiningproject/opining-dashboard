@@ -3270,6 +3270,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .odlg__row dd { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow-wrap: anywhere; }
 /* Het teken van de betaalwijze staat voor het woord, op dezelfde regel. */
 .odlg__pay { display: flex; align-items: center; gap: 8px; }
+/* De knop naast de naam blijft binnen de regelhoogte van de rest. */
+.odlg__name { display: flex; align-items: center; gap: 4px; }
+.odlg__go { width: 24px; height: 24px; }
+.odlg__go .icon { width: 15px; height: 15px; }
 .odlg__pay .icon { width: 18px; height: 18px; color: var(--text-muted); }
 @media (max-width: 560px) {
   .odlg__cols { grid-template-columns: minmax(0, 1fr); gap: 0; }
@@ -3277,10 +3281,18 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 }
 
 /* Wat er besteld is: aantal, naam en wat die regel kost. */
-.oitem { display: flex; align-items: baseline; gap: 12px; padding: 10px 0; }
+/* Een regel kan twee hoog zijn zodra er iets aan toegevoegd is; het aantal en
+   het bedrag horen dan bij de bovenste regel. */
+.oitem { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; }
 .oitem + .oitem { border-top: 1px solid var(--border); }
-.oitem__qty { flex: 0 0 auto; min-width: 20px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
-.oitem__name { flex: 1 1 auto; min-width: 0; font-size: var(--fs-md); color: var(--text-strong); }
+/* Het aantal hoort bij de naam en leest dus hetzelfde. */
+.oitem__qty { flex: 0 0 auto; min-width: 20px; font-size: var(--fs-md); color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.oitem__name { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; font-size: var(--fs-md); color: var(--text-strong); }
+/* Wat eraan toegevoegd is staat eronder, kleiner: het hoort bij het gerecht
+   en is niet zelf een regel in de bestelling. */
+.oitem__adds { display: flex; flex-direction: column; gap: 2px; }
+.oitem__add { font-size: var(--fs-sm); color: var(--text-muted); }
+.oitem__addsum { font-variant-numeric: tabular-nums; }
 .oitem__sum { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text-strong); font-variant-numeric: tabular-nums; }
 .osum { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
 .osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-size: var(--fs-md); color: var(--text-muted); }
