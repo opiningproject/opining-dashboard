@@ -2310,7 +2310,10 @@
     var plaatje = BETAALMERK[naam];
     merk.hidden = !plaatje;
     if (plaatje) merk.querySelector("img").src = "img/pay/" + plaatje;
-    teken.hidden = naam !== "cash";
+    /* hidden is een eigenschap van HTML-elementen; een <svg> kent hem niet,
+       dus daar moet het attribuut zelf aan en uit. */
+    if (naam === "cash") teken.removeAttribute("hidden");
+    else teken.setAttribute("hidden", "");
   }
 
   function zetVeld(naam, waarde) {
