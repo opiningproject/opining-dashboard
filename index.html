@@ -5812,18 +5812,18 @@
             </svg>
           </div>
 
-          <!-- Van de winkel naar de deur: twee haltes met de rit ertussen. -->
-          <ol class="oroute">
-            <li class="oroute__stop">
-              <span class="oroute__mark" aria-hidden="true"><svg class="icon"><use href="#i-store"/></svg></span>
-              <span class="oroute__text"><b>Opining</b><span class="oroute__sub">Pick up the order</span></span>
-            </li>
-            <li class="oroute__leg" data-orow="leg"><span data-oveld="route-leg"></span></li>
-            <li class="oroute__stop">
+          <!-- Onze eigen bezorgers vertrekken hier, dus de rit kent maar een
+               halte: waar hij heen moet. -->
+          <div class="oroute">
+            <div class="oroute__stop">
               <span class="oroute__mark oroute__mark--end" aria-hidden="true"><svg class="icon"><use href="#i-pin"/></svg></span>
-              <span class="oroute__text"><b data-oveld="route-to"></b><span class="oroute__sub" data-oveld="route-eta"></span></span>
-            </li>
-          </ol>
+              <span class="oroute__text">
+                <b data-oveld="route-to"></b>
+                <span class="oroute__sub" data-oveld="route-eta"></span>
+                <span class="oroute__sub" data-orow="leg" data-oveld="route-leg"></span>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 

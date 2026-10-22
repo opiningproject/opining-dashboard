@@ -4299,13 +4299,15 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .oroute__from   { fill: var(--bg-surface); stroke: var(--text-strong); stroke-width: 3; }
 .oroute__to     { fill: var(--accent); stroke: var(--bg-surface); stroke-width: 3; }
 
-/* De twee haltes onder elkaar, met de rit als streep ertussen. */
+/* Eén halte: waar de bestelling heen moet, met de rit eronder. */
 .oroute { display: flex; flex-direction: column; }
-.oroute__stop { display: flex; align-items: center; gap: 12px; }
+/* Het merkje hoort bij het adres, niet bij het blokje als geheel. */
+.oroute__stop { display: flex; align-items: flex-start; gap: 12px; }
 .oroute__mark {
   display: grid; place-items: center;
   flex: 0 0 auto;
   width: 34px; height: 34px;
+  margin-top: -4px;
   border: 1px solid var(--border);
   border-radius: var(--r-full);
   background: var(--bg-surface);
@@ -4316,13 +4318,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .oroute__text { display: flex; flex-direction: column; }
 .oroute__text b { font-weight: 500; color: var(--text-strong); }
 .oroute__sub { font-size: var(--fs-sm); color: var(--text-muted); }
-/* De streep loopt door het midden van de merkjes, zodat het een lijn blijft. */
-.oroute__leg {
-  margin-left: 17px;
-  padding: 8px 0 8px 29px;
-  border-left: 1px solid var(--border);
-  font-size: var(--fs-sm); color: var(--text-muted);
-}
+
 
 /* Een bestelling heeft meer te tonen dan de meeste vensters: op een scherm met
    ruimte krijgt het venster die ook. De drie tabs houden daarbij één maat,
