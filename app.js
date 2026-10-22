@@ -567,15 +567,22 @@
      die suggereert een server met meer rijen dan hier staan. Zodra je filtert
      klopt dat niet meer, dus dan vertelt de teller wat er écht overblijft en
      zijn de bladerknoppen uit. Filter weg, oude tekst terug. */
-  /* Bladeren heeft pas zin voorbij een volle pagina. De vaste teller doet alsof
-     er meer op de server staan, maar of je kunt bladeren hangt af van wat er
-     werkelijk in de lijst staat. */
-  var PAGINA = 20;
+  /* Een pagina draagt vijfentwintig regels. Bladeren heeft pas zin voorbij een
+     volle pagina: de vaste teller doet alsof er meer op de server staan, maar
+     of je kunt bladeren hangt af van wat er werkelijk in de lijst staat. */
+  var PAGINA = 25;
 
   function zetPagerZichtbaar(panel, aantal) {
     var voet = panel.querySelector(".pager");
     if (voet) voet.hidden = aantal <= PAGINA;
   }
+
+  /* Bij het laden staat er nog geen filter; zonder deze ronde blijft een voet
+     staan onder een lijst die in zijn geheel op de pagina past. */
+  document.querySelectorAll(".panel").forEach(function (panel) {
+    if (!panel.querySelector(".pager") || panel.querySelector("table[data-page]")) return;
+    zetPagerZichtbaar(panel, panel.querySelectorAll("tbody tr").length);
+  });
 
   function syncVastePager(panel, actief, aantal) {
     var voet = panel.querySelector(".pager");
@@ -951,6 +958,15 @@
         });
       sortItem.classList.add("is-selected");
       sortItem.setAttribute("aria-checked", "true");
+      /* Op- en aflopend heet anders per veld: een naam loopt van A naar Z,
+         een datum van nieuw naar oud. Het veld draagt die twee woorden. */
+      if (groep === "field" && sortItem.dataset.dir) {
+        var woorden = sortItem.dataset.dir.split("|");
+        sortItem.closest(".sort__menu")
+          .querySelectorAll('[data-sort="dir"] .sort__dirname').forEach(function (naam, i) {
+            naam.textContent = woorden[i] || "";
+          });
+      }
       return;
     }
 

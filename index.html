@@ -959,19 +959,21 @@
                   </button>
                   <div class="sort__menu" role="menu" hidden>
                     <p class="sort__head">Sort by</p>
-                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field">
+                    <!-- De richting heet naar het veld dat je kiest: data-dir geeft
+                         de twee woorden die dan onder de streep horen te staan. -->
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field" data-dir="A – Z|Z – A">
                       <span class="sort__dot" aria-hidden="true"></span>Customer name</button>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
-                      <span class="sort__dot" aria-hidden="true"></span>Last order date</button>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
-                      <span class="sort__dot" aria-hidden="true"></span>First order date</button>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-dir="Latest first|Oldest first">
+                      <span class="sort__dot" aria-hidden="true"></span>Order date</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-dir="Most first|Fewest first">
                       <span class="sort__dot" aria-hidden="true"></span>Total orders</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-dir="Highest first|Lowest first">
+                      <span class="sort__dot" aria-hidden="true"></span>Total spend</button>
                     <div class="sort__sep" role="separator"></div>
                     <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="dir">
-                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>Ascending</button>
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg><span class="sort__dirname">A – Z</span></button>
                     <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
-                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg>Descending</button>
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg><span class="sort__dirname">Z – A</span></button>
                   </div>
                 </div>
                 <!-- Zoekstand: vervangt het filter zolang hij openstaat. -->
@@ -4849,7 +4851,7 @@
             </div>
 
             <div class="table-wrap">
-              <table class="table" data-page="5">
+              <table class="table" data-page="25">
                 <thead>
                   <tr><th scope="col">Date</th><th scope="col">Total</th><th scope="col">Status</th><th scope="col">Actions</th></tr>
                 </thead>
