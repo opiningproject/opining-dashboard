@@ -2110,6 +2110,15 @@
      ligt klaar voor de klant, een bezorgbestelling gaat mee de deur uit. */
   var UITNAAM = { collection: "Ready for takeaway", delivery: "Move to delivery" };
 
+  /* Hoe de volgende stap heet. De knop op de regel en de knop in het venster
+     zeggen hetzelfde, dus het staat op een plek. */
+  function stapNaam(kaart) {
+    var doel = VOLGENDE[kaart.dataset.filter];
+    if (!doel) return "";
+    var eigen = doel === "outgoing" && UITNAAM[kaart.dataset.type];
+    return eigen || STAPNAAM[doel];
+  }
+
   function zetStapKnop(kaart) {
     var knop = kaart.querySelector(".rowact .btn--accent");
     if (!knop) return;
@@ -2117,8 +2126,8 @@
     if (!doel) { knop.hidden = true; return; }
     knop.hidden = false;
     /* Alleen het tekstdeel vervangen; de chevron erachter blijft staan. */
-    var eigen = doel === "outgoing" && UITNAAM[kaart.dataset.type];
-    var naam = eigen || STAPNAAM[doel];
+    var naam = stapNaam(kaart);
+    var eigen = naam !== STAPNAAM[doel];
     knop.firstChild.nodeValue = naam + " ";
     /* "Move to Ready for takeaway" leest nergens naar; die twee zeggen zelf al
        wat de knop doet. */
@@ -2147,10 +2156,9 @@
     romp.insertBefore(nieuw, romp.firstChild);
   }
 
-  document.addEventListener("click", function (e) {
-    var knop = e.target.closest(".ocard .rowact .btn--accent");
-    if (!knop) return;
-    var kaart = knop.closest(".ocard");
+  /* Eén stap verder, of je nu op de regel klikt of in het venster van de
+     bestelling. */
+  function zetStapDoor(kaart) {
     var doel = VOLGENDE[kaart.dataset.filter];
     if (!doel) return;
 
@@ -2170,6 +2178,11 @@
 
     zetKolomTellers();
     showToast(doel === "archief" ? naam + " archived" : naam + " moved to " + STAPNAAM[doel]);
+  }
+
+  document.addEventListener("click", function (e) {
+    var knop = e.target.closest(".ocard .rowact .btn--accent");
+    if (knop) zetStapDoor(knop.closest(".ocard"));
   });
 
   if (bord) {
@@ -2184,6 +2197,8 @@
      komt van de regel waarop je klikt: een kaartje draagt zijn gegevens in
      data-attributen, een archiefrij deels in zijn cellen. */
   var orderVenster = document.getElementById("order-dialog");
+  var orderStap = orderVenster && orderVenster.querySelector("#order-step");
+  var orderRegel = null;   /* de regel waar het open venster bij hoort */
 
   function leesBestelling(rij) {
     var kaart = rij.classList.contains("ocard");
@@ -2271,6 +2286,18 @@
        zegt niets en blijft dus weg. */
     zetVeld("route-leg", b.km && b.rit ? b.km + " · " + b.rit + " by bike" : "");
     zetOrderRij("leg", !!(b.km && b.rit));
+    /* Een archiefrij is al klaar; daar valt niets meer door te zetten. */
+    orderRegel = rij.classList.contains("ocard") ? rij : null;
+    if (orderStap) {
+      var stap = orderRegel ? stapNaam(orderRegel) : "";
+      orderStap.hidden = !stap;
+      if (stap) {
+        orderStap.firstChild.nodeValue = stap + " ";
+        orderStap.setAttribute("aria-label",
+          stap === "Kitchen" || stap === "Archive" ? "Move to " + stap : stap);
+      }
+    }
+
     /* Een volgende bestelling begint weer bij wie het is. */
     toonOrderPaneel("customer");
     orderVenster.hidden = false;
@@ -2282,6 +2309,13 @@
       if (rij) { openBestelling(rij); return; }
       var tab = e.target.closest("#order-dialog [data-otab]");
       if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
+      if (e.target.closest("#order-step") && orderRegel) {
+        /* Doorzetten sluit het venster: de bestelling staat daarna ergens
+           anders, en wat je hier las klopt dan niet meer. */
+        zetStapDoor(orderRegel);
+        orderVenster.hidden = true;
+        return;
+      }
       if (e.target.closest("[data-print-label]")) showToast("Label sent to printer");
     });
   }
