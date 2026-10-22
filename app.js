@@ -572,9 +572,51 @@
      of je kunt bladeren hangt af van wat er werkelijk in de lijst staat. */
   var PAGINA = 25;
 
+  /* ---- Sorteren -----------------------------------------------------------
+     Een sorteerknop die niets doet is een knop die liegt. Het gekozen veld
+     draagt waarop gesorteerd wordt (een kolom of een getal op de regel) en
+     welke kant zijn bovenste richting op gaat; de onderste is de andere. */
+  function sorteerWaarde(rij, sleutel) {
+    if (sleutel[0] === "num") return Number(rij.dataset[sleutel[1]]) || 0;
+    var cel = rij.cells[Number(sleutel[1])];
+    return cel ? cel.textContent.trim().toLowerCase() : "";
+  }
+
+  function pasSortering(blok) {
+    var veld = blok.querySelector('[data-sort="field"].is-selected');
+    if (!veld || !veld.dataset.key) return;
+    var panel = blok.closest(".panel");
+    var tabel = panel && panel.querySelector("table");
+    if (!tabel || !tabel.tBodies[0]) return;
+
+    var richtingen = blok.querySelectorAll('[data-sort="dir"]');
+    var andersom = richtingen[1] && richtingen[1].classList.contains("is-selected");
+    var oplopend = (veld.dataset.first !== "desc") !== !!andersom;
+    var sleutel = veld.dataset.key.split(":");
+
+    var rijen = [].slice.call(tabel.tBodies[0].rows);
+    rijen.sort(function (p, q) {
+      var x = sorteerWaarde(p, sleutel), y = sorteerWaarde(q, sleutel);
+      if (x < y) return oplopend ? -1 : 1;
+      if (x > y) return oplopend ? 1 : -1;
+      return 0;
+    });
+    rijen.forEach(function (r) { tabel.tBodies[0].appendChild(r); });
+    /* Wie bladert kijkt daarna naar andere regels op pagina een. */
+    if (tabel.herpagineer) tabel.herpagineer();
+  }
+
   function zetPagerZichtbaar(panel, aantal) {
     var voet = panel.querySelector(".pager");
-    if (voet) voet.hidden = aantal <= PAGINA;
+    if (!voet) return;
+    /* Een vaste teller zegt hoeveel er in het echt zijn; daar hangt het van af
+       of er een tweede pagina bestaat, niet van de steekproef in de HTML. */
+    var teller = voet.querySelector(".pager__count");
+    var vast = teller && (teller.dataset.vast !== undefined ? teller.dataset.vast : teller.innerHTML);
+    var totaal = vast && vast.indexOf(" of ") !== -1
+      ? Number(vast.split(" of ").pop().replace(/[^0-9]/g, ""))
+      : aantal;
+    voet.hidden = (isFinite(totaal) && totaal ? totaal : aantal) <= PAGINA;
   }
 
   /* Bij het laden staat er nog geen filter; zonder deze ronde blijft een voet
@@ -960,6 +1002,7 @@
       sortItem.setAttribute("aria-checked", "true");
       /* Op- en aflopend heet anders per veld: een naam loopt van A naar Z,
          een datum van nieuw naar oud. Het veld draagt die twee woorden. */
+      pasSortering(sortItem.closest(".sort__menu"));
       if (groep === "field" && sortItem.dataset.dir) {
         var woorden = sortItem.dataset.dir.split("|");
         sortItem.closest(".sort__menu")
