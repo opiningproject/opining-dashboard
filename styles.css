@@ -4354,3 +4354,35 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Een klant die niet mag bestellen draagt dat achter zijn naam. */
 .cname { display: inline-flex; align-items: center; gap: 6px; }
 .cname__block { width: 15px; height: 15px; color: var(--danger); }
+
+/* ---- Een klant op zijn eigen pagina --------------------------------------
+   Wie hij is staat bovenaan in één regel: de initialen als teken, de naam en
+   waar we hem bereiken, en rechts of de rekening openstaat. */
+.cprof { display: flex; align-items: center; gap: 16px; }
+.cprof__avatar {
+  display: grid; place-items: center;
+  flex: 0 0 auto;
+  width: 48px; height: 48px;
+  border-radius: var(--r-full);
+  background: var(--gray-100);
+  font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
+}
+.cprof__text { min-width: 0; }
+.cprof__name { font-size: 18px; font-weight: 500; color: var(--text-strong); }
+.cprof__sub { font-size: var(--fs-sm); color: var(--text-muted); }
+.cprof__state { margin-left: auto; align-self: flex-start; }
+
+/* Drie cijfers naast elkaar in plaats van vier. */
+.stats--drie { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 739px) {
+  .stats--drie { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Een regel in de bestelgeschiedenis zegt met een teken of hij bezorgd of
+   opgehaald is; het adres of het woord ernaast zegt de rest. */
+.corder { display: inline-flex; align-items: center; gap: 8px; }
+.corder__icon { width: 17px; height: 17px; color: var(--text-muted); }
+/* De titel van een paneel zonder tabs: even zwaar als een kaarttitel. */
+.panel__title { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+/* Een regel in de klantenlijst gaat ergens heen. */
+.table--customers tbody tr { cursor: pointer; }

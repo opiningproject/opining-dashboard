@@ -2391,6 +2391,112 @@
     });
   }
 
+  /* ========================================================================
+     EEN KLANT — alles van één klant op een eigen pagina
+     De regel in de lijst draagt al wat de pagina nodig heeft; de bestellingen
+     eronder worden eruit afgeleid. In productie komt die lijst van de server;
+     hier verdeelt hij het totaal over de laatste bestellingen, zodat de som
+     klopt met wat de klant heeft uitgegeven.
+     ======================================================================== */
+  (function () {
+    var vak = document.querySelector('[data-view="customer"]');
+    if (!vak) return;
+    var romp = vak.querySelector("tbody");
+    var BEZORGERS = ["Youssef Amrani", "Nina Bakker", "Ruben de Wit"];
+    var MAAND = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    /* Zelfde vaste dag als de rest van het prototype. */
+    var VANDAAG = new Date(2026, 8, 30);
+
+    /* Duizendtal met een punt, centen met een komma, zoals de rest van de
+       lijsten het toont. */
+    function geld(n) {
+      var vast = n.toFixed(2);
+      var heel = vast.slice(0, -3);
+      var cent = vast.slice(-2);
+      if (heel.length > 3) heel = heel.slice(0, heel.length - 3) + "." + heel.slice(heel.length - 3);
+      return "€ " + heel + "," + cent;
+    }
+    function datum(d) { return d.getDate() + " " + MAAND[d.getMonth()] + " " + d.getFullYear(); }
+
+    function zet(naam, waarde) {
+      var el = vak.querySelector('[data-cveld="' + naam + '"]');
+      if (el) el.textContent = waarde;
+    }
+
+    /* De laatste bestellingen, hoogstens vijf. Passen ze er allemaal in, dan
+       tellen ze samen op tot het totaal; anders zijn het de recentste. */
+    function bestellingen(aantal, totaal, dagen, adressen) {
+      var toon = Math.min(aantal, 5);
+      var rijen = [];
+      var allemaal = toon === aantal;
+      var per = allemaal ? totaal / toon : totaal / aantal;
+      var rest = allemaal ? totaal - Math.round(per * 100) / 100 * toon : 0;
+      for (var i = 0; i < toon; i++) {
+        var d = new Date(VANDAAG.getTime());
+        d.setDate(d.getDate() - dagen - i * 9);
+        var bedrag = Math.round(per * 100) / 100 + (i === 0 ? Math.round(rest * 100) / 100 : 0);
+        var afhalen = i % 3 === 2;
+        rijen.push({
+          datum: datum(d),
+          tijd: ["18:40", "17:05", "19:20", "12:35", "20:10"][i],
+          wat: afhalen ? "Takeaway" : adressen[i % adressen.length],
+          afhalen: afhalen,
+          bedrag: bedrag,
+          bezorger: afhalen ? "" : BEZORGERS[i % BEZORGERS.length]
+        });
+      }
+      return rijen;
+    }
+
+    function vul(rij) {
+      var naam = rij.cells[1].textContent.replace("Blocked", "").trim();
+      var adresCel = rij.cells[2];
+      var alle = adresCel.querySelector("[data-codes]");
+      var adressen = alle
+        ? alle.dataset.codes.split(",").map(function (s) { return s.trim(); })
+        : [adresCel.textContent.trim()];
+      var aantal = Number(rij.dataset.orders) || 0;
+      var besteed = Number(rij.dataset.spent) || 0;
+
+      zet("initials", naam.split(" ").map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase());
+      zet("name", naam);
+      zet("mail", rij.cells[3].textContent.trim());
+      zet("since", "Customer for " + rij.dataset.since + " days");
+      zet("spend", geld(besteed));
+      zet("orders", aantal + (aantal === 1 ? " order" : " orders"));
+      zet("avg", aantal ? geld(besteed / aantal) : "—");
+      zet("count", aantal + (aantal === 1 ? " order" : " orders"));
+      vak.querySelector('[data-crow="blocked"]').hidden = rij.dataset.blocked !== "yes";
+
+      romp.textContent = "";
+      bestellingen(aantal, besteed, Number(rij.dataset.lastdays) || 0, adressen).forEach(function (b) {
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+          "<td></td><td></td>" +
+          '<td><span class="corder"><svg class="icon corder__icon" aria-hidden="true"><use href="#i-deliverers"/></svg><span></span></span></td>' +
+          "<td></td>" +
+          '<td><span class="badge badge--muted"></span></td>';
+        tr.cells[0].textContent = b.datum;
+        tr.cells[1].textContent = b.tijd;
+        tr.cells[2].querySelector("span span").textContent = b.wat;
+        if (b.afhalen) tr.cells[2].querySelector("use").setAttribute("href", "#i-bag");
+        tr.cells[3].textContent = geld(b.bedrag);
+        tr.cells[4].querySelector(".badge").textContent = b.bezorger || "N.A.";
+        romp.appendChild(tr);
+      });
+    }
+
+    /* De knoppen in de regel doen hun eigen ding; de rest van de regel opent
+       de klant. */
+    document.addEventListener("click", function (e) {
+      var rij = e.target.closest('[data-view="customers"] tbody tr');
+      if (!rij) return;
+      if (e.target.closest("button, a, label, input")) return;
+      vul(rij);
+      openPageSub("customer", rij.cells[1].textContent.replace("Blocked", "").trim());
+    });
+  })();
+
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
   var pageAction = document.getElementById("page-action");
   var pageActionLabel = document.getElementById("page-action-label");
