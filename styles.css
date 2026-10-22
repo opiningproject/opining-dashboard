@@ -4390,3 +4390,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* De kop van een tabel lijnt standaard links uit; een kolom met bedragen
    wint het van die regel alleen met dezelfde zwaarte. */
 .table th.ta-right, .table td.ta-right { text-align: right; }
+/* Een getal of een korte aanduiding staat gecentreerd onder zijn kop; dat
+   leest rustiger dan een kolom die half leeg naar links hangt. */
+.table th.ta-mid, .table td.ta-mid { text-align: center; }
