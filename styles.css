@@ -3282,21 +3282,21 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Wat er besteld is: aantal, naam en wat die regel kost. */
 /* Een regel kan twee hoog zijn zodra er iets aan toegevoegd is; het aantal en
    het bedrag horen dan bij de bovenste regel. */
+/* Alles op dit tabblad leest hetzelfde: zelfde maat, zelfde kleur, zelfde
+   gewicht. De regels zelf dragen alleen nog hun indeling. */
+[data-opane="items"] { font-size: var(--fs-md); color: var(--text-strong); }
 .oitem { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; }
-/* Het aantal hoort bij de naam en leest dus hetzelfde. */
-.oitem__qty { flex: 0 0 auto; min-width: 20px; font-size: var(--fs-md); color: var(--text-strong); font-variant-numeric: tabular-nums; }
-.oitem__name { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; font-size: var(--fs-md); color: var(--text-strong); }
-/* Wat eraan toegevoegd is staat eronder, kleiner: het hoort bij het gerecht
-   en is niet zelf een regel in de bestelling. */
+.oitem__qty { flex: 0 0 auto; min-width: 20px; font-variant-numeric: tabular-nums; }
+.oitem__name { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; }
+/* Wat eraan toegevoegd is staat eronder, in dezelfde letter als de rest:
+   op dit tabblad leest alles hetzelfde, en de plek zegt waar het bij hoort. */
 .oitem__adds { display: flex; flex-direction: column; gap: 2px; }
-.oitem__add { font-size: var(--fs-sm); color: var(--text-muted); }
 .oitem__addsum { font-variant-numeric: tabular-nums; }
-.oitem__sum { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.oitem__sum { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
 .osum { margin-top: 14px; padding-top: 12px; }
-.osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-size: var(--fs-md); color: var(--text-muted); }
+.osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; }
 .osum__row dd { font-variant-numeric: tabular-nums; }
-/* Het bedrag onderaan is waar het om gaat, dus dat weegt zwaarder. */
-.osum__row--tot { margin-top: 6px; color: var(--text-strong); font-weight: 600; }
+.osum__row--tot { margin-top: 6px; }
 
 /* ==========================================================================
    8n2. EEN BEZORGGEBIED INVULLEN — losse postcodes en twee bedragen

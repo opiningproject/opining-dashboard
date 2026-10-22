@@ -2382,9 +2382,12 @@
     if (plaatje) merk.querySelector("img").src = "img/pay/" + plaatje;
   }
 
+  /* Een gegeven mag op meer dan een plek in het venster staan — het totaal
+     staat bij de klant en onder de regels — dus alle plekken krijgen het. */
   function zetVeld(naam, waarde) {
-    var vak = orderVenster.querySelector('[data-oveld="' + naam + '"]');
-    if (vak) vak.textContent = waarde;
+    orderVenster.querySelectorAll('[data-oveld="' + naam + '"]').forEach(function (vak) {
+      vak.textContent = waarde;
+    });
   }
 
   function zetOrderRij(naam, aan) {
