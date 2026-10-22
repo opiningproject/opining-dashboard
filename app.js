@@ -492,7 +492,10 @@
     var s = kop.querySelector(".sfilter__label");
     if (s) return s.textContent.trim();
     var tab = kop.querySelector(".tab.is-active");
-    return tab ? tab.textContent.replace(/\s*[\d.]+\s*$/, "").trim() : "";
+    if (!tab) return "";
+    /* Een tab mag anders heten dan de waarde waarop hij filtert. */
+    if (tab.dataset.value) return tab.dataset.value;
+    return tab.textContent.replace(/\s*[\d.]+\s*$/, "").trim();
   }
 
   function vulFilterMenu(psearch) {
@@ -614,10 +617,12 @@
     "Order timeframe": function (rij, waarde) {
       var d = Number(rij.dataset.lastdays);
       if (isNaN(d)) return false;
-      if (waarde.indexOf("today") === 0) return d === 0;
-      if (waarde.indexOf("last 7") === 0) return d <= 7;
-      if (waarde.indexOf("last 30") === 0) return d <= 30;
-      if (waarde.indexOf("last 90") === 0) return d <= 90;
+      /* De woorden komen uit een filtermenu of van een tab ("Ordered today"),
+         dus kijken we waar ze over gaan, niet waar ze mee beginnen. */
+      if (waarde.indexOf("last 7") !== -1) return d <= 7;
+      if (waarde.indexOf("last 30") !== -1) return d <= 30;
+      if (waarde.indexOf("last 90") !== -1) return d <= 90;
+      if (waarde.indexOf("today") !== -1) return d === 0;
       return d <= 365;
     },
     /* Hier juist andersom: wie al die tijd niets besteld heeft. */
@@ -677,7 +682,12 @@
       });
     } else {
       var gekozen = actieveInperking(kop);
-      if (gekozen && !/^All\b/i.test(gekozen)) eisen.push({ naam: "", waarden: [gekozen.toLowerCase()] });
+      /* Een tabstreep kan een filter zijn dat rekent in plaats van zoekt; dan
+         staat de naam ervan op de streep. */
+      var tabs = kop.querySelector("[data-filter-name]");
+      if (gekozen && !/^All\b/i.test(gekozen)) {
+        eisen.push({ naam: tabs ? tabs.dataset.filterName : "", waarden: [gekozen.toLowerCase()] });
+      }
     }
 
     /* De menukaart: gerechten in groepen in plaats van rijen in een tabel. Een

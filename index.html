@@ -938,22 +938,16 @@
           <section class="view" data-view="customers" hidden>
             <div class="panel panel--scroll">
               <div class="panel__head">
-                <!-- Zelfde opzet als Orders: één filter in plaats van tabs. -->
-                <div class="sfilter">
-                  <button class="sfilter__btn" type="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="sfilter__label">All</span>
-                    <svg class="icon sfilter__caret" aria-hidden="true"><use href="#i-chevrons-y"/></svg>
-                  </button>
-                  <div class="sfilter__menu" role="menu" hidden>
-                    <button class="sfilter__item is-selected" type="button" role="menuitemradio" aria-checked="true">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>All</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Returning</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>New</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Inactive</button>
-                  </div>
+                <!-- Hoe recent iemand besteld heeft is waar je een klantenlijst op
+                     uit elkaar trekt; de rest zit achter het filter. De tabs zeggen
+                     met data-filter op welke regel ze gelezen moeten worden. -->
+                <div class="tabs" data-filter-name="Order timeframe">
+                  <button class="tab is-active" type="button">All</button>
+                  <!-- De tab heet anders dan de waarde waarop hij filtert; die
+                       waarde staat in het filtermenu net zo. -->
+                  <button class="tab" type="button" data-value="Today">Ordered today</button>
+                  <button class="tab" type="button">Last 7 days</button>
+                  <button class="tab" type="button">Last 30 days</button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter customers">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
