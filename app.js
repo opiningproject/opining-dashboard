@@ -309,12 +309,21 @@
      De knop rechts in de panel-kop wisselt die kop om naar een zoekveld met
      een filterknop. De tabelkop blijft staan: je zoekt in dezelfde lijst,
      niet in een nieuw scherm. */
-  /* data-filters is "Naam:waarde|waarde;Naam:waarde" — één plek per paneel
-     om de filters te benoemen. */
+  /* data-filters is "Naam:waarde|waarde;Naam=waarde|waarde" — één plek per
+     paneel om de filters te benoemen. Met een dubbele punt mag je meerdere
+     waarden tegelijk aanvinken; met een = kies je er één, want zoiets als een
+     bedragklasse of geblokkeerd-of-niet sluit elkaar uit. */
   function leesFilters(psearch) {
     return (psearch.dataset.filters || "").split(";").filter(Boolean).map(function (deel) {
-      var stuk = deel.split(":");
-      return { naam: stuk[0], waarden: (stuk[1] || "").split("|").filter(Boolean) };
+      var punt = deel.indexOf(":");
+      var isGelijk = deel.indexOf("=");
+      var knip = punt < 0 || (isGelijk >= 0 && isGelijk < punt) ? isGelijk : punt;
+      if (knip < 0) return { naam: deel, waarden: [], een: false };
+      return {
+        naam: deel.slice(0, knip),
+        een: deel.charAt(knip) === "=",
+        waarden: deel.slice(knip + 1).split("|").filter(Boolean)
+      };
     });
   }
 
@@ -338,7 +347,9 @@
     return chip;
   }
 
-  /* Een toegevoegd filter klapt open met zijn waarden; je kiest er nul of meer. */
+  var chipTeller = 0;
+  /* Een toegevoegd filter klapt open met zijn waarden; je kiest er nul of meer,
+     of één als het filter dat zo heeft opgeschreven. */
   function chipVanFilter(filter) {
     var chip = document.createElement("span");
     chip.className = "fchip fchip--drop";
@@ -353,10 +364,14 @@
     var menu = document.createElement("div");
     menu.className = "fchip__menu";
     menu.hidden = true;
+    /* Een naam per chip, zodat twee chips elkaars rondjes niet uitzetten. */
+    var groep = "fopt-" + (++chipTeller);
     filter.waarden.forEach(function (waarde) {
       var optie = document.createElement("label");
-      optie.className = "fopt";
-      optie.innerHTML = '<input type="checkbox" /><span></span>';
+      optie.className = filter.een ? "fopt fopt--een" : "fopt";
+      optie.innerHTML = filter.een
+        ? '<input type="radio" name="' + groep + '" /><span></span>'
+        : '<input type="checkbox" /><span></span>';
       optie.querySelector("span").textContent = waarde;
       menu.appendChild(optie);
     });
@@ -575,6 +590,60 @@
   /* Eén ingang voor alle inperkingen op een paneel. Buiten de zoekstand is dat
      de gekozen tab of het statusfilter; erbinnen zijn het het zoekwoord en de
      chips, want de tab is dan als chip meegenomen. */
+  /* De meeste filters kijken naar de tekst van een regel. Een bedragklasse of
+     een termijn staat daar niet in: die rekent met wat de regel aan gegevens
+     draagt. Een filter zonder regel hieronder blijft gewoon op tekst zoeken. */
+  var FILTERREGELS = {
+    "Total orders": function (rij, waarde) {
+      var n = Number(rij.dataset.orders);
+      if (isNaN(n)) return false;
+      if (waarde.indexOf("0 ") === 0) return n === 0;
+      if (waarde.indexOf("1 ") === 0) return n === 1;
+      if (waarde.indexOf("2-9") === 0) return n >= 2 && n <= 9;
+      return n >= 10;
+    },
+    "Lifetime value": function (rij, waarde) {
+      var n = Number(rij.dataset.spent);
+      if (isNaN(n)) return false;
+      if (waarde.indexOf("low") === 0) return n < 100;
+      if (waarde.indexOf("medium") === 0) return n >= 100 && n < 500;
+      if (waarde.indexOf("high") === 0) return n >= 500 && n < 1000;
+      return n >= 1000;
+    },
+    /* Wanneer hij voor het laatst bestelde, geteld in dagen terug. */
+    "Order timeframe": function (rij, waarde) {
+      var d = Number(rij.dataset.lastdays);
+      if (isNaN(d)) return false;
+      if (waarde.indexOf("today") === 0) return d === 0;
+      if (waarde.indexOf("last 7") === 0) return d <= 7;
+      if (waarde.indexOf("last 30") === 0) return d <= 30;
+      if (waarde.indexOf("last 90") === 0) return d <= 90;
+      return d <= 365;
+    },
+    /* Hier juist andersom: wie al die tijd niets besteld heeft. */
+    "Last order": function (rij, waarde) {
+      var d = Number(rij.dataset.lastdays);
+      if (isNaN(d)) return false;
+      if (waarde.indexOf("30 days") !== -1) return d > 30;
+      if (waarde.indexOf("90 days") !== -1) return d > 90;
+      if (waarde.indexOf("6 months") !== -1) return d > 182;
+      return d > 365;
+    },
+    "Account state": function (rij, waarde) {
+      var dicht = rij.dataset.blocked === "yes";
+      return waarde.indexOf("not") === 0 ? !dicht : dicht;
+    }
+  };
+
+  function voldoet(rij, tekst, eisen) {
+    return eisen.every(function (eis) {
+      var regel = FILTERREGELS[eis.naam];
+      return eis.waarden.some(function (waarde) {
+        return regel ? regel(rij, waarde) : tekst.indexOf(waarde) !== -1;
+      });
+    });
+  }
+
   function pasPaneelFilter(kop) {
     /* Een zoekbalk hoeft niet boven de lijst te staan die hij doorzoekt: met
        data-list wijst hij hem aan. */
@@ -599,13 +668,16 @@
         var aan = [].slice.call(chip.querySelectorAll("input:checked")).map(function (i) {
           return i.nextElementSibling.textContent.trim().toLowerCase();
         });
-        if (aan.length) { eisen.push(aan); return; }
+        var naam = (chip.dataset.naam || "").trim();
+        if (aan.length) { eisen.push({ naam: naam, waarden: aan }); return; }
         /* De chip die je vanuit de tab meenam draagt zijn waarde in het label. */
-        if (!chip.classList.contains("fchip--drop")) eisen.push([chip.textContent.trim().toLowerCase()]);
+        if (!chip.classList.contains("fchip--drop")) {
+          eisen.push({ naam: naam, waarden: [chip.textContent.trim().toLowerCase()] });
+        }
       });
     } else {
       var gekozen = actieveInperking(kop);
-      if (gekozen && !/^All\b/i.test(gekozen)) eisen.push([gekozen.toLowerCase()]);
+      if (gekozen && !/^All\b/i.test(gekozen)) eisen.push({ naam: "", waarden: [gekozen.toLowerCase()] });
     }
 
     /* De menukaart: gerechten in groepen in plaats van rijen in een tabel. Een
@@ -619,9 +691,7 @@
            filteren identiek. */
         groep.querySelectorAll(".prod, .ocard").forEach(function (rij) {
           var tekst = rijTekst(rij);
-          var past = (!zoek || tekst.indexOf(zoek) !== -1) && eisen.every(function (groepEis) {
-            return groepEis.some(function (waarde) { return tekst.indexOf(waarde) !== -1; });
-          });
+          var past = (!zoek || tekst.indexOf(zoek) !== -1) && voldoet(rij, tekst, eisen);
           rij.hidden = !past;
           if (past) zichtbaar++;
         });
@@ -644,9 +714,7 @@
     var over = 0;
     [].slice.call(tabel.tBodies[0].rows).forEach(function (rij) {
       var tekst = rijTekst(rij);
-      var past = (!zoek || tekst.indexOf(zoek) !== -1) && eisen.every(function (groep) {
-        return groep.some(function (waarde) { return tekst.indexOf(waarde) !== -1; });
-      });
+      var past = (!zoek || tekst.indexOf(zoek) !== -1) && voldoet(rij, tekst, eisen);
       if (past) { delete rij.dataset.filtered; over++; }
       else rij.dataset.filtered = "1";
     });

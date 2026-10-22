@@ -4341,3 +4341,16 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   background: var(--accent) url("data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27white%27 stroke-width=%273%27 stroke-linecap=%27round%27><path d=%27M6 12h12%27/></svg>") center / 12px no-repeat;
 }
 .rowpick__box input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Een filter waarbij maar één waarde tegelijk kan: rondjes in plaats van
+   vakjes, zodat je aan de vorm ziet dat kiezen de vorige vervangt. */
+.fopt--een input { border-radius: var(--r-full); }
+.fopt--een input:checked {
+  border-color: var(--accent);
+  background: var(--bg-surface);
+  box-shadow: inset 0 0 0 4px var(--accent);
+}
+
+/* Een klant die niet mag bestellen draagt dat achter zijn naam. */
+.cname { display: inline-flex; align-items: center; gap: 6px; }
+.cname__block { width: 15px; height: 15px; color: var(--danger); }
