@@ -2512,6 +2512,9 @@
         var bedrag = Math.round(per * 100) / 100 + (i === 0 ? Math.round(rest * 100) / 100 : 0);
         var afhalen = i % 3 === 2;
         rijen.push({
+          /* Waarop gesorteerd wordt staat op de regel: hoeveel dagen geleden,
+             en het bedrag als getal. */
+          dagen: dagen + i * 9,
           datum: datum(d),
           tijd: ["18:40", "17:05", "19:20", "12:35", "20:10"][i],
           wat: afhalen ? "Takeaway" : adressen[i % adressen.length],
@@ -2546,6 +2549,8 @@
       romp.textContent = "";
       bestellingen(aantal, besteed, Number(rij.dataset.lastdays) || 0, adressen).forEach(function (b) {
         var tr = document.createElement("tr");
+        tr.dataset.ago = b.dagen;
+        tr.dataset.amount = b.bedrag.toFixed(2);
         tr.innerHTML =
           "<td></td><td></td>" +
           '<td><span class="corder"><svg class="icon corder__icon" aria-hidden="true"><use href="#i-deliverers"/></svg><span></span></span></td>' +

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=452" />
+  <link rel="stylesheet" href="styles.css?v=453" />
 </head>
 <body>
 
@@ -756,19 +756,19 @@
                   </button>
                   <div class="sort__menu" role="menu" hidden>
                     <p class="sort__head">Sort by</p>
-                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field">
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field" data-key="num:ago" data-first="asc" data-dir="Latest first|Oldest first">
                       <span class="sort__dot" aria-hidden="true"></span>Delivered time</button>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-key="cel:0" data-first="asc" data-dir="A – Z|Z – A">
                       <span class="sort__dot" aria-hidden="true"></span>Destination</button>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-key="cel:2" data-first="desc" data-dir="Highest first|Lowest first">
                       <span class="sort__dot" aria-hidden="true"></span>Payment</button>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-key="cel:3" data-first="asc" data-dir="A – Z|Z – A">
                       <span class="sort__dot" aria-hidden="true"></span>Deliverer</button>
                     <div class="sort__sep" role="separator"></div>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
-                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>Ascending</button>
                     <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="dir">
-                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg>Descending</button>
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg><span class="sort__dirname">Latest first</span></button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg><span class="sort__dirname">Oldest first</span></button>
                   </div>
                 </div>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
@@ -803,43 +803,43 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr data-filter="today last 7 days last 30 days" data-order="260930A11" data-name="Iris van Dijk" data-phone="+31 6 2755 3012" data-mail="iris.vandijk@example.com" data-placed="18:05" data-eta="18:40" data-method="iDEAL" data-wish="ASAP">
+                    <tr data-ago="-65" data-filter="today last 7 days last 30 days" data-order="260930A11" data-name="Iris van Dijk" data-phone="+31 6 2755 3012" data-mail="iris.vandijk@example.com" data-placed="18:05" data-eta="18:40" data-method="iDEAL" data-wish="ASAP">
                       <td>Lusthofstraat 27A</td>
                       <td><span class="when"><span class="when__day">Today</span>18:40</span></td>
                       <td>&euro;70.25</td>
                       <td><span class="badge badge--muted">Nina Bakker</span></td>
                     </tr>
-                    <tr data-filter="today last 7 days last 30 days" data-order="260930A09" data-name="Daan Mulder" data-phone="+31 6 8812 4409" data-mail="daan.mulder@example.com" data-placed="17:28" data-eta="18:02" data-method="Cash" data-wish="ASAP">
+                    <tr data-ago="-27" data-filter="today last 7 days last 30 days" data-order="260930A09" data-name="Daan Mulder" data-phone="+31 6 8812 4409" data-mail="daan.mulder@example.com" data-placed="17:28" data-eta="18:02" data-method="Cash" data-wish="ASAP">
                       <td>Tochtstraat 40</td>
                       <td><span class="when"><span class="when__day">Today</span>18:02</span></td>
                       <td>&euro;70.25</td>
                       <td><span class="badge badge--muted">Tarik Yildiz</span></td>
                     </tr>
-                    <tr data-filter="today last 7 days last 30 days" data-order="260930A04" data-name="Noor Hendriks" data-phone="+31 6 3044 9187" data-mail="noor.hendriks@example.com" data-placed="16:44" data-eta="17:20" data-method="iDEAL" data-wish="ASAP">
+                    <tr data-ago="15" data-filter="today last 7 days last 30 days" data-order="260930A04" data-name="Noor Hendriks" data-phone="+31 6 3044 9187" data-mail="noor.hendriks@example.com" data-placed="16:44" data-eta="17:20" data-method="iDEAL" data-wish="ASAP">
                       <td>Zwaanshals 299</td>
                       <td><span class="when"><span class="when__day">Today</span>17:20</span></td>
                       <td>&euro;70.25</td>
                       <td><span class="badge badge--muted">Emma Post</span></td>
                     </tr>
-                    <tr data-filter="today last 7 days last 30 days" data-order="260930A03" data-name="Kaan Demir" data-phone="+31 6 6190 2254" data-mail="kaan.demir@example.com" data-placed="16:31" data-eta="17:05" data-method="PayPal" data-wish="ASAP">
+                    <tr data-ago="30" data-filter="today last 7 days last 30 days" data-order="260930A03" data-name="Kaan Demir" data-phone="+31 6 6190 2254" data-mail="kaan.demir@example.com" data-placed="16:31" data-eta="17:05" data-method="PayPal" data-wish="ASAP">
                       <td>1e Pijnackerstraat 120B</td>
                       <td><span class="when"><span class="when__day">Today</span>17:05</span></td>
                       <td>&euro;70.25</td>
                       <td><span class="badge badge--muted">Ruben de Wit</span></td>
                     </tr>
-                    <tr data-filter="yesterday last 7 days last 30 days" data-order="260929A02" data-name="Eva Smits" data-phone="+31 6 4028 7765" data-mail="eva.smits@example.com" data-placed="16:20" data-eta="16:58" data-method="Cash" data-wish="ASAP">
+                    <tr data-ago="1477" data-filter="yesterday last 7 days last 30 days" data-order="260929A02" data-name="Eva Smits" data-phone="+31 6 4028 7765" data-mail="eva.smits@example.com" data-placed="16:20" data-eta="16:58" data-method="Cash" data-wish="ASAP">
                       <td>Lusthofstraat 27A</td>
                       <td><span class="when"><span class="when__day">Yesterday</span>16:58</span></td>
                       <td>&euro;70.25</td>
                       <td><span class="badge badge--muted">Nina Bakker</span></td>
                     </tr>
-                    <tr data-filter="yesterday last 7 days last 30 days" data-order="260929A01" data-name="Sem Willemse" data-phone="+31 6 9173 4408" data-mail="sem.willemse@example.com" data-placed="16:02" data-eta="16:35" data-method="iDEAL" data-wish="16:30">
+                    <tr data-ago="1500" data-filter="yesterday last 7 days last 30 days" data-order="260929A01" data-name="Sem Willemse" data-phone="+31 6 9173 4408" data-mail="sem.willemse@example.com" data-placed="16:02" data-eta="16:35" data-method="iDEAL" data-wish="16:30">
                       <td>Collection</td>
                       <td><span class="when"><span class="when__day">Yesterday</span>16:35</span></td>
                       <td>&euro;67.30</td>
                       <td><span class="badge badge--muted">Collected</span></td>
                     </tr>
-                    <tr data-filter="last 30 days" data-order="260817A01" data-name="Anna Koning" data-phone="+31 6 2286 5531" data-mail="anna.koning@example.com" data-placed="15:38" data-eta="16:12" data-method="Visa" data-wish="ASAP">
+                    <tr data-ago="63443" data-filter="last 30 days" data-order="260817A01" data-name="Anna Koning" data-phone="+31 6 2286 5531" data-mail="anna.koning@example.com" data-placed="15:38" data-eta="16:12" data-method="Visa" data-wish="ASAP">
                       <td>Tochtstraat 40</td>
                       <td><span class="when"><span class="when__day">17 Aug</span>16:12</span></td>
                       <td>&euro;70.25</td>
@@ -1126,15 +1126,15 @@
                   </button>
                   <div class="sort__menu" role="menu" hidden>
                     <p class="sort__head">Sort by</p>
-                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field">
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field" data-key="num:ago" data-first="asc" data-dir="Latest first|Oldest first">
                       <span class="sort__dot" aria-hidden="true"></span>Date</button>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-key="num:amount" data-first="desc" data-dir="Highest first|Lowest first">
                       <span class="sort__dot" aria-hidden="true"></span>Amount</button>
                     <div class="sort__sep" role="separator"></div>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
-                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>Ascending</button>
                     <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="dir">
-                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg>Descending</button>
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg><span class="sort__dirname">Latest first</span></button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg><span class="sort__dirname">Oldest first</span></button>
                   </div>
                 </div>
               </div>
@@ -6552,6 +6552,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=452"></script>
+  <script src="app.js?v=453"></script>
 </body>
 </html>
