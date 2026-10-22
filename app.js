@@ -2367,25 +2367,19 @@
   }
 
   /* Dezelfde merkjes als op de betaalpagina, zodat iDEAL er in een bestelling
-     uitziet als iDEAL. Contant heeft geen merk; daar staat het teken uit de
-     sprite. Een wijze die we geen van beide kennen laat de plek leeg. */
+     uitziet als iDEAL. Contant heeft er zelf geen, dus draagt het er een van
+     ons in dezelfde vorm. Een wijze die we niet kennen laat de plek leeg. */
   var BETAALMERK = {
     ideal: "idealwero.svg", visa: "visa.svg", mastercard: "mastercard.svg",
     maestro: "maestro.svg", paypal: "paypal.svg", klarna: "klarna.svg",
-    "apple pay": "apple.svg", "google pay": "google.svg"
+    "apple pay": "apple.svg", "google pay": "google.svg", cash: "cash.svg"
   };
   function zetBetaalIcoon(wijze) {
-    var teken = document.getElementById("order-pay-icon");
     var merk = document.getElementById("order-pay-mark");
-    if (!teken || !merk) return;
-    var naam = (wijze || "").toLowerCase();
-    var plaatje = BETAALMERK[naam];
+    if (!merk) return;
+    var plaatje = BETAALMERK[(wijze || "").toLowerCase()];
     merk.hidden = !plaatje;
     if (plaatje) merk.querySelector("img").src = "img/pay/" + plaatje;
-    /* hidden is een eigenschap van HTML-elementen; een <svg> kent hem niet,
-       dus daar moet het attribuut zelf aan en uit. */
-    if (naam === "cash") teken.removeAttribute("hidden");
-    else teken.setAttribute("hidden", "");
   }
 
   function zetVeld(naam, waarde) {
