@@ -3264,7 +3264,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .odlg__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
 .odlg__list { min-width: 0; }
 .odlg__row { display: grid; grid-template-columns: minmax(0, 104px) minmax(0, 1fr); gap: 12px; padding: 9px 0; }
-.odlg__row + .odlg__row { border-top: 1px solid var(--border); }
 .odlg__row dt { font-size: var(--fs-sm); color: var(--text-muted); }
 /* Een adres of mailadres mag afbreken; het venster rekt er niet voor uit. */
 .odlg__row dd { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow-wrap: anywhere; }
@@ -3284,7 +3283,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Een regel kan twee hoog zijn zodra er iets aan toegevoegd is; het aantal en
    het bedrag horen dan bij de bovenste regel. */
 .oitem { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; }
-.oitem + .oitem { border-top: 1px solid var(--border); }
 /* Het aantal hoort bij de naam en leest dus hetzelfde. */
 .oitem__qty { flex: 0 0 auto; min-width: 20px; font-size: var(--fs-md); color: var(--text-strong); font-variant-numeric: tabular-nums; }
 .oitem__name { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; font-size: var(--fs-md); color: var(--text-strong); }
@@ -3294,7 +3292,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .oitem__add { font-size: var(--fs-sm); color: var(--text-muted); }
 .oitem__addsum { font-variant-numeric: tabular-nums; }
 .oitem__sum { flex: 0 0 auto; font-size: var(--fs-md); color: var(--text-strong); font-variant-numeric: tabular-nums; }
-.osum { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+.osum { margin-top: 14px; padding-top: 12px; }
 .osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-size: var(--fs-md); color: var(--text-muted); }
 .osum__row dd { font-variant-numeric: tabular-nums; }
 /* Het bedrag onderaan is waar het om gaat, dus dat weegt zwaarder. */
@@ -4393,3 +4391,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Een getal of een korte aanduiding staat gecentreerd onder zijn kop; dat
    leest rustiger dan een kolom die half leeg naar links hangt. */
 .table th.ta-mid, .table td.ta-mid { text-align: center; }
+
+/* Een bestelling leest als een kaart, niet als een tabel: geen streepjes
+   tussen de regels, en geen rand onder de kop van het venster. De ruimte
+   ertussen doet het werk. */
+#order-dialog .dialog__head { border-bottom: 0; }
