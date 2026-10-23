@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=453" />
+  <link rel="stylesheet" href="styles.css?v=461" />
 </head>
 <body>
 
@@ -72,7 +72,7 @@
     <!-- Zelfde lijndikte als i-search-filter ernaast: die staat op een 31x13
          raster en krimpt naar 26x11, waardoor zijn 1.6 als 1.34 uitkomt. Hier
          is de schaal 1, dus staat die 1.34 er gewoon. -->
-    <symbol id="i-sort" viewBox="0 0 20 20" style="stroke-width:1.34"><path d="M6.3 4.6v10.8M3.7 12.8l2.6 2.6 2.6-2.6M13.7 15.4V4.6M11.1 7.2l2.6-2.6 2.6 2.6"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 20 20" style="stroke-width:1.34"><path d="M4.4 4.2v11.6M1.8 13.2l2.6 2.6 2.6-2.6M9.6 6.5h8.6M9.6 10.5h6.4M9.6 14.5h4.2"/></symbol>
     <symbol id="i-arrow-up" viewBox="0 0 20 20"><path d="M10 16.2V4.4M5.4 9l4.6-4.6L14.6 9"/></symbol>
     <symbol id="i-arrow-down" viewBox="0 0 20 20"><path d="M10 3.8v11.8M5.4 11l4.6 4.6L14.6 11"/></symbol>
     <!-- Compacte op-en-neer chevron voor een keuzeknop; i-sort heeft stelen. -->
@@ -643,7 +643,7 @@
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. De
                      chips perken ook in op wat een bestelling wel draagt maar
                      niet toont: of de tijd vastligt, en hoe er betaald is. -->
-                <div class="psearch" data-filters="Order type:Delivery|Collection;Status:New|Kitchen|Outgoing;Time:Scheduled|ASAP;Payment:Paid online|Cash">
+                <div class="psearch" data-filters="Order type:Delivery|Collection;Status:New|Kitchen|Outgoing;Time:Scheduled|ASAP;Payment:iDEAL|Visa|Mastercard|PayPal|Cash">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -669,19 +669,19 @@
                   <span class="group__count">3 orders</span>
                 </div>
                 <div class="group__panel"><ul class="group__list">
-                  <li class="ocard" data-wish="21:30" data-when="21:30" data-pay="&euro;70.25" data-filter="new" data-type="delivery" data-order="1047" data-name="Thomas Berg" data-phone="+31 6 1903 6672" data-mail="thomas.berg@example.com" data-placed="15:40" data-eta="21:30" data-km="2.9 km" data-ride="9 min" data-method="Paid online">
+                  <li class="ocard" data-wish="21:30" data-when="21:30" data-pay="&euro;70.25" data-filter="new" data-type="delivery" data-order="260930A01" data-name="Thomas Berg" data-phone="+31 6 1903 6672" data-mail="thomas.berg@example.com" data-placed="15:40" data-eta="21:30" data-method="iDEAL">
                     <div class="ocard__body">
                       <p class="ocard__dest">Lusthofstraat 27A</p>
                       <p class="ocard__meta"><span class="badge ocard__badge"><svg class="icon ocard__fixed" aria-hidden="true"><use href="#i-clock"/></svg><span class="sr-only">Scheduled </span>21:30</span></p>
                     </div>
                   </li>
-                  <li class="ocard" data-wish="20:00" data-when="20:00" data-pay="&euro;70.25" data-filter="new" data-type="delivery" data-order="1049" data-name="Lotte Visser" data-phone="+31 6 5527 1180" data-mail="lotte.visser@example.com" data-placed="16:52" data-eta="20:00" data-km="1.6 km" data-ride="6 min" data-method="Paid online">
+                  <li class="ocard" data-wish="20:00" data-when="20:00" data-pay="&euro;70.25" data-filter="new" data-type="delivery" data-order="260930A05" data-name="Lotte Visser" data-phone="+31 6 5527 1180" data-mail="lotte.visser@example.com" data-placed="16:52" data-eta="20:00" data-method="Visa">
                     <div class="ocard__body">
                       <p class="ocard__dest">Tochtstraat 40</p>
                       <p class="ocard__meta"><span class="badge ocard__badge"><svg class="icon ocard__fixed" aria-hidden="true"><use href="#i-clock"/></svg><span class="sr-only">Scheduled </span>20:00</span></p>
                     </div>
                   </li>
-                  <li class="ocard" data-wish="ASAP" data-when="17:55" data-pay="&euro;70.25" data-filter="new" data-type="delivery" data-order="1053" data-name="Fatima El Amrani" data-phone="+31 6 2048 7713" data-mail="fatima.elamrani@example.com" data-placed="17:33" data-eta="17:55" data-km="0.8 km" data-ride="3 min" data-method="Cash">
+                  <li class="ocard" data-wish="ASAP" data-when="17:55" data-pay="&euro;70.25" data-filter="new" data-type="delivery" data-order="260930A10" data-name="Fatima El Amrani" data-phone="+31 6 2048 7713" data-mail="fatima.elamrani@example.com" data-placed="17:33" data-eta="17:55" data-method="Cash">
                     <div class="ocard__body">
                       <p class="ocard__dest">Zwaanshals 299</p>
                       <p class="ocard__meta"><span class="badge ocard__badge"><span class="sr-only">Estimated </span>17:55</span></p>
@@ -696,13 +696,13 @@
                   <span class="group__count">2 orders</span>
                 </div>
                 <div class="group__panel"><ul class="group__list">
-                  <li class="ocard" data-wish="18:00" data-when="18:00" data-pay="&euro;70.25" data-filter="kitchen" data-type="delivery" data-order="1048" data-name="Bram Jansen" data-phone="+31 6 3390 5521" data-mail="bram.jansen@example.com" data-placed="16:30" data-eta="18:00" data-km="1.2 km" data-ride="5 min" data-method="Paid online">
+                  <li class="ocard" data-wish="18:00" data-when="18:00" data-pay="&euro;70.25" data-filter="kitchen" data-type="delivery" data-order="260930A02" data-name="Bram Jansen" data-phone="+31 6 3390 5521" data-mail="bram.jansen@example.com" data-placed="16:30" data-eta="18:00" data-method="iDEAL">
                     <div class="ocard__body">
                       <p class="ocard__dest">1e Pijnackerstraat 120B</p>
                       <p class="ocard__meta"><span class="badge ocard__badge"><svg class="icon ocard__fixed" aria-hidden="true"><use href="#i-clock"/></svg><span class="sr-only">Scheduled </span>18:00</span></p>
                     </div>
                   </li>
-                  <li class="ocard" data-wish="ASAP" data-when="17:45" data-pay="&euro;67.30" data-filter="kitchen" data-type="collection" data-order="1052" data-name="Mert Kaya" data-phone="+31 6 4471 2055" data-mail="mert.kaya@example.com" data-placed="17:18" data-eta="17:45" data-method="Cash">
+                  <li class="ocard" data-wish="ASAP" data-when="17:45" data-pay="&euro;67.30" data-filter="kitchen" data-type="collection" data-order="260930A08" data-name="Mert Kaya" data-phone="+31 6 4471 2055" data-mail="mert.kaya@example.com" data-placed="17:18" data-eta="17:45" data-method="Cash">
                     <div class="ocard__body">
                       <p class="ocard__dest">Collection</p>
                       <p class="ocard__meta"><span class="badge ocard__badge"><span class="sr-only">Estimated </span>17:45</span></p>
@@ -717,13 +717,13 @@
                   <span class="group__count">2 orders</span>
                 </div>
                 <div class="group__panel"><ul class="group__list">
-                  <li class="ocard" data-wish="ASAP" data-when="17:30" data-pay="&euro;70.25" data-filter="outgoing" data-type="delivery" data-order="1050" data-name="Julia Peters" data-phone="+31 6 1172 6408" data-mail="julia.peters@example.com" data-placed="16:58" data-eta="17:30" data-km="2.9 km" data-ride="9 min" data-method="Paid online">
+                  <li class="ocard" data-wish="ASAP" data-when="17:30" data-pay="&euro;70.25" data-filter="outgoing" data-type="delivery" data-order="260930A06" data-name="Julia Peters" data-phone="+31 6 1172 6408" data-mail="julia.peters@example.com" data-placed="16:58" data-eta="17:30" data-method="iDEAL">
                     <div class="ocard__body">
                       <p class="ocard__dest">Lusthofstraat 27A</p>
                       <p class="ocard__meta"><span class="badge ocard__badge"><span class="sr-only">Estimated </span>17:30</span></p>
                     </div>
                   </li>
-                  <li class="ocard" data-wish="ASAP" data-when="17:40" data-pay="&euro;70.25" data-filter="outgoing" data-type="delivery" data-order="1051" data-name="Sanne de Groot" data-phone="+31 6 2184 9930" data-mail="sanne.degroot@example.com" data-placed="17:05" data-eta="17:40" data-km="1.6 km" data-ride="6 min" data-method="Paid online">
+                  <li class="ocard" data-wish="ASAP" data-when="17:40" data-pay="&euro;70.25" data-filter="outgoing" data-type="delivery" data-order="260930A07" data-name="Sanne de Groot" data-phone="+31 6 2184 9930" data-mail="sanne.degroot@example.com" data-placed="17:05" data-eta="17:40" data-method="Mastercard">
                     <div class="ocard__body">
                       <p class="ocard__dest">Tochtstraat 40</p>
                       <p class="ocard__meta"><span class="badge ocard__badge"><span class="sr-only">Estimated </span>17:40</span></p>
@@ -756,23 +756,23 @@
                   </button>
                   <div class="sort__menu" role="menu" hidden>
                     <p class="sort__head">Sort by</p>
-                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field">
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field" data-key="num:ago" data-first="asc" data-dir="Latest first|Oldest first">
                       <span class="sort__dot" aria-hidden="true"></span>Delivered time</button>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-key="cel:0" data-first="asc" data-dir="A – Z|Z – A">
                       <span class="sort__dot" aria-hidden="true"></span>Destination</button>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-key="cel:2" data-first="desc" data-dir="Highest first|Lowest first">
                       <span class="sort__dot" aria-hidden="true"></span>Payment</button>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field">
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-key="cel:3" data-first="asc" data-dir="A – Z|Z – A">
                       <span class="sort__dot" aria-hidden="true"></span>Deliverer</button>
                     <div class="sort__sep" role="separator"></div>
-                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
-                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg>Ascending</button>
                     <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="dir">
-                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg>Descending</button>
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg><span class="sort__dirname">Latest first</span></button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg><span class="sort__dirname">Oldest first</span></button>
                   </div>
                 </div>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Payment:Paid online|Cash;Order type:Delivery|Takeaway;Deliverer:Youssef Amrani|Nina Bakker|Ruben de Wit">
+                <div class="psearch" data-filters="Payment:iDEAL|Visa|Mastercard|PayPal|Cash;Order type:Delivery|Takeaway;Deliverer:Youssef Amrani|Nina Bakker|Ruben de Wit">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -803,43 +803,43 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr data-filter="today last 7 days last 30 days" data-order="1046" data-name="Iris van Dijk" data-phone="+31 6 2755 3012" data-mail="iris.vandijk@example.com" data-placed="18:05" data-eta="18:40" data-method="Paid online" data-wish="ASAP">
+                    <tr data-ago="-65" data-filter="today last 7 days last 30 days" data-order="260930A11" data-name="Iris van Dijk" data-phone="+31 6 2755 3012" data-mail="iris.vandijk@example.com" data-placed="18:05" data-eta="18:40" data-method="iDEAL" data-wish="ASAP">
                       <td>Lusthofstraat 27A</td>
                       <td><span class="when"><span class="when__day">Today</span>18:40</span></td>
                       <td>&euro;70.25</td>
                       <td><span class="badge badge--muted">Nina Bakker</span></td>
                     </tr>
-                    <tr data-filter="today last 7 days last 30 days" data-order="1045" data-name="Daan Mulder" data-phone="+31 6 8812 4409" data-mail="daan.mulder@example.com" data-placed="17:28" data-eta="18:02" data-method="Cash" data-wish="ASAP">
+                    <tr data-ago="-27" data-filter="today last 7 days last 30 days" data-order="260930A09" data-name="Daan Mulder" data-phone="+31 6 8812 4409" data-mail="daan.mulder@example.com" data-placed="17:28" data-eta="18:02" data-method="Cash" data-wish="ASAP">
                       <td>Tochtstraat 40</td>
                       <td><span class="when"><span class="when__day">Today</span>18:02</span></td>
                       <td>&euro;70.25</td>
                       <td><span class="badge badge--muted">Tarik Yildiz</span></td>
                     </tr>
-                    <tr data-filter="today last 7 days last 30 days" data-order="1044" data-name="Noor Hendriks" data-phone="+31 6 3044 9187" data-mail="noor.hendriks@example.com" data-placed="16:44" data-eta="17:20" data-method="Paid online" data-wish="ASAP">
+                    <tr data-ago="15" data-filter="today last 7 days last 30 days" data-order="260930A04" data-name="Noor Hendriks" data-phone="+31 6 3044 9187" data-mail="noor.hendriks@example.com" data-placed="16:44" data-eta="17:20" data-method="iDEAL" data-wish="ASAP">
                       <td>Zwaanshals 299</td>
                       <td><span class="when"><span class="when__day">Today</span>17:20</span></td>
                       <td>&euro;70.25</td>
                       <td><span class="badge badge--muted">Emma Post</span></td>
                     </tr>
-                    <tr data-filter="today last 7 days last 30 days" data-order="1043" data-name="Kaan Demir" data-phone="+31 6 6190 2254" data-mail="kaan.demir@example.com" data-placed="16:31" data-eta="17:05" data-method="Paid online" data-wish="ASAP">
+                    <tr data-ago="30" data-filter="today last 7 days last 30 days" data-order="260930A03" data-name="Kaan Demir" data-phone="+31 6 6190 2254" data-mail="kaan.demir@example.com" data-placed="16:31" data-eta="17:05" data-method="PayPal" data-wish="ASAP">
                       <td>1e Pijnackerstraat 120B</td>
                       <td><span class="when"><span class="when__day">Today</span>17:05</span></td>
                       <td>&euro;70.25</td>
                       <td><span class="badge badge--muted">Ruben de Wit</span></td>
                     </tr>
-                    <tr data-filter="yesterday last 7 days last 30 days" data-order="1042" data-name="Eva Smits" data-phone="+31 6 4028 7765" data-mail="eva.smits@example.com" data-placed="16:20" data-eta="16:58" data-method="Cash" data-wish="ASAP">
+                    <tr data-ago="1477" data-filter="yesterday last 7 days last 30 days" data-order="260929A02" data-name="Eva Smits" data-phone="+31 6 4028 7765" data-mail="eva.smits@example.com" data-placed="16:20" data-eta="16:58" data-method="Cash" data-wish="ASAP">
                       <td>Lusthofstraat 27A</td>
                       <td><span class="when"><span class="when__day">Yesterday</span>16:58</span></td>
                       <td>&euro;70.25</td>
                       <td><span class="badge badge--muted">Nina Bakker</span></td>
                     </tr>
-                    <tr data-filter="yesterday last 7 days last 30 days" data-order="1041" data-name="Sem Willemse" data-phone="+31 6 9173 4408" data-mail="sem.willemse@example.com" data-placed="16:02" data-eta="16:35" data-method="Paid online" data-wish="16:30">
+                    <tr data-ago="1500" data-filter="yesterday last 7 days last 30 days" data-order="260929A01" data-name="Sem Willemse" data-phone="+31 6 9173 4408" data-mail="sem.willemse@example.com" data-placed="16:02" data-eta="16:35" data-method="iDEAL" data-wish="16:30">
                       <td>Collection</td>
                       <td><span class="when"><span class="when__day">Yesterday</span>16:35</span></td>
                       <td>&euro;67.30</td>
                       <td><span class="badge badge--muted">Collected</span></td>
                     </tr>
-                    <tr data-filter="last 30 days" data-order="1040" data-name="Anna Koning" data-phone="+31 6 2286 5531" data-mail="anna.koning@example.com" data-placed="15:38" data-eta="16:12" data-method="Paid online" data-wish="ASAP">
+                    <tr data-ago="63443" data-filter="last 30 days" data-order="260817A01" data-name="Anna Koning" data-phone="+31 6 2286 5531" data-mail="anna.koning@example.com" data-placed="15:38" data-eta="16:12" data-method="Visa" data-wish="ASAP">
                       <td>Tochtstraat 40</td>
                       <td><span class="when"><span class="when__day">17 Aug</span>16:12</span></td>
                       <td>&euro;70.25</td>
@@ -854,7 +854,7 @@
                   <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
                 <button class="icon-btn pager__btn" type="button" aria-label="Next page">
                   <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
-                <p class="pager__count"><b>1&ndash;8</b> of 24</p>
+                <p class="pager__count"><b>1&ndash;24</b> of 24</p>
               </nav>
             </div>
           </section>
@@ -938,28 +938,50 @@
           <section class="view" data-view="customers" hidden>
             <div class="panel panel--scroll">
               <div class="panel__head">
-                <!-- Zelfde opzet als Orders: één filter in plaats van tabs. -->
-                <div class="sfilter">
-                  <button class="sfilter__btn" type="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="sfilter__label">All</span>
-                    <svg class="icon sfilter__caret" aria-hidden="true"><use href="#i-chevrons-y"/></svg>
-                  </button>
-                  <div class="sfilter__menu" role="menu" hidden>
-                    <button class="sfilter__item is-selected" type="button" role="menuitemradio" aria-checked="true">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>All</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Returning</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>New</button>
-                    <button class="sfilter__item" type="button" role="menuitemradio" aria-checked="false">
-                      <svg class="icon sfilter__check" aria-hidden="true"><use href="#i-check"/></svg>Inactive</button>
-                  </div>
+                <!-- Hoe recent iemand besteld heeft is waar je een klantenlijst op
+                     uit elkaar trekt; de rest zit achter het filter. De tabs zeggen
+                     met data-filter op welke regel ze gelezen moeten worden. -->
+                <div class="tabs" data-filter-name="Order timeframe">
+                  <button class="tab is-active" type="button">All</button>
+                  <!-- De tab heet anders dan de waarde waarop hij filtert; die
+                       waarde staat in het filtermenu net zo. -->
+                  <button class="tab" type="button" data-value="Today">Ordered today</button>
+                  <button class="tab" type="button">Last 7 days</button>
+                  <button class="tab" type="button">Last 30 days</button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter customers">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
+                <!-- Sorteren: eerst waarop, daaronder in welke richting. -->
+                <div class="sort">
+                  <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Sort customers">
+                    <svg class="icon" aria-hidden="true"><use href="#i-sort"/></svg>
+                  </button>
+                  <div class="sort__menu" role="menu" hidden>
+                    <p class="sort__head">Sort by</p>
+                    <!-- De richting heet naar het veld dat je kiest: data-dir geeft
+                         de twee woorden die dan onder de streep horen te staan. -->
+                    <!-- data-key zegt waarop gesorteerd wordt: een kolom, of een
+                         getal dat de regel draagt. data-first zegt welke kant de
+                         bovenste richting op gaat. -->
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-dir="A – Z|Z – A" data-key="cel:1" data-first="asc">
+                      <span class="sort__dot" aria-hidden="true"></span>Customer name</button>
+                    <!-- Pas besteld is weinig dagen geleden, dus oplopend. -->
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field" data-dir="Latest first|Oldest first" data-key="num:lastdays" data-first="asc">
+                      <span class="sort__dot" aria-hidden="true"></span>Order date</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-dir="Most first|Fewest first" data-key="num:orders" data-first="desc">
+                      <span class="sort__dot" aria-hidden="true"></span>Total orders</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-dir="Highest first|Lowest first" data-key="num:spent" data-first="desc">
+                      <span class="sort__dot" aria-hidden="true"></span>Total spend</button>
+                    <div class="sort__sep" role="separator"></div>
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg><span class="sort__dirname">Latest first</span></button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg><span class="sort__dirname">Oldest first</span></button>
+                  </div>
+                </div>
                 <!-- Zoekstand: vervangt het filter zolang hij openstaat. -->
-                <div class="psearch" data-filters="Orders:1-5|6-20|20+;Total spent:Under 100|100-500|500+;Last order:This week|This month|Older">
+                <div class="psearch" data-filters="Order timeframe=Today|Last 7 days|Last 30 days|Last 90 days|Last year;Total orders=0 orders|1 order|2-9 orders|10+ orders;Lifetime value=Low (under € 100)|Medium (€ 100 – € 500)|High (€ 500 – € 1.000)|VIP (€ 1.000 and up);Last order=No order in last 30 days|No order in last 90 days|No order in last 6 months|No order in last 12 months;Account state=Blocked|Not blocked">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -980,81 +1002,436 @@
               </div>
 
               <div class="table-wrap">
-                <table class="table table--customers">
+                <table class="table table--customers" data-page="25">
                   <thead>
                     <tr>
+                      <!-- Het vakje in de kop zet alle regels tegelijk aan of uit. -->
+                      <th class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick-all /><span class="sr-only">Select all customers</span></label></th>
                       <th>Customer</th>
-                      <th>Email</th>
-                      <th>Orders</th>
-                      <th>Total spent</th>
-                      <th>Last order</th>
-                      <th><span class="sr-only">Actions</span></th>
+                      <th>Address</th>
+                      <th class="ta-mid">Orders</th>
+                      <th class="ta-mid">Last order</th>
+                      <!-- Een bedrag leest van rechts naar links; daarom staat het
+                           rechts, en als laatste. -->
+                      <th class="ta-right">Total spent</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr data-mail="thomas@example.nl" data-since="30" data-orders="4" data-spent="85.60" data-lastdays="0" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Thomas Jefferson</span></label></td>
                       <td>Thomas Jefferson</td>
-                      <td>thomas@example.nl</td>
-                      <td>24</td>
-                      <td>&euro; 681,20</td>
-                      <td>Today</td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Thomas Jefferson"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td>Tochtstraat 3</td>
+                      <td class="ta-mid">4</td>
+                      <td class="ta-mid">Today</td>
+                      <td class="ta-right">&euro; 85,60</td>
                     </tr>
-                    <tr>
+                    <tr data-mail="sanne@example.nl" data-since="61" data-orders="9" data-spent="251.55" data-lastdays="1" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Sanne de Vries</span></label></td>
                       <td>Sanne de Vries</td>
-                      <td>sanne@example.nl</td>
-                      <td>18</td>
-                      <td>&euro; 512,75</td>
-                      <td>Yesterday</td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Sanne de Vries"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td>Lusthofstraat 20</td>
+                      <td class="ta-mid">9</td>
+                      <td class="ta-mid">Yesterday</td>
+                      <td class="ta-right">&euro; 251,55</td>
                     </tr>
-                    <tr>
+                    <tr data-mail="mo@example.nl" data-since="93" data-orders="14" data-spent="463.40" data-lastdays="3" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Mo El Amrani</span></label></td>
                       <td>Mo El Amrani</td>
-                      <td>mo@example.nl</td>
-                      <td>12</td>
-                      <td>&euro; 348,60</td>
-                      <td>3 days ago</td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Mo El Amrani"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="codes">Bergweg 37<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Mo El Amrani" data-codes-noun="addresses" data-codes="Bergweg 37, Insulindestraat 66, Tochtstraat 95">+2</button></span></td>
+                      <td class="ta-mid">14</td>
+                      <td class="ta-mid">3 days ago</td>
+                      <td class="ta-right">&euro; 463,40</td>
                     </tr>
-                    <tr>
+                    <tr data-mail="lisa@example.nl" data-since="125" data-orders="19" data-spent="793.25" data-lastdays="5" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Lisa Bakker</span></label></td>
                       <td>Lisa Bakker</td>
-                      <td>lisa@example.nl</td>
-                      <td>9</td>
-                      <td>&euro; 254,10</td>
-                      <td>5 days ago</td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Lisa Bakker"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="codes">Hofdijk 54<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Lisa Bakker" data-codes-noun="addresses" data-codes="Hofdijk 54, Soetendaalseweg 83">+1</button></span></td>
+                      <td class="ta-mid">19</td>
+                      <td class="ta-mid">5 days ago</td>
+                      <td class="ta-right">&euro; 793,25</td>
                     </tr>
-                    <tr>
-                      <td>Kevin Groot</td>
-                      <td>kevin@example.nl</td>
-                      <td>7</td>
-                      <td>&euro; 198,45</td>
-                      <td>1 week ago</td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Kevin Groot"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    <tr data-mail="kevin@example.nl" data-since="157" data-orders="24" data-spent="1204.80" data-lastdays="7" data-blocked="yes">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Kevin Groot</span></label></td>
+                      <td><span class="cname">Kevin Groot<svg class="icon cname__block" aria-hidden="true"><use href="#i-lock"/></svg><span class="sr-only">Blocked</span></span></td>
+                      <td>Bergselaan 71</td>
+                      <td class="ta-mid">24</td>
+                      <td class="ta-mid">1 week ago</td>
+                      <td class="ta-right">&euro; 1.204,80</td>
                     </tr>
-                    <tr>
+                    <tr data-mail="fatima@example.nl" data-since="194" data-orders="29" data-spent="540.85" data-lastdays="14" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Fatima Yilmaz</span></label></td>
                       <td>Fatima Yilmaz</td>
-                      <td>fatima@example.nl</td>
-                      <td>5</td>
-                      <td>&euro; 142,30</td>
-                      <td>2 weeks ago</td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Fatima Yilmaz"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td>Walenburgerweg 88</td>
+                      <td class="ta-mid">29</td>
+                      <td class="ta-mid">2 weeks ago</td>
+                      <td class="ta-right">&euro; 540,85</td>
                     </tr>
-                    <tr>
+                    <tr data-mail="daan@example.nl" data-since="270" data-orders="34" data-spent="1251.20" data-lastdays="60" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Daan Visser</span></label></td>
                       <td>Daan Visser</td>
-                      <td>daan@example.nl</td>
-                      <td>3</td>
-                      <td>&euro; 87,90</td>
-                      <td>3 weeks ago</td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Daan Visser"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td>Vroesenlaan 105</td>
+                      <td class="ta-mid">34</td>
+                      <td class="ta-mid">2 months ago</td>
+                      <td class="ta-right">&euro; 1.251,20</td>
                     </tr>
-                    <tr>
+                    <tr data-mail="iris@example.nl" data-since="440" data-orders="1" data-spent="21.40" data-lastdays="200" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Iris Smit</span></label></td>
                       <td>Iris Smit</td>
-                      <td>iris@example.nl</td>
-                      <td>1</td>
-                      <td>&euro; 24,50</td>
-                      <td>1 month ago</td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Iris Smit"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td>Zwaanshals 122</td>
+                      <td class="ta-mid">1</td>
+                      <td class="ta-mid">7 months ago</td>
+                      <td class="ta-right">&euro; 21,40</td>
+                    </tr>
+                    <tr data-mail="bram@example.nl" data-since="376" data-orders="6" data-spent="167.70" data-lastdays="106" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Bram Hendriks</span></label></td>
+                      <td>Bram Hendriks</td>
+                      <td>Noordplein 139</td>
+                      <td class="ta-mid">6</td>
+                      <td class="ta-mid">4 months ago</td>
+                      <td class="ta-right">&euro; 167,70</td>
+                    </tr>
+                    <tr data-mail="noor@example.nl" data-since="419" data-orders="11" data-spent="364.10" data-lastdays="119" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Noor Willemse</span></label></td>
+                      <td>Noor Willemse</td>
+                      <td>Benthuizerstraat 156</td>
+                      <td class="ta-mid">11</td>
+                      <td class="ta-mid">4 months ago</td>
+                      <td class="ta-right">&euro; 364,10</td>
+                    </tr>
+                    <tr data-mail="youssef@example.nl" data-since="462" data-orders="16" data-spent="668.00" data-lastdays="132" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Youssef Baran</span></label></td>
+                      <td>Youssef Baran</td>
+                      <td><span class="codes">Crooswijksestraat 173<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Youssef Baran" data-codes-noun="addresses" data-codes="Crooswijksestraat 173, Gordelweg 22">+1</button></span></td>
+                      <td class="ta-mid">16</td>
+                      <td class="ta-mid">4 months ago</td>
+                      <td class="ta-right">&euro; 668,00</td>
+                    </tr>
+                    <tr data-mail="eva@example.nl" data-since="505" data-orders="21" data-spent="1054.20" data-lastdays="145" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Eva Molenaar</span></label></td>
+                      <td>Eva Molenaar</td>
+                      <td>Insulindestraat 10</td>
+                      <td class="ta-mid">21</td>
+                      <td class="ta-mid">5 months ago</td>
+                      <td class="ta-right">&euro; 1.054,20</td>
+                    </tr>
+                    <tr data-mail="sem@example.nl" data-since="188" data-orders="26" data-spent="484.90" data-lastdays="158" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Sem de Boer</span></label></td>
+                      <td>Sem de Boer</td>
+                      <td>Soetendaalseweg 27</td>
+                      <td class="ta-mid">26</td>
+                      <td class="ta-mid">5 months ago</td>
+                      <td class="ta-right">&euro; 484,90</td>
+                    </tr>
+                    <tr data-mail="lotte@example.nl" data-since="231" data-orders="31" data-spent="1140.80" data-lastdays="171" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Lotte Kuipers</span></label></td>
+                      <td>Lotte Kuipers</td>
+                      <td><span class="codes">Statenweg 44<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Lotte Kuipers" data-codes-noun="addresses" data-codes="Statenweg 44, Bergweg 73, Insulindestraat 102">+2</button></span></td>
+                      <td class="ta-mid">31</td>
+                      <td class="ta-mid">6 months ago</td>
+                      <td class="ta-right">&euro; 1.140,80</td>
+                    </tr>
+                    <tr data-mail="kaan@example.nl" data-since="274" data-orders="36" data-spent="770.40" data-lastdays="184" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Kaan Demir</span></label></td>
+                      <td>Kaan Demir</td>
+                      <td>1e Pijnackerstraat 61</td>
+                      <td class="ta-mid">36</td>
+                      <td class="ta-mid">6 months ago</td>
+                      <td class="ta-right">&euro; 770,40</td>
+                    </tr>
+                    <tr data-mail="anna@example.nl" data-since="317" data-orders="3" data-spent="83.85" data-lastdays="197" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Anna Koning</span></label></td>
+                      <td>Anna Koning</td>
+                      <td>Zaagmolenkade 78</td>
+                      <td class="ta-mid">3</td>
+                      <td class="ta-mid">7 months ago</td>
+                      <td class="ta-right">&euro; 83,85</td>
+                    </tr>
+                    <tr data-mail="ruben@example.nl" data-since="360" data-orders="8" data-spent="264.80" data-lastdays="210" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Ruben Vos</span></label></td>
+                      <td>Ruben Vos</td>
+                      <td>Schieweg 95</td>
+                      <td class="ta-mid">8</td>
+                      <td class="ta-mid">7 months ago</td>
+                      <td class="ta-right">&euro; 264,80</td>
+                    </tr>
+                    <tr data-mail="maud@example.nl" data-since="403" data-orders="13" data-spent="542.75" data-lastdays="223" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Maud Peters</span></label></td>
+                      <td>Maud Peters</td>
+                      <td><span class="codes">Vijverhofstraat 112<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Maud Peters" data-codes-noun="addresses" data-codes="Vijverhofstraat 112, Vroesenlaan 141">+1</button></span></td>
+                      <td class="ta-mid">13</td>
+                      <td class="ta-mid">7 months ago</td>
+                      <td class="ta-right">&euro; 542,75</td>
+                    </tr>
+                    <tr data-mail="tim@example.nl" data-since="446" data-orders="18" data-spent="903.60" data-lastdays="236" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Tim Jansen</span></label></td>
+                      <td>Tim Jansen</td>
+                      <td>Rodenrijselaan 129</td>
+                      <td class="ta-mid">18</td>
+                      <td class="ta-mid">8 months ago</td>
+                      <td class="ta-right">&euro; 903,60</td>
+                    </tr>
+                    <tr data-mail="julia@example.nl" data-since="489" data-orders="23" data-spent="428.95" data-lastdays="249" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Julia Scholten</span></label></td>
+                      <td>Julia Scholten</td>
+                      <td>Gordelweg 146</td>
+                      <td class="ta-mid">23</td>
+                      <td class="ta-mid">8 months ago</td>
+                      <td class="ta-right">&euro; 428,95</td>
+                    </tr>
+                    <tr data-mail="nina@example.nl" data-since="532" data-orders="28" data-spent="1030.40" data-lastdays="262" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Nina Hofman</span></label></td>
+                      <td>Nina Hofman</td>
+                      <td>Tochtstraat 163</td>
+                      <td class="ta-mid">28</td>
+                      <td class="ta-mid">9 months ago</td>
+                      <td class="ta-right">&euro; 1.030,40</td>
+                    </tr>
+                    <tr data-mail="lars@example.nl" data-since="575" data-orders="33" data-spent="706.20" data-lastdays="275" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Lars Verhoeven</span></label></td>
+                      <td>Lars Verhoeven</td>
+                      <td>Lusthofstraat 180</td>
+                      <td class="ta-mid">33</td>
+                      <td class="ta-mid">9 months ago</td>
+                      <td class="ta-right">&euro; 706,20</td>
+                    </tr>
+                    <tr data-mail="sofie@example.nl" data-since="618" data-orders="38" data-spent="1062.10" data-lastdays="288" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Sofie Maas</span></label></td>
+                      <td>Sofie Maas</td>
+                      <td>Bergweg 17</td>
+                      <td class="ta-mid">38</td>
+                      <td class="ta-mid">10 months ago</td>
+                      <td class="ta-right">&euro; 1.062,10</td>
+                    </tr>
+                    <tr data-mail="jesse@example.nl" data-since="661" data-orders="5" data-spent="165.50" data-lastdays="301" data-blocked="yes">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Jesse Wolters</span></label></td>
+                      <td><span class="cname">Jesse Wolters<svg class="icon cname__block" aria-hidden="true"><use href="#i-lock"/></svg><span class="sr-only">Blocked</span></span></td>
+                      <td>Hofdijk 34</td>
+                      <td class="ta-mid">5</td>
+                      <td class="ta-mid">10 months ago</td>
+                      <td class="ta-right">&euro; 165,50</td>
+                    </tr>
+                    <tr data-mail="emma@example.nl" data-since="344" data-orders="10" data-spent="417.50" data-lastdays="314" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Emma Timmermans</span></label></td>
+                      <td>Emma Timmermans</td>
+                      <td><span class="codes">Bergselaan 51<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Emma Timmermans" data-codes-noun="addresses" data-codes="Bergselaan 51, Statenweg 80, Bergweg 109">+2</button></span></td>
+                      <td class="ta-mid">10</td>
+                      <td class="ta-mid">10 months ago</td>
+                      <td class="ta-right">&euro; 417,50</td>
+                    </tr>
+                    <tr data-mail="pieter@example.nl" data-since="387" data-orders="15" data-spent="753.00" data-lastdays="327" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Pieter Dekker</span></label></td>
+                      <td>Pieter Dekker</td>
+                      <td>Walenburgerweg 68</td>
+                      <td class="ta-mid">15</td>
+                      <td class="ta-mid">11 months ago</td>
+                      <td class="ta-right">&euro; 753,00</td>
+                    </tr>
+                    <tr data-mail="yara@example.nl" data-since="430" data-orders="20" data-spent="373.00" data-lastdays="340" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Yara Bosman</span></label></td>
+                      <td>Yara Bosman</td>
+                      <td>Vroesenlaan 85</td>
+                      <td class="ta-mid">20</td>
+                      <td class="ta-mid">11 months ago</td>
+                      <td class="ta-right">&euro; 373,00</td>
+                    </tr>
+                    <tr data-mail="tycho@example.nl" data-since="473" data-orders="25" data-spent="920.00" data-lastdays="353" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Tycho van Loon</span></label></td>
+                      <td>Tycho van Loon</td>
+                      <td>Zwaanshals 102</td>
+                      <td class="ta-mid">25</td>
+                      <td class="ta-mid">12 months ago</td>
+                      <td class="ta-right">&euro; 920,00</td>
+                    </tr>
+                    <tr data-mail="amber@example.nl" data-since="516" data-orders="30" data-spent="642.00" data-lastdays="366" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Amber Rietveld</span></label></td>
+                      <td>Amber Rietveld</td>
+                      <td>Noordplein 119</td>
+                      <td class="ta-mid">30</td>
+                      <td class="ta-mid">1 year ago</td>
+                      <td class="ta-right">&euro; 642,00</td>
+                    </tr>
+                    <tr data-mail="stan@example.nl" data-since="559" data-orders="35" data-spent="978.25" data-lastdays="379" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Stan Kramer</span></label></td>
+                      <td>Stan Kramer</td>
+                      <td>Benthuizerstraat 136</td>
+                      <td class="ta-mid">35</td>
+                      <td class="ta-mid">1 year ago</td>
+                      <td class="ta-right">&euro; 978,25</td>
+                    </tr>
+                    <tr data-mail="lieke@example.nl" data-since="602" data-orders="2" data-spent="66.20" data-lastdays="392" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Lieke Hoekstra</span></label></td>
+                      <td>Lieke Hoekstra</td>
+                      <td>Crooswijksestraat 153</td>
+                      <td class="ta-mid">2</td>
+                      <td class="ta-mid">1 year ago</td>
+                      <td class="ta-right">&euro; 66,20</td>
+                    </tr>
+                    <tr data-mail="milan@example.nl" data-since="245" data-orders="7" data-spent="292.25" data-lastdays="5" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Milan Prins</span></label></td>
+                      <td>Milan Prins</td>
+                      <td><span class="codes">Insulindestraat 170<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Milan Prins" data-codes-noun="addresses" data-codes="Insulindestraat 170, Tochtstraat 19">+1</button></span></td>
+                      <td class="ta-mid">7</td>
+                      <td class="ta-mid">5 days ago</td>
+                      <td class="ta-right">&euro; 292,25</td>
+                    </tr>
+                    <tr data-mail="rosa@example.nl" data-since="288" data-orders="12" data-spent="602.40" data-lastdays="18" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Rosa Schouten</span></label></td>
+                      <td>Rosa Schouten</td>
+                      <td>Soetendaalseweg 7</td>
+                      <td class="ta-mid">12</td>
+                      <td class="ta-mid">3 weeks ago</td>
+                      <td class="ta-right">&euro; 602,40</td>
+                    </tr>
+                    <tr data-mail="jorrit@example.nl" data-since="331" data-orders="17" data-spent="317.05" data-lastdays="31" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Jorrit Blom</span></label></td>
+                      <td>Jorrit Blom</td>
+                      <td>Statenweg 24</td>
+                      <td class="ta-mid">17</td>
+                      <td class="ta-mid">1 month ago</td>
+                      <td class="ta-right">&euro; 317,05</td>
+                    </tr>
+                    <tr data-mail="esmee@example.nl" data-since="374" data-orders="22" data-spent="809.60" data-lastdays="44" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Esmee van Dam</span></label></td>
+                      <td>Esmee van Dam</td>
+                      <td>1e Pijnackerstraat 41</td>
+                      <td class="ta-mid">22</td>
+                      <td class="ta-mid">1 month ago</td>
+                      <td class="ta-right">&euro; 809,60</td>
+                    </tr>
+                    <tr data-mail="teun@example.nl" data-since="417" data-orders="27" data-spent="577.80" data-lastdays="57" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Teun Verbeek</span></label></td>
+                      <td>Teun Verbeek</td>
+                      <td><span class="codes">Zaagmolenkade 58<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Teun Verbeek" data-codes-noun="addresses" data-codes="Zaagmolenkade 58, Bergselaan 87, Statenweg 116">+2</button></span></td>
+                      <td class="ta-mid">27</td>
+                      <td class="ta-mid">1 month ago</td>
+                      <td class="ta-right">&euro; 577,80</td>
+                    </tr>
+                    <tr data-mail="hannah@example.nl" data-since="100" data-orders="32" data-spent="894.40" data-lastdays="70" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Hannah Driessen</span></label></td>
+                      <td>Hannah Driessen</td>
+                      <td>Schieweg 75</td>
+                      <td class="ta-mid">32</td>
+                      <td class="ta-mid">2 months ago</td>
+                      <td class="ta-right">&euro; 894,40</td>
+                    </tr>
+                    <tr data-mail="melle@example.nl" data-since="143" data-orders="37" data-spent="1224.70" data-lastdays="83" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Melle Kuijpers</span></label></td>
+                      <td>Melle Kuijpers</td>
+                      <td>Vijverhofstraat 92</td>
+                      <td class="ta-mid">37</td>
+                      <td class="ta-mid">3 months ago</td>
+                      <td class="ta-right">&euro; 1.224,70</td>
+                    </tr>
+                    <tr data-mail="saar@example.nl" data-since="186" data-orders="4" data-spent="167.00" data-lastdays="96" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Saar Mulder</span></label></td>
+                      <td>Saar Mulder</td>
+                      <td><span class="codes">Rodenrijselaan 109<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Saar Mulder" data-codes-noun="addresses" data-codes="Rodenrijselaan 109, Zwaanshals 138">+1</button></span></td>
+                      <td class="ta-mid">4</td>
+                      <td class="ta-mid">3 months ago</td>
+                      <td class="ta-right">&euro; 167,00</td>
+                    </tr>
+                    <tr data-mail="finn@example.nl" data-since="229" data-orders="9" data-spent="451.80" data-lastdays="109" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Finn Oosterhuis</span></label></td>
+                      <td>Finn Oosterhuis</td>
+                      <td>Gordelweg 126</td>
+                      <td class="ta-mid">9</td>
+                      <td class="ta-mid">4 months ago</td>
+                      <td class="ta-right">&euro; 451,80</td>
+                    </tr>
+                    <tr data-mail="veerle@example.nl" data-since="272" data-orders="14" data-spent="261.10" data-lastdays="122" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Veerle Nagel</span></label></td>
+                      <td>Veerle Nagel</td>
+                      <td>Tochtstraat 143</td>
+                      <td class="ta-mid">14</td>
+                      <td class="ta-mid">4 months ago</td>
+                      <td class="ta-right">&euro; 261,10</td>
+                    </tr>
+                    <tr data-mail="olivier@example.nl" data-since="315" data-orders="19" data-spent="699.20" data-lastdays="135" data-blocked="yes">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Olivier Brand</span></label></td>
+                      <td><span class="cname">Olivier Brand<svg class="icon cname__block" aria-hidden="true"><use href="#i-lock"/></svg><span class="sr-only">Blocked</span></span></td>
+                      <td>Lusthofstraat 160</td>
+                      <td class="ta-mid">19</td>
+                      <td class="ta-mid">5 months ago</td>
+                      <td class="ta-right">&euro; 699,20</td>
+                    </tr>
+                    <tr data-mail="linde@example.nl" data-since="358" data-orders="24" data-spent="513.60" data-lastdays="148" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Linde Huisman</span></label></td>
+                      <td>Linde Huisman</td>
+                      <td>Bergweg 177</td>
+                      <td class="ta-mid">24</td>
+                      <td class="ta-mid">5 months ago</td>
+                      <td class="ta-right">&euro; 513,60</td>
+                    </tr>
+                    <tr data-mail="sven@example.nl" data-since="401" data-orders="29" data-spent="810.55" data-lastdays="161" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Sven Meijer</span></label></td>
+                      <td>Sven Meijer</td>
+                      <td>Hofdijk 14</td>
+                      <td class="ta-mid">29</td>
+                      <td class="ta-mid">5 months ago</td>
+                      <td class="ta-right">&euro; 810,55</td>
+                    </tr>
+                    <tr data-mail="fleur@example.nl" data-since="444" data-orders="34" data-spent="1125.40" data-lastdays="174" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Fleur Kuiper</span></label></td>
+                      <td>Fleur Kuiper</td>
+                      <td>Bergselaan 31</td>
+                      <td class="ta-mid">34</td>
+                      <td class="ta-mid">6 months ago</td>
+                      <td class="ta-right">&euro; 1.125,40</td>
+                    </tr>
+                    <tr data-mail="cas@example.nl" data-since="487" data-orders="1" data-spent="41.75" data-lastdays="187" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Cas Lammers</span></label></td>
+                      <td>Cas Lammers</td>
+                      <td><span class="codes">Walenburgerweg 48<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Cas Lammers" data-codes-noun="addresses" data-codes="Walenburgerweg 48, 1e Pijnackerstraat 77">+1</button></span></td>
+                      <td class="ta-mid">1</td>
+                      <td class="ta-mid">6 months ago</td>
+                      <td class="ta-right">&euro; 41,75</td>
+                    </tr>
+                    <tr data-mail="nora@example.nl" data-since="530" data-orders="6" data-spent="301.20" data-lastdays="200" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Nora Boeve</span></label></td>
+                      <td>Nora Boeve</td>
+                      <td><span class="codes">Vroesenlaan 65<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Nora Boeve" data-codes-noun="addresses" data-codes="Vroesenlaan 65, Zaagmolenkade 94, Bergselaan 123">+2</button></span></td>
+                      <td class="ta-mid">6</td>
+                      <td class="ta-mid">7 months ago</td>
+                      <td class="ta-right">&euro; 301,20</td>
+                    </tr>
+                    <tr data-mail="thijs@example.nl" data-since="573" data-orders="11" data-spent="205.15" data-lastdays="213" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Thijs Wagenaar</span></label></td>
+                      <td>Thijs Wagenaar</td>
+                      <td>Zwaanshals 82</td>
+                      <td class="ta-mid">11</td>
+                      <td class="ta-mid">7 months ago</td>
+                      <td class="ta-right">&euro; 205,15</td>
+                    </tr>
+                    <tr data-mail="isa@example.nl" data-since="256" data-orders="16" data-spent="588.80" data-lastdays="226" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Isa Boersma</span></label></td>
+                      <td>Isa Boersma</td>
+                      <td>Noordplein 99</td>
+                      <td class="ta-mid">16</td>
+                      <td class="ta-mid">8 months ago</td>
+                      <td class="ta-right">&euro; 588,80</td>
+                    </tr>
+                    <tr data-mail="guus@example.nl" data-since="299" data-orders="21" data-spent="449.40" data-lastdays="239" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Guus Terpstra</span></label></td>
+                      <td>Guus Terpstra</td>
+                      <td>Benthuizerstraat 116</td>
+                      <td class="ta-mid">21</td>
+                      <td class="ta-mid">8 months ago</td>
+                      <td class="ta-right">&euro; 449,40</td>
+                    </tr>
+                    <tr data-mail="ilse@example.nl" data-since="342" data-orders="26" data-spent="726.70" data-lastdays="252" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Ilse Noordman</span></label></td>
+                      <td>Ilse Noordman</td>
+                      <td>Crooswijksestraat 133</td>
+                      <td class="ta-mid">26</td>
+                      <td class="ta-mid">8 months ago</td>
+                      <td class="ta-right">&euro; 726,70</td>
+                    </tr>
+                    <tr data-mail="rik@example.nl" data-since="385" data-orders="31" data-spent="1026.10" data-lastdays="265" data-blocked="no">
+                      <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Rik Slegers</span></label></td>
+                      <td>Rik Slegers</td>
+                      <td>Insulindestraat 150</td>
+                      <td class="ta-mid">31</td>
+                      <td class="ta-mid">9 months ago</td>
+                      <td class="ta-right">&euro; 1.026,10</td>
                     </tr>
                   </tbody>
                 </table>
@@ -1065,8 +1442,62 @@
                   <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
                 <button class="icon-btn pager__btn" type="button" aria-label="Next page">
                   <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
-                <p class="pager__count"><b>1&ndash;8</b> of 1.284</p>
+                <p class="pager__count"><b>1&ndash;25</b> of 1.284</p>
               </nav>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: een klant ---------- -->
+          <!-- Alles wat een klant is, op één pagina: wie hij is, wat hij ons
+               waard is, en wat hij besteld heeft. app.js vult hem uit de regel
+               waarop je klikt, want daar staat het al. -->
+          <section class="view" data-view="customer" hidden>
+            <div class="card cprof">
+              <span class="cprof__avatar" aria-hidden="true" data-cveld="initials"></span>
+              <div class="cprof__text">
+                <p class="cprof__name" data-cveld="name"></p>
+                <p class="cprof__sub" data-cveld="mail"></p>
+                <p class="cprof__sub" data-cveld="since"></p>
+              </div>
+              <span class="badge badge--danger cprof__state" data-crow="blocked" hidden>Blocked</span>
+            </div>
+
+            <ul class="stats stats--drie">
+              <li class="stat"><p class="stat__label">Total spend</p><p class="stat__value" data-cveld="spend"></p></li>
+              <li class="stat"><p class="stat__label">Total orders</p><p class="stat__value" data-cveld="orders"></p></li>
+              <li class="stat"><p class="stat__label">Average order value</p><p class="stat__value" data-cveld="avg"></p></li>
+            </ul>
+
+            <div class="panel panel--scroll">
+              <div class="panel__head">
+                <span class="panel__title" data-cveld="count"></span>
+                <!-- Sorteren: eerst waarop, daaronder in welke richting. -->
+                <div class="sort">
+                  <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Sort orders">
+                    <svg class="icon" aria-hidden="true"><use href="#i-sort"/></svg>
+                  </button>
+                  <div class="sort__menu" role="menu" hidden>
+                    <p class="sort__head">Sort by</p>
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="field" data-key="num:ago" data-first="asc" data-dir="Latest first|Oldest first">
+                      <span class="sort__dot" aria-hidden="true"></span>Date</button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="field" data-key="num:amount" data-first="desc" data-dir="Highest first|Lowest first">
+                      <span class="sort__dot" aria-hidden="true"></span>Amount</button>
+                    <div class="sort__sep" role="separator"></div>
+                    <button class="sort__item is-selected" type="button" role="menuitemradio" aria-checked="true" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg><span class="sort__dirname">Latest first</span></button>
+                    <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
+                      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg><span class="sort__dirname">Oldest first</span></button>
+                  </div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="table table--corders">
+                  <thead>
+                    <tr><th>Date</th><th>Time</th><th>Order details</th><th>Amount</th><th>Courier</th></tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
             </div>
           </section>
 
@@ -1272,7 +1703,7 @@
               <nav class="panel__foot pager" aria-label="Payout pages">
                 <button class="icon-btn pager__btn" type="button" aria-label="Previous page" disabled><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
                 <button class="icon-btn pager__btn" type="button" aria-label="Next page"><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
-                <p class="pager__count"><b>1&ndash;5</b> of 23</p>
+                <p class="pager__count"><b>1&ndash;23</b> of 23</p>
               </nav>
               </div>
             </div>
@@ -2657,7 +3088,7 @@
             <div class="field">
               <label class="label" for="order-prefix">Order ID Prefix</label>
               <input class="input" id="order-prefix" type="text" value="#" />
-              <p class="hint">Your order ID will appear as #1001, #1002, #1003, …</p>
+              <p class="hint">Your order ID will appear as #260930A01, #260930A02, #260930A03, …</p>
             </div>
             <div class="field-row">
               <div class="field">
@@ -4776,7 +5207,7 @@
             </div>
 
             <div class="table-wrap">
-              <table class="table" data-page="5">
+              <table class="table" data-page="25">
                 <thead>
                   <tr><th scope="col">Date</th><th scope="col">Total</th><th scope="col">Status</th><th scope="col">Actions</th></tr>
                 </thead>
@@ -5759,10 +6190,15 @@
         <div data-opane="customer">
           <div class="odlg__cols">
             <dl class="odlg__list">
-              <div class="odlg__row"><dt>Name</dt><dd data-oveld="name"></dd></div>
+              <!-- De naam leidt naar de klant zelf; het venster gaat dan dicht,
+                   want je kijkt daarna naar een andere pagina. -->
+              <div class="odlg__row"><dt>Name</dt><dd class="odlg__name"><span data-oveld="name"></span><button class="icon-btn odlg__go" type="button" data-goto-page="customers" data-close-order aria-label="Open this customer"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></button></dd></div>
               <div class="odlg__row"><dt>Address</dt><dd data-oveld="address"></dd></div>
               <div class="odlg__row"><dt>Phone</dt><dd data-oveld="phone"></dd></div>
               <div class="odlg__row"><dt>E-mail</dt><dd data-oveld="mail"></dd></div>
+              <!-- Wat de bestelling kost hoort bij wie hem deed; het staat ook
+                   onder de regels op het tabblad ernaast. -->
+              <div class="odlg__row"><dt>Total</dt><dd data-oveld="total"></dd></div>
             </dl>
             <dl class="odlg__list">
               <div class="odlg__row"><dt>Order placed</dt><dd data-oveld="placed"></dd></div>
@@ -5770,7 +6206,7 @@
               <div class="odlg__row"><dt>Estimated time</dt><dd data-oveld="eta"></dd></div>
               <!-- De wijze van betalen herken je sneller aan het teken dan aan
                    het woord; app.js wisselt het icoon mee. -->
-              <div class="odlg__row"><dt>Payment</dt><dd class="odlg__pay"><svg class="icon" id="order-pay-icon" aria-hidden="true"><use href="#i-card"/></svg><span data-oveld="method"></span></dd></div>
+              <div class="odlg__row"><dt>Payment</dt><dd class="odlg__pay"><span class="pm__mark" id="order-pay-mark" aria-hidden="true" hidden><img src="" alt="" /></span><span data-oveld="method"></span></dd></div>
               <!-- Wie het gebracht heeft weet het archief; een bestelling die
                    nog loopt of wordt afgehaald niet. -->
               <div class="odlg__row" data-orow="courier" hidden><dt>Deliverer</dt><dd data-oveld="courier"></dd></div>
@@ -5780,9 +6216,9 @@
 
         <div data-opane="items" hidden>
           <ul class="oitems">
-            <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Pistachio Velvet Latte</span><span class="oitem__sum">&euro;11.90</span></li>
-            <li class="oitem"><span class="oitem__qty">3</span><span class="oitem__name">Iced Protein Matcha</span><span class="oitem__sum">&euro;20.85</span></li>
-            <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Chicken Sandwich</span><span class="oitem__sum">&euro;17.90</span></li>
+            <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Pistachio Velvet Latte<span class="oitem__adds"><span class="oitem__add">Oat milk <span class="oitem__addsum">+&euro;0.50</span></span></span></span><span class="oitem__sum">&euro;11.90</span></li>
+            <li class="oitem"><span class="oitem__qty">3</span><span class="oitem__name">Iced Protein Matcha<span class="oitem__adds"><span class="oitem__add">Extra shot <span class="oitem__addsum">+&euro;0.50</span></span></span></span><span class="oitem__sum">&euro;20.85</span></li>
+            <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Chicken Sandwich<span class="oitem__adds"><span class="oitem__add">Extra avocado <span class="oitem__addsum">+&euro;0.50</span></span><span class="oitem__add">No onion</span></span></span><span class="oitem__sum">&euro;17.90</span></li>
             <li class="oitem"><span class="oitem__qty">1</span><span class="oitem__name">Tomato &amp; Mozzarella Sandwich with bacon</span><span class="oitem__sum">&euro;9.75</span></li>
             <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Cappuccino</span><span class="oitem__sum">&euro;6.90</span></li>
           </ul>
@@ -5812,23 +6248,14 @@
             </svg>
           </div>
 
-          <!-- Van de winkel naar de deur: twee haltes met de rit ertussen. -->
-          <ol class="oroute">
-            <li class="oroute__stop">
-              <span class="oroute__mark" aria-hidden="true"><svg class="icon"><use href="#i-store"/></svg></span>
-              <span class="oroute__text"><b>Opining</b><span class="oroute__sub">Pick up the order</span></span>
-            </li>
-            <li class="oroute__leg" data-orow="leg"><span data-oveld="route-leg"></span></li>
-            <li class="oroute__stop">
-              <span class="oroute__mark oroute__mark--end" aria-hidden="true"><svg class="icon"><use href="#i-pin"/></svg></span>
-              <span class="oroute__text"><b data-oveld="route-to"></b><span class="oroute__sub" data-oveld="route-eta"></span></span>
-            </li>
-          </ol>
         </div>
       </div>
 
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-print-label>Print label</button>
+        <!-- Dezelfde stap als op de regel zelf; app.js zet er de naam van de
+             volgende stand in en laat hem weg bij een bestelling die al klaar is. -->
+        <button class="btn btn--primary" type="button" id="order-step">Move to Kitchen <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
       </div>
     </div>
   </div>
@@ -6480,6 +6907,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=453"></script>
+  <script src="app.js?v=461"></script>
 </body>
 </html>

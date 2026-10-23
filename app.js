@@ -309,12 +309,21 @@
      De knop rechts in de panel-kop wisselt die kop om naar een zoekveld met
      een filterknop. De tabelkop blijft staan: je zoekt in dezelfde lijst,
      niet in een nieuw scherm. */
-  /* data-filters is "Naam:waarde|waarde;Naam:waarde" — één plek per paneel
-     om de filters te benoemen. */
+  /* data-filters is "Naam:waarde|waarde;Naam=waarde|waarde" — één plek per
+     paneel om de filters te benoemen. Met een dubbele punt mag je meerdere
+     waarden tegelijk aanvinken; met een = kies je er één, want zoiets als een
+     bedragklasse of geblokkeerd-of-niet sluit elkaar uit. */
   function leesFilters(psearch) {
     return (psearch.dataset.filters || "").split(";").filter(Boolean).map(function (deel) {
-      var stuk = deel.split(":");
-      return { naam: stuk[0], waarden: (stuk[1] || "").split("|").filter(Boolean) };
+      var punt = deel.indexOf(":");
+      var isGelijk = deel.indexOf("=");
+      var knip = punt < 0 || (isGelijk >= 0 && isGelijk < punt) ? isGelijk : punt;
+      if (knip < 0) return { naam: deel, waarden: [], een: false };
+      return {
+        naam: deel.slice(0, knip),
+        een: deel.charAt(knip) === "=",
+        waarden: deel.slice(knip + 1).split("|").filter(Boolean)
+      };
     });
   }
 
@@ -338,7 +347,9 @@
     return chip;
   }
 
-  /* Een toegevoegd filter klapt open met zijn waarden; je kiest er nul of meer. */
+  var chipTeller = 0;
+  /* Een toegevoegd filter klapt open met zijn waarden; je kiest er nul of meer,
+     of één als het filter dat zo heeft opgeschreven. */
   function chipVanFilter(filter) {
     var chip = document.createElement("span");
     chip.className = "fchip fchip--drop";
@@ -353,10 +364,14 @@
     var menu = document.createElement("div");
     menu.className = "fchip__menu";
     menu.hidden = true;
+    /* Een naam per chip, zodat twee chips elkaars rondjes niet uitzetten. */
+    var groep = "fopt-" + (++chipTeller);
     filter.waarden.forEach(function (waarde) {
       var optie = document.createElement("label");
-      optie.className = "fopt";
-      optie.innerHTML = '<input type="checkbox" /><span></span>';
+      optie.className = filter.een ? "fopt fopt--een" : "fopt";
+      optie.innerHTML = filter.een
+        ? '<input type="radio" name="' + groep + '" /><span></span>'
+        : '<input type="checkbox" /><span></span>';
       optie.querySelector("span").textContent = waarde;
       menu.appendChild(optie);
     });
@@ -477,7 +492,10 @@
     var s = kop.querySelector(".sfilter__label");
     if (s) return s.textContent.trim();
     var tab = kop.querySelector(".tab.is-active");
-    return tab ? tab.textContent.replace(/\s*[\d.]+\s*$/, "").trim() : "";
+    if (!tab) return "";
+    /* Een tab mag anders heten dan de waarde waarop hij filtert. */
+    if (tab.dataset.value) return tab.dataset.value;
+    return tab.textContent.replace(/\s*[\d.]+\s*$/, "").trim();
   }
 
   function vulFilterMenu(psearch) {
@@ -526,6 +544,9 @@
     /* Staat de waarde nergens in de tekst — een status die alleen als knop
        bestaat — dan draagt de rij hem in data-filter. */
     if (rij.dataset.filter) stukken.push(rij.dataset.filter);
+    /* Een klant toont zijn mailadres niet meer in de lijst; zoeken erop
+       hoort gewoon te blijven werken. */
+    if (rij.dataset.mail) stukken.push(rij.dataset.mail);
     return stukken.join(" ").replace(/\s+/g, " ").trim().toLowerCase();
   }
 
@@ -546,15 +567,64 @@
      die suggereert een server met meer rijen dan hier staan. Zodra je filtert
      klopt dat niet meer, dus dan vertelt de teller wat er écht overblijft en
      zijn de bladerknoppen uit. Filter weg, oude tekst terug. */
-  /* Bladeren heeft pas zin voorbij een volle pagina. De vaste teller doet alsof
-     er meer op de server staan, maar of je kunt bladeren hangt af van wat er
-     werkelijk in de lijst staat. */
-  var PAGINA = 20;
+  /* Een pagina draagt vijfentwintig regels. Bladeren heeft pas zin voorbij een
+     volle pagina: de vaste teller doet alsof er meer op de server staan, maar
+     of je kunt bladeren hangt af van wat er werkelijk in de lijst staat. */
+  var PAGINA = 25;
+
+  /* ---- Sorteren -----------------------------------------------------------
+     Een sorteerknop die niets doet is een knop die liegt. Het gekozen veld
+     draagt waarop gesorteerd wordt (een kolom of een getal op de regel) en
+     welke kant zijn bovenste richting op gaat; de onderste is de andere. */
+  function sorteerWaarde(rij, sleutel) {
+    if (sleutel[0] === "num") return Number(rij.dataset[sleutel[1]]) || 0;
+    var cel = rij.cells[Number(sleutel[1])];
+    return cel ? cel.textContent.trim().toLowerCase() : "";
+  }
+
+  function pasSortering(blok) {
+    var veld = blok.querySelector('[data-sort="field"].is-selected');
+    if (!veld || !veld.dataset.key) return;
+    var panel = blok.closest(".panel");
+    var tabel = panel && panel.querySelector("table");
+    if (!tabel || !tabel.tBodies[0]) return;
+
+    var richtingen = blok.querySelectorAll('[data-sort="dir"]');
+    var andersom = richtingen[1] && richtingen[1].classList.contains("is-selected");
+    var oplopend = (veld.dataset.first !== "desc") !== !!andersom;
+    var sleutel = veld.dataset.key.split(":");
+
+    var rijen = [].slice.call(tabel.tBodies[0].rows);
+    rijen.sort(function (p, q) {
+      var x = sorteerWaarde(p, sleutel), y = sorteerWaarde(q, sleutel);
+      if (x < y) return oplopend ? -1 : 1;
+      if (x > y) return oplopend ? 1 : -1;
+      return 0;
+    });
+    rijen.forEach(function (r) { tabel.tBodies[0].appendChild(r); });
+    /* Wie bladert kijkt daarna naar andere regels op pagina een. */
+    if (tabel.herpagineer) tabel.herpagineer();
+  }
 
   function zetPagerZichtbaar(panel, aantal) {
     var voet = panel.querySelector(".pager");
-    if (voet) voet.hidden = aantal <= PAGINA;
+    if (!voet) return;
+    /* Een vaste teller zegt hoeveel er in het echt zijn; daar hangt het van af
+       of er een tweede pagina bestaat, niet van de steekproef in de HTML. */
+    var teller = voet.querySelector(".pager__count");
+    var vast = teller && (teller.dataset.vast !== undefined ? teller.dataset.vast : teller.innerHTML);
+    var totaal = vast && vast.indexOf(" of ") !== -1
+      ? Number(vast.split(" of ").pop().replace(/[^0-9]/g, ""))
+      : aantal;
+    voet.hidden = (isFinite(totaal) && totaal ? totaal : aantal) <= PAGINA;
   }
+
+  /* Bij het laden staat er nog geen filter; zonder deze ronde blijft een voet
+     staan onder een lijst die in zijn geheel op de pagina past. */
+  document.querySelectorAll(".panel").forEach(function (panel) {
+    if (!panel.querySelector(".pager") || panel.querySelector("table[data-page]")) return;
+    zetPagerZichtbaar(panel, panel.querySelectorAll("tbody tr").length);
+  });
 
   function syncVastePager(panel, actief, aantal) {
     var voet = panel.querySelector(".pager");
@@ -575,6 +645,62 @@
   /* Eén ingang voor alle inperkingen op een paneel. Buiten de zoekstand is dat
      de gekozen tab of het statusfilter; erbinnen zijn het het zoekwoord en de
      chips, want de tab is dan als chip meegenomen. */
+  /* De meeste filters kijken naar de tekst van een regel. Een bedragklasse of
+     een termijn staat daar niet in: die rekent met wat de regel aan gegevens
+     draagt. Een filter zonder regel hieronder blijft gewoon op tekst zoeken. */
+  var FILTERREGELS = {
+    "Total orders": function (rij, waarde) {
+      var n = Number(rij.dataset.orders);
+      if (isNaN(n)) return false;
+      if (waarde.indexOf("0 ") === 0) return n === 0;
+      if (waarde.indexOf("1 ") === 0) return n === 1;
+      if (waarde.indexOf("2-9") === 0) return n >= 2 && n <= 9;
+      return n >= 10;
+    },
+    "Lifetime value": function (rij, waarde) {
+      var n = Number(rij.dataset.spent);
+      if (isNaN(n)) return false;
+      if (waarde.indexOf("low") === 0) return n < 100;
+      if (waarde.indexOf("medium") === 0) return n >= 100 && n < 500;
+      if (waarde.indexOf("high") === 0) return n >= 500 && n < 1000;
+      return n >= 1000;
+    },
+    /* Wanneer hij voor het laatst bestelde, geteld in dagen terug. */
+    "Order timeframe": function (rij, waarde) {
+      var d = Number(rij.dataset.lastdays);
+      if (isNaN(d)) return false;
+      /* De woorden komen uit een filtermenu of van een tab ("Ordered today"),
+         dus kijken we waar ze over gaan, niet waar ze mee beginnen. */
+      if (waarde.indexOf("last 7") !== -1) return d <= 7;
+      if (waarde.indexOf("last 30") !== -1) return d <= 30;
+      if (waarde.indexOf("last 90") !== -1) return d <= 90;
+      if (waarde.indexOf("today") !== -1) return d === 0;
+      return d <= 365;
+    },
+    /* Hier juist andersom: wie al die tijd niets besteld heeft. */
+    "Last order": function (rij, waarde) {
+      var d = Number(rij.dataset.lastdays);
+      if (isNaN(d)) return false;
+      if (waarde.indexOf("30 days") !== -1) return d > 30;
+      if (waarde.indexOf("90 days") !== -1) return d > 90;
+      if (waarde.indexOf("6 months") !== -1) return d > 182;
+      return d > 365;
+    },
+    "Account state": function (rij, waarde) {
+      var dicht = rij.dataset.blocked === "yes";
+      return waarde.indexOf("not") === 0 ? !dicht : dicht;
+    }
+  };
+
+  function voldoet(rij, tekst, eisen) {
+    return eisen.every(function (eis) {
+      var regel = FILTERREGELS[eis.naam];
+      return eis.waarden.some(function (waarde) {
+        return regel ? regel(rij, waarde) : tekst.indexOf(waarde) !== -1;
+      });
+    });
+  }
+
   function pasPaneelFilter(kop) {
     /* Een zoekbalk hoeft niet boven de lijst te staan die hij doorzoekt: met
        data-list wijst hij hem aan. */
@@ -599,13 +725,21 @@
         var aan = [].slice.call(chip.querySelectorAll("input:checked")).map(function (i) {
           return i.nextElementSibling.textContent.trim().toLowerCase();
         });
-        if (aan.length) { eisen.push(aan); return; }
+        var naam = (chip.dataset.naam || "").trim();
+        if (aan.length) { eisen.push({ naam: naam, waarden: aan }); return; }
         /* De chip die je vanuit de tab meenam draagt zijn waarde in het label. */
-        if (!chip.classList.contains("fchip--drop")) eisen.push([chip.textContent.trim().toLowerCase()]);
+        if (!chip.classList.contains("fchip--drop")) {
+          eisen.push({ naam: naam, waarden: [chip.textContent.trim().toLowerCase()] });
+        }
       });
     } else {
       var gekozen = actieveInperking(kop);
-      if (gekozen && !/^All\b/i.test(gekozen)) eisen.push([gekozen.toLowerCase()]);
+      /* Een tabstreep kan een filter zijn dat rekent in plaats van zoekt; dan
+         staat de naam ervan op de streep. */
+      var tabs = kop.querySelector("[data-filter-name]");
+      if (gekozen && !/^All\b/i.test(gekozen)) {
+        eisen.push({ naam: tabs ? tabs.dataset.filterName : "", waarden: [gekozen.toLowerCase()] });
+      }
     }
 
     /* De menukaart: gerechten in groepen in plaats van rijen in een tabel. Een
@@ -619,9 +753,7 @@
            filteren identiek. */
         groep.querySelectorAll(".prod, .ocard").forEach(function (rij) {
           var tekst = rijTekst(rij);
-          var past = (!zoek || tekst.indexOf(zoek) !== -1) && eisen.every(function (groepEis) {
-            return groepEis.some(function (waarde) { return tekst.indexOf(waarde) !== -1; });
-          });
+          var past = (!zoek || tekst.indexOf(zoek) !== -1) && voldoet(rij, tekst, eisen);
           rij.hidden = !past;
           if (past) zichtbaar++;
         });
@@ -644,9 +776,7 @@
     var over = 0;
     [].slice.call(tabel.tBodies[0].rows).forEach(function (rij) {
       var tekst = rijTekst(rij);
-      var past = (!zoek || tekst.indexOf(zoek) !== -1) && eisen.every(function (groep) {
-        return groep.some(function (waarde) { return tekst.indexOf(waarde) !== -1; });
-      });
+      var past = (!zoek || tekst.indexOf(zoek) !== -1) && voldoet(rij, tekst, eisen);
       if (past) { delete rij.dataset.filtered; over++; }
       else rij.dataset.filtered = "1";
     });
@@ -870,6 +1000,16 @@
         });
       sortItem.classList.add("is-selected");
       sortItem.setAttribute("aria-checked", "true");
+      /* Op- en aflopend heet anders per veld: een naam loopt van A naar Z,
+         een datum van nieuw naar oud. Het veld draagt die twee woorden. */
+      pasSortering(sortItem.closest(".sort__menu"));
+      if (groep === "field" && sortItem.dataset.dir) {
+        var woorden = sortItem.dataset.dir.split("|");
+        sortItem.closest(".sort__menu")
+          .querySelectorAll('[data-sort="dir"] .sort__dirname').forEach(function (naam, i) {
+            naam.textContent = woorden[i] || "";
+          });
+      }
       return;
     }
 
@@ -2110,6 +2250,15 @@
      ligt klaar voor de klant, een bezorgbestelling gaat mee de deur uit. */
   var UITNAAM = { collection: "Ready for takeaway", delivery: "Move to delivery" };
 
+  /* Hoe de volgende stap heet. De knop op de regel en de knop in het venster
+     zeggen hetzelfde, dus het staat op een plek. */
+  function stapNaam(kaart) {
+    var doel = VOLGENDE[kaart.dataset.filter];
+    if (!doel) return "";
+    var eigen = doel === "outgoing" && UITNAAM[kaart.dataset.type];
+    return eigen || STAPNAAM[doel];
+  }
+
   function zetStapKnop(kaart) {
     var knop = kaart.querySelector(".rowact .btn--accent");
     if (!knop) return;
@@ -2117,8 +2266,8 @@
     if (!doel) { knop.hidden = true; return; }
     knop.hidden = false;
     /* Alleen het tekstdeel vervangen; de chevron erachter blijft staan. */
-    var eigen = doel === "outgoing" && UITNAAM[kaart.dataset.type];
-    var naam = eigen || STAPNAAM[doel];
+    var naam = stapNaam(kaart);
+    var eigen = naam !== STAPNAAM[doel];
     knop.firstChild.nodeValue = naam + " ";
     /* "Move to Ready for takeaway" leest nergens naar; die twee zeggen zelf al
        wat de knop doet. */
@@ -2147,10 +2296,9 @@
     romp.insertBefore(nieuw, romp.firstChild);
   }
 
-  document.addEventListener("click", function (e) {
-    var knop = e.target.closest(".ocard .rowact .btn--accent");
-    if (!knop) return;
-    var kaart = knop.closest(".ocard");
+  /* Eén stap verder, of je nu op de regel klikt of in het venster van de
+     bestelling. */
+  function zetStapDoor(kaart) {
     var doel = VOLGENDE[kaart.dataset.filter];
     if (!doel) return;
 
@@ -2170,6 +2318,11 @@
 
     zetKolomTellers();
     showToast(doel === "archief" ? naam + " archived" : naam + " moved to " + STAPNAAM[doel]);
+  }
+
+  document.addEventListener("click", function (e) {
+    var knop = e.target.closest(".ocard .rowact .btn--accent");
+    if (knop) zetStapDoor(knop.closest(".ocard"));
   });
 
   if (bord) {
@@ -2178,6 +2331,248 @@
     bord.querySelectorAll(".group[data-status]").forEach(sorteerOpTijd);
     zetKolomTellers();
   }
+
+  /* ---- Een bestelling opengeslagen ---------------------------------------
+     De live lijst en het archief openen hetzelfde venster. Wat erin staat
+     komt van de regel waarop je klikt: een kaartje draagt zijn gegevens in
+     data-attributen, een archiefrij deels in zijn cellen. */
+  var orderVenster = document.getElementById("order-dialog");
+  var orderStap = orderVenster && orderVenster.querySelector("#order-step");
+  var orderRegel = null;   /* de regel waar het open venster bij hoort */
+
+  function leesBestelling(rij) {
+    var kaart = rij.classList.contains("ocard");
+    var bestemming = kaart
+      ? rij.querySelector(".ocard__dest").textContent.trim()
+      : rij.cells[0].textContent.trim();
+    /* Afhalen heeft geen adres en geen bezorger; dat scheelt ook de
+       bezorgkosten onder de regels. */
+    var afhalen = kaart ? rij.dataset.type === "collection" : bestemming === "Collection";
+    return {
+      nr: rij.dataset.order || "",
+      naam: rij.dataset.name || "",
+      adres: afhalen ? "Pickup in store" : bestemming,
+      tel: rij.dataset.phone || "",
+      mail: rij.dataset.mail || "",
+      geplaatst: rij.dataset.placed || "",
+      /* Wat de klant wilde staat op de regel: het merkje toont wat wij denken
+         te halen, en dat is iets anders. */
+      wens: rij.dataset.wish || "",
+      eta: rij.dataset.eta || "",
+      wijze: rij.dataset.method || "",
+      bezorger: (afhalen || kaart || !rij.cells[3]) ? "" : rij.cells[3].textContent.trim(),
+      bedrag: rij.dataset.pay || (rij.cells && rij.cells[2] ? rij.cells[2].textContent.trim() : ""),
+      afhalen: afhalen
+    };
+  }
+
+  /* Dezelfde merkjes als op de betaalpagina, zodat iDEAL er in een bestelling
+     uitziet als iDEAL. Contant heeft er zelf geen, dus draagt het er een van
+     ons in dezelfde vorm. Een wijze die we niet kennen laat de plek leeg. */
+  var BETAALMERK = {
+    ideal: "idealwero.svg", visa: "visa.svg", mastercard: "mastercard.svg",
+    maestro: "maestro.svg", paypal: "paypal.svg", klarna: "klarna.svg",
+    "apple pay": "apple.svg", "google pay": "google.svg", cash: "cash.svg"
+  };
+  function zetBetaalIcoon(wijze) {
+    var merk = document.getElementById("order-pay-mark");
+    if (!merk) return;
+    var plaatje = BETAALMERK[(wijze || "").toLowerCase()];
+    merk.hidden = !plaatje;
+    if (plaatje) merk.querySelector("img").src = "img/pay/" + plaatje;
+  }
+
+  /* Een gegeven mag op meer dan een plek in het venster staan — het totaal
+     staat bij de klant en onder de regels — dus alle plekken krijgen het. */
+  function zetVeld(naam, waarde) {
+    orderVenster.querySelectorAll('[data-oveld="' + naam + '"]').forEach(function (vak) {
+      vak.textContent = waarde;
+    });
+  }
+
+  function zetOrderRij(naam, aan) {
+    var rij = orderVenster.querySelector('[data-orow="' + naam + '"]');
+    if (rij) rij.hidden = !aan;
+  }
+
+  function toonOrderPaneel(naam) {
+    orderVenster.querySelectorAll("[data-opane]").forEach(function (paneel) {
+      paneel.hidden = paneel.dataset.opane !== naam;
+    });
+    orderVenster.querySelectorAll("[data-otab]").forEach(function (tab) {
+      var aan = tab.dataset.otab === naam;
+      tab.classList.toggle("is-active", aan);
+      tab.setAttribute("aria-selected", String(aan));
+    });
+  }
+
+  function openBestelling(rij) {
+    var b = leesBestelling(rij);
+    orderVenster.querySelector(".dialog__title").textContent = "Order #" + b.nr;
+    zetVeld("name", b.naam);
+    zetVeld("address", b.adres);
+    zetVeld("phone", b.tel);
+    zetVeld("mail", b.mail);
+    zetVeld("placed", b.geplaatst);
+    zetVeld("wish", b.wens);
+    zetVeld("eta", b.eta);
+    zetVeld("method", b.wijze);
+    zetBetaalIcoon(b.wijze);
+    zetVeld("courier", b.bezorger);
+    zetVeld("total", b.bedrag);
+    zetOrderRij("courier", !!b.bezorger);
+    zetOrderRij("fee", !b.afhalen);
+
+    /* Wie afhaalt legt geen route af; dan is er niets te plannen. */
+    var routeTab = orderVenster.querySelector('[data-otab="route"]');
+    if (routeTab) routeTab.hidden = b.afhalen;
+    /* Een archiefrij is al klaar; daar valt niets meer door te zetten. */
+    orderRegel = rij.classList.contains("ocard") ? rij : null;
+    if (orderStap) {
+      var stap = orderRegel ? stapNaam(orderRegel) : "";
+      orderStap.hidden = !stap;
+      if (stap) {
+        orderStap.firstChild.nodeValue = stap + " ";
+        orderStap.setAttribute("aria-label",
+          stap === "Kitchen" || stap === "Archive" ? "Move to " + stap : stap);
+      }
+    }
+
+    /* Een volgende bestelling begint weer bij wie het is. */
+    toonOrderPaneel("customer");
+    orderVenster.hidden = false;
+  }
+
+  if (orderVenster) {
+    document.addEventListener("click", function (e) {
+      var rij = e.target.closest(".ocard, .table--archive tbody tr");
+      if (rij) { openBestelling(rij); return; }
+      var tab = e.target.closest("#order-dialog [data-otab]");
+      if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
+      /* Naar de klant toe: de paginawissel regelt data-goto-page, hier gaat
+         alleen het venster dicht. */
+      if (e.target.closest("[data-close-order]")) { orderVenster.hidden = true; return; }
+      if (e.target.closest("#order-step") && orderRegel) {
+        /* Doorzetten sluit het venster: de bestelling staat daarna ergens
+           anders, en wat je hier las klopt dan niet meer. */
+        zetStapDoor(orderRegel);
+        orderVenster.hidden = true;
+        return;
+      }
+      if (e.target.closest("[data-print-label]")) showToast("Label sent to printer");
+    });
+  }
+
+  /* ========================================================================
+     EEN KLANT — alles van één klant op een eigen pagina
+     De regel in de lijst draagt al wat de pagina nodig heeft; de bestellingen
+     eronder worden eruit afgeleid. In productie komt die lijst van de server;
+     hier verdeelt hij het totaal over de laatste bestellingen, zodat de som
+     klopt met wat de klant heeft uitgegeven.
+     ======================================================================== */
+  (function () {
+    var vak = document.querySelector('[data-view="customer"]');
+    if (!vak) return;
+    var romp = vak.querySelector("tbody");
+    var BEZORGERS = ["Youssef Amrani", "Nina Bakker", "Ruben de Wit"];
+    var MAAND = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    /* Zelfde vaste dag als de rest van het prototype. */
+    var VANDAAG = new Date(2026, 8, 30);
+
+    /* Duizendtal met een punt, centen met een komma, zoals de rest van de
+       lijsten het toont. */
+    function geld(n) {
+      var vast = n.toFixed(2);
+      var heel = vast.slice(0, -3);
+      var cent = vast.slice(-2);
+      if (heel.length > 3) heel = heel.slice(0, heel.length - 3) + "." + heel.slice(heel.length - 3);
+      return "€ " + heel + "," + cent;
+    }
+    function datum(d) { return d.getDate() + " " + MAAND[d.getMonth()] + " " + d.getFullYear(); }
+
+    function zet(naam, waarde) {
+      var el = vak.querySelector('[data-cveld="' + naam + '"]');
+      if (el) el.textContent = waarde;
+    }
+
+    /* De laatste bestellingen, hoogstens vijf. Passen ze er allemaal in, dan
+       tellen ze samen op tot het totaal; anders zijn het de recentste. */
+    function bestellingen(aantal, totaal, dagen, adressen) {
+      var toon = Math.min(aantal, 5);
+      var rijen = [];
+      var allemaal = toon === aantal;
+      var per = allemaal ? totaal / toon : totaal / aantal;
+      var rest = allemaal ? totaal - Math.round(per * 100) / 100 * toon : 0;
+      for (var i = 0; i < toon; i++) {
+        var d = new Date(VANDAAG.getTime());
+        d.setDate(d.getDate() - dagen - i * 9);
+        var bedrag = Math.round(per * 100) / 100 + (i === 0 ? Math.round(rest * 100) / 100 : 0);
+        var afhalen = i % 3 === 2;
+        rijen.push({
+          /* Waarop gesorteerd wordt staat op de regel: hoeveel dagen geleden,
+             en het bedrag als getal. */
+          dagen: dagen + i * 9,
+          datum: datum(d),
+          tijd: ["18:40", "17:05", "19:20", "12:35", "20:10"][i],
+          wat: afhalen ? "Takeaway" : adressen[i % adressen.length],
+          afhalen: afhalen,
+          bedrag: bedrag,
+          bezorger: afhalen ? "" : BEZORGERS[i % BEZORGERS.length]
+        });
+      }
+      return rijen;
+    }
+
+    function vul(rij) {
+      var naam = rij.cells[1].textContent.replace("Blocked", "").trim();
+      var adresCel = rij.cells[2];
+      var alle = adresCel.querySelector("[data-codes]");
+      var adressen = alle
+        ? alle.dataset.codes.split(",").map(function (s) { return s.trim(); })
+        : [adresCel.textContent.trim()];
+      var aantal = Number(rij.dataset.orders) || 0;
+      var besteed = Number(rij.dataset.spent) || 0;
+
+      zet("initials", naam.split(" ").map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase());
+      zet("name", naam);
+      zet("mail", rij.dataset.mail || "");
+      zet("since", "Customer for " + rij.dataset.since + " days");
+      zet("spend", geld(besteed));
+      zet("orders", aantal + (aantal === 1 ? " order" : " orders"));
+      zet("avg", aantal ? geld(besteed / aantal) : "—");
+      zet("count", aantal + (aantal === 1 ? " order" : " orders"));
+      vak.querySelector('[data-crow="blocked"]').hidden = rij.dataset.blocked !== "yes";
+
+      romp.textContent = "";
+      bestellingen(aantal, besteed, Number(rij.dataset.lastdays) || 0, adressen).forEach(function (b) {
+        var tr = document.createElement("tr");
+        tr.dataset.ago = b.dagen;
+        tr.dataset.amount = b.bedrag.toFixed(2);
+        tr.innerHTML =
+          "<td></td><td></td>" +
+          '<td><span class="corder"><svg class="icon corder__icon" aria-hidden="true"><use href="#i-deliverers"/></svg><span></span></span></td>' +
+          "<td></td>" +
+          '<td><span class="badge badge--muted"></span></td>';
+        tr.cells[0].textContent = b.datum;
+        tr.cells[1].textContent = b.tijd;
+        tr.cells[2].querySelector("span span").textContent = b.wat;
+        if (b.afhalen) tr.cells[2].querySelector("use").setAttribute("href", "#i-bag");
+        tr.cells[3].textContent = geld(b.bedrag);
+        tr.cells[4].querySelector(".badge").textContent = b.bezorger || "N.A.";
+        romp.appendChild(tr);
+      });
+    }
+
+    /* De knoppen in de regel doen hun eigen ding; de rest van de regel opent
+       de klant. */
+    document.addEventListener("click", function (e) {
+      var rij = e.target.closest('[data-view="customers"] tbody tr');
+      if (!rij) return;
+      if (e.target.closest("button, a, label, input")) return;
+      vul(rij);
+      openPageSub("customer", rij.cells[1].textContent.replace("Blocked", "").trim());
+    });
+  })();
 
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
   var pageAction = document.getElementById("page-action");
@@ -4142,7 +4537,9 @@
     pop = document.createElement("div");
     pop.className = "codepop";
     pop.setAttribute("role", "dialog");
-    pop.setAttribute("aria-label", "Postal codes");
+    /* Dezelfde teller draagt postcodes of adressen; het woord staat erbij. */
+    var woord = knop.dataset.codesNoun || "postal codes";
+    pop.setAttribute("aria-label", woord.charAt(0).toUpperCase() + woord.slice(1));
     knop.dataset.codes.split(",").forEach(function (code) {
       var chip = document.createElement("span");
       chip.textContent = code.trim();
@@ -4175,6 +4572,30 @@
   /* Meescrollen zou hem naast de knop laten zweven; dan liever weg. */
   window.addEventListener("resize", sluitPop);
   document.addEventListener("scroll", sluitPop, true);
+
+  /* ---- Regels aankruisen -------------------------------------------------
+     Het vakje in de kop volgt de regels eronder: alles aan, alles uit, of
+     half zolang er een deel aanstaat. */
+  function zetKopVakje(tabel) {
+    var kop = tabel.querySelector("[data-pick-all]");
+    if (!kop) return;
+    var vakjes = [].slice.call(tabel.querySelectorAll("[data-pick]"));
+    var aan = vakjes.filter(function (v) { return v.checked; }).length;
+    kop.checked = aan > 0 && aan === vakjes.length;
+    kop.indeterminate = aan > 0 && aan < vakjes.length;
+  }
+
+  document.addEventListener("change", function (e) {
+    var kop = e.target.closest("[data-pick-all]");
+    if (kop) {
+      var tabel = kop.closest("table");
+      tabel.querySelectorAll("[data-pick]").forEach(function (v) { v.checked = kop.checked; });
+      zetKopVakje(tabel);
+      return;
+    }
+    var een = e.target.closest("[data-pick]");
+    if (een) zetKopVakje(een.closest("table"));
+  });
 
   /* ========================================================================
      11. SYSTEEMKIEZER — op een telefoon kiest de telefoon
@@ -4230,7 +4651,7 @@
     sel.className = "codes__native";
     sel.setAttribute("aria-label", knop.getAttribute("aria-label") || "Postal codes");
     var kop = document.createElement("option");
-    kop.textContent = codes.length + " postal codes";
+    kop.textContent = codes.length + " " + (knop.dataset.codesNoun || "postal codes");
     sel.appendChild(kop);
     codes.forEach(function (code) {
       var opt = document.createElement("option");
