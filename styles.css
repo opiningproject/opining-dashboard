@@ -4329,7 +4329,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   appearance: none;
   width: 18px; height: 18px;
   border: 1.5px solid var(--border-strong);
-  border-radius: var(--r-sm);
+  border-radius: calc(var(--r-sm) - 3px);
   cursor: pointer;
 }
 .rowpick__box input:checked {
