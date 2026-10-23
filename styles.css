@@ -1452,11 +1452,13 @@ select.input {
 }
 .fchip__menu[hidden] { display: none; }
 .fopt { display: flex; align-items: center; gap: 10px; padding: 6px 4px; font-size: var(--fs-md); font-weight: 400; color: var(--text-strong); cursor: pointer; }
+/* Een vakje van achttien pixels met de kleine radius wordt bijna een pil; een
+   slag minder rond leest als een vakje om aan te vinken. */
 .fopt input {
   appearance: none;
   width: 18px; height: 18px; flex: 0 0 auto;
   border: 1.5px solid var(--border-strong);
-  border-radius: var(--r-sm);
+  border-radius: calc(var(--r-sm) - 3px);
 }
 .fopt input:checked {
   border-color: var(--accent);
