@@ -4261,6 +4261,35 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    afgesproken tijd. Dat tijdstip leest als cijfers op een rij. */
 .ocard__meta .badge { display: inline-flex; align-items: center; font-variant-numeric: tabular-nums; }
 
+/* Rechts op de regel: wat de eigenaar moet weten voordat hij de bestelling
+   aanpakt en wat nergens anders op de regel staat. Alleen de omtrek, zodat ze
+   niet met de tijd ernaast om aandacht vechten; aanwijzen zegt wat ze
+   betekenen. */
+.omarks { display: inline-flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+.omark {
+  position: relative;
+  display: grid; place-items: center;
+  color: var(--text-muted);
+  cursor: help;
+}
+.omark .icon { width: 17px; height: 17px; }
+.omark:hover, .omark:focus-visible { color: var(--text-strong); outline: none; }
+.omark__tip {
+  position: absolute; top: calc(100% + 8px); right: -8px;
+  z-index: 30;
+  display: none;
+  width: max-content; max-width: 240px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-md);
+  font-size: var(--fs-sm); line-height: 1.45; color: var(--text);
+  text-align: left; white-space: normal;
+}
+.omark:hover .omark__tip, .omark:focus-within .omark__tip { display: block; }
+.omark__tip b { display: block; margin-bottom: 3px; font-weight: 600; color: var(--text-strong); }
+
 
 /* ---- Opzeggen bevestigen -------------------------------------------------
    Een merkteken boven de titel in plaats van ernaast, zodat de kop van het

@@ -2325,9 +2325,43 @@
     if (knop) zetStapDoor(knop.closest(".ocard"));
   });
 
+  /* ---- Wat de eigenaar moet opmerken -------------------------------------
+     Twee dingen staan niet in het adres en niet in de tijd: of er contant
+     betaald wordt -- dan moet er wisselgeld mee -- en of de klant iets heeft
+     doorgegeven. Allebei een teken rechts op de regel, met de uitleg eronder
+     zodra je het aanwijst. Ze komen uit wat de regel zelf draagt, zodat ze
+     niet kunnen afwijken van wat er in het venster staat. */
+  function merkteken(icoon, kop, tekst) {
+    var merk = document.createElement("span");
+    merk.className = "omark";
+    merk.tabIndex = 0;
+    /* Een teken met een betekenis is geen versiering: wie laat voorlezen
+       hoort waar het over gaat, ook zonder het aan te wijzen. */
+    merk.setAttribute("role", "img");
+    merk.setAttribute("aria-label", kop ? kop + ": " + tekst : tekst);
+    merk.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#' + icoon + '"/></svg>'
+      + '<span class="omark__tip" aria-hidden="true">' + (kop ? "<b></b>" : "") + "<span></span></span>";
+    if (kop) merk.querySelector("b").textContent = kop;
+    merk.querySelector(".omark__tip span").textContent = tekst;
+    return merk;
+  }
+
+  function zetMerktekens(kaart) {
+    var oud = kaart.querySelector(".omarks");
+    if (oud) oud.remove();
+    var plek = document.createElement("span");
+    plek.className = "omarks";
+    if (kaart.dataset.note) plek.appendChild(merkteken("i-note", "Customer note", kaart.dataset.note));
+    if ((kaart.dataset.method || "").toLowerCase() === "cash") {
+      plek.appendChild(merkteken("i-cash", "", "The customer pays cash, so bring change."));
+    }
+    if (plek.children.length) kaart.appendChild(plek);
+  }
+
   if (bord) {
     bord.querySelectorAll(".ocard").forEach(zetStapKnop);
     bord.querySelectorAll(".ocard").forEach(zetStip);
+    bord.querySelectorAll(".ocard").forEach(zetMerktekens);
     bord.querySelectorAll(".group[data-status]").forEach(sorteerOpTijd);
     zetKolomTellers();
   }
