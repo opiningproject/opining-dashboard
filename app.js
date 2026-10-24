@@ -2597,12 +2597,13 @@
       });
     }
 
-    /* De knoppen in de regel doen hun eigen ding; de rest van de regel opent
-       de klant. */
+    /* Alleen de naam opent de klant. De rest van de regel doet niets: op een
+       telefoon raak je anders de hele regel aan terwijl je wilde aankruisen,
+       schuiven of een adres bekijken. */
     document.addEventListener("click", function (e) {
-      var rij = e.target.closest('[data-view="customers"] tbody tr');
-      if (!rij) return;
-      if (e.target.closest("button, a, label, input")) return;
+      var naam = e.target.closest('[data-view="customers"] [data-cust-open]');
+      if (!naam) return;
+      var rij = naam.closest("tr");
       vul(rij);
       openPageSub("customer", rij.cells[1].textContent.replace("Blocked", "").trim());
     });
@@ -4714,15 +4715,10 @@
   function blokkeerRij(rij) {
     if (rij.dataset.blocked === "yes") return;
     rij.dataset.blocked = "yes";
-    var cel = rij.cells[1];
-    var naam = cel.textContent.trim();
-    cel.textContent = "";
-    var vak = document.createElement("span");
-    vak.className = "cname";
-    vak.textContent = naam;
-    vak.insertAdjacentHTML("beforeend",
+    var knop = rij.cells[1].querySelector("[data-cust-open]");
+    if (!knop) return;
+    knop.insertAdjacentHTML("beforeend",
       '<svg class="icon cname__block" aria-hidden="true"><use href="#i-lock"/></svg><span class="sr-only">Blocked</span>');
-    cel.appendChild(vak);
   }
 
   document.addEventListener("click", function (e) {

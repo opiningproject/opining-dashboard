@@ -4429,7 +4429,17 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 }
 
 /* Een klant die niet mag bestellen draagt dat achter zijn naam. */
-.cname { display: inline-flex; align-items: center; gap: 6px; }
+/* De naam is de ingang naar de klant, en als enige in de regel: op een
+   telefoon tik je anders zo de pagina open terwijl je wilde aankruisen of
+   schuiven. Hij leest als de rest van de regel en laat bij aanwijzen zien
+   dat er iets achter zit. */
+.cname {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: inherit; color: inherit; text-align: left;
+  text-underline-offset: 3px;
+}
+.cname:hover { text-decoration: underline; }
+.cname:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
 .cname__block { width: 15px; height: 15px; color: var(--danger); }
 
 /* ---- Een klant op zijn eigen pagina --------------------------------------
@@ -4462,7 +4472,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* De titel van een paneel zonder tabs: even zwaar als een kaarttitel. */
 .panel__title { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
 /* Een regel in de klantenlijst gaat ergens heen. */
-.table--customers tbody tr { cursor: pointer; }
 
 /* De kop van een tabel lijnt standaard links uit; een kolom met bedragen
    wint het van die regel alleen met dezelfde zwaarte. */
