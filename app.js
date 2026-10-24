@@ -2011,7 +2011,7 @@
      Een nieuwe volgorde gaat niet vanzelf live. Wijkt hij af van wat bewaard
      is, dan komt de savebar; terugslepen naar de bewaarde volgorde haalt hem
      weer weg, en Discard zet elke rij terug. */
-  var sorteerLijsten = document.querySelectorAll('[data-view="products"] .group__list, [data-view="choices"] .group__list');
+  var sorteerLijsten = document.querySelectorAll('[data-view="products"] .group__list, [data-view="choices"] .group__list, [data-view="categories"] .group__list');
   var bewaardeVolgorde = new Map();
   var rustig = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -2140,13 +2140,13 @@
         /* Een lijst buiten de menukaart heeft geen bewaarde volgorde om mee
            te vergelijken; daar is verslepen gewoon een wijziging. */
         if (lijst.closest('[data-view="online-store"]')) markUnsaved("Online store");
-        /* De volgorde van de categorieen geldt meteen, dus valt er niets te
-           bewaren -- alleen te melden dat het gebeurd is. */
-        if (lijst.closest('[data-view="categories"]')) showToast("Category order updated");
         return;
       }
       if (volgordeGewijzigd()) {
-        markUnsavedZin(lijst.closest('[data-view="choices"]') ? "Choice order saved" : "Product order saved");
+        /* De melding na Save noemt waar de volgorde over ging. */
+        var soort = lijst.closest('[data-view="choices"]') ? "Choice"
+          : lijst.closest('[data-view="categories"]') ? "Category" : "Product";
+        markUnsavedZin(soort + " order saved");
       } else hideSavebar();
     }
 
