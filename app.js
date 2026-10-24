@@ -4540,7 +4540,16 @@
       duim.style.transform = "translateX(" + (tabs.scrollLeft * zichtbaar / totaal) + "px)";
     }
 
-    tabs.addEventListener("scroll", teken);
+    /* De streep hoort bij het schuiven zelf: hij komt op bij de eerste
+       beweging en vervaagt kort nadat je loslaat. */
+    var vervaag;
+    function toon() {
+      vak.classList.add("is-scrolling");
+      clearTimeout(vervaag);
+      vervaag = setTimeout(function () { vak.classList.remove("is-scrolling"); }, 700);
+    }
+
+    tabs.addEventListener("scroll", function () { teken(); toon(); });
     /* Vangt ook het moment waarop de pagina zichtbaar wordt: dan pas heeft de
        rij een breedte. */
     if (window.ResizeObserver) new ResizeObserver(teken).observe(tabs);

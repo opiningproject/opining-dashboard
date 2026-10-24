@@ -871,12 +871,18 @@ select.input {
    ruimte innam zou de tabrij omhoog schuiven en niet meer op één lijn staan
    met de knop ernaast. */
 .tabsbox { position: relative; min-width: 0; }
+/* Alleen te zien terwijl je schuift. Een streep die er altijd staat leest als
+   een rand onder de tabs; tijdens het schuiven zegt hij waar je bent, en
+   daarna mag hij weg. */
 .tabscroll {
   position: absolute; left: 0; right: 0; bottom: -8px;
   height: 3px;
   border-radius: var(--r-full);
   background: var(--gray-100);
+  opacity: 0;
+  transition: opacity 240ms var(--ease);
 }
+.tabsbox.is-scrolling .tabscroll { opacity: 1; }
 .tabscroll__thumb {
   display: block; height: 100%;
   border-radius: var(--r-full);
@@ -1629,7 +1635,7 @@ select.input {
   border-radius: var(--r-md);
 }
 .icon--wide { width: 26px; height: 11px; }
-.icon--sort { width: 24px; height: 24px; }
+.icon--sort { width: 20px; height: 20px; }
 
 /* Tweeregelige cel: titel met een toelichting eronder. */
 .cell { display: flex; flex-direction: column; gap: 2px; }
