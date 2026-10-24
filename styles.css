@@ -1629,6 +1629,7 @@ select.input {
   border-radius: var(--r-md);
 }
 .icon--wide { width: 26px; height: 11px; }
+.icon--sort { width: 24px; height: 24px; }
 
 /* Tweeregelige cel: titel met een toelichting eronder. */
 .cell { display: flex; flex-direction: column; gap: 2px; }
@@ -2087,6 +2088,21 @@ select.input {
 .crumb .page-head__icon { color: var(--text-muted); transition: color var(--dur) var(--ease); }
 .crumb__link:hover .page-head__icon { color: var(--text-strong); }
 .crumb__sep { width: 15px; height: 15px; color: var(--border-strong); }
+/* Op een pagina van een klant of een nieuw scherm is dit de enige weg terug.
+   Een teken alleen ziet er niet uit als iets om op te drukken, dus krijgt het
+   een vlak om zich heen; de chevron blijft erbuiten, want die scheidt de
+   knop van de naam ernaast. */
+#page-crumb { gap: 8px; }
+#page-crumb .page-head__icon {
+  box-sizing: content-box;
+  padding: 6px;
+  border-radius: var(--r-md);
+  background: var(--gray-100);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+#page-crumb:hover .page-head__icon { background: var(--gray-150); color: var(--text-strong); }
+#page-crumb:focus-visible { outline: none; }
+#page-crumb:focus-visible .page-head__icon { outline: 2px solid var(--accent); outline-offset: 2px; }
 /* De naam van de pagina erboven: gedempt, want de pagina waar je bent staat
    ernaast in het zwart. Hij komt er alleen bij als die pagina zelf een
    subpagina is; de settingspagina zelf is het icoon en heeft geen naam nodig. */
