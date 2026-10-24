@@ -1989,7 +1989,9 @@
   document.querySelectorAll('[data-view="products"] .panel, [data-view="choices"] .panel').forEach(function (productPanel) {
     productPanel.addEventListener("click", function (e) {
       var kop = e.target.closest(".group__head");
-      if (!kop) return;
+      /* De knop met de gerechten zit in dezelfde balk maar klapt hem niet
+         open of dicht. */
+      if (!kop || e.target.closest("[data-used]")) return;
       var groep = kop.closest(".group");
       var open = !groep.classList.contains("is-open");
       groep.classList.toggle("is-open", open);
@@ -4592,7 +4594,9 @@
     pop.setAttribute("role", "dialog");
     /* Dezelfde teller draagt postcodes, adressen of een notitie; het woord
        staat erbij. */
-    var woord = knop.dataset.notepop ? "customer note" : (knop.dataset.codesNoun || "postal codes");
+    var woord = knop.dataset.notepop ? "customer note"
+      : knop.dataset.used ? "products"
+      : (knop.dataset.codesNoun || "postal codes");
     pop.setAttribute("aria-label", woord.charAt(0).toUpperCase() + woord.slice(1));
     if (knop.dataset.notepop) {
       /* Een notitie is een zin om te lezen, geen reeks: kop erboven, tekst
@@ -4606,10 +4610,25 @@
       regel.textContent = knop.dataset.notepop;
       pop.appendChild(notekop);
       pop.appendChild(regel);
+    } else if (knop.dataset.used) {
+      /* Welke gerechten een keuzegroep gebruiken: een regel per gerecht, met
+         hetzelfde teken als in de zijbalk bij de menukaart. */
+      pop.className = "codepop codepop--lijst";
+      var usekop = document.createElement("p");
+      usekop.className = "codepop__head";
+      usekop.textContent = "Used by";
+      pop.appendChild(usekop);
+      knop.dataset.used.split(";").forEach(function (naam) {
+        var regel = document.createElement("span");
+        regel.className = "codepop__regel";
+        regel.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><span></span>';
+        regel.querySelector("span").textContent = naam.trim();
+        pop.appendChild(regel);
+      });
     } else if (knop.dataset.addr) {
       /* Hele adressen lezen als regels, niet als chips: een speld ervoor, de
          straat en de postcode erachter, en een kop die zegt wat je ziet. */
-      pop.className = "codepop codepop--adres";
+      pop.className = "codepop codepop--lijst";
       var kop = document.createElement("p");
       kop.className = "codepop__head";
       kop.textContent = "All addresses";
@@ -4617,7 +4636,7 @@
       knop.dataset.addr.split(";").forEach(function (deel) {
         var stuk = deel.split("|");
         var regel = document.createElement("span");
-        regel.className = "codepop__adres";
+        regel.className = "codepop__regel";
         regel.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span></span>';
         regel.querySelector("span").textContent = stuk[0].trim() + (stuk[1] ? ", " + stuk[1].trim() : "");
         pop.appendChild(regel);
@@ -4645,7 +4664,7 @@
   }
 
   document.addEventListener("click", function (e) {
-    var knop = e.target.closest("[data-codes], [data-notepop]");
+    var knop = e.target.closest("[data-codes], [data-notepop], [data-used]");
     if (knop) {
       if (knop === popKnop) { sluitPop(); return; }
       openPop(knop);

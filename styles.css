@@ -939,17 +939,11 @@ select.input {
    in plaats van de lijst zelf. */
 .group__inner { overflow: hidden; }
 
-/* Bij welke gerechten een keuzegroep hoort. Een mededeling, geen waarschuwing:
-   dezelfde opbouw als een melding maar in de accentkleur, en zonder marge
-   want hij sluit aan op de kop erboven. */
-.usedby {
-  display: flex; align-items: flex-start; gap: 10px;
-  margin: 0; padding: 12px 16px;
-  background: var(--accent-soft);
-  font-size: var(--fs-md); line-height: 1.45; color: var(--text);
-}
-.usedby .icon { flex: 0 0 auto; width: 18px; height: 18px; margin-top: 1px; color: var(--accent); }
-.usedby b { font-weight: 600; color: var(--text-strong); }
+/* De kop van een groep draagt twee knoppen: een om hem te openen en, bij een
+   keuzegroep, een die laat zien bij welke gerechten hij hoort. Twee knoppen
+   kunnen niet in elkaar, dus staan ze naast elkaar in dezelfde balk. */
+.group__open { display: inline-flex; align-items: center; gap: 12px; font: inherit; color: inherit; text-align: left; }
+.usedby { flex: 0 0 auto; }
 
 /* Een keuze of een categorie heeft geen foto en geen eigen scherm: de regel
    is er om te lezen en te verslepen, dus wijst de muis niet. */
@@ -2086,20 +2080,20 @@ select.input {
 .pickbar__act:hover { color: var(--text-strong); text-decoration: underline; }
 .pickbar__act:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
 
-/* Alle adressen van een klant: een regel per adres, met een speld ervoor en
-   de postcode erachter. De reeks postcodes van een bezorggebied blijft
-   chips; dit zijn hele adressen en die lezen als regels. */
-.codepop--adres { display: block; max-width: 320px; padding: 14px; }
+/* Een lijst in het zwevende vakje: een regel per ding, met een teken
+   ervoor. Adressen van een klant, of de gerechten die een keuzegroep
+   gebruiken. De reeks postcodes van een bezorggebied blijft chips. */
+.codepop--lijst { display: block; max-width: 320px; padding: 14px; }
 .codepop__head { margin-bottom: 10px; font-size: var(--fs-sm); color: var(--text-muted); }
 /* Een notitie is lopende tekst; die krijgt de breedte van een zin en niet de
    ruimte van een reeks. */
 .codepop--tekst { display: block; max-width: 280px; padding: 14px; }
 .codepop__tekst { font-size: var(--fs-md); line-height: 1.45; color: var(--text); }
-.codepop__adres { display: flex; align-items: flex-start; gap: 10px; font-size: var(--fs-md); line-height: 1.4; color: var(--text); }
-.codepop__adres + .codepop__adres { margin-top: 10px; }
-.codepop__adres .icon { flex: 0 0 auto; width: 17px; height: 17px; margin-top: 2px; color: var(--text-muted); }
+.codepop__regel { display: flex; align-items: flex-start; gap: 10px; font-size: var(--fs-md); line-height: 1.4; color: var(--text); }
+.codepop__regel + .codepop__regel { margin-top: 10px; }
+.codepop__regel .icon { flex: 0 0 auto; width: 17px; height: 17px; margin-top: 2px; color: var(--text-muted); }
 
-.codepop:not(.codepop--adres) span {
+.codepop:not(.codepop--lijst) span {
   padding: 2px 9px;
   border-radius: var(--r-full);
   background: var(--gray-100);
