@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=462" />
+  <link rel="stylesheet" href="styles.css?v=464" />
 </head>
 <body>
 
@@ -1006,14 +1006,24 @@
                   <thead>
                     <tr>
                       <!-- Het vakje in de kop zet alle regels tegelijk aan of uit. -->
-                      <th class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick-all /><span class="sr-only">Select all customers</span></label></th>
-                      <th>Customer</th>
-                      <th>Address</th>
-                      <th class="ta-mid">Orders</th>
-                      <th class="ta-mid">Last order</th>
+                      <th class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick-all /><span class="sr-only">Clear the selection</span></label></th>
+                      <!-- Zodra er regels aanstaan gaat het niet meer om wat er in
+                           de kolommen staat maar om wat je met die regels doet;
+                           dan nemen deze twee de plek van de kolomnamen in. -->
+                      <th class="pickbar" colspan="5" hidden>
+                        <span class="pickbar__in">
+                          <span class="pickbar__count" data-pick-count>0 selected</span>
+                          <button class="linkbtn pickbar__act" type="button" data-pick-copy>Copy email addresses</button>
+                          <button class="linkbtn pickbar__act" type="button" data-pick-block>Block</button>
+                        </span>
+                      </th>
+                      <th data-pick-hide>Customer</th>
+                      <th data-pick-hide>Address</th>
+                      <th class="ta-mid" data-pick-hide>Orders</th>
+                      <th class="ta-mid" data-pick-hide>Last order</th>
                       <!-- Een bedrag leest van rechts naar links; daarom staat het
                            rechts, en als laatste. -->
-                      <th class="ta-right">Total spent</th>
+                      <th class="ta-right" data-pick-hide>Total spent</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1036,7 +1046,7 @@
                     <tr data-mail="mo@example.nl" data-since="93" data-orders="14" data-spent="463.40" data-lastdays="3" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Mo El Amrani</span></label></td>
                       <td>Mo El Amrani</td>
-                      <td><span class="codes">Bergweg 37<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Mo El Amrani" data-codes-noun="addresses" data-codes="Bergweg 37, Insulindestraat 66, Tochtstraat 95">+2</button></span></td>
+                      <td><span class="codes">Bergweg 37<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Mo El Amrani" data-codes-noun="addresses" data-codes="Bergweg 37, Insulindestraat 66, Tochtstraat 95" data-addr="Bergweg 37|3036 BB Rotterdam;Insulindestraat 66|3038 JC Rotterdam;Tochtstraat 95|3036 SK Rotterdam">+2</button></span></td>
                       <td class="ta-mid">14</td>
                       <td class="ta-mid">3 days ago</td>
                       <td class="ta-right">&euro; 463,40</td>
@@ -1044,7 +1054,7 @@
                     <tr data-mail="lisa@example.nl" data-since="125" data-orders="19" data-spent="793.25" data-lastdays="5" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Lisa Bakker</span></label></td>
                       <td>Lisa Bakker</td>
-                      <td><span class="codes">Hofdijk 54<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Lisa Bakker" data-codes-noun="addresses" data-codes="Hofdijk 54, Soetendaalseweg 83">+1</button></span></td>
+                      <td><span class="codes">Hofdijk 54<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Lisa Bakker" data-codes-noun="addresses" data-codes="Hofdijk 54, Soetendaalseweg 83" data-addr="Hofdijk 54|3032 CG Rotterdam;Soetendaalseweg 83|3036 SB Rotterdam">+1</button></span></td>
                       <td class="ta-mid">19</td>
                       <td class="ta-mid">5 days ago</td>
                       <td class="ta-right">&euro; 793,25</td>
@@ -1100,7 +1110,7 @@
                     <tr data-mail="youssef@example.nl" data-since="462" data-orders="16" data-spent="668.00" data-lastdays="132" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Youssef Baran</span></label></td>
                       <td>Youssef Baran</td>
-                      <td><span class="codes">Crooswijksestraat 173<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Youssef Baran" data-codes-noun="addresses" data-codes="Crooswijksestraat 173, Gordelweg 22">+1</button></span></td>
+                      <td><span class="codes">Crooswijksestraat 173<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Youssef Baran" data-codes-noun="addresses" data-codes="Crooswijksestraat 173, Gordelweg 22" data-addr="Crooswijksestraat 173|3034 CJ Rotterdam;Gordelweg 22|3039 EA Rotterdam">+1</button></span></td>
                       <td class="ta-mid">16</td>
                       <td class="ta-mid">4 months ago</td>
                       <td class="ta-right">&euro; 668,00</td>
@@ -1124,7 +1134,7 @@
                     <tr data-mail="lotte@example.nl" data-since="231" data-orders="31" data-spent="1140.80" data-lastdays="171" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Lotte Kuipers</span></label></td>
                       <td>Lotte Kuipers</td>
-                      <td><span class="codes">Statenweg 44<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Lotte Kuipers" data-codes-noun="addresses" data-codes="Statenweg 44, Bergweg 73, Insulindestraat 102">+2</button></span></td>
+                      <td><span class="codes">Statenweg 44<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Lotte Kuipers" data-codes-noun="addresses" data-codes="Statenweg 44, Bergweg 73, Insulindestraat 102" data-addr="Statenweg 44|3039 JD Rotterdam;Bergweg 73|3036 BB Rotterdam;Insulindestraat 102|3038 JC Rotterdam">+2</button></span></td>
                       <td class="ta-mid">31</td>
                       <td class="ta-mid">6 months ago</td>
                       <td class="ta-right">&euro; 1.140,80</td>
@@ -1156,7 +1166,7 @@
                     <tr data-mail="maud@example.nl" data-since="403" data-orders="13" data-spent="542.75" data-lastdays="223" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Maud Peters</span></label></td>
                       <td>Maud Peters</td>
-                      <td><span class="codes">Vijverhofstraat 112<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Maud Peters" data-codes-noun="addresses" data-codes="Vijverhofstraat 112, Vroesenlaan 141">+1</button></span></td>
+                      <td><span class="codes">Vijverhofstraat 112<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Maud Peters" data-codes-noun="addresses" data-codes="Vijverhofstraat 112, Vroesenlaan 141" data-addr="Vijverhofstraat 112|3032 SP Rotterdam;Vroesenlaan 141|3039 ER Rotterdam">+1</button></span></td>
                       <td class="ta-mid">13</td>
                       <td class="ta-mid">7 months ago</td>
                       <td class="ta-right">&euro; 542,75</td>
@@ -1212,7 +1222,7 @@
                     <tr data-mail="emma@example.nl" data-since="344" data-orders="10" data-spent="417.50" data-lastdays="314" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Emma Timmermans</span></label></td>
                       <td>Emma Timmermans</td>
-                      <td><span class="codes">Bergselaan 51<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Emma Timmermans" data-codes-noun="addresses" data-codes="Bergselaan 51, Statenweg 80, Bergweg 109">+2</button></span></td>
+                      <td><span class="codes">Bergselaan 51<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Emma Timmermans" data-codes-noun="addresses" data-codes="Bergselaan 51, Statenweg 80, Bergweg 109" data-addr="Bergselaan 51|3037 BA Rotterdam;Statenweg 80|3039 JD Rotterdam;Bergweg 109|3036 BB Rotterdam">+2</button></span></td>
                       <td class="ta-mid">10</td>
                       <td class="ta-mid">10 months ago</td>
                       <td class="ta-right">&euro; 417,50</td>
@@ -1268,7 +1278,7 @@
                     <tr data-mail="milan@example.nl" data-since="245" data-orders="7" data-spent="292.25" data-lastdays="5" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Milan Prins</span></label></td>
                       <td>Milan Prins</td>
-                      <td><span class="codes">Insulindestraat 170<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Milan Prins" data-codes-noun="addresses" data-codes="Insulindestraat 170, Tochtstraat 19">+1</button></span></td>
+                      <td><span class="codes">Insulindestraat 170<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Milan Prins" data-codes-noun="addresses" data-codes="Insulindestraat 170, Tochtstraat 19" data-addr="Insulindestraat 170|3038 JC Rotterdam;Tochtstraat 19|3036 SK Rotterdam">+1</button></span></td>
                       <td class="ta-mid">7</td>
                       <td class="ta-mid">5 days ago</td>
                       <td class="ta-right">&euro; 292,25</td>
@@ -1300,7 +1310,7 @@
                     <tr data-mail="teun@example.nl" data-since="417" data-orders="27" data-spent="577.80" data-lastdays="57" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Teun Verbeek</span></label></td>
                       <td>Teun Verbeek</td>
-                      <td><span class="codes">Zaagmolenkade 58<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Teun Verbeek" data-codes-noun="addresses" data-codes="Zaagmolenkade 58, Bergselaan 87, Statenweg 116">+2</button></span></td>
+                      <td><span class="codes">Zaagmolenkade 58<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Teun Verbeek" data-codes-noun="addresses" data-codes="Zaagmolenkade 58, Bergselaan 87, Statenweg 116" data-addr="Zaagmolenkade 58|3035 KB Rotterdam;Bergselaan 87|3037 BA Rotterdam;Statenweg 116|3039 JD Rotterdam">+2</button></span></td>
                       <td class="ta-mid">27</td>
                       <td class="ta-mid">1 month ago</td>
                       <td class="ta-right">&euro; 577,80</td>
@@ -1324,7 +1334,7 @@
                     <tr data-mail="saar@example.nl" data-since="186" data-orders="4" data-spent="167.00" data-lastdays="96" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Saar Mulder</span></label></td>
                       <td>Saar Mulder</td>
-                      <td><span class="codes">Rodenrijselaan 109<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Saar Mulder" data-codes-noun="addresses" data-codes="Rodenrijselaan 109, Zwaanshals 138">+1</button></span></td>
+                      <td><span class="codes">Rodenrijselaan 109<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Saar Mulder" data-codes-noun="addresses" data-codes="Rodenrijselaan 109, Zwaanshals 138" data-addr="Rodenrijselaan 109|3037 XC Rotterdam;Zwaanshals 138|3035 KR Rotterdam">+1</button></span></td>
                       <td class="ta-mid">4</td>
                       <td class="ta-mid">3 months ago</td>
                       <td class="ta-right">&euro; 167,00</td>
@@ -1380,7 +1390,7 @@
                     <tr data-mail="cas@example.nl" data-since="487" data-orders="1" data-spent="41.75" data-lastdays="187" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Cas Lammers</span></label></td>
                       <td>Cas Lammers</td>
-                      <td><span class="codes">Walenburgerweg 48<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Cas Lammers" data-codes-noun="addresses" data-codes="Walenburgerweg 48, 1e Pijnackerstraat 77">+1</button></span></td>
+                      <td><span class="codes">Walenburgerweg 48<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 2 addresses of Cas Lammers" data-codes-noun="addresses" data-codes="Walenburgerweg 48, 1e Pijnackerstraat 77" data-addr="Walenburgerweg 48|3039 AG Rotterdam;1e Pijnackerstraat 77|3035 GM Rotterdam">+1</button></span></td>
                       <td class="ta-mid">1</td>
                       <td class="ta-mid">6 months ago</td>
                       <td class="ta-right">&euro; 41,75</td>
@@ -1388,7 +1398,7 @@
                     <tr data-mail="nora@example.nl" data-since="530" data-orders="6" data-spent="301.20" data-lastdays="200" data-blocked="no">
                       <td class="rowpick"><label class="rowpick__box"><input type="checkbox" data-pick /><span class="sr-only">Select Nora Boeve</span></label></td>
                       <td>Nora Boeve</td>
-                      <td><span class="codes">Vroesenlaan 65<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Nora Boeve" data-codes-noun="addresses" data-codes="Vroesenlaan 65, Zaagmolenkade 94, Bergselaan 123">+2</button></span></td>
+                      <td><span class="codes">Vroesenlaan 65<button class="codes__more" type="button" aria-expanded="false" aria-label="Show all 3 addresses of Nora Boeve" data-codes-noun="addresses" data-codes="Vroesenlaan 65, Zaagmolenkade 94, Bergselaan 123" data-addr="Vroesenlaan 65|3039 ER Rotterdam;Zaagmolenkade 94|3035 KB Rotterdam;Bergselaan 123|3037 BA Rotterdam">+2</button></span></td>
                       <td class="ta-mid">6</td>
                       <td class="ta-mid">7 months ago</td>
                       <td class="ta-right">&euro; 301,20</td>
@@ -6907,6 +6917,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=462"></script>
+  <script src="app.js?v=464"></script>
 </body>
 </html>

@@ -2019,7 +2019,28 @@ select.input {
   background: var(--bg-surface);
   box-shadow: var(--shadow-md);
 }
-.codepop span {
+/* Wat je met de aangekruiste regels kunt. Staat in de kop van de tabel, op de
+   plek van de kolomnamen: zolang je bezig bent met kiezen zeggen die namen
+   minder dan wat je ermee kunt. */
+.pickbar { font-weight: 400; }
+/* Het vak binnenin draagt de indeling: een cel die zelf een flexvak wordt is
+   geen tabelcel meer, en dan telt zijn colspan niet. */
+.pickbar__in { display: flex; align-items: center; }
+.pickbar__count { color: var(--accent); font-weight: 600; }
+/* De handelingen staan rechts, de teller links. */
+.pickbar__act { margin-left: 24px; }
+.pickbar__act:first-of-type { margin-left: auto; }
+
+/* Alle adressen van een klant: een regel per adres, met een speld ervoor en
+   de postcode erachter. De reeks postcodes van een bezorggebied blijft
+   chips; dit zijn hele adressen en die lezen als regels. */
+.codepop--adres { display: block; max-width: 320px; padding: 14px; }
+.codepop__head { margin-bottom: 10px; font-size: var(--fs-sm); color: var(--text-muted); }
+.codepop__adres { display: flex; align-items: flex-start; gap: 10px; font-size: var(--fs-md); line-height: 1.4; color: var(--text); }
+.codepop__adres + .codepop__adres { margin-top: 10px; }
+.codepop__adres .icon { flex: 0 0 auto; width: 17px; height: 17px; margin-top: 2px; color: var(--text-muted); }
+
+.codepop:not(.codepop--adres) span {
   padding: 2px 9px;
   border-radius: var(--r-full);
   background: var(--gray-100);

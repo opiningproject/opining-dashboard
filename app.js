@@ -4574,11 +4574,29 @@
     /* Dezelfde teller draagt postcodes of adressen; het woord staat erbij. */
     var woord = knop.dataset.codesNoun || "postal codes";
     pop.setAttribute("aria-label", woord.charAt(0).toUpperCase() + woord.slice(1));
-    knop.dataset.codes.split(",").forEach(function (code) {
-      var chip = document.createElement("span");
-      chip.textContent = code.trim();
-      pop.appendChild(chip);
-    });
+    if (knop.dataset.addr) {
+      /* Hele adressen lezen als regels, niet als chips: een speld ervoor, de
+         straat en de postcode erachter, en een kop die zegt wat je ziet. */
+      pop.className = "codepop codepop--adres";
+      var kop = document.createElement("p");
+      kop.className = "codepop__head";
+      kop.textContent = "All addresses";
+      pop.appendChild(kop);
+      knop.dataset.addr.split(";").forEach(function (deel) {
+        var stuk = deel.split("|");
+        var regel = document.createElement("span");
+        regel.className = "codepop__adres";
+        regel.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><span></span>';
+        regel.querySelector("span").textContent = stuk[0].trim() + (stuk[1] ? ", " + stuk[1].trim() : "");
+        pop.appendChild(regel);
+      });
+    } else {
+      knop.dataset.codes.split(",").forEach(function (code) {
+        var chip = document.createElement("span");
+        chip.textContent = code.trim();
+        pop.appendChild(chip);
+      });
+    }
     document.body.appendChild(pop);
 
     /* Onder de knop, en tegen de schermrand aan geschoven als het niet past. */
@@ -4608,27 +4626,105 @@
   document.addEventListener("scroll", sluitPop, true);
 
   /* ---- Regels aankruisen -------------------------------------------------
-     Het vakje in de kop volgt de regels eronder: alles aan, alles uit, of
-     half zolang er een deel aanstaat. */
+     Het vakje in de kop draagt een streepje zodra er iets aanstaat, hoeveel
+     dat er ook zijn: klikken maakt de keuze dan leeg, en dat is wat een
+     streepje belooft. Staat er niets aan, dan zet het alles aan. */
   function zetKopVakje(tabel) {
     var kop = tabel.querySelector("[data-pick-all]");
     if (!kop) return;
-    var vakjes = [].slice.call(tabel.querySelectorAll("[data-pick]"));
-    var aan = vakjes.filter(function (v) { return v.checked; }).length;
-    kop.checked = aan > 0 && aan === vakjes.length;
-    kop.indeterminate = aan > 0 && aan < vakjes.length;
+    var aan = tabel.querySelectorAll("[data-pick]:checked").length;
+    kop.checked = false;
+    kop.indeterminate = aan > 0;
+    zetKiesbalk(tabel);
+  }
+
+  /* Zolang er regels aanstaan gaat de kop over wat je met die regels doet;
+     de kolomnamen wachten zolang. */
+  function zetKiesbalk(tabel) {
+    var balk = tabel.querySelector(".pickbar");
+    if (!balk) return;
+    var aan = tabel.querySelectorAll("[data-pick]:checked").length;
+    balk.hidden = aan === 0;
+    tabel.querySelectorAll("[data-pick-hide]").forEach(function (cel) { cel.hidden = aan > 0; });
+    var teller = balk.querySelector("[data-pick-count]");
+    if (teller) teller.textContent = aan + " selected";
   }
 
   document.addEventListener("change", function (e) {
     var kop = e.target.closest("[data-pick-all]");
     if (kop) {
       var tabel = kop.closest("table");
-      tabel.querySelectorAll("[data-pick]").forEach(function (v) { v.checked = kop.checked; });
+      var vakjes = [].slice.call(tabel.querySelectorAll("[data-pick]"));
+      /* Stond er iets aan, dan maakt deze klik de keuze leeg. */
+      var naar = !vakjes.some(function (v) { return v.checked; });
+      vakjes.forEach(function (v) { v.checked = naar; });
       zetKopVakje(tabel);
       return;
     }
     var een = e.target.closest("[data-pick]");
     if (een) zetKopVakje(een.closest("table"));
+  });
+
+  /* ---- Wat je met de gekozen regels doet ---------------------------------
+     Twee handelingen, allebei op de klanten die aanstaan: hun adressen
+     kopieren om er een bericht aan te sturen, of ze de deur wijzen. */
+  function naarKlembord(tekst) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(tekst)["catch"](function () { klembordOud(tekst); });
+      return;
+    }
+    klembordOud(tekst);
+  }
+
+  /* Zonder veilige verbinding bestaat het klembord van de browser niet; dan
+     doet een onzichtbaar veld hetzelfde werk. */
+  function klembordOud(tekst) {
+    var veld = document.createElement("textarea");
+    veld.value = tekst;
+    veld.setAttribute("readonly", "");
+    veld.style.cssText = "position:fixed;top:-100px;opacity:0";
+    document.body.appendChild(veld);
+    veld.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    veld.remove();
+  }
+
+  function blokkeerRij(rij) {
+    if (rij.dataset.blocked === "yes") return;
+    rij.dataset.blocked = "yes";
+    var cel = rij.cells[1];
+    var naam = cel.textContent.trim();
+    cel.textContent = "";
+    var vak = document.createElement("span");
+    vak.className = "cname";
+    vak.textContent = naam;
+    vak.insertAdjacentHTML("beforeend",
+      '<svg class="icon cname__block" aria-hidden="true"><use href="#i-lock"/></svg><span class="sr-only">Blocked</span>');
+    cel.appendChild(vak);
+  }
+
+  document.addEventListener("click", function (e) {
+    var kopieer = e.target.closest("[data-pick-copy]");
+    var blok = e.target.closest("[data-pick-block]");
+    if (!kopieer && !blok) return;
+    var tabel = (kopieer || blok).closest("table");
+    var rijen = [].slice.call(tabel.querySelectorAll("[data-pick]:checked")).map(function (v) {
+      return v.closest("tr");
+    });
+    if (!rijen.length) return;
+
+    if (kopieer) {
+      var mails = rijen.map(function (r) { return r.dataset.mail; }).filter(Boolean);
+      naarKlembord(mails.join(", "));
+      showToast(mails.length + (mails.length === 1 ? " email address copied" : " email addresses copied"));
+      return;
+    }
+
+    rijen.forEach(blokkeerRij);
+    showToast(rijen.length + (rijen.length === 1 ? " customer blocked" : " customers blocked"));
+    /* De handeling is gedaan; dan hoort de keuze niet te blijven staan. */
+    tabel.querySelectorAll("[data-pick]").forEach(function (v) { v.checked = false; });
+    zetKopVakje(tabel);
   });
 
   /* ========================================================================
