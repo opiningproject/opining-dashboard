@@ -2027,9 +2027,19 @@ select.input {
    geen tabelcel meer, en dan telt zijn colspan niet. */
 .pickbar__in { display: flex; align-items: center; }
 .pickbar__count { color: var(--accent); font-weight: 600; }
-/* De handelingen staan rechts, de teller links. */
-.pickbar__act { margin-left: 24px; }
+/* De handelingen staan rechts, de teller links. Ze lezen als de kolomnamen
+   die ze vervangen -- zelfde maat, zelfde grijs -- want anders springt de
+   kop in het oog terwijl je aan het kiezen bent. Pas bij aanwijzen laten ze
+   zien dat er iets te klikken valt. */
+.pickbar__act {
+  margin-left: 24px;
+  font: inherit;
+  color: var(--text-muted);
+  text-underline-offset: 3px;
+}
 .pickbar__act:first-of-type { margin-left: auto; }
+.pickbar__act:hover { color: var(--text-strong); text-decoration: underline; }
+.pickbar__act:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
 
 /* Alle adressen van een klant: een regel per adres, met een speld ervoor en
    de postcode erachter. De reeks postcodes van een bezorggebied blijft
