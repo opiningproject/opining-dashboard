@@ -4717,8 +4717,10 @@
     rij.dataset.blocked = "yes";
     var knop = rij.cells[1].querySelector("[data-cust-open]");
     if (!knop) return;
-    knop.insertAdjacentHTML("beforeend",
-      '<svg class="icon cname__block" aria-hidden="true"><use href="#i-lock"/></svg><span class="sr-only">Blocked</span>');
+    var merk = document.createElement("span");
+    merk.className = "badge badge--muted cstate";
+    merk.textContent = "Blocked";
+    knop.after(merk);
   }
 
   document.addEventListener("click", function (e) {
