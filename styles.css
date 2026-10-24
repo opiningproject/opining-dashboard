@@ -928,6 +928,36 @@ select.input {
 .group__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 240ms var(--ease); }
 .group.is-open .group__panel { grid-template-rows: 1fr; }
 .group__list { overflow: hidden; }
+/* Staat er meer in een groep dan de lijst -- bij een keuzegroep de gerechten
+   die hem gebruiken -- dan knipt dit vak af tijdens het open- en dichtklappen
+   in plaats van de lijst zelf. */
+.group__inner { overflow: hidden; }
+
+/* Bij welke gerechten een keuzegroep hoort. Een mededeling, geen waarschuwing:
+   dezelfde opbouw als een melding maar in de accentkleur, en zonder marge
+   want hij sluit aan op de kop erboven. */
+.usedby {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin: 0; padding: 12px 16px;
+  background: var(--accent-soft);
+  font-size: var(--fs-md); line-height: 1.45; color: var(--text);
+}
+.usedby .icon { flex: 0 0 auto; width: 18px; height: 18px; margin-top: 1px; color: var(--accent); }
+.usedby b { font-weight: 600; color: var(--text-strong); }
+
+/* Een keuze of een categorie heeft geen foto en geen eigen scherm: de regel
+   is er om te lezen en te verslepen, dus wijst de muis niet. */
+.prod--keuze { cursor: default; }
+.prod__count { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+/* De kop boven een platte lijst: zelfde grijs en dezelfde inspringing als de
+   kop van een tabel, want het is hetzelfde soort regel. */
+.listhead {
+  padding: 12px 16px;
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--border);
+  font-size: var(--fs-sm); font-weight: 500; color: var(--text-muted);
+}
 .group__list > li { border-top: 1px solid var(--border); }
 
 /* De hele regel opent het gerecht, dus de muis hoort dat te zeggen. De greep

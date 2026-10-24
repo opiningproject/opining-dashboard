@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=479" />
+  <link rel="stylesheet" href="styles.css?v=481" />
 </head>
 <body>
 
@@ -2471,6 +2471,261 @@
                     <span class="badge badge--draft">Draft</span>
                   </li>
                 </ul></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: keuzemenu ----------
+               Dezelfde opbouw als de menukaart: groepen die open- en
+               dichtklappen, met regels die je versleept. Wat een keuzegroep
+               hier anders maakt is dat hij bij gerechten hoort; dat staat
+               onder de kop, zodat je ziet wat je raakt voordat je iets
+               verandert. Een groep die nog nergens aan hangt zegt niets. -->
+          <section class="view" data-view="choices" hidden>
+            <div class="panel">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All</button>
+                  <button class="tab" type="button">Active</button>
+                  <button class="tab" type="button">Draft</button>
+                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter choices">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
+                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
+                <div class="psearch" data-filters="Status:Active|Draft">
+                  <div class="psearch__top">
+                    <span class="psearch__field">
+                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                      <input type="search" placeholder="search" aria-label="Search this list" />
+                    </span>
+                    <button class="psearch__cancel" type="button">Cancel</button>
+                  </div>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                    <button class="fclear" type="button" hidden>Clear All</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="group is-open" data-noun="choice">
+                <button class="group__head" type="button" aria-expanded="true">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">Milk</span>
+                  <span class="group__count">5 choices</span>
+                </button>
+                <div class="group__panel"><div class="group__inner">
+                  <p class="usedby">
+                    <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                    <span><b>Used by</b> Pistachio Velvet Latte, Cappuccino, Flat White, Iced Latte</span>
+                  </p>
+                  <ul class="group__list">
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Whole milk</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Oat milk</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Soy milk</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Almond milk</span>
+                    <span class="badge badge--draft">Draft</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Lactose-free milk</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  </ul>
+                </div></div>
+              </div>
+
+              <div class="group is-open" data-noun="choice">
+                <button class="group__head" type="button" aria-expanded="true">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">Extra shot</span>
+                  <span class="group__count">3 choices</span>
+                </button>
+                <div class="group__panel"><div class="group__inner">
+                  <p class="usedby">
+                    <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                    <span><b>Used by</b> Cappuccino, Flat White, Iced Latte, Cold Brew</span>
+                  </p>
+                  <ul class="group__list">
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Single shot</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Double shot</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Decaf</span>
+                    <span class="badge badge--draft">Draft</span>
+                  </li>
+                  </ul>
+                </div></div>
+              </div>
+
+              <div class="group is-open" data-noun="choice">
+                <button class="group__head" type="button" aria-expanded="true">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">Sandwich extras</span>
+                  <span class="group__count">5 choices</span>
+                </button>
+                <div class="group__panel"><div class="group__inner">
+                  <p class="usedby">
+                    <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                    <span><b>Used by</b> Mozarella Sandwich, Chicken Sandwich, Tomato &amp; Mozzarella Sandwich with bacon</span>
+                  </p>
+                  <ul class="group__list">
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Extra cheese</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Bacon</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Avocado</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Pesto</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Chilli flakes</span>
+                    <span class="badge badge--draft">Draft</span>
+                  </li>
+                  </ul>
+                </div></div>
+              </div>
+
+              <div class="group is-open" data-noun="choice">
+                <button class="group__head" type="button" aria-expanded="true">
+                  <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+                  <span class="group__name">Syrup</span>
+                  <span class="group__count">3 choices</span>
+                </button>
+                <div class="group__panel"><div class="group__inner">
+                  <ul class="group__list">
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Vanilla</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Caramel</span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Hazelnut</span>
+                    <span class="badge badge--draft">Draft</span>
+                  </li>
+                  </ul>
+                </div></div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- ---------- VIEW: categorieen ----------
+               Een platte lijst: een categorie heeft geen groep boven zich. De
+               volgorde hier is de volgorde op de site, en die geldt meteen --
+               vandaar de melding erboven in plaats van een balk om te
+               bewaren. Het getal achter de naam is het aantal gerechten. -->
+          <section class="view" data-view="categories" hidden>
+            <p class="alert">
+              <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>
+              Changes to the category order are applied immediately and shown on your website.
+            </p>
+            <div class="panel">
+              <div class="panel__head">
+                <div class="tabs">
+                  <button class="tab is-active" type="button">All</button>
+                  <button class="tab" type="button">Active</button>
+                  <button class="tab" type="button">Draft</button>
+                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter categories">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
+                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
+                <div class="psearch" data-filters="Status:Active|Draft">
+                  <div class="psearch__top">
+                    <span class="psearch__field">
+                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                      <input type="search" placeholder="search" aria-label="Search this list" />
+                    </span>
+                    <button class="psearch__cancel" type="button">Cancel</button>
+                  </div>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                    <button class="fclear" type="button" hidden>Clear All</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="group" data-noun="category">
+                <p class="listhead">Category name</p>
+                <ul class="group__list">
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Protein Beverages <span class="prod__count">(5)</span></span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Sandwiches <span class="prod__count">(4)</span></span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Hot Coffee <span class="prod__count">(2)</span></span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Cold Coffee <span class="prod__count">(2)</span></span>
+                    <span class="badge badge--active">Active</span>
+                  </li>
+                  <li class="prod prod--keuze">
+                    <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
+                    <span class="prod__name">Seasonal specials <span class="prod__count">(0)</span></span>
+                    <span class="badge badge--draft">Draft</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </section>
@@ -6917,6 +7172,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=479"></script>
+  <script src="app.js?v=481"></script>
 </body>
 </html>

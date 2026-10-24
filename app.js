@@ -1981,7 +1981,7 @@
   /* ---- Productenlijst: groepen klappen los van elkaar open ----------------
      Alleen de menukaart: bij de bestellingen is de kop van een status een
      opschrift, geen knop. */
-  document.querySelectorAll('[data-view="products"] .panel').forEach(function (productPanel) {
+  document.querySelectorAll('[data-view="products"] .panel, [data-view="choices"] .panel').forEach(function (productPanel) {
     productPanel.addEventListener("click", function (e) {
       var kop = e.target.closest(".group__head");
       if (!kop) return;
@@ -2004,7 +2004,7 @@
      Een nieuwe volgorde gaat niet vanzelf live. Wijkt hij af van wat bewaard
      is, dan komt de savebar; terugslepen naar de bewaarde volgorde haalt hem
      weer weg, en Discard zet elke rij terug. */
-  var sorteerLijsten = document.querySelectorAll('[data-view="products"] .group__list');
+  var sorteerLijsten = document.querySelectorAll('[data-view="products"] .group__list, [data-view="choices"] .group__list');
   var bewaardeVolgorde = new Map();
   var rustig = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -2133,10 +2133,14 @@
         /* Een lijst buiten de menukaart heeft geen bewaarde volgorde om mee
            te vergelijken; daar is verslepen gewoon een wijziging. */
         if (lijst.closest('[data-view="online-store"]')) markUnsaved("Online store");
+        /* De volgorde van de categorieen geldt meteen, dus valt er niets te
+           bewaren -- alleen te melden dat het gebeurd is. */
+        if (lijst.closest('[data-view="categories"]')) showToast("Category order updated");
         return;
       }
-      if (volgordeGewijzigd()) markUnsavedZin("Product order saved");
-      else hideSavebar();
+      if (volgordeGewijzigd()) {
+        markUnsavedZin(lijst.closest('[data-view="choices"]') ? "Choice order saved" : "Product order saved");
+      } else hideSavebar();
     }
 
     window.addEventListener("pointermove", verplaats);
@@ -2621,7 +2625,7 @@
     /* Menupaginas: alleen tekst op de knop. */
     products:       { label: "Add product",   zacht: false },
     choices:        { label: "Add new",       zacht: false },
-    categories:     { label: "Add categorie", zacht: false },
+    categories:     { label: "Add category", zacht: false },
     deliverers:     { label: "Add deliverer", icon: "i-plus", zacht: false },
     discounts:      { label: "Create discount", icon: "i-plus", zacht: false, opent: "discount-new" },
     vouchers:       { label: "Create voucher",  icon: "i-plus", zacht: false, opent: "voucher-new" },
@@ -8055,8 +8059,9 @@
 
     /* Vanaf de menukaart: de regel die je aanklikt bepaalt wat er in staat. */
     document.addEventListener("click", function (e) {
-      var rij = e.target.closest(".prod");
-      /* De greep is om te slepen, niet om te openen. */
+      var rij = e.target.closest('[data-view="products"] .prod');
+      /* De greep is om te slepen, niet om te openen; en een keuze of een
+         categorie heeft geen scherm om te openen. */
       if (!rij || e.target.closest(".prod__handle")) return;
 
       var naam = rij.querySelector(".prod__name").textContent.trim();
