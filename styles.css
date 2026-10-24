@@ -2026,13 +2026,13 @@ select.input {
 /* Het vak binnenin draagt de indeling: een cel die zelf een flexvak wordt is
    geen tabelcel meer, en dan telt zijn colspan niet. */
 .pickbar__in { display: flex; align-items: center; }
-.pickbar__count { color: var(--accent); font-weight: 600; }
+.pickbar__count { color: var(--accent); }
 /* De handelingen staan rechts, de teller links. Ze lezen als de kolomnamen
    die ze vervangen -- zelfde maat, zelfde grijs -- want anders springt de
    kop in het oog terwijl je aan het kiezen bent. Pas bij aanwijzen laten ze
    zien dat er iets te klikken valt. */
 .pickbar__act {
-  margin-left: 24px;
+  margin-left: 40px;
   font: inherit;
   color: var(--text-muted);
   text-underline-offset: 3px;
