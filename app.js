@@ -2331,31 +2331,29 @@
      doorgegeven. Allebei een teken rechts op de regel, met de uitleg eronder
      zodra je het aanwijst. Ze komen uit wat de regel zelf draagt, zodat ze
      niet kunnen afwijken van wat er in het venster staat. */
-  function merkteken(icoon, kop, tekst) {
-    var merk = document.createElement("span");
+  function merkteken(icoon, label, tekst) {
+    var merk = document.createElement("button");
+    merk.type = "button";
     merk.className = "omark";
-    merk.tabIndex = 0;
-    /* Een teken met een betekenis is geen versiering: wie laat voorlezen
-       hoort waar het over gaat, ook zonder het aan te wijzen. */
-    merk.setAttribute("role", "img");
-    merk.setAttribute("aria-label", kop ? kop + ": " + tekst : tekst);
-    merk.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#' + icoon + '"/></svg>'
-      + '<span class="omark__tip" aria-hidden="true">' + (kop ? "<b></b>" : "") + "<span></span></span>";
-    if (kop) merk.querySelector("b").textContent = kop;
-    merk.querySelector(".omark__tip span").textContent = tekst;
+    merk.setAttribute("aria-expanded", "false");
+    merk.setAttribute("aria-label", label);
+    /* Dezelfde teller-op-een-klik als bij de adressen van een klant; app.js
+       §10 zet het venster neer en haalt het weer weg. */
+    merk.dataset.notepop = tekst;
+    merk.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#' + icoon + '"/></svg>';
     return merk;
   }
 
+  /* Het vak staat er altijd, ook zonder teken: anders is de regel eronder een
+     streep breder en begint het merkje met de tijd op elke regel ergens
+     anders. */
   function zetMerktekens(kaart) {
     var oud = kaart.querySelector(".omarks");
     if (oud) oud.remove();
     var plek = document.createElement("span");
     plek.className = "omarks";
     if (kaart.dataset.note) plek.appendChild(merkteken("i-note", "Customer note", kaart.dataset.note));
-    if ((kaart.dataset.method || "").toLowerCase() === "cash") {
-      plek.appendChild(merkteken("i-cash", "", "The customer pays cash, so bring change."));
-    }
-    if (plek.children.length) kaart.appendChild(plek);
+    kaart.appendChild(plek);
   }
 
   if (bord) {
@@ -2479,8 +2477,10 @@
 
   if (orderVenster) {
     document.addEventListener("click", function (e) {
+      /* Een teken op de regel heeft zijn eigen venster; dan hoort de
+         bestelling niet ook nog open te gaan. */
       var rij = e.target.closest(".ocard, .table--archive tbody tr");
-      if (rij) { openBestelling(rij); return; }
+      if (rij && !e.target.closest(".omark")) { openBestelling(rij); return; }
       var tab = e.target.closest("#order-dialog [data-otab]");
       if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
       /* Naar de klant toe: de paginawissel regelt data-goto-page, hier gaat
@@ -4571,10 +4571,23 @@
     pop = document.createElement("div");
     pop.className = "codepop";
     pop.setAttribute("role", "dialog");
-    /* Dezelfde teller draagt postcodes of adressen; het woord staat erbij. */
-    var woord = knop.dataset.codesNoun || "postal codes";
+    /* Dezelfde teller draagt postcodes, adressen of een notitie; het woord
+       staat erbij. */
+    var woord = knop.dataset.notepop ? "customer note" : (knop.dataset.codesNoun || "postal codes");
     pop.setAttribute("aria-label", woord.charAt(0).toUpperCase() + woord.slice(1));
-    if (knop.dataset.addr) {
+    if (knop.dataset.notepop) {
+      /* Een notitie is een zin om te lezen, geen reeks: kop erboven, tekst
+         eronder. */
+      pop.className = "codepop codepop--tekst";
+      var notekop = document.createElement("p");
+      notekop.className = "codepop__head";
+      notekop.textContent = "Customer note";
+      var regel = document.createElement("p");
+      regel.className = "codepop__tekst";
+      regel.textContent = knop.dataset.notepop;
+      pop.appendChild(notekop);
+      pop.appendChild(regel);
+    } else if (knop.dataset.addr) {
       /* Hele adressen lezen als regels, niet als chips: een speld ervoor, de
          straat en de postcode erachter, en een kop die zegt wat je ziet. */
       pop.className = "codepop codepop--adres";
@@ -4613,7 +4626,7 @@
   }
 
   document.addEventListener("click", function (e) {
-    var knop = e.target.closest("[data-codes]");
+    var knop = e.target.closest("[data-codes], [data-notepop]");
     if (knop) {
       if (knop === popKnop) { sluitPop(); return; }
       openPop(knop);
