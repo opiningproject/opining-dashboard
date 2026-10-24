@@ -906,6 +906,12 @@ select.input {
 .tab.is-active { background: var(--gray-100); color: var(--text-strong); }
 
 .group + .group { border-top: 1px solid var(--border); }
+/* Een groep draagt een streep boven zich om hem van de vorige te scheiden.
+   Valt die vorige weg door een filter, dan staat de streep tegen de rand van
+   de kop erboven en wordt die twee pixels dik. De bovenste groep die je nog
+   ziet draagt er daarom geen; app.js wijst hem aan, want welke dat is hangt
+   van het filter af. */
+.group.group--eerst { border-top: 0; }
 .group__head {
   display: flex; align-items: center; gap: 12px;
   width: 100%;

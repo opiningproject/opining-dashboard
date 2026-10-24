@@ -747,6 +747,9 @@
        kopje boven een leeg vak. */
     if (!tabel) {
       var overLijst = 0;
+      /* Welke groep bovenaan staat hangt van het filter af; die draagt geen
+         streep boven zich. */
+      var eerst = true;
       groepen.forEach(function (groep) {
         var zichtbaar = 0;
         /* De menukaart heeft .prod, de bestellingen .ocard; verder is het
@@ -758,6 +761,8 @@
           if (past) zichtbaar++;
         });
         groep.hidden = zichtbaar === 0;
+        groep.classList.toggle("group--eerst", !groep.hidden && eerst);
+        if (!groep.hidden) eerst = false;
         var teller = groep.querySelector(".group__count");
         if (teller) {
           if (teller.dataset.vast === undefined) teller.dataset.vast = teller.textContent;
