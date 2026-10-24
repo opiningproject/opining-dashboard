@@ -1583,7 +1583,7 @@ select.input {
 .panel__head .sort { margin-left: 0; }
 /* In een panel-kop staat hij naast de zoek-en-filterknop en krijgt hij
    dezelfde vorm; in een kaartkop is het gewoon een menuknop zonder rand. */
-.panel__head .sort__btn { width: auto; height: 34px; padding: 0 10px; border: 1px solid var(--border); border-radius: var(--r-md); }
+.panel__head .sort__btn { width: 52px; height: 34px; padding: 0; border: 1px solid var(--border); border-radius: var(--r-md); }
 .sort__menu {
   position: absolute; top: calc(100% + 6px); right: 0;
   z-index: 20;
@@ -1628,14 +1628,16 @@ select.input {
 .sort__item--danger:hover { background: var(--danger-soft); }
 
 .panel__tool {
-  width: auto; height: 34px;
+  width: 52px; height: 34px;
   margin-left: auto;
-  padding: 0 12px;
+  padding: 0;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
 }
 .icon--wide { width: 26px; height: 11px; }
-.icon--sort { width: 20px; height: 20px; }
+/* Het teken is kleiner dan de knop: zo bepaalt de knop de maat en niet het
+   teken, en staan de twee knoppen in de kop even breed naast elkaar. */
+.icon--sort { width: 18px; height: 18px; }
 
 /* Tweeregelige cel: titel met een toelichting eronder. */
 .cell { display: flex; flex-direction: column; gap: 2px; }
