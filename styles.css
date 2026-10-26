@@ -4517,8 +4517,10 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    ertussen doet het werk. */
 #order-dialog .dialog__head { border-bottom: 0; }
 
-/* Op het afrekenscherm van een domein staan de kaarttitels naast een formulier
-   in plaats van boven een pagina: een maat kleiner is genoeg om ze als kop te
-   lezen. De regel eronder weegt even zwaar als de labels waar hij bij hoort. */
-[data-set-sub="domain-checkout"] .card__title { font-size: 16px; }
+/* Op het afrekenscherm van een domein staat alles naast of boven een formulier.
+   Elke kop leest daar even groot als de labels van de velden eronder: de naam
+   van het domein, het verlengen, de twee kaarttitels en de samenvatting. */
+[data-set-sub="domain-checkout"] .card__title,
+[data-set-sub="domain-checkout"] .buy__domain,
+[data-set-sub="domain-checkout"] .buy__renew .row__title,
 [data-set-sub="domain-checkout"] .card__sub { font-size: var(--fs-sm); }
