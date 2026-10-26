@@ -3103,7 +3103,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .tline__step { position: relative; display: flex; justify-content: space-between; gap: 16px; padding-left: 22px; }
 .tline__step::before {
   content: ""; position: absolute; left: 0; top: 4px;
-  width: 9px; height: 9px; border: 1px solid var(--text-strong);
+  width: 9px; height: 9px; border: 1px solid var(--text-strong); border-radius: 2px;
   background: var(--text-strong);
 }
 /* Het lijntje loopt van dit vierkantje naar het volgende. Alleen de laatste
@@ -3127,6 +3127,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* De regel met het bedrag van vandaag staat los van de tijdlijn en hoort
    zonder vierkantje, maar wel op dezelfde inspringing. */
 .buy__due { display: flex; justify-content: space-between; gap: 16px; }
+
+/* Zonder automatisch verlengen is er geen tweede moment om te tonen: de
+   tijdlijn valt weg en het bedrag van vandaag sluit direct op de kop aan. */
+[data-buy-renew="uit"] .buy__due { border-top: 0; }
 
 /* Foutmelding onder een veld. */
 .input--error { border-color: var(--danger); background: #fdf3f2; }

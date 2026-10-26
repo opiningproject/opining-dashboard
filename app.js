@@ -1250,7 +1250,32 @@
 
       koopWinkel.classList.remove("input--error");
       koopFout.hidden = true;
+      zetVerlengen();
     });
+
+    /* Automatisch verlengen aan of uit verandert wat er te zien valt. Staat het
+       aan, dan zijn er twee momenten: vandaag en over een jaar, met een lijntje
+       ertussen. Staat het uit, dan is er alleen vandaag; de tijdlijn valt weg en
+       bij de schakelaar staat tot wanneer het domein dan van jou is. */
+    var koopAan = document.getElementById("buy-renew-on");
+    var koopLijn = document.getElementById("buy-tline");
+    var koopTot = document.getElementById("buy-expire");
+    var koopTotDatum = document.getElementById("buy-expire-date");
+    var koopNote = document.getElementById("buy-note");
+
+    function zetVerlengen() {
+      var aan = koopAan.checked;
+      koopLijn.hidden = !aan;
+      koopTot.hidden = aan;
+      koopTotDatum.textContent = koopDatum.textContent;
+      koopPagina.setAttribute("data-buy-renew", aan ? "aan" : "uit");
+      koopNote.textContent = aan
+        ? "This purchase is charged immediately and cannot be refunded. The domain is yours for a year and renews unless you turn that off."
+        : "This purchase is charged immediately and cannot be refunded. The domain is yours for a year and stops after that unless you renew it yourself.";
+    }
+
+    koopAan.addEventListener("change", zetVerlengen);
+    zetVerlengen();
 
     /* Zonder winkelnaam kan de registratie niet de deur uit. */
     var koopVervalt = "";

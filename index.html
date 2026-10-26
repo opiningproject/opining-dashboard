@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=499" />
+  <link rel="stylesheet" href="styles.css?v=501" />
 </head>
 <body>
 
@@ -5906,8 +5906,9 @@
                 <div class="row row--static buy__renew">
                   <span class="row__text">
                     <span class="row__title">Auto-renew every year</span>
+                    <span class="row__meta" id="buy-expire" hidden>This domain will expire on <span id="buy-expire-date">12 September 2027</span>.</span>
                   </span>
-                  <label class="switch row__switch"><input type="checkbox" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Renew this domain automatically</span></label>
+                  <label class="switch row__switch"><input type="checkbox" id="buy-renew-on" checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Renew this domain automatically</span></label>
                 </div>
               </div>
 
@@ -6027,7 +6028,7 @@
                 <!-- Tijdlijn: links wanneer er iets gebeurt, rechts wat het kost.
                      Het lijntje tussen de twee blokjes laat zien dat vandaag en
                      over een jaar hetzelfde domein betreffen. -->
-                <ol class="tline">
+                <ol class="tline" id="buy-tline">
                   <li class="tline__step">
                     <span class="tline__when"><b>Today</b>Domain purchase</span>
                     <span class="tline__amount"><b id="buy-today">&euro; 9,00</b></span>
@@ -6043,7 +6044,7 @@
                 </div>
                 <div class="buy__foot">
                   <button class="btn btn--primary buy__go" type="button" id="buy-go">Buy domain</button>
-                  <p class="hint">This purchase is charged immediately and cannot be refunded. The domain is yours for a year and renews unless you turn that off.</p>
+                  <p class="hint" id="buy-note">This purchase is charged immediately and cannot be refunded. The domain is yours for a year and renews unless you turn that off.</p>
                 </div>
               </div>
             </aside>
@@ -7212,6 +7213,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=499"></script>
+  <script src="app.js?v=501"></script>
 </body>
 </html>
