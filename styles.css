@@ -2177,7 +2177,6 @@ select.input {
    vlak, zodat het niet met een status te verwarren is. */
 .pill { padding: 1px 8px; border: 1px solid var(--border-strong); border-radius: var(--r-full); font-size: var(--fs-sm); font-weight: 500; color: var(--text-muted); }
 /* Losse verwijzing onder een lijst; hoort bij de pagina, niet bij de kaart. */
-.midlink { text-align: center; font-size: var(--fs-md); }
 
 /* Wervende kaart: tekst links, illustratie rechts. De illustratie is
    decoratief en verdwijnt als eerste bij weinig ruimte. */
