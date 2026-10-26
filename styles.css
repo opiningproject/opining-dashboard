@@ -4538,5 +4538,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 [data-set-sub="domain-checkout"] .addrow { font-size: var(--fs-sm); }
 /* Een kop boven een lijstje binnen een pagina is geen paginatitel. */
 .card__title--sub { font-size: var(--fs-md); }
-[data-set-sub="domain-buy"] .card__title { font-size: var(--fs-md); }
-[data-set-sub="domain-buy"] .card__sub { font-size: var(--fs-sm); }
+
+/* In de instellingen is een kaartkop geen paginakop: de naam van de pagina
+   staat al bovenaan. Elke kop leest hier even groot als de labels van de
+   velden eronder, met de regel eronder een stap kleiner. */
+#settings-overlay .card__title { font-size: var(--fs-md); }
+#settings-overlay .card__sub { font-size: var(--fs-sm); }
