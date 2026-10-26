@@ -440,13 +440,14 @@
     });
   }
 
-  /* Een menu in een schuivende tabel wordt door die tabel afgeknipt. Het komt
+  /* Een menu in een vak dat zijn inhoud afknipt — een schuivende tabel, een
+     omlijnde lijst met ronde hoeken — wordt door dat vak afgesneden. Het komt
      daarom los in het venster te hangen, met de rechterkant onder de knop. Valt
      het onderaan buiten beeld, dan klapt het boven de knop open. */
   function zetMenuVast(knop, menu) {
     menu.classList.remove("sort__menu--vast");
     menu.style.top = menu.style.left = "";
-    if (!menu.closest(".table-wrap")) return;
+    if (!menu.closest(".table-wrap, .paybox")) return;
 
     /* Eerst losmaken, dan meten: zolang hij in de cel hangt knijpt de tabel
        hem smal, en dan klopt de berekende plek niet. */
@@ -5148,6 +5149,14 @@
     });
   })();
 
+  /* De bovenste betaalwijze is de primaire; "Make primary" zegt daar niets.
+     Het betaalprofiel zet dit bij elke wijziging opnieuw; een vak dat niet
+     verandert heeft genoeg aan deze ene ronde. */
+  document.querySelectorAll(".paybox").forEach(function (vak) {
+    var eerste = vak.querySelector(".payrow [data-pm-primary]");
+    if (eerste) eerste.hidden = true;
+  });
+
   /* ---- Een domein zoeken --------------------------------------------------
      Zolang je niets gevraagd hebt staat er geen uitslag: wat eronder hoort te
      staan hangt af van de naam die je intikt, en die is er nog niet. Zodra je
@@ -5575,7 +5584,7 @@
             '<svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>' +
           '<div class="sort__menu sort__menu--kort" role="menu" hidden>' +
             '<button class="sort__item" type="button" role="menuitem" data-pm-primary>Make primary</button>' +
-            '<button class="sort__item" type="button" role="menuitem" data-pm-remove>Remove</button>' +
+            '<button class="sort__item sort__item--danger" type="button" role="menuitem" data-pm-remove>Delete</button>' +
           '</div>' +
         '</span>';
       var vakje = rij.querySelector(".pm__mark");

@@ -3179,6 +3179,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Eén woord in het menu: zo breed als dat woord. De 210px van een
    sorteermenu maakt er een leeg vlak van. */
 .sort__menu--kort { min-width: 0; }
+/* Smal mag, maar een regel mag niet midden in een woord afbreken. */
+.sort__item { white-space: nowrap; }
 
 /* Tarieven: wat het kost, per gebied. Alleen lezen, dus geen knoppen. */
 .rate { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
