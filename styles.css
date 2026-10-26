@@ -4536,3 +4536,5 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    een eigen pagina; ze lezen even groot als de rest. */
 [data-set-sub="domain-checkout"] .payrow__name,
 [data-set-sub="domain-checkout"] .addrow { font-size: var(--fs-sm); }
+/* Een kop boven een lijstje binnen een pagina is geen paginatitel. */
+.card__title--sub { font-size: var(--fs-md); }
