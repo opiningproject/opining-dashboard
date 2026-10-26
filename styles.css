@@ -4538,3 +4538,5 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 [data-set-sub="domain-checkout"] .addrow { font-size: var(--fs-sm); }
 /* Een kop boven een lijstje binnen een pagina is geen paginatitel. */
 .card__title--sub { font-size: var(--fs-md); }
+[data-set-sub="domain-buy"] .card__title { font-size: var(--fs-md); }
+[data-set-sub="domain-buy"] .card__sub { font-size: var(--fs-sm); }
