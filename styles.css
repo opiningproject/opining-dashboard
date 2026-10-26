@@ -1616,8 +1616,8 @@ select.input {
 .sort__menu {
   position: absolute; top: calc(100% + 6px); right: 0;
   z-index: 20;
-  min-width: 210px;
-  padding: 8px;
+  min-width: 190px;
+  padding: 5px;
   border: 1px solid var(--border);
   border-radius: var(--r-md);
   background: var(--bg-surface);
@@ -1625,13 +1625,13 @@ select.input {
   display: flex; flex-direction: column;
 }
 .sort__menu[hidden] { display: none; }
-.sort__head { padding: 4px 10px 8px; font-size: var(--fs-sm); color: var(--text-muted); }
+.sort__head { padding: 3px 8px 6px; font-size: var(--fs-sm); color: var(--text-muted); }
 .sort__item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 10px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px;
   border-radius: var(--r-sm);
   text-align: left;
-  font-size: var(--fs-md);
+  font-size: var(--fs-sm);
   color: var(--text-strong);
 }
 .sort__item:hover { background: var(--bg-hover); }
