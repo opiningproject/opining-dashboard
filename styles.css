@@ -4524,3 +4524,13 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 [data-set-sub="domain-checkout"] .buy__domain,
 [data-set-sub="domain-checkout"] .buy__renew .row__title,
 [data-set-sub="domain-checkout"] .card__sub { font-size: var(--fs-sm); }
+
+/* De titel van het afrekenscherm staat naast het kruimelpad waar hij uit
+   voortkomt; even groot als die naam leest het als een volgende stap in
+   plaats van als een nieuwe pagina. */
+[data-settings-full] #set-title { font-size: var(--fs-md); letter-spacing: 0; }
+
+/* De betaalregels op dit scherm horen bij het formulier ernaast, niet bij
+   een eigen pagina; ze lezen even groot als de rest. */
+[data-set-sub="domain-checkout"] .payrow__name,
+[data-set-sub="domain-checkout"] .addrow { font-size: var(--fs-sm); }
