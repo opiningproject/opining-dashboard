@@ -5148,6 +5148,83 @@
     });
   })();
 
+  /* ---- Een domein zoeken --------------------------------------------------
+     Zolang je niets gevraagd hebt staat er geen uitslag: wat eronder hoort te
+     staan hangt af van de naam die je intikt, en die is er nog niet. Zodra je
+     zoekt dragen de regels jouw naam met hun eigen extensie erachter. */
+  (function () {
+    var veld = document.getElementById("domain-q");
+    var knop = document.getElementById("domain-go");
+    var raak = document.getElementById("domain-hit");
+    var bezet = document.getElementById("domain-taken");
+    var meer = document.getElementById("domain-more");
+    if (!veld || !knop || !raak || !bezet || !meer) return;
+
+    /* In het echt vraagt de server dit; hier is het een lijstje, zodat beide
+       uitkomsten te zien zijn. */
+    var VERGEVEN = ["burgers", "pizza", "sushi", "opining", "shop", "food", "kebab"];
+
+    /* Wie zijn extensie meetypt bedoelt die extensie; de naam ervoor is waar
+       we op zoeken. Verder horen in een domeinnaam alleen kleine letters,
+       cijfers en streepjes. */
+    function leesNaam(tekst) {
+      var ruw = tekst.trim().toLowerCase();
+      var punt = ruw.lastIndexOf(".");
+      var ext = "";
+      if (punt > 0 && punt < ruw.length - 1) {
+        ext = "." + schoon(ruw.slice(punt + 1));
+        ruw = ruw.slice(0, punt);
+      }
+      return { naam: schoon(ruw), ext: ext.length > 1 ? ext : ".nl" };
+    }
+    function schoon(tekst) {
+      var uit = "";
+      tekst.split("").forEach(function (teken) {
+        if ((teken >= "a" && teken <= "z") || (teken >= "0" && teken <= "9") || teken === "-") uit += teken;
+      });
+      return uit;
+    }
+
+    function zoek() {
+      var gevraagd = leesNaam(veld.value);
+      if (!gevraagd.naam) { raak.hidden = true; bezet.hidden = true; meer.hidden = true; veld.focus(); return; }
+
+      /* De gevraagde extensie staat in de uitslag; de andere blijven suggestie. */
+      raak.querySelector("[data-ext]").dataset.ext = gevraagd.ext;
+      bezet.querySelector("[data-ext]").dataset.ext = gevraagd.ext;
+      document.querySelectorAll("#domain-hit [data-ext], #domain-taken [data-ext], #domain-more [data-ext]")
+        .forEach(function (titel) { titel.textContent = gevraagd.naam + titel.dataset.ext; });
+
+      /* Een extensie die je zelf vroeg hoort niet nog eens als suggestie. */
+      meer.querySelectorAll("[data-ext]").forEach(function (titel) {
+        titel.closest(".row").hidden = titel.dataset.ext === gevraagd.ext;
+      });
+
+      var vrij = VERGEVEN.indexOf(gevraagd.naam) < 0;
+      raak.hidden = !vrij;
+      bezet.hidden = vrij;
+      meer.hidden = false;
+
+      /* De koopknop neemt mee waar hij over gaat. */
+      var afrekenen = document.getElementById("buy-domain");
+      if (afrekenen) afrekenen.textContent = gevraagd.naam + gevraagd.ext;
+    }
+
+    knop.addEventListener("click", zoek);
+    veld.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); zoek(); }
+    });
+
+    /* Een volgend bezoek begint weer blanco. */
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest('[data-sub="domain-buy"]')) return;
+      veld.value = "";
+      raak.hidden = true;
+      bezet.hidden = true;
+      meer.hidden = true;
+    });
+  })();
+
   /* ========================================================================
      12. TOETSENBORD
      ======================================================================== */

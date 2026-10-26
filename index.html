@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=487" />
+  <link rel="stylesheet" href="styles.css?v=489" />
 </head>
 <body>
 
@@ -5832,15 +5832,28 @@
 
             <div class="dsearch">
               <label class="sr-only" for="domain-q">Domain name</label>
-              <input class="input" id="domain-q" type="text" value="mijnburgers" placeholder="yourname" />
-              <button class="btn btn--primary" type="button">Search</button>
+              <input class="input" id="domain-q" type="text" placeholder="yourname" autocomplete="off" />
+              <button class="btn btn--primary" type="button" id="domain-go">Search</button>
             </div>
 
-            <div class="rows">
+            <!-- Een naam die al vergeven is: zeggen dat het niet kan, en meteen
+                 waar je wel verder kunt kijken. -->
+            <div class="rows" id="domain-taken" hidden>
+              <div class="row row--static">
+                <svg class="icon row__icon row__icon--bad" aria-hidden="true"><use href="#i-alert"/></svg>
+                <span class="row__text">
+                  <span class="row__title"><span data-ext=".nl">mijnburgers.nl</span> isn&rsquo;t available</span>
+                  <span class="row__meta">Choose a suggested domain below or search again.</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Wat een naam oplevert staat er pas als ernaar gevraagd is. -->
+            <div class="rows" id="domain-hit" hidden>
               <div class="row row--static">
                 <svg class="icon row__icon row__icon--ok" aria-hidden="true"><use href="#i-check-circle"/></svg>
                 <span class="row__text">
-                  <span class="row__title">mijnburgers.nl</span>
+                  <span class="row__title" data-ext=".nl">mijnburgers.nl</span>
                   <span class="row__meta">&euro; 9,00 per year</span>
                 </span>
                 <span class="badge badge--active">Available</span>
@@ -5851,13 +5864,13 @@
 
           <!-- Dezelfde naam op een andere extensie. Geen suggesties die een
                naam voor je verzinnen: wat je wilt heten weet je zelf. -->
-          <div class="card">
+          <div class="card" id="domain-more" hidden>
             <h3 class="card__title">Other extensions</h3>
             <div class="rows">
               <div class="row row--static">
                 <svg class="icon row__icon row__icon--ok" aria-hidden="true"><use href="#i-check-circle"/></svg>
                 <span class="row__text">
-                  <span class="row__title">mijnburgers.com</span>
+                  <span class="row__title" data-ext=".com">mijnburgers.com</span>
                   <span class="row__meta">&euro; 14,00 per year</span>
                 </span>
                 <button class="btn btn--ghost btn--sm" type="button" data-sub="domain-checkout" data-sub-title="Buy new domain">Buy</button>
@@ -5865,7 +5878,7 @@
               <div class="row row--static">
                 <svg class="icon row__icon row__icon--ok" aria-hidden="true"><use href="#i-check-circle"/></svg>
                 <span class="row__text">
-                  <span class="row__title">mijnburgers.eu</span>
+                  <span class="row__title" data-ext=".eu">mijnburgers.eu</span>
                   <span class="row__meta">&euro; 8,00 per year</span>
                 </span>
                 <button class="btn btn--ghost btn--sm" type="button" data-sub="domain-checkout" data-sub-title="Buy new domain">Buy</button>
@@ -5873,7 +5886,7 @@
               <div class="row row--static">
                 <svg class="icon row__icon row__icon--ok" aria-hidden="true"><use href="#i-check-circle"/></svg>
                 <span class="row__text">
-                  <span class="row__title">mijnburgers.store</span>
+                  <span class="row__title" data-ext=".store">mijnburgers.store</span>
                   <span class="row__meta">&euro; 9,00 the first year, &euro; 52,00 per year after that</span>
                 </span>
                 <button class="btn btn--ghost btn--sm" type="button" data-sub="domain-checkout" data-sub-title="Buy new domain">Buy</button>
@@ -5881,7 +5894,7 @@
               <div class="row row--static">
                 <svg class="icon row__icon" aria-hidden="true"><use href="#i-globe"/></svg>
                 <span class="row__text">
-                  <span class="row__title">mijnburgers.nu</span>
+                  <span class="row__title" data-ext=".nu">mijnburgers.nu</span>
                   <span class="row__meta">Taken, registered until March 2028</span>
                 </span>
                 <span class="badge badge--muted">Taken</span>
@@ -5974,6 +5987,45 @@
                     <label class="label" for="buy-city">City</label>
                     <input class="input" id="buy-city" type="text" value="Rotterdam" autocomplete="address-level2" />
                   </div>
+                </div>
+              </div>
+
+              <!-- Waarvan we dit domein afschrijven. Dezelfde regels als in het
+                   betaalprofiel, zodat een methode er overal hetzelfde uitziet. -->
+              <div class="card">
+                <h3 class="card__title">Payment method</h3>
+                <div class="paybox">
+                  <div class="payrow">
+                    <span class="pm__mark" aria-hidden="true"><img src="img/pay/visa.svg" alt="" /></span>
+                    <span class="payrow__name">Visa &bull;&bull;&bull;&bull; 5320</span>
+                    <span class="badge badge--draft">Primary</span>
+                    <span class="sort payrow__menu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for Visa 5320">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-pm-primary>Make primary</button>
+                        <button class="sort__item" type="button" role="menuitem" data-pm-remove>Remove</button>
+                      </div>
+                    </span>
+                  </div>
+                  <div class="payrow">
+                    <span class="pm__mark" aria-hidden="true"><img src="img/pay/sepa.svg" alt="" /></span>
+                    <span class="payrow__name">SEPA Direct Debit ending in 5362</span>
+                    <span class="badge badge--muted">Backup</span>
+                    <span class="sort payrow__menu">
+                      <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for SEPA Direct Debit ending in 5362">
+                        <svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg>
+                      </button>
+                      <div class="sort__menu sort__menu--kort" role="menu" hidden>
+                        <button class="sort__item" type="button" role="menuitem" data-pm-primary>Make primary</button>
+                        <button class="sort__item" type="button" role="menuitem" data-pm-remove>Remove</button>
+                      </div>
+                    </span>
+                  </div>
+                  <button class="addrow" type="button" data-dialog="paymethod-dialog">
+                      <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add payment method
+                    </button>
                 </div>
               </div>
             </div>
@@ -7169,6 +7221,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=487"></script>
+  <script src="app.js?v=489"></script>
 </body>
 </html>
