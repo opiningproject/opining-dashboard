@@ -3716,6 +3716,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   /* Op een telefoon is de regel te smal voor een naam in het kruimelpad; de
      terugknop erboven wijst al de weg. */
   .crumb--named .crumb__name, .crumb--named .crumb__sep--name { display: none; }
+  /* Zonder naam ervoor is de titel hier weer de naam van de pagina. */
+  .page-head:has(.crumb--named) h1,
+  .page-head:has(.crumb--named) h2 { font-size: 18px; letter-spacing: -.015em; }
 
   .set-back {
     position: sticky; top: 0; z-index: 2;
@@ -4557,10 +4560,11 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 [data-set-sub="domain-checkout"] .buy__renew .row__title,
 [data-set-sub="domain-checkout"] .card__sub { font-size: var(--fs-sm); }
 
-/* De titel van het afrekenscherm staat naast het kruimelpad waar hij uit
-   voortkomt; even groot als die naam leest het als een volgende stap in
-   plaats van als een nieuwe pagina. */
-[data-settings-full] #set-title { font-size: var(--fs-md); letter-spacing: 0; }
+/* Staat de titel achter een naam in het kruimelpad, dan is hij de laatste
+   stap van dat pad en geen nieuwe paginatitel: een kruimelpad leest in een
+   maat. Zonder naam ervoor is de titel wel de naam van de pagina. */
+.page-head:has(.crumb--named) h1,
+.page-head:has(.crumb--named) h2 { font-size: var(--fs-md); letter-spacing: 0; }
 
 /* De betaalregels op dit scherm horen bij het formulier ernaast, niet bij
    een eigen pagina; ze lezen even groot als de rest. */
