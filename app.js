@@ -6075,12 +6075,17 @@
     }
 
     detailDnsKnop.addEventListener("click", function () {
-      if (detailRij && domSoort(detailRij) === "extern") {
-        showToast("DNS records for " + domNaam(detailRij) + " are managed at your provider");
-        return;
-      }
-      openSetSub("dns-settings", "DNS settings",
-                 "Records and nameservers for " + (detailRij ? domNaam(detailRij) : "this domain"));
+      var naam = detailRij ? domNaam(detailRij) : "this domain";
+      /* Bij een domein van elders staan de nameservers bij die aanbieder; de
+         records hier gaan pas tellen als de naam naar ons wijst. */
+      var eigen = !detailRij || domSoort(detailRij) !== "extern";
+      var nsTitel = document.getElementById("dns-ns-title");
+      var nsTekst = document.getElementById("dns-ns-meta");
+      if (nsTitel) nsTitel.textContent = eigen ? "Opining\u2019s nameservers" : "Your provider\u2019s nameservers";
+      if (nsTekst) nsTekst.textContent = eigen
+        ? "ns1.opining.com and ns2.opining.com"
+        : "These records count once " + naam + " answers from ns1.opining.com and ns2.opining.com";
+      openSetSub("dns-settings", "DNS settings", "Records and nameservers for " + naam);
     });
 
     /* Primair maken kan pas als het domein bereikbaar is; daarna verhuist het

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=508" />
+  <link rel="stylesheet" href="styles.css?v=509" />
 </head>
 <body>
 
@@ -6345,8 +6345,8 @@
               <div class="row row--static">
                 <svg class="icon row__icon" aria-hidden="true"><use href="#i-globe"/></svg>
                 <span class="row__text">
-                  <span class="row__title">Opining&rsquo;s nameservers</span>
-                  <span class="row__meta">ns1.opining.com and ns2.opining.com</span>
+                  <span class="row__title" id="dns-ns-title">Opining&rsquo;s nameservers</span>
+                  <span class="row__meta" id="dns-ns-meta">ns1.opining.com and ns2.opining.com</span>
                 </span>
                 <button class="btn btn--ghost btn--sm" type="button" data-toast="Point your domain at other nameservers from the provider you bought it from">Change</button>
               </div>
@@ -7487,6 +7487,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=508"></script>
+  <script src="app.js?v=509"></script>
 </body>
 </html>
