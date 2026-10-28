@@ -1045,14 +1045,15 @@
     var uitloggen = e.target.closest(".umenu__item--out");
     if (uitloggen) { sluitFilterMenus(); showToast("Signed out"); return; }
 
-    /* Account opent de settings-overlay op de accountpagina. */
+    /* Account opent de settings-overlay op de accountpagina. Door de regel in
+       de navigatie zelf aan te klikken gaat alles mee wat daaraan vastzit: op
+       een telefoon schuift de lijst opzij in plaats van te blijven staan. */
     var accountItem = e.target.closest(".umenu__item");
     if (accountItem) {
       sluitFilterMenus();
       openSettings();
-      var rij = setNav.querySelector('[data-set="account"]');
-      activate(rij, setNav);
-      showSetPage("account", "Account", "i-user-circle");
+      var rij = setNav.querySelector('.nav__item[data-set="account"]');
+      if (rij) rij.click();
       return;
     }
 
