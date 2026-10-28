@@ -831,6 +831,17 @@ select.input {
 /* De hoofdactie blijft altijd naast de titel; de rest zit op een klein scherm
    achter de drie puntjes. app.js bouwt dat menu uit dezelfde knoppen. */
 .page-head__more { display: none; }
+/* Niet de schermbreedte bepaalt of de knoppen nog naast de titel passen maar
+   de ruimte op die regel: in de instellingen staat er een navigatie naast,
+   dus daar is het eerder krap. app.js meet het en zet data-krap. */
+.page-head__tools[data-krap] .page-head__more { display: block; }
+.page-head__tools[data-krap] .btn:not(.btn--primary) { display: none; }
+.page-head__tools[data-krap] > .sort:not(.page-head__more) { display: none; }
+.page-head__tools[data-krap] { position: relative; }
+/* Past de naam dan nog niet, dan eindigt hij op drie puntjes in plaats van de
+   stand en de knoppen naar de volgende regel te duwen. */
+.page-head[data-kort] .page-head__line { flex-wrap: nowrap; }
+.page-head[data-kort] .page-head__text { flex: 1 1 0; }
 /* Een icon-btn is 40px; op de titelregel hoort hij bij de andere knoppen. */
 .page-head__more .sort__btn { width: 36px; height: 36px; }
 /* Een mededeling naast de titel in plaats van een knop: hij leest mee, maar
@@ -2502,6 +2513,7 @@ select.input {
 /* Zonder badge duwt de knop zichzelf naar rechts; staat er wel een badge, dan
    houdt de regel hieronder de afstand tussen die twee vast. */
 .row > .btn { margin-left: auto; }
+[data-set-sub="domain-detail"] .row > .icon-btn { margin-left: auto; }
 .row > .badge:not([hidden]) + .btn { margin-left: 14px; }
 /* Een losse link achteraan de rij, bijvoorbeeld om het adres te wijzigen. */
 .row__link { flex: 0 0 auto; margin-left: 14px; }
@@ -3715,13 +3727,18 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
      want die ruimte is er niet. De tekst mag inkorten voor de knoppen. */
   .savebar { width: auto; flex: 1 1 auto; margin-inline: 0; min-width: 0; }
   .savebar__text { min-width: 0; overflow: hidden; white-space: nowrap; }
-  /* Twee knoppen naast een paginatitel passen hier niet. De hoofdactie blijft
-     staan; de rest zit achter de drie puntjes die app.js erbij zet. Alleen
-     waar dat menu er ook echt is, vandaar :has(). */
+  /* Twee knoppen naast een paginatitel passen hier niet. Een hoofdactie
+     blijft staan; de rest zit achter de drie puntjes die app.js erbij zet.
+     Alleen waar dat menu er ook echt is, vandaar :has(). */
   .page-head__tools:has(.page-head__more) .page-head__more { display: block; }
   .page-head__tools:has(.page-head__more) .btn:not(.btn--primary) { display: none; }
-  /* De gesplitste knop verhuist in zijn geheel naar het menu. */
-  .page-head__tools:has(.page-head__more) .split { display: none; }
+  /* Een gesplitste knop of een eigen menu verhuist in zijn geheel; wat
+     overblijft is een lege huls die alleen ruimte kost. */
+  .page-head__tools:has(.page-head__more) > .sort:not(.page-head__more) { display: none; }
+  /* Met de knoppen op hun plek is er ruimte voor de naam, maar niet altijd
+     genoeg: een lange naam eindigt op drie puntjes in plaats van de stand
+     ernaast naar de volgende regel te duwen. */
+
   /* Het menu lijnt uit op de knoppenrij, niet op de puntjes: anders steekt het
      aan de linkerkant buiten het scherm. */
   .page-head__tools:has(.page-head__more) { position: relative; }

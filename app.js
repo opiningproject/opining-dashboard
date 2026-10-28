@@ -225,10 +225,13 @@
        op mobiel toch al zijn eigen regel. */
     if (tools.querySelector("select")) return;
 
-    /* Het pijltje van een gesplitste knop is zelf geen actie; wat erachter zit
-       wel, dus dat gaat als eigen regel mee het menu in. */
-    var bij = [].slice.call(tools.querySelectorAll(".btn:not(.btn--primary):not(.split__toggle), .split .sort__item"));
-    if (bij.length < 1 || !tools.querySelector(".btn--primary")) return;
+    /* Een knop die alleen een menu opent is zelf geen actie; de regels in dat
+       menu zijn dat wel, dus die gaan los mee. */
+    var bij = [].slice.call(tools.querySelectorAll(".btn:not(.btn--primary):not(.sort__btn), .sort .sort__item"));
+    /* Met een hoofdactie blijft die staan en verhuist de rest. Zonder
+       hoofdactie gaat alles mee, en dan is een enkele knop het niet waard:
+       die past er zelf ook nog wel naast. */
+    if (bij.length < (tools.querySelector(".btn--primary") ? 1 : 2)) return;
 
     var vak = document.createElement("div");
     vak.className = "sort page-head__more";
@@ -252,6 +255,8 @@
       item.className = "sort__item";
       item.setAttribute("role", "menuitem");
       item.textContent = bron.textContent.trim();
+      item.hidden = bron.hidden;
+      if (bron.id) item.setAttribute("data-mirror", bron.id);
       /* De knop zelf blijft de actie; het menu-item drukt hem alleen in. */
       item.addEventListener("click", function () {
         sluitFilterMenus();
@@ -263,6 +268,70 @@
     vak.append(knop, menu);
     tools.insertBefore(vak, tools.querySelector(".btn--primary") || null);
   });
+
+  /* ---- Past het nog naast de titel? --------------------------------------
+     De knoppen staan rechts van de paginanaam. Hoeveel ruimte daar is hangt
+     niet aan de schermbreedte: in de instellingen staat er een navigatie
+     naast, en een lange domeinnaam eet de rest op. Daarom meten we het.
+     Eerst krijgen de knoppen hun plek terug en kijken we of ze op dezelfde
+     regel als de naam staan. Zo niet, dan verhuizen ze naar het menu achter
+     de drie puntjes. Staan ze dan nog onder de naam, dan is de naam zelf te
+     lang en eindigt die op drie puntjes. */
+  var koppen = [].slice.call(document.querySelectorAll(".page-head"));
+  var kopWacht = null;
+  var kopKijker = null;
+
+  function kopZet(el, naam, aan) {
+    if (aan) { if (el.dataset[naam] !== "on") el.dataset[naam] = "on"; }
+    else if (el.dataset[naam] !== undefined) delete el.dataset[naam];
+  }
+
+  /* Staan de knoppen nog naast de naam, of zijn ze eronder gezakt? */
+  function kopPast(kop, tools) {
+    var lijn = kop.querySelector(".page-head__line") || kop.querySelector("h1, h2");
+    if (!lijn) return true;
+    return tools.getBoundingClientRect().top < lijn.getBoundingClientRect().bottom;
+  }
+
+  function meetKop(kop) {
+    var tools = kop.querySelector(".page-head__tools:not([hidden])");
+    kopZet(kop, "kort", false);
+    if (!tools || !tools.getClientRects().length) return;
+
+    var menu = tools.querySelector(".page-head__more");
+    if (menu) kopZet(tools, "krap", false);
+    if (kopPast(kop, tools)) return;
+
+    if (menu) {
+      kopZet(tools, "krap", true);
+      if (kopPast(kop, tools)) return;
+    }
+    kopZet(kop, "kort", true);
+  }
+
+  function meetKoppen() {
+    koppen.forEach(meetKop);
+    /* Onze eigen aanpassingen hoeven geen nieuwe meting uit te lokken. */
+    if (kopKijker) kopKijker.takeRecords();
+  }
+
+  /* Een titel die verandert, een blok knoppen dat in beeld komt, een venster
+     dat smaller wordt: allemaal reden om opnieuw te kijken. Eenmaal per
+     beeldje is genoeg. */
+  function meetStraks() {
+    if (kopWacht) return;
+    kopWacht = requestAnimationFrame(function () { kopWacht = null; meetKoppen(); });
+  }
+
+  if (window.MutationObserver) {
+    kopKijker = new MutationObserver(meetStraks);
+    koppen.forEach(function (k) {
+      kopKijker.observe(k, { subtree: true, childList: true, characterData: true, attributes: true });
+    });
+  }
+  window.addEventListener("resize", meetStraks);
+  meetKoppen();
+
   /* ---- Doorverwijzen naar de plek waar de taak hoort ---------------------
      De knoppen in de setup-guide sturen je naar een pagina in de sidebar
      (data-goto-page) of naar een settingspagina (data-goto-set). Ze klikken
@@ -5957,6 +6026,15 @@
       return "extern";
     }
 
+    /* Op een smal scherm staat deze regel ook in het puntjesmenu; daar hoort
+       hij net zo goed weg te vallen. */
+    function toonPrimair(aan) {
+      detailPrimair.hidden = !aan;
+      document.querySelectorAll('[data-mirror="detail-primary"]').forEach(function (el) {
+        el.hidden = !aan;
+      });
+    }
+
     function domStand(rij) {
       var b = rij.querySelector(".badge");
       return b ? b.textContent.trim() : "";
@@ -5984,7 +6062,7 @@
 
       detailVak.dataset.subBadge = domStand(rij);
       detailBekijk.href = "https://" + naam;
-      detailPrimair.hidden = domIsPrimair(rij);
+      toonPrimair(!domIsPrimair(rij));
 
       var verloopt = detailVak.querySelector("[data-domain-expiry]");
       var onder = soort === "ours"
@@ -6013,7 +6091,7 @@
         return;
       }
       maakPrimair(rij);
-      detailPrimair.hidden = true;
+      toonPrimair(false);
       showToast(naam + " is now your primary domain");
     });
 
