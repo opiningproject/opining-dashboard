@@ -226,8 +226,23 @@
     if (tools.querySelector("select")) return;
 
     /* Een knop die alleen een menu opent is zelf geen actie; de regels in dat
-       menu zijn dat wel, dus die gaan los mee. */
-    var bij = [].slice.call(tools.querySelectorAll(".btn:not(.btn--primary):not(.sort__btn), .sort .sort__item"));
+       menu zijn dat wel, dus die gaan los mee. Wat zo'n knop bij elkaar hield
+       gaat niet verloren: zijn naam komt als kopje boven die regels te staan,
+       anders zijn het zes losse regels zonder te zeggen waar ze voor zijn. */
+    var bij = [];
+    [].forEach.call(tools.children, function (kind) {
+      if (kind.matches(".btn:not(.btn--primary):not(.sort__btn)")) { bij.push({ bron: kind }); return; }
+      if (!kind.matches(".sort")) return;
+      /* Van een gesplitste knop is de hoofdhelft zelf een actie. */
+      kind.querySelectorAll(".btn:not(.btn--primary):not(.sort__btn)").forEach(function (knop) {
+        bij.push({ bron: knop });
+      });
+      var opener = kind.querySelector(".sort__btn");
+      var kop = opener ? opener.textContent.trim() : "";
+      kind.querySelectorAll(".sort__item").forEach(function (regel, i) {
+        bij.push({ bron: regel, kop: i === 0 ? kop : "" });
+      });
+    });
     /* Met een hoofdactie blijft die staan en verhuist de rest. Zonder
        hoofdactie gaat alles mee, en dan is een enkele knop het niet waard:
        die past er zelf ook nog wel naast. */
@@ -249,7 +264,14 @@
     menu.setAttribute("role", "menu");
     menu.hidden = true;
 
-    bij.forEach(function (bron) {
+    bij.forEach(function (post) {
+      var bron = post.bron;
+      if (post.kop) {
+        var kop = document.createElement("p");
+        kop.className = "sort__head";
+        kop.textContent = post.kop;
+        menu.appendChild(kop);
+      }
       var item = document.createElement("button");
       item.type = "button";
       item.className = "sort__item";

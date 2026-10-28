@@ -1637,6 +1637,9 @@ select.input {
 }
 .sort__menu[hidden] { display: none; }
 .sort__head { padding: 3px 8px 6px; font-size: var(--fs-sm); color: var(--text-muted); }
+/* Een kopje middenin een menu begint een nieuwe groep; zonder lijntje
+   erboven plakt hij aan de regel ervoor vast. */
+.sort__item + .sort__head { margin-top: 6px; padding-top: 9px; border-top: 1px solid var(--border); }
 .sort__item {
   display: flex; align-items: center; gap: 8px;
   padding: 6px 8px;
