@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=505" />
+  <link rel="stylesheet" href="styles.css?v=507" />
 </head>
 <body>
 
@@ -3287,6 +3287,25 @@
               </div>
             </span>
           </div>
+          <!-- Op de DNS-pagina: alles terugzetten zoals wij het aanleveren, of
+               zelf een record erbij. Geen van beide is de hoofdactie, dus allebei
+               een gewone knop; passen ze niet, dan vouwt app.js ze samen. -->
+          <div class="page-head__tools" data-sub-tools="dns-settings" hidden>
+            <button class="btn btn--ghost page-head__action" type="button" id="dns-reset-all">Reset DNS settings</button>
+            <span class="sort">
+              <button class="btn btn--ghost page-head__action sort__btn" type="button" aria-haspopup="true" aria-expanded="false">
+                Add custom record <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+              </button>
+              <div class="sort__menu" role="menu" hidden>
+                <button class="sort__item" type="button" role="menuitem" data-dns-add="A">A record</button>
+                <button class="sort__item" type="button" role="menuitem" data-dns-add="AAAA">AAAA record</button>
+                <button class="sort__item" type="button" role="menuitem" data-dns-add="CNAME">CNAME record</button>
+                <button class="sort__item" type="button" role="menuitem" data-dns-add="MX">MX record</button>
+                <button class="sort__item" type="button" role="menuitem" data-dns-add="TXT">TXT record</button>
+                <button class="sort__item" type="button" role="menuitem" data-dns-add="SRV">SRV record</button>
+              </div>
+            </span>
+          </div>
           <div class="page-head__tools" data-sub-tools="domain-connect" hidden>
             <a class="btn btn--ghost page-head__action" id="connect-view" href="#" target="_blank" rel="noopener">View</a>
             <span class="sort">
@@ -6173,6 +6192,168 @@
             </div>
           </div>
         </section>
+        <!-- ---------- SETTINGS-SUB: DNS-instellingen ---------- -->
+        <!-- De records staan per soort bij elkaar. Wat wij aanleveren draagt een
+             label en kan terug naar die stand; wat je zelf toevoegt kan weg. Het
+             is dezelfde pagina voor elk domein dat wij beheren, dus de naam van
+             het domein staat in het kruimelpad en niet in de records. -->
+        <section class="view" data-set-sub="dns-settings" hidden>
+          <div class="card card--flush dnsgroep" data-dns-soort="A">
+            <h3 class="card__title card__title--sub dnsgroep__kop">A record</h3>
+            <div class="table-wrap">
+              <table class="table table--dnsrec">
+                <thead>
+                  <tr><th>Name</th><th>Points to</th><th><span class="sr-only">Actions</span></th></tr>
+                </thead>
+                <tbody>
+                  <tr data-dns-rij data-dns-std>
+                    <td class="dnsrec__naam">@</td>
+                    <td>23.227.38.69 <span class="badge badge--active">Opining IP</span></td>
+                    <td class="dnsrec__acts">
+                      <span class="domacts">
+                        <button class="icon-btn domact" type="button" data-dns-edit aria-label="Edit this record"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+                        <button class="icon-btn domact" type="button" data-dns-reset aria-label="Reset this record"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></button>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card card--flush dnsgroep" data-dns-soort="AAAA">
+            <h3 class="card__title card__title--sub dnsgroep__kop">AAAA record</h3>
+            <div class="table-wrap">
+              <table class="table table--dnsrec">
+                <thead>
+                  <tr><th>Name</th><th>Points to</th><th><span class="sr-only">Actions</span></th></tr>
+                </thead>
+                <tbody>
+                  <tr data-dns-rij data-dns-std>
+                    <td class="dnsrec__naam">@</td>
+                    <td>2620:0127:f00f:9:: <span class="badge badge--active">Opining IP</span></td>
+                    <td class="dnsrec__acts">
+                      <span class="domacts">
+                        <button class="icon-btn domact" type="button" data-dns-edit aria-label="Edit this record"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+                        <button class="icon-btn domact" type="button" data-dns-reset aria-label="Reset this record"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></button>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card card--flush dnsgroep" data-dns-soort="CNAME">
+            <h3 class="card__title card__title--sub dnsgroep__kop">CNAME record</h3>
+            <div class="table-wrap">
+              <table class="table table--dnsrec">
+                <thead>
+                  <tr><th>Name</th><th>Points to</th><th><span class="sr-only">Actions</span></th></tr>
+                </thead>
+                <tbody>
+                  <tr data-dns-rij data-dns-std>
+                    <td class="dnsrec__naam">account</td>
+                    <td>shops.opining.com</td>
+                    <td class="dnsrec__acts">
+                      <span class="domacts">
+                        <button class="icon-btn domact" type="button" data-dns-edit aria-label="Edit this record"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+                        <button class="icon-btn domact" type="button" data-dns-reset aria-label="Reset this record"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></button>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr data-dns-rij data-dns-std>
+                    <td class="dnsrec__naam">www</td>
+                    <td>shops.opining.com</td>
+                    <td class="dnsrec__acts">
+                      <span class="domacts">
+                        <button class="icon-btn domact" type="button" data-dns-edit aria-label="Edit this record"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+                        <button class="icon-btn domact" type="button" data-dns-reset aria-label="Reset this record"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></button>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card card--flush dnsgroep" data-dns-soort="MX" hidden>
+            <h3 class="card__title card__title--sub dnsgroep__kop">MX record</h3>
+            <div class="table-wrap">
+              <table class="table table--dnsrec">
+                <thead>
+                  <tr><th>Name</th><th>Mail server</th><th>Priority</th><th><span class="sr-only">Actions</span></th></tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card card--flush dnsgroep" data-dns-soort="TXT">
+            <h3 class="card__title card__title--sub dnsgroep__kop">TXT record</h3>
+            <div class="table-wrap">
+              <table class="table table--dnsrec">
+                <thead>
+                  <tr><th>Name</th><th>TXT value</th><th><span class="sr-only">Actions</span></th></tr>
+                </thead>
+                <tbody>
+                  <tr data-dns-rij data-dns-std>
+                    <td class="dnsrec__naam">_dmarc</td>
+                    <td>v=DMARC1; p=none</td>
+                    <td class="dnsrec__acts">
+                      <span class="domacts">
+                        <button class="icon-btn domact" type="button" data-dns-edit aria-label="Edit this record"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+                        <button class="icon-btn domact" type="button" data-dns-reset aria-label="Reset this record"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></button>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr data-dns-rij data-dns-std>
+                    <td class="dnsrec__naam">_provider</td>
+                    <td>opining</td>
+                    <td class="dnsrec__acts">
+                      <span class="domacts">
+                        <button class="icon-btn domact" type="button" data-dns-edit aria-label="Edit this record"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+                        <button class="icon-btn domact" type="button" data-dns-reset aria-label="Reset this record"><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg></button>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card card--flush dnsgroep" data-dns-soort="SRV" hidden>
+            <h3 class="card__title card__title--sub dnsgroep__kop">SRV record</h3>
+            <div class="table-wrap">
+              <table class="table table--dnsrec">
+                <thead>
+                  <tr><th>Name</th><th>Target</th><th>Priority</th><th><span class="sr-only">Actions</span></th></tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Zolang het domein onze nameservers gebruikt gelden de records
+               hierboven. Wijst de naam naar een andere partij, dan staat daar wat
+               er echt gebeurt en is dit scherm een lege huls. -->
+          <div class="card">
+            <h3 class="card__title">Nameservers</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-globe"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Opining&rsquo;s nameservers</span>
+                  <span class="row__meta">ns1.opining.com and ns2.opining.com</span>
+                </span>
+                <button class="btn btn--ghost btn--sm" type="button" data-toast="Point your domain at other nameservers from the provider you bought it from">Change</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section class="view" data-set-view="generic" hidden>
           <div class="card card--empty">
             <svg class="icon empty__icon" id="set-empty-icon" aria-hidden="true"><use href="#i-store"/></svg>
@@ -6263,6 +6444,68 @@
   </div>
   <!-- Uitbetaalritme en de naam die op het afschrift komt. Klein genoeg voor
        een venster: twee velden, en je bent terug waar je was. -->
+  <!-- Een record erbij of een record wijzigen gaat door hetzelfde venster: de
+       velden zijn dezelfde, alleen de naam van het tweede veld en de uitleg
+       hangen af van het soort record. -->
+  <div class="dialog" id="dns-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="dns-dialog-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="dns-dialog-title">Edit A record</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead" id="dns-dialog-lead">An A record points your domain at an IPv4 address.</p>
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="dns-name">Name</label>
+          <input class="input" id="dns-name" type="text" placeholder="@" aria-describedby="dns-name-error" />
+          <p class="field__error" id="dns-name-error" hidden>
+            <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
+          </p>
+        </div>
+        <div class="field">
+          <label class="label" for="dns-value" id="dns-value-label">Points to</label>
+          <input class="input" id="dns-value" type="text" aria-describedby="dns-value-error" />
+          <p class="field__error" id="dns-value-error" hidden>
+            <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>This can&rsquo;t be blank.
+          </p>
+        </div>
+      </div>
+      <div class="field" id="dns-prio-field" hidden>
+        <label class="label" for="dns-prio">Priority</label>
+        <input class="input" id="dns-prio" type="number" min="0" step="1" value="10" />
+        <p class="hint">Mail is offered to the lowest number first.</p>
+      </div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="dns-confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terugzetten of weghalen is niet ongedaan te maken, dus eerst de vraag. -->
+  <div class="dialog" id="dnsreset-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="dnsreset-title">
+      <div class="dialog__head dialog__head--mark">
+        <span class="dialog__mark dialog__mark--danger" aria-hidden="true">
+          <svg class="icon"><use href="#i-warning"/></svg>
+        </span>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <h2 class="dialog__title" id="dnsreset-title">Reset A record</h2>
+      <p class="dialog__lead" id="dnsreset-lead">This puts the A record back the way we deliver it, pointing at your store.</p>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--danger" type="button" id="dnsreset-go">Reset</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dialog" id="payout-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="payout-dialog-title">
@@ -7244,6 +7487,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=505"></script>
+  <script src="app.js?v=507"></script>
 </body>
 </html>

@@ -3289,6 +3289,15 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 
 /* De records: wat er nu staat, en wat het moet worden. */
 .dns { margin-top: 8px; }
+/* De DNS-records staan per soort in een eigen kaart: een kop die zegt om
+   welk soort het gaat, en daaronder de regels. De kop hoort op dezelfde
+   lijn te beginnen als de kolomnamen eronder. */
+.dnsgroep__kop { padding: 16px 20px 12px; }
+.table--dnsrec td:last-child, .table--dnsrec th:last-child { width: 1%; }
+.dnsrec__naam { font-weight: 500; color: var(--text-strong); }
+/* De waarde en het label erachter horen bij elkaar op een regel. */
+.table--dnsrec .badge { margin-left: 8px; }
+
 .table--dns { font-size: var(--fs-sm); }
 .table--dns th, .table--dns td { white-space: nowrap; }
 .dns__empty { color: var(--text-muted); }

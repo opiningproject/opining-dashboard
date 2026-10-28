@@ -6075,9 +6075,12 @@
     }
 
     detailDnsKnop.addEventListener("click", function () {
-      var extern = detailRij && domSoort(detailRij) === "extern";
-      showToast(extern ? "DNS records for " + domNaam(detailRij) + " are managed at your provider"
-                       : "DNS settings are managed by Opining");
+      if (detailRij && domSoort(detailRij) === "extern") {
+        showToast("DNS records for " + domNaam(detailRij) + " are managed at your provider");
+        return;
+      }
+      openSetSub("dns-settings", "DNS settings",
+                 "Records and nameservers for " + (detailRij ? domNaam(detailRij) : "this domain"));
     });
 
     /* Primair maken kan pas als het domein bereikbaar is; daarna verhuist het
@@ -6114,6 +6117,249 @@
 
 
   }
+
+  /* ---- DNS-instellingen ---------------------------------------------------
+     De records staan per soort in een eigen kaart. Wat wij aanleveren draagt
+     een label en kan terug naar die stand; wat je zelf toevoegt kan weg. Het
+     venster waarin je een record wijzigt is hetzelfde als waarin je er een
+     toevoegt: alleen de uitleg en de naam van het tweede veld verschillen,
+     en bij mail komt er een voorkeur bij. */
+  var dnsPagina = document.querySelector('[data-set-sub="dns-settings"]');
+
+  if (dnsPagina) {
+    var DNS_SOORT = {
+      A: { veld: "Points to", prio: false,
+           uitleg: "An A record points your domain at an IPv4 address." },
+      AAAA: { veld: "Points to", prio: false,
+           uitleg: "An AAAA record points your domain at an IPv6 address." },
+      CNAME: { veld: "Points to", prio: false,
+           uitleg: "A CNAME record points one name at another name." },
+      MX: { veld: "Mail server", prio: true,
+           uitleg: "An MX record says which server takes the mail for your domain." },
+      TXT: { veld: "TXT value", prio: false,
+           uitleg: "A TXT record holds text that other services read, for mail or to prove the domain is yours." },
+      SRV: { veld: "Target", prio: true,
+           uitleg: "An SRV record points a service on your domain at a server." }
+    };
+
+    var dnsVenster = document.getElementById("dns-dialog");
+    var dnsTitel = document.getElementById("dns-dialog-title");
+    var dnsUitleg = document.getElementById("dns-dialog-lead");
+    var dnsNaam = document.getElementById("dns-name");
+    var dnsNaamFout = document.getElementById("dns-name-error");
+    var dnsWaardeVeld = document.getElementById("dns-value");
+    var dnsWaardeFout = document.getElementById("dns-value-error");
+    var dnsWaardeLabel = document.getElementById("dns-value-label");
+    var dnsPrioVak = document.getElementById("dns-prio-field");
+    var dnsPrio = document.getElementById("dns-prio");
+
+    var dnsVraag = document.getElementById("dnsreset-dialog");
+    var dnsVraagTitel = document.getElementById("dnsreset-title");
+    var dnsVraagTekst = document.getElementById("dnsreset-lead");
+    var dnsVraagKnop = document.getElementById("dnsreset-go");
+
+    var dnsRij = null;      /* de regel die je wijzigt, of null bij een nieuwe */
+    var dnsNieuw = "";      /* het soort van een nieuwe regel */
+    var dnsDoe = null;      /* wat de vraag in het rode venster uitvoert */
+
+    function dnsGroep(soort) {
+      return dnsPagina.querySelector('[data-dns-soort="' + soort + '"]');
+    }
+
+    /* De stand zoals wij hem aanleveren; daar kun je naar terug. */
+    var dnsBegin = {};
+    dnsPagina.querySelectorAll(".dnsgroep").forEach(function (g) {
+      dnsBegin[g.dataset.dnsSoort] = { rijen: g.querySelector("tbody").innerHTML, weg: g.hidden };
+    });
+
+    /* De waarde staat vooraan in de cel; een label erachter telt niet mee. */
+    function leesWaarde(cel) {
+      var eerste = cel.firstChild;
+      return eerste ? eerste.textContent.trim() : "";
+    }
+
+    function schrijfWaarde(cel, tekst) {
+      var eerste = cel.firstChild;
+      if (eerste && eerste.nodeType === 3) eerste.textContent = tekst;
+      else cel.insertBefore(document.createTextNode(tekst), eerste || null);
+    }
+
+    /* Een label als Opining IP klopt alleen zolang de waarde van ons is. */
+    function merkBij(rij, cel) {
+      var merk = cel.querySelector(".badge");
+      if (merk && !rij.dataset.dnsMerk) {
+        rij.dataset.dnsMerk = merk.textContent;
+        rij.dataset.dnsEcht = leesWaarde(cel);
+      }
+      if (!rij.dataset.dnsMerk) return;
+      var zelfde = leesWaarde(cel) === rij.dataset.dnsEcht;
+      if (zelfde && !merk) {
+        merk = document.createElement("span");
+        merk.className = "badge badge--active";
+        merk.textContent = rij.dataset.dnsMerk;
+        cel.appendChild(merk);
+      }
+      if (!zelfde && merk) merk.remove();
+    }
+
+    dnsPagina.querySelectorAll("[data-dns-rij]").forEach(function (rij) {
+      merkBij(rij, rij.cells[1]);
+    });
+
+    /* Een nieuwe regel ziet eruit als de regels die er al staan; alleen is hij
+       van jou, dus hij kan weg in plaats van terug naar de standaard. */
+    function maakRij(soort, naam, waarde, prio) {
+      var rij = document.createElement("tr");
+      rij.setAttribute("data-dns-rij", "");
+      var cellen = '<td class="dnsrec__naam"></td><td></td>';
+      if (DNS_SOORT[soort].prio) cellen += "<td></td>";
+      rij.innerHTML = cellen +
+        '<td class="dnsrec__acts"><span class="domacts">' +
+        '<button class="icon-btn domact" type="button" data-dns-edit aria-label="Edit this record">' +
+        '<svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>' +
+        '<button class="icon-btn domact" type="button" data-dns-del aria-label="Remove this record">' +
+        '<svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>' +
+        "</span></td>";
+      rij.cells[0].textContent = naam;
+      rij.cells[1].textContent = waarde;
+      if (DNS_SOORT[soort].prio) rij.cells[2].textContent = prio;
+      return rij;
+    }
+
+    function soortVan(rij) {
+      var groep = rij.closest(".dnsgroep");
+      return groep ? groep.dataset.dnsSoort : "A";
+    }
+
+    function openVenster(soort, rij) {
+      var regels = DNS_SOORT[soort];
+      dnsRij = rij || null;
+      dnsNieuw = rij ? "" : soort;
+      dnsTitel.textContent = (rij ? "Edit " : "Add ") + soort + " record";
+      dnsUitleg.textContent = regels.uitleg;
+      dnsWaardeLabel.textContent = regels.veld;
+      dnsPrioVak.hidden = !regels.prio;
+      dnsNaam.value = rij ? rij.cells[0].textContent.trim() : "";
+      dnsWaardeVeld.value = rij ? leesWaarde(rij.cells[1]) : "";
+      dnsPrio.value = rij && regels.prio ? rij.cells[2].textContent.trim() : "10";
+      dnsNaam.classList.remove("input--error");
+      dnsWaardeVeld.classList.remove("input--error");
+      dnsNaamFout.hidden = true;
+      dnsWaardeFout.hidden = true;
+      dnsVenster.hidden = false;
+      dnsNaam.focus();
+    }
+
+    function openVraag(titel, tekst, knop, doen) {
+      dnsVraagTitel.textContent = titel;
+      dnsVraagTekst.textContent = tekst;
+      dnsVraagKnop.textContent = knop;
+      dnsDoe = doen;
+      dnsVraag.hidden = false;
+    }
+
+    function zetGroepTerug(soort) {
+      var groep = dnsGroep(soort);
+      var begin = dnsBegin[soort];
+      if (!groep || !begin) return;
+      groep.querySelector("tbody").innerHTML = begin.rijen;
+      groep.hidden = begin.weg;
+      groep.querySelectorAll("[data-dns-rij]").forEach(function (rij) {
+        merkBij(rij, rij.cells[1]);
+      });
+    }
+
+    dnsPagina.addEventListener("click", function (e) {
+      var wijzig = e.target.closest("[data-dns-edit]");
+      if (wijzig) {
+        var rij = wijzig.closest("tr");
+        openVenster(soortVan(rij), rij);
+        return;
+      }
+
+      var terug = e.target.closest("[data-dns-reset]");
+      if (terug) {
+        var soort = soortVan(terug.closest("tr"));
+        openVraag("Reset " + soort + " record",
+          "This puts the " + soort + " record back the way we deliver it, pointing at your store. Anything you changed here is gone.",
+          "Reset",
+          function () { zetGroepTerug(soort); showToast(soort + " record reset"); });
+        return;
+      }
+
+      var weg = e.target.closest("[data-dns-del]");
+      if (weg) {
+        var rijWeg = weg.closest("tr");
+        var soortWeg = soortVan(rijWeg);
+        openVraag("Remove this " + soortWeg + " record",
+          "The record for " + rijWeg.cells[0].textContent.trim() + " stops answering as soon as the change has spread.",
+          "Remove",
+          function () {
+            var groep = rijWeg.closest(".dnsgroep");
+            rijWeg.remove();
+            if (!groep.querySelector("[data-dns-rij]")) groep.hidden = true;
+            showToast(soortWeg + " record removed");
+          });
+      }
+    });
+
+    document.addEventListener("click", function (e) {
+      var erbij = e.target.closest("[data-dns-add]");
+      if (erbij) openVenster(erbij.dataset.dnsAdd, null);
+    });
+
+    document.getElementById("dns-reset-all").addEventListener("click", function () {
+      openVraag("Reset DNS settings",
+        "Every record goes back the way we deliver it. Records you added yourself are removed.",
+        "Reset",
+        function () {
+          Object.keys(dnsBegin).forEach(zetGroepTerug);
+          showToast("DNS settings reset");
+        });
+    });
+
+    dnsVraagKnop.addEventListener("click", function () {
+      dnsVraag.hidden = true;
+      if (dnsDoe) dnsDoe();
+      dnsDoe = null;
+    });
+
+    /* Typen ruimt de melding op: die ging over de vorige poging. */
+    [dnsNaam, dnsWaardeVeld].forEach(function (veld) {
+      veld.addEventListener("input", function () {
+        veld.classList.remove("input--error");
+        var fout = veld === dnsNaam ? dnsNaamFout : dnsWaardeFout;
+        fout.hidden = true;
+      });
+    });
+
+    document.getElementById("dns-confirm").addEventListener("click", function () {
+      var naam = dnsNaam.value.trim();
+      var waarde = dnsWaardeVeld.value.trim();
+      var mis = false;
+      if (!naam) { dnsNaam.classList.add("input--error"); dnsNaamFout.hidden = false; mis = true; }
+      if (!waarde) { dnsWaardeVeld.classList.add("input--error"); dnsWaardeFout.hidden = false; mis = true; }
+      if (mis) { (naam ? dnsWaardeVeld : dnsNaam).focus(); return; }
+
+      if (dnsRij) {
+        var soort = soortVan(dnsRij);
+        dnsRij.cells[0].textContent = naam;
+        schrijfWaarde(dnsRij.cells[1], waarde);
+        if (DNS_SOORT[soort].prio) dnsRij.cells[2].textContent = dnsPrio.value;
+        merkBij(dnsRij, dnsRij.cells[1]);
+        dnsVenster.hidden = true;
+        showToast(soort + " record updated");
+        return;
+      }
+
+      var groep = dnsGroep(dnsNieuw);
+      groep.querySelector("tbody").appendChild(maakRij(dnsNieuw, naam, waarde, dnsPrio.value));
+      groep.hidden = false;
+      dnsVenster.hidden = true;
+      showToast(dnsNieuw + " record added");
+    });
+  }
+
   /* ---- Betrokkenen in de onboarding ---------------------------------------
      Een eenmanszaak heeft een eigenaar; bij een BV of vennootschap moeten alle
      UBO's en tekenbevoegden erbij. De rechtsvorm uit stap 1 bepaalt welke van
