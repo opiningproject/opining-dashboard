@@ -1312,6 +1312,7 @@
         koopRij = document.createElement("tr");
         koopRij.className = "dom-child";
         koopRij.setAttribute("data-domain", "");
+        koopRij.setAttribute("data-domain-ours", "");
         koopRij.innerHTML =
           '<td><span class="dom dom--sub"><svg class="icon dom__icon" aria-hidden="true">' +
           '<use href="#i-redirect"/></svg><span class="dom__name"></span></span></td>' +
@@ -1333,17 +1334,9 @@
     /* Van de bevestiging naar het domein zelf: dat is één stap opzij, geen
        stap dieper, dus eerst terug en dan de andere pagina open. */
     document.getElementById("bought-status").addEventListener("click", function () {
-      var naam = document.getElementById("bought-domain").textContent;
       backFromSub();
-      openSetSub("domain-detail", naam, "Managed by Opining · Expires on " + koopVervalt);
-    });
-
-    document.getElementById("detail-primary").addEventListener("click", function () {
-      showToast("Wait until the domain is reachable before making it primary");
-    });
-
-    document.getElementById("detail-transfer").addEventListener("click", function () {
-      showToast("A domain can be transferred 60 days after you bought it");
+      var potlood = document.querySelector(".table--domains tr[data-domain-ours] [data-domain-dns]");
+      if (potlood) potlood.click();
     });
 
     /* Deze twee schakelaars gelden meteen: een melding, geen opslaan-balk. */
@@ -5841,23 +5834,28 @@
         return;
       }
 
-      var oud = [].slice.call(domLijst.querySelectorAll("tr[data-domain]"))
-        .filter(function (r) { return domIsPrimair(r); })[0];
-      if (oud && oud !== domRij) {
-        /* Het label verhuist mee, en het icoon zegt waar de rij voor staat:
-           een wereldbol voor het adres zelf, een verwijzing voor de rest. */
-        var label = oud.querySelector(".pill");
-        oud.classList.add("dom-child");
-        oud.querySelector(".dom").classList.add("dom--sub");
-        oud.querySelector(".dom__icon use").setAttribute("href", "#i-redirect");
-        domRij.classList.remove("dom-child");
-        domRij.querySelector(".dom").classList.remove("dom--sub");
-        domRij.querySelector(".dom__icon use").setAttribute("href", "#i-globe");
-        domRij.querySelector(".dom").appendChild(label);
-        domLijst.insertBefore(domRij, oud);
-      }
+      maakPrimair(domRij);
       showToast(naam + " is now your primary domain");
     });
+
+    /* Een nieuw primair domein gaat naar boven en krijgt het label; het oude
+       zakt eronder en wijst er voortaan naartoe. Het icoon zegt waar de rij
+       voor staat: een wereldbol voor het adres zelf, een verwijzing voor de
+       rest. */
+    function maakPrimair(rij) {
+      var oud = [].slice.call(domLijst.querySelectorAll("tr[data-domain]"))
+        .filter(function (r) { return domIsPrimair(r); })[0];
+      if (!oud || oud === rij) return;
+      var label = oud.querySelector(".pill");
+      oud.classList.add("dom-child");
+      oud.querySelector(".dom").classList.add("dom--sub");
+      oud.querySelector(".dom__icon use").setAttribute("href", "#i-redirect");
+      rij.classList.remove("dom-child");
+      rij.querySelector(".dom").classList.remove("dom--sub");
+      rij.querySelector(".dom__icon use").setAttribute("href", "#i-globe");
+      rij.querySelector(".dom").appendChild(label);
+      domLijst.insertBefore(rij, oud);
+    }
 
     /* Een rij die app.js zelf toevoegt (gekocht of gekoppeld domein) heeft nog
        een lege actiecel; die vullen we met dezelfde drie knoppen. */
@@ -5938,6 +5936,91 @@
         });
       });
     }).observe(domLijst, { childList: true });
+
+    /* Het potlood bij een rij opent de pagina van dat domein. Wat daar valt te
+       regelen hangt af van waar het domein vandaan komt: een domein dat je bij
+       ons kocht verleng je hier en staat met contactgegevens in het register,
+       een adres uit het abonnement verloopt niet, en bij een domein dat ergens
+       anders geregistreerd staat regelt die aanbieder dat allemaal. Ook de
+       stand naast de titel, de knop View en de vraag of dit al het primaire
+       domein is komen uit de rij waarop je klikte. */
+    var detailVak = document.querySelector('[data-set-sub="domain-detail"]');
+    var detailDnsTekst = document.getElementById("detail-dns-meta");
+    var detailDnsKnop = document.getElementById("detail-dns-go");
+    var detailBekijk = document.getElementById("detail-view");
+    var detailPrimair = document.getElementById("detail-primary");
+    var detailRij = null;
+
+    function domSoort(rij) {
+      if (rij.hasAttribute("data-domain-ours")) return "ours";
+      if (domNaam(rij).toLowerCase().slice(-14) === ".myopining.com") return "plan";
+      return "extern";
+    }
+
+    function domStand(rij) {
+      var b = rij.querySelector(".badge");
+      return b ? b.textContent.trim() : "";
+    }
+
+    function toonKaart(naam, aan) {
+      var kaart = detailVak.querySelector('[data-dcard="' + naam + '"]');
+      if (kaart) kaart.hidden = !aan;
+    }
+
+    function openDomeinPagina(rij) {
+      if (!rij || !detailVak) return;
+      detailRij = rij;
+      var naam = domNaam(rij);
+      var soort = domSoort(rij);
+
+      toonKaart("renewal", soort === "ours");
+      toonKaart("plan", soort === "plan");
+      toonKaart("reg", soort === "ours");
+      toonKaart("provider", soort === "extern");
+
+      detailDnsTekst.textContent = soort === "extern"
+        ? "Records and nameservers live at your provider"
+        : "Records and nameservers for this domain";
+
+      detailVak.dataset.subBadge = domStand(rij);
+      detailBekijk.href = "https://" + naam;
+      detailPrimair.hidden = domIsPrimair(rij);
+
+      var verloopt = detailVak.querySelector("[data-domain-expiry]");
+      var onder = soort === "ours"
+        ? "Managed by Opining \u00b7 Expires on " + (verloopt ? verloopt.textContent : "")
+        : soort === "plan"
+        ? "Managed by Opining \u00b7 Part of your plan"
+        : "Connected from your domain provider";
+
+      openSetSub("domain-detail", naam, onder);
+    }
+
+    detailDnsKnop.addEventListener("click", function () {
+      var extern = detailRij && domSoort(detailRij) === "extern";
+      showToast(extern ? "DNS records for " + domNaam(detailRij) + " are managed at your provider"
+                       : "DNS settings are managed by Opining");
+    });
+
+    /* Primair maken kan pas als het domein bereikbaar is; daarna verhuist het
+       label in de lijst, net als via Change domain type. */
+    detailPrimair.addEventListener("click", function () {
+      var rij = detailRij || domLijst.querySelector("tr[data-domain-ours]");
+      if (!rij) return;
+      var naam = domNaam(rij);
+      if (domStand(rij) === "Propagating") {
+        showToast("Wait until " + naam + " is reachable before making it primary");
+        return;
+      }
+      maakPrimair(rij);
+      detailPrimair.hidden = true;
+      showToast(naam + " is now your primary domain");
+    });
+
+    document.getElementById("detail-transfer").addEventListener("click", function () {
+      showToast("A domain can be transferred 60 days after you bought it");
+    });
+
     /* De twee andere knoppen in de rij: kijken hoe het domein eruitziet, en
        de DNS-records. Die records staan bij de aanbieder waar het domein
        vandaan komt, behalve bij een domein dat je bij ons kocht. */
@@ -5948,7 +6031,7 @@
         return;
       }
       var dns = e.target.closest("[data-domain-dns]");
-      if (dns) showToast("DNS records for " + domNaam(dns.closest("tr")) + " are managed at your provider");
+      if (dns) openDomeinPagina(dns.closest("tr"));
     });
 
 

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=501" />
+  <link rel="stylesheet" href="styles.css?v=502" />
 </head>
 <body>
 
@@ -6091,7 +6091,7 @@
              Doelen en subdomeinen laten we weg: er is één winkel om naartoe te
              wijzen. -->
         <section class="view" data-set-sub="domain-detail" data-sub-badge="Propagating" hidden>
-          <div class="card">
+          <div class="card" data-dcard="renewal">
             <h3 class="card__title">Renewal</h3>
             <div class="rows">
               <div class="row row--static">
@@ -6104,21 +6104,36 @@
             </div>
           </div>
 
-          <div class="card">
+          <!-- Een adres dat bij het abonnement hoort, in plaats van een
+               domein dat je ergens registreerde: er valt niets te verlengen. -->
+          <div class="card" data-dcard="plan" hidden>
+            <h3 class="card__title">Renewal</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-store"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Included in your plan</span>
+                  <span class="row__meta">This address comes with Opining. It does not expire and there is nothing to renew.</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" data-dcard="dns">
             <h3 class="card__title">DNS</h3>
             <div class="rows">
               <div class="row row--static">
                 <svg class="icon row__icon" aria-hidden="true"><use href="#i-domain"/></svg>
                 <span class="row__text">
                   <span class="row__title">DNS settings</span>
-                  <span class="row__meta">Records and nameservers for this domain</span>
+                  <span class="row__meta" id="detail-dns-meta">Records and nameservers for this domain</span>
                 </span>
-                <button class="btn btn--ghost btn--sm" type="button" data-toast="DNS settings are managed by Opining">Manage</button>
+                <button class="btn btn--ghost btn--sm" type="button" id="detail-dns-go">Manage</button>
               </div>
             </div>
           </div>
 
-          <div class="card">
+          <div class="card" data-dcard="reg">
             <h3 class="card__title">Registration details</h3>
             <div class="rows">
               <div class="row row--static">
@@ -6138,6 +6153,22 @@
                   <span class="row__meta">Your contact details stay out of the public register</span>
                 </span>
                 <label class="switch"><input type="checkbox" checked id="domain-whois" /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Keep my contact details private</span></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bij een domein dat ergens anders geregistreerd staat regelt die
+               aanbieder het verlengen en de contactgegevens; hier staat alleen
+               waar je daarvoor moet zijn. -->
+          <div class="card" data-dcard="provider" hidden>
+            <h3 class="card__title">Registration details</h3>
+            <div class="rows">
+              <div class="row row--static">
+                <svg class="icon row__icon" aria-hidden="true"><use href="#i-globe"/></svg>
+                <span class="row__text">
+                  <span class="row__title">Registered somewhere else</span>
+                  <span class="row__meta">Renewal, contact details and WHOIS privacy are handled by the provider you bought this domain from.</span>
+                </span>
               </div>
             </div>
           </div>
@@ -7213,6 +7244,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=501"></script>
+  <script src="app.js?v=502"></script>
 </body>
 </html>
