@@ -2267,7 +2267,10 @@ select.input {
    Choices Menu: gewone tekst, en een kleinere prullenbak, zodat de knop de
    regel niet hoger maakt dan de tekst nodig heeft. */
 #pe-choices .row, #pe-choices-empty .row { padding: 6px 8px 6px 16px; min-height: 46px; }
-#pe-choices .row__title, #pe-choices-empty .row__title { font-weight: 400; }
+#pe-choices .row__title, #pe-choices-empty .row__title, [data-allergens] .row__title { font-weight: 400; }
+/* De allergenen eronder in dezelfde maat, anders staat er een dikke regel
+   onder twee dunne. */
+.row[data-allergens] { padding-block: 6px; min-height: 46px; }
 #pe-choices .row__del { width: 32px; height: 32px; }
 #pe-choices .row__del .icon { width: 18px; height: 18px; }
 /* Een vraag in de faq: de hele naam is de knop die hem openslaat, dus die
