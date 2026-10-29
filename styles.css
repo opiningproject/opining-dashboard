@@ -956,6 +956,22 @@ select.input {
 .group__open { display: inline-flex; align-items: center; gap: 12px; font: inherit; color: inherit; text-align: left; }
 .usedby { flex: 0 0 auto; }
 
+/* Rechts in de kop van een keuzegroep: het potlood om de groep in te stellen
+   en het rondje om er een keuze bij te zetten. Het potlood komt pas bij het
+   aanwijzen, het plusje staat er altijd: toevoegen is wat je hier het vaakst
+   komt doen. Zonder muis staan ze er allebei. */
+.gacts { display: flex; align-items: center; gap: 2px; margin-left: auto; margin-block: -6px; }
+.gact { width: 32px; height: 32px; }
+.gact--edit { visibility: hidden; }
+.group__head:hover .gact--edit, .gact--edit:focus-visible { visibility: visible; }
+@media (hover: none) {
+  .gact--edit { visibility: visible; }
+}
+/* Een kopje boven een rijtje keuzes in het venster van de keuzegroep. */
+.cgroup__head { margin: 22px 0 2px; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
+.cgroup__max { margin: 4px 0 0 30px; max-width: 200px; }
+.cnew__row { margin-top: 16px; }
+
 /* Een keuze of een categorie heeft geen foto en geen eigen scherm: de regel
    is er om te lezen en te verslepen, dus wijst de muis niet. */
 .prod--keuze { cursor: default; }

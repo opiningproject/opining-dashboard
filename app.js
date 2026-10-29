@@ -2100,9 +2100,9 @@
   document.querySelectorAll('[data-view="products"] .panel, [data-view="choices"] .panel').forEach(function (productPanel) {
     productPanel.addEventListener("click", function (e) {
       var kop = e.target.closest(".group__head");
-      /* De knop met de gerechten zit in dezelfde balk maar klapt hem niet
-         open of dicht. */
-      if (!kop || e.target.closest("[data-used]")) return;
+      /* De knop met de gerechten en de knoppen rechts zitten in dezelfde
+         balk, maar klappen hem niet open of dicht. */
+      if (!kop || e.target.closest("[data-used], .gacts")) return;
       var groep = kop.closest(".group");
       var open = !groep.classList.contains("is-open");
       groep.classList.toggle("is-open", open);
@@ -2136,6 +2136,128 @@
     });
   }
   legVolgordeVast();
+
+  /* ---- Keuzegroepen instellen en aanvullen -------------------------------
+     Het potlood in de kop opent het venster met de naam, of kiezen verplicht
+     is en hoeveel keuzes er mogen. Het rondje met het plusje zet er een keuze
+     bij. De stand van een groep staat op de groep zelf, in data-need en
+     data-max; zonder die staat hij op optioneel en een keuze. */
+  var groepVenster = document.getElementById("cgroup-dialog");
+  var nieuwVenster = document.getElementById("cnew-dialog");
+
+  if (groepVenster && nieuwVenster) {
+    var groepNaam = document.getElementById("cgroup-name");
+    var groepFout = document.getElementById("cgroup-name-error");
+    var maxVeld = document.getElementById("cgroup-max-field");
+    var maxInvoer = document.getElementById("cgroup-max");
+    var nieuwNaam = document.getElementById("cnew-name");
+    var nieuwFout = document.getElementById("cnew-name-error");
+    var nieuwPrijs = document.getElementById("cnew-price");
+    var nieuwStatus = document.getElementById("cnew-status");
+    var bezig = null;
+
+    function kies(naam, waarde) {
+      groepVenster.querySelectorAll('input[name="' + naam + '"]').forEach(function (r) {
+        r.checked = r.value === waarde;
+      });
+    }
+    function gekozen(naam) {
+      var r = groepVenster.querySelector('input[name="' + naam + '"]:checked');
+      return r ? r.value : "";
+    }
+    function zetMaxVeld() {
+      maxVeld.hidden = gekozen("cgroup-count") !== "several";
+    }
+    function zetFout(veld, fout, aan) {
+      fout.hidden = !aan;
+      veld.classList.toggle("input--error", aan);
+    }
+
+    document.addEventListener("click", function (e) {
+      var knop = e.target.closest(".gact");
+      if (!knop) return;
+      bezig = knop.closest(".group");
+      var naam = bezig.querySelector(".group__name").textContent;
+
+      if (knop.classList.contains("gact--edit")) {
+        groepNaam.value = naam;
+        zetFout(groepNaam, groepFout, false);
+        kies("cgroup-need", bezig.dataset.need || "optional");
+        var max = parseInt(bezig.dataset.max, 10) || 1;
+        kies("cgroup-count", max > 1 ? "several" : "one");
+        /* Standaard zoveel als er keuzes zijn, want meer kan niet. */
+        maxInvoer.value = max > 1 ? max : Math.max(2, bezig.querySelectorAll(".prod").length);
+        zetMaxVeld();
+        groepVenster.hidden = false;
+        setTimeout(function () { groepNaam.focus(); }, 0);
+      } else {
+        document.getElementById("cnew-lead").textContent = "The choice is added at the bottom of " + naam + ".";
+        nieuwNaam.value = "";
+        nieuwPrijs.value = "";
+        nieuwStatus.value = "active";
+        zetFout(nieuwNaam, nieuwFout, false);
+        nieuwVenster.hidden = false;
+        setTimeout(function () { nieuwNaam.focus(); }, 0);
+      }
+    });
+
+    groepVenster.addEventListener("change", function (e) {
+      if (e.target.name === "cgroup-count") {
+        zetMaxVeld();
+        if (!maxVeld.hidden) maxInvoer.focus();
+      }
+    });
+
+    document.getElementById("cgroup-save").addEventListener("click", function () {
+      var naam = groepNaam.value.trim();
+      zetFout(groepNaam, groepFout, !naam);
+      if (!naam) { groepNaam.focus(); return; }
+      var meer = gekozen("cgroup-count") === "several";
+      var max = meer ? Math.max(2, parseInt(maxInvoer.value, 10) || 2) : 1;
+      bezig.querySelector(".group__name").textContent = naam;
+      bezig.dataset.need = gekozen("cgroup-need");
+      bezig.dataset.max = max;
+      /* De knop met de gerechten noemt de groep bij naam. */
+      var gebruik = bezig.querySelector(".usedby");
+      if (gebruik) gebruik.setAttribute("aria-label", gebruik.getAttribute("aria-label").replace(/use .*$/, "use " + naam));
+      groepVenster.hidden = true;
+      showToast(naam + " saved");
+    });
+
+    document.getElementById("cnew-save").addEventListener("click", function () {
+      var naam = nieuwNaam.value.trim();
+      zetFout(nieuwNaam, nieuwFout, !naam);
+      if (!naam) { nieuwNaam.focus(); return; }
+      var concept = nieuwStatus.value === "draft";
+      var li = document.createElement("li");
+      li.className = "prod prod--keuze";
+      li.innerHTML = '<span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>' +
+        '<span class="prod__name"></span>' +
+        '<span class="badge badge--' + (concept ? "draft" : "active") + '">' + (concept ? "Draft" : "Active") + "</span>";
+      li.querySelector(".prod__name").textContent = naam;
+      if (nieuwPrijs.value.trim()) li.dataset.price = nieuwPrijs.value.trim();
+      var lijst = bezig.querySelector(".group__list");
+      lijst.appendChild(li);
+      /* Een nieuwe keuze is bewaard; hij hoort niet als verschoven volgorde
+         de savebar op te roepen. */
+      var bewaard = bewaardeVolgorde.get(lijst);
+      if (bewaard) bewaard.push(li);
+      /* Een dichte groep gaat open, zodat je ziet waar hij terechtkwam. */
+      bezig.classList.add("is-open");
+      nieuwVenster.hidden = true;
+      showToast(naam + " added to " + bezig.querySelector(".group__name").textContent);
+    });
+
+    /* Enter in een veld doet wat de knop onderin doet. */
+    [[groepVenster, "cgroup-save"], [nieuwVenster, "cnew-save"]].forEach(function (paar) {
+      paar[0].addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && e.target.matches("input:not([type=radio])")) {
+          e.preventDefault();
+          document.getElementById(paar[1]).click();
+        }
+      });
+    });
+  }
 
   /* Rijen die van plek wisselen glijden erheen in plaats van te springen:
      eerst meten, dan verplaatsen, dan het verschil wegschuiven. */

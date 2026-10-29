@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=512" />
+  <link rel="stylesheet" href="styles.css?v=513" />
 </head>
 <body>
 
@@ -2522,7 +2522,10 @@
                   <button class="codes__more usedby" type="button" aria-expanded="false"
                           aria-label="Show the 4 products that use Milk"
                           data-used="Pistachio Velvet Latte;Cappuccino;Flat White;Iced Latte">Used by 4</button>
-                  <span class="group__count">5 choices</span>
+                  <span class="gacts">
+                    <button class="icon-btn gact gact--edit" type="button" aria-label="Edit choice group" title="Edit choice group"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+                    <button class="icon-btn gact gact--add" type="button" aria-label="Add a choice" title="Add a choice"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg></button>
+                  </span>
                 </div>
                 <div class="group__panel"><div class="group__inner">
                   <ul class="group__list">
@@ -2564,7 +2567,10 @@
                   <button class="codes__more usedby" type="button" aria-expanded="false"
                           aria-label="Show the 4 products that use Extra shot"
                           data-used="Cappuccino;Flat White;Iced Latte;Cold Brew">Used by 4</button>
-                  <span class="group__count">3 choices</span>
+                  <span class="gacts">
+                    <button class="icon-btn gact gact--edit" type="button" aria-label="Edit choice group" title="Edit choice group"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+                    <button class="icon-btn gact gact--add" type="button" aria-label="Add a choice" title="Add a choice"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg></button>
+                  </span>
                 </div>
                 <div class="group__panel"><div class="group__inner">
                   <ul class="group__list">
@@ -2596,7 +2602,10 @@
                   <button class="codes__more usedby" type="button" aria-expanded="false"
                           aria-label="Show the 3 products that use Sandwich extras"
                           data-used="Mozarella Sandwich;Chicken Sandwich;Tomato &amp; Mozzarella Sandwich with bacon">Used by 3</button>
-                  <span class="group__count">5 choices</span>
+                  <span class="gacts">
+                    <button class="icon-btn gact gact--edit" type="button" aria-label="Edit choice group" title="Edit choice group"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+                    <button class="icon-btn gact gact--add" type="button" aria-label="Add a choice" title="Add a choice"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg></button>
+                  </span>
                 </div>
                 <div class="group__panel"><div class="group__inner">
                   <ul class="group__list">
@@ -2635,7 +2644,10 @@
                     <svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
                     <span class="group__name">Syrup</span>
                   </button>
-                  <span class="group__count">3 choices</span>
+                  <span class="gacts">
+                    <button class="icon-btn gact gact--edit" type="button" aria-label="Edit choice group" title="Edit choice group"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
+                    <button class="icon-btn gact gact--add" type="button" aria-label="Add a choice" title="Add a choice"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg></button>
+                  </span>
                 </div>
                 <div class="group__panel"><div class="group__inner">
                   <ul class="group__list">
@@ -6399,6 +6411,98 @@
   <!-- Opzeggen is niet terug te draaien zonder opnieuw te beginnen, dus eerst
        zwart op wit wat er stopt en wanneer. De zachte knop houdt het plan; de
        rode zegt op, en staat als enige in de rode kleur. -->
+  <!-- Een keuzegroep instellen: de naam, of de gast moet kiezen, en hoeveel
+       keuzes hij mag aanvinken. Het potlood in de kop van de groep opent hem. -->
+  <div class="dialog" id="cgroup-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cgroup-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="cgroup-title">Edit choice group</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <div class="field">
+        <label class="label" for="cgroup-name">Name</label>
+        <input class="input" id="cgroup-name" type="text" aria-describedby="cgroup-name-error" />
+        <p class="field__error" id="cgroup-name-error" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
+        </p>
+      </div>
+      <h3 class="cgroup__head">Selection</h3>
+      <label class="opt">
+        <input type="radio" name="cgroup-need" value="optional" />
+        <span class="opt__name">Optional</span>
+        <span class="opt__desc">The guest can skip this group.</span>
+      </label>
+      <label class="opt">
+        <input type="radio" name="cgroup-need" value="required" />
+        <span class="opt__name">Required</span>
+        <span class="opt__desc">The guest has to choose before the product goes in the basket.</span>
+      </label>
+      <h3 class="cgroup__head">How many</h3>
+      <label class="opt">
+        <input type="radio" name="cgroup-count" value="one" />
+        <span class="opt__name">One choice</span>
+        <span class="opt__desc">Shown as a list where picking one replaces the other.</span>
+      </label>
+      <label class="opt">
+        <input type="radio" name="cgroup-count" value="several" />
+        <span class="opt__name">Several choices</span>
+        <span class="opt__desc">The guest ticks as many as you allow.</span>
+      </label>
+      <div class="field cgroup__max" id="cgroup-max-field" hidden>
+        <label class="label" for="cgroup-max">At most</label>
+        <span class="infield">
+          <input class="input infield__input--after" id="cgroup-max" type="number" min="2" step="1" />
+          <span class="infield__after">choices</span>
+        </span>
+      </div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="cgroup-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Een keuze erbij in een groep: naam, meerprijs en of hij al te zien is.
+       Het rondje met het plusje in de kop van de groep opent hem. -->
+  <div class="dialog" id="cnew-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cnew-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="cnew-title">Add choice</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead" id="cnew-lead"></p>
+      <div class="field">
+        <label class="label" for="cnew-name">Name</label>
+        <input class="input" id="cnew-name" type="text" aria-describedby="cnew-name-error" />
+        <p class="field__error" id="cnew-name-error" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
+        </p>
+      </div>
+      <div class="field-row cnew__row">
+        <div class="field">
+          <label class="label" for="cnew-price">Extra price <span class="label__opt">optional</span></label>
+          <span class="infield">
+            <span class="infield__unit">&euro;</span>
+            <input class="input infield__input" id="cnew-price" type="text" inputmode="decimal" placeholder="0,00" />
+          </span>
+        </div>
+        <div class="field">
+          <label class="label" for="cnew-status">Status</label>
+          <select class="input" id="cnew-status"><option value="active">Active</option><option value="draft">Draft</option></select>
+        </div>
+      </div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="cnew-save">Add choice</button>
+      </div>
+    </div>
+  </div>
   <div class="dialog" id="cancel-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cancel-dialog-title">
@@ -7487,6 +7591,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=512"></script>
+  <script src="app.js?v=513"></script>
 </body>
 </html>
