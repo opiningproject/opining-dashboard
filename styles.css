@@ -1971,6 +1971,9 @@ select.input {
 
 /* Neutrale toelichting; de gele .alert is voor waarschuwingen. */
 .alert--info { background: var(--accent-soft); color: #14567f; }
+/* Staan er velden onder een melding, dan krijgen die dezelfde ruimte als
+   boven de melding, anders plakt het eerste label eronder. */
+.alert + .field-row, .alert + .field { margin-top: 16px; }
 /* Melding met een titel: de titel op een eigen regel, de uitleg eronder,
    en het teken bovenaan naast de titel in plaats van in het midden. */
 .alert--titled { padding: 16px; font-weight: 400; }
