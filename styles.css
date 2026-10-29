@@ -854,6 +854,9 @@ select.input {
 /* Een kaart die de titelregel op een telefoon ontlast; op een breed scherm
    staat hetzelfde veld naast de titel. */
 .card--smal { display: none; }
+/* De keuzelijst staat er zonder veldvak omheen; hij krijgt dezelfde ruimte
+   onder de titel als een veld in een andere kaart. */
+.card--smal > .input { margin-top: 14px; }
 /* Twee knoppen die samen een zijn: de gewone actie en een pijltje voor de
    minder gewone weg. De naad ertussen is hun gedeelde rand. */
 .split { display: inline-flex; }
