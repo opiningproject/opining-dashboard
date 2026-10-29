@@ -1071,29 +1071,21 @@ select.input {
 /* In de online store staat het blokje onder een streep in plaats van onder
    een kop; dan hoort de ruimte erboven bij de streep. */
 .rule + .langtabs { margin-top: 18px; }
-/* De taalkeuze is een schakelaar tussen twee standen van hetzelfde veld, geen
-   filter. Daarom geen blauwe knopjes maar een grijze rail met de gekozen taal
-   wit erin, in de grijzen van de tabs boven een lijst. */
-.chips.langtabs {
-  display: inline-flex; flex-wrap: nowrap; gap: 2px;
-  padding: 3px;
-  border-radius: var(--r-md);
-  background: var(--gray-100);
-}
+/* De taalkeuze ziet eruit als de tabs boven een lijst (All, Active, Draft):
+   geen blauwe knopjes, maar grijze tekst met de gekozen taal op een grijs
+   vlak. */
+.chips.langtabs { gap: 4px; }
 .langtabs .chip {
-  height: 30px; padding: 0 14px;
-  border-radius: calc(var(--r-md) - 2px);
+  display: inline-flex; align-items: center;
+  height: 34px; padding: 0 14px;
+  border-radius: var(--r-md);
   background: transparent;
+  font-size: var(--fs-md); font-weight: 500;
   color: var(--text-muted);
-  font-weight: 500;
 }
-.langtabs .chip:hover { background: transparent; color: var(--text-strong); }
+.langtabs .chip:hover { background: var(--gray-50); color: var(--text); }
 .langtabs .chip.is-active,
-.langtabs .chip.is-active:hover {
-  background: var(--bg-surface);
-  color: var(--text-strong);
-  box-shadow: 0 1px 2px rgba(18, 22, 28, .08), 0 0 0 1px rgba(18, 22, 28, .04);
-}
+.langtabs .chip.is-active:hover { background: var(--gray-100); color: var(--text-strong); }
 .langtabs .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 /* ==========================================================================
