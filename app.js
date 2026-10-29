@@ -8726,6 +8726,17 @@
       zetFout();
     }
 
+    /* Zonder keuzegroepen geen lege lijst met een knop erboven, maar een
+       regel om er een toe te voegen op de plek van de lijst. */
+    var keuzeLijst = document.getElementById("pe-choices");
+    function zetKeuzeLeeg() {
+      var leeg = !keuzeLijst.querySelector(".row");
+      keuzeLijst.hidden = leeg;
+      document.getElementById("pe-choices-empty").hidden = !leeg;
+      document.getElementById("pe-choices-head-add").hidden = leeg;
+    }
+    zetKeuzeLeeg();
+
     vak.addEventListener("click", function (e) {
       var knop = e.target.closest("[data-lang]");
       if (knop) { toonTaal(knop.dataset.lang); return; }
@@ -8735,6 +8746,7 @@
         var rij = weg.closest(".row");
         var naam = rij.querySelector(".row__title").textContent;
         rij.remove();
+        zetKeuzeLeeg();
         showToast(naam + " removed");
         return;
       }

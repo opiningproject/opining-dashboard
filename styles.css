@@ -2227,6 +2227,11 @@ select.input {
 /* Rij zonder eigen actie: geen hover, bediening rechts. */
 .row--static { cursor: default; }
 .row--static:hover { background: none; }
+/* De regel die een keuzegroep toevoegt als er nog geen is: dezelfde maat als
+   een groep, met een plusje waar anders de greep staat. */
+.row--add { cursor: pointer; }
+.row__plus { width: 18px; height: 18px; color: var(--text-muted); }
+.row--add .row__title { color: var(--text); }
 /* Een vraag in de faq: de hele naam is de knop die hem openslaat, dus die
    vult de regel en houdt zijn tekst links. De regel die openstaat kleurt mee
    met de rest van het ontwerp -- licht, niet vol, want het is een keuze en

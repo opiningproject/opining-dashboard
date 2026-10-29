@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=513" />
+  <link rel="stylesheet" href="styles.css?v=514" />
 </head>
 <body>
 
@@ -2855,7 +2855,7 @@
                    slepen zonder langs een knop te moeten. -->
               <div class="card__headrow">
                 <h2 class="card__title">Choices menu</h2>
-                <button class="btn btn--ghost btn--sm" type="button" data-choice-add>Add</button>
+                <button class="btn btn--ghost btn--sm" type="button" data-choice-add id="pe-choices-head-add">Add</button>
               </div>
               <!-- Dezelfde groepen als op de keuzekaart; hier bepaal je welke
                    bij dit gerecht horen en in welke volgorde ze staan. Slepen
@@ -2875,6 +2875,14 @@
                     <svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>
                   </button>
                 </div>
+              </div>
+              <!-- Zonder groepen is de lijst leeg; dan staat op zijn plek een regel om
+                   er een toe te voegen, en vervalt de knop in de kop. -->
+              <div class="rows" id="pe-choices-empty" hidden>
+                <button class="row row--add" type="button" data-choice-add>
+                  <svg class="icon row__plus" aria-hidden="true"><use href="#i-plus"/></svg>
+                  <span class="row__title">Add choices menu</span>
+                </button>
               </div>
             </div>
 
@@ -7591,6 +7599,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=513"></script>
+  <script src="app.js?v=514"></script>
 </body>
 </html>
