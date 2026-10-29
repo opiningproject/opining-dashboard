@@ -1022,6 +1022,8 @@ select.input {
   background: var(--gray-25);
   color: var(--border-strong);
 }
+/* Een foto in de lijst vult het vakje helemaal. */
+.prod__thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
 /* De naam krijgt een vaste halve rij, zodat de stand erachter bij elke rij op
    dezelfde hoogte begint. Past een naam daar niet in, dan kapt hij af met
    puntjes: een tweede regel zou de rijen ongelijk hoog maken. */
@@ -1061,16 +1063,6 @@ select.input {
 /* ==========================================================================
    8b2. EEN GERECHT BEWERKEN — tip bovenaan, daarna de kaarten met gegevens
    ========================================================================== */
-/* De foto van het gerecht. Zolang er geen foto's zijn staat er hetzelfde teken
-   als in de lijst, maar dan op formaat. */
-.prodimg {
-  display: grid; place-items: center;
-  width: 110px; height: 110px;
-  border: 1px solid var(--border); border-radius: var(--r-md);
-  background: var(--gray-50);
-}
-.prodimg:hover { background: var(--gray-100); }
-.prodimg .icon { width: 28px; height: 28px; color: var(--text-muted); }
 
 /* De talen boven naam en omschrijving: dezelfde knopjes als in het zoekpaneel. */
 /* De taalkeuze staat los boven de velden waar hij over gaat; eronder dezelfde

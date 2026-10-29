@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=518" />
+  <link rel="stylesheet" href="styles.css?v=519" />
 </head>
 <body>
 
@@ -2771,11 +2771,23 @@
 
               <div class="field">
                 <span class="label">Image</span>
-                <!-- Nog geen foto's in dit prototype; hetzelfde plaatsvervangend
-                     teken als in de lijst, maar dan op formaat. -->
-                <button class="prodimg" type="button" aria-label="Change image">
-                  <svg class="icon" aria-hidden="true"><use href="#i-image"/></svg>
-                </button>
+                <!-- Hetzelfde vak als voor het logo van de winkel: kiezen of
+                     erin slepen, en daarna het beeld met Replace en Remove. -->
+                <div class="drop drop--beeld" id="pe-image">
+                  <input type="file" hidden accept="image/png,image/jpeg,image/webp" aria-label="Product image" />
+                  <div class="drop__empty">
+                    <button class="btn btn--soft btn--sm" type="button" data-beeld-kies>Select</button>
+                    <p class="drop__hint">PNG, JPG or WebP, up to 5 MB</p>
+                  </div>
+                  <div class="drop__beeld" hidden>
+                    <img alt="" />
+                    <span class="drop__name"></span>
+                    <span class="drop__acties">
+                      <button class="link link--btn" type="button" data-beeld-kies>Replace</button>
+                      <button class="link link--btn" type="button" data-beeld-weg>Remove</button>
+                    </span>
+                  </div>
+                </div>
               </div>
 
               <div class="field">
@@ -2900,7 +2912,7 @@
             <!-- Opslaan hoort bij het formulier, niet bij de titelregel. -->
             <div class="formfoot">
               <button class="btn btn--ghost" type="button" data-back-view>Discard</button>
-              <button class="btn btn--primary" type="button" data-created="Product saved">Save</button>
+              <button class="btn btn--primary" type="button" id="pe-save" data-created="Product saved">Save</button>
             </div>
           </section>
 
@@ -7679,6 +7691,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=518"></script>
+  <script src="app.js?v=519"></script>
 </body>
 </html>

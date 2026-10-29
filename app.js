@@ -1638,12 +1638,18 @@
         beeld.hidden = false;
         vak.querySelector(".drop__empty").hidden = true;
         vak.classList.add("drop--filled");
-        markUnsaved("Online store");
+        beeldGewijzigd(vak);
       };
       lezer.readAsDataURL(bestand);
     }
 
-    storeView.querySelectorAll(".drop--beeld").forEach(function (vak) {
+    /* Het logo van de winkel en de foto van een gerecht gaan door hetzelfde
+       vak. Alleen de winkel heeft een savebar; een gerecht bewaar je onderin. */
+    function beeldGewijzigd(vak) {
+      if (storeView.contains(vak)) markUnsaved("Online store");
+    }
+
+    document.querySelectorAll(".drop--beeld").forEach(function (vak) {
       var kiezer = vak.querySelector("input[type='file']");
       var leegStand = vak.classList.contains("drop--filled");
 
@@ -1664,7 +1670,7 @@
         vak.querySelector(".drop__empty").hidden = false;
         vak.classList.toggle("drop--filled", leegStand);
         kiezer.value = "";
-        markUnsaved("Online store");
+        beeldGewijzigd(vak);
       });
 
       kiezer.addEventListener("change", function () { toonBeeld(vak, kiezer.files[0]); });
@@ -8853,6 +8859,25 @@
     });
     omschrijving.addEventListener("input", function () { tekst[taal].uitleg = omschrijving.value; });
 
+    /* Bewaren zet de gekozen foto ook in de lijst, of haalt hem daar weg. */
+    var fotoVak = document.getElementById("pe-image");
+    var openRij = null;
+    document.getElementById("pe-save").addEventListener("click", function () {
+      if (!openRij) return;
+      var duim = openRij.querySelector(".prod__thumb");
+      var foto = fotoVak.querySelector(".drop__beeld");
+      if (foto.hidden) {
+        duim.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-image"/></svg>';
+        return;
+      }
+      var img = document.createElement("img");
+      img.alt = "";
+      img.src = foto.querySelector("img").src;
+      img.dataset.naam = foto.querySelector(".drop__name").textContent;
+      duim.textContent = "";
+      duim.appendChild(img);
+    });
+
     /* Vanaf de menukaart: de regel die je aanklikt bepaalt wat er in staat. */
     document.addEventListener("click", function (e) {
       var rij = e.target.closest('[data-view="products"] .prod');
@@ -8863,6 +8888,17 @@
       var naam = rij.querySelector(".prod__name").textContent.trim();
       var badge = rij.querySelector(".badge");
       var groep = rij.closest(".group");
+      /* De foto komt uit de regel in de lijst; heeft die er geen, dan begint
+         het vak leeg. */
+      openRij = rij;
+      var duim = rij.querySelector(".prod__thumb img");
+      if (duim) fotoVak.querySelector(".drop__beeld img").src = duim.src;
+      else fotoVak.querySelector(".drop__beeld img").removeAttribute("src");
+      fotoVak.querySelector(".drop__name").textContent = duim ? duim.dataset.naam || "" : "";
+      fotoVak.querySelector(".drop__beeld").hidden = !duim;
+      fotoVak.querySelector(".drop__empty").hidden = !!duim;
+      fotoVak.classList.toggle("drop--filled", !!duim);
+      fotoVak.querySelector("input[type='file']").value = "";
 
       tekst = {
         en: { titel: naam, uitleg: "Steamed semi-skimmed milk mixed with a chocolate sauce, topped with a sweet preparation based on milk with white chocolate and pistachio." },
