@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=516" />
+  <link rel="stylesheet" href="styles.css?v=517" />
 </head>
 <body>
 
@@ -6419,6 +6419,65 @@
   <!-- Opzeggen is niet terug te draaien zonder opnieuw te beginnen, dus eerst
        zwart op wit wat er stopt en wanneer. De zachte knop houdt het plan; de
        rode zegt op, en staat als enige in de rode kleur. -->
+  <!-- Allergenen van een gerecht: de veertien uit de Europese lijst, met de
+       granen en de noten per soort, want daar vraagt de wet om. Bevestigen kan
+       pas met het vinkje dat de gegevens kloppen, en met ten minste een
+       allergeen of de verklaring dat er geen in zit. -->
+  <div class="dialog" id="allergen-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="allergen-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="allergen-title">Allergens</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <div class="allerg" id="allergen-list">
+        <h3 class="allerg__head">Cereals containing gluten</h3>
+        <div class="allerg__grid">
+          <label class="ack"><input type="checkbox" value="Barley" /><span>Barley</span></label>
+          <label class="ack"><input type="checkbox" value="Oats" /><span>Oats</span></label>
+          <label class="ack"><input type="checkbox" value="Spelt" /><span>Spelt</span></label>
+          <label class="ack"><input type="checkbox" value="Kamut" /><span>Kamut</span></label>
+          <label class="ack"><input type="checkbox" value="Rye" /><span>Rye</span></label>
+          <label class="ack"><input type="checkbox" value="Wheat" /><span>Wheat</span></label>
+        </div>
+        <h3 class="allerg__head">Nuts</h3>
+        <div class="allerg__grid">
+          <label class="ack"><input type="checkbox" value="Almonds" /><span>Almonds</span></label>
+          <label class="ack"><input type="checkbox" value="Cashews" /><span>Cashews</span></label>
+          <label class="ack"><input type="checkbox" value="Macadamia nuts" /><span>Macadamia nuts</span></label>
+          <label class="ack"><input type="checkbox" value="Pistachios" /><span>Pistachios</span></label>
+          <label class="ack"><input type="checkbox" value="Walnuts" /><span>Walnuts</span></label>
+          <label class="ack"><input type="checkbox" value="Brazil nuts" /><span>Brazil nuts</span></label>
+          <label class="ack"><input type="checkbox" value="Hazelnuts" /><span>Hazelnuts</span></label>
+          <label class="ack"><input type="checkbox" value="Pecans" /><span>Pecans</span></label>
+        </div>
+        <h3 class="allerg__head">Other allergens</h3>
+        <div class="allerg__grid">
+          <label class="ack"><input type="checkbox" value="Crustaceans and products thereof" /><span>Crustaceans and products thereof</span></label>
+          <label class="ack"><input type="checkbox" value="Fish and products thereof" /><span>Fish and products thereof</span></label>
+          <label class="ack"><input type="checkbox" value="Soybeans and products thereof" /><span>Soybeans and products thereof</span></label>
+          <label class="ack"><input type="checkbox" value="Celery and products thereof" /><span>Celery and products thereof</span></label>
+          <label class="ack"><input type="checkbox" value="Sesame seeds and products thereof" /><span>Sesame seeds and products thereof</span></label>
+          <label class="ack"><input type="checkbox" value="Lupin and products thereof" /><span>Lupin and products thereof</span></label>
+          <label class="ack"><input type="checkbox" value="Eggs and products thereof" /><span>Eggs and products thereof</span></label>
+          <label class="ack"><input type="checkbox" value="Peanuts and products thereof" /><span>Peanuts and products thereof</span></label>
+          <label class="ack"><input type="checkbox" value="Milk and products thereof (including lactose)" /><span>Milk and products thereof (including lactose)</span></label>
+          <label class="ack"><input type="checkbox" value="Mustard and products thereof" /><span>Mustard and products thereof</span></label>
+          <label class="ack"><input type="checkbox" value="Sulphur dioxide and sulphites" /><span>Sulphur dioxide and sulphites</span></label>
+          <label class="ack"><input type="checkbox" value="Molluscs and products thereof" /><span>Molluscs and products thereof</span></label>
+        </div>
+      </div>
+      <label class="ack allerg__none"><input type="checkbox" id="allergen-none" /><span>This product contains no allergens</span></label>
+      <label class="ack allerg__pledge"><input type="checkbox" id="allergen-pledge" /><span>I confirm that the allergen information is complete and correct, and that I will update it when something on my menu changes.</span></label>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="allergen-save" disabled>Confirm</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Keuzegroepen bij een gerecht zetten. De lijst komt uit de keuzekaart,
        zodat hij altijd dezelfde groepen toont; wat er al bij staat is
        aangevinkt en niet nog eens te kiezen. -->
@@ -7620,6 +7679,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=516"></script>
+  <script src="app.js?v=517"></script>
 </body>
 </html>
