@@ -8737,6 +8737,60 @@
     }
     zetKeuzeLeeg();
 
+    /* Het venster met de keuzegroepen. Elke keer opnieuw opgebouwd uit de
+       keuzekaart, zodat een groep die daar net is hernoemd of bijgekomen
+       hier ook zo staat. */
+    var kiezer = document.getElementById("cpick-dialog");
+    var kiesLijst = document.getElementById("cpick-list");
+    var kiesKnop = document.getElementById("cpick-save");
+
+    function openKeuzeKiezer() {
+      var al = [].map.call(keuzeLijst.querySelectorAll(".row__title"), function (t) { return t.textContent; });
+      kiesLijst.textContent = "";
+      document.querySelectorAll('[data-view="choices"] .group').forEach(function (groep) {
+        var naam = groep.querySelector(".group__name").textContent;
+        var aantal = groep.querySelectorAll(".prod").length;
+        var erbij = al.indexOf(naam) !== -1;
+        var regel = document.createElement("label");
+        regel.className = "pick" + (erbij ? " pick--al" : "");
+        regel.innerHTML = '<input type="checkbox" /><span class="pick__name"></span><span class="pick__meta"></span>';
+        var vink = regel.querySelector("input");
+        vink.value = naam;
+        vink.checked = erbij;
+        vink.disabled = erbij;
+        regel.querySelector(".pick__name").textContent = naam;
+        regel.querySelector(".pick__meta").textContent = erbij ? "Added" : aantal + (aantal === 1 ? " choice" : " choices");
+        kiesLijst.appendChild(regel);
+      });
+      zetKiesKnop();
+      kiezer.hidden = false;
+    }
+
+    /* De knop telt mee, zodat je ziet hoeveel er bijkomen. */
+    function zetKiesKnop() {
+      var n = kiesLijst.querySelectorAll("input:checked:not(:disabled)").length;
+      kiesKnop.disabled = n === 0;
+      kiesKnop.textContent = n > 1 ? "Add " + n : "Add";
+    }
+    kiesLijst.addEventListener("change", zetKiesKnop);
+
+    kiesKnop.addEventListener("click", function () {
+      var nieuw = [].map.call(kiesLijst.querySelectorAll("input:checked:not(:disabled)"), function (v) { return v.value; });
+      nieuw.forEach(function (naam) {
+        var rij = document.createElement("div");
+        rij.className = "row row--static";
+        rij.innerHTML = '<span class="prod__handle" aria-hidden="true"><svg class="icon"><use href="#i-drag"/></svg></span>' +
+          '<span class="row__title"></span>' +
+          '<button class="icon-btn row__del" type="button" data-choice-remove><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>';
+        rij.querySelector(".row__title").textContent = naam;
+        rij.querySelector(".row__del").setAttribute("aria-label", "Remove " + naam);
+        keuzeLijst.appendChild(rij);
+      });
+      zetKeuzeLeeg();
+      kiezer.hidden = true;
+      showToast(nieuw.length === 1 ? nieuw[0] + " added" : nieuw.length + " choice groups added");
+    });
+
     vak.addEventListener("click", function (e) {
       var knop = e.target.closest("[data-lang]");
       if (knop) { toonTaal(knop.dataset.lang); return; }
@@ -8751,7 +8805,7 @@
         return;
       }
 
-      if (e.target.closest("[data-choice-add]")) { showToast("Choose a group to add"); return; }
+      if (e.target.closest("[data-choice-add]")) { openKeuzeKiezer(); return; }
       if (e.target.closest("[data-allergens]")) { showToast("Allergens are set per product"); }
     });
 

@@ -1722,6 +1722,24 @@ select.input {
 .pick__meta { margin-left: auto; font-size: var(--fs-sm); color: var(--text-muted); visibility: hidden; }
 .pick input:checked ~ .pick__meta { visibility: visible; }
 
+/* In het venster om keuzegroepen bij een gerecht te zetten kies je er meer
+   tegelijk: een vinkje in een vierkantje in plaats van een rondje. Wat er al
+   bij staat is aangevinkt en zakt naar de achtergrond. */
+.cpick { margin-top: 0; }
+.cpick .pick input {
+  width: 18px; height: 18px;
+  border-radius: calc(var(--r-sm) - 3px);
+}
+.cpick .pick input:checked {
+  border-width: 1.5px;
+  background: var(--accent) url("data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27white%27 stroke-width=%273%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27><path d=%27m5 12.5 4.5 4.5L19 7%27/></svg>") center / 12px no-repeat;
+}
+.cpick .pick__meta { visibility: visible; }
+.cpick .pick--al { cursor: default; }
+.cpick .pick--al:hover { background: none; }
+.cpick .pick--al input { opacity: .45; }
+.cpick .pick--al .pick__name { color: var(--text-muted); }
+
 /* Plek voor het logo van een betaalmethode. Geen kader eromheen: de logos
    hebben hun eigen vorm en kleur, en een vakje maakt dat alleen maar druk.
    Het logo schaalt mee zonder uit te rekken. */

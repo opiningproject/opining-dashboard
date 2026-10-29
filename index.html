@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=514" />
+  <link rel="stylesheet" href="styles.css?v=515" />
 </head>
 <body>
 
@@ -6419,6 +6419,27 @@
   <!-- Opzeggen is niet terug te draaien zonder opnieuw te beginnen, dus eerst
        zwart op wit wat er stopt en wanneer. De zachte knop houdt het plan; de
        rode zegt op, en staat als enige in de rode kleur. -->
+  <!-- Keuzegroepen bij een gerecht zetten. De lijst komt uit de keuzekaart,
+       zodat hij altijd dezelfde groepen toont; wat er al bij staat is
+       aangevinkt en niet nog eens te kiezen. -->
+  <div class="dialog" id="cpick-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cpick-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="cpick-title">Add choices menu</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <p class="dialog__lead">Pick the groups guests can choose from with this product.</p>
+      <div class="rows cpick" id="cpick-list"></div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="cpick-save" disabled>Add</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Een keuzegroep instellen: de naam, of de gast moet kiezen, en hoeveel
        keuzes hij mag aanvinken. Het potlood in de kop van de groep opent hem. -->
   <div class="dialog" id="cgroup-dialog" hidden>
@@ -7599,6 +7620,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=514"></script>
+  <script src="app.js?v=515"></script>
 </body>
 </html>
