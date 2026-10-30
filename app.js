@@ -9345,7 +9345,7 @@
       nieuwGerecht = true;
       tekst = { en: { titel: "", uitleg: "" }, nl: { titel: "", uitleg: "" } };
       taal = "en";
-      categorie.selectedIndex = 0;
+      categorie.value = "";
       fotoVak.querySelector(".drop__beeld").hidden = true;
       fotoVak.querySelector(".drop__beeld img").removeAttribute("src");
       fotoVak.querySelector(".drop__empty").hidden = false;
@@ -9371,6 +9371,7 @@
     document.getElementById("page-action").addEventListener("click", function () {
       if (!document.querySelector('[data-view="products"]').hidden) maakLeeg();
     });
+    categorie.addEventListener("change", function () { categorie.classList.remove("input--error"); });
     /* Een bestaand gerecht openen sluit de nieuwe stand af; prijzen die leeg
        stonden krijgen weer wat dit voorbeeld bij elk gerecht laat zien. */
     document.addEventListener("click", function (e) {
@@ -9388,6 +9389,14 @@
         if (taal !== "en") toonTaal("en");
         zetFout();
         titelVeld.focus();
+        e.stopPropagation();
+        return;
+      }
+      /* Zonder categorie weet de lijst niet waar hij hoort. */
+      if (!categorie.value) {
+        categorie.classList.add("input--error");
+        categorie.focus();
+        showToast("Choose a category");
         e.stopPropagation();
         return;
       }
@@ -9410,7 +9419,7 @@
         duim.appendChild(img);
       }
       /* De categorie uit het formulier bepaalt de groep in de lijst. */
-      var kies = categorie.options[categorie.selectedIndex].textContent.trim();
+      var kies = categorie.value;
       var groep = [].filter.call(document.querySelectorAll('[data-view="products"] .group'), function (g) {
         var kop = g.querySelector(".group__name");
         return kop && kop.textContent.trim() === kies;
