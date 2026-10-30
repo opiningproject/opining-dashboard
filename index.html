@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=548" />
+  <link rel="stylesheet" href="styles.css?v=549" />
 </head>
 <body>
 
@@ -6434,9 +6434,8 @@
        zwart op wit wat er stopt en wanneer. De zachte knop houdt het plan; de
        rode zegt op, en staat als enige in de rode kleur. -->
   <!-- Allergenen van een gerecht: de veertien uit de Europese lijst, met de
-       granen en de noten per soort, want daar vraagt de wet om. Bevestigen kan
-       pas met het vinkje dat de gegevens kloppen, en met ten minste een
-       allergeen of de verklaring dat er geen in zit. -->
+       granen en de noten per soort, want daar vraagt de wet om. Niets
+       aanvinken betekent geen allergenen. -->
   <div class="dialog" id="allergen-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="allergen-title">
@@ -6483,11 +6482,9 @@
           <label class="ack"><input type="checkbox" value="Molluscs and products thereof" /><span>Molluscs and products thereof</span></label>
         </div>
       </div>
-      <label class="ack allerg__none"><input type="checkbox" id="allergen-none" /><span>This product contains no allergens</span></label>
-      <label class="ack allerg__pledge"><input type="checkbox" id="allergen-pledge" /><span>I confirm that the allergen information is complete and correct, and that I will update it when something on my menu changes.</span></label>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
-        <button class="btn btn--primary" type="button" id="allergen-save" disabled>Confirm</button>
+        <button class="btn btn--primary" type="button" id="allergen-save">Confirm</button>
       </div>
     </div>
   </div>
@@ -7792,6 +7789,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=548"></script>
+  <script src="app.js?v=549"></script>
 </body>
 </html>

@@ -4699,17 +4699,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   background: var(--accent) url("data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27white%27 stroke-width=%273%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27><path d=%27m5 12.5 4.5 4.5L19 7%27/></svg>") center / 12px no-repeat;
 }
 .ack input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-/* Zegt de zaak dat er niets in zit, dan valt er niets meer aan te vinken. */
+/* Een vinkje dat niet kan, staat er grijs bij. */
 .ack:has(input:disabled) { color: var(--text-muted); cursor: default; }
 .ack input:disabled { opacity: .45; cursor: default; }
-.allerg__none { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
-/* De verklaring valt op, want hier neemt de zaak de verantwoordelijkheid. */
-.allerg__pledge {
-  margin-top: 16px; padding: 12px 14px;
-  border-radius: var(--r-md);
-  background: var(--warning-bg); color: var(--warning-fg);
-  font-size: var(--fs-sm);
-}
 @media (max-width: 560px) {
   .allerg__grid { grid-template-columns: minmax(0, 1fr); }
 }

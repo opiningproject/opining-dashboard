@@ -9024,37 +9024,24 @@
     }
     zetKeuzeLeeg();
 
-    /* Allergenen. Het venster opent met wat er nu staat; Bevestigen gaat pas
-       aan met het vinkje onderin, en met een allergeen of de verklaring dat
-       er geen in zit. Die verklaring en de allergenen sluiten elkaar uit. */
+    /* Allergenen. Het venster opent met wat er nu staat. Niets aanvinken
+       betekent geen allergenen: dat is de standaard, dus daar is geen apart
+       vinkje voor nodig, en Bevestigen kan altijd. */
     var allVenster = document.getElementById("allergen-dialog");
     var allVinken = allVenster.querySelectorAll("#allergen-list input");
-    var allGeen = document.getElementById("allergen-none");
-    var allBelofte = document.getElementById("allergen-pledge");
     var allKnop = document.getElementById("allergen-save");
     var allRegel = document.getElementById("pe-allergens");
     var allGekozen = [];
     var allNiets = false;
 
-    function zetAllergenen() {
-      allVinken.forEach(function (v) { v.disabled = allGeen.checked; if (allGeen.checked) v.checked = false; });
-      var iets = [].some.call(allVinken, function (v) { return v.checked; });
-      allGeen.disabled = iets;
-      allKnop.disabled = !allBelofte.checked || !(iets || allGeen.checked);
-    }
-
     function openAllergenen() {
       allVinken.forEach(function (v) { v.checked = allGekozen.indexOf(v.value) !== -1; });
-      allGeen.checked = allNiets;
-      allBelofte.checked = false;
-      zetAllergenen();
       allVenster.hidden = false;
     }
-    allVenster.addEventListener("change", zetAllergenen);
 
     allKnop.addEventListener("click", function () {
       allGekozen = [].filter.call(allVinken, function (v) { return v.checked; }).map(function (v) { return v.value; });
-      allNiets = allGeen.checked;
+      allNiets = !allGekozen.length;
       /* In de regel de korte naam: "Milk", niet de hele wettekst. */
       allRegel.textContent = allNiets ? "No allergens"
         : allGekozen.map(function (n) { return n.replace(/ and products thereof.*$/, ""); }).join(", ");
