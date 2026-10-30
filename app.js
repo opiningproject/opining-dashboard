@@ -2273,6 +2273,7 @@
     function zetMinRegel() {
       minRegel.classList.toggle("is-uit", !verplicht.checked);
       minInvoer.disabled = !verplicht.checked;
+      minInvoer.placeholder = verplicht.checked ? "1" : "None";
       if (!verplicht.checked) { minInvoer.value = ""; zetFout(minInvoer, minFout, false); }
       else if (!minInvoer.value) minInvoer.value = 1;
     }
