@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=540" />
+  <link rel="stylesheet" href="styles.css?v=541" />
 </head>
 <body>
 
@@ -69,6 +69,7 @@
     <!-- Op het 20-raster, net als de sidebar- en settings-sets. -->
     <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4.2v11.6M4.2 10h11.6"/></symbol>
     <symbol id="i-plus-circle" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><path d="M10 6.7v6.6M6.7 10h6.6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 20 20"><rect x="7" y="7" width="9.5" height="9.5" rx="2"/><path d="M13 7V5.5A2 2 0 0 0 11 3.5H5.5a2 2 0 0 0-2 2V11a2 2 0 0 0 2 2H7"/></symbol>
     <!-- Zelfde lijndikte als i-search-filter ernaast: die staat op een 31x13
          raster en krimpt naar 26x11, waardoor zijn 1.6 als 1.34 uitkomt. Hier
          is de schaal 1, dus staat die 1.34 er gewoon. -->
@@ -299,9 +300,8 @@
                   <svg class="icon page-head__dots" aria-hidden="true"><use href="#i-dots"/></svg>
                 </button>
                 <div class="sort__menu sort__menu--kort" role="menu" hidden>
-                  <button class="sort__item" type="button" role="menuitem" data-created="Product duplicated">Duplicate</button>
-                  <button class="sort__item" type="button" role="menuitem" data-created="Product archived">Archive</button>
-                  <button class="sort__item" type="button" role="menuitem" data-created="Product deleted">Delete</button>
+                  <button class="sort__item" type="button" role="menuitem" data-prod-dup><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>Duplicate</button>
+                  <button class="sort__item sort__item--danger" type="button" role="menuitem" data-prod-del><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>Delete</button>
                 </div>
               </div>
             </div>
@@ -6666,6 +6666,28 @@
       </div>
     </div>
   </div>
+  <!-- Een gerecht verwijderen is niet terug te draaien, dus eerst de vraag.
+       De naam van het gerecht komt erin te staan. -->
+  <div class="dialog" id="proddel-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="proddel-title">
+      <div class="dialog__head dialog__head--mark">
+        <span class="dialog__mark dialog__mark--danger" aria-hidden="true">
+          <svg class="icon"><use href="#i-warning"/></svg>
+        </span>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <h2 class="dialog__title" id="proddel-title">Delete product?</h2>
+      <p class="dialog__lead" id="proddel-lead"></p>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--danger" type="button" id="proddel-go">Delete product</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dialog" id="cancel-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cancel-dialog-title">
@@ -7754,6 +7776,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=540"></script>
+  <script src="app.js?v=541"></script>
 </body>
 </html>

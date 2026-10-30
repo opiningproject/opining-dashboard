@@ -9160,6 +9160,108 @@
       zetStand(standBewaard);
       hideSavebar();
     });
+
+    /* ---- Dupliceren en verwijderen ----------------------------------------
+       Duplicate maakt nog niets aan: het opent dezelfde pagina met alles van
+       het origineel erin, de naam met (copy) erachter en de stand op Draft,
+       zodat een kopie niet ongemerkt live gaat. Pas Save zet hem in de lijst,
+       direct onder het origineel. Verwijderen vraagt eerst of het zeker is;
+       bij een kopie die nog niet bewaard is valt er niets te verwijderen, dan
+       gaat hij gewoon weg. */
+    var kopieVan = null;
+    var bewaarKnop = document.getElementById("pe-save");
+    var wegVenster = document.getElementById("proddel-dialog");
+
+    /* Het aantal in de kop van een categorie telt de regels zelf. */
+    function telGroep(groep) {
+      var teller = groep && groep.querySelector(".group__count");
+      if (!teller) return;
+      var n = groep.querySelectorAll(".prod").length;
+      teller.textContent = n + (n === 1 ? " product" : " products");
+      teller.dataset.vast = teller.textContent;
+    }
+
+    document.addEventListener("click", function (e) {
+      if (e.target.closest('[data-view="products"] .prod')) kopieVan = null;
+
+      if (e.target.closest("[data-prod-dup]")) {
+        var bron = kopieVan || openRij;
+        if (!bron) return;
+        var naam = titelVeld.value.trim() || bron.querySelector(".prod__name").textContent.trim();
+        tekst[taal] = { titel: titelVeld.value, uitleg: omschrijving.value };
+        tekst.en.titel = naam + " (copy)";
+        if (tekst.nl.titel) tekst.nl.titel += " (kopie)";
+        kopieVan = bron;
+        openRij = null;
+        standBewaard = "Draft";
+        zetStand("Draft");
+        hideSavebar();
+        openPageSub("product-edit", tekst.en.titel);
+        toonTaal(taal, true);
+        showToast("Copy of " + naam + ". Save to add it to your menu.");
+        return;
+      }
+
+      if (e.target.closest("[data-prod-del]")) {
+        if (kopieVan) {
+          kopieVan = null;
+          backToList();
+          showToast("Copy discarded");
+          return;
+        }
+        if (!openRij) return;
+        document.getElementById("proddel-lead").textContent =
+          openRij.querySelector(".prod__name").textContent.trim() +
+          " will be removed from your menu and your online store. This can’t be undone.";
+        wegVenster.hidden = false;
+      }
+    });
+
+    document.getElementById("proddel-go").addEventListener("click", function () {
+      if (!openRij) return;
+      var naam = openRij.querySelector(".prod__name").textContent.trim();
+      var groep = openRij.closest(".group");
+      var vast = bewaardeVolgorde.get(openRij.parentElement);
+      if (vast && vast.indexOf(openRij) !== -1) vast.splice(vast.indexOf(openRij), 1);
+      openRij.remove();
+      openRij = null;
+      telGroep(groep);
+      wegVenster.hidden = true;
+      backToList();
+      showToast(naam + " deleted");
+    });
+
+    /* Bewaren van een kopie: een nieuwe regel onder het origineel, met de
+       naam, de stand en de foto uit het formulier. De melding zegt dat hij
+       erbij is gekomen in plaats van alleen dat er bewaard is. */
+    bewaarKnop.addEventListener("click", function () {
+      if (!kopieVan) { bewaarKnop.dataset.created = "Product saved"; return; }
+      var naam = (taal === "en" ? titelVeld.value : tekst.en.titel).trim() || "Untitled product";
+      var rij = kopieVan.cloneNode(true);
+      rij.querySelector(".prod__name").textContent = naam;
+      var concept = /draft/i.test((stand || standSmal).value);
+      var badge = rij.querySelector(".badge");
+      badge.className = "badge badge--" + (concept ? "draft" : "active");
+      badge.textContent = concept ? "Draft" : "Active";
+      var foto = fotoVak.querySelector(".drop__beeld");
+      var duim = rij.querySelector(".prod__thumb");
+      if (foto.hidden) duim.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-image"/></svg>';
+      else {
+        var img = document.createElement("img");
+        img.alt = "";
+        img.src = foto.querySelector("img").src;
+        img.dataset.naam = foto.querySelector(".drop__name").textContent;
+        duim.textContent = "";
+        duim.appendChild(img);
+      }
+      var lijst = kopieVan.parentElement;
+      lijst.insertBefore(rij, kopieVan.nextSibling);
+      var vast = bewaardeVolgorde.get(lijst);
+      if (vast) vast.splice(vast.indexOf(kopieVan) + 1, 0, rij);
+      telGroep(kopieVan.closest(".group"));
+      kopieVan = null;
+      bewaarKnop.dataset.created = naam + " added to your menu";
+    });
   })();
 
 })();
