@@ -986,6 +986,13 @@ select.input {
 /* Een keuze of een categorie heeft geen foto en geen eigen scherm: de regel
    is er om te lezen en te verslepen, dus wijst de muis niet. */
 .prod--keuze { cursor: default; }
+/* Het potlood achter een categorie: helemaal rechts, en pas bij het
+   aanwijzen van de regel. Zonder muis staat hij er altijd. */
+.cact { width: 32px; height: 32px; margin: -6px -8px -6px 0; visibility: hidden; }
+.prod:hover .cact, .cact:focus-visible { visibility: visible; }
+@media (hover: none) {
+  .cact { visibility: visible; }
+}
 .prod__count { color: var(--text-muted); font-variant-numeric: tabular-nums; }
 
 /* De kop boven een platte lijst: zelfde grijs en dezelfde inspringing als de

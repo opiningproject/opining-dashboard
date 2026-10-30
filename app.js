@@ -2143,6 +2143,85 @@
   }
   legVolgordeVast();
 
+  /* ---- Categorieen aanmaken en bewerken ----------------------------------
+     Het potlood achter een regel opent het venster met wat er staat; Add
+     category rechtsboven opent het leeg. De Nederlandse naam en de twee
+     omschrijvingen staan op de regel zelf, in data-nl, data-desc en
+     data-desc-nl. Het getal achter de naam is het aantal gerechten en blijft
+     staan. */
+  var catVenster = document.getElementById("cat-dialog");
+
+  if (catVenster) {
+    var catVelden = {
+      naam: document.getElementById("cat-name"),
+      naamNl: document.getElementById("cat-name-nl"),
+      uitleg: document.getElementById("cat-desc"),
+      uitlegNl: document.getElementById("cat-desc-nl")
+    };
+    var catFout = document.getElementById("cat-name-error");
+    var catLijst = document.querySelector('[data-view="categories"] .group__list');
+    var catRij = null;
+
+    function catNaam(rij) {
+      return rij.querySelector(".prod__name").firstChild.textContent.trim();
+    }
+
+    function openCategorie(rij) {
+      catRij = rij;
+      document.getElementById("cat-title").textContent = rij ? "Edit category" : "Create new category";
+      catVelden.naam.value = rij ? catNaam(rij) : "";
+      catVelden.naamNl.value = rij ? rij.dataset.nl || "" : "";
+      catVelden.uitleg.value = rij ? rij.dataset.desc || "" : "";
+      catVelden.uitlegNl.value = rij ? rij.dataset.descNl || "" : "";
+      catFout.hidden = true;
+      catVelden.naam.classList.remove("input--error");
+      catVenster.hidden = false;
+      setTimeout(function () { catVelden.naam.focus(); }, 0);
+    }
+
+    document.addEventListener("click", function (e) {
+      var knop = e.target.closest(".cact");
+      if (knop) openCategorie(knop.closest(".prod"));
+    });
+    document.getElementById("page-action").addEventListener("click", function () {
+      if (!document.querySelector('[data-view="categories"]').hidden) openCategorie(null);
+    });
+
+    document.getElementById("cat-save").addEventListener("click", function () {
+      var naam = catVelden.naam.value.trim();
+      catFout.hidden = !!naam;
+      catVelden.naam.classList.toggle("input--error", !naam);
+      if (!naam) { catVelden.naam.focus(); return; }
+
+      var nieuw = !catRij;
+      var rij = catRij;
+      if (nieuw) {
+        /* Een nieuwe categorie heeft nog geen gerechten en staat onderaan. */
+        rij = document.createElement("li");
+        rij.className = "prod prod--keuze";
+        rij.innerHTML = '<span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>' +
+          '<span class="prod__name"> <span class="prod__count">(0)</span></span>' +
+          '<span class="badge badge--active">Active</span>' +
+          '<button class="icon-btn cact" type="button" aria-label="Edit category" title="Edit category"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>';
+        catLijst.appendChild(rij);
+        /* Een nieuwe regel is bewaard; hij hoort geen savebar op te roepen. */
+        var bewaard = bewaardeVolgorde.get(catLijst);
+        if (bewaard) bewaard.push(rij);
+      }
+      rij.querySelector(".prod__name").firstChild.textContent = naam + " ";
+      [["nl", catVelden.naamNl], ["desc", catVelden.uitleg], ["descNl", catVelden.uitlegNl]].forEach(function (paar) {
+        var waarde = paar[1].value.trim();
+        if (waarde) rij.dataset[paar[0]] = waarde; else delete rij.dataset[paar[0]];
+      });
+      catVenster.hidden = true;
+      showToast(nieuw ? naam + " created" : naam + " saved");
+    });
+
+    catVelden.naam.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); document.getElementById("cat-save").click(); }
+    });
+  }
+
   /* ---- Keuzegroepen aanmaken, instellen en aanvullen ---------------------
      Add group rechtsboven opent het venster leeg; het potlood in de kop van
      een groep opent het met wat er staat. Het rondje met het plusje zet er

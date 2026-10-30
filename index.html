@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=528" />
+  <link rel="stylesheet" href="styles.css?v=529" />
 </head>
 <body>
 
@@ -2717,26 +2717,31 @@
                     <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
                     <span class="prod__name">Protein Beverages <span class="prod__count">(5)</span></span>
                     <span class="badge badge--active">Active</span>
+                    <button class="icon-btn cact" type="button" aria-label="Edit category" title="Edit category"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
                   </li>
                   <li class="prod prod--keuze">
                     <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
                     <span class="prod__name">Sandwiches <span class="prod__count">(4)</span></span>
                     <span class="badge badge--active">Active</span>
+                    <button class="icon-btn cact" type="button" aria-label="Edit category" title="Edit category"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
                   </li>
                   <li class="prod prod--keuze">
                     <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
                     <span class="prod__name">Hot Coffee <span class="prod__count">(2)</span></span>
                     <span class="badge badge--active">Active</span>
+                    <button class="icon-btn cact" type="button" aria-label="Edit category" title="Edit category"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
                   </li>
                   <li class="prod prod--keuze">
                     <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
                     <span class="prod__name">Cold Coffee <span class="prod__count">(2)</span></span>
                     <span class="badge badge--active">Active</span>
+                    <button class="icon-btn cact" type="button" aria-label="Edit category" title="Edit category"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
                   </li>
                   <li class="prod prod--keuze">
                     <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
                     <span class="prod__name">Seasonal specials <span class="prod__count">(0)</span></span>
                     <span class="badge badge--draft">Draft</span>
+                    <button class="icon-btn cact" type="button" aria-label="Edit category" title="Edit category"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>
                   </li>
                 </ul>
               </div>
@@ -6511,6 +6516,48 @@
     </div>
   </div>
 
+  <!-- Een categorie aanmaken of bewerken: naam en omschrijving in beide
+       talen. De naam in het Engels is nodig, de rest mag leeg. Add category
+       rechtsboven opent hem leeg, het potlood achter een regel ingevuld. -->
+  <div class="dialog" id="cat-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cat-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="cat-title">Edit category</h2>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="cat-name">Category name English</label>
+          <input class="input" id="cat-name" type="text" placeholder="Category name English" aria-describedby="cat-name-error" />
+          <p class="field__error" id="cat-name-error" hidden>
+            <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
+          </p>
+        </div>
+        <div class="field">
+          <label class="label" for="cat-name-nl">Category name Dutch</label>
+          <input class="input" id="cat-name-nl" type="text" placeholder="Category name Dutch" />
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="cat-desc">Description English <span class="label__opt">optional</span></label>
+          <textarea class="input" id="cat-desc" rows="3" placeholder="Description English"></textarea>
+        </div>
+        <div class="field">
+          <label class="label" for="cat-desc-nl">Description Dutch <span class="label__opt">optional</span></label>
+          <textarea class="input" id="cat-desc-nl" rows="3" placeholder="Description Dutch"></textarea>
+        </div>
+      </div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="cat-save">Save</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Een keuzegroep aanmaken of instellen, in hetzelfde venster: Add group
        rechtsboven opent hem leeg, het potlood in de kop van een groep met wat
        er staat. Choice betekent dat de gast moet kiezen; dan hoort er een
@@ -7690,6 +7737,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=528"></script>
+  <script src="app.js?v=529"></script>
 </body>
 </html>
