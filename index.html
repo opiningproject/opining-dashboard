@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=550" />
+  <link rel="stylesheet" href="styles.css?v=551" />
 </head>
 <body>
 
@@ -7064,8 +7064,6 @@
       <div class="tabs odlg__tabs" role="tablist">
         <button class="tab is-active" type="button" role="tab" aria-selected="true" data-otab="customer">Customer</button>
         <button class="tab" type="button" role="tab" aria-selected="false" data-otab="items">Order <span class="tab__count">5</span></button>
-        <!-- Afhalen kent geen rit; app.js laat deze tab dan weg. -->
-        <button class="tab" type="button" role="tab" aria-selected="false" data-otab="route" data-otabel="route">Route Planner</button>
       </div>
 
       <div class="dialog__body">
@@ -7075,7 +7073,10 @@
               <!-- De naam leidt naar de klant zelf; het venster gaat dan dicht,
                    want je kijkt daarna naar een andere pagina. -->
               <div class="odlg__row"><dt>Name</dt><dd class="odlg__name"><span data-oveld="name"></span><button class="icon-btn odlg__go" type="button" data-goto-page="customers" data-close-order aria-label="Open this customer"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></button></dd></div>
-              <div class="odlg__row"><dt>Address</dt><dd data-oveld="address"></dd></div>
+              <!-- Bij bezorgen het adres waar het heen gaat, met eronder de route
+                   vanaf de zaak in Google Maps. Afhalen heeft geen rit; app.js
+                   noemt het dan gewoon het adres en laat de knop weg. -->
+              <div class="odlg__row"><dt data-oveld-label="address">Delivery address</dt><dd><span data-oveld="address"></span><a class="btn btn--ghost btn--sm odlg__maps" id="order-maps" href="#" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg>Open maps</a></dd></div>
               <div class="odlg__row"><dt>Phone</dt><dd data-oveld="phone"></dd></div>
               <div class="odlg__row"><dt>E-mail</dt><dd data-oveld="mail"></dd></div>
               <!-- Wat de bestelling kost hoort bij wie hem deed; het staat ook
@@ -7111,26 +7112,6 @@
           </dl>
         </div>
 
-        <div data-opane="route" hidden>
-          <!-- De kaart komt straks van Google Maps en wordt in dit vak gehangen.
-               Zolang die er niet is staat er een schets van dezelfde rit, in
-               hetzelfde formaat, zodat de echte kaart er zonder sprong in past. -->
-          <div class="oroute__map" id="order-map" data-order-map>
-            <svg viewBox="0 0 560 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <rect class="oroute__land" x="0" y="0" width="560" height="240"/>
-              <g class="oroute__street">
-                <path d="M0 74H560"/><path d="M0 168H560"/>
-                <path d="M128 0V240"/><path d="M318 0V240"/><path d="M452 0V240"/>
-                <path d="M0 20L560 128"/>
-              </g>
-              <path class="oroute__water" d="M0 214H560"/>
-              <path class="oroute__line" d="M96 196L96 168L318 168L318 74L436 74"/>
-              <circle class="oroute__from" cx="96" cy="196" r="7"/>
-              <circle class="oroute__to" cx="436" cy="74" r="9"/>
-            </svg>
-          </div>
-
-        </div>
       </div>
 
       <div class="dialog__foot">
@@ -7789,6 +7770,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=550"></script>
+  <script src="app.js?v=551"></script>
 </body>
 </html>

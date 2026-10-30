@@ -2986,9 +2986,18 @@
     zetOrderRij("courier", !!b.bezorger);
     zetOrderRij("fee", !b.afhalen);
 
-    /* Wie afhaalt legt geen route af; dan is er niets te plannen. */
-    var routeTab = orderVenster.querySelector('[data-otab="route"]');
-    if (routeTab) routeTab.hidden = b.afhalen;
+    /* Bij bezorgen de route van de zaak naar dit adres in Google Maps, in een
+       nieuw tabblad. Wie afhaalt legt geen rit af: dan heet het gewoon het
+       adres en is er geen knop. */
+    var kaartKnop = document.getElementById("order-maps");
+    var zaak = document.getElementById("store-address");
+    orderVenster.querySelector('[data-oveld-label="address"]').textContent = b.afhalen ? "Address" : "Delivery address";
+    if (kaartKnop) {
+      kaartKnop.hidden = b.afhalen || !b.adres;
+      kaartKnop.href = "https://www.google.com/maps/dir/?api=1&travelmode=driving" +
+        "&origin=" + encodeURIComponent(zaak ? zaak.textContent.trim() : "") +
+        "&destination=" + encodeURIComponent(b.adres || "");
+    }
     /* Een archiefrij is al klaar; daar valt niets meer door te zetten. */
     orderRegel = rij.classList.contains("ocard") ? rij : null;
     if (orderStap) {
