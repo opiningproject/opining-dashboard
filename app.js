@@ -2274,6 +2274,11 @@
       minRegel.classList.toggle("is-uit", !verplicht.checked);
       minInvoer.disabled = !verplicht.checked;
       minInvoer.placeholder = verplicht.checked ? "1" : "None";
+      /* Verplicht kies je uit choices; zonder verplichting zijn het add-ons,
+         options. Het woord in de velden volgt dat. */
+      groepVenster.querySelectorAll(".cgroup__nums .infield__after").forEach(function (w) {
+        w.textContent = verplicht.checked ? "choices" : "options";
+      });
       if (!verplicht.checked) { minInvoer.value = ""; zetFout(minInvoer, minFout, false); }
       else if (!minInvoer.value) minInvoer.value = 1;
     }
