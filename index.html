@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=544" />
+  <link rel="stylesheet" href="styles.css?v=545" />
 </head>
 <body>
 
@@ -6513,7 +6513,7 @@
   </div>
 
   <!-- Een categorie aanmaken of bewerken: naam en omschrijving in beide
-       talen. De naam in het Engels is nodig, de rest mag leeg. Add category
+       talen. Alles onder elkaar: namen en omschrijvingen kunnen lang zijn. De naam in het Engels is nodig, de rest mag leeg. Add category
        rechtsboven opent hem leeg, Edit category onder de drie puntjes ingevuld. -->
   <div class="dialog" id="cat-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
@@ -6524,28 +6524,24 @@
           <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
         </button>
       </div>
-      <div class="field-row">
-        <div class="field">
-          <label class="label" for="cat-name">Category name English</label>
-          <input class="input" id="cat-name" type="text" placeholder="Category name English" aria-describedby="cat-name-error" />
-          <p class="field__error" id="cat-name-error" hidden>
-            <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
-          </p>
-        </div>
-        <div class="field">
-          <label class="label" for="cat-name-nl">Category name Dutch</label>
-          <input class="input" id="cat-name-nl" type="text" placeholder="Category name Dutch" />
-        </div>
+      <div class="field">
+        <label class="label" for="cat-name">Category name English</label>
+        <input class="input" id="cat-name" type="text" placeholder="Category name English" aria-describedby="cat-name-error" />
+        <p class="field__error" id="cat-name-error" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
+        </p>
       </div>
-      <div class="field-row">
-        <div class="field">
-          <label class="label" for="cat-desc">Description English <span class="label__opt">optional</span></label>
-          <textarea class="input" id="cat-desc" rows="3" placeholder="Description English"></textarea>
-        </div>
-        <div class="field">
-          <label class="label" for="cat-desc-nl">Description Dutch <span class="label__opt">optional</span></label>
-          <textarea class="input" id="cat-desc-nl" rows="3" placeholder="Description Dutch"></textarea>
-        </div>
+      <div class="field">
+        <label class="label" for="cat-name-nl">Category name Dutch</label>
+        <input class="input" id="cat-name-nl" type="text" placeholder="Category name Dutch" />
+      </div>
+      <div class="field">
+        <label class="label" for="cat-desc">Description English <span class="label__opt">optional</span></label>
+        <textarea class="input" id="cat-desc" rows="4" placeholder="Description English"></textarea>
+      </div>
+      <div class="field">
+        <label class="label" for="cat-desc-nl">Description Dutch <span class="label__opt">optional</span></label>
+        <textarea class="input" id="cat-desc-nl" rows="4" placeholder="Description Dutch"></textarea>
       </div>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
@@ -7793,6 +7789,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=544"></script>
+  <script src="app.js?v=545"></script>
 </body>
 </html>
