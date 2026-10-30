@@ -978,9 +978,9 @@ select.input {
 .cgroup__req { color: var(--danger); }
 .cnew__row { margin-top: 16px; }
 
-/* Een keuze of een categorie heeft geen eigen scherm, maar de regel opent
-   het venster om hem te bewerken. Zo werkt hij net als een gerecht, zonder
-   een potlood op elke regel. */
+/* Een categorie heeft geen eigen scherm, maar de regel opent het venster om
+   hem te bewerken. Zo werkt hij net als een gerecht, zonder een potlood op
+   elke regel. Een keuze werkt anders, zie hieronder. */
 .prod--keuze { cursor: pointer; }
 /* Op de pagina Choices Menu opent een regel niets: een keuze bewerk je via
    de drie puntjes rechts, zodat een klik naast de greep niet per ongeluk een
