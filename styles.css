@@ -3427,18 +3427,19 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Breder venster voor wie meer te lezen krijgt, zoals de gegevens bij een upload. */
 .dialog__card--wide { max-width: 620px; }
 @keyframes dialog-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+/* Geen streep onder de kop: de witruimte scheidt kop en inhoud al, en een
+   streep maakte van elk klein venster twee vakken. */
 .dialog__head {
   flex: 0 0 auto;
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
   padding: 16px 22px;
-  border-bottom: 1px solid var(--border);
 }
 /* Alleen dit deel schuift. min-height 0 hoort erbij: zonder die regel weigert
    een flex-kind kleiner te worden dan zijn inhoud en schuift er niets. */
 .dialog__body {
   flex: 1 1 auto; min-height: 0;
   overflow-y: auto; scrollbar-width: thin;
-  padding: 18px 22px 22px;
+  padding: 4px 22px 22px;
 }
 /* De aanhef draagt zijn eigen ruimte al niet meer; die zit in het vak. */
 .dialog__body > .dialog__lead:first-child { margin-top: 0; }
@@ -3576,7 +3577,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   /* Ook op een telefoon gecentreerd; alleen krapper, en de twee knoppen
      verdelen de breedte. */
   .dialog__head { padding: 14px 18px; }
-  .dialog__body { padding: 16px 18px 18px; }
+  .dialog__body { padding: 4px 18px 18px; }
   .dialog__foot { padding: 0 18px 18px; }
   .dialog__card > .tabs,
   .dialog__card > .tabsbox { padding: 12px 18px 0; }
@@ -4645,7 +4646,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Een bestelling leest als een kaart, niet als een tabel: geen streepjes
    tussen de regels, en geen rand onder de kop van het venster. De ruimte
    ertussen doet het werk. */
-#order-dialog .dialog__head { border-bottom: 0; }
 
 /* Op het afrekenscherm van een domein staat alles naast of boven een formulier.
    Elke kop leest daar even groot als de labels van de velden eronder: de naam

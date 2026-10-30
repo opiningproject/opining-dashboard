@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=543" />
+  <link rel="stylesheet" href="styles.css?v=544" />
 </head>
 <body>
 
@@ -6672,15 +6672,12 @@
   <div class="dialog" id="confirm-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
-      <div class="dialog__head dialog__head--mark">
-        <span class="dialog__mark dialog__mark--danger" aria-hidden="true">
-          <svg class="icon"><use href="#i-warning"/></svg>
-        </span>
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="confirm-title"></h2>
         <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
           <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
         </button>
       </div>
-      <h2 class="dialog__title" id="confirm-title"></h2>
       <p class="dialog__lead" id="confirm-lead"></p>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close id="confirm-cancel">Cancel</button>
@@ -6694,15 +6691,12 @@
   <div class="dialog" id="proddel-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="proddel-title">
-      <div class="dialog__head dialog__head--mark">
-        <span class="dialog__mark dialog__mark--danger" aria-hidden="true">
-          <svg class="icon"><use href="#i-warning"/></svg>
-        </span>
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="proddel-title">Delete product?</h2>
         <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
           <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
         </button>
       </div>
-      <h2 class="dialog__title" id="proddel-title">Delete product?</h2>
       <p class="dialog__lead" id="proddel-lead"></p>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
@@ -7799,6 +7793,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=543"></script>
+  <script src="app.js?v=544"></script>
 </body>
 </html>
