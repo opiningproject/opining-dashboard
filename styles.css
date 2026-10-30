@@ -4533,9 +4533,8 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 
 /* De knop onder het bezorgadres: klein, onder het adres, en net zo breed
    als zijn tekst. */
-.odlg__maps { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; }
+.odlg__maps { display: inline-flex; align-items: center; margin-top: 8px; }
 .odlg__maps[hidden] { display: none; }
-.odlg__maps .icon { width: 16px; height: 16px; }
 .odlg__row dd > [data-oveld="address"] { display: block; }
 
 
