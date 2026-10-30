@@ -2143,91 +2143,134 @@
   }
   legVolgordeVast();
 
-  /* ---- Keuzegroepen instellen en aanvullen -------------------------------
-     Het potlood in de kop opent het venster met de naam, of kiezen verplicht
-     is en hoeveel keuzes er mogen. Het rondje met het plusje zet er een keuze
-     bij. De stand van een groep staat op de groep zelf, in data-need en
-     data-max; zonder die staat hij op optioneel en een keuze. */
+  /* ---- Keuzegroepen aanmaken, instellen en aanvullen ---------------------
+     Add group rechtsboven opent het venster leeg; het potlood in de kop van
+     een groep opent het met wat er staat. Het rondje met het plusje zet er
+     een keuze bij. De stand van een groep staat op de groep zelf: data-nl
+     (de Nederlandse naam), data-need (required of optional), data-min en
+     data-max. */
   var groepVenster = document.getElementById("cgroup-dialog");
   var nieuwVenster = document.getElementById("cnew-dialog");
 
   if (groepVenster && nieuwVenster) {
     var groepNaam = document.getElementById("cgroup-name");
+    var groepNaamNl = document.getElementById("cgroup-name-nl");
     var groepFout = document.getElementById("cgroup-name-error");
-    var maxVeld = document.getElementById("cgroup-max-field");
+    var verplicht = document.getElementById("cgroup-required");
+    var minRegel = document.getElementById("cgroup-min-row");
+    var minInvoer = document.getElementById("cgroup-min");
+    var minFout = document.getElementById("cgroup-min-error");
     var maxInvoer = document.getElementById("cgroup-max");
     var nieuwNaam = document.getElementById("cnew-name");
     var nieuwFout = document.getElementById("cnew-name-error");
     var nieuwPrijs = document.getElementById("cnew-price");
     var nieuwStatus = document.getElementById("cnew-status");
+    var keuzePanel = document.querySelector('[data-view="choices"] .panel');
+    /* De groep die je bewerkt; null bij een nieuwe groep. */
     var bezig = null;
 
-    function kies(naam, waarde) {
-      groepVenster.querySelectorAll('input[name="' + naam + '"]').forEach(function (r) {
-        r.checked = r.value === waarde;
-      });
-    }
-    function gekozen(naam) {
-      var r = groepVenster.querySelector('input[name="' + naam + '"]:checked');
-      return r ? r.value : "";
-    }
-    function zetMaxVeld() {
-      maxVeld.hidden = gekozen("cgroup-count") !== "several";
-    }
     function zetFout(veld, fout, aan) {
       fout.hidden = !aan;
       veld.classList.toggle("input--error", aan);
     }
+    function zetMinRegel() {
+      minRegel.hidden = !verplicht.checked;
+      if (!verplicht.checked) zetFout(minInvoer, minFout, false);
+    }
+
+    function openGroep(groep) {
+      bezig = groep;
+      document.getElementById("cgroup-title").textContent = groep ? "Edit group" : "Create new group";
+      groepNaam.value = groep ? groep.querySelector(".group__name").textContent : "";
+      groepNaamNl.value = groep ? groep.dataset.nl || "" : "";
+      verplicht.checked = !!groep && groep.dataset.need === "required";
+      minInvoer.value = groep && groep.dataset.min ? groep.dataset.min : "";
+      maxInvoer.value = groep && groep.dataset.max ? groep.dataset.max : "";
+      zetFout(groepNaam, groepFout, false);
+      zetMinRegel();
+      groepVenster.hidden = false;
+      setTimeout(function () { groepNaam.focus(); }, 0);
+    }
+
+    /* Add group staat alleen op de pagina Choices Menu op deze knop. */
+    document.getElementById("page-action").addEventListener("click", function () {
+      if (!document.querySelector('[data-view="choices"]').hidden) openGroep(null);
+    });
 
     document.addEventListener("click", function (e) {
       var knop = e.target.closest(".gact");
       if (!knop) return;
-      bezig = knop.closest(".group");
-      var naam = bezig.querySelector(".group__name").textContent;
+      var groep = knop.closest(".group");
 
-      if (knop.classList.contains("gact--edit")) {
-        groepNaam.value = naam;
-        zetFout(groepNaam, groepFout, false);
-        kies("cgroup-need", bezig.dataset.need || "optional");
-        var max = parseInt(bezig.dataset.max, 10) || 1;
-        kies("cgroup-count", max > 1 ? "several" : "one");
-        /* Standaard zoveel als er keuzes zijn, want meer kan niet. */
-        maxInvoer.value = max > 1 ? max : Math.max(2, bezig.querySelectorAll(".prod").length);
-        zetMaxVeld();
-        groepVenster.hidden = false;
-        setTimeout(function () { groepNaam.focus(); }, 0);
-      } else {
-        document.getElementById("cnew-lead").textContent = "The choice is added at the bottom of " + naam + ".";
-        nieuwNaam.value = "";
-        nieuwPrijs.value = "";
-        nieuwStatus.value = "active";
-        zetFout(nieuwNaam, nieuwFout, false);
-        nieuwVenster.hidden = false;
-        setTimeout(function () { nieuwNaam.focus(); }, 0);
-      }
+      if (knop.classList.contains("gact--edit")) { openGroep(groep); return; }
+
+      bezig = groep;
+      document.getElementById("cnew-lead").textContent = "The choice is added at the bottom of " + groep.querySelector(".group__name").textContent + ".";
+      nieuwNaam.value = "";
+      nieuwPrijs.value = "";
+      nieuwStatus.value = "active";
+      zetFout(nieuwNaam, nieuwFout, false);
+      nieuwVenster.hidden = false;
+      setTimeout(function () { nieuwNaam.focus(); }, 0);
     });
 
-    groepVenster.addEventListener("change", function (e) {
-      if (e.target.name === "cgroup-count") {
-        zetMaxVeld();
-        if (!maxVeld.hidden) maxInvoer.focus();
-      }
+    verplicht.addEventListener("change", function () {
+      zetMinRegel();
+      if (verplicht.checked) minInvoer.focus();
     });
+
+    /* Een nieuwe groep: dezelfde kop als de andere, nog zonder keuzes en
+       nog door geen enkel gerecht gebruikt. Hij komt onderaan en staat open,
+       zodat je meteen ziet waar je met het plusje keuzes toevoegt. */
+    function maakGroep() {
+      var groep = document.createElement("div");
+      groep.className = "group is-open";
+      groep.dataset.noun = "choice";
+      groep.innerHTML =
+        '<div class="group__head">' +
+          '<button class="group__open" type="button" aria-expanded="true">' +
+            '<svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>' +
+            '<span class="group__name"></span>' +
+          '</button>' +
+          '<span class="gacts">' +
+            '<button class="icon-btn gact gact--edit" type="button" aria-label="Edit choice group" title="Edit choice group"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>' +
+            '<button class="icon-btn gact gact--add" type="button" aria-label="Add a choice" title="Add a choice"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg></button>' +
+          '</span>' +
+        '</div>' +
+        '<div class="group__panel"><div class="group__inner"><ul class="group__list"></ul></div></div>';
+      keuzePanel.appendChild(groep);
+      return groep;
+    }
 
     document.getElementById("cgroup-save").addEventListener("click", function () {
       var naam = groepNaam.value.trim();
+      var min = parseInt(minInvoer.value, 10);
+      var max = parseInt(maxInvoer.value, 10);
       zetFout(groepNaam, groepFout, !naam);
+
+      /* Moet de gast kiezen, dan minstens een; en nooit meer dan het maximum. */
+      var minMelding = "";
+      if (verplicht.checked && !(min >= 1)) minMelding = "Enter a minimum of at least 1.";
+      else if (verplicht.checked && max >= 1 && min > max) minMelding = "The minimum can’t be higher than the maximum.";
+      minFout.querySelector("span").textContent = minMelding;
+      zetFout(minInvoer, minFout, !!minMelding);
+
       if (!naam) { groepNaam.focus(); return; }
-      var meer = gekozen("cgroup-count") === "several";
-      var max = meer ? Math.max(2, parseInt(maxInvoer.value, 10) || 2) : 1;
-      bezig.querySelector(".group__name").textContent = naam;
-      bezig.dataset.need = gekozen("cgroup-need");
-      bezig.dataset.max = max;
+      if (minMelding) { minInvoer.focus(); return; }
+
+      var nieuw = !bezig;
+      var groep = bezig || maakGroep();
+      groep.querySelector(".group__name").textContent = naam;
+      groep.dataset.nl = groepNaamNl.value.trim();
+      groep.dataset.need = verplicht.checked ? "required" : "optional";
+      if (verplicht.checked) groep.dataset.min = min; else delete groep.dataset.min;
+      if (max >= 1) groep.dataset.max = max; else delete groep.dataset.max;
       /* De knop met de gerechten noemt de groep bij naam. */
-      var gebruik = bezig.querySelector(".usedby");
+      var gebruik = groep.querySelector(".usedby");
       if (gebruik) gebruik.setAttribute("aria-label", gebruik.getAttribute("aria-label").replace(/use .*$/, "use " + naam));
       groepVenster.hidden = true;
-      showToast(naam + " saved");
+      if (nieuw) groep.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      showToast(nieuw ? naam + " created" : naam + " saved");
     });
 
     document.getElementById("cnew-save").addEventListener("click", function () {

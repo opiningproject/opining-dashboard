@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=526" />
+  <link rel="stylesheet" href="styles.css?v=527" />
 </head>
 <body>
 
@@ -6511,52 +6511,45 @@
     </div>
   </div>
 
-  <!-- Een keuzegroep instellen: de naam, of de gast moet kiezen, en hoeveel
-       keuzes hij mag aanvinken. Het potlood in de kop van de groep opent hem. -->
+  <!-- Een keuzegroep aanmaken of instellen, in hetzelfde venster: Add group
+       rechtsboven opent hem leeg, het potlood in de kop van een groep met wat
+       er staat. Choice betekent dat de gast moet kiezen; dan hoort er een
+       minimum bij. Een maximum kan altijd. -->
   <div class="dialog" id="cgroup-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cgroup-title">
       <div class="dialog__head">
-        <h2 class="dialog__title" id="cgroup-title">Edit choice group</h2>
+        <h2 class="dialog__title" id="cgroup-title">Create new group</h2>
         <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
           <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
         </button>
       </div>
-      <div class="field">
-        <label class="label" for="cgroup-name">Name</label>
-        <input class="input" id="cgroup-name" type="text" aria-describedby="cgroup-name-error" />
-        <p class="field__error" id="cgroup-name-error" hidden>
-          <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
-        </p>
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="cgroup-name">Group name English</label>
+          <input class="input" id="cgroup-name" type="text" placeholder="Group name English" aria-describedby="cgroup-name-error" />
+          <p class="field__error" id="cgroup-name-error" hidden>
+            <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
+          </p>
+        </div>
+        <div class="field">
+          <label class="label" for="cgroup-name-nl">Group name Dutch</label>
+          <input class="input" id="cgroup-name-nl" type="text" placeholder="Group name Dutch" />
+        </div>
       </div>
-      <h3 class="cgroup__head">Selection</h3>
-      <label class="opt">
-        <input type="radio" name="cgroup-need" value="optional" />
-        <span class="opt__name">Optional</span>
-        <span class="opt__desc">The guest can skip this group.</span>
-      </label>
-      <label class="opt">
-        <input type="radio" name="cgroup-need" value="required" />
-        <span class="opt__name">Required</span>
-        <span class="opt__desc">The guest has to choose before the product goes in the basket.</span>
-      </label>
-      <h3 class="cgroup__head">How many</h3>
-      <label class="opt">
-        <input type="radio" name="cgroup-count" value="one" />
-        <span class="opt__name">One choice</span>
-        <span class="opt__desc">Shown as a list where picking one replaces the other.</span>
-      </label>
-      <label class="opt">
-        <input type="radio" name="cgroup-count" value="several" />
-        <span class="opt__name">Several choices</span>
-        <span class="opt__desc">The guest ticks as many as you allow.</span>
-      </label>
-      <div class="field cgroup__max" id="cgroup-max-field" hidden>
-        <label class="label" for="cgroup-max">At most</label>
-        <span class="infield">
-          <input class="input infield__input--after" id="cgroup-max" type="number" min="2" step="1" />
-          <span class="infield__after">choices</span>
-        </span>
+      <label class="ack cgroup__choice"><input type="checkbox" id="cgroup-required" /><span>Choice <span class="cgroup__hint">The guest has to choose from this group</span></span></label>
+      <div class="cgroup__nums">
+        <div class="cgroup__num" id="cgroup-min-row" hidden>
+          <label class="label" for="cgroup-min">Force minimum <span class="cgroup__req" aria-hidden="true">*</span></label>
+          <input class="input" id="cgroup-min" type="number" min="1" step="1" placeholder="Enter minimum number" aria-describedby="cgroup-min-error" />
+          <p class="field__error" id="cgroup-min-error" hidden>
+            <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg><span></span>
+          </p>
+        </div>
+        <div class="cgroup__num">
+          <label class="label" for="cgroup-max">Force maximum</label>
+          <input class="input" id="cgroup-max" type="number" min="1" step="1" placeholder="Enter maximum number" />
+        </div>
       </div>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
@@ -7691,6 +7684,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=526"></script>
+  <script src="app.js?v=527"></script>
 </body>
 </html>

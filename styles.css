@@ -970,9 +970,17 @@ select.input {
 @media (hover: none) {
   .gact--edit { visibility: visible; }
 }
-/* Een kopje boven een rijtje keuzes in het venster van de keuzegroep. */
-.cgroup__head { margin: 22px 0 2px; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
-.cgroup__max { margin: 4px 0 0 30px; max-width: 200px; }
+/* Het venster van een keuzegroep: de naam in twee talen naast elkaar, dan
+   het vinkje Choice, en daaronder minimum en maximum met het label links en
+   het getal rechts, in de kolommen van de namen erboven. */
+.cgroup__choice { margin-top: 14px; }
+.cgroup__hint { display: block; font-size: var(--fs-sm); color: var(--text-muted); }
+.cgroup__nums { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+.cgroup__num { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: 4px 16px; }
+.cgroup__num[hidden] { display: none; }
+.cgroup__num .label { font-size: var(--fs-md); font-weight: 500; }
+.cgroup__num .field__error { grid-column: 2; }
+.cgroup__req { color: var(--danger); }
 .cnew__row { margin-top: 16px; }
 
 /* Een keuze of een categorie heeft geen foto en geen eigen scherm: de regel
