@@ -2240,8 +2240,8 @@
   /* ---- Keuzegroepen aanmaken, instellen en aanvullen ---------------------
      Add group rechtsboven opent het venster leeg; Edit group onder de drie
      puntjes in de kop opent het met wat er staat, en Add choice in dat menu
-     zet er een keuze bij. De drie puntjes op een keuze bewerken of
-     verwijderen hem. De stand van een groep staat op de groep zelf: data-nl
+     zet er een keuze bij. Een klik op een keuze opent hem, met Delete
+     onderin het venster. De stand van een groep staat op de groep zelf: data-nl
      (de Nederlandse naam), data-need (required of optional), data-min en
      data-max. */
   var groepVenster = document.getElementById("cgroup-dialog");
@@ -2268,9 +2268,13 @@
       fout.hidden = !aan;
       veld.classList.toggle("input--error", aan);
     }
+    /* Het minimum blijft staan maar doet alleen mee als kiezen verplicht is;
+       aanzetten vult er een in, want verplicht betekent minstens een. */
     function zetMinRegel() {
-      minRegel.hidden = !verplicht.checked;
-      if (!verplicht.checked) zetFout(minInvoer, minFout, false);
+      minRegel.classList.toggle("is-uit", !verplicht.checked);
+      minInvoer.disabled = !verplicht.checked;
+      if (!verplicht.checked) { minInvoer.value = ""; zetFout(minInvoer, minFout, false); }
+      else if (!minInvoer.value) minInvoer.value = 1;
     }
 
     function openGroep(groep) {
@@ -2302,6 +2306,7 @@
       var groepNaam = groep.querySelector(".group__name").textContent;
       document.getElementById("cnew-title").textContent = rij ? "Edit choice" : "Add choice";
       document.getElementById("cnew-save").textContent = rij ? "Save" : "Add choice";
+      document.getElementById("cnew-del").hidden = !rij;
       document.getElementById("cnew-lead").textContent = rij ? "Part of " + groepNaam + "."
         : "The choice is added at the bottom of " + groepNaam + ".";
       nieuwNaam.value = rij ? rij.querySelector(".prod__name").textContent : "";
@@ -2331,27 +2336,9 @@
         return;
       }
 
-      /* Een keuze bewerken of weghalen gaat via de drie puntjes op de regel,
-         niet met een klik op de regel zelf: die raak je te makkelijk per
-         ongeluk. */
-      var keuzeBewerk = e.target.closest("[data-choice-edit]");
-      if (keuzeBewerk) {
-        var rij = keuzeBewerk.closest(".prod");
-        openKeuze(rij.closest(".group"), rij);
-        return;
-      }
-      var keuzeWeg = e.target.closest("[data-choice-del]");
-      if (keuzeWeg) {
-        var wegRij = keuzeWeg.closest(".prod");
-        var wegNaam = wegRij.querySelector(".prod__name").textContent;
-        var wegLijst = wegRij.parentElement;
-        /* Ook uit de bewaarde volgorde, anders ziet die een gat en komt de
-           savebar. */
-        var vast = bewaardeVolgorde.get(wegLijst);
-        if (vast && vast.indexOf(wegRij) !== -1) vast.splice(vast.indexOf(wegRij), 1);
-        wegRij.remove();
-        showToast(wegNaam + " deleted");
-      }
+      /* Een keuze in de lijst opent zichzelf; de greep sleept alleen. */
+      var rij = e.target.closest('[data-view="choices"] .prod');
+      if (rij && !e.target.closest(".prod__handle")) openKeuze(rij.closest(".group"), rij);
     });
 
     verplicht.addEventListener("change", function () {
@@ -2427,12 +2414,7 @@
         li = document.createElement("li");
         li.className = "prod prod--keuze";
         li.innerHTML = '<span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>' +
-          '<span class="prod__name"></span><span class="badge"></span>' +
-          '<span class="sort cmore"><button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for this choice"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>' +
-          '<span class="sort__menu sort__menu--kort" role="menu" hidden>' +
-            '<button class="sort__item" type="button" role="menuitem" data-choice-edit><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>Edit choice</button>' +
-            '<button class="sort__item sort__item--danger" type="button" role="menuitem" data-choice-del><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>Delete choice</button>' +
-          '</span></span>';
+          '<span class="prod__name"></span><span class="badge"></span>';
         var lijst = bezig.querySelector(".group__list");
         lijst.appendChild(li);
         /* Een nieuwe keuze is bewaard; hij hoort niet als verschoven volgorde
@@ -2452,6 +2434,19 @@
       });
       nieuwVenster.hidden = true;
       showToast(keuzeRij ? naam + " saved" : naam + " added to " + bezig.querySelector(".group__name").textContent);
+    });
+
+    /* Weghalen kan alleen bij een bestaande keuze, vanuit het venster. Ook uit
+       de bewaarde volgorde, anders ziet die een gat en komt de savebar. */
+    document.getElementById("cnew-del").addEventListener("click", function () {
+      if (!keuzeRij) return;
+      var naam = keuzeRij.querySelector(".prod__name").textContent;
+      var vast = bewaardeVolgorde.get(keuzeRij.parentElement);
+      if (vast && vast.indexOf(keuzeRij) !== -1) vast.splice(vast.indexOf(keuzeRij), 1);
+      keuzeRij.remove();
+      keuzeRij = null;
+      nieuwVenster.hidden = true;
+      showToast(naam + " deleted");
     });
 
     /* Enter in een veld doet wat de knop onderin doet. */

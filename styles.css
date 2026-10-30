@@ -964,24 +964,33 @@ select.input {
    kop zelf klapt de groep al open en dicht. */
 .gacts { display: flex; align-items: center; gap: 2px; margin-left: auto; margin-block: -6px; }
 .gmore .sort__btn { width: 32px; height: 32px; }
-/* Het venster van een keuzegroep: de naam in twee talen naast elkaar, dan
-   het vinkje Choice, en daaronder minimum en maximum met het label links en
-   het getal rechts, in de kolommen van de namen erboven. */
-.cgroup__choice { margin-top: 14px; }
-.cgroup__hint { display: block; font-size: var(--fs-sm); color: var(--text-muted); }
-.cgroup__nums { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
-.cgroup__num { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: 4px 16px; }
-.cgroup__num[hidden] { display: none; }
-.cgroup__num .label { font-size: var(--fs-md); font-weight: 500; }
-.cgroup__num .field__error { grid-column: 2; }
-.cgroup__req { color: var(--danger); }
+/* Het venster van een keuzegroep: bovenin de naam in twee talen, daaronder
+   een licht vak met hoe de gast kiest. De schakelaar staat rechts, zoals bij
+   andere instellingen; minimum en maximum staan naast elkaar eronder, met
+   het woord choices in het veld zodat je ziet wat het getal telt. */
+.cgroup__rules {
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--gray-25);
+}
+.cgroup__switch { display: flex; align-items: center; gap: 16px; padding: 14px 16px; cursor: pointer; }
+.cgroup__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; margin-right: auto; }
+.cgroup__title { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.cgroup__hint { font-size: var(--fs-sm); color: var(--text-muted); }
+.cgroup__nums { padding: 14px 16px 16px; border-top: 1px solid var(--border); }
+.cgroup__nums .input { background: var(--bg-surface); }
+/* Zonder verplicht kiezen telt het minimum niet mee: het staat er nog, zodat
+   het venster niet verspringt, maar het doet niet mee. */
+.cgroup__nums .field.is-uit .label { color: var(--text-muted); }
+.cgroup__nums .field.is-uit .input { background: var(--gray-50); }
 .cnew__row { margin-top: 16px; }
 
-/* Een keuze of een categorie opent niets met een klik op de regel: je
-   bewerkt hem via de drie puntjes rechts, zodat een klik naast de greep niet per ongeluk een
-   venster opent. De puntjes komen bij het aanwijzen; zonder muis staan ze
-   er altijd. */
+/* Een categorie opent niets met een klik op de regel: je bewerkt hem via
+   de drie puntjes rechts. Die komen bij het aanwijzen; zonder muis staan ze
+   er altijd. Een keuze opent wel met een klik, net als een gerecht. */
 .prod.prod--keuze { cursor: default; }
+[data-view="choices"] .prod.prod--keuze { cursor: pointer; }
 .cmore { margin: -6px -8px -6px 0; }
 .cmore .sort__btn { width: 32px; height: 32px; visibility: hidden; }
 .prod:hover .cmore .sort__btn, .cmore .sort__btn:focus-visible, .cmore .sort__btn[aria-expanded="true"] { visibility: visible; }
@@ -3437,6 +3446,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   display: flex; justify-content: flex-end; gap: 10px;
   padding: 0 22px 22px;
 }
+/* Weghalen staat links, ver van Save: het is de andere kant op. */
+.dialog__del { margin-right: auto; }
 
 /* Een stand in een venster: in woorden links, de schakelaar rechts, met een
    streep eronder omdat eronder het veld staat dat erbij hoort. */
