@@ -538,7 +538,7 @@
   function zetMenuVast(knop, menu) {
     menu.classList.remove("sort__menu--vast");
     menu.style.top = menu.style.left = "";
-    if (!menu.closest(".table-wrap, .paybox")) return;
+    if (!menu.closest(".table-wrap, .paybox, .gmore")) return;
 
     /* Eerst losmaken, dan meten: zolang hij in de cel hangt knijpt de tabel
        hem smal, en dan klopt de berekende plek niet. */
@@ -2144,7 +2144,7 @@
   legVolgordeVast();
 
   /* ---- Categorieen aanmaken en bewerken ----------------------------------
-     Het potlood achter een regel opent het venster met wat er staat; Add
+     Een klik op een regel opent het venster met wat er staat; Add
      category rechtsboven opent het leeg. De Nederlandse naam en de twee
      omschrijvingen staan op de regel zelf, in data-nl, data-desc en
      data-desc-nl. Het getal achter de naam is het aantal gerechten en blijft
@@ -2180,8 +2180,9 @@
     }
 
     document.addEventListener("click", function (e) {
-      var knop = e.target.closest(".cact");
-      if (knop) openCategorie(knop.closest(".prod"));
+      /* De hele regel opent de categorie; de greep sleept alleen. */
+      var rij = e.target.closest('[data-view="categories"] .prod');
+      if (rij && !e.target.closest(".prod__handle")) openCategorie(rij);
     });
     document.getElementById("page-action").addEventListener("click", function () {
       if (!document.querySelector('[data-view="categories"]').hidden) openCategorie(null);
@@ -2201,8 +2202,7 @@
         rij.className = "prod prod--keuze";
         rij.innerHTML = '<span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>' +
           '<span class="prod__name"> <span class="prod__count">(0)</span></span>' +
-          '<span class="badge badge--active">Active</span>' +
-          '<button class="icon-btn cact" type="button" aria-label="Edit category" title="Edit category"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>';
+          '<span class="badge badge--active">Active</span>';
         catLijst.appendChild(rij);
         /* Een nieuwe regel is bewaard; hij hoort geen savebar op te roepen. */
         var bewaard = bewaardeVolgorde.get(catLijst);
@@ -2223,9 +2223,9 @@
   }
 
   /* ---- Keuzegroepen aanmaken, instellen en aanvullen ---------------------
-     Add group rechtsboven opent het venster leeg; het potlood in de kop van
-     een groep opent het met wat er staat. Het rondje met het plusje zet er
-     een keuze bij. De stand van een groep staat op de groep zelf: data-nl
+     Add group rechtsboven opent het venster leeg; Edit group onder de drie
+     puntjes in de kop opent het met wat er staat. Het rondje met het plusje
+     zet er een keuze bij, en een klik op een keuze opent die keuze. De stand van een groep staat op de groep zelf: data-nl
      (de Nederlandse naam), data-need (required of optional), data-min en
      data-max. */
   var groepVenster = document.getElementById("cgroup-dialog");
@@ -2276,22 +2276,47 @@
       if (!document.querySelector('[data-view="choices"]').hidden) openGroep(null);
     });
 
-    document.addEventListener("click", function (e) {
-      var knop = e.target.closest(".gact");
-      if (!knop) return;
-      var groep = knop.closest(".group");
+    /* Een keuze toevoegen of bewerken gaat door hetzelfde venster. keuzeRij
+       is de regel die je bewerkt; null bij een nieuwe keuze. */
+    var keuzeRij = null;
 
-      if (knop.classList.contains("gact--edit")) { openGroep(groep); return; }
-
+    function openKeuze(groep, rij) {
       bezig = groep;
-      document.getElementById("cnew-lead").textContent = "The choice is added at the bottom of " + groep.querySelector(".group__name").textContent + ".";
-      nieuwNaam.value = "";
-      document.getElementById("cnew-name-nl").value = "";
-      nieuwPrijs.value = "";
-      nieuwStatus.value = "active";
+      keuzeRij = rij;
+      var groepNaam = groep.querySelector(".group__name").textContent;
+      document.getElementById("cnew-title").textContent = rij ? "Edit choice" : "Add choice";
+      document.getElementById("cnew-save").textContent = rij ? "Save" : "Add choice";
+      document.getElementById("cnew-lead").textContent = rij ? "Part of " + groepNaam + "."
+        : "The choice is added at the bottom of " + groepNaam + ".";
+      nieuwNaam.value = rij ? rij.querySelector(".prod__name").textContent : "";
+      document.getElementById("cnew-name-nl").value = rij ? rij.dataset.nl || "" : "";
+      nieuwPrijs.value = rij ? rij.dataset.price || "" : "";
+      nieuwStatus.value = rij && rij.querySelector(".badge--draft") ? "draft" : "active";
       zetFout(nieuwNaam, nieuwFout, false);
       nieuwVenster.hidden = false;
       setTimeout(function () { nieuwNaam.focus(); }, 0);
+    }
+
+    document.addEventListener("click", function (e) {
+      var plus = e.target.closest(".gact");
+      if (plus) { openKeuze(plus.closest(".group"), null); return; }
+
+      /* De drie puntjes in de kop: de groep bewerken of weghalen. Het menu
+         zelf gaat open en dicht via de gewone menucode. */
+      var bewerk = e.target.closest("[data-group-edit]");
+      if (bewerk) { openGroep(bewerk.closest(".group")); return; }
+      var weg = e.target.closest("[data-group-del]");
+      if (weg) {
+        var groep = weg.closest(".group");
+        var naam = groep.querySelector(".group__name").textContent;
+        groep.remove();
+        showToast(naam + " deleted");
+        return;
+      }
+
+      /* Een keuze in de lijst opent zichzelf; de greep sleept alleen. */
+      var rij = e.target.closest('[data-view="choices"] .prod');
+      if (rij && !e.target.closest(".prod__handle")) openKeuze(rij.closest(".group"), rij);
     });
 
     verplicht.addEventListener("change", function () {
@@ -2313,7 +2338,11 @@
             '<span class="group__name"></span>' +
           '</button>' +
           '<span class="gacts">' +
-            '<button class="icon-btn gact gact--edit" type="button" aria-label="Edit choice group" title="Edit choice group"><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg></button>' +
+            '<span class="sort gmore"><button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for this group"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>' +
+              '<span class="sort__menu sort__menu--kort" role="menu" hidden>' +
+                '<button class="sort__item" type="button" role="menuitem" data-group-edit><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>Edit group</button>' +
+                '<button class="sort__item sort__item--danger" type="button" role="menuitem" data-group-del><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>Delete group</button>' +
+              '</span></span>' +
             '<button class="icon-btn gact gact--add" type="button" aria-label="Add a choice" title="Add a choice"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg></button>' +
           '</span>' +
         '</div>' +
@@ -2358,25 +2387,31 @@
       zetFout(nieuwNaam, nieuwFout, !naam);
       if (!naam) { nieuwNaam.focus(); return; }
       var concept = nieuwStatus.value === "draft";
-      var li = document.createElement("li");
-      li.className = "prod prod--keuze";
-      li.innerHTML = '<span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>' +
-        '<span class="prod__name"></span>' +
-        '<span class="badge badge--' + (concept ? "draft" : "active") + '">' + (concept ? "Draft" : "Active") + "</span>";
+      var li = keuzeRij;
+      if (!li) {
+        li = document.createElement("li");
+        li.className = "prod prod--keuze";
+        li.innerHTML = '<span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>' +
+          '<span class="prod__name"></span><span class="badge"></span>';
+        var lijst = bezig.querySelector(".group__list");
+        lijst.appendChild(li);
+        /* Een nieuwe keuze is bewaard; hij hoort niet als verschoven volgorde
+           de savebar op te roepen. */
+        var bewaard = bewaardeVolgorde.get(lijst);
+        if (bewaard) bewaard.push(li);
+        /* Een dichte groep gaat open, zodat je ziet waar hij terechtkwam. */
+        bezig.classList.add("is-open");
+      }
       li.querySelector(".prod__name").textContent = naam;
-      if (nieuwPrijs.value.trim()) li.dataset.price = nieuwPrijs.value.trim();
-      var naamNl = document.getElementById("cnew-name-nl").value.trim();
-      if (naamNl) li.dataset.nl = naamNl;
-      var lijst = bezig.querySelector(".group__list");
-      lijst.appendChild(li);
-      /* Een nieuwe keuze is bewaard; hij hoort niet als verschoven volgorde
-         de savebar op te roepen. */
-      var bewaard = bewaardeVolgorde.get(lijst);
-      if (bewaard) bewaard.push(li);
-      /* Een dichte groep gaat open, zodat je ziet waar hij terechtkwam. */
-      bezig.classList.add("is-open");
+      var badge = li.querySelector(".badge");
+      badge.className = "badge badge--" + (concept ? "draft" : "active");
+      badge.textContent = concept ? "Draft" : "Active";
+      [["price", nieuwPrijs], ["nl", document.getElementById("cnew-name-nl")]].forEach(function (paar) {
+        var waarde = paar[1].value.trim();
+        if (waarde) li.dataset[paar[0]] = waarde; else delete li.dataset[paar[0]];
+      });
       nieuwVenster.hidden = true;
-      showToast(naam + " added to " + bezig.querySelector(".group__name").textContent);
+      showToast(keuzeRij ? naam + " saved" : naam + " added to " + bezig.querySelector(".group__name").textContent);
     });
 
     /* Enter in een veld doet wat de knop onderin doet. */

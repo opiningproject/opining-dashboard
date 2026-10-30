@@ -959,17 +959,12 @@ select.input {
 .group__open { display: inline-flex; align-items: center; gap: 12px; font: inherit; color: inherit; text-align: left; }
 .usedby { flex: 0 0 auto; }
 
-/* Rechts in de kop van een keuzegroep: het potlood om de groep in te stellen
-   en het rondje om er een keuze bij te zetten. Het potlood komt pas bij het
-   aanwijzen, het plusje staat er altijd: toevoegen is wat je hier het vaakst
-   komt doen. Zonder muis staan ze er allebei. */
+/* Rechts in de kop van een keuzegroep: het rondje met het plusje om er een
+   keuze bij te zetten, en de drie puntjes met wat je met de groep zelf
+   kunt. Bewerken zit in dat menu, want de kop zelf klapt de groep al open
+   en dicht. */
 .gacts { display: flex; align-items: center; gap: 2px; margin-left: auto; margin-block: -6px; }
-.gact { width: 32px; height: 32px; }
-.gact--edit { visibility: hidden; }
-.group__head:hover .gact--edit, .gact--edit:focus-visible { visibility: visible; }
-@media (hover: none) {
-  .gact--edit { visibility: visible; }
-}
+.gact, .gmore .sort__btn { width: 32px; height: 32px; }
 /* Het venster van een keuzegroep: de naam in twee talen naast elkaar, dan
    het vinkje Choice, en daaronder minimum en maximum met het label links en
    het getal rechts, in de kolommen van de namen erboven. */
@@ -983,16 +978,10 @@ select.input {
 .cgroup__req { color: var(--danger); }
 .cnew__row { margin-top: 16px; }
 
-/* Een keuze of een categorie heeft geen foto en geen eigen scherm: de regel
-   is er om te lezen en te verslepen, dus wijst de muis niet. */
-.prod--keuze { cursor: default; }
-/* Het potlood achter een categorie: helemaal rechts, en pas bij het
-   aanwijzen van de regel. Zonder muis staat hij er altijd. */
-.cact { width: 32px; height: 32px; margin: -6px -8px -6px 0; visibility: hidden; }
-.prod:hover .cact, .cact:focus-visible { visibility: visible; }
-@media (hover: none) {
-  .cact { visibility: visible; }
-}
+/* Een keuze of een categorie heeft geen eigen scherm, maar de regel opent
+   het venster om hem te bewerken. Zo werkt hij net als een gerecht, zonder
+   een potlood op elke regel. */
+.prod--keuze { cursor: pointer; }
 .prod__count { color: var(--text-muted); font-variant-numeric: tabular-nums; }
 
 /* De kop boven een platte lijst: zelfde grijs en dezelfde inspringing als de
