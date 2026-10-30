@@ -2298,10 +2298,11 @@
     }
 
     document.addEventListener("click", function (e) {
-      var plus = e.target.closest(".gact");
+      var plus = e.target.closest(".gact, [data-group-add]");
       if (plus) { openKeuze(plus.closest(".group"), null); return; }
 
-      /* De drie puntjes in de kop: de groep bewerken of weghalen. Het menu
+      /* De drie puntjes in de kop: de groep bewerken of weghalen. Add choice
+         in dat menu doet hetzelfde als het plusje ernaast. Het menu
          zelf gaat open en dicht via de gewone menucode. */
       var bewerk = e.target.closest("[data-group-edit]");
       if (bewerk) { openGroep(bewerk.closest(".group")); return; }
@@ -2341,6 +2342,7 @@
             '<span class="sort gmore"><button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for this group"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>' +
               '<span class="sort__menu sort__menu--kort" role="menu" hidden>' +
                 '<button class="sort__item" type="button" role="menuitem" data-group-edit><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>Edit group</button>' +
+                '<button class="sort__item" type="button" role="menuitem" data-group-add><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add choice</button>' +
                 '<button class="sort__item sort__item--danger" type="button" role="menuitem" data-group-del><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>Delete group</button>' +
               '</span></span>' +
             '<button class="icon-btn gact gact--add" type="button" aria-label="Add a choice" title="Add a choice"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg></button>' +
