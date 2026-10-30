@@ -2143,6 +2143,22 @@
   }
   legVolgordeVast();
 
+  /* Een venster zet de cursor in het eerste veld, maar alleen met een muis:
+     op een telefoon springt dan het toetsenbord open, schuiven de knoppen
+     eronder weg en gaat de eerste tik op Cancel of Save op aan het
+     toetsenbord sluiten. */
+  var metMuis = window.matchMedia("(hover: hover) and (pointer: fine)");
+  function zetCursor(veld) {
+    if (metMuis.matches) setTimeout(function () { veld.focus(); }, 0);
+  }
+  /* Bewaren kan pas met een naam: zolang het veld leeg is staat de knop
+     uit. De terugkeerwaarde zet de knop bij het openen van het venster. */
+  function naamVerplicht(veld, knop) {
+    function zet() { knop.disabled = !veld.value.trim(); }
+    veld.addEventListener("input", zet);
+    return zet;
+  }
+
   /* ---- Eerst vragen, dan weghalen ----------------------------------------
      Eén venster voor elke vraag op de menukaart. vraag() zet er de titel, de
      zin en de knop in en voert actie pas uit na die knop. Zonder knop is het
@@ -2186,6 +2202,7 @@
       uitlegNl: document.getElementById("cat-desc-nl")
     };
     var catFout = document.getElementById("cat-name-error");
+    var zetCatKnop = naamVerplicht(document.getElementById("cat-name"), document.getElementById("cat-save"));
     var catLijst = document.querySelector('[data-view="categories"] .group__list');
     var catRij = null;
 
@@ -2203,7 +2220,8 @@
       catFout.hidden = true;
       catVelden.naam.classList.remove("input--error");
       catVenster.hidden = false;
-      setTimeout(function () { catVelden.naam.focus(); }, 0);
+      zetCatKnop();
+      zetCursor(catVelden.naam);
     }
 
     document.addEventListener("click", function (e) {
@@ -2297,6 +2315,7 @@
     var groepNaam = document.getElementById("cgroup-name");
     var groepNaamNl = document.getElementById("cgroup-name-nl");
     var groepFout = document.getElementById("cgroup-name-error");
+    var zetGroepKnop = naamVerplicht(document.getElementById("cgroup-name"), document.getElementById("cgroup-save"));
     var verplicht = document.getElementById("cgroup-required");
     var minRegel = document.getElementById("cgroup-min-row");
     var minInvoer = document.getElementById("cgroup-min");
@@ -2304,6 +2323,7 @@
     var maxInvoer = document.getElementById("cgroup-max");
     var nieuwNaam = document.getElementById("cnew-name");
     var nieuwFout = document.getElementById("cnew-name-error");
+    var zetKeuzeKnop = naamVerplicht(document.getElementById("cnew-name"), document.getElementById("cnew-save"));
     var nieuwPrijs = document.getElementById("cnew-price");
     var nieuwStatus = document.getElementById("cnew-status");
     var keuzePanel = document.querySelector('[data-view="choices"] .panel');
@@ -2340,7 +2360,8 @@
       zetFout(groepNaam, groepFout, false);
       zetMinRegel();
       groepVenster.hidden = false;
-      setTimeout(function () { groepNaam.focus(); }, 0);
+      zetGroepKnop();
+      zetCursor(groepNaam);
     }
 
     /* Add group staat alleen op de pagina Choices Menu op deze knop. */
@@ -2367,7 +2388,8 @@
       nieuwStatus.value = rij && rij.querySelector(".badge--draft") ? "draft" : "active";
       zetFout(nieuwNaam, nieuwFout, false);
       nieuwVenster.hidden = false;
-      setTimeout(function () { nieuwNaam.focus(); }, 0);
+      zetKeuzeKnop();
+      zetCursor(nieuwNaam);
     }
 
     document.addEventListener("click", function (e) {

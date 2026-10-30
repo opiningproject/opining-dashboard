@@ -3421,6 +3421,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   background: var(--bg-surface);
   box-shadow: var(--shadow-lg);
   max-height: calc(100vh - 48px);
+  /* Op een telefoon is 100vh hoger dan wat je ziet: de balk van de browser
+     valt eroverheen, en daaronder lagen Cancel en Save, onbereikbaar. dvh
+     is de hoogte die echt zichtbaar is. */
+  max-height: calc(100dvh - 48px);
   overflow: hidden;
   animation: dialog-in 200ms var(--ease);
 }
@@ -4195,7 +4199,7 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Een lijst mensen wordt zo lang als hij is; dit venster houdt daarom een
    eigen maximum aan, korter dan het scherm. De rest -- kop die blijft staan,
    midden dat schuift -- doet elk venster. */
-#person-dialog .dialog__card { max-height: min(620px, calc(100vh - 48px)); }
+#person-dialog .dialog__card { max-height: min(620px, calc(100vh - 48px)); max-height: min(620px, calc(100dvh - 48px)); }
 /* In de stap over jezelf staan de velden gewoon in de kaart: geen kader,
    geen kop, geen eigen knoppen. Next legt vast wat er staat. */
 .persform--kaal { margin-top: 0; }
