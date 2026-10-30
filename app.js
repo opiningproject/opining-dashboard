@@ -9185,7 +9185,10 @@
       if (e.target.closest('[data-view="products"] .prod')) kopieVan = null;
 
       if (e.target.closest("[data-prod-dup]")) {
-        var bron = kopieVan || openRij;
+        /* Een kopie van een kopie die nog niet bestaat zou (copy) (copy)
+           worden; eerst bewaren. */
+        if (kopieVan) { showToast("Save this copy first"); return; }
+        var bron = openRij;
         if (!bron) return;
         var naam = titelVeld.value.trim() || bron.querySelector(".prod__name").textContent.trim();
         tekst[taal] = { titel: titelVeld.value, uitleg: omschrijving.value };
