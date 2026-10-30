@@ -9246,6 +9246,7 @@
         /* Een kopie van een kopie die nog niet bestaat zou (copy) (copy)
            worden; eerst bewaren. */
         if (kopieVan) { showToast("Save this copy first"); return; }
+        if (nieuwGerecht) { showToast("Save this product first"); return; }
         var bron = openRij;
         if (!bron) return;
         var naam = titelVeld.value.trim() || bron.querySelector(".prod__name").textContent.trim();
@@ -9268,6 +9269,12 @@
           kopieVan = null;
           backToList();
           showToast("Copy discarded");
+          return;
+        }
+        if (nieuwGerecht) {
+          nieuwGerecht = false;
+          backToList();
+          showToast("Product discarded");
           return;
         }
         if (!openRij) return;
@@ -9321,6 +9328,99 @@
       if (vast) vast.splice(vast.indexOf(kopieVan) + 1, 0, rij);
       telGroep(kopieVan.closest(".group"));
       kopieVan = null;
+      bewaarKnop.dataset.created = naam + " added to your menu";
+    });
+
+    /* ---- Een nieuw gerecht -------------------------------------------------
+       Add product opent dezelfde pagina, maar leeg en op Draft: een nieuw
+       gerecht gaat niet live voordat je dat zelf zegt. Pas Save zet hem in
+       de lijst, onderaan de categorie die je kiest; zonder naam kan dat
+       niet. */
+    var nieuwGerecht = false;
+    var prijsVelden = [document.getElementById("pe-price-delivery"), document.getElementById("pe-price-takeaway")];
+
+    function maakLeeg() {
+      kopieVan = null;
+      openRij = null;
+      nieuwGerecht = true;
+      tekst = { en: { titel: "", uitleg: "" }, nl: { titel: "", uitleg: "" } };
+      taal = "en";
+      categorie.selectedIndex = 0;
+      fotoVak.querySelector(".drop__beeld").hidden = true;
+      fotoVak.querySelector(".drop__beeld img").removeAttribute("src");
+      fotoVak.querySelector(".drop__empty").hidden = false;
+      fotoVak.classList.remove("drop--filled");
+      fotoVak.querySelector("input[type='file']").value = "";
+      prijsVelden.forEach(function (v) { v.value = ""; v.placeholder = "0,00"; });
+      ["pe-tax", "pe-deposit"].forEach(function (id) { document.getElementById(id).selectedIndex = 0; });
+      keuzeLijst.querySelectorAll(".row").forEach(function (r) { r.remove(); });
+      zetKeuzeLeeg();
+      allGekozen = [];
+      allNiets = false;
+      allRegel.textContent = "Select allergens";
+      standBewaard = "Draft";
+      zetStand("Draft");
+      hideSavebar();
+      openPageSub("product-edit", "Add product");
+      toonTaal("en", true);
+      /* Een leeg veld is hier het begin, geen fout. */
+      fout.hidden = true;
+      titelVeld.classList.remove("input--error");
+    }
+
+    document.getElementById("page-action").addEventListener("click", function () {
+      if (!document.querySelector('[data-view="products"]').hidden) maakLeeg();
+    });
+    /* Een bestaand gerecht openen sluit de nieuwe stand af; prijzen die leeg
+       stonden krijgen weer wat dit voorbeeld bij elk gerecht laat zien. */
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest('[data-view="products"] .prod') || e.target.closest(".prod__handle")) return;
+      nieuwGerecht = false;
+      prijsVelden.forEach(function (v) { if (!v.value) v.value = "9,55"; });
+    });
+
+    bewaarKnop.addEventListener("click", function (e) {
+      if (!nieuwGerecht) return;
+      var naam = (taal === "en" ? titelVeld.value : tekst.en.titel).trim();
+      if (!naam) {
+        /* Zonder naam geen gerecht: de melding staat bij het veld, en de
+           pagina blijft open. */
+        if (taal !== "en") toonTaal("en");
+        zetFout();
+        titelVeld.focus();
+        e.stopPropagation();
+        return;
+      }
+      var concept = /draft/i.test((stand || standSmal).value);
+      var rij = document.createElement("li");
+      rij.className = "prod";
+      rij.innerHTML = '<span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>' +
+        '<span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>' +
+        '<span class="prod__name"></span>' +
+        '<span class="badge badge--' + (concept ? "draft" : "active") + '">' + (concept ? "Draft" : "Active") + "</span>";
+      rij.querySelector(".prod__name").textContent = naam;
+      var foto = fotoVak.querySelector(".drop__beeld");
+      if (!foto.hidden) {
+        var img = document.createElement("img");
+        img.alt = "";
+        img.src = foto.querySelector("img").src;
+        img.dataset.naam = foto.querySelector(".drop__name").textContent;
+        var duim = rij.querySelector(".prod__thumb");
+        duim.textContent = "";
+        duim.appendChild(img);
+      }
+      /* De categorie uit het formulier bepaalt de groep in de lijst. */
+      var kies = categorie.options[categorie.selectedIndex].textContent.trim();
+      var groep = [].filter.call(document.querySelectorAll('[data-view="products"] .group'), function (g) {
+        var kop = g.querySelector(".group__name");
+        return kop && kop.textContent.trim() === kies;
+      })[0] || document.querySelector('[data-view="products"] .group');
+      var lijst = groep.querySelector(".group__list");
+      lijst.appendChild(rij);
+      var vast = bewaardeVolgorde.get(lijst);
+      if (vast) vast.push(rij);
+      telGroep(groep);
+      nieuwGerecht = false;
       bewaarKnop.dataset.created = naam + " added to your menu";
     });
   })();
