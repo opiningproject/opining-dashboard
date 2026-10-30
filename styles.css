@@ -1681,6 +1681,11 @@ select.input {
   display: flex; flex-direction: column;
 }
 .sort__menu[hidden] { display: none; }
+/* Een menuknop met drie puntjes houdt het grijs van aanwijzen zolang zijn
+   menu openstaat: zo zie je bij welke knop het menu hoort. In de grijze kop
+   van een groep een tint donkerder, anders valt hij weg. */
+.icon-btn.sort__btn[aria-expanded="true"] { background: var(--bg-active); color: var(--text-strong); }
+.group__head .icon-btn.sort__btn[aria-expanded="true"] { background: var(--gray-200); }
 .sort__head { padding: 3px 8px 6px; font-size: var(--fs-sm); color: var(--text-muted); }
 /* Een kopje middenin een menu begint een nieuwe groep; zonder lijntje
    erboven plakt hij aan de regel ervoor vast. */
