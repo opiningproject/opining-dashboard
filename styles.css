@@ -982,6 +982,17 @@ select.input {
    het venster om hem te bewerken. Zo werkt hij net als een gerecht, zonder
    een potlood op elke regel. */
 .prod--keuze { cursor: pointer; }
+/* Op de pagina Choices Menu opent een regel niets: een keuze bewerk je via
+   de drie puntjes rechts, zodat een klik naast de greep niet per ongeluk een
+   venster opent. De puntjes komen bij het aanwijzen; zonder muis staan ze
+   er altijd. */
+[data-view="choices"] .prod--keuze { cursor: default; }
+.cmore { margin: -6px -8px -6px 0; }
+.cmore .sort__btn { width: 32px; height: 32px; visibility: hidden; }
+.prod:hover .cmore .sort__btn, .cmore .sort__btn:focus-visible, .cmore .sort__btn[aria-expanded="true"] { visibility: visible; }
+@media (hover: none) {
+  .cmore .sort__btn { visibility: visible; }
+}
 .prod__count { color: var(--text-muted); font-variant-numeric: tabular-nums; }
 
 /* De kop boven een platte lijst: zelfde grijs en dezelfde inspringing als de
