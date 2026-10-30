@@ -2143,6 +2143,33 @@
   }
   legVolgordeVast();
 
+  /* ---- Eerst vragen, dan weghalen ----------------------------------------
+     Eén venster voor elke vraag op de menukaart. vraag() zet er de titel, de
+     zin en de knop in en voert actie pas uit na die knop. Zonder knop is het
+     een melding: alleen OK, en er gebeurt niets. */
+  var vraagVenster = document.getElementById("confirm-dialog");
+  var vraagActie = null;
+
+  function vraag(opties) {
+    document.getElementById("confirm-title").textContent = opties.titel;
+    document.getElementById("confirm-lead").textContent = opties.tekst;
+    var ga = document.getElementById("confirm-go");
+    var terug = document.getElementById("confirm-cancel");
+    ga.hidden = !opties.knop;
+    ga.textContent = opties.knop || "";
+    terug.textContent = opties.knop ? "Cancel" : "OK";
+    vraagActie = opties.actie || null;
+    vraagVenster.hidden = false;
+  }
+
+  if (vraagVenster) {
+    document.getElementById("confirm-go").addEventListener("click", function () {
+      vraagVenster.hidden = true;
+      if (vraagActie) vraagActie();
+      vraagActie = null;
+    });
+  }
+
   /* ---- Categorieen aanmaken en bewerken ----------------------------------
      Edit category onder de drie puntjes opent het venster met wat er
      staat; Add category rechtsboven opent het leeg. De Nederlandse naam en de twee
@@ -2188,10 +2215,29 @@
       if (weg) {
         var rij = weg.closest(".prod");
         var naam = catNaam(rij);
-        var vast = bewaardeVolgorde.get(rij.parentElement);
-        if (vast && vast.indexOf(rij) !== -1) vast.splice(vast.indexOf(rij), 1);
-        rij.remove();
-        showToast(naam + " deleted");
+        /* Een categorie met gerechten erin gaat niet weg: die gerechten
+           zouden nergens meer staan. Dan eerst een melding. */
+        var teller = rij.querySelector(".prod__count");
+        var aantal = teller ? parseInt(teller.textContent.replace(/\D/g, ""), 10) || 0 : 0;
+        if (aantal) {
+          vraag({
+            titel: "Category still has products",
+            tekst: "Delete is possible when you remove all products from " + naam + ". It still has " +
+              aantal + (aantal === 1 ? " product" : " products") + "; move them to another category or delete them first."
+          });
+          return;
+        }
+        vraag({
+          titel: "Delete category?",
+          tekst: naam + " will be deleted. This can’t be undone.",
+          knop: "Delete category",
+          actie: function () {
+            var vast = bewaardeVolgorde.get(rij.parentElement);
+            if (vast && vast.indexOf(rij) !== -1) vast.splice(vast.indexOf(rij), 1);
+            rij.remove();
+            showToast(naam + " deleted");
+          }
+        });
       }
     });
     document.getElementById("page-action").addEventListener("click", function () {
@@ -2337,8 +2383,20 @@
       if (weg) {
         var groep = weg.closest(".group");
         var naam = groep.querySelector(".group__name").textContent;
-        groep.remove();
-        showToast(naam + " deleted");
+        /* Wie hem gebruikt raakt hem kwijt; dat hoort in de vraag. */
+        var gebruikt = groep.querySelector(".usedby");
+        var aantal = gebruikt ? parseInt(gebruikt.textContent.replace(/\D/g, ""), 10) || 0 : 0;
+        vraag({
+          titel: "Delete group?",
+          tekst: naam + " and its choices will be deleted" +
+            (aantal ? ", and removed from the " + aantal + (aantal === 1 ? " product" : " products") + " that use it" : "") +
+            ". This can’t be undone.",
+          knop: "Delete group",
+          actie: function () {
+            groep.remove();
+            showToast(naam + " deleted");
+          }
+        });
         return;
       }
 

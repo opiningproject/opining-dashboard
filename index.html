@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=542" />
+  <link rel="stylesheet" href="styles.css?v=543" />
 </head>
 <body>
 
@@ -6666,6 +6666,29 @@
       </div>
     </div>
   </div>
+  <!-- Eén vraagvenster voor weghalen op de menukaart: een groep of een
+       categorie. app.js zet de titel, de zin en de knop erin. Zonder knop
+       om te verwijderen is het een melding: dan staat er alleen OK. -->
+  <div class="dialog" id="confirm-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <div class="dialog__head dialog__head--mark">
+        <span class="dialog__mark dialog__mark--danger" aria-hidden="true">
+          <svg class="icon"><use href="#i-warning"/></svg>
+        </span>
+        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <h2 class="dialog__title" id="confirm-title"></h2>
+      <p class="dialog__lead" id="confirm-lead"></p>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close id="confirm-cancel">Cancel</button>
+        <button class="btn btn--danger" type="button" id="confirm-go"></button>
+      </div>
+    </div>
+  </div>
+
   <!-- Een gerecht verwijderen is niet terug te draaien, dus eerst de vraag.
        De naam van het gerecht komt erin te staan. -->
   <div class="dialog" id="proddel-dialog" hidden>
@@ -7776,6 +7799,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=542"></script>
+  <script src="app.js?v=543"></script>
 </body>
 </html>
