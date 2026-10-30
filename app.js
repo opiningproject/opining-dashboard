@@ -2207,6 +2207,7 @@
       bezig = groep;
       document.getElementById("cnew-lead").textContent = "The choice is added at the bottom of " + groep.querySelector(".group__name").textContent + ".";
       nieuwNaam.value = "";
+      document.getElementById("cnew-name-nl").value = "";
       nieuwPrijs.value = "";
       nieuwStatus.value = "active";
       zetFout(nieuwNaam, nieuwFout, false);
@@ -2285,6 +2286,8 @@
         '<span class="badge badge--' + (concept ? "draft" : "active") + '">' + (concept ? "Draft" : "Active") + "</span>";
       li.querySelector(".prod__name").textContent = naam;
       if (nieuwPrijs.value.trim()) li.dataset.price = nieuwPrijs.value.trim();
+      var naamNl = document.getElementById("cnew-name-nl").value.trim();
+      if (naamNl) li.dataset.nl = naamNl;
       var lijst = bezig.querySelector(".group__list");
       lijst.appendChild(li);
       /* Een nieuwe keuze is bewaard; hij hoort niet als verschoven volgorde
