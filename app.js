@@ -2870,7 +2870,7 @@
   var PAGINA_ACTIES = {
     /* Menupaginas: alleen tekst op de knop. */
     products:       { label: "Add product",   zacht: false },
-    choices:        { label: "Add new",       zacht: false },
+    choices:        { label: "Add group",     zacht: false },
     categories:     { label: "Add category", zacht: false },
     deliverers:     { label: "Add deliverer", icon: "i-plus", zacht: false },
     discounts:      { label: "Create discount", icon: "i-plus", zacht: false, opent: "discount-new" },
