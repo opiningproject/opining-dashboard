@@ -2239,8 +2239,8 @@
 
   /* ---- Keuzegroepen aanmaken, instellen en aanvullen ---------------------
      Add group rechtsboven opent het venster leeg; Edit group onder de drie
-     puntjes in de kop opent het met wat er staat. Het rondje met het plusje
-     zet er een keuze bij; de drie puntjes op een keuze bewerken of
+     puntjes in de kop opent het met wat er staat, en Add choice in dat menu
+     zet er een keuze bij. De drie puntjes op een keuze bewerken of
      verwijderen hem. De stand van een groep staat op de groep zelf: data-nl
      (de Nederlandse naam), data-need (required of optional), data-min en
      data-max. */
@@ -2314,11 +2314,11 @@
     }
 
     document.addEventListener("click", function (e) {
-      var plus = e.target.closest(".gact, [data-group-add]");
+      var plus = e.target.closest("[data-group-add]");
       if (plus) { openKeuze(plus.closest(".group"), null); return; }
 
       /* De drie puntjes in de kop: de groep bewerken of weghalen. Add choice
-         in dat menu doet hetzelfde als het plusje ernaast. Het menu
+         in dat menu zet er een keuze bij. Het menu
          zelf gaat open en dicht via de gewone menucode. */
       var bewerk = e.target.closest("[data-group-edit]");
       if (bewerk) { openGroep(bewerk.closest(".group")); return; }
@@ -2361,7 +2361,7 @@
 
     /* Een nieuwe groep: dezelfde kop als de andere, nog zonder keuzes en
        nog door geen enkel gerecht gebruikt. Hij komt onderaan en staat open,
-       zodat je meteen ziet waar je met het plusje keuzes toevoegt. */
+       zodat je meteen ziet waar zijn keuzes komen. */
     function maakGroep() {
       var groep = document.createElement("div");
       groep.className = "group is-open";
@@ -2379,7 +2379,6 @@
                 '<button class="sort__item" type="button" role="menuitem" data-group-add><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>Add choice</button>' +
                 '<button class="sort__item sort__item--danger" type="button" role="menuitem" data-group-del><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>Delete group</button>' +
               '</span></span>' +
-            '<button class="icon-btn gact gact--add" type="button" aria-label="Add a choice" title="Add a choice"><svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg></button>' +
           '</span>' +
         '</div>' +
         '<div class="group__panel"><div class="group__inner"><ul class="group__list"></ul></div></div>';

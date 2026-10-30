@@ -959,12 +959,11 @@ select.input {
 .group__open { display: inline-flex; align-items: center; gap: 12px; font: inherit; color: inherit; text-align: left; }
 .usedby { flex: 0 0 auto; }
 
-/* Rechts in de kop van een keuzegroep: het rondje met het plusje om er een
-   keuze bij te zetten, en de drie puntjes met wat je met de groep zelf
-   kunt. Bewerken zit in dat menu, want de kop zelf klapt de groep al open
-   en dicht. */
+/* Rechts in de kop van een keuzegroep: de drie puntjes met wat je met de
+   groep kunt, een keuze toevoegen inbegrepen. Dat zit in een menu, want de
+   kop zelf klapt de groep al open en dicht. */
 .gacts { display: flex; align-items: center; gap: 2px; margin-left: auto; margin-block: -6px; }
-.gact, .gmore .sort__btn { width: 32px; height: 32px; }
+.gmore .sort__btn { width: 32px; height: 32px; }
 /* Het venster van een keuzegroep: de naam in twee talen naast elkaar, dan
    het vinkje Choice, en daaronder minimum en maximum met het label links en
    het getal rechts, in de kolommen van de namen erboven. */
