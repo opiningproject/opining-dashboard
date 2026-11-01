@@ -957,6 +957,12 @@ select.input {
    keuzegroep, een die laat zien bij welke gerechten hij hoort. Twee knoppen
    kunnen niet in elkaar, dus staan ze naast elkaar in dezelfde balk. */
 .group__open { display: inline-flex; align-items: center; gap: 12px; font: inherit; color: inherit; text-align: left; }
+/* Of de gast moet kiezen staat in de kop van de groep zelf: dat bepaalt of
+   een gerecht zonder die keuze de mand in kan, en dat wil je zien zonder
+   de groep open te slaan. Verplicht leest zwaarder dan optioneel, want dat
+   is waar een gast tegenaan loopt. */
+.group__need { flex: 0 0 auto; }
+.group__need--req { border-color: var(--text-muted); color: var(--text-strong); }
 .usedby { flex: 0 0 auto; }
 
 /* Rechts in de kop van een keuzegroep: de drie puntjes met wat je met de

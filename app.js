@@ -2445,6 +2445,7 @@
             '<svg class="icon group__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>' +
             '<span class="group__name"></span>' +
           '</button>' +
+          '<span class="pill group__need"></span>' +
           '<span class="gacts">' +
             '<span class="sort gmore"><button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for this group"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>' +
               '<span class="sort__menu sort__menu--kort" role="menu" hidden>' +
@@ -2480,6 +2481,11 @@
       groep.querySelector(".group__name").textContent = naam;
       groep.dataset.nl = groepNaamNl.value.trim();
       groep.dataset.need = verplicht.checked ? "required" : "optional";
+      var merk = groep.querySelector(".group__need");
+      if (merk) {
+        merk.textContent = verplicht.checked ? "Required" : "Optional";
+        merk.classList.toggle("group__need--req", verplicht.checked);
+      }
       if (verplicht.checked) groep.dataset.min = min; else delete groep.dataset.min;
       if (max >= 1) groep.dataset.max = max; else delete groep.dataset.max;
       /* De knop met de gerechten noemt de groep bij naam. */
