@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=554" />
+  <link rel="stylesheet" href="styles.css?v=556" />
 </head>
 <body>
 
@@ -6616,9 +6616,11 @@
     </div>
   </div>
 
-  <!-- Een keuze erbij in een groep: naam in twee talen, meerprijs en of hij al te zien is.
-       Add choice onder de drie puntjes van de groep opent hem leeg, een klik op
-       een keuze ingevuld, met dan ook Delete links onderin. -->
+  <!-- Een keuze erbij in een groep: naam in twee talen, meerprijs en of hij al
+       te zien is. Alles onder elkaar, net als bij een categorie: twee velden
+       naast elkaar leest als een paar, en dat zijn het hier niet. Add choice
+       onder de drie puntjes van de groep opent hem leeg, een klik op een keuze
+       ingevuld, met dan ook Delete links onderin. -->
   <div class="dialog" id="cnew-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cnew-title">
@@ -6629,31 +6631,27 @@
         </button>
       </div>
       <p class="dialog__lead" id="cnew-lead"></p>
-      <div class="field-row">
-        <div class="field">
-          <label class="label" for="cnew-name">Name English</label>
-          <input class="input" id="cnew-name" type="text" placeholder="Name English" aria-describedby="cnew-name-error" />
-          <p class="field__error" id="cnew-name-error" hidden>
-            <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
-          </p>
-        </div>
-        <div class="field">
-          <label class="label" for="cnew-name-nl">Name Dutch</label>
-          <input class="input" id="cnew-name-nl" type="text" placeholder="Name Dutch" />
-        </div>
+      <div class="field">
+        <label class="label" for="cnew-status">Status</label>
+        <select class="input" id="cnew-status"><option value="active">Active</option><option value="draft">Draft</option></select>
       </div>
-      <div class="field-row cnew__row">
-        <div class="field">
-          <label class="label" for="cnew-price">Extra price <span class="label__opt">optional</span></label>
-          <span class="infield">
-            <span class="infield__unit">&euro;</span>
-            <input class="input infield__input" id="cnew-price" type="text" inputmode="decimal" placeholder="0,00" />
-          </span>
-        </div>
-        <div class="field">
-          <label class="label" for="cnew-status">Status</label>
-          <select class="input" id="cnew-status"><option value="active">Active</option><option value="draft">Draft</option></select>
-        </div>
+      <div class="field">
+        <label class="label" for="cnew-name">Name English</label>
+        <input class="input" id="cnew-name" type="text" placeholder="Name English" aria-describedby="cnew-name-error" />
+        <p class="field__error" id="cnew-name-error" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
+        </p>
+      </div>
+      <div class="field">
+        <label class="label" for="cnew-name-nl">Name Dutch</label>
+        <input class="input" id="cnew-name-nl" type="text" placeholder="Name Dutch" />
+      </div>
+      <div class="field">
+        <label class="label" for="cnew-price">Extra price <span class="label__opt">optional</span></label>
+        <span class="infield">
+          <span class="infield__unit">&euro;</span>
+          <input class="input infield__input" id="cnew-price" type="text" inputmode="decimal" placeholder="0,00" />
+        </span>
       </div>
       <div class="dialog__foot">
         <button class="btn btn--danger dialog__del" type="button" id="cnew-del" hidden>Delete</button>
@@ -7770,6 +7768,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=554"></script>
+  <script src="app.js?v=556"></script>
 </body>
 </html>

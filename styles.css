@@ -984,7 +984,6 @@ select.input {
    het venster niet verspringt, maar het doet niet mee. */
 .cgroup__nums .field.is-uit .label { color: var(--text-muted); }
 .cgroup__nums .field.is-uit .input { background: var(--gray-50); }
-.cnew__row { margin-top: 16px; }
 
 /* Een categorie opent niets met een klik op de regel: je bewerkt hem via
    de drie puntjes rechts. Die komen bij het aanwijzen; zonder muis staan ze
