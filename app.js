@@ -538,7 +538,7 @@
   function zetMenuVast(knop, menu) {
     menu.classList.remove("sort__menu--vast");
     menu.style.top = menu.style.left = "";
-    if (!menu.closest(".table-wrap, .paybox, .gmore, .cmore")) return;
+    if (!menu.closest(".table-wrap, .paybox, .gmore")) return;
 
     /* Eerst losmaken, dan meten: zolang hij in de cel hangt knijpt de tabel
        hem smal, en dan klopt de berekende plek niet. */
@@ -2195,8 +2195,8 @@
   }
 
   /* ---- Categorieen aanmaken en bewerken ----------------------------------
-     Edit category onder de drie puntjes opent het venster met wat er
-     staat; Add category rechtsboven opent het leeg. De Nederlandse naam en de twee
+     Een klik op een regel opent het venster met wat er staat; Add
+     category rechtsboven opent het leeg. De Nederlandse naam en de twee
      omschrijvingen staan op de regel zelf, in data-nl, data-desc en
      data-desc-nl. Het getal achter de naam is het aantal gerechten en blijft
      staan. */
@@ -2221,6 +2221,7 @@
     function openCategorie(rij) {
       catRij = rij;
       document.getElementById("cat-title").textContent = rij ? "Edit category" : "Create new category";
+      document.getElementById("cat-more").hidden = !rij;
       catVelden.naam.value = rij ? catNaam(rij) : "";
       catVelden.naamNl.value = rij ? rij.dataset.nl || "" : "";
       catVelden.uitleg.value = rij ? rij.dataset.desc || "" : "";
@@ -2233,13 +2234,14 @@
     }
 
     document.addEventListener("click", function (e) {
-      /* Bewerken en weghalen gaan via de drie puntjes op de regel, net als
-         bij een keuze; de regel zelf opent niets. */
-      var bewerk = e.target.closest("[data-cat-edit]");
-      if (bewerk) { openCategorie(bewerk.closest(".prod")); return; }
+      /* De hele regel opent de categorie, net als een keuze; de greep
+         sleept alleen. Weghalen zit achter de drie puntjes in het venster. */
+      var regel = e.target.closest('[data-view="categories"] .prod');
+      if (regel && !e.target.closest(".prod__handle")) { openCategorie(regel); return; }
       var weg = e.target.closest("[data-cat-del]");
-      if (weg) {
-        var rij = weg.closest(".prod");
+      if (weg && catRij) {
+        var rij = catRij;
+        catVenster.hidden = true;
         var naam = catNaam(rij);
         /* Een categorie met gerechten erin gaat niet weg: die gerechten
            zouden nergens meer staan. Dan eerst een melding. */
@@ -2284,12 +2286,7 @@
         rij.className = "prod prod--keuze";
         rij.innerHTML = '<span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>' +
           '<span class="prod__name"> <span class="prod__count">(0)</span></span>' +
-          '<span class="badge badge--active">Active</span>' +
-          '<span class="sort cmore"><button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Actions for this category"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button>' +
-          '<span class="sort__menu sort__menu--kort" role="menu" hidden>' +
-            '<button class="sort__item" type="button" role="menuitem" data-cat-edit><svg class="icon" aria-hidden="true"><use href="#i-edit"/></svg>Edit category</button>' +
-            '<button class="sort__item sort__item--danger" type="button" role="menuitem" data-cat-del><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>Delete category</button>' +
-          '</span></span>';
+          '<span class="badge badge--active">Active</span>';
         catLijst.appendChild(rij);
         /* Een nieuwe regel is bewaard; hij hoort geen savebar op te roepen. */
         var bewaard = bewaardeVolgorde.get(catLijst);

@@ -997,17 +997,9 @@ select.input {
 .cgroup__nums .field.is-uit .label { color: var(--text-muted); }
 .cgroup__nums .field.is-uit .input { background: var(--gray-50); }
 
-/* Een categorie opent niets met een klik op de regel: je bewerkt hem via
-   de drie puntjes rechts. Die komen bij het aanwijzen; zonder muis staan ze
-   er altijd. Een keuze opent wel met een klik, net als een gerecht. */
-.prod.prod--keuze { cursor: default; }
-[data-view="choices"] .prod.prod--keuze { cursor: pointer; }
-.cmore { margin: -6px -8px -6px 0; }
-.cmore .sort__btn { width: 32px; height: 32px; visibility: hidden; }
-.prod:hover .cmore .sort__btn, .cmore .sort__btn:focus-visible, .cmore .sort__btn[aria-expanded="true"] { visibility: visible; }
-@media (hover: none) {
-  .cmore .sort__btn { visibility: visible; }
-}
+/* Een keuze of een categorie opent met een klik op de regel het venster om
+   hem te bewerken, net als een gerecht; weghalen zit daar achter de drie
+   puntjes in de kop. Geen knoppen op de regel zelf. */
 .prod__count { color: var(--text-muted); font-variant-numeric: tabular-nums; }
 
 /* De kop boven een platte lijst: zelfde grijs en dezelfde inspringing als de
