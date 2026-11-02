@@ -2393,6 +2393,7 @@
       document.getElementById("cnew-save").textContent = rij ? "Save" : "Add " + woord;
       document.getElementById("cnew-more").hidden = !rij;
       document.querySelector("#cnew-del span").textContent = "Delete " + woord;
+      document.querySelector("#cnew-dup span").textContent = "Duplicate " + woord;
       document.getElementById("cnew-lead").textContent = rij ? "Part of " + groepNaam + "."
         : "The " + woord + " is added at the bottom of " + groepNaam + ".";
       nieuwNaam.value = rij ? rij.querySelector(".prod__name").textContent : "";
@@ -2553,6 +2554,23 @@
       keuzeRij = null;
       nieuwVenster.hidden = true;
       showToast(naam + " deleted");
+    });
+
+    /* Dupliceren zet een kopie direct onder het origineel, met dezelfde
+       naam (met (copy) erachter), meerprijs en stand, en opent die kopie
+       meteen: dan pas je aan wat anders moet. */
+    document.getElementById("cnew-dup").addEventListener("click", function () {
+      if (!keuzeRij) return;
+      var kopie = keuzeRij.cloneNode(true);
+      var naam = keuzeRij.querySelector(".prod__name").textContent;
+      kopie.querySelector(".prod__name").textContent = naam + " (copy)";
+      if (kopie.dataset.nl) kopie.dataset.nl += " (kopie)";
+      var lijst = keuzeRij.parentElement;
+      lijst.insertBefore(kopie, keuzeRij.nextSibling);
+      var vast = bewaardeVolgorde.get(lijst);
+      if (vast && vast.indexOf(keuzeRij) !== -1) vast.splice(vast.indexOf(keuzeRij) + 1, 0, kopie);
+      openKeuze(bezig, kopie);
+      showToast(naam + " duplicated");
     });
 
     /* Enter in een veld doet wat de knop onderin doet. */
