@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=576" />
+  <link rel="stylesheet" href="styles.css?v=577" />
 </head>
 <body>
 
@@ -1491,7 +1491,19 @@
 
             <div class="panel panel--scroll">
               <div class="panel__head">
-                <span class="panel__title" data-cveld="count"></span>
+                <!-- Net als de klantenlijst: snelle tabs op hoe lang geleden, en
+                     zoeken en sorteren rechts. De tabs rekenen met de dagen die
+                     elke regel draagt (data-ago). -->
+                <div class="tabs" data-filter-name="Order date">
+                  <button class="tab is-active" type="button">All</button>
+                  <button class="tab" type="button">Last 7 days</button>
+                  <button class="tab" type="button">Last 30 days</button>
+                  <button class="tab" type="button">Last 90 days</button>
+                  <button class="tab" type="button">Last year</button>
+                </div>
+                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter orders">
+                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
+                </button>
                 <!-- Sorteren: eerst waarop, daaronder in welke richting. -->
                 <div class="sort">
                   <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Sort orders">
@@ -1508,6 +1520,25 @@
                       <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"/></svg><span class="sort__dirname">Latest first</span></button>
                     <button class="sort__item" type="button" role="menuitemradio" aria-checked="false" data-sort="dir">
                       <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"/></svg><span class="sort__dirname">Oldest first</span></button>
+                  </div>
+                </div>
+                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
+                <div class="psearch" data-filters="Order date=Last 7 days|Last 30 days|Last 90 days|Last year;Order type=Delivery|Takeaway">
+                  <div class="psearch__top">
+                    <span class="psearch__field">
+                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                      <input type="search" placeholder="search" aria-label="Search this list" />
+                    </span>
+                    <button class="psearch__cancel" type="button">Cancel</button>
+                  </div>
+                  <div class="psearch__filters">
+                    <div class="fadd">
+                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
+                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
+                      </button>
+                      <div class="fmenu" role="menu" hidden></div>
+                    </div>
+                    <button class="fclear" type="button" hidden>Clear All</button>
                   </div>
                 </div>
               </div>
@@ -7701,6 +7732,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=576"></script>
+  <script src="app.js?v=577"></script>
 </body>
 </html>

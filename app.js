@@ -781,6 +781,20 @@
     "Account state": function (rij, waarde) {
       var dicht = rij.dataset.blocked === "yes";
       return waarde.indexOf("not") === 0 ? !dicht : dicht;
+    },
+    /* De bestellingen van een klant: hoeveel dagen geleden elke bestelling
+       was, en of hij bezorgd of afgehaald is. */
+    "Order date": function (rij, waarde) {
+      var d = Number(rij.dataset.ago);
+      if (isNaN(d)) return false;
+      if (waarde.indexOf("last 7") !== -1) return d <= 7;
+      if (waarde.indexOf("last 30") !== -1) return d <= 30;
+      if (waarde.indexOf("last 90") !== -1) return d <= 90;
+      return d <= 365;
+    },
+    "Order type": function (rij, waarde) {
+      var afhalen = rij.cells[2].textContent.trim() === "Takeaway";
+      return waarde.indexOf("takeaway") === 0 ? afhalen : !afhalen;
     }
   };
 
@@ -3187,6 +3201,12 @@
         tr.cells[4].querySelector(".badge").textContent = b.bezorger || "N.A.";
         romp.appendChild(tr);
       });
+      /* Een andere klant begint weer bij All, zonder zoekwoord of filter. */
+      var kop = vak.querySelector(".panel__head");
+      var stop = kop.querySelector(".psearch__cancel");
+      if (kop.classList.contains("is-searching") && stop) stop.click();
+      var alles = kop.querySelector(".tabs .tab");
+      if (alles) alles.click();
     }
 
     /* Alleen de naam opent de klant. De rest van de regel doet niets: op een
