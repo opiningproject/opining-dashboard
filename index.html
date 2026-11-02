@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=578" />
+  <link rel="stylesheet" href="styles.css?v=579" />
 </head>
 <body>
 
@@ -1474,10 +1474,11 @@
                 <p class="cprof__name" data-cveld="name"></p>
                 <p class="cprof__sub" data-cveld="mail"></p>
               </div>
-              <!-- Hoe lang iemand al klant is staat rechtsboven, los van wie het
-                   is; een blokkade staat eronder. -->
+              <!-- Rechtsboven: contact opnemen, met een blokkade eronder als die
+                   er is. Contact opent een venster met nummer en e-mail om te
+                   kopieren. -->
               <div class="cprof__side">
-                <p class="cprof__sub" data-cveld="since"></p>
+                <button class="btn btn--ghost btn--sm" type="button" id="cust-contact">Contact</button>
                 <span class="badge badge--danger" data-crow="blocked" hidden>Blocked</span>
               </div>
             </div>
@@ -6746,6 +6747,36 @@
     </div>
   </div>
 
+  <!-- Contact met een klant: telefoon en e-mail, elk met een knop om te
+       kopieren. Aanklikken belt of mailt direct, voor wie dat liever doet. -->
+  <div class="dialog" id="contact-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="contact-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="contact-title">Contact</h2>
+      </div>
+      <ul class="ccopy">
+        <li class="ccopy__row">
+          <div class="ccopy__text">
+            <p class="ccopy__label">Phone</p>
+            <a class="ccopy__value" id="contact-phone" href="#"></a>
+          </div>
+          <button class="btn btn--ghost btn--sm ccopy__btn" type="button" data-copy="contact-phone" data-copy-name="Phone number"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button>
+        </li>
+        <li class="ccopy__row">
+          <div class="ccopy__text">
+            <p class="ccopy__label">E-mail</p>
+            <a class="ccopy__value" id="contact-mail" href="#"></a>
+          </div>
+          <button class="btn btn--ghost btn--sm ccopy__btn" type="button" data-copy="contact-mail" data-copy-name="E-mail address"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg><span>Copy</span></button>
+        </li>
+      </ul>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Close</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dialog" id="cancel-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cancel-dialog-title">
@@ -7731,6 +7762,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=578"></script>
+  <script src="app.js?v=579"></script>
 </body>
 </html>

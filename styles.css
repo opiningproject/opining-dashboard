@@ -4590,6 +4590,17 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Rechtsboven in de kaart: hoe lang iemand al klant is, met een blokkade
    eronder als die er is. */
 .cprof__side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; margin-left: auto; align-self: flex-start; text-align: right; }
+/* Contact met een klant: een regel per gegeven, met de waarde om aan te
+   klikken en rechts een knop om hem te kopieren. */
+.ccopy { border: 1px solid var(--border); border-radius: var(--r-md); }
+.ccopy__row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; }
+.ccopy__row + .ccopy__row { border-top: 1px solid var(--border); }
+.ccopy__text { min-width: 0; margin-right: auto; }
+.ccopy__label { font-size: var(--fs-sm); color: var(--text-muted); }
+.ccopy__value { display: block; font-size: var(--fs-md); color: var(--text-strong); overflow-wrap: anywhere; }
+.ccopy__value:hover { text-decoration: underline; }
+.ccopy__btn { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; }
+.ccopy__btn .icon { width: 16px; height: 16px; }
 
 /* Drie cijfers naast elkaar in plaats van vier. */
 .stats--drie { grid-template-columns: repeat(3, minmax(0, 1fr)); }

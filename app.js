@@ -3176,7 +3176,20 @@
 
       zet("name", naam);
       zet("mail", rij.dataset.mail || "");
-      zet("since", "Customer for " + rij.dataset.since + " days");
+      /* Contact: naam, nummer en e-mail voor het venster. Er staat nog geen
+         nummer bij de klanten; dit voorbeeld maakt er een uit het e-mailadres,
+         zodat dezelfde klant altijd hetzelfde nummer heeft. */
+      var mail = rij.dataset.mail || "";
+      var cijfers = String(mail.split("").reduce(function (n, c) { return (n * 31 + c.charCodeAt(0)) % 100000000; }, 7));
+      while (cijfers.length < 8) cijfers = "0" + cijfers;
+      var tel = rij.dataset.phone || "+31 6 " + cijfers.slice(0, 4) + " " + cijfers.slice(4);
+      document.getElementById("contact-title").textContent = "Contact " + naam;
+      var telVeld = document.getElementById("contact-phone");
+      telVeld.textContent = tel;
+      telVeld.href = "tel:" + tel.replace(/\s/g, "");
+      var mailVeld = document.getElementById("contact-mail");
+      mailVeld.textContent = mail;
+      mailVeld.href = "mailto:" + mail;
       zet("spend", geld(besteed));
       zet("orders", aantal + (aantal === 1 ? " order" : " orders"));
       zet("avg", aantal ? geld(besteed / aantal) : "—");
@@ -3207,6 +3220,22 @@
       var alles = kop.querySelector(".tabs .tab");
       if (alles) alles.click();
     }
+
+    document.getElementById("cust-contact").addEventListener("click", function () {
+      document.getElementById("contact-dialog").hidden = false;
+    });
+
+    /* Kopieren zegt even "Copied" op de knop zelf, en daarna weer Copy. */
+    document.getElementById("contact-dialog").addEventListener("click", function (e) {
+      var knop = e.target.closest("[data-copy]");
+      if (!knop) return;
+      naarKlembord(document.getElementById(knop.dataset.copy).textContent);
+      var woord = knop.querySelector("span");
+      woord.textContent = "Copied";
+      clearTimeout(knop.terug);
+      knop.terug = setTimeout(function () { woord.textContent = "Copy"; }, 1500);
+      showToast(knop.dataset.copyName + " copied");
+    });
 
     /* Alleen de naam opent de klant. De rest van de regel doet niets: op een
        telefoon raak je anders de hele regel aan terwijl je wilde aankruisen,
