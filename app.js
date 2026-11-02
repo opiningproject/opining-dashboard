@@ -2391,7 +2391,8 @@
       var woord = woordVan(groep);
       document.getElementById("cnew-title").textContent = (rij ? "Edit " : "Add ") + woord;
       document.getElementById("cnew-save").textContent = rij ? "Save" : "Add " + woord;
-      document.getElementById("cnew-del").hidden = !rij;
+      document.getElementById("cnew-more").hidden = !rij;
+      document.querySelector("#cnew-del span").textContent = "Delete " + woord;
       document.getElementById("cnew-lead").textContent = rij ? "Part of " + groepNaam + "."
         : "The " + woord + " is added at the bottom of " + groepNaam + ".";
       nieuwNaam.value = rij ? rij.querySelector(".prod__name").textContent : "";

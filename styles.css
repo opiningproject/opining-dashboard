@@ -3469,8 +3469,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   display: flex; justify-content: flex-end; gap: 10px;
   padding: 0 22px 22px;
 }
-/* Weghalen staat links, ver van Save: het is de andere kant op. */
-.dialog__del { margin-right: auto; }
+/* Rechts in de kop: eventueel drie puntjes met wat er verder kan, zoals
+   weghalen, en het kruisje. */
+.dialog__acts { display: flex; align-items: center; gap: 2px; }
+.dialog__acts .sort[hidden] { display: none; }
 
 /* Een stand in een venster: in woorden links, de schakelaar rechts, met een
    streep eronder omdat eronder het veld staat dat erbij hoort. */
@@ -3587,22 +3589,13 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .linkbtn + .field__error { margin-top: 8px; }
 
 @media (max-width: 560px) {
-  /* Ook op een telefoon gecentreerd; alleen krapper, en de twee knoppen
-     verdelen de breedte. */
+  /* Ook op een telefoon gecentreerd, alleen krapper. De knoppen onderin
+     blijven rechts en zo breed als hun tekst, net als op een groot scherm. */
   .dialog__head { padding: 14px 18px; }
   .dialog__body { padding: 4px 18px 26px; }
   .dialog__foot { padding: 0 18px 18px; }
   .dialog__card > .tabs,
   .dialog__card > .tabsbox { padding: 12px 18px 0; }
-  .dialog__foot .btn { flex: 1 1 0; }
-  /* Drie knoppen naast elkaar passen op een telefoon niet. Cancel en Save
-     houden de rij; weghalen zakt eronder als rode tekst over de hele
-     breedte, ver van Save en zonder een derde knop in de rij. */
-  .dialog__foot { flex-wrap: wrap; }
-  .dialog__foot .dialog__del {
-    order: 3; flex: 1 0 100%;
-    margin: 0; border-color: transparent; background: none;
-  }
 }
 
 

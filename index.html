@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=560" />
+  <link rel="stylesheet" href="styles.css?v=561" />
 </head>
 <body>
 
@@ -6630,9 +6630,14 @@
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cnew-title">
       <div class="dialog__head">
         <h2 class="dialog__title" id="cnew-title">Add choice</h2>
-        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
-          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
-        </button>
+        <!-- Weghalen staat achter de drie puntjes, niet als derde knop onderin:
+             daar is het te dicht bij Save. Alleen bij een bestaande keuze. -->
+        <span class="dialog__acts">
+          <span class="sort" id="cnew-more" hidden><button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More actions"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button><span class="sort__menu sort__menu--kort" role="menu" hidden><button class="sort__item sort__item--danger" type="button" role="menuitem" id="cnew-del"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg><span>Delete choice</span></button></span></span>
+          <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+            <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+          </button>
+        </span>
       </div>
       <p class="dialog__lead" id="cnew-lead"></p>
       <div class="field">
@@ -6658,7 +6663,6 @@
         </span>
       </div>
       <div class="dialog__foot">
-        <button class="btn btn--danger dialog__del" type="button" id="cnew-del" hidden>Delete</button>
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
         <button class="btn btn--primary" type="button" id="cnew-save">Add choice</button>
       </div>
@@ -7772,6 +7776,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=560"></script>
+  <script src="app.js?v=561"></script>
 </body>
 </html>
