@@ -4578,7 +4578,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 /* Geblokkeerd staat als merkje naast de naam, in woorden: een teken alleen
    laat je raden, en rood maakt er een storing van terwijl het een stand is
    die jij zelf hebt gezet. */
-.cstate { margin-left: 8px; }
 
 /* ---- Een klant op zijn eigen pagina --------------------------------------
    Wie hij is staat bovenaan in één regel: de initialen als teken, de naam en

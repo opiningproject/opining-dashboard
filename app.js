@@ -403,7 +403,7 @@
   /* data-filters is "Naam:waarde|waarde;Naam=waarde|waarde" — één plek per
      paneel om de filters te benoemen. Met een dubbele punt mag je meerdere
      waarden tegelijk aanvinken; met een = kies je er één, want zoiets als een
-     bedragklasse of geblokkeerd-of-niet sluit elkaar uit. */
+     bedragklasse sluit elkaar uit. */
   function leesFilters(psearch) {
     return (psearch.dataset.filters || "").split(";").filter(Boolean).map(function (deel) {
       var punt = deel.indexOf(":");
@@ -777,10 +777,6 @@
       if (waarde.indexOf("90 days") !== -1) return d > 90;
       if (waarde.indexOf("6 months") !== -1) return d > 182;
       return d > 365;
-    },
-    "Account state": function (rij, waarde) {
-      var dicht = rij.dataset.blocked === "yes";
-      return waarde.indexOf("not") === 0 ? !dicht : dicht;
     },
     /* De bestellingen van een klant: hoeveel dagen geleden elke bestelling
        was, en of hij bezorgd of afgehaald is. */
@@ -3165,7 +3161,7 @@
     }
 
     function vul(rij) {
-      var naam = rij.cells[1].textContent.replace("Blocked", "").trim();
+      var naam = rij.cells[1].textContent.trim();
       var adresCel = rij.cells[2];
       var alle = adresCel.querySelector("[data-codes]");
       var adressen = alle
@@ -3194,7 +3190,6 @@
       zet("orders", aantal + (aantal === 1 ? " order" : " orders"));
       zet("avg", aantal ? geld(besteed / aantal) : "—");
       zet("count", aantal + (aantal === 1 ? " order" : " orders"));
-      vak.querySelector('[data-crow="blocked"]').hidden = rij.dataset.blocked !== "yes";
 
       romp.textContent = "";
       bestellingen(aantal, besteed, Number(rij.dataset.lastdays) || 0, adressen).forEach(function (b) {
@@ -3245,7 +3240,7 @@
       if (!naam) return;
       var rij = naam.closest("tr");
       vul(rij);
-      openPageSub("customer", rij.cells[1].textContent.replace("Blocked", "").trim());
+      openPageSub("customer", rij.cells[1].textContent.trim());
     });
   })();
 
@@ -5346,8 +5341,8 @@
   });
 
   /* ---- Wat je met de gekozen regels doet ---------------------------------
-     Twee handelingen, allebei op de klanten die aanstaan: hun adressen
-     kopieren om er een bericht aan te sturen, of ze de deur wijzen. */
+     Op de klanten die aanstaan: hun adressen kopieren om er een bericht aan
+     te sturen. */
   function naarKlembord(tekst) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(tekst)["catch"](function () { klembordOud(tekst); });
@@ -5369,36 +5364,18 @@
     veld.remove();
   }
 
-  function blokkeerRij(rij) {
-    if (rij.dataset.blocked === "yes") return;
-    rij.dataset.blocked = "yes";
-    var knop = rij.cells[1].querySelector("[data-cust-open]");
-    if (!knop) return;
-    var merk = document.createElement("span");
-    merk.className = "badge badge--muted cstate";
-    merk.textContent = "Blocked";
-    knop.after(merk);
-  }
-
   document.addEventListener("click", function (e) {
     var kopieer = e.target.closest("[data-pick-copy]");
-    var blok = e.target.closest("[data-pick-block]");
-    if (!kopieer && !blok) return;
-    var tabel = (kopieer || blok).closest("table");
+    if (!kopieer) return;
+    var tabel = kopieer.closest("table");
     var rijen = [].slice.call(tabel.querySelectorAll("[data-pick]:checked")).map(function (v) {
       return v.closest("tr");
     });
     if (!rijen.length) return;
 
-    if (kopieer) {
-      var mails = rijen.map(function (r) { return r.dataset.mail; }).filter(Boolean);
-      naarKlembord(mails.join(", "));
-      showToast(mails.length + (mails.length === 1 ? " email address copied" : " email addresses copied"));
-      return;
-    }
-
-    rijen.forEach(blokkeerRij);
-    showToast(rijen.length + (rijen.length === 1 ? " customer blocked" : " customers blocked"));
+    var mails = rijen.map(function (r) { return r.dataset.mail; }).filter(Boolean);
+    naarKlembord(mails.join(", "));
+    showToast(mails.length + (mails.length === 1 ? " email address copied" : " email addresses copied"));
     /* De handeling is gedaan; dan hoort de keuze niet te blijven staan. */
     tabel.querySelectorAll("[data-pick]").forEach(function (v) { v.checked = false; });
     zetKopVakje(tabel);
