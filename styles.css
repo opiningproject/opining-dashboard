@@ -325,6 +325,10 @@ legend { padding: 0; }
 .content {
   min-width: 0;
   overflow-y: auto;
+  /* De ruimte voor de schuifbalk staat er altijd, ook op een korte pagina
+     zonder balk. Anders schuift de gecentreerde inhoud een paar pixels
+     opzij bij het wisselen tussen een lange en een korte pagina. */
+  scrollbar-gutter: stable;
   padding: var(--content-pad-t) 24px var(--content-pad-b);
 }
 .content__inner { max-width: var(--content-max); margin-inline: auto; }
