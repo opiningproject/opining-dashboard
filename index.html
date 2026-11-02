@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=572" />
+  <link rel="stylesheet" href="styles.css?v=573" />
 </head>
 <body>
 
@@ -6696,12 +6696,9 @@
   <div class="dialog" id="cancel-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cancel-dialog-title">
-      <div class="dialog__head dialog__head--mark">
-        <span class="dialog__mark dialog__mark--danger" aria-hidden="true">
-          <svg class="icon"><use href="#i-warning"/></svg>
-        </span>
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="cancel-dialog-title">Cancel plan</h2>
       </div>
-      <h2 class="dialog__title" id="cancel-dialog-title">Cancel plan</h2>
       <p class="dialog__lead">Cancel to stop recurring billing. You can keep using Opining until 1 September 2026, the end of the period you have paid for.</p>
       <h3 class="loss__head">You&rsquo;ll lose access to</h3>
       <ul class="loss">
@@ -6777,12 +6774,9 @@
   <div class="dialog" id="dnsreset-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="dnsreset-title">
-      <div class="dialog__head dialog__head--mark">
-        <span class="dialog__mark dialog__mark--danger" aria-hidden="true">
-          <svg class="icon"><use href="#i-warning"/></svg>
-        </span>
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="dnsreset-title">Reset A record</h2>
       </div>
-      <h2 class="dialog__title" id="dnsreset-title">Reset A record</h2>
       <p class="dialog__lead" id="dnsreset-lead">This puts the A record back the way we deliver it, pointing at your store.</p>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
@@ -7708,6 +7702,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=572"></script>
+  <script src="app.js?v=573"></script>
 </body>
 </html>
