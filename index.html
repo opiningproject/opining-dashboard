@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=571" />
+  <link rel="stylesheet" href="styles.css?v=572" />
 </head>
 <body>
 
@@ -29,6 +29,8 @@
          label krijgt de kleur van de achtergrond, zodat het achterste erachter
          verdwijnt; daarom de icon-halo, net als bij i-marketing. -->
     <symbol id="i-categories" viewBox="2 2 20 20"><circle cx="16.46" cy="10.11" r="0.91" fill="currentColor" stroke="none"/><path d="M9.298 20.0465L6.52773 17.2763C5.25117 15.9997 5.25117 13.9301 6.52773 12.6536L12.498 6.6833C13.3322 5.84908 14.508 5.45189 15.6772 5.60928L18.6633 6.01124C19.6521 6.14438 20.4299 6.92218 20.5631 7.911L20.965 10.8971C21.1224 12.0663 20.7252 13.242 19.891 14.0763L13.9207 20.0465C12.6442 21.323 10.5745 21.323 9.298 20.0465Z"/><path d="M6.72769 17.4723L3.95741 14.702C2.68086 13.4255 2.68086 11.3559 3.95741 10.0793L9.92768 4.10908C10.7619 3.27486 11.9376 2.87768 13.1069 3.03507L16.093 3.43702C17.0818 3.57016 17.8596 4.34796 17.9928 5.33679L18.3947 8.32288C18.5521 9.49212 18.1549 10.6678 17.3207 11.5021L11.3504 17.4723C10.0739 18.7488 8.00421 18.7488 6.72769 17.4723Z" fill="var(--icon-halo, #fff)"/><circle cx="13.5" cy="7.5" r="1" fill="currentColor" stroke="none"/></symbol>
+    <!-- Een plus in een open rondje: iets erbij kiezen bij een gerecht. -->
+    <symbol id="i-choices" viewBox="2 2 20 20"><path d="M12 8.56919V15.4336"/><path d="M8.56641 12H15.4308"/><path d="M16.6564 19.7034C15.2979 20.5263 13.7042 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02941 7.02944 3 12 3C16.9706 3 21 7.02941 21 12C21 13.8483 20.4301 15.5665 19.4746 16.9958"/></symbol>
     <symbol id="i-analytics" viewBox="0 114 20 20"><path d="M15.6455 131.052C16.5544 131.052 17.1396 130.404 17.1396 129.783V122.931C17.1396 122.31 16.5543 121.662 15.6455 121.662C14.7368 121.662 14.1514 122.31 14.1514 122.931V129.783C14.1514 130.404 14.7368 131.052 15.6455 131.052Z"/><path d="M4.35254 130.958C5.26139 130.958 5.84668 130.31 5.84668 129.689V127.563C5.84668 126.943 5.26139 126.295 4.35254 126.295C3.44378 126.295 2.8584 126.943 2.8584 127.563V129.689C2.8584 130.31 3.44378 130.958 4.35254 130.958Z"/><path d="M9.99707 131.11C10.879 131.11 11.4912 130.456 11.4912 129.772V118.224C11.4912 117.54 10.879 116.886 9.99707 116.886C9.11525 116.886 8.50297 117.54 8.50293 118.224V129.772C8.50293 130.456 9.11522 131.11 9.99707 131.11Z"/></symbol>
     <!-- Cursor over een doelwit, met de witte lijn eromheen uit het ontwerp.
          Die lijn is een knockout, geen decoratie: hij moet de achtergrond van
@@ -231,7 +233,7 @@
                    en dekt grid-template-rows er maar één. -->
               <div class="nav__sub" id="menu-sub"><ul class="nav__sub-list">
                 <li><a class="nav__item nav__sub-item" href="#" data-page="products" data-title="Products" data-icon="i-menu-item"><span>Products</span></a></li>
-                <li><a class="nav__item nav__sub-item" href="#" data-page="choices" data-title="Choices Menu" data-icon="i-menu-item"><span>Choices Menu</span></a></li>
+                <li><a class="nav__item nav__sub-item" href="#" data-page="choices" data-title="Choices Menu" data-icon="i-choices"><span>Choices Menu</span></a></li>
                 <li><a class="nav__item nav__sub-item" href="#" data-page="categories" data-title="Categories" data-icon="i-categories"><span>Categories</span></a></li>
               </ul></div>
             </li>
@@ -7706,6 +7708,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=571"></script>
+  <script src="app.js?v=572"></script>
 </body>
 </html>
