@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=568" />
+  <link rel="stylesheet" href="styles.css?v=569" />
 </head>
 <body>
 
@@ -289,8 +289,8 @@
               <label class="sr-only" for="pe-status">Product status</label>
               <select class="input" id="pe-status">
                 <option>Active</option>
-                <option>Draft</option>
                 <option>Paused</option>
+                <option>Draft</option>
               </select>
               <div class="sort">
                 <!-- Op een smal scherm blijft hier alleen het teken over; de
@@ -2330,14 +2330,14 @@
                 <div class="tabs">
                   <button class="tab is-active" type="button">All</button>
                   <button class="tab" type="button">Active</button>
-                  <button class="tab" type="button">Draft</button>
                   <button class="tab" type="button">Paused</button>
+                  <button class="tab" type="button">Draft</button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter products">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status:Active|Draft|Paused">
+                <div class="psearch" data-filters="Status:Active|Paused|Draft">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -2489,14 +2489,14 @@
                 <div class="tabs">
                   <button class="tab is-active" type="button">All</button>
                   <button class="tab" type="button">Active</button>
-                  <button class="tab" type="button">Draft</button>
                   <button class="tab" type="button">Paused</button>
+                  <button class="tab" type="button">Draft</button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter choices">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status:Active|Draft|Paused">
+                <div class="psearch" data-filters="Status:Active|Paused|Draft">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -2761,8 +2761,8 @@
               <label class="sr-only" for="pe-status-smal">Product status</label>
               <select class="input" id="pe-status-smal">
                 <option>Active</option>
-                <option>Draft</option>
                 <option>Paused</option>
+                <option>Draft</option>
               </select>
             </div>
 
@@ -6628,7 +6628,7 @@
       <p class="dialog__lead" id="cnew-lead"></p>
       <div class="field">
         <label class="label" for="cnew-status">Status</label>
-        <select class="input" id="cnew-status"><option value="active">Active</option><option value="draft">Draft</option><option value="paused">Paused</option></select>
+        <select class="input" id="cnew-status"><option value="active">Active</option><option value="paused">Paused</option><option value="draft">Draft</option></select>
       </div>
       <div class="field">
         <label class="label" for="cnew-name">Name English</label>
@@ -7702,6 +7702,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=568"></script>
+  <script src="app.js?v=569"></script>
 </body>
 </html>
