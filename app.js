@@ -2373,15 +2373,27 @@
        is de regel die je bewerkt; null bij een nieuwe keuze. */
     var keuzeRij = null;
 
+    /* Een verplichte groep heeft choices, een vrije groep options (add-ons).
+       Het menu en het venster noemen ze zo. */
+    function woordVan(groep) {
+      return groep.dataset.need === "required" ? "choice" : "option";
+    }
+    function zetToevoegLabel(groep) {
+      var item = groep.querySelector("[data-group-add]");
+      if (item) item.lastChild.textContent = "Add " + woordVan(groep);
+    }
+    document.querySelectorAll('[data-view="choices"] .group').forEach(zetToevoegLabel);
+
     function openKeuze(groep, rij) {
       bezig = groep;
       keuzeRij = rij;
       var groepNaam = groep.querySelector(".group__name").textContent;
-      document.getElementById("cnew-title").textContent = rij ? "Edit choice" : "Add choice";
-      document.getElementById("cnew-save").textContent = rij ? "Save" : "Add choice";
+      var woord = woordVan(groep);
+      document.getElementById("cnew-title").textContent = (rij ? "Edit " : "Add ") + woord;
+      document.getElementById("cnew-save").textContent = rij ? "Save" : "Add " + woord;
       document.getElementById("cnew-del").hidden = !rij;
       document.getElementById("cnew-lead").textContent = rij ? "Part of " + groepNaam + "."
-        : "The choice is added at the bottom of " + groepNaam + ".";
+        : "The " + woord + " is added at the bottom of " + groepNaam + ".";
       nieuwNaam.value = rij ? rij.querySelector(".prod__name").textContent : "";
       document.getElementById("cnew-name-nl").value = rij ? rij.dataset.nl || "" : "";
       nieuwPrijs.value = rij ? rij.dataset.price || "" : "";
@@ -2481,6 +2493,7 @@
       groep.querySelector(".group__name").textContent = naam;
       groep.dataset.nl = groepNaamNl.value.trim();
       groep.dataset.need = verplicht.checked ? "required" : "optional";
+      zetToevoegLabel(groep);
       var merk = groep.querySelector(".group__need");
       if (merk) {
         merk.textContent = verplicht.checked ? "Required" : "Optional";
