@@ -963,7 +963,11 @@ select.input {
    is waar een gast tegenaan loopt. */
 .group__need { flex: 0 0 auto; }
 .group__need--req { border-color: var(--text-muted); color: var(--text-strong); }
-.usedby { flex: 0 0 auto; }
+/* Hoeveel gerechten een groep gebruiken: het teken van de menukaart met het
+   getal erachter. Kort, want naast Required of Optional werd "Used by 4"
+   te lang; de lijst zelf staat onder de klik, het woord in de tooltip. */
+.usedby { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 4px; }
+.usedby .icon { width: 14px; height: 14px; }
 
 /* Rechts in de kop van een keuzegroep: de drie puntjes met wat je met de
    groep kunt, een keuze toevoegen inbegrepen. Dat zit in een menu, want de
