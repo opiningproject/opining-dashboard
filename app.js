@@ -3174,7 +3174,6 @@
       var aantal = Number(rij.dataset.orders) || 0;
       var besteed = Number(rij.dataset.spent) || 0;
 
-      zet("initials", naam.split(" ").map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase());
       zet("name", naam);
       zet("mail", rij.dataset.mail || "");
       zet("since", "Customer for " + rij.dataset.since + " days");

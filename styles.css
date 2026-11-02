@@ -4584,14 +4584,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
    Wie hij is staat bovenaan in één regel: de initialen als teken, de naam en
    waar we hem bereiken, en rechts of de rekening openstaat. */
 .cprof { display: flex; align-items: center; gap: 16px; }
-.cprof__avatar {
-  display: grid; place-items: center;
-  flex: 0 0 auto;
-  width: 48px; height: 48px;
-  border-radius: var(--r-full);
-  background: var(--gray-100);
-  font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
-}
 .cprof__text { min-width: 0; }
 .cprof__name { font-size: 18px; font-weight: 500; color: var(--text-strong); }
 .cprof__sub { font-size: var(--fs-sm); color: var(--text-muted); }
