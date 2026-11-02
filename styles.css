@@ -3470,7 +3470,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   padding: 0 22px 22px;
 }
 /* Rechts in de kop: eventueel drie puntjes met wat er verder kan, zoals
-   weghalen, en het kruisje. */
+   weghalen. Een kruisje staat er niet bij een venster met Cancel onderin:
+   dat doet hetzelfde. */
 .dialog__acts { display: flex; align-items: center; gap: 2px; }
 .dialog__acts .sort[hidden] { display: none; }
 
