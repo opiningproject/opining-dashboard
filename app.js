@@ -2557,20 +2557,23 @@
     });
 
     /* Dupliceren zet een kopie direct onder het origineel, met dezelfde
-       naam (met (copy) erachter), meerprijs en stand, en opent die kopie
-       meteen: dan pas je aan wat anders moet. */
+       naam (met (copy) erachter) en meerprijs, op Draft: hij is meteen
+       bewaard maar nog niet te zien. Het venster gaat dicht. */
     document.getElementById("cnew-dup").addEventListener("click", function () {
       if (!keuzeRij) return;
       var kopie = keuzeRij.cloneNode(true);
       var naam = keuzeRij.querySelector(".prod__name").textContent;
       kopie.querySelector(".prod__name").textContent = naam + " (copy)";
       if (kopie.dataset.nl) kopie.dataset.nl += " (kopie)";
+      var merk = kopie.querySelector(".badge");
+      merk.className = "badge badge--draft";
+      merk.textContent = "Draft";
       var lijst = keuzeRij.parentElement;
       lijst.insertBefore(kopie, keuzeRij.nextSibling);
       var vast = bewaardeVolgorde.get(lijst);
       if (vast && vast.indexOf(keuzeRij) !== -1) vast.splice(vast.indexOf(keuzeRij) + 1, 0, kopie);
-      openKeuze(bezig, kopie);
-      showToast(naam + " duplicated");
+      nieuwVenster.hidden = true;
+      showToast(naam + " (copy) saved as draft");
     });
 
     /* Enter in een veld doet wat de knop onderin doet. */
