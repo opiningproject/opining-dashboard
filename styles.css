@@ -957,15 +957,17 @@ select.input {
    keuzegroep, een die laat zien bij welke gerechten hij hoort. Twee knoppen
    kunnen niet in elkaar, dus staan ze naast elkaar in dezelfde balk. */
 .group__open { display: inline-flex; align-items: center; gap: 12px; font: inherit; color: inherit; text-align: left; }
-/* Of de gast moet kiezen staat in de kop van de groep zelf: dat bepaalt of
-   een gerecht zonder die keuze de mand in kan, en dat wil je zien zonder
-   de groep open te slaan. Verplicht leest zwaarder dan optioneel, want dat
-   is waar een gast tegenaan loopt. */
-.group__need { flex: 0 0 auto; }
-.group__need--req { border-color: var(--text-muted); color: var(--text-strong); }
+/* Of de klant moet kiezen staat in de kop van de groep zelf: een sterretje
+   achter de naam, zoals bij een verplicht veld. Een lange naam ("Wilt u hier
+   bestek bij?") wordt ingekort met puntjes, maar het sterretje valt nooit
+   weg: de naam krimpt, het sterretje niet. */
+.group__head > .group__open { flex: 0 1 auto; min-width: 0; }
+.group__label { display: inline-flex; align-items: baseline; min-width: 0; }
+.group__label .group__name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.group__req { display: none; flex: 0 0 auto; margin-left: 2px; font-weight: 600; color: var(--text-strong); }
+.group[data-need="required"] .group__req { display: inline; }
 /* Hoeveel gerechten een groep gebruiken: het teken van de menukaart met het
-   getal erachter. Kort, want naast Required of Optional werd "Used by 4"
-   te lang; de lijst zelf staat onder de klik, het woord in de tooltip. */
+   getal erachter. Kort, want "Used by 4" maakte de kop te lang; de lijst zelf staat onder de klik, het woord in de tooltip. */
 .usedby { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 4px; }
 .usedby .icon { width: 14px; height: 14px; }
 
