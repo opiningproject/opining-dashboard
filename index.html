@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=574" />
+  <link rel="stylesheet" href="styles.css?v=575" />
 </head>
 <body>
 
@@ -6647,12 +6647,31 @@
         <label class="label" for="cnew-name-nl">Name Dutch</label>
         <input class="input" id="cnew-name-nl" type="text" placeholder="Name Dutch" />
       </div>
+      <!-- Net als een gerecht: een prijs voor bezorgen en een voor afhalen, en
+           statiegeld. Leeg is gratis: de meeste keuzes kosten niets extra. -->
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="cnew-price-delivery">Delivery price</label>
+          <span class="infield">
+            <span class="infield__unit">&euro;</span>
+            <input class="input infield__input" id="cnew-price-delivery" type="text" inputmode="decimal" placeholder="0,00" />
+          </span>
+        </div>
+        <div class="field">
+          <label class="label" for="cnew-price-takeaway">Takeaway price</label>
+          <span class="infield">
+            <span class="infield__unit">&euro;</span>
+            <input class="input infield__input" id="cnew-price-takeaway" type="text" inputmode="decimal" placeholder="0,00" />
+          </span>
+        </div>
+      </div>
       <div class="field">
-        <label class="label" for="cnew-price">Extra price <span class="label__opt">optional</span></label>
-        <span class="infield">
-          <span class="infield__unit">&euro;</span>
-          <input class="input infield__input" id="cnew-price" type="text" inputmode="decimal" placeholder="0,00" />
-        </span>
+        <label class="label" for="cnew-deposit">Deposit</label>
+        <select class="input" id="cnew-deposit">
+          <option>None</option>
+          <option>&euro; 0,15 can</option>
+          <option>&euro; 0,25 bottle</option>
+        </select>
       </div>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
@@ -7678,6 +7697,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=574"></script>
+  <script src="app.js?v=575"></script>
 </body>
 </html>

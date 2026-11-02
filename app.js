@@ -2329,7 +2329,9 @@
     var nieuwNaam = document.getElementById("cnew-name");
     var nieuwFout = document.getElementById("cnew-name-error");
     var zetKeuzeKnop = naamVerplicht(document.getElementById("cnew-name"), document.getElementById("cnew-save"));
-    var nieuwPrijs = document.getElementById("cnew-price");
+    var prijsBezorg = document.getElementById("cnew-price-delivery");
+    var prijsAfhaal = document.getElementById("cnew-price-takeaway");
+    var statiegeld = document.getElementById("cnew-deposit");
     var nieuwStatus = document.getElementById("cnew-status");
     var keuzePanel = document.querySelector('[data-view="choices"] .panel');
     /* De groep die je bewerkt; null bij een nieuwe groep. */
@@ -2403,7 +2405,10 @@
         : "The " + woord + " is added at the bottom of " + groepNaam + ".";
       nieuwNaam.value = rij ? rij.querySelector(".prod__name").textContent : "";
       document.getElementById("cnew-name-nl").value = rij ? rij.dataset.nl || "" : "";
-      nieuwPrijs.value = rij ? rij.dataset.price || "" : "";
+      /* Een oudere keuze had een meerprijs; die geldt dan voor allebei. */
+      prijsBezorg.value = rij ? rij.dataset.priceDelivery || rij.dataset.price || "" : "";
+      prijsAfhaal.value = rij ? rij.dataset.priceTakeaway || rij.dataset.price || "" : "";
+      statiegeld.value = rij && rij.dataset.deposit ? rij.dataset.deposit : "None";
       nieuwStatus.value = rij ? standVan(rij.querySelector(".badge").textContent) : "active";
       zetFout(nieuwNaam, nieuwFout, false);
       nieuwVenster.hidden = false;
@@ -2535,9 +2540,11 @@
       var keuzeStand = standVan(nieuwStatus.value);
       badge.className = "badge badge--" + keuzeStand;
       badge.textContent = STANDNAAM[keuzeStand];
-      [["price", nieuwPrijs], ["nl", document.getElementById("cnew-name-nl")]].forEach(function (paar) {
+      delete li.dataset.price;
+      [["priceDelivery", prijsBezorg], ["priceTakeaway", prijsAfhaal], ["deposit", statiegeld],
+       ["nl", document.getElementById("cnew-name-nl")]].forEach(function (paar) {
         var waarde = paar[1].value.trim();
-        if (waarde) li.dataset[paar[0]] = waarde; else delete li.dataset[paar[0]];
+        if (waarde && waarde !== "None") li.dataset[paar[0]] = waarde; else delete li.dataset[paar[0]];
       });
       nieuwVenster.hidden = true;
       showToast(keuzeRij ? naam + " saved" : naam + " added to " + bezig.querySelector(".group__name").textContent);
