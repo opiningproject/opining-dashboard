@@ -2147,6 +2147,14 @@
      op een telefoon springt dan het toetsenbord open, schuiven de knoppen
      eronder weg en gaat de eerste tik op Cancel of Save op aan het
      toetsenbord sluiten. */
+  /* Drie standen voor wat er op de menukaart staat: Active is te zien en te
+     bestellen, Draft is nog niet te zien, Paused staat er wel maar is even
+     niet te bestellen. Elke plek die een merkje zet, leest de stand hier. */
+  var STANDNAAM = { active: "Active", draft: "Draft", paused: "Paused" };
+  function standVan(waarde) {
+    return /draft/i.test(waarde) ? "draft" : /paused/i.test(waarde) ? "paused" : "active";
+  }
+
   var metMuis = window.matchMedia("(hover: hover) and (pointer: fine)");
   function zetCursor(veld) {
     if (metMuis.matches) setTimeout(function () { veld.focus(); }, 0);
@@ -2399,7 +2407,7 @@
       nieuwNaam.value = rij ? rij.querySelector(".prod__name").textContent : "";
       document.getElementById("cnew-name-nl").value = rij ? rij.dataset.nl || "" : "";
       nieuwPrijs.value = rij ? rij.dataset.price || "" : "";
-      nieuwStatus.value = rij && rij.querySelector(".badge--draft") ? "draft" : "active";
+      nieuwStatus.value = rij ? standVan(rij.querySelector(".badge").textContent) : "active";
       zetFout(nieuwNaam, nieuwFout, false);
       nieuwVenster.hidden = false;
       zetKeuzeKnop();
@@ -2527,8 +2535,9 @@
       }
       li.querySelector(".prod__name").textContent = naam;
       var badge = li.querySelector(".badge");
-      badge.className = "badge badge--" + (concept ? "draft" : "active");
-      badge.textContent = concept ? "Draft" : "Active";
+      var keuzeStand = standVan(nieuwStatus.value);
+      badge.className = "badge badge--" + keuzeStand;
+      badge.textContent = STANDNAAM[keuzeStand];
       [["price", nieuwPrijs], ["nl", document.getElementById("cnew-name-nl")]].forEach(function (paar) {
         var waarde = paar[1].value.trim();
         if (waarde) li.dataset[paar[0]] = waarde; else delete li.dataset[paar[0]];
@@ -9243,7 +9252,7 @@
       if (standSmal) standSmal.value = waarde;
       if (!merk) return;
       merk.textContent = waarde;
-      merk.className = "badge page-head__badge " + (/draft/i.test(waarde) ? "badge--draft" : "badge--active");
+      merk.className = "badge page-head__badge badge--" + standVan(waarde);
       merk.hidden = false;
     }
 
@@ -9365,10 +9374,10 @@
       var naam = (taal === "en" ? titelVeld.value : tekst.en.titel).trim() || "Untitled product";
       var rij = kopieVan.cloneNode(true);
       rij.querySelector(".prod__name").textContent = naam;
-      var concept = /draft/i.test((stand || standSmal).value);
+      var kopieStand = standVan((stand || standSmal).value);
       var badge = rij.querySelector(".badge");
-      badge.className = "badge badge--" + (concept ? "draft" : "active");
-      badge.textContent = concept ? "Draft" : "Active";
+      badge.className = "badge badge--" + kopieStand;
+      badge.textContent = STANDNAAM[kopieStand];
       var foto = fotoVak.querySelector(".drop__beeld");
       var duim = rij.querySelector(".prod__thumb");
       if (foto.hidden) duim.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#i-image"/></svg>';
@@ -9458,13 +9467,13 @@
         e.stopPropagation();
         return;
       }
-      var concept = /draft/i.test((stand || standSmal).value);
+      var nieuwStand = standVan((stand || standSmal).value);
       var rij = document.createElement("li");
       rij.className = "prod";
       rij.innerHTML = '<span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>' +
         '<span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>' +
         '<span class="prod__name"></span>' +
-        '<span class="badge badge--' + (concept ? "draft" : "active") + '">' + (concept ? "Draft" : "Active") + "</span>";
+        '<span class="badge badge--' + nieuwStand + '">' + STANDNAAM[nieuwStand] + "</span>";
       rij.querySelector(".prod__name").textContent = naam;
       var foto = fotoVak.querySelector(".drop__beeld");
       if (!foto.hidden) {

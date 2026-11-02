@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=566" />
+  <link rel="stylesheet" href="styles.css?v=567" />
 </head>
 <body>
 
@@ -290,6 +290,7 @@
               <select class="input" id="pe-status">
                 <option>Active</option>
                 <option>Draft</option>
+                <option>Paused</option>
               </select>
               <div class="sort">
                 <!-- Op een smal scherm blijft hier alleen het teken over; de
@@ -2330,12 +2331,13 @@
                   <button class="tab is-active" type="button">All</button>
                   <button class="tab" type="button">Active</button>
                   <button class="tab" type="button">Draft</button>
+                  <button class="tab" type="button">Paused</button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter products">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status:Active|Draft">
+                <div class="psearch" data-filters="Status:Active|Draft|Paused">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -2378,7 +2380,7 @@
                     <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
                     <span class="prod__thumb"><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg></span>
                     <span class="prod__name">Green Special</span>
-                    <span class="badge badge--active">Active</span>
+                    <span class="badge badge--paused">Paused</span>
                   </li>
                   <li class="prod">
                     <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
@@ -2488,12 +2490,13 @@
                   <button class="tab is-active" type="button">All</button>
                   <button class="tab" type="button">Active</button>
                   <button class="tab" type="button">Draft</button>
+                  <button class="tab" type="button">Paused</button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter choices">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status:Active|Draft">
+                <div class="psearch" data-filters="Status:Active|Draft|Paused">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -2541,7 +2544,7 @@
                   <li class="prod prod--keuze">
                     <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
                     <span class="prod__name">Soy milk</span>
-                    <span class="badge badge--active">Active</span>
+                    <span class="badge badge--paused">Paused</span>
                   </li>
                   <li class="prod prod--keuze">
                     <span class="prod__handle"><svg class="icon" aria-hidden="true"><use href="#i-drag"/></svg></span>
@@ -2764,6 +2767,7 @@
               <select class="input" id="pe-status-smal">
                 <option>Active</option>
                 <option>Draft</option>
+                <option>Paused</option>
               </select>
             </div>
 
@@ -6625,7 +6629,7 @@
       <p class="dialog__lead" id="cnew-lead"></p>
       <div class="field">
         <label class="label" for="cnew-status">Status</label>
-        <select class="input" id="cnew-status"><option value="active">Active</option><option value="draft">Draft</option></select>
+        <select class="input" id="cnew-status"><option value="active">Active</option><option value="draft">Draft</option><option value="paused">Paused</option></select>
       </div>
       <div class="field">
         <label class="label" for="cnew-name">Name English</label>
@@ -7699,6 +7703,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=566"></script>
+  <script src="app.js?v=567"></script>
 </body>
 </html>

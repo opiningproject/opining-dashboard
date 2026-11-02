@@ -1092,6 +1092,10 @@ select.input {
 .ocard__fixed { width: 14px; height: 14px; margin-right: 6px; vertical-align: -3px; }
 .badge--active { background: #e3f5ec; color: var(--success); }
 .badge--draft  { background: #e4eefb; color: #1f5fa8; }
+/* Paused: staat op de menukaart maar is even niet te bestellen. Oranje, want
+   het is tijdelijk en vraagt om terugzetten; anders dan Draft, dat nog niet
+   af is. */
+.badge--paused { background: #fdf0e1; color: #9a5512; }
 
 /* ==========================================================================
    8b2. EEN GERECHT BEWERKEN — tip bovenaan, daarna de kaarten met gegevens
