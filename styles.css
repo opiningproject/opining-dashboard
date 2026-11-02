@@ -4595,7 +4595,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .cprof__text { min-width: 0; }
 .cprof__name { font-size: 18px; font-weight: 500; color: var(--text-strong); }
 .cprof__sub { font-size: var(--fs-sm); color: var(--text-muted); }
-.cprof__state { margin-left: auto; align-self: flex-start; }
+/* Rechtsboven in de kaart: hoe lang iemand al klant is, met een blokkade
+   eronder als die er is. */
+.cprof__side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; margin-left: auto; align-self: flex-start; text-align: right; }
 
 /* Drie cijfers naast elkaar in plaats van vier. */
 .stats--drie { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -4603,10 +4605,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
   .stats--drie { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Een regel in de bestelgeschiedenis zegt met een teken of hij bezorgd of
-   opgehaald is; het adres of het woord ernaast zegt de rest. */
-.corder { display: inline-flex; align-items: center; gap: 8px; }
-.corder__icon { width: 17px; height: 17px; color: var(--text-muted); }
 /* De titel van een paneel zonder tabs: even zwaar als een kaarttitel. */
 .panel__title { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
 /* Een regel in de klantenlijst gaat ergens heen. */

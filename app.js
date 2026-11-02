@@ -3177,13 +3177,12 @@
         tr.dataset.amount = b.bedrag.toFixed(2);
         tr.innerHTML =
           "<td></td><td></td>" +
-          '<td><span class="corder"><svg class="icon corder__icon" aria-hidden="true"><use href="#i-deliverers"/></svg><span></span></span></td>' +
+          "<td></td>" +
           "<td></td>" +
           '<td><span class="badge badge--muted"></span></td>';
         tr.cells[0].textContent = b.datum;
         tr.cells[1].textContent = b.tijd;
-        tr.cells[2].querySelector("span span").textContent = b.wat;
-        if (b.afhalen) tr.cells[2].querySelector("use").setAttribute("href", "#i-bag");
+        tr.cells[2].textContent = b.wat;
         tr.cells[3].textContent = geld(b.bedrag);
         tr.cells[4].querySelector(".badge").textContent = b.bezorger || "N.A.";
         romp.appendChild(tr);

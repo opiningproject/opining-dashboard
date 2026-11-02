@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=575" />
+  <link rel="stylesheet" href="styles.css?v=576" />
 </head>
 <body>
 
@@ -1474,9 +1474,13 @@
               <div class="cprof__text">
                 <p class="cprof__name" data-cveld="name"></p>
                 <p class="cprof__sub" data-cveld="mail"></p>
-                <p class="cprof__sub" data-cveld="since"></p>
               </div>
-              <span class="badge badge--danger cprof__state" data-crow="blocked" hidden>Blocked</span>
+              <!-- Hoe lang iemand al klant is staat rechtsboven, los van wie het
+                   is; een blokkade staat eronder. -->
+              <div class="cprof__side">
+                <p class="cprof__sub" data-cveld="since"></p>
+                <span class="badge badge--danger" data-crow="blocked" hidden>Blocked</span>
+              </div>
             </div>
 
             <ul class="stats stats--drie">
@@ -7697,6 +7701,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=575"></script>
+  <script src="app.js?v=576"></script>
 </body>
 </html>
