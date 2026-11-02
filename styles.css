@@ -4586,9 +4586,9 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .cprof__text { min-width: 0; }
 .cprof__name { font-size: 18px; font-weight: 500; color: var(--text-strong); }
 .cprof__sub { font-size: var(--fs-sm); color: var(--text-muted); }
-/* Rechtsboven in de kaart: hoe lang iemand al klant is, met een blokkade
-   eronder als die er is. */
-.cprof__side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; margin-left: auto; align-self: flex-start; text-align: right; }
+/* Rechts in de kaart, verticaal in het midden naast naam en e-mail: de
+   knop om contact op te nemen. */
+.cprof__side { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; margin-left: auto; text-align: right; }
 /* Contact met een klant: een regel per gegeven, met de waarde om aan te
    klikken en rechts een knop om hem te kopieren. */
 .ccopy { border: 1px solid var(--border); border-radius: var(--r-md); }
