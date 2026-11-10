@@ -1289,7 +1289,7 @@ select.input {
 .table td { padding: 14px 20px; border-top: 1px solid var(--border); color: var(--text); white-space: nowrap; }
 .table tbody tr { transition: background var(--dur) var(--ease); }
 /* Ook een rij in het archief slaat zijn bestelling open. */
-.table--archive tbody tr { cursor: pointer; }
+.table--archive tbody tr, .table--corders tbody tr { cursor: pointer; }
 .table tbody tr:hover { background: var(--gray-25); }
 
 .badge--muted { background: var(--gray-100); color: var(--text-muted); }

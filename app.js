@@ -2976,10 +2976,10 @@
     var kaart = rij.classList.contains("ocard");
     var bestemming = kaart
       ? rij.querySelector(".ocard__dest").textContent.trim()
-      : rij.cells[0].textContent.trim();
+      : (rij.dataset.dest || rij.cells[0].textContent.trim());
     /* Afhalen heeft geen adres en geen bezorger; dat scheelt ook de
        bezorgkosten onder de regels. */
-    var afhalen = kaart ? rij.dataset.type === "collection" : bestemming === "Collection";
+    var afhalen = kaart ? rij.dataset.type === "collection" : (bestemming === "Collection" || bestemming === "Takeaway");
     return {
       nr: rij.dataset.order || "",
       naam: rij.dataset.name || "",
@@ -2992,7 +2992,8 @@
       wens: rij.dataset.wish || "",
       eta: rij.dataset.eta || "",
       wijze: rij.dataset.method || "",
-      bezorger: (afhalen || kaart || !rij.cells[3]) ? "" : rij.cells[3].textContent.trim(),
+      bezorger: rij.dataset.courier !== undefined ? rij.dataset.courier
+        : (afhalen || kaart || !rij.cells[3]) ? "" : rij.cells[3].textContent.trim(),
       bedrag: rij.dataset.pay || (rij.cells && rij.cells[2] ? rij.cells[2].textContent.trim() : ""),
       afhalen: afhalen
     };
@@ -3093,7 +3094,7 @@
     document.addEventListener("click", function (e) {
       /* Een teken op de regel heeft zijn eigen venster; dan hoort de
          bestelling niet ook nog open te gaan. */
-      var rij = e.target.closest(".ocard, .table--archive tbody tr");
+      var rij = e.target.closest(".ocard, .table--archive tbody tr, .table--corders tbody tr");
       if (rij && !e.target.closest(".omark")) { openBestelling(rij); return; }
       var tab = e.target.closest("#order-dialog [data-otab]");
       if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
@@ -3161,6 +3162,10 @@
              en het bedrag als getal. */
           dagen: dagen + i * 9,
           datum: datum(d),
+          /* Het bestelnummer zoals op het bord: jaar, maand en dag, en een
+             volgnummer van die dag. */
+          nr: String(d.getFullYear()).slice(2) + ("0" + (d.getMonth() + 1)).slice(-2) + ("0" + d.getDate()).slice(-2) + "A0" + (i + 1),
+          wijze: ["iDEAL", "Visa", "Cash", "iDEAL", "Mastercard"][i],
           tijd: ["18:40", "17:05", "19:20", "12:35", "20:10"][i],
           wat: afhalen ? "Takeaway" : adressen[i % adressen.length],
           afhalen: afhalen,
@@ -3217,6 +3222,19 @@
         tr.cells[2].textContent = b.wat;
         tr.cells[3].textContent = geld(b.bedrag);
         tr.cells[4].querySelector(".badge").textContent = b.bezorger || "N.A.";
+        /* Wat het bestelvenster nodig heeft; dezelfde gegevens als een regel
+           in het archief, want ook deze bestellingen zijn klaar. */
+        tr.dataset.order = b.nr;
+        tr.dataset.name = naam;
+        tr.dataset.mail = mail;
+        tr.dataset.phone = tel;
+        tr.dataset.placed = b.tijd;
+        tr.dataset.wish = b.tijd;
+        tr.dataset.eta = b.tijd;
+        tr.dataset.method = b.wijze;
+        tr.dataset.pay = geld(b.bedrag);
+        tr.dataset.dest = b.wat;
+        tr.dataset.courier = b.bezorger;
         romp.appendChild(tr);
       });
       /* Een andere klant begint weer bij All, zonder zoekwoord of filter. */
