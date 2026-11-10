@@ -3056,23 +3056,8 @@
     zetOrderRij("courier", !!b.bezorger);
     zetOrderRij("fee", !b.afhalen);
 
-    /* Bij bezorgen de route van de zaak naar dit adres in Google Maps, in een
-       nieuw tabblad. Wie afhaalt legt geen rit af: dan heet het gewoon het
-       adres en is er geen knop. */
-    var kaartKnop = document.getElementById("order-maps");
-    var zaak = document.getElementById("store-address");
+    /* Wie afhaalt legt geen rit af: dan heet het gewoon het adres. */
     orderVenster.querySelector('[data-oveld-label="address"]').textContent = b.afhalen ? "Address" : "Delivery address";
-    if (kaartKnop) {
-      var van = zaak ? zaak.textContent.trim() : "";
-      /* Een adres zonder plaats krijgt de plaats van de zaak erbij; anders
-         zoekt Maps de straat in het hele land. */
-      var stad = (van.match(/\d{4}\s?[A-Z]{2}\s+(.+)$/) || [])[1];
-      var naar = b.adres || "";
-      if (stad && naar.indexOf(",") === -1) naar += ", " + stad;
-      kaartKnop.hidden = b.afhalen || !b.adres;
-      kaartKnop.href = "https://www.google.com/maps/dir/?api=1&travelmode=driving" +
-        "&origin=" + encodeURIComponent(van) + "&destination=" + encodeURIComponent(naar);
-    }
     /* Een archiefrij is al klaar; daar valt niets meer door te zetten. */
     orderRegel = rij.classList.contains("ocard") ? rij : null;
     if (orderStap) {

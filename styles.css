@@ -4517,12 +4517,6 @@ tr:hover .domact, .domact:focus-visible { visibility: visible; }
 .omark:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 
-/* De knop onder het bezorgadres: klein, onder het adres, en net zo breed
-   als zijn tekst. */
-.odlg__maps { display: inline-flex; align-items: center; margin-top: 8px; }
-.odlg__maps[hidden] { display: none; }
-.odlg__row dd > [data-oveld="address"] { display: block; }
-
 
 /* Een bestelling heeft meer te tonen dan de meeste vensters: op een scherm met
    ruimte krijgt het venster die ook. De drie tabs houden daarbij één maat,
