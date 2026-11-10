@@ -2153,6 +2153,17 @@
   }
   legVolgordeVast();
 
+  /* ---- Vooruit bestellen ---------------------------------------------------
+     De dagen en tijden doen alleen mee als vooruit bestellen aanstaat; uit
+     verdwijnen ze, en aan staan ze er weer zoals ze waren. */
+  var voorAan = document.getElementById("preorder-on");
+  var voorVak = document.getElementById("preorder-body");
+  if (voorAan && voorVak) {
+    var zetVoorVak = function () { voorVak.hidden = !voorAan.checked; };
+    voorAan.addEventListener("change", zetVoorVak);
+    zetVoorVak();
+  }
+
   /* Een venster zet de cursor in het eerste veld, maar alleen met een muis:
      op een telefoon springt dan het toetsenbord open, schuiven de knoppen
      eronder weg en gaat de eerste tik op Cancel of Save op aan het
