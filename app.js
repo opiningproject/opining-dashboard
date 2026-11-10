@@ -3083,9 +3083,6 @@
       if (rij && !e.target.closest(".omark")) { openBestelling(rij); return; }
       var tab = e.target.closest("#order-dialog [data-otab]");
       if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
-      /* Naar de klant toe: de paginawissel regelt data-goto-page, hier gaat
-         alleen het venster dicht. */
-      if (e.target.closest("[data-close-order]")) { orderVenster.hidden = true; return; }
       if (e.target.closest("#order-step") && orderRegel) {
         /* Doorzetten sluit het venster: de bestelling staat daarna ergens
            anders, en wat je hier las klopt dan niet meer. */

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=588" />
+  <link rel="stylesheet" href="styles.css?v=589" />
 </head>
 <body>
 
@@ -7102,9 +7102,7 @@
         <div data-opane="customer">
           <div class="odlg__cols">
             <dl class="odlg__list">
-              <!-- De naam leidt naar de klant zelf; het venster gaat dan dicht,
-                   want je kijkt daarna naar een andere pagina. -->
-              <div class="odlg__row"><dt>Name</dt><dd class="odlg__name"><span data-oveld="name"></span><button class="icon-btn odlg__go" type="button" data-goto-page="customers" data-close-order aria-label="Open this customer"><svg class="icon" aria-hidden="true"><use href="#i-external"/></svg></button></dd></div>
+              <div class="odlg__row"><dt>Name</dt><dd data-oveld="name"></dd></div>
               <!-- Bij bezorgen het adres waar het heen gaat; afhalen heeft geen rit,
                    dan noemt app.js het gewoon het adres. -->
               <div class="odlg__row"><dt data-oveld-label="address">Delivery address</dt><dd data-oveld="address"></dd></div>
@@ -7771,6 +7769,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=588"></script>
+  <script src="app.js?v=589"></script>
 </body>
 </html>
