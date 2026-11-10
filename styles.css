@@ -2730,14 +2730,14 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Online of contant betaald: twee delen van hetzelfde geheel. Een balk met
    twee stukken leest de verhouding in een oogopslag; de regels eronder
    dragen de getallen, want kleur alleen is geen identificatie. */
+/* De verdeling online en contant als een dunne lijn, net zo licht als de
+   lijnen in de grafiek erboven: twee stukken met een kier ertussen, elk met
+   ronde uiteinden. Een dikke balk trok meer aandacht dan het getal waard is. */
 .paybar {
-  display: flex;
-  height: 12px; margin-top: 18px;
-  border-radius: var(--r-full);
-  background: var(--gray-100);
-  overflow: hidden;
+  display: flex; gap: 3px;
+  height: 4px; margin-top: 18px;
 }
-.paybar__part { display: block; height: 100%; }
+.paybar__part { display: block; height: 100%; min-width: 4px; border-radius: var(--r-full); }
 .paybar__part--online { background: var(--series-delivery); }
 .paybar__part--cash   { background: var(--series-soft); }
 .paylist { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
