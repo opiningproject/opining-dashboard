@@ -3459,7 +3459,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Wat tussen de kop en het midden staat -- de tabs van een bestelling -- moet
    zijn ruimte zelf dragen, want de kaart heeft die niet meer. */
 .dialog__card > .tabs,
-.dialog__card > .tabsbox { flex: 0 0 auto; padding: 14px 22px 0; }
+.dialog__card > .tabsbox { flex: 0 0 auto; padding: 14px 22px 12px; }
+/* Het bestelvenster: rondom 18px in het midden, op elk scherm even veel. */
+#order-dialog .dialog__body { padding: 18px; }
 .dialog__title { font-size: var(--fs-lg); font-weight: 600; color: var(--text-strong); }
 .dialog__lead { margin: 6px 0 18px; font-size: var(--fs-md); color: var(--text-muted); }
 /* De knoppen rechts, met afbreken links ervan: bevestigen staat het dichtst
@@ -3596,7 +3598,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .dialog__body { padding: 4px 18px 26px; }
   .dialog__foot { padding: 0 18px 18px; }
   .dialog__card > .tabs,
-  .dialog__card > .tabsbox { padding: 12px 18px 0; }
+  .dialog__card > .tabsbox { padding: 12px 18px 12px; }
+  #order-dialog .dialog__body { padding: 18px; }
 }
 
 
