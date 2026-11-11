@@ -923,6 +923,18 @@ select.input {
 .tab:hover { background: var(--gray-50); color: var(--text); }
 .tab.is-active { background: var(--gray-100); color: var(--text-strong); }
 
+/* Een tabrij zonder blokjes: het woord zelf is de knop en een streep
+   eronder zegt waar je bent. In een venster leest dat rustiger dan een
+   grijs vlak achter de tekst. */
+.tabs--line { gap: 22px; }
+.tabs--line .tab {
+  height: 32px; padding: 0 1px;
+  border-bottom: 2px solid transparent; border-radius: 0;
+  background: none;
+}
+.tabs--line .tab:hover { background: none; color: var(--text-strong); }
+.tabs--line .tab.is-active { background: none; color: var(--text-strong); border-bottom-color: var(--accent); }
+
 .group + .group { border-top: 1px solid var(--border); }
 /* Een groep draagt een streep boven zich om hem van de vorige te scheiden.
    Valt die vorige weg door een filter, dan staat de streep tegen de rand van
@@ -3466,6 +3478,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 #order-dialog .dialog__head,
 #order-dialog .dialog__body,
 #order-dialog .dialog__foot { padding: 18px; }
+#order-dialog .dialog__card > .tabsbox { padding: 4px 18px 0; }
 .dialog__title { font-size: var(--fs-lg); font-weight: 600; color: var(--text-strong); }
 .dialog__lead { margin: 6px 0 18px; font-size: var(--fs-md); color: var(--text-muted); }
 /* De knoppen rechts, met afbreken links ervan: bevestigen staat het dichtst
@@ -3495,14 +3508,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    Links wie het is, rechts wanneer het moet: twee lijsten naast elkaar, elk
    een label met zijn waarde. Op een telefoon is daar geen ruimte voor en
    komen ze onder elkaar als een doorlopende lijst. */
-/* Twee stukken onder elkaar in een doorlopend venster. Elk stuk staat in een
-   eigen grijs vlak: dat geeft het een rand waar het binnen valt. Zonder dat
-   loopt alles door als een lap tekst en weet je niet waar het een ophoudt
-   en het ander begint. */
-.odlg__sec { padding: 16px; border: 1px solid var(--border); border-radius: var(--r-lg); }
-.odlg__sec + .odlg__sec { margin-top: 14px; }
-.odlg__head { margin-bottom: 14px; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
-.odlg__count { margin-left: 6px; font-weight: 400; color: var(--text-muted); }
+.odlg__tabs { margin-top: 0; }
 /* Binnen het eerste stuk staan de gegevens in blokjes van twee kolommen:
    een kopje met daaronder regels die voor zich spreken. Een label per regel
    zou van vier regels vier kolommen maken. */
@@ -3616,6 +3622,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   #order-dialog .dialog__head,
   #order-dialog .dialog__body,
   #order-dialog .dialog__foot { padding: 18px; }
+  #order-dialog .dialog__card > .tabsbox { padding: 4px 18px 0; }
 }
 
 

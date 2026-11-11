@@ -3028,10 +3028,23 @@
     if (rij) rij.hidden = !aan;
   }
 
+  /* Welk van de twee tabbladen je ziet: wat er over de bestelling te weten
+     valt, of wat erin zit. */
+  function toonOrderPaneel(naam) {
+    orderVenster.querySelectorAll("[data-opane]").forEach(function (paneel) {
+      paneel.hidden = paneel.dataset.opane !== naam;
+    });
+    orderVenster.querySelectorAll("[data-otab]").forEach(function (tab) {
+      var aan = tab.dataset.otab === naam;
+      tab.classList.toggle("is-active", aan);
+      tab.setAttribute("aria-selected", String(aan));
+    });
+  }
+
 
   function openBestelling(rij) {
     var b = leesBestelling(rij);
-    orderVenster.querySelector(".dialog__title").textContent = "Order #" + b.nr;
+    orderVenster.querySelector(".dialog__title").textContent = "#" + b.nr;
     zetVeld("name", b.naam);
     zetVeld("address", b.adres);
     zetVeld("phone", b.tel);
@@ -3062,7 +3075,9 @@
       }
     }
 
-    /* Een volgende bestelling begint weer bovenaan. */
+    /* Een volgende bestelling begint weer bij wat erover te weten valt, en
+       bovenaan. */
+    toonOrderPaneel("details");
     orderVenster.querySelector(".dialog__body").scrollTop = 0;
     orderVenster.hidden = false;
   }
@@ -3073,6 +3088,8 @@
          bestelling niet ook nog open te gaan. */
       var rij = e.target.closest(".ocard, .table--archive tbody tr, .table--corders tbody tr");
       if (rij && !e.target.closest(".omark")) { openBestelling(rij); return; }
+      var tab = e.target.closest("#order-dialog [data-otab]");
+      if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
       if (e.target.closest("#order-step") && orderRegel) {
         /* Doorzetten sluit het venster: de bestelling staat daarna ergens
            anders, en wat je hier las klopt dan niet meer. */
