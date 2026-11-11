@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=599" />
+  <link rel="stylesheet" href="styles.css?v=600" />
 </head>
 <body>
 
@@ -7093,18 +7093,10 @@
         </button>
       </div>
 
-      <!-- Twee tabbladen: wat je over de bestelling moet weten, en wat erin
-           zit. De naam van het tabblad is de kop van wat eronder staat. -->
-      <div class="tabs tabs--line odlg__tabs" role="tablist">
-        <button class="tab is-active" type="button" role="tab" aria-selected="true" data-otab="details">Order details</button>
-        <button class="tab" type="button" role="tab" aria-selected="false" data-otab="items">Order <span class="tab__count">5</span></button>
-      </div>
-
       <div class="dialog__body">
-        <!-- Binnen dit tabblad draagt elk blokje een kopje; de regels eronder
-             spreken voor zich en hebben geen eigen label nodig. -->
-        <div data-opane="details">
-          <div class="odlg__cols">
+        <!-- Elk blokje draagt een kopje; de regels eronder spreken voor zich
+             en hebben geen eigen label nodig. -->
+        <div class="odlg__cols">
             <!-- Welke bestelling dit is staat voorop, over de volle breedte: het
                  hoort bij geen van de blokjes eronder maar bij alle vier. -->
             <div class="odlg__blok odlg__blok--breed">
@@ -7140,26 +7132,34 @@
             </div>
             <!-- Wie het gebracht heeft weet het archief; een bestelling die nog
                  loopt of wordt afgehaald niet. -->
-            <div class="odlg__blok" data-orow="courier" hidden>
-              <p class="odlg__label">Deliverer</p>
-              <p class="odlg__val" data-oveld="courier"></p>
-            </div>
+          <div class="odlg__blok" data-orow="courier" hidden>
+            <p class="odlg__label">Deliverer</p>
+            <p class="odlg__val" data-oveld="courier"></p>
           </div>
         </div>
 
-        <div data-opane="items" hidden>
-          <ul class="oitems">
-            <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Pistachio Velvet Latte<span class="oitem__adds"><span class="oitem__add">Oat milk <span class="oitem__addsum">+&euro;0.50</span></span></span></span><span class="oitem__sum">&euro;11.90</span></li>
-            <li class="oitem"><span class="oitem__qty">3</span><span class="oitem__name">Iced Protein Matcha<span class="oitem__adds"><span class="oitem__add">Extra shot <span class="oitem__addsum">+&euro;0.50</span></span></span></span><span class="oitem__sum">&euro;20.85</span></li>
-            <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Chicken Sandwich<span class="oitem__adds"><span class="oitem__add">Extra avocado <span class="oitem__addsum">+&euro;0.50</span></span><span class="oitem__add">No onion</span></span></span><span class="oitem__sum">&euro;17.90</span></li>
-            <li class="oitem"><span class="oitem__qty">1</span><span class="oitem__name">Tomato &amp; Mozzarella Sandwich with bacon</span><span class="oitem__sum">&euro;9.75</span></li>
-            <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Cappuccino</span><span class="oitem__sum">&euro;6.90</span></li>
-          </ul>
-          <dl class="osum">
-            <div class="osum__row"><dt>Subtotal</dt><dd>&euro;67.30</dd></div>
-            <div class="osum__row" data-orow="fee"><dt>Delivery</dt><dd>&euro;2.95</dd></div>
-            <div class="osum__row osum__row--tot"><dt>Total</dt><dd data-oveld="total"></dd></div>
-          </dl>
+        <!-- De regels staan onder de gegevens en klappen in: wie alleen wil
+             weten waar het heen moet heeft ze niet nodig, wie de keuken belt
+             wel. app.js telt hoeveel het er zijn. -->
+        <div class="odlg__prod is-open">
+          <button class="odlg__prodhead" type="button" aria-expanded="true" aria-controls="order-products">
+            <span>Product list <span class="odlg__count" data-oveld="count"></span></span>
+            <svg class="icon odlg__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+          </button>
+          <div class="odlg__prodbody" id="order-products">
+            <ul class="oitems">
+              <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Pistachio Velvet Latte<span class="oitem__adds"><span class="oitem__add">Oat milk <span class="oitem__addsum">+&euro;0.50</span></span></span></span><span class="oitem__sum">&euro;11.90</span></li>
+              <li class="oitem"><span class="oitem__qty">3</span><span class="oitem__name">Iced Protein Matcha<span class="oitem__adds"><span class="oitem__add">Extra shot <span class="oitem__addsum">+&euro;0.50</span></span></span></span><span class="oitem__sum">&euro;20.85</span></li>
+              <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Chicken Sandwich<span class="oitem__adds"><span class="oitem__add">Extra avocado <span class="oitem__addsum">+&euro;0.50</span></span><span class="oitem__add">No onion</span></span></span><span class="oitem__sum">&euro;17.90</span></li>
+              <li class="oitem"><span class="oitem__qty">1</span><span class="oitem__name">Tomato &amp; Mozzarella Sandwich with bacon</span><span class="oitem__sum">&euro;9.75</span></li>
+              <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Cappuccino</span><span class="oitem__sum">&euro;6.90</span></li>
+            </ul>
+            <dl class="osum">
+              <div class="osum__row"><dt>Subtotal</dt><dd>&euro;67.30</dd></div>
+              <div class="osum__row" data-orow="fee"><dt>Delivery</dt><dd>&euro;2.95</dd></div>
+              <div class="osum__row osum__row--tot"><dt>Total</dt><dd data-oveld="total"></dd></div>
+            </dl>
+          </div>
         </div>
       </div>
 
@@ -7789,6 +7789,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=599"></script>
+  <script src="app.js?v=600"></script>
 </body>
 </html>

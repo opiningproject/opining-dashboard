@@ -3028,23 +3028,24 @@
     if (rij) rij.hidden = !aan;
   }
 
-  /* Welk van de twee tabbladen je ziet: wat er over de bestelling te weten
-     valt, of wat erin zit. */
-  function toonOrderPaneel(naam) {
-    orderVenster.querySelectorAll("[data-opane]").forEach(function (paneel) {
-      paneel.hidden = paneel.dataset.opane !== naam;
-    });
-    orderVenster.querySelectorAll("[data-otab]").forEach(function (tab) {
-      var aan = tab.dataset.otab === naam;
-      tab.classList.toggle("is-active", aan);
-      tab.setAttribute("aria-selected", String(aan));
-    });
+  /* De lijst met wat er besteld is open- of dichtklappen. */
+  function zetProductLijst(open) {
+    var vak = orderVenster.querySelector(".odlg__prod");
+    if (!vak) return;
+    vak.classList.toggle("is-open", open);
+    vak.querySelector(".odlg__prodhead").setAttribute("aria-expanded", String(open));
+    vak.querySelector(".odlg__prodbody").hidden = !open;
   }
+
 
 
   function openBestelling(rij) {
     var b = leesBestelling(rij);
     zetVeld("nr", "#" + b.nr);
+    /* Hoeveel regels de bestelling telt, zodat de kop het zegt ook als de
+       lijst dicht staat. */
+    var aantal = orderVenster.querySelectorAll(".oitem").length;
+    zetVeld("count", "(" + aantal + (aantal === 1 ? " item)" : " items)"));
     zetVeld("name", b.naam);
     zetVeld("address", b.adres);
     zetVeld("phone", b.tel);
@@ -3075,9 +3076,8 @@
       }
     }
 
-    /* Een volgende bestelling begint weer bij wat erover te weten valt, en
-       bovenaan. */
-    toonOrderPaneel("details");
+    /* Een volgende bestelling begint weer bovenaan, met de lijst open. */
+    zetProductLijst(true);
     orderVenster.querySelector(".dialog__body").scrollTop = 0;
     orderVenster.hidden = false;
   }
@@ -3088,8 +3088,11 @@
          bestelling niet ook nog open te gaan. */
       var rij = e.target.closest(".ocard, .table--archive tbody tr, .table--corders tbody tr");
       if (rij && !e.target.closest(".omark")) { openBestelling(rij); return; }
-      var tab = e.target.closest("#order-dialog [data-otab]");
-      if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
+      var lijstKop = e.target.closest("#order-dialog .odlg__prodhead");
+      if (lijstKop) {
+        zetProductLijst(!lijstKop.closest(".odlg__prod").classList.contains("is-open"));
+        return;
+      }
       if (e.target.closest("#order-step") && orderRegel) {
         /* Doorzetten sluit het venster: de bestelling staat daarna ergens
            anders, en wat je hier las klopt dan niet meer. */
