@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=600" />
+  <link rel="stylesheet" href="styles.css?v=601" />
 </head>
 <body>
 
@@ -7094,17 +7094,15 @@
       </div>
 
       <div class="dialog__body">
-        <!-- Elk blokje draagt een kopje; de regels eronder spreken voor zich
-             en hebben geen eigen label nodig. -->
+        <!-- De gegevens staan in blokjes zonder kopje: de naam, het teken van
+             de betaalwijze en het adres zeggen zelf wat ze zijn. -->
         <div class="odlg__cols">
             <!-- Welke bestelling dit is staat voorop, over de volle breedte: het
                  hoort bij geen van de blokjes eronder maar bij alle vier. -->
             <div class="odlg__blok odlg__blok--breed">
-              <p class="odlg__label">Order number</p>
               <p class="odlg__val" data-oveld="nr"></p>
             </div>
             <div class="odlg__blok">
-              <p class="odlg__label">Contact information</p>
               <p class="odlg__val" data-oveld="name"></p>
               <p class="odlg__val" data-oveld="phone"></p>
               <p class="odlg__val" data-oveld="mail"></p>
@@ -7113,20 +7111,17 @@
                  woord; app.js wisselt het icoon mee. Het bedrag staat eronder,
                  en nog een keer onder de regels. -->
             <div class="odlg__blok">
-              <p class="odlg__label">Payment</p>
               <p class="odlg__val odlg__pay"><span class="pm__mark" id="order-pay-mark" aria-hidden="true" hidden><img src="" alt="" /></span><span data-oveld="method"></span></p>
               <p class="odlg__val" data-oveld="total"></p>
             </div>
             <!-- Bij bezorgen het adres waar het heen gaat; afhalen heeft geen rit,
                  dan noemt app.js het gewoon het adres. -->
             <div class="odlg__blok">
-              <p class="odlg__label" data-oveld-label="address">Delivery address</p>
               <p class="odlg__val" data-oveld="address"></p>
             </div>
             <!-- Wat de klant wilde staat voorop; wanneer hij bestelde en wat wij
                  denken te halen staan eronder, want daar kijk je pas daarna naar. -->
             <div class="odlg__blok">
-              <p class="odlg__label" data-oveld-label="time">Delivery time</p>
               <p class="odlg__val" data-oveld="wish"></p>
               <p class="odlg__val odlg__val--sub">Ordered <span data-oveld="placed"></span> &middot; estimated <span data-oveld="eta"></span></p>
             </div>
@@ -7789,6 +7784,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=600"></script>
+  <script src="app.js?v=601"></script>
 </body>
 </html>

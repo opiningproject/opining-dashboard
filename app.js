@@ -3060,10 +3060,6 @@
     zetOrderRij("courier", !!b.bezorger);
     zetOrderRij("fee", !b.afhalen);
 
-    /* Wie afhaalt legt geen rit af: dan heet het gewoon het adres, en de tijd
-       is het moment waarop hij langskomt. */
-    orderVenster.querySelector('[data-oveld-label="address"]').textContent = b.afhalen ? "Address" : "Delivery address";
-    orderVenster.querySelector('[data-oveld-label="time"]').textContent = b.afhalen ? "Pickup time" : "Delivery time";
     /* Een archiefrij is al klaar; daar valt niets meer door te zetten. */
     orderRegel = rij.classList.contains("ocard") ? rij : null;
     if (orderStap) {
