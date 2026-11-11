@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=601" />
+  <link rel="stylesheet" href="styles.css?v=605" />
 </head>
 <body>
 
@@ -7097,9 +7097,8 @@
         <!-- De gegevens staan in blokjes zonder kopje: de naam, het teken van
              de betaalwijze en het adres zeggen zelf wat ze zijn. -->
         <div class="odlg__cols">
-            <!-- Welke bestelling dit is staat voorop, over de volle breedte: het
-                 hoort bij geen van de blokjes eronder maar bij alle vier. -->
-            <div class="odlg__blok odlg__blok--breed">
+          <div class="odlg__kolom">
+            <div class="odlg__blok">
               <p class="odlg__val" data-oveld="nr"></p>
             </div>
             <div class="odlg__blok">
@@ -7107,30 +7106,46 @@
               <p class="odlg__val" data-oveld="phone"></p>
               <p class="odlg__val" data-oveld="mail"></p>
             </div>
-            <!-- De wijze van betalen herken je sneller aan het teken dan aan het
-                 woord; app.js wisselt het icoon mee. Het bedrag staat eronder,
-                 en nog een keer onder de regels. -->
-            <div class="odlg__blok">
-              <p class="odlg__val odlg__pay"><span class="pm__mark" id="order-pay-mark" aria-hidden="true" hidden><img src="" alt="" /></span><span data-oveld="method"></span></p>
-              <p class="odlg__val" data-oveld="total"></p>
-            </div>
-            <!-- Bij bezorgen het adres waar het heen gaat; afhalen heeft geen rit,
-                 dan noemt app.js het gewoon het adres. -->
+            <!-- Bij bezorgen het adres waar het heen gaat; afhalen heeft geen
+                 rit. Eronder wat de klant vroeg en wat wij hebben toegezegd:
+                 twee tijden die uit elkaar kunnen lopen. -->
             <div class="odlg__blok">
               <p class="odlg__val" data-oveld="address"></p>
+              <p class="odlg__val odlg__val--sub" data-orow="wish">Requested delivery time <b data-oveld="wish"></b></p>
+              <p class="odlg__val odlg__val--sub">Confirmed delivery time <b data-oveld="eta"></b></p>
             </div>
-            <!-- Wat de klant wilde staat voorop; wanneer hij bestelde en wat wij
-                 denken te halen staan eronder, want daar kijk je pas daarna naar. -->
+            <!-- Het bedrag met ernaast of het al binnen is; de wijze van betalen
+                 staat er als woord, niet als teken. -->
             <div class="odlg__blok">
-              <p class="odlg__val" data-oveld="wish"></p>
-              <p class="odlg__val odlg__val--sub">Ordered <span data-oveld="placed"></span> &middot; estimated <span data-oveld="eta"></span></p>
+              <p class="odlg__val odlg__prijs"><span data-oveld="total"></span><span class="badge" data-oveld="paid"></span></p>
             </div>
             <!-- Wie het gebracht heeft weet het archief; een bestelling die nog
                  loopt of wordt afgehaald niet. -->
-          <div class="odlg__blok" data-orow="courier" hidden>
-            <p class="odlg__label">Deliverer</p>
-            <p class="odlg__val" data-oveld="courier"></p>
+            <div class="odlg__blok" data-orow="courier" hidden>
+              <p class="odlg__label">Deliverer</p>
+              <p class="odlg__val" data-oveld="courier"></p>
+            </div>
           </div>
+
+          <!-- Rechts alleen het moment waar alles om draait, groot genoeg om
+               vanaf een meter af te lezen. -->
+          <div class="odlg__kolom odlg__kolom--tijd">
+            <p class="odlg__label" data-oveld-label="at">Deliver at</p>
+            <p class="odlg__groot" data-oveld="eta"></p>
+          </div>
+        </div>
+
+        <!-- Hoe ver de bestelling is. Op een breed scherm staan de vier namen
+             onder hun punt; op een telefoon is daar geen ruimte voor en staat
+             alleen waar hij nu staat boven de punten. -->
+        <div class="ostat">
+          <p class="ostat__now"><b data-oveld="stepname"></b> <span data-oveld="stepcount"></span></p>
+          <ol class="ostep">
+            <li class="ostep__item" data-ostep="new"><span class="ostep__dot"></span><span class="ostep__name">New</span></li>
+            <li class="ostep__item" data-ostep="kitchen"><span class="ostep__dot"></span><span class="ostep__name">Kitchen</span></li>
+            <li class="ostep__item" data-ostep="outgoing"><span class="ostep__dot"></span><span class="ostep__name" data-oveld="stepout">Outgoing</span></li>
+            <li class="ostep__item" data-ostep="archief"><span class="ostep__dot"></span><span class="ostep__name">Completed</span></li>
+          </ol>
         </div>
 
         <!-- De regels staan onder de gegevens en klappen in: wie alleen wil
@@ -7784,6 +7799,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=601"></script>
+  <script src="app.js?v=605"></script>
 </body>
 </html>

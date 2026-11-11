@@ -3496,24 +3496,56 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    Links wie het is, rechts wanneer het moet: twee lijsten naast elkaar, elk
    een label met zijn waarde. Op een telefoon is daar geen ruimte voor en
    komen ze onder elkaar als een doorlopende lijst. */
+/* Hoe ver de bestelling is: vier punten op een lijn met hun naam eronder.
+   Wat geweest is kleurt mee, zodat je in een oogopslag ziet hoe ver hij is. */
+.ostat { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border); }
+.ostep { display: flex; list-style: none; }
+.ostep__item {
+  position: relative; flex: 1 1 0; min-width: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 9px;
+}
+/* Het lijntje loopt van het vorige punt naar dit; het eerste heeft er geen. */
+.ostep__item::before {
+  content: ""; position: absolute; top: 5px; right: 50%; width: 100%; height: 2px;
+  background: var(--border);
+}
+.ostep__item:first-child::before { display: none; }
+.ostep__item.is-done::before, .ostep__item.is-now::before { background: var(--accent); }
+/* Boven het lijntje, anders loopt dat van de buur er dwars overheen. */
+.ostep__dot { position: relative; z-index: 1; width: 12px; height: 12px; border-radius: var(--r-full); background: var(--border-strong); }
+.ostep__item.is-done .ostep__dot, .ostep__item.is-now .ostep__dot { background: var(--accent); }
+/* Waar hij nu staat is het punt waar je naar zoekt; dat mag groter. */
+.ostep__item.is-now .ostep__dot { width: 16px; height: 16px; margin: -2px 0; }
+.ostep__name { font-size: var(--fs-sm); color: var(--text-muted); text-align: center; }
+.ostep__item.is-done .ostep__name { color: var(--text); }
+.ostep__item.is-now .ostep__name { font-weight: 500; color: var(--text-strong); }
+/* Op een breed scherm staat de stand onder zijn eigen punt; de regel erboven
+   is er voor de telefoon. */
+.ostat__now { display: none; }
+
 /* Wat er besteld is staat onder de gegevens en klapt in. De kop is de knop:
    de naam links, het teken rechts, en dat teken draait mee. */
 .odlg__prod { margin-top: 22px; border-top: 1px solid var(--border); }
 .odlg__prodhead {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  width: 100%; padding: 14px 0 0;
+  width: 100%; padding: 14px 0;
   font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
 }
 .odlg__count { font-weight: 400; color: var(--text-muted); }
 .odlg__chev { color: var(--text-muted); transition: transform var(--dur) var(--ease); }
 .odlg__prod.is-open .odlg__chev { transform: rotate(180deg); }
-.odlg__prodbody { padding-top: 6px; }
+.odlg__prodbody { padding-top: 0; }
 /* Binnen het eerste stuk staan de gegevens in blokjes van twee kolommen:
    een kopje met daaronder regels die voor zich spreken. Een label per regel
    zou van vier regels vier kolommen maken. */
 .odlg__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 32px; }
+/* Links de gegevens onder elkaar, rechts alleen het moment. */
+.odlg__kolom { min-width: 0; display: grid; gap: 18px; align-content: start; }
 .odlg__blok { min-width: 0; }
-.odlg__blok--breed { grid-column: 1 / -1; }
+/* Het moment waar alles om draait, groot genoeg om vanaf een meter te lezen. */
+.odlg__groot { font-size: 26px; font-weight: 600; letter-spacing: -.01em; color: var(--text-strong); }
+/* Het bedrag met het woord erachter op dezelfde regel. */
+.odlg__prijs { display: flex; align-items: center; gap: 10px; }
 .odlg__label { margin-bottom: 5px; font-size: var(--fs-sm); color: var(--text-muted); }
 /* Een adres of mailadres mag afbreken; het venster rekt er niet voor uit. */
 .odlg__val { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow-wrap: anywhere; }
@@ -3525,6 +3557,12 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .odlg__pay .icon { width: 18px; height: 18px; color: var(--text-muted); }
 @media (max-width: 560px) {
   .odlg__cols { grid-template-columns: minmax(0, 1fr); gap: 18px 0; }
+  /* Vier namen naast elkaar passen hier niet. De punten blijven staan, want
+     die laten zien hoe ver hij is; waar hij nu staat komt er in woorden
+     boven, met het nummer van de stap erachter. */
+  .ostep__name { display: none; }
+  .ostat__now { display: block; margin-bottom: 12px; font-size: var(--fs-sm); color: var(--text-muted); }
+  .ostat__now b { font-weight: 500; color: var(--text-strong); }
 }
 
 /* Wat er besteld is: aantal, naam en wat die regel kost. */
@@ -3533,6 +3571,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Alles in dit vak leest hetzelfde: zelfde maat, zelfde kleur, zelfde
    gewicht. De regels zelf dragen alleen nog hun indeling. */
 .oitems, .osum { font-size: var(--fs-md); color: var(--text-strong); }
+.oitems { padding: 18px; }
 .oitem { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; }
 /* De eerste regel sluit aan op de kop erboven, de laatste op de streep. */
 .oitem:first-child { padding-top: 0; }

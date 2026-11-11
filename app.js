@@ -2999,20 +2999,15 @@
     };
   }
 
-  /* Dezelfde merkjes als op de betaalpagina, zodat iDEAL er in een bestelling
-     uitziet als iDEAL. Contant heeft er zelf geen, dus draagt het er een van
-     ons in dezelfde vorm. Een wijze die we niet kennen laat de plek leeg. */
-  var BETAALMERK = {
-    ideal: "idealwero.svg", visa: "visa.svg", mastercard: "mastercard.svg",
-    maestro: "maestro.svg", paypal: "paypal.svg", klarna: "klarna.svg",
-    "apple pay": "apple.svg", "google pay": "google.svg", cash: "cash.svg"
-  };
-  function zetBetaalIcoon(wijze) {
-    var merk = document.getElementById("order-pay-mark");
+  /* Van de betaalwijze doet er maar een ding toe: staat het geld er al, of
+     moet het nog bij de deur komen. Groen voor wat binnen is, grijs voor wat
+     je nog moet innen. */
+  function zetBetaalMerk(wijze) {
+    var merk = orderVenster.querySelector('[data-oveld="paid"]');
     if (!merk) return;
-    var plaatje = BETAALMERK[(wijze || "").toLowerCase()];
-    merk.hidden = !plaatje;
-    if (plaatje) merk.querySelector("img").src = "img/pay/" + plaatje;
+    var contant = (wijze || "").toLowerCase() === "cash";
+    merk.textContent = contant ? "Cash" : "Paid online";
+    merk.className = "badge " + (contant ? "badge--muted" : "badge--active");
   }
 
   /* Een gegeven mag op meer dan een plek in het venster staan — het totaal
@@ -3026,6 +3021,26 @@
   function zetOrderRij(naam, aan) {
     var rij = orderVenster.querySelector('[data-orow="' + naam + '"]');
     if (rij) rij.hidden = !aan;
+  }
+
+  /* Hoe ver de bestelling is. Een rij die nog op het bord staat weet het van
+     zichzelf; een rij uit het archief is per definitie klaar. */
+  var ORDERSTAPPEN = ["new", "kitchen", "outgoing", "archief"];
+
+  function zetOrderStand(rij, afhalen) {
+    var nu = rij.classList.contains("ocard") ? (rij.dataset.filter || "new") : "archief";
+    var bij = ORDERSTAPPEN.indexOf(nu);
+    if (bij < 0) bij = ORDERSTAPPEN.length - 1;
+
+    /* De stap de keuken uit heet naar wat er dan gebeurt. */
+    zetVeld("stepout", afhalen ? "Ready" : "Outgoing");
+
+    orderVenster.querySelectorAll(".ostep__item").forEach(function (stap, i) {
+      stap.classList.toggle("is-done", i < bij);
+      stap.classList.toggle("is-now", i === bij);
+      if (i === bij) zetVeld("stepname", stap.querySelector(".ostep__name").textContent);
+    });
+    zetVeld("stepcount", "step " + (bij + 1) + " of " + ORDERSTAPPEN.length);
   }
 
   /* De lijst met wat er besteld is open- of dichtklappen. */
@@ -3046,6 +3061,8 @@
        lijst dicht staat. */
     var aantal = orderVenster.querySelectorAll(".oitem").length;
     zetVeld("count", "(" + aantal + (aantal === 1 ? " item)" : " items)"));
+    zetOrderStand(rij, b.afhalen);
+    orderVenster.querySelector('[data-oveld-label="at"]').textContent = b.afhalen ? "Pickup at" : "Deliver at";
     zetVeld("name", b.naam);
     zetVeld("address", b.adres);
     zetVeld("phone", b.tel);
@@ -3054,7 +3071,7 @@
     zetVeld("wish", b.wens);
     zetVeld("eta", b.eta);
     zetVeld("method", b.wijze);
-    zetBetaalIcoon(b.wijze);
+    zetBetaalMerk(b.wijze);
     zetVeld("courier", b.bezorger);
     zetVeld("total", b.bedrag);
     zetOrderRij("courier", !!b.bezorger);
