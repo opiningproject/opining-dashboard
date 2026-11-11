@@ -3497,11 +3497,13 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    een label met zijn waarde. Op een telefoon is daar geen ruimte voor en
    komen ze onder elkaar als een doorlopende lijst. */
 .odlg__tabs { margin-top: 0; }
-.odlg__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
-.odlg__list { min-width: 0; }
-/* Label en waarde staan op dezelfde lijn: het label in het midden naast de
-   waarde, ook als die een betaalmerkje voor zich heeft. */
-.odlg__row { display: grid; grid-template-columns: minmax(0, 104px) minmax(0, 1fr); align-items: center; gap: 12px; padding: 9px 0; }
+.odlg__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+/* Het label staat boven zijn waarde, niet ernaast. Naast elkaar duwt een
+   lang label als Delivery address de waarden uit elkaar en krijg je twee
+   rafelige randen per kolom; boven elkaar beginnen alle waarden op dezelfde
+   lijn en leest een kolom als een kolom. */
+.odlg__list { min-width: 0; display: grid; gap: 15px; align-content: start; }
+.odlg__row { display: grid; gap: 3px; padding: 0; }
 .odlg__row dt { font-size: var(--fs-sm); color: var(--text-muted); }
 /* Een adres of mailadres mag afbreken; het venster rekt er niet voor uit. */
 .odlg__row dd { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow-wrap: anywhere; }
@@ -3509,8 +3511,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .odlg__pay { display: flex; align-items: center; gap: 8px; }
 .odlg__pay .icon { width: 18px; height: 18px; color: var(--text-muted); }
 @media (max-width: 560px) {
-  .odlg__cols { grid-template-columns: minmax(0, 1fr); gap: 0; }
-  .odlg__cols .odlg__list + .odlg__list .odlg__row:first-child { border-top: 1px solid var(--border); }
+  .odlg__cols { grid-template-columns: minmax(0, 1fr); gap: 15px 0; }
 }
 
 /* Wat er besteld is: aantal, naam en wat die regel kost. */
