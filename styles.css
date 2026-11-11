@@ -3523,6 +3523,15 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    is er voor de telefoon. */
 .ostat__now { display: none; }
 
+/* In dit venster leest alles even groot: de gegevens, de twee tijden eronder,
+   het woord bij het bedrag, de namen bij de punten en de regels van de
+   bestelling. Alleen de kop, de knoppen en de tijd rechts staan daarbuiten. */
+#order-dialog .odlg__label,
+#order-dialog .odlg__val--sub,
+#order-dialog .ostep__name,
+#order-dialog .ostat__now,
+#order-dialog .badge { font-size: var(--fs-md); }
+
 /* Wat er besteld is staat onder de gegevens en klapt in. De kop is de knop:
    de naam links, het teken rechts, en dat teken draait mee. */
 .odlg__prod { margin-top: 22px; border-top: 1px solid var(--border); }
