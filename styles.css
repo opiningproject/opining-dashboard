@@ -3498,7 +3498,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    komen ze onder elkaar als een doorlopende lijst. */
 /* Hoe ver de bestelling is: vier punten op een lijn met hun naam eronder.
    Wat geweest is kleurt mee, zodat je in een oogopslag ziet hoe ver hij is. */
-.ostat { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border); }
+.ostat { margin-top: 26px; }
 .ostep { display: flex; list-style: none; }
 .ostep__item {
   position: relative; flex: 1 1 0; min-width: 0;
