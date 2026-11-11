@@ -3499,18 +3499,19 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Hoe ver de bestelling is: vier punten op een lijn met hun naam eronder.
    Wat geweest is kleurt mee, zodat je in een oogopslag ziet hoe ver hij is. */
 .ostat { margin-top: 26px; }
-.ostep { display: flex; list-style: none; }
+/* De lijn loopt van rand tot rand onder de punten door, zonder ruimte links
+   en rechts. De punten staan op gelijke afstand, elk in het midden van zijn
+   eigen vak; app.js zet met --stap hoe ver het gekleurde deel komt. */
+.ostep { position: relative; display: flex; list-style: none; }
+.ostep::before, .ostep::after {
+  content: ""; position: absolute; top: 5px; left: 0; height: 2px;
+}
+.ostep::before { right: 0; background: var(--border); }
+.ostep::after { width: var(--stap, 0px); background: var(--accent); }
 .ostep__item {
-  position: relative; flex: 1 1 0; min-width: 0;
+  flex: 1 1 0; min-width: 0;
   display: flex; flex-direction: column; align-items: center; gap: 9px;
 }
-/* Het lijntje loopt van het vorige punt naar dit; het eerste heeft er geen. */
-.ostep__item::before {
-  content: ""; position: absolute; top: 5px; right: 50%; width: 100%; height: 2px;
-  background: var(--border);
-}
-.ostep__item:first-child::before { display: none; }
-.ostep__item.is-done::before, .ostep__item.is-now::before { background: var(--accent); }
 /* Boven het lijntje, anders loopt dat van de buur er dwars overheen. */
 .ostep__dot { position: relative; z-index: 1; width: 12px; height: 12px; border-radius: var(--r-full); background: var(--border-strong); }
 .ostep__item.is-done .ostep__dot, .ostep__item.is-now .ostep__dot { background: var(--accent); }
