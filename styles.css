@@ -3495,9 +3495,12 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    Links wie het is, rechts wanneer het moet: twee lijsten naast elkaar, elk
    een label met zijn waarde. Op een telefoon is daar geen ruimte voor en
    komen ze onder elkaar als een doorlopende lijst. */
-/* Twee stukken onder elkaar in een doorlopend venster, met een kop boven
-   elk stuk. */
-.odlg__sec + .odlg__sec { margin-top: 26px; }
+/* Twee stukken onder elkaar in een doorlopend venster. Elk stuk staat in een
+   eigen grijs vlak: dat geeft het een rand waar het binnen valt. Zonder dat
+   loopt alles door als een lap tekst en weet je niet waar het een ophoudt
+   en het ander begint. */
+.odlg__sec { padding: 16px; border: 1px solid var(--border); border-radius: var(--r-lg); }
+.odlg__sec + .odlg__sec { margin-top: 14px; }
 .odlg__head { margin-bottom: 14px; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
 .odlg__count { margin-left: 6px; font-weight: 400; color: var(--text-muted); }
 /* Binnen het eerste stuk staan de gegevens in blokjes van twee kolommen:
@@ -3521,10 +3524,12 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Wat er besteld is: aantal, naam en wat die regel kost. */
 /* Een regel kan twee hoog zijn zodra er iets aan toegevoegd is; het aantal en
    het bedrag horen dan bij de bovenste regel. */
-/* Alles op dit tabblad leest hetzelfde: zelfde maat, zelfde kleur, zelfde
+/* Alles in dit vak leest hetzelfde: zelfde maat, zelfde kleur, zelfde
    gewicht. De regels zelf dragen alleen nog hun indeling. */
-[data-opane="items"] { font-size: var(--fs-md); color: var(--text-strong); }
-.oitem { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; }
+.oitems, .osum { font-size: var(--fs-md); color: var(--text-strong); }
+.oitem { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; }
+/* De eerste regel sluit aan op de kop erboven, de laatste op de streep. */
+.oitem:first-child { padding-top: 0; }
 .oitem__qty { flex: 0 0 auto; min-width: 20px; font-variant-numeric: tabular-nums; }
 .oitem__name { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; }
 /* Wat eraan toegevoegd is staat eronder, in dezelfde letter als de rest:
@@ -3532,10 +3537,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .oitem__adds { display: flex; flex-direction: column; gap: 2px; }
 .oitem__addsum { font-variant-numeric: tabular-nums; }
 .oitem__sum { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
-.osum { margin-top: 14px; padding-top: 12px; }
-.osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; }
+.osum { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+.osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
 .osum__row dd { font-variant-numeric: tabular-nums; }
-.osum__row--tot { margin-top: 6px; }
+/* Wat er onder de streep te betalen valt is het antwoord op de hele lijst. */
+.osum__row--tot { margin-top: 5px; font-weight: 600; }
 
 /* ==========================================================================
    8n2. EEN BEZORGGEBIED INVULLEN — losse postcodes en twee bedragen
