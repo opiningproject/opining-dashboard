@@ -3044,7 +3044,7 @@
 
   function openBestelling(rij) {
     var b = leesBestelling(rij);
-    orderVenster.querySelector(".dialog__title").textContent = "#" + b.nr;
+    zetVeld("nr", "#" + b.nr);
     zetVeld("name", b.naam);
     zetVeld("address", b.adres);
     zetVeld("phone", b.tel);

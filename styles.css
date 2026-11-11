@@ -3514,6 +3514,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    zou van vier regels vier kolommen maken. */
 .odlg__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 32px; }
 .odlg__blok { min-width: 0; }
+.odlg__blok--breed { grid-column: 1 / -1; }
 .odlg__label { margin-bottom: 5px; font-size: var(--fs-sm); color: var(--text-muted); }
 /* Een adres of mailadres mag afbreken; het venster rekt er niet voor uit. */
 .odlg__val { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow-wrap: anywhere; }

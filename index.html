@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=598" />
+  <link rel="stylesheet" href="styles.css?v=599" />
 </head>
 <body>
 
@@ -7087,7 +7087,7 @@
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="order-dialog-title">
       <div class="dialog__head">
-        <h2 class="dialog__title" id="order-dialog-title">Order</h2>
+        <h2 class="dialog__title" id="order-dialog-title">Order details</h2>
         <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
           <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
         </button>
@@ -7105,6 +7105,12 @@
              spreken voor zich en hebben geen eigen label nodig. -->
         <div data-opane="details">
           <div class="odlg__cols">
+            <!-- Welke bestelling dit is staat voorop, over de volle breedte: het
+                 hoort bij geen van de blokjes eronder maar bij alle vier. -->
+            <div class="odlg__blok odlg__blok--breed">
+              <p class="odlg__label">Order number</p>
+              <p class="odlg__val" data-oveld="nr"></p>
+            </div>
             <div class="odlg__blok">
               <p class="odlg__label">Contact information</p>
               <p class="odlg__val" data-oveld="name"></p>
@@ -7783,6 +7789,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=598"></script>
+  <script src="app.js?v=599"></script>
 </body>
 </html>
