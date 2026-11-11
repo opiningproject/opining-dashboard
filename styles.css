@@ -929,7 +929,7 @@ select.input {
 .tabs--line { gap: 22px; }
 .tabs--line .tab {
   height: 32px; padding: 0 1px;
-  border-bottom: 2px solid transparent; border-radius: 0;
+  border-bottom: 4px solid transparent; border-radius: 0;
   background: none;
 }
 .tabs--line .tab:hover { background: none; color: var(--text-strong); }
@@ -3478,7 +3478,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 #order-dialog .dialog__head,
 #order-dialog .dialog__body,
 #order-dialog .dialog__foot { padding: 18px; }
-#order-dialog .dialog__card > .tabsbox { padding: 4px 18px 0; }
+#order-dialog .dialog__card > .tabsbox { padding: 4px 18px 0; border-bottom: 1px solid var(--border); }
 .dialog__title { font-size: var(--fs-lg); font-weight: 600; color: var(--text-strong); }
 .dialog__lead { margin: 6px 0 18px; font-size: var(--fs-md); color: var(--text-muted); }
 /* De knoppen rechts, met afbreken links ervan: bevestigen staat het dichtst
@@ -3622,7 +3622,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   #order-dialog .dialog__head,
   #order-dialog .dialog__body,
   #order-dialog .dialog__foot { padding: 18px; }
-  #order-dialog .dialog__card > .tabsbox { padding: 4px 18px 0; }
+  #order-dialog .dialog__card > .tabsbox { padding: 4px 18px 0; border-bottom: 1px solid var(--border); }
 }
 
 
