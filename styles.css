@@ -3499,19 +3499,27 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Hoe ver de bestelling is: vier punten op een lijn met hun naam eronder.
    Wat geweest is kleurt mee, zodat je in een oogopslag ziet hoe ver hij is. */
 .ostat { margin-top: 26px; }
-/* De lijn loopt van rand tot rand onder de punten door, zonder ruimte links
-   en rechts. De punten staan op gelijke afstand, elk in het midden van zijn
-   eigen vak; app.js zet met --stap hoe ver het gekleurde deel komt. */
+/* De punten liggen op gelijke afstand over de volle breedte: het eerste
+   tegen de linkerrand, het laatste tegen de rechter, de twee ertussen op een
+   derde en twee derde. De lijn loopt van het midden van het eerste punt naar
+   het midden van het laatste, zodat die twee hem afsluiten; app.js zet met
+   --stap hoe ver het gekleurde deel komt. */
 .ostep { position: relative; display: flex; list-style: none; }
 .ostep::before, .ostep::after {
-  content: ""; position: absolute; top: 5px; left: 0; height: 2px;
+  content: ""; position: absolute; top: 5px; left: 6px; height: 2px;
 }
-.ostep::before { right: 0; background: var(--border); }
+.ostep::before { right: 6px; background: var(--border); }
 .ostep::after { width: var(--stap, 0px); background: var(--accent); }
-.ostep__item {
-  flex: 1 1 0; min-width: 0;
-  display: flex; flex-direction: column; align-items: center; gap: 9px;
+.ostep__item { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+/* De buitenste twee staan in de stroom en bepalen de hoogte van de rij. */
+.ostep__item:first-child { align-items: flex-start; }
+.ostep__item:last-child { align-items: flex-end; margin-left: auto; }
+/* De twee ertussen hangen op hun eigen plek, punt en naam gelijk gecentreerd. */
+.ostep__item:nth-child(2), .ostep__item:nth-child(3) {
+  position: absolute; top: 0; transform: translateX(-50%);
 }
+.ostep__item:nth-child(2) { left: calc(6px + (100% - 12px) / 3); }
+.ostep__item:nth-child(3) { left: calc(6px + (100% - 12px) * 2 / 3); }
 /* Boven het lijntje, anders loopt dat van de buur er dwars overheen. */
 .ostep__dot { position: relative; z-index: 1; width: 12px; height: 12px; border-radius: var(--r-full); background: var(--border-strong); }
 .ostep__item.is-done .ostep__dot, .ostep__item.is-now .ostep__dot { background: var(--accent); }

@@ -3040,11 +3040,11 @@
       stap.classList.toggle("is-now", i === bij);
       if (i === bij) zetVeld("stepname", stap.querySelector(".ostep__name").textContent);
     });
-    /* Het gekleurde deel loopt van de linkerrand tot het midden van het punt
-       waar hij staat: elk punt staat midden in zijn eigen vak van een vierde. */
-    var vak = 100 / ORDERSTAPPEN.length;
+    /* Het gekleurde deel loopt van het eerste punt tot het punt waar hij staat;
+       de punten liggen op gelijke afstand over de hele lijn. */
+    var deel = bij / (ORDERSTAPPEN.length - 1);
     orderVenster.querySelector(".ostep")
-      .style.setProperty("--stap", (vak / 2 + vak * bij).toFixed(2) + "%");
+      .style.setProperty("--stap", "calc((100% - 12px) * " + deel.toFixed(4) + ")");
     zetVeld("stepcount", "step " + (bij + 1) + " of " + ORDERSTAPPEN.length);
   }
 
