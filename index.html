@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=593" />
+  <link rel="stylesheet" href="styles.css?v=594" />
 </head>
 <body>
 
@@ -7093,40 +7093,52 @@
         </button>
       </div>
 
-      <div class="tabs odlg__tabs" role="tablist">
-        <button class="tab is-active" type="button" role="tab" aria-selected="true" data-otab="customer">Customer</button>
-        <button class="tab" type="button" role="tab" aria-selected="false" data-otab="items">Order <span class="tab__count">5</span></button>
-      </div>
-
       <div class="dialog__body">
-        <div data-opane="customer">
+        <!-- Geen tabbladen maar een doorlopend venster met twee stukken: wat je
+             over de bestelling moet weten, en wat erin zit. Binnen het eerste
+             stuk draagt elk blokje een kopje; de regels eronder spreken voor
+             zich en hebben geen eigen label nodig. -->
+        <section class="odlg__sec">
+          <h3 class="odlg__head">Order details</h3>
           <div class="odlg__cols">
-            <dl class="odlg__list">
-              <div class="odlg__row"><dt>Name</dt><dd data-oveld="name"></dd></div>
-              <!-- Bij bezorgen het adres waar het heen gaat; afhalen heeft geen rit,
-                   dan noemt app.js het gewoon het adres. -->
-              <div class="odlg__row"><dt data-oveld-label="address">Delivery address</dt><dd data-oveld="address"></dd></div>
-              <div class="odlg__row"><dt>Phone</dt><dd data-oveld="phone"></dd></div>
-              <div class="odlg__row"><dt>E-mail</dt><dd data-oveld="mail"></dd></div>
-              <!-- Wat de bestelling kost hoort bij wie hem deed; het staat ook
-                   onder de regels op het tabblad ernaast. -->
-              <div class="odlg__row"><dt>Total</dt><dd data-oveld="total"></dd></div>
-            </dl>
-            <dl class="odlg__list">
-              <div class="odlg__row"><dt>Order placed</dt><dd data-oveld="placed"></dd></div>
-              <div class="odlg__row"><dt>Wished time</dt><dd data-oveld="wish"></dd></div>
-              <div class="odlg__row"><dt>Estimated time</dt><dd data-oveld="eta"></dd></div>
-              <!-- De wijze van betalen herken je sneller aan het teken dan aan
-                   het woord; app.js wisselt het icoon mee. -->
-              <div class="odlg__row"><dt>Payment</dt><dd class="odlg__pay"><span class="pm__mark" id="order-pay-mark" aria-hidden="true" hidden><img src="" alt="" /></span><span data-oveld="method"></span></dd></div>
-              <!-- Wie het gebracht heeft weet het archief; een bestelling die
-                   nog loopt of wordt afgehaald niet. -->
-              <div class="odlg__row" data-orow="courier" hidden><dt>Deliverer</dt><dd data-oveld="courier"></dd></div>
-            </dl>
+            <div class="odlg__blok">
+              <p class="odlg__label">Contact information</p>
+              <p class="odlg__val" data-oveld="name"></p>
+              <p class="odlg__val" data-oveld="phone"></p>
+              <p class="odlg__val" data-oveld="mail"></p>
+            </div>
+            <!-- De wijze van betalen herken je sneller aan het teken dan aan het
+                 woord; app.js wisselt het icoon mee. Het bedrag staat eronder,
+                 en nog een keer onder de regels. -->
+            <div class="odlg__blok">
+              <p class="odlg__label">Payment</p>
+              <p class="odlg__val odlg__pay"><span class="pm__mark" id="order-pay-mark" aria-hidden="true" hidden><img src="" alt="" /></span><span data-oveld="method"></span></p>
+              <p class="odlg__val" data-oveld="total"></p>
+            </div>
+            <!-- Bij bezorgen het adres waar het heen gaat; afhalen heeft geen rit,
+                 dan noemt app.js het gewoon het adres. -->
+            <div class="odlg__blok">
+              <p class="odlg__label" data-oveld-label="address">Delivery address</p>
+              <p class="odlg__val" data-oveld="address"></p>
+            </div>
+            <!-- Wat de klant wilde staat voorop; wanneer hij bestelde en wat wij
+                 denken te halen staan eronder, want daar kijk je pas daarna naar. -->
+            <div class="odlg__blok">
+              <p class="odlg__label" data-oveld-label="time">Delivery time</p>
+              <p class="odlg__val" data-oveld="wish"></p>
+              <p class="odlg__val odlg__val--sub">Ordered <span data-oveld="placed"></span> &middot; estimated <span data-oveld="eta"></span></p>
+            </div>
+            <!-- Wie het gebracht heeft weet het archief; een bestelling die nog
+                 loopt of wordt afgehaald niet. -->
+            <div class="odlg__blok" data-orow="courier" hidden>
+              <p class="odlg__label">Deliverer</p>
+              <p class="odlg__val" data-oveld="courier"></p>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div data-opane="items" hidden>
+        <section class="odlg__sec">
+          <h3 class="odlg__head">Order <span class="odlg__count">5</span></h3>
           <ul class="oitems">
             <li class="oitem"><span class="oitem__qty">2</span><span class="oitem__name">Pistachio Velvet Latte<span class="oitem__adds"><span class="oitem__add">Oat milk <span class="oitem__addsum">+&euro;0.50</span></span></span></span><span class="oitem__sum">&euro;11.90</span></li>
             <li class="oitem"><span class="oitem__qty">3</span><span class="oitem__name">Iced Protein Matcha<span class="oitem__adds"><span class="oitem__add">Extra shot <span class="oitem__addsum">+&euro;0.50</span></span></span></span><span class="oitem__sum">&euro;20.85</span></li>
@@ -7139,8 +7151,7 @@
             <div class="osum__row" data-orow="fee"><dt>Delivery</dt><dd>&euro;2.95</dd></div>
             <div class="osum__row osum__row--tot"><dt>Total</dt><dd data-oveld="total"></dd></div>
           </dl>
-        </div>
-
+        </section>
       </div>
 
       <div class="dialog__foot">
@@ -7769,6 +7780,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=593"></script>
+  <script src="app.js?v=594"></script>
 </body>
 </html>

@@ -3028,16 +3028,6 @@
     if (rij) rij.hidden = !aan;
   }
 
-  function toonOrderPaneel(naam) {
-    orderVenster.querySelectorAll("[data-opane]").forEach(function (paneel) {
-      paneel.hidden = paneel.dataset.opane !== naam;
-    });
-    orderVenster.querySelectorAll("[data-otab]").forEach(function (tab) {
-      var aan = tab.dataset.otab === naam;
-      tab.classList.toggle("is-active", aan);
-      tab.setAttribute("aria-selected", String(aan));
-    });
-  }
 
   function openBestelling(rij) {
     var b = leesBestelling(rij);
@@ -3056,8 +3046,10 @@
     zetOrderRij("courier", !!b.bezorger);
     zetOrderRij("fee", !b.afhalen);
 
-    /* Wie afhaalt legt geen rit af: dan heet het gewoon het adres. */
+    /* Wie afhaalt legt geen rit af: dan heet het gewoon het adres, en de tijd
+       is het moment waarop hij langskomt. */
     orderVenster.querySelector('[data-oveld-label="address"]').textContent = b.afhalen ? "Address" : "Delivery address";
+    orderVenster.querySelector('[data-oveld-label="time"]').textContent = b.afhalen ? "Pickup time" : "Delivery time";
     /* Een archiefrij is al klaar; daar valt niets meer door te zetten. */
     orderRegel = rij.classList.contains("ocard") ? rij : null;
     if (orderStap) {
@@ -3070,8 +3062,8 @@
       }
     }
 
-    /* Een volgende bestelling begint weer bij wie het is. */
-    toonOrderPaneel("customer");
+    /* Een volgende bestelling begint weer bovenaan. */
+    orderVenster.querySelector(".dialog__body").scrollTop = 0;
     orderVenster.hidden = false;
   }
 
@@ -3081,8 +3073,6 @@
          bestelling niet ook nog open te gaan. */
       var rij = e.target.closest(".ocard, .table--archive tbody tr, .table--corders tbody tr");
       if (rij && !e.target.closest(".omark")) { openBestelling(rij); return; }
-      var tab = e.target.closest("#order-dialog [data-otab]");
-      if (tab) { toonOrderPaneel(tab.dataset.otab); return; }
       if (e.target.closest("#order-step") && orderRegel) {
         /* Doorzetten sluit het venster: de bestelling staat daarna ergens
            anders, en wat je hier las klopt dan niet meer. */
