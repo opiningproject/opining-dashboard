@@ -3622,6 +3622,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .oitem__adds { display: flex; flex-direction: column; gap: 2px; }
 .oitem__addsum { font-variant-numeric: tabular-nums; }
 .oitem__sum { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+/* Aantal, naam en prijs van een regel een tikje zwaarder dan de rest; wat
+   eraan toegevoegd is blijft gewoon. */
+.oitem__qty, .oitem__name, .oitem__sum { font-weight: 500; }
+.oitem__adds { font-weight: 400; }
 .osum { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
 .osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
 .osum__row dd { font-variant-numeric: tabular-nums; }
