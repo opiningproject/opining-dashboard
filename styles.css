@@ -3629,6 +3629,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    plaatje in de menukaart. Op een telefoon blijft het gewoon het getal. */
 .oitem__thumb {
   position: relative;
+  margin-right: 4px;
   display: grid; place-items: center;
   width: 44px; height: 44px; flex: 0 0 auto;
   border: 1px solid var(--border);
