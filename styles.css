@@ -3540,13 +3540,15 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 #order-dialog .ostat__now,
 #order-dialog .badge { font-size: var(--fs-md); }
 
+/* De drie kopjes in dit venster - de naam van de klant, de productlijst en
+   adres en contact - lezen 2px groter dan de tekst eronder. */
 /* Wat er besteld is staat onder de gegevens en klapt in. De kop is de knop:
    de naam links, het teken rechts, en dat teken draait mee. */
 .odlg__prod { margin-top: 22px; border-top: 1px solid var(--border); }
 .odlg__prodhead {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   width: 100%; padding: 14px 0;
-  font-size: var(--fs-md); font-weight: 600; color: var(--text-strong);
+  font-size: calc(var(--fs-md) + 2px); font-weight: 600; color: var(--text-strong);
 }
 /* Het aantal hoort bij de kop: even groot, even zwaar en even zwart. */
 .odlg__count { font: inherit; color: inherit; }
@@ -3556,7 +3558,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Adres en contact onder de bestelling, met dezelfde streep erboven en een
    kop zo zwaar als die van de productlijst. */
 .odlg__contact { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
-.odlg__subhead { margin-bottom: 10px; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
+.odlg__subhead { margin-bottom: 10px; font-size: calc(var(--fs-md) + 2px); font-weight: 600; color: var(--text-strong); }
 /* De naam van de klant is het kopje van de gegevens, met het nummer er
    vlak onder. */
 .odlg__naam { margin-bottom: 2px; }
