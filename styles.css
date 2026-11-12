@@ -3550,7 +3550,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .odlg__prod { margin-top: 22px; border-top: 1px solid var(--border); }
 .odlg__prodhead {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  width: 100%; padding: 14px 0;
+  width: 100%; padding: 18px 0;
   font-size: calc(var(--fs-md) + 2px); font-weight: 600; color: var(--text-strong);
 }
 /* Het aantal hoort bij de kop: even groot, even zwaar en even zwart. */
@@ -3562,7 +3562,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .odlg__prodbody { padding-top: 0; padding-bottom: 18px; }
 /* Adres en contact onder de bestelling, met dezelfde streep erboven en een
    kop zo zwaar als die van de productlijst. */
-.odlg__contact { padding-top: 14px; border-top: 1px solid var(--border); }
+.odlg__contact { padding-top: 18px; border-top: 1px solid var(--border); }
+.odlg__contact .odlg__subhead { margin-bottom: 18px; }
 .odlg__subhead { margin-bottom: 10px; font-size: calc(var(--fs-md) + 2px); font-weight: 600; color: var(--text-strong); }
 /* De naam van de klant is het kopje van de gegevens; de ruimte eronder
    komt van de kolom, net als tussen de andere blokjes. */
