@@ -3061,7 +3061,7 @@
 
   function openBestelling(rij) {
     var b = leesBestelling(rij);
-    zetVeld("nr", "Order " + b.nr);
+    zetVeld("nr", (b.afhalen ? "Collection order " : "Delivery order ") + b.nr);
     /* Hoeveel regels de bestelling telt, zodat de kop het zegt ook als de
        lijst dicht staat. */
     var aantal = orderVenster.querySelectorAll(".oitem").length;
