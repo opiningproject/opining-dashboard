@@ -3578,8 +3578,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Een adres of mailadres mag afbreken; het venster rekt er niet voor uit. */
 .odlg__val { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow-wrap: anywhere; }
 .odlg__val + .odlg__val { margin-top: 3px; }
-/* Wat erbij hoort maar niet het antwoord is, leest een maat kleiner. */
-.odlg__val--sub { margin-top: 4px; font-size: var(--fs-sm); color: var(--text-muted); }
+/* De linkerkolom leest in een stijl: de twee tijden onder het adres staan
+   net zo zwart en gewoon als het adres zelf, de tijd erin niet vet. */
+.odlg__val--sub { margin-top: 3px; font-size: var(--fs-md); color: var(--text-strong); }
+.odlg__val--sub b { font-weight: 400; }
+.odlg__kolom:not(.odlg__kolom--tijd) .odlg__label { color: var(--text-strong); }
 /* Het teken van de betaalwijze staat voor het woord, op dezelfde regel. */
 .odlg__pay { display: flex; align-items: center; gap: 8px; }
 .odlg__pay .icon { width: 18px; height: 18px; color: var(--text-muted); }
