@@ -3100,7 +3100,7 @@
       var stap = orderRegel ? stapNaam(orderRegel) : "";
       orderStap.hidden = !stap;
       if (stap) {
-        orderStap.firstChild.nodeValue = stap + " ";
+        orderStap.textContent = stap;
         orderStap.setAttribute("aria-label",
           stap === "Kitchen" || stap === "Archive" ? "Move to " + stap : stap);
       }
