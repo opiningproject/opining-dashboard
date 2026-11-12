@@ -3562,6 +3562,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .odlg__blok { min-width: 0; }
 /* Het moment waar alles om draait, groot genoeg om vanaf een meter te lezen. */
 .odlg__groot { font-size: 26px; font-weight: 600; letter-spacing: -.01em; color: var(--text-strong); }
+/* "Deliver at" en de tijd horen bij elkaar: 2px ertussen, niet de ruimte
+   tussen twee blokken. */
+.odlg__kolom--tijd { gap: 2px; }
+.odlg__kolom--tijd .odlg__label { margin-bottom: 0; }
 /* Op een breed scherm staat het moment in het midden van de rechterkolom,
    zowel in de hoogte als in de breedte. Op een telefoon blijft het onder de
    gegevens staan zoals het staat. */
