@@ -3614,7 +3614,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Geen ruimte aan de zijkanten: de regels lijnen links met de kop en
    rechts met de bedragen eronder. */
 .oitems { padding: 18px 0; }
-.oitem { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; }
+.oitem { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; }
 /* De eerste regel sluit aan op de kop erboven, de laatste op de streep. */
 .oitem:first-child { padding-top: 0; }
 .oitem__qty { flex: 0 0 auto; min-width: 20px; font-variant-numeric: tabular-nums; }
@@ -3629,7 +3629,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .oitem__qty, .oitem__name, .oitem__sum { font-weight: 500; }
 .oitem__adds { font-weight: 400; }
 .osum { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
-.osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
+.osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; }
 .osum__row dd { font-variant-numeric: tabular-nums; }
 /* Subtotal, Delivery en Total lezen hetzelfde en staan even ver uit
    elkaar; het totaal is de onderste regel, dat zegt genoeg. Ze zijn even
