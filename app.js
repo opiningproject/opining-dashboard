@@ -3081,6 +3081,22 @@
     zetVeld("total", b.bedrag);
     zetOrderRij("courier", !!b.bezorger);
     zetOrderRij("fee", !b.afhalen);
+    /* De foto bij elke regel komt uit de menukaart: heeft het gerecht daar
+       een plaatje, dan staat dat hier ook. Anders blijft het lege teken. */
+    orderVenster.querySelectorAll(".oitem").forEach(function (regel) {
+      var vak = regel.querySelector(".oitem__thumb");
+      if (!vak) return;
+      var naam = regel.querySelector(".oitem__name").firstChild.textContent.trim();
+      var gerecht = [].filter.call(document.querySelectorAll('[data-view="products"] .prod'), function (p) {
+        return p.querySelector(".prod__name").textContent.trim() === naam;
+      })[0];
+      var foto = gerecht && gerecht.querySelector(".prod__thumb img");
+      var oud = vak.querySelector("img, svg");
+      var nieuw;
+      if (foto) { nieuw = document.createElement("img"); nieuw.alt = ""; nieuw.src = foto.src; }
+      else { nieuw = document.createElementNS("http://www.w3.org/2000/svg", "svg"); nieuw.setAttribute("class", "icon"); nieuw.setAttribute("aria-hidden", "true"); nieuw.innerHTML = '<use href="#i-image"/>'; }
+      vak.replaceChild(nieuw, oud);
+    });
     /* Adres en contact. Een bestelling kent hier alleen de straat; postcode
        en plaats komen in het echt uit het adres van de klant. Dit voorbeeld
        neemt de plaats van de zaak en maakt een vaste postcode bij de straat,

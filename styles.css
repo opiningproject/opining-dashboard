@@ -3624,6 +3624,34 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* De eerste regel sluit aan op de kop erboven, de laatste op de streep. */
 .oitem:first-child { padding-top: 0; }
 .oitem__qty { flex: 0 0 auto; min-width: 20px; font-variant-numeric: tabular-nums; }
+/* Op een breed scherm staat voor elke regel de foto van het gerecht, met het
+   aantal in een rondje rechtsboven, zoals in Shopify. Zelfde maat als het
+   plaatje in de menukaart. Op een telefoon blijft het gewoon het getal. */
+.oitem__thumb {
+  position: relative;
+  display: grid; place-items: center;
+  width: 44px; height: 44px; flex: 0 0 auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--gray-25);
+  color: var(--border-strong);
+}
+.oitem__thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
+.oitem__badge {
+  position: absolute; top: -8px; right: -8px;
+  display: grid; place-items: center;
+  min-width: 20px; height: 20px; padding: 0 5px;
+  border: 2px solid var(--bg-surface);
+  border-radius: var(--r-full);
+  background: var(--gray-200);
+  font-size: 11.5px; font-weight: 600; line-height: 1; color: var(--text-strong);
+  font-variant-numeric: tabular-nums;
+}
+.oitem__qty { display: none; }
+@media (max-width: 560px) {
+  .oitem__thumb { display: none; }
+  .oitem__qty { display: block; }
+}
 .oitem__name { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; }
 /* Wat eraan toegevoegd is staat eronder; de plek zegt waar het bij hoort. */
 .oitem__adds { display: flex; flex-direction: column; gap: 2px; }
