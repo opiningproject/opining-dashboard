@@ -538,17 +538,14 @@
   function zetMenuVast(knop, menu) {
     menu.classList.remove("sort__menu--vast");
     menu.style.top = menu.style.left = "";
-    if (!menu.closest(".table-wrap, .paybox, .gmore, .odlg__more")) return;
+    if (!menu.closest(".table-wrap, .paybox, .gmore")) return;
 
     /* Eerst losmaken, dan meten: zolang hij in de cel hangt knijpt de tabel
        hem smal, en dan klopt de berekende plek niet. */
     menu.classList.add("sort__menu--vast");
     var k = knop.getBoundingClientRect();
     var m = menu.getBoundingClientRect();
-    /* Een knop die links staat, zoals More actions in het bestelvenster, krijgt
-       zijn menu ook links uitgelijnd; anders steekt het buiten het venster. */
-    var vanaf = menu.closest(".odlg__more") ? k.left : k.right - m.width;
-    var links = Math.min(Math.max(8, vanaf), innerWidth - m.width - 8);
+    var links = Math.min(Math.max(8, k.right - m.width), innerWidth - m.width - 8);
     var boven = k.bottom + 6;
     if (boven + m.height > innerHeight - 8) boven = Math.max(8, k.top - 6 - m.height);
     menu.style.left = Math.round(links) + "px";
@@ -3323,11 +3320,11 @@
   })();
 
 
-  /* ---- More actions onder in het bestelvenster ---------------------------
-     Naar de klant: zijn profiel uit de klantenlijst, of, als hij daar niet
-     staat, een profiel opgebouwd uit wat de bestelling weet. Annuleren en
-     terugbetalen vraagt eerst of het zeker is; een lopende bestelling gaat
-     daarna van het bord. */
+  /* ---- Acties achter de drie puntjes in het bestelvenster -------------
+     Naar de klant (ook via de naam bovenaan): zijn profiel uit de
+     klantenlijst, of, als hij daar niet staat, een profiel opgebouwd uit wat
+     de bestelling weet. Annuleren en terugbetalen vraagt eerst of het zeker
+     is; een lopende bestelling gaat daarna van het bord. */
   if (orderVenster) {
     document.addEventListener("click", function (e) {
       if (e.target.closest("[data-order-klant]") && huidigeBestelling) {

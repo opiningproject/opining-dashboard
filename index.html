@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=638" />
+  <link rel="stylesheet" href="styles.css?v=639" />
 </head>
 <body>
 
@@ -7088,9 +7088,16 @@
     <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="order-dialog-title">
       <div class="dialog__head">
         <h2 class="dialog__title" id="order-dialog-title">Order details</h2>
-        <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
-          <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
-        </button>
+        <!-- Rechtsboven wat je verder met de bestelling kunt, achter drie
+             puntjes, met het kruisje helemaal rechts. Naar de klant staat
+             bovenaan; annuleren onderaan en in rood, zodat je er niet per
+             ongeluk op uitkomt. -->
+        <span class="dialog__acts odlg__acts">
+          <span class="sort"><button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More actions"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button><span class="sort__menu" role="menu" hidden><button class="sort__item" type="button" role="menuitem" data-order-klant><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>Go to customer profile</button><button class="sort__item sort__item--danger" type="button" role="menuitem" data-order-cancel><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>Cancel and refund order</button></span></span>
+          <button class="icon-btn" type="button" data-dialog-close aria-label="Close">
+            <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+          </button>
+        </span>
       </div>
 
       <div class="dialog__body">
@@ -7101,7 +7108,7 @@
         <div class="odlg__cols">
           <div class="odlg__kolom">
             <div class="odlg__blok">
-              <h3 class="odlg__subhead odlg__naam" data-oveld="name"></h3>
+              <h3 class="odlg__subhead odlg__naam"><button class="odlg__naamlink" type="button" data-order-klant data-oveld="name"></button></h3>
             </div>
             <div class="odlg__blok">
               <p class="odlg__val" data-oveld="nr"></p>
@@ -7178,15 +7185,6 @@
           <p class="odlg__val" data-oveld="street" data-orow="street"></p>
           <p class="odlg__val">Tel. <span data-oveld="phone"></span></p>
         </section>
-        <!-- Wat je verder met de bestelling kunt, onder alles: naar de klant,
-             of de bestelling annuleren en terugbetalen. -->
-        <div class="sort odlg__more">
-          <button class="btn btn--ghost sort__btn" type="button" aria-haspopup="true" aria-expanded="false">More actions <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg></button>
-          <div class="sort__menu sort__menu--kort" role="menu" hidden>
-            <button class="sort__item" type="button" role="menuitem" data-order-klant><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>Go to customer profile</button>
-            <button class="sort__item sort__item--danger" type="button" role="menuitem" data-order-cancel><svg class="icon" aria-hidden="true"><use href="#i-refresh"/></svg>Cancel and refund order</button>
-          </div>
-        </div>
       </div>
 
       <div class="dialog__foot">
@@ -7815,6 +7813,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=638"></script>
+  <script src="app.js?v=639"></script>
 </body>
 </html>
