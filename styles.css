@@ -3540,6 +3540,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 #order-dialog .ostat__now,
 #order-dialog .badge { font-size: var(--fs-md); }
 
+/* De titel van het bestelvenster leest 2px groter dan die van andere
+   vensters. */
+#order-dialog .dialog__title { font-size: calc(var(--fs-lg) + 2px); }
 /* De drie kopjes in dit venster - de naam van de klant, de productlijst en
    adres en contact - lezen 2px groter dan de tekst eronder. */
 /* Wat er besteld is staat onder de gegevens en klapt in. De kop is de knop:
