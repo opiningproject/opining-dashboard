@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=626" />
+  <link rel="stylesheet" href="styles.css?v=627" />
 </head>
 <body>
 
@@ -7094,12 +7094,15 @@
       </div>
 
       <div class="dialog__body">
-        <!-- Bovenaan de naam als kopje, met het bestelnummer eronder. Adres en
+        <!-- Bovenaan de naam als kopje, met het bestelnummer eronder. Elk in
+             een eigen blokje, zodat ertussen dezelfde ruimte staat als verderop. Adres en
              telefoon staan onderaan bij Address & Contact, dus niet hier. -->
         <div class="odlg__cols">
           <div class="odlg__kolom">
             <div class="odlg__blok">
               <h3 class="odlg__subhead odlg__naam" data-oveld="name"></h3>
+            </div>
+            <div class="odlg__blok">
               <p class="odlg__val" data-oveld="nr"></p>
             </div>
             <!-- Wat de klant vroeg en wat wij hebben toegezegd: twee tijden die
@@ -7802,6 +7805,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=626"></script>
+  <script src="app.js?v=627"></script>
 </body>
 </html>

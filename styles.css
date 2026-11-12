@@ -3559,9 +3559,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    kop zo zwaar als die van de productlijst. */
 .odlg__contact { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
 .odlg__subhead { margin-bottom: 10px; font-size: calc(var(--fs-md) + 2px); font-weight: 600; color: var(--text-strong); }
-/* De naam van de klant is het kopje van de gegevens, met het nummer er
-   vlak onder. */
-.odlg__naam { margin-bottom: 2px; }
+/* De naam van de klant is het kopje van de gegevens; de ruimte eronder
+   komt van de kolom, net als tussen de andere blokjes. */
+.odlg__naam { margin-bottom: 0; }
 /* Binnen het eerste stuk staan de gegevens in blokjes van twee kolommen:
    een kopje met daaronder regels die voor zich spreken. Een label per regel
    zou van vier regels vier kolommen maken. */
