@@ -3557,10 +3557,12 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .odlg__count { font: inherit; color: inherit; }
 .odlg__chev { color: var(--text-muted); transition: transform var(--dur) var(--ease); }
 .odlg__prod.is-open .odlg__chev { transform: rotate(180deg); }
-.odlg__prodbody { padding-top: 0; }
+/* De ruimte onder de lijst hoort bij de lijst: dichtgeklapt valt hij weg,
+   en staat de kop even ver van de streep erboven als van die eronder. */
+.odlg__prodbody { padding-top: 0; padding-bottom: 18px; }
 /* Adres en contact onder de bestelling, met dezelfde streep erboven en een
    kop zo zwaar als die van de productlijst. */
-.odlg__contact { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); }
+.odlg__contact { padding-top: 14px; border-top: 1px solid var(--border); }
 .odlg__subhead { margin-bottom: 10px; font-size: calc(var(--fs-md) + 2px); font-weight: 600; color: var(--text-strong); }
 /* De naam van de klant is het kopje van de gegevens; de ruimte eronder
    komt van de kolom, net als tussen de andere blokjes. */
