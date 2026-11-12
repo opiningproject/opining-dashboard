@@ -3624,15 +3624,15 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .oitem:first-child { padding-top: 0; }
 .oitem__qty { flex: 0 0 auto; min-width: 20px; font-variant-numeric: tabular-nums; }
 .oitem__name { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; }
-/* Wat eraan toegevoegd is staat eronder, in dezelfde letter als de rest:
-   op dit tabblad leest alles hetzelfde, en de plek zegt waar het bij hoort. */
+/* Wat eraan toegevoegd is staat eronder; de plek zegt waar het bij hoort. */
 .oitem__adds { display: flex; flex-direction: column; gap: 2px; }
-.oitem__addsum { font-variant-numeric: tabular-nums; }
 .oitem__sum { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
 /* Aantal, naam en prijs van een regel een tikje zwaarder dan de rest; wat
    eraan toegevoegd is blijft gewoon. */
 .oitem__qty, .oitem__name, .oitem__sum { font-weight: 500; }
-.oitem__adds { font-weight: 400; }
+/* Wat eraan toegevoegd is, zonder meerprijs: die zit al in het bedrag van
+   de regel. Donkergrijs, zodat het product zelf voorgaat. */
+.oitem__adds { font-weight: 400; color: var(--text); }
 .osum { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
 .osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; }
 .osum__row dd { font-variant-numeric: tabular-nums; }
