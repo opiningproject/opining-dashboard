@@ -545,7 +545,10 @@
     menu.classList.add("sort__menu--vast");
     var k = knop.getBoundingClientRect();
     var m = menu.getBoundingClientRect();
-    var links = Math.min(Math.max(8, k.right - m.width), innerWidth - m.width - 8);
+    /* Een knop die links staat, zoals More actions in het bestelvenster, krijgt
+       zijn menu ook links uitgelijnd; anders steekt het buiten het venster. */
+    var vanaf = menu.closest(".odlg__more") ? k.left : k.right - m.width;
+    var links = Math.min(Math.max(8, vanaf), innerWidth - m.width - 8);
     var boven = k.bottom + 6;
     if (boven + m.height > innerHeight - 8) boven = Math.max(8, k.top - 6 - m.height);
     menu.style.left = Math.round(links) + "px";
