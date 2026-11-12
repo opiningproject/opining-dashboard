@@ -3609,7 +3609,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Alles in dit vak leest hetzelfde: zelfde maat, zelfde kleur, zelfde
    gewicht. De regels zelf dragen alleen nog hun indeling. */
 .oitems, .osum { font-size: var(--fs-md); color: var(--text-strong); }
-.oitems { padding: 18px; }
+/* Geen ruimte aan de zijkanten: de regels lijnen links met de kop en
+   rechts met de bedragen eronder. */
+.oitems { padding: 18px 0; }
 .oitem { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; }
 /* De eerste regel sluit aan op de kop erboven, de laatste op de streep. */
 .oitem:first-child { padding-top: 0; }
