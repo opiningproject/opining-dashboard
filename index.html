@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=616" />
+  <link rel="stylesheet" href="styles.css?v=617" />
 </head>
 <body>
 
@@ -7094,23 +7094,17 @@
       </div>
 
       <div class="dialog__body">
-        <!-- De gegevens staan in blokjes zonder kopje: de naam, het teken van
-             de betaalwijze en het adres zeggen zelf wat ze zijn. -->
+        <!-- Bovenaan de naam als kopje, met het bestelnummer eronder. Adres en
+             telefoon staan onderaan bij Address & Contact, dus niet hier. -->
         <div class="odlg__cols">
           <div class="odlg__kolom">
             <div class="odlg__blok">
+              <h3 class="odlg__subhead odlg__naam" data-oveld="name"></h3>
               <p class="odlg__val" data-oveld="nr"></p>
             </div>
+            <!-- Wat de klant vroeg en wat wij hebben toegezegd: twee tijden die
+                 uit elkaar kunnen lopen. -->
             <div class="odlg__blok">
-              <p class="odlg__val" data-oveld="name"></p>
-              <p class="odlg__val" data-oveld="phone"></p>
-              <p class="odlg__val" data-oveld="mail"></p>
-            </div>
-            <!-- Bij bezorgen het adres waar het heen gaat; afhalen heeft geen
-                 rit. Eronder wat de klant vroeg en wat wij hebben toegezegd:
-                 twee tijden die uit elkaar kunnen lopen. -->
-            <div class="odlg__blok">
-              <p class="odlg__val" data-oveld="address"></p>
               <p class="odlg__val odlg__val--sub" data-orow="wish">Requested delivery time <b data-oveld="wish"></b></p>
               <p class="odlg__val odlg__val--sub">Confirmed delivery time <b data-oveld="eta"></b></p>
             </div>
@@ -7808,6 +7802,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=616"></script>
+  <script src="app.js?v=617"></script>
 </body>
 </html>
