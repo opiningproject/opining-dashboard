@@ -3562,6 +3562,12 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .odlg__blok { min-width: 0; }
 /* Het moment waar alles om draait, groot genoeg om vanaf een meter te lezen. */
 .odlg__groot { font-size: 26px; font-weight: 600; letter-spacing: -.01em; color: var(--text-strong); }
+/* Op een breed scherm staat het moment in het midden van de rechterkolom,
+   zowel in de hoogte als in de breedte. Op een telefoon blijft het onder de
+   gegevens staan zoals het staat. */
+@media (min-width: 561px) {
+  .odlg__kolom--tijd { align-content: center; justify-items: center; text-align: center; }
+}
 /* Het bedrag met het woord erachter op dezelfde regel. */
 .odlg__prijs { display: flex; align-items: center; gap: 10px; }
 .odlg__label { margin-bottom: 5px; font-size: var(--fs-sm); color: var(--text-muted); }
