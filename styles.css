@@ -3504,7 +3504,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    derde en twee derde. De lijn loopt van het midden van het eerste punt naar
    het midden van het laatste, zodat die twee hem afsluiten; app.js zet met
    --stap hoe ver het gekleurde deel komt. */
-.ostep { position: relative; display: flex; list-style: none; }
+.ostep { position: relative; display: flex; list-style: none; margin-bottom: 12px; }
 .ostep::before, .ostep::after {
   content: ""; position: absolute; top: 5px; left: 6px; height: 2px;
 }
