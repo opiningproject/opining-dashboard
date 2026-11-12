@@ -3632,7 +3632,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
 .osum__row dd { font-variant-numeric: tabular-nums; }
 /* Subtotal, Delivery en Total lezen hetzelfde en staan even ver uit
-   elkaar; het totaal is de onderste regel, dat zegt genoeg. */
+   elkaar; het totaal is de onderste regel, dat zegt genoeg. Ze zijn even
+   zwaar als de namen van de regels erboven. */
+.osum__row { font-weight: 500; }
 
 /* ==========================================================================
    8n2. EEN BEZORGGEBIED INVULLEN — losse postcodes en twee bedragen
