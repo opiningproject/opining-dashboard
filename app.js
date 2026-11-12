@@ -3081,6 +3081,18 @@
     zetVeld("total", b.bedrag);
     zetOrderRij("courier", !!b.bezorger);
     zetOrderRij("fee", !b.afhalen);
+    /* Adres en contact. Een bestelling kent hier alleen de straat; postcode
+       en plaats komen in het echt uit het adres van de klant. Dit voorbeeld
+       neemt de plaats van de zaak en maakt een vaste postcode bij de straat,
+       zodat dezelfde straat altijd dezelfde postcode heeft. */
+    var zaakAdres = document.getElementById("store-address");
+    var plaats = ((zaakAdres ? zaakAdres.textContent : "").match(/\d{4}\s?[A-Z]{2}\s+(.+)$/) || [])[1] || "";
+    var h = (b.adres || "").split("").reduce(function (n, c) { return (n * 31 + c.charCodeAt(0)) % 9973; }, 7);
+    var postcode = (3011 + h % 80) + " " + String.fromCharCode(65 + h % 26) + String.fromCharCode(65 + (h >> 3) % 26);
+    zetVeld("zipcity", (postcode + " " + plaats).trim());
+    zetVeld("street", b.adres);
+    zetOrderRij("zipcity", !b.afhalen);
+    zetOrderRij("street", !b.afhalen);
 
     /* Een archiefrij is al klaar; daar valt niets meer door te zetten. */
     orderRegel = rij.classList.contains("ocard") ? rij : null;

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=613" />
+  <link rel="stylesheet" href="styles.css?v=614" />
 </head>
 <body>
 
@@ -7171,6 +7171,15 @@
             </dl>
           </div>
         </div>
+        <!-- Adres en contact onder de bestelling, zoals de bezorger het leest:
+             postcode en plaats, de straat, en het nummer om te bellen. Bij
+             afhalen is er geen adres; dan staat alleen het nummer er. -->
+        <section class="odlg__contact" aria-labelledby="order-contact-title">
+          <h3 class="odlg__subhead" id="order-contact-title">Address &amp; Contact</h3>
+          <p class="odlg__val" data-oveld="zipcity" data-orow="zipcity"></p>
+          <p class="odlg__val" data-oveld="street" data-orow="street"></p>
+          <p class="odlg__val">Tel. <span data-oveld="phone"></span></p>
+        </section>
       </div>
 
       <div class="dialog__foot">
@@ -7799,6 +7808,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=613"></script>
+  <script src="app.js?v=614"></script>
 </body>
 </html>
