@@ -3564,6 +3564,12 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    kop zo zwaar als die van de productlijst. */
 .odlg__contact { padding-top: 18px; border-top: 1px solid var(--border); }
 .odlg__contact .odlg__subhead { margin-bottom: 18px; }
+/* More actions onder adres en contact: links, met wat ruimte erboven. Het
+   menu gaat open waar plek is, ook als de knop onderaan het venster staat. */
+.odlg__more { display: inline-block; margin-top: 18px; }
+.odlg__more .sort__btn { display: inline-flex; align-items: center; gap: 6px; }
+.odlg__more .sort__btn .icon { width: 16px; height: 16px; }
+.odlg__more .sort__menu { left: 0; right: auto; }
 .odlg__subhead { margin-bottom: 10px; font-size: calc(var(--fs-md) + 2px); font-weight: 600; color: var(--text-strong); }
 /* De naam van de klant is het kopje van de gegevens; de ruimte eronder
    komt van de kolom, net als tussen de andere blokjes. */

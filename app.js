@@ -538,7 +538,7 @@
   function zetMenuVast(knop, menu) {
     menu.classList.remove("sort__menu--vast");
     menu.style.top = menu.style.left = "";
-    if (!menu.closest(".table-wrap, .paybox, .gmore")) return;
+    if (!menu.closest(".table-wrap, .paybox, .gmore, .odlg__more")) return;
 
     /* Eerst losmaken, dan meten: zolang hij in de cel hangt knijpt de tabel
        hem smal, en dan klopt de berekende plek niet. */
@@ -2971,6 +2971,7 @@
   var orderVenster = document.getElementById("order-dialog");
   var orderStap = orderVenster && orderVenster.querySelector("#order-step");
   var orderRegel = null;   /* de regel waar het open venster bij hoort */
+  var huidigeBestelling = null;   /* wat het open venster toont */
 
   function leesBestelling(rij) {
     var kaart = rij.classList.contains("ocard");
@@ -3061,6 +3062,7 @@
 
   function openBestelling(rij) {
     var b = leesBestelling(rij);
+    huidigeBestelling = b;
     zetVeld("nr", (b.afhalen ? "Collection order " : "Delivery order ") + b.nr);
     /* Hoeveel regels de bestelling telt, zodat de kop het zegt ook als de
        lijst dicht staat. */
@@ -3309,7 +3311,63 @@
       vul(rij);
       openPageSub("customer", rij.cells[1].textContent.trim());
     });
+
+    /* Vanuit een bestelling: More actions > Go to customer profile. */
+    document.addEventListener("klant-openen", function (e) {
+      vul(e.detail);
+      openPageSub("customer", e.detail.cells[1].textContent.trim());
+    });
   })();
+
+
+  /* ---- More actions onder in het bestelvenster ---------------------------
+     Naar de klant: zijn profiel uit de klantenlijst, of, als hij daar niet
+     staat, een profiel opgebouwd uit wat de bestelling weet. Annuleren en
+     terugbetalen vraagt eerst of het zeker is; een lopende bestelling gaat
+     daarna van het bord. */
+  if (orderVenster) {
+    document.addEventListener("click", function (e) {
+      if (e.target.closest("[data-order-klant]") && huidigeBestelling) {
+        var b = huidigeBestelling;
+        orderVenster.hidden = true;
+        var klanten = [].slice.call(document.querySelectorAll('[data-view="customers"] tbody tr'));
+        var rij = klanten.filter(function (r) {
+          return r.cells[1] && r.cells[1].textContent.trim() === b.naam;
+        })[0];
+        if (!rij) {
+          rij = document.createElement("tr");
+          rij.innerHTML = "<td></td><td></td><td></td>";
+          rij.cells[1].textContent = b.naam;
+          rij.cells[2].textContent = b.afhalen ? "" : b.adres;
+          rij.dataset.mail = b.mail;
+          rij.dataset.phone = b.tel;
+          rij.dataset.orders = "1";
+          rij.dataset.spent = String(parseFloat((b.bedrag || "0").replace(/[^\d.,]/g, "").replace(",", ".")) || 0);
+          rij.dataset.lastdays = "0";
+        }
+        var nav = document.querySelector('.nav__item[data-page="customers"]');
+        if (nav) nav.click();
+        document.dispatchEvent(new CustomEvent("klant-openen", { detail: rij }));
+        return;
+      }
+
+      if (e.target.closest("[data-order-cancel]") && huidigeBestelling) {
+        var best = huidigeBestelling;
+        var regel = orderRegel;
+        orderVenster.hidden = true;
+        vraag({
+          titel: "Cancel and refund order?",
+          tekst: "Order " + best.nr + " for " + best.naam + " will be cancelled and " + best.bedrag +
+            " refunded to the customer. This can’t be undone.",
+          knop: "Cancel and refund",
+          actie: function () {
+            if (regel) { regel.remove(); zetKolomTellers(); }
+            showToast("Order " + best.nr + " cancelled and refunded");
+          }
+        });
+      }
+    });
+  }
 
   /* ---- Paginakop: actieknop en paginagebonden bediening ------------------ */
   var pageAction = document.getElementById("page-action");
