@@ -3631,8 +3631,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .osum { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
 .osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
 .osum__row dd { font-variant-numeric: tabular-nums; }
-/* Wat er onder de streep te betalen valt is het antwoord op de hele lijst. */
-.osum__row--tot { margin-top: 5px; font-weight: 600; }
+/* Subtotal, Delivery en Total lezen hetzelfde en staan even ver uit
+   elkaar; het totaal is de onderste regel, dat zegt genoeg. */
 
 /* ==========================================================================
    8n2. EEN BEZORGGEBIED INVULLEN — losse postcodes en twee bedragen
