@@ -3523,11 +3523,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Boven het lijntje, anders loopt dat van de buur er dwars overheen. */
 .ostep__dot { position: relative; z-index: 1; width: 12px; height: 12px; border-radius: var(--r-full); background: var(--border-strong); }
 .ostep__item.is-done .ostep__dot, .ostep__item.is-now .ostep__dot { background: var(--accent); }
-/* Waar hij nu staat is het punt waar je naar zoekt; dat mag groter. */
-.ostep__item.is-now .ostep__dot { width: 16px; height: 16px; margin: -2px 0; }
 .ostep__name { font-size: var(--fs-sm); color: var(--text-muted); text-align: center; }
-.ostep__item.is-done .ostep__name { color: var(--text); }
-.ostep__item.is-now .ostep__name { font-weight: 500; color: var(--text-strong); }
+/* Waar hij nu staat leest net als de stappen ervoor: zelfde punt, zelfde
+   letter. De blauwe lijn tot daar zegt al hoe ver hij is. */
+.ostep__item.is-done .ostep__name, .ostep__item.is-now .ostep__name { color: var(--text); }
 /* Op een breed scherm staat de stand onder zijn eigen punt; de regel erboven
    is er voor de telefoon. */
 .ostat__now { display: none; }
