@@ -3590,11 +3590,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    tussen twee blokken. */
 .odlg__kolom--tijd { gap: 2px; }
 .odlg__kolom--tijd .odlg__label { margin-bottom: 0; }
-/* Op een breed scherm staat het moment in het midden van de rechterkolom,
-   zowel in de hoogte als in de breedte. Op een telefoon blijft het onder de
+/* Op een breed scherm staat het moment rechtsboven: op dezelfde hoogte als
+   de naam links, tegen de rechterrand. Op een telefoon blijft het onder de
    gegevens staan zoals het staat. */
 @media (min-width: 561px) {
-  .odlg__kolom--tijd { align-content: center; justify-items: center; text-align: center; }
+  .odlg__kolom--tijd { align-content: start; justify-items: end; text-align: right; }
 }
 /* Het bedrag met het woord erachter op dezelfde regel. */
 /* Het merkje sluit het blok met de gegevens af; wat erna komt mag wat meer
