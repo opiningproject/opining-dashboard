@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=639" />
+  <link rel="stylesheet" href="styles.css?v=640" />
 </head>
 <body>
 
@@ -175,6 +175,18 @@
           <button class="btn btn--ghost" type="button" data-save="discard">Discard</button>
           <button class="btn btn--primary" type="button" data-save="save">Save</button>
         </div>
+      </div>
+
+      <!-- Kwam je op een klantpagina via een bestelling, dan staat hier de weg
+           terug. Wie een klant opzoekt wil daarna meestal verder met de
+           bestelling waar hij vandaan kwam, en die staat dan achter een
+           paginawissel en een rij in een lijst. Zelfde plek als de zoekbalk;
+           moet er iets bewaard worden, dan gaat de savebar voor. -->
+      <div class="backbar" id="backbar" hidden>
+        <button class="backbar__btn" type="button" id="back-to-order">
+          <svg class="icon" aria-hidden="true"><use href="#i-chevron-left"/></svg>
+          <span class="backbar__text">Back to order <b id="back-to-order-nr"></b></span>
+        </button>
       </div>
 
       <div class="topbar__actions">
@@ -7813,6 +7825,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=639"></script>
+  <script src="app.js?v=640"></script>
 </body>
 </html>

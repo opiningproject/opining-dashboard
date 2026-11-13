@@ -130,6 +130,30 @@
     document.dispatchEvent(new CustomEvent("chart-herteken"));
   }
 
+  /* De bestelling waar je vandaan kwam toen je naar een klant sprong. Zolang
+     die onthouden is staat er een knop in de header die hem weer opent. */
+  var terugBestelling = null;
+
+  function zetTerugKnop(regel, nummer) {
+    var balk = document.getElementById("backbar");
+    if (!balk) return;
+    terugBestelling = regel || null;
+    balk.hidden = !terugBestelling;
+    if (terugBestelling) {
+      document.getElementById("back-to-order-nr").textContent = nummer || "";
+      root.dataset.backbar = "open";
+    } else {
+      delete root.dataset.backbar;
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest("#back-to-order") || !terugBestelling) return;
+    var regel = terugBestelling;
+    zetTerugKnop(null);
+    document.dispatchEvent(new CustomEvent("bestelling-openen", { detail: regel }));
+  });
+
   function showPage(page, title, icon) {
     /* Een stand die je niet hebt bewaard geldt niet, en de balk hoort niet mee
        naar de volgende pagina. Het gerechtblok zet hem zelf terug. */
@@ -138,6 +162,8 @@
 
     pageTitle.textContent = title;
     swapIcon(pageIcon, icon);
+    /* Wie naar een andere pagina gaat is klaar met die bestelling. */
+    zetTerugKnop(null);
     /* Een gewone paginawissel verlaat altijd een eventueel aanmaakscherm. */
     pageCrumb.hidden = true;
     var merkje = document.getElementById("page-badge");
@@ -2971,6 +2997,7 @@
   var orderVenster = document.getElementById("order-dialog");
   var orderStap = orderVenster && orderVenster.querySelector("#order-step");
   var orderRegel = null;   /* de regel waar het open venster bij hoort */
+  var orderBron = null;    /* dezelfde regel, ook uit het archief of een klant */
   var huidigeBestelling = null;   /* wat het open venster toont */
 
   function leesBestelling(rij) {
@@ -3112,6 +3139,7 @@
     zetOrderRij("zipcity", !b.afhalen);
     zetOrderRij("street", !b.afhalen);
 
+    orderBron = rij;
     /* Een archiefrij is al klaar; daar valt niets meer door te zetten. */
     orderRegel = rij.classList.contains("ocard") ? rij : null;
     if (orderStap) {
@@ -3131,6 +3159,9 @@
   }
 
   if (orderVenster) {
+    /* De knop in de header opent de bestelling waar je vandaan kwam. */
+    document.addEventListener("bestelling-openen", function (e) { openBestelling(e.detail); });
+
     document.addEventListener("click", function (e) {
       /* Een teken op de regel heeft zijn eigen venster; dan hoort de
          bestelling niet ook nog open te gaan. */
@@ -3345,9 +3376,12 @@
           rij.dataset.spent = String(parseFloat((b.bedrag || "0").replace(/[^\d.,]/g, "").replace(",", ".")) || 0);
           rij.dataset.lastdays = "0";
         }
+        var bron = orderBron;
         var nav = document.querySelector('.nav__item[data-page="customers"]');
         if (nav) nav.click();
         document.dispatchEvent(new CustomEvent("klant-openen", { detail: rij }));
+        /* Na de paginawissel, want die wist de knop juist. */
+        zetTerugKnop(bron, b.nr);
         return;
       }
 
