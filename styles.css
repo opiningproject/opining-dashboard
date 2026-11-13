@@ -3597,7 +3597,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   .odlg__kolom--tijd { align-content: center; justify-items: center; text-align: center; }
 }
 /* Het bedrag met het woord erachter op dezelfde regel. */
-.odlg__prijs { display: flex; align-items: center; gap: 10px; }
+/* Het merkje sluit het blok met de gegevens af; wat erna komt mag wat meer
+   lucht hebben dan de regels onderling. */
+.odlg__prijs { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .odlg__label { margin-bottom: 5px; font-size: var(--fs-sm); color: var(--text-muted); }
 /* Een adres of mailadres mag afbreken; het venster rekt er niet voor uit. */
 .odlg__val { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow-wrap: anywhere; }
@@ -3678,7 +3680,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Wat eraan toegevoegd is, zonder meerprijs: die zit al in het bedrag van
    de regel. Donkergrijs, zodat het product zelf voorgaat. */
 .oitem__adds { font-weight: 400; color: var(--text); }
-.osum { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+/* De streep sluit direct op de laatste regel aan; de ruimte zit eronder. */
+.osum { padding-top: 12px; border-top: 1px solid var(--border); }
 .osum__row { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; }
 .osum__row dd { font-variant-numeric: tabular-nums; }
 /* Subtotal, Delivery en Total lezen hetzelfde en staan even ver uit
