@@ -3626,7 +3626,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Geen ruimte aan de zijkanten: de regels lijnen links met de kop en
    rechts met de bedragen eronder. */
 .oitems { padding: 18px 0; }
-.oitem { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; }
+.oitem { display: flex; align-items: flex-start; gap: 12px; padding: 16px 0; }
 /* De eerste regel sluit aan op de kop erboven, de laatste op de streep. */
 .oitem:first-child { padding-top: 0; }
 /* Een lichte streep tussen twee artikelen: met een foto en twee regels tekst
