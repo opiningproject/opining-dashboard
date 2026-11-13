@@ -3669,9 +3669,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 /* Wat eraan toegevoegd is staat eronder; de plek zegt waar het bij hoort. */
 .oitem__adds { display: flex; flex-direction: column; gap: 2px; }
 .oitem__sum { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
-/* Aantal, naam en prijs van een regel een tikje zwaarder dan de rest; wat
-   eraan toegevoegd is blijft gewoon. */
-.oitem__qty, .oitem__name, .oitem__sum { font-weight: 500; }
+/* Aantal, naam en prijs lezen even zwaar als de regels met de tijden boven
+   in het venster: alles in dit venster is even belangrijk. Wat aan een regel
+   is toegevoegd staat eronder in een lichtere kleur; dat verschil volstaat. */
+.oitem__qty, .oitem__name, .oitem__sum { font-weight: 400; }
 /* Wat eraan toegevoegd is, zonder meerprijs: die zit al in het bedrag van
    de regel. Donkergrijs, zodat het product zelf voorgaat. */
 .oitem__adds { font-weight: 400; color: var(--text); }
