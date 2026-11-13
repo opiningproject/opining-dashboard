@@ -741,6 +741,13 @@
      een termijn staat daar niet in: die rekent met wat de regel aan gegevens
      draagt. Een filter zonder regel hieronder blijft gewoon op tekst zoeken. */
   var FILTERREGELS = {
+    /* Een bezorger staat aan of uit; dat staat in de schakelaar in zijn rij
+       en nergens in de tekst, dus de tab kan er niet naar zoeken. */
+    Duty: function (rij, waarde) {
+      var aan = rij.querySelector("[data-rider-on]");
+      var rijdt = !aan || aan.checked;
+      return waarde.indexOf("offline") !== -1 ? !rijdt : rijdt;
+    },
     "Total orders": function (rij, waarde) {
       var n = Number(rij.dataset.orders);
       if (isNaN(n)) return false;
@@ -3027,6 +3034,34 @@
     if (rij) rij.hidden = !aan;
   }
 
+  /* Wie vandaag rijdt staat op de bezorgerspagina aan. Alleen die namen komen
+     in de keuzelijst; wie uit staat is er niet. Stond er al iemand op deze
+     bestelling, dan blijft hij staan ook als hij inmiddels uit staat: anders
+     zou hij er stilletjes af vallen. */
+  function vulBezorgers(gekozen) {
+    var keuze = document.getElementById("order-courier");
+    if (!keuze) return;
+    var namen = [];
+    document.querySelectorAll('[data-view="deliverers"] tbody tr').forEach(function (rij) {
+      var aan = rij.querySelector("[data-rider-on]");
+      if (aan && !aan.checked) return;
+      namen.push(rij.cells[0].textContent.trim());
+    });
+    if (gekozen && namen.indexOf(gekozen) < 0) namen.unshift(gekozen);
+
+    keuze.innerHTML = "";
+    var leeg = document.createElement("option");
+    leeg.value = "";
+    leeg.textContent = "Not assigned";
+    keuze.appendChild(leeg);
+    namen.forEach(function (naam) {
+      var optie = document.createElement("option");
+      optie.textContent = naam;
+      keuze.appendChild(optie);
+    });
+    keuze.value = gekozen || "";
+  }
+
   /* Hoe ver de bestelling is. Een rij die nog op het bord staat weet het van
      zichzelf; een rij uit het archief is per definitie klaar. */
   var ORDERSTAPPEN = ["new", "kitchen", "outgoing", "archief"];
@@ -3084,8 +3119,7 @@
     /* Contant is nog niet betaald, dus valt er ook niets terug te storten. */
     zetVeld("cancel", isContant(b.wijze) ? "Cancel order" : "Cancel and refund order");
     /* Wie het brengt kies je hier; bij afhalen is er niemand te kiezen. */
-    var bezorgKeuze = document.getElementById("order-courier");
-    if (bezorgKeuze) bezorgKeuze.value = b.bezorger || "";
+    vulBezorgers(b.bezorger);
     zetVeld("total", b.bedrag);
     zetOrderRij("courier", !b.afhalen);
     zetOrderRij("fee", !b.afhalen);
@@ -3405,7 +3439,6 @@
     products:       { label: "Add product",   zacht: false },
     choices:        { label: "Add group",     zacht: false },
     categories:     { label: "Add category", zacht: false },
-    deliverers:     { label: "Add deliverer", zacht: false },
     discounts:      { label: "Create discount", icon: "i-plus", zacht: false, opent: "discount-new" },
     vouchers:       { label: "Create voucher",  icon: "i-plus", zacht: false, opent: "voucher-new" },
     "email-campaigns": { label: "New campaign", icon: "i-plus", zacht: false, opent: "campaign-new" },
@@ -3474,8 +3507,7 @@
       paar[0].addEventListener("input", function () { riderFout(paar[0], paar[1], false); });
     });
 
-    pageAction.addEventListener("click", function () {
-      if (document.querySelector('[data-view="deliverers"]').hidden) return;
+    document.getElementById("rider-add").addEventListener("click", function () {
       riderNaam.value = "";
       riderTel.value = "";
       riderFout(riderNaam, riderNaamFout, false);
@@ -3494,16 +3526,62 @@
 
       var lijst = document.querySelector('[data-view="deliverers"] tbody');
       var rij = document.createElement("tr");
-      rij.innerHTML = "<td></td><td></td><td>0</td>";
+      rij.innerHTML = "<td></td><td></td>" +
+        '<td data-rides="0|0|0|0">0</td>' +
+        '<td data-cash="&euro; 0,00|&euro; 0,00|&euro; 0,00|&euro; 0,00">&euro; 0,00</td>' +
+        '<td><label class="switch"><input type="checkbox" data-rider-on checked />' +
+        '<span class="switch__track" aria-hidden="true"></span>' +
+        '<span class="sr-only"></span></label></td>';
       rij.cells[0].textContent = naam;
       rij.cells[1].textContent = tel;
+      rij.querySelector(".sr-only").textContent = naam + " is on duty";
       lijst.appendChild(rij);
-      /* De tab All telt hoeveel er zijn; de andere drie gaan over hun stand
-         en die weet een nieuwe bezorger nog niet. */
-      var teller = document.getElementById("rider-count");
-      if (teller) teller.textContent = lijst.rows.length;
+      telBezorgers();
       riderVenster.hidden = true;
       showToast(naam + " added");
+    });
+
+    /* Hoeveel er aan en uit staan; de tabs erboven zeggen het. */
+    function telBezorgers() {
+      var rijen = [].slice.call(document.querySelectorAll('[data-view="deliverers"] tbody tr'));
+      var aan = rijen.filter(function (rij) {
+        var s = rij.querySelector("[data-rider-on]");
+        return !s || s.checked;
+      }).length;
+      var zet = function (naam, n) {
+        var el = document.querySelector('[data-rider-tab="' + naam + '"]');
+        if (el) el.textContent = n;
+      };
+      zet("all", rijen.length);
+      zet("available", aan);
+      zet("offline", rijen.length - aan);
+    }
+
+    /* Ritten en opgehaald geld gaan over een periode; elke cel draagt de vier
+       standen bij zich, gescheiden door een streep. */
+    var riderPeriode = document.getElementById("rider-period");
+
+    function zetPeriode() {
+      var i = Number(riderPeriode.value) || 0;
+      document.querySelectorAll('[data-view="deliverers"] [data-rides], [data-view="deliverers"] [data-cash]')
+        .forEach(function (cel) {
+          var standen = (cel.dataset.rides || cel.dataset.cash).split("|");
+          cel.textContent = standen[i] !== undefined ? standen[i] : standen[0];
+        });
+    }
+
+    riderPeriode.addEventListener("change", zetPeriode);
+    zetPeriode();
+    telBezorgers();
+
+    /* Aan of uit geldt meteen: wie uit staat valt uit de keuzelijst bij een
+       bestelling, en de tellers boven de lijst lopen mee. */
+    document.addEventListener("change", function (e) {
+      var schakelaar = e.target.closest("[data-rider-on]");
+      if (!schakelaar) return;
+      var naam = schakelaar.closest("tr").cells[0].textContent.trim();
+      telBezorgers();
+      showToast(naam + (schakelaar.checked ? " is on duty" : " is off duty"));
     });
   }
 

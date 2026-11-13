@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=657" />
+  <link rel="stylesheet" href="styles.css?v=660" />
 </head>
 <body>
 
@@ -333,6 +333,19 @@
               <button class="btn btn--ghost page-head__action" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
               </button>
+            </div>
+            <!-- Over welke periode de ritten en het opgehaalde geld gaan, met
+                 de knop ernaast. Een eigen blok, want twee dingen naast de
+                 titel passen niet in die ene actieknop. -->
+            <div class="page-head__tools" data-tools="deliverers" hidden>
+              <label class="sr-only" for="rider-period">Period</label>
+              <select class="input" id="rider-period">
+                <option value="0">Today</option>
+                <option value="1">This week</option>
+                <option value="2">This month</option>
+                <option value="3">All time</option>
+              </select>
+              <button class="btn btn--primary page-head__action" type="button" id="rider-add">Add deliverer</button>
             </div>
             <div class="page-head__tools" data-tools="finance" hidden>
               <!-- Beheren gaat over de instellingen achter de uitbetalingen:
@@ -1554,11 +1567,10 @@
           <section class="view" data-view="deliverers" hidden>
             <div class="panel">
               <div class="panel__head">
-                <div class="tabs">
-                  <button class="tab is-active" type="button">All <span class="tab__count" id="rider-count">5</span></button>
-                  <button class="tab" type="button">Available <span class="tab__count">2</span></button>
-                  <button class="tab" type="button">On delivery <span class="tab__count">2</span></button>
-                  <button class="tab" type="button">Offline <span class="tab__count">1</span></button>
+                <div class="tabs" data-filter-name="Duty">
+                  <button class="tab is-active" type="button">All <span class="tab__count" data-rider-tab="all">5</span></button>
+                  <button class="tab" type="button">Available <span class="tab__count" data-rider-tab="available">4</span></button>
+                  <button class="tab" type="button">Offline <span class="tab__count" data-rider-tab="offline">1</span></button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter deliverers">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
@@ -1590,33 +1602,45 @@
                       <th>Deliverer</th>
                       <th>Phone</th>
                       <th>Deliveries</th>
+                      <th>Cash collected</th>
+                      <th>On duty</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>Youssef Amrani</td>
                       <td>+31 6 1452 2453</td>
-                      <td>12</td>
+                      <td data-rides="12|58|241|1180">12</td>
+                      <td data-cash="&euro; 148,50|&euro; 705,25|&euro; 2.980,40|&euro; 14.210,75">&euro; 148,50</td>
+                      <td><label class="switch"><input type="checkbox" data-rider-on checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Youssef Amrani is on duty</span></label></td>
                     </tr>
                     <tr>
                       <td>Nina Bakker</td>
                       <td>+31 6 2298 1174</td>
-                      <td>9</td>
+                      <td data-rides="9|44|198|905">9</td>
+                      <td data-cash="&euro; 96,25|&euro; 512,80|&euro; 2.244,15|&euro; 10.868,30">&euro; 96,25</td>
+                      <td><label class="switch"><input type="checkbox" data-rider-on checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Nina Bakker is on duty</span></label></td>
                     </tr>
                     <tr>
                       <td>Ruben de Wit</td>
                       <td>+31 6 3841 5502</td>
-                      <td>8</td>
+                      <td data-rides="8|39|176|842">8</td>
+                      <td data-cash="&euro; 72,00|&euro; 388,45|&euro; 1.903,60|&euro; 9.517,05">&euro; 72,00</td>
+                      <td><label class="switch"><input type="checkbox" data-rider-on checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Ruben de Wit is on duty</span></label></td>
                     </tr>
                     <tr>
                       <td>Emma Post</td>
                       <td>+31 6 5567 9930</td>
-                      <td>6</td>
+                      <td data-rides="6|31|142|588">6</td>
+                      <td data-cash="&euro; 41,80|&euro; 254,60|&euro; 1.188,95|&euro; 5.942,20">&euro; 41,80</td>
+                      <td><label class="switch"><input type="checkbox" data-rider-on checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Emma Post is on duty</span></label></td>
                     </tr>
                     <tr>
                       <td>Tarik Yildiz</td>
                       <td>+31 6 7712 4408</td>
-                      <td>3</td>
+                      <td data-rides="3|17|88|396">3</td>
+                      <td data-cash="&euro; 18,90|&euro; 131,70|&euro; 702,35|&euro; 3.480,90">&euro; 18,90</td>
+                      <td><label class="switch"><input type="checkbox" data-rider-on /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Tarik Yildiz is on duty</span></label></td>
                     </tr>
                   </tbody>
                 </table>
@@ -6579,7 +6603,6 @@
         <p class="field__error" id="rider-phone-error" hidden>
           <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Phone can&rsquo;t be blank.
         </p>
-        <p class="hint">The kitchen calls this number when an order is ready.</p>
       </div>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
@@ -7845,6 +7868,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=657"></script>
+  <script src="app.js?v=660"></script>
 </body>
 </html>
