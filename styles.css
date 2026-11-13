@@ -205,11 +205,8 @@ legend { padding: 0; }
 .brand__mark { width: 24px; height: 24px; color: var(--accent); }
 
 .search { position: relative; margin-inline: auto; width: 640px; }
-/* Savebar en de weg terug naar een bestelling delen de plek in het midden
-   van de header met de zoekbalk. Valt er iets te bewaren, dan gaat dat voor. */
-[data-savebar="open"] .search,
-[data-backbar="open"] .search { display: none; }
-[data-savebar="open"] .backbar { display: none; }
+/* Savebar deelt de plek in het midden van de header met de zoekbalk. */
+[data-savebar="open"] .search { display: none; }
 .search__icon {
   position: absolute; left: 12px; top: 50%;
   transform: translateY(-50%);
@@ -761,9 +758,7 @@ select.input {
    ========================================================================== */
 /* Zit in de header op de plek van de zoekbalk, dus exact hetzelfde vak:
    640 breed, 36 hoog. Zie ook [data-savebar] bij .search. */
-/* De weg terug naar een bestelling staat op dezelfde plek en in hetzelfde
-   vak: wie hem ziet herkent de balk al. */
-.savebar, .backbar {
+.savebar {
   display: flex; align-items: center; gap: 12px;
   margin-inline: auto;
   width: 640px;
@@ -777,9 +772,6 @@ select.input {
   animation: savebar-in 200ms var(--ease);
 }
 @keyframes savebar-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-
-/* Terug naar de bestelling waar je vandaan kwam: zelfde vak als de zoekbalk,
-   met de knop in het midden. */
 /* Wegklikken terwijl er iets openstaat: dan trilt de balk. Geen venster dat
    een vraag stelt -- Discard en Save staan er al -- maar een beweging die je
    blik terugtrekt naar die twee knoppen. De rand kleurt even mee, want een
@@ -794,17 +786,17 @@ select.input {
 @media (prefers-reduced-motion: reduce) {
   .savebar--trilt { animation: none; }
 }
-.savebar__text, .backbar__text {
+.savebar__text {
   display: flex; align-items: center; gap: 8px;
   min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   font-size: var(--fs-sm); color: var(--text);
 }
 /* 16px-grid met eigen lijndikte; de globale 1.72 is voor de 24px-set. */
-.savebar__text .icon, .backbar__text .icon { width: 16px; height: 16px; stroke-width: 1.2; color: var(--text-muted); }
-.savebar__actions, .backbar__actions { display: flex; gap: 4px; margin-left: auto; flex: 0 0 auto; }
+.savebar__text .icon { width: 16px; height: 16px; stroke-width: 1.2; color: var(--text-muted); }
+.savebar__actions { display: flex; gap: 4px; margin-left: auto; flex: 0 0 auto; }
 /* 36 balk min 2x4 padding laat exact 28 over; de radius loopt concentrisch
    mee met de balk (10 buiten, 4 padding, dus 6 binnen) in plaats van rond. */
-.savebar .btn, .backbar .btn { height: 28px; padding: 0 12px; border-radius: calc(var(--r-md) - 4px); font-size: var(--fs-xs); }
+.savebar .btn { height: 28px; padding: 0 12px; border-radius: calc(var(--r-md) - 4px); font-size: var(--fs-xs); }
 
 /* ==========================================================================
    8b. MENU-SECTIE — uitklapbare sidebargroep + productenlijst
@@ -4009,8 +4001,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 
   /* Zelfde balk en knopmaten als op desktop; alleen de vaste 640px vervalt,
      want die ruimte is er niet. De tekst mag inkorten voor de knoppen. */
-  .savebar, .backbar { width: auto; flex: 1 1 auto; margin-inline: 0; min-width: 0; }
-  .savebar__text, .backbar__text { min-width: 0; overflow: hidden; white-space: nowrap; }
+  .savebar { width: auto; flex: 1 1 auto; margin-inline: 0; min-width: 0; }
+  .savebar__text { min-width: 0; overflow: hidden; white-space: nowrap; }
   /* Twee knoppen naast een paginatitel passen hier niet. Een hoofdactie
      blijft staan; de rest zit achter de drie puntjes die app.js erbij zet.
      Alleen waar dat menu er ook echt is, vandaar :has(). */
