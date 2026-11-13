@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=655" />
+  <link rel="stylesheet" href="styles.css?v=657" />
 </head>
 <body>
 
@@ -1555,7 +1555,7 @@
             <div class="panel">
               <div class="panel__head">
                 <div class="tabs">
-                  <button class="tab is-active" type="button">All <span class="tab__count">5</span></button>
+                  <button class="tab is-active" type="button">All <span class="tab__count" id="rider-count">5</span></button>
                   <button class="tab" type="button">Available <span class="tab__count">2</span></button>
                   <button class="tab" type="button">On delivery <span class="tab__count">2</span></button>
                   <button class="tab" type="button">Offline <span class="tab__count">1</span></button>
@@ -6558,6 +6558,36 @@
        talen, alles onder elkaar: namen en omschrijvingen kunnen lang zijn.
        De naam in het Engels is nodig, de rest mag leeg. Add category
        rechtsboven opent hem leeg, een klik op een regel ingevuld. -->
+  <!-- Een bezorger erbij: zijn naam en het nummer waarop de keuken hem belt.
+       Meer hoeft er niet in; hoeveel ritten hij deed telt de lijst zelf. -->
+  <div class="dialog" id="rider-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="rider-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="rider-title">Add deliverer</h2>
+      </div>
+      <div class="field">
+        <label class="label" for="rider-name">Name</label>
+        <input class="input" id="rider-name" type="text" placeholder="e.g. Nina Bakker" aria-describedby="rider-name-error" />
+        <p class="field__error" id="rider-name-error" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Name can&rsquo;t be blank.
+        </p>
+      </div>
+      <div class="field">
+        <label class="label" for="rider-phone">Phone</label>
+        <input class="input" id="rider-phone" type="tel" inputmode="tel" placeholder="+31 6 1234 5678" autocomplete="tel" aria-describedby="rider-phone-error" />
+        <p class="field__error" id="rider-phone-error" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Phone can&rsquo;t be blank.
+        </p>
+        <p class="hint">The kitchen calls this number when an order is ready.</p>
+      </div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="rider-save">Add deliverer</button>
+      </div>
+    </div>
+  </div>
+
   <div class="dialog" id="cat-dialog" hidden>
     <div class="dialog__scrim" data-dialog-close></div>
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="cat-title">
@@ -7815,6 +7845,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=655"></script>
+  <script src="app.js?v=657"></script>
 </body>
 </html>

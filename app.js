@@ -3405,7 +3405,7 @@
     products:       { label: "Add product",   zacht: false },
     choices:        { label: "Add group",     zacht: false },
     categories:     { label: "Add category", zacht: false },
-    deliverers:     { label: "Add deliverer", icon: "i-plus", zacht: false },
+    deliverers:     { label: "Add deliverer", zacht: false },
     discounts:      { label: "Create discount", icon: "i-plus", zacht: false, opent: "discount-new" },
     vouchers:       { label: "Create voucher",  icon: "i-plus", zacht: false, opent: "voucher-new" },
     "email-campaigns": { label: "New campaign", icon: "i-plus", zacht: false, opent: "campaign-new" },
@@ -3450,6 +3450,61 @@
     }
     pageAction.classList.toggle("btn--soft", actie.zacht);
     pageAction.classList.toggle("btn--primary", !actie.zacht);
+  }
+
+  /* ---- Een bezorger erbij ------------------------------------------------
+     De knop rechtsboven op de bezorgerspagina opent een venster met twee
+     velden. Opslaan zet hem onderaan de lijst, nog zonder ritten. */
+  var riderVenster = document.getElementById("rider-dialog");
+
+  if (riderVenster) {
+    var riderNaam = document.getElementById("rider-name");
+    var riderTel = document.getElementById("rider-phone");
+    var riderNaamFout = document.getElementById("rider-name-error");
+    var riderTelFout = document.getElementById("rider-phone-error");
+    var riderKnop = document.getElementById("rider-save");
+
+    function riderFout(veld, melding, aan) {
+      melding.hidden = !aan;
+      veld.classList.toggle("input--error", aan);
+    }
+
+    /* Typen ruimt de melding op: die ging over de vorige poging. */
+    [[riderNaam, riderNaamFout], [riderTel, riderTelFout]].forEach(function (paar) {
+      paar[0].addEventListener("input", function () { riderFout(paar[0], paar[1], false); });
+    });
+
+    pageAction.addEventListener("click", function () {
+      if (document.querySelector('[data-view="deliverers"]').hidden) return;
+      riderNaam.value = "";
+      riderTel.value = "";
+      riderFout(riderNaam, riderNaamFout, false);
+      riderFout(riderTel, riderTelFout, false);
+      riderVenster.hidden = false;
+      zetCursor(riderNaam);
+    });
+
+    riderKnop.addEventListener("click", function () {
+      var naam = riderNaam.value.trim();
+      var tel = riderTel.value.trim();
+      riderFout(riderNaam, riderNaamFout, !naam);
+      riderFout(riderTel, riderTelFout, !tel);
+      if (!naam) { riderNaam.focus(); return; }
+      if (!tel) { riderTel.focus(); return; }
+
+      var lijst = document.querySelector('[data-view="deliverers"] tbody');
+      var rij = document.createElement("tr");
+      rij.innerHTML = "<td></td><td></td><td>0</td>";
+      rij.cells[0].textContent = naam;
+      rij.cells[1].textContent = tel;
+      lijst.appendChild(rij);
+      /* De tab All telt hoeveel er zijn; de andere drie gaan over hun stand
+         en die weet een nieuwe bezorger nog niet. */
+      var teller = document.getElementById("rider-count");
+      if (teller) teller.textContent = lijst.rows.length;
+      riderVenster.hidden = true;
+      showToast(naam + " added");
+    });
   }
 
   /* Groepen waarvan de ouder alleen open- en dichtklapt: er bestaat geen
