@@ -3629,15 +3629,20 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .oitem { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; }
 /* De eerste regel sluit aan op de kop erboven, de laatste op de streep. */
 .oitem:first-child { padding-top: 0; }
+/* Een lichte streep tussen twee artikelen: met een foto en twee regels tekst
+   per artikel loopt anders niet te zien waar het een ophoudt. */
+.oitem + .oitem { border-top: 1px solid var(--border); }
 .oitem__qty { flex: 0 0 auto; min-width: 20px; font-variant-numeric: tabular-nums; }
 /* Op een breed scherm staat voor elke regel de foto van het gerecht, met het
-   aantal in een rondje rechtsboven, zoals in Shopify. Zelfde maat als het
+   aantal rechtsboven. Dat merkje rekt mee met het getal: vaste ruimte aan de
+   zijkanten, wat minder boven en onder. Bij een getal is het rond, bij twee of
+   drie cijfers wordt het een langwerpig vlakje in plaats van een grote bol. Zelfde maat als het
    plaatje in de menukaart. Op een telefoon blijft het gewoon het getal. */
 .oitem__thumb {
   position: relative;
   margin-right: 4px;
   display: grid; place-items: center;
-  width: 44px; height: 44px; flex: 0 0 auto;
+  width: 48px; height: 48px; flex: 0 0 auto;
   border: 1px solid var(--border);
   border-radius: var(--r-sm);
   background: var(--gray-25);
@@ -3646,8 +3651,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .oitem__thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
 .oitem__badge {
   position: absolute; top: -9px; right: -9px;
-  display: grid; place-items: center;
-  min-width: 22px; height: 22px; padding: 0 6px;
+  display: flex; align-items: center;
+  padding: 3px 8px;
   border: 2px solid var(--bg-surface);
   border-radius: var(--r-full);
   background: var(--gray-200);
