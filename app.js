@@ -2971,6 +2971,7 @@
   var orderVenster = document.getElementById("order-dialog");
   var orderStap = orderVenster && orderVenster.querySelector("#order-step");
   var orderRegel = null;   /* de regel waar het open venster bij hoort */
+  var orderBron = null;    /* dezelfde regel, ook als hij uit het archief komt */
   var huidigeBestelling = null;   /* wat het open venster toont */
 
   function leesBestelling(rij) {
@@ -3071,7 +3072,6 @@
     var aantal = orderVenster.querySelectorAll(".oitem").length;
     zetVeld("count", "(" + aantal + (aantal === 1 ? " item)" : " items)"));
     zetOrderStand(rij, b.afhalen);
-    orderVenster.querySelector('[data-oveld-label="at"]').textContent = b.afhalen ? "Pickup at" : "Deliver at";
     zetVeld("name", b.naam);
     zetVeld("address", b.adres);
     zetVeld("phone", b.tel);
@@ -3083,9 +3083,11 @@
     zetBetaalMerk(b.wijze);
     /* Contant is nog niet betaald, dus valt er ook niets terug te storten. */
     zetVeld("cancel", isContant(b.wijze) ? "Cancel order" : "Cancel and refund order");
-    zetVeld("courier", b.bezorger);
+    /* Wie het brengt kies je hier; bij afhalen is er niemand te kiezen. */
+    var bezorgKeuze = document.getElementById("order-courier");
+    if (bezorgKeuze) bezorgKeuze.value = b.bezorger || "";
     zetVeld("total", b.bedrag);
-    zetOrderRij("courier", !!b.bezorger);
+    zetOrderRij("courier", !b.afhalen);
     zetOrderRij("fee", !b.afhalen);
     /* De foto bij elke regel komt uit de menukaart: heeft het gerecht daar
        een plaatje, dan staat dat hier ook. Anders blijft het lege teken. */
@@ -3116,6 +3118,7 @@
     zetOrderRij("zipcity", !b.afhalen);
     zetOrderRij("street", !b.afhalen);
 
+    orderBron = rij;
     /* Een archiefrij is al klaar; daar valt niets meer door te zetten. */
     orderRegel = rij.classList.contains("ocard") ? rij : null;
     if (orderStap) {
@@ -3135,6 +3138,17 @@
   }
 
   if (orderVenster) {
+    /* Een bezorger kiezen geldt meteen: de rij onthoudt hem, zodat hij er bij
+       de volgende keer openslaan nog staat. */
+    var bezorgVeld = document.getElementById("order-courier");
+    if (bezorgVeld) {
+      bezorgVeld.addEventListener("change", function () {
+        var naam = bezorgVeld.value;
+        if (orderBron) orderBron.dataset.courier = naam;
+        showToast(naam ? naam + " will bring this order" : "No deliverer on this order");
+      });
+    }
+
     document.addEventListener("click", function (e) {
       /* Een teken op de regel heeft zijn eigen venster; dan hoort de
          bestelling niet ook nog open te gaan. */

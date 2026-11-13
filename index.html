@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=651" />
+  <link rel="stylesheet" href="styles.css?v=653" />
 </head>
 <body>
 
@@ -7124,19 +7124,21 @@
             <div class="odlg__blok">
               <p class="odlg__val odlg__prijs"><span class="badge" data-oveld="paid"></span></p>
             </div>
-            <!-- Wie het gebracht heeft weet het archief; een bestelling die nog
-                 loopt of wordt afgehaald niet. -->
-            <div class="odlg__blok" data-orow="courier" hidden>
-              <p class="odlg__label">Deliverer</p>
-              <p class="odlg__val" data-oveld="courier"></p>
-            </div>
           </div>
 
-          <!-- Rechts alleen het moment waar alles om draait, groot genoeg om
-               vanaf een meter af te lezen. -->
-          <div class="odlg__kolom odlg__kolom--tijd">
-            <p class="odlg__label" data-oveld-label="at">Deliver at</p>
-            <p class="odlg__groot" data-oveld="eta"></p>
+          <!-- Rechts wie het gaat brengen. De tijden staan links al; dit is het
+               enige dat je hier nog moet kiezen. Bij afhalen valt het weg: dan
+               komt de klant zelf langs. -->
+          <div class="odlg__kolom odlg__kolom--bezorger" data-orow="courier">
+            <label class="odlg__label" for="order-courier">Deliverer</label>
+            <select class="input" id="order-courier">
+              <option value="">Not assigned</option>
+              <option>Youssef Amrani</option>
+              <option>Nina Bakker</option>
+              <option>Ruben de Wit</option>
+              <option>Emma Post</option>
+              <option>Tarik Yildiz</option>
+            </select>
           </div>
         </div>
 
@@ -7813,6 +7815,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=651"></script>
+  <script src="app.js?v=653"></script>
 </body>
 </html>

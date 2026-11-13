@@ -3588,21 +3588,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .odlg__groot { font-size: 26px; font-weight: 600; letter-spacing: -.01em; color: var(--text-strong); }
 /* "Deliver at" en de tijd horen bij elkaar: 2px ertussen, niet de ruimte
    tussen twee blokken. */
-.odlg__kolom--tijd { gap: 2px; }
-.odlg__kolom--tijd .odlg__label { margin-bottom: 0; }
-/* Op een breed scherm krijgt het moment een eigen vlakje, midden in de
-   rechterkolom. Los in de witruimte zweefde het; in een vlakje is het een
-   ding op zichzelf, en dat is het ook: waar in de keuken alles om draait.
-   Op een telefoon blijft het onder de gegevens staan zoals het staat. */
-@media (min-width: 561px) {
-  .odlg__kolom--tijd {
-    align-self: center; justify-self: center;
-    padding: 14px 24px;
-    border-radius: var(--r-lg);
-    background: var(--gray-50);
-    justify-items: center; text-align: center;
-  }
-}
+/* Wie het gaat brengen: een keuzelijst die zo breed is als zijn kolom. */
+.odlg__kolom--bezorger { gap: 0; align-content: start; }
+.odlg__kolom--bezorger .input { width: 100%; }
 /* Het bedrag met het woord erachter op dezelfde regel. */
 /* Het merkje sluit het blok met de gegevens af; wat erna komt mag wat meer
    lucht hebben dan de regels onderling. */
