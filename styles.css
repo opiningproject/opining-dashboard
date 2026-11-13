@@ -3564,6 +3564,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    kop zo zwaar als die van de productlijst. */
 .odlg__contact { padding-top: 18px; border-top: 1px solid var(--border); }
 .odlg__contact .odlg__subhead { margin-bottom: 18px; }
+/* Het adres is een blok van twee regels; het nummer om te bellen hoort daar
+   niet bij en staat er los onder. */
+.odlg__contact .odlg__val:last-child { margin-top: 12px; }
 /* In de kop: de drie puntjes en het kruisje, met wat ruimte ertussen zodat
    je op een telefoon niet het verkeerde raakt. */
 .odlg__acts { gap: 6px; }
