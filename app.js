@@ -3003,10 +3003,12 @@
   /* Van de betaalwijze doet er maar een ding toe: staat het geld er al, of
      moet het nog bij de deur komen. Groen voor wat binnen is, grijs voor wat
      je nog moet innen. */
+  function isContant(wijze) { return (wijze || "").toLowerCase() === "cash"; }
+
   function zetBetaalMerk(wijze) {
     var merk = orderVenster.querySelector('[data-oveld="paid"]');
     if (!merk) return;
-    var contant = (wijze || "").toLowerCase() === "cash";
+    var contant = isContant(wijze);
     merk.textContent = contant ? "Cash" : "Paid online";
     merk.className = "badge " + (contant ? "badge--muted" : "badge--active");
   }
@@ -3079,6 +3081,8 @@
     zetVeld("eta", b.eta);
     zetVeld("method", b.wijze);
     zetBetaalMerk(b.wijze);
+    /* Contant is nog niet betaald, dus valt er ook niets terug te storten. */
+    zetVeld("cancel", isContant(b.wijze) ? "Cancel order" : "Cancel and refund order");
     zetVeld("courier", b.bezorger);
     zetVeld("total", b.bedrag);
     zetOrderRij("courier", !!b.bezorger);
@@ -3355,14 +3359,19 @@
         var best = huidigeBestelling;
         var regel = orderRegel;
         orderVenster.hidden = true;
+        /* Bij contant is er nog geen geld binnen: dan gaat de bestelling
+           alleen van het bord en valt er niets terug te storten. */
+        var contant = isContant(best.wijze);
         vraag({
-          titel: "Cancel and refund order?",
-          tekst: "Order " + best.nr + " for " + best.naam + " will be cancelled and " + best.bedrag +
-            " refunded to the customer. This can’t be undone.",
-          knop: "Cancel and refund",
+          titel: contant ? "Cancel order?" : "Cancel and refund order?",
+          tekst: "Order " + best.nr + " for " + best.naam + " will be cancelled" +
+            (contant ? ". Nothing has been paid yet, so there is nothing to refund."
+                     : " and " + best.bedrag + " refunded to the customer.") +
+            " This can’t be undone.",
+          knop: contant ? "Cancel order" : "Cancel and refund",
           actie: function () {
             if (regel) { regel.remove(); zetKolomTellers(); }
-            showToast("Order " + best.nr + " cancelled and refunded");
+            showToast("Order " + best.nr + (contant ? " cancelled" : " cancelled and refunded"));
           }
         });
       }
