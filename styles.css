@@ -551,7 +551,10 @@ input[type="date"], input[type="time"] {
 /* Een label met een vraagteken ernaast: de twee horen op één regel. */
 .label--info { position: relative; display: flex; align-items: center; gap: 6px; }
 .explain__icon { display: flex; color: var(--text-muted); cursor: help; }
-.explain__icon .icon { width: 16px; height: 16px; }
+/* Een vraagteken van 16px op een raster van 24 wordt mager; de lijn mag hier
+   dikker. En een cirkel naast kleine letters staat optisch te hoog als je hem
+   wiskundig centreert: de tekst heeft zijn gewicht onder het midden. */
+.explain__icon .icon { position: relative; top: 1px; width: 16px; height: 16px; stroke-width: 2.3; }
 .explain__icon:hover { color: var(--text); }
 .explain__icon:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-full); }
 
