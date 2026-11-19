@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=663" />
+  <link rel="stylesheet" href="styles.css?v=664" />
 </head>
 <body>
 
@@ -357,6 +357,22 @@
           </div>
 
           <section class="view" data-view="dashboard">
+            <!-- Staat de deur open? Het eerste dat je wilt weten als je hier
+                 binnenkomt, en het enige op deze pagina dat je met een klik
+                 verandert: hiermee stopt en start het aannemen van
+                 bestellingen. -->
+            <div class="card taking" id="store-open">
+              <label class="taking__row">
+                <svg class="icon" aria-hidden="true"><use href="#i-store"/></svg>
+                <b data-store-state>Open for orders</b>
+                <span class="switch taking__switch">
+                  <input type="checkbox" id="store-switch" checked />
+                  <span class="switch__track" aria-hidden="true"></span>
+                  <span class="sr-only">Take orders</span>
+                </span>
+              </label>
+            </div>
+
             <!-- De cijfers waar de zaak op draait. Deze kaart staat er vanaf de
                  eerste dag, ook als de setup-guide nog niet af is: zo blijft
                  het dashboard hetzelfde als de winkel eenmaal loopt. -->
@@ -548,22 +564,6 @@
               <!-- Welke periode je ziet, onder de as. Het bolletje in de
                    lijnkleur koppelt het aan de lijn erboven. -->
               <p class="chart__range"><span class="chart__dot" aria-hidden="true"></span><span class="chart__period"></span></p>
-            </div>
-
-            <!-- Staat de deur open? Dat is wat je als eerste wilt weten en als
-                 enige met een klik kunt veranderen: hiermee stopt en start het
-                 aannemen van bestellingen. Dezelfde regel als die eronder,
-                 maar met een schakelaar waar daar een pijltje staat. -->
-            <div class="card taking" id="store-open">
-              <label class="taking__row">
-                <svg class="icon" aria-hidden="true"><use href="#i-store"/></svg>
-                <b data-store-state>Open for orders</b>
-                <span class="switch taking__switch">
-                  <input type="checkbox" id="store-switch" checked />
-                  <span class="switch__track" aria-hidden="true"></span>
-                  <span class="sr-only">Take orders</span>
-                </span>
-              </label>
             </div>
 
             <!-- Wat er nu ligt, onder de cijfers: eerst zie je hoe de dag
@@ -7884,6 +7884,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=663"></script>
+  <script src="app.js?v=664"></script>
 </body>
 </html>
