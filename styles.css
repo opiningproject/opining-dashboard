@@ -3511,13 +3511,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    soorten weg. */
 .dialog__body.picklist { padding: 0; }
 .picklist .row { position: relative; border-top: 0; padding-inline: 22px; }
-.picklist .row::before,
-.picklist .row:last-child::after {
-  content: ""; position: absolute; left: 22px; right: 22px;
+.picklist .row::before {
+  content: ""; position: absolute; top: 0; left: 22px; right: 22px;
   border-top: 1px solid var(--border);
 }
-.picklist .row::before { top: 0; }
-.picklist .row:last-child::after { bottom: 0; }
 .picklist .row__meta { overflow: visible; white-space: normal; }
 
 /* Vier soorten korting, gekozen bij Create discount. Het meeste van het
