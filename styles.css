@@ -1827,7 +1827,14 @@ select.input {
 /* Een aanbieder die buiten ons om afrekent staat in een eigen kader: het is
    geen methode die wij aanzetten, maar een koppeling die jij onderhoudt. */
 .prov { margin-top: 16px; border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
-.prov__row .row__text { gap: 8px; }
+/* De naam met zijn stand ernaast, het merk van de aanbieder rechts tegen het
+   pijltje aan: zo staat het merk waar je het bij de andere methodes ook ziet.
+   Alleen het merk duwt naar rechts; zonder dat verdelen de stand, het merk en
+   het pijltje de ruimte alle drie en staat alles los in het midden. */
+.prov__row { gap: 10px; }
+.row.prov__row > .badge { margin-left: 0; }
+.prov__mark { margin-left: auto; }
+.prov__mark + .row__caret { margin-left: 10px; }
 /* De melding hoort bij de regel erboven, maar plakt niet aan de rand: ruimte
    eromheen, uitgelijnd met de tekst van die regel. */
 .prov__note { margin: 0 16px 16px; }
