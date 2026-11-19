@@ -3485,6 +3485,32 @@
     pageAction.classList.toggle("btn--primary", !actie.zacht);
   }
 
+  /* ---- De deur open of dicht ---------------------------------------------
+     Met deze schakelaar neemt de winkel wel of geen bestellingen meer aan.
+     Dicht is geen ramp maar wel iets wat je moet zien: de regel zegt het in
+     woorden, want een schakelaar alleen lees je over het hoofd. */
+  var winkelSchakelaar = document.getElementById("store-switch");
+
+  if (winkelSchakelaar) {
+    var winkelKaart = document.getElementById("store-open");
+    var winkelStand = winkelKaart.querySelector("[data-store-state]");
+    var winkelMeta = winkelKaart.querySelector("[data-store-meta]");
+
+    function zetWinkel(open, melden) {
+      winkelKaart.classList.toggle("is-dicht", !open);
+      winkelStand.textContent = open ? "Open for orders" : "Closed for orders";
+      winkelMeta.textContent = open
+        ? "Guests can order until 21:30"
+        : "Guests see your store but cannot order";
+      if (melden) showToast(open ? "Your store takes orders again" : "Your store stopped taking orders");
+    }
+
+    winkelSchakelaar.addEventListener("change", function () {
+      zetWinkel(winkelSchakelaar.checked, true);
+    });
+    zetWinkel(winkelSchakelaar.checked, false);
+  }
+
   /* ---- Een bezorger erbij ------------------------------------------------
      De knop rechtsboven op de bezorgerspagina opent een venster met twee
      velden. Opslaan zet hem onderaan de lijst, nog zonder ritten. */

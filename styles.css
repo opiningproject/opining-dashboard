@@ -628,6 +628,17 @@ select.input {
 /* Het pijltje helemaal rechts, zoals overal waar een regel je ergens heen
    brengt. */
 .taking__go { margin-left: auto; width: 18px; height: 18px; color: var(--text-muted); }
+/* Dezelfde regel als de bestellingen eronder, maar met een schakelaar in
+   plaats van een pijltje. De hele regel is het label, dus je kunt overal
+   klikken. */
+.taking__row { display: flex; align-items: center; gap: 10px; width: 100%; font-size: var(--fs-md); color: var(--text-strong); cursor: pointer; }
+.taking__row > .icon { flex: 0 0 auto; width: 20px; height: 20px; color: var(--text-muted); }
+.taking__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.taking__text b { font-weight: 600; }
+.taking__meta { font-size: var(--fs-sm); color: var(--text-muted); }
+.taking__switch { margin-left: auto; flex: 0 0 auto; }
+/* Dicht: de regel zegt het ook zonder de schakelaar te lezen. */
+#store-open.is-dicht .taking__row > .icon, #store-open.is-dicht b { color: var(--danger); }
 .taking__open .icon { width: 20px; height: 20px; color: var(--text-muted); }
 .taking__open b { font-weight: 600; }
 .taking__open:hover { color: var(--accent); }
