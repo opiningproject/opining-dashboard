@@ -3844,7 +3844,7 @@
      Voor het versturen van de aanvraag staat er reclame; zodra die verstuurd
      is, staat er wat je vanaf dan te regelen hebt. data-pay-state zegt van elk
      blok bij welke van de twee het hoort. */
-  var betaalStand = "off";
+  var betaalStand = "on";
 
   function zetBetaalStand(stand) {
     betaalStand = stand;
@@ -3865,9 +3865,9 @@
   }
 
   /* Stand van de verificatie bij Pay.nl, op de betaalpagina als data-verify:
-     setup (het account wordt aangemaakt), pending (Pay.nl controleert) of
-     failed. Hier gaat setup na een paar tellen vanzelf over in pending; echt
-     komt die overgang uit de koppeling met Pay.nl. */
+     setup (het account wordt aangemaakt), pending (Pay.nl controleert), done
+     (akkoord) of failed. Wie de aanvraag doorloopt ziet die eerste drie na
+     elkaar; echt komen die overgangen uit de koppeling met Pay.nl. */
   var betaalSectie = document.querySelector("[data-set-view=\"payments\"]");
   var verificatieTimer = null;
 
@@ -3878,7 +3878,10 @@
   function startVerificatie() {
     zetVerificatie("setup");
     clearTimeout(verificatieTimer);
-    verificatieTimer = setTimeout(function () { zetVerificatie("pending"); }, 4000);
+    verificatieTimer = setTimeout(function () {
+      zetVerificatie("pending");
+      verificatieTimer = setTimeout(function () { zetVerificatie("done"); }, 6000);
+    }, 4000);
   }
   btnSettings.addEventListener("click", openSettings);
   btnSetClose.addEventListener("click", closeSettings);
@@ -6208,8 +6211,9 @@
      De verificatie komt in het echt van Pay.nl, dus er is geen knop om hem te
      laten mislukken. Voor het tonen van een scherm kan het wel met ?demo= in
      de link: failed (afgewezen, uitbetalingen gepauzeerd), pending (in
-     behandeling), setup (account wordt aangemaakt) of off (nog niets
-     ingesteld). De link opent meteen de betaalpagina. */
+     behandeling), setup (account wordt aangemaakt), done (akkoord, de stand
+     waarin de pagina normaal staat) of off (nog niets ingesteld). De link
+     opent meteen de betaalpagina. */
   var demoStand = new URLSearchParams(location.search).get("demo") ||
                   new URLSearchParams(location.hash.slice(1)).get("demo");
   if (demoStand) {
@@ -6221,7 +6225,7 @@
       zetBetaalStand("off");
     } else {
       zetBetaalStand("on");
-      zetVerificatie(demoStand === "setup" || demoStand === "pending" ? demoStand : "failed");
+      zetVerificatie(["setup", "pending", "done"].indexOf(demoStand) >= 0 ? demoStand : "failed");
     }
   }
 

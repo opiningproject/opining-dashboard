@@ -1856,15 +1856,20 @@ select.input {
 .vbar__icon { display: grid; place-items: center; flex: 0 0 auto; }
 .vbar__icon .icon { width: 18px; height: 18px; }
 .vbar__body { display: none; flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px 16px; font-size: var(--fs-md); color: var(--text); }
-/* Drie standen, gekozen met data-verify op de betaalpagina.
+/* Vier standen, gekozen met data-verify op de betaalpagina.
    setup: het account wordt aangemaakt; grijze stippen, een gele melding en
    nog geen balk bovenaan. pending: onder review; betalen kan al, uitbetalen
-   nog niet. failed: de controle is mislukt; rood kruis, beide stippen rood,
-   en de uitleg over controleren valt weg. */
-.v-setup, .v-failed { display: none; }
+   nog niet. done: Pay.nl is akkoord; beide stippen groen en geen melding
+   meer, want er valt niets te wachten. failed: de controle is mislukt; rood
+   kruis, beide stippen rood, en de uitleg over controleren valt weg. */
+.v-setup, .v-failed, .v-done { display: none; }
 [data-verify="setup"] .v-pending, [data-verify="setup"] .v-later, [data-verify="setup"] .vbar,
+[data-verify="done"] .v-pending, [data-verify="done"] .v-later, [data-verify="done"] .vbar,
 [data-verify="failed"] .v-pending { display: none; }
-[data-verify="setup"] .v-setup, [data-verify="failed"] .v-failed { display: inline; }
+[data-verify="setup"] .v-setup, [data-verify="failed"] .v-failed,
+[data-verify="done"] .v-done { display: inline; }
+/* Alles loopt: ook uitbetalen staat op groen. */
+[data-verify="done"] .paystat__dot { background: var(--success); }
 [data-verify="setup"] .alert.v-setup { display: flex; }
 [data-verify="setup"] .paystat__dot { background: var(--gray-300); }
 [data-verify="failed"] .vbar__band { background: var(--danger); color: #fff; }

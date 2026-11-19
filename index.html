@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=677" />
+  <link rel="stylesheet" href="styles.css?v=679" />
 </head>
 <body>
 
@@ -4275,7 +4275,7 @@
         <section class="view" data-set-sub="payment-methods" hidden>
           <!-- Zolang de aanvraag niet verstuurd is, kun je hier van alles
                aanzetten wat toch niets doet. Dat hoort bovenaan te staan. -->
-          <p class="alert" data-pay-state="off">
+          <p class="alert" data-pay-state="off" hidden>
             <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>
             Opining Payments is not processing transactions yet. Complete your account setup to start accepting payments.
           </p>
@@ -5124,8 +5124,8 @@
         </section>
 
         <!-- ---------- SETTINGS: payments ---------- -->
-        <section class="view" data-set-view="payments" data-verify="setup" hidden>
-          <div class="card" data-pay-state="off">
+        <section class="view" data-set-view="payments" data-verify="done" hidden>
+          <div class="card" data-pay-state="off" hidden>
             <div class="promo">
               <div class="promo__body">
                 <h3 class="card__title">Activate online payments</h3>
@@ -5170,9 +5170,10 @@
           </div>
 
           <!-- De stand van de verificatie in een regel bovenaan. data-verify op
-               de sectie kiest de variant: setup (nog verborgen), pending (blauw
-               i-teken) of failed (rood kruis); de kaart eronder volgt mee. -->
-          <div class="card vbar" data-pay-state="on" hidden>
+               de sectie kiest de variant: setup en done laten hem weg, pending
+               geeft een blauw i-teken en failed een rood kruis; de kaart eronder
+               volgt mee. -->
+          <div class="card vbar" data-pay-state="on">
             <p class="vbar__band">
               <span class="vbar__icon" aria-hidden="true">
                 <svg class="icon v-pending"><use href="#i-info"/></svg>
@@ -5194,7 +5195,7 @@
                kun je al instellen wat je wilt, maar nog geen online betalingen
                ontvangen; deze kaart zegt dat bovenaan. Manage opent het beheer:
                uitbetalingen, ritme en wat de klant op zijn afschrift ziet. -->
-          <div class="card" data-pay-state="on" hidden>
+          <div class="card" data-pay-state="on">
             <div class="card__headrow">
               <h3 class="card__title">Online payments</h3>
               <button class="btn btn--ghost" type="button" data-sub="online-payments" data-sub-title="Online payments">Manage</button>
@@ -5204,8 +5205,8 @@
               <span>Opining Payments isn&rsquo;t processing transactions yet. We&rsquo;re setting up your account with Pay.nl.</span>
             </p>
             <div class="paystat">
-              <span class="paystat__item"><span class="paystat__dot paystat__dot--one" aria-hidden="true"></span><span class="v-setup">Setting up payments</span><span class="v-pending">Accepting payments</span><span class="v-failed">Payment methods limited</span></span>
-              <span class="paystat__item"><span class="paystat__dot paystat__dot--two" aria-hidden="true"></span><span class="v-setup">Setting up payouts</span><span class="v-later">Can&rsquo;t receive payouts</span></span>
+              <span class="paystat__item"><span class="paystat__dot paystat__dot--one" aria-hidden="true"></span><span class="v-setup">Setting up payments</span><span class="v-pending">Accepting payments</span><span class="v-done">Accepting payments</span><span class="v-failed">Payment methods limited</span></span>
+              <span class="paystat__item"><span class="paystat__dot paystat__dot--two" aria-hidden="true"></span><span class="v-setup">Setting up payouts</span><span class="v-later">Can&rsquo;t receive payouts</span><span class="v-done">Receiving payouts</span></span>
             </div>
             <p class="alert alert--info alert--titled paystat__note v-pending">
               <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
@@ -7859,6 +7860,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=677"></script>
+  <script src="app.js?v=679"></script>
 </body>
 </html>
