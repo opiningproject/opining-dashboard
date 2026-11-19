@@ -641,6 +641,15 @@ select.input {
 /* Buiten openingstijd valt er niets te kiezen; de schakelaar zegt dat ook
    zonder uit te leggen waarom hij niet meegeeft. */
 #store-open.is-gesloten .taking__switch { opacity: .45; cursor: not-allowed; }
+/* De stand met een stip ervoor: groen draait, oranje staat stil, rood dicht. */
+.storestate { display: inline-flex; align-items: center; gap: 9px; }
+.storestate__dot {
+  width: 9px; height: 9px; flex: 0 0 auto;
+  border-radius: var(--r-full);
+  background: var(--success);
+}
+#store-open.is-pauze .storestate__dot { background: var(--warning); }
+#store-open.is-gesloten .storestate__dot { background: var(--danger); }
 .taking__open .icon { width: 20px; height: 20px; color: var(--text-muted); }
 .taking__open b { font-weight: 600; }
 .taking__open:hover { color: var(--accent); }

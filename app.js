@@ -3532,8 +3532,10 @@
       var open = binnenOpeningstijd();
       winkelKaart.classList.toggle("is-gesloten", !open);
       winkelSchakelaar.disabled = !open;
-      var stand = !open ? "Closed" : (winkelSchakelaar.checked ? "Open for orders" : "Orders paused");
-      winkelStand.textContent = stand;
+      var pauze = open && !winkelSchakelaar.checked;
+      winkelKaart.classList.toggle("is-pauze", pauze);
+      /* Alleen het woord vervangen; de stip ervoor blijft staan. */
+      winkelStand.lastChild.nodeValue = !open ? "Closed" : (pauze ? "Orders paused" : "Open for orders");
       if (melden) {
         showToast(winkelSchakelaar.checked
           ? "Your store takes orders again"
