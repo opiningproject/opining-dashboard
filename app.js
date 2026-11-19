@@ -3534,8 +3534,8 @@
       winkelSchakelaar.disabled = !open;
       var pauze = open && !winkelSchakelaar.checked;
       winkelKaart.classList.toggle("is-pauze", pauze);
-      /* Alleen het woord vervangen; de stip ervoor blijft staan. */
-      winkelStand.lastChild.nodeValue = !open ? "Closed" : (pauze ? "Orders paused" : "Open for orders");
+      /* Alleen het woord vervangen; de stip erachter blijft staan. */
+      winkelStand.firstChild.nodeValue = !open ? "Closed" : (pauze ? "Orders paused" : "Open for orders");
       if (melden) {
         showToast(winkelSchakelaar.checked
           ? "Your store takes orders again"
