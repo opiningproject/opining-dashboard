@@ -3494,14 +3494,10 @@
   if (winkelSchakelaar) {
     var winkelKaart = document.getElementById("store-open");
     var winkelStand = winkelKaart.querySelector("[data-store-state]");
-    var winkelMeta = winkelKaart.querySelector("[data-store-meta]");
 
     function zetWinkel(open, melden) {
       winkelKaart.classList.toggle("is-dicht", !open);
       winkelStand.textContent = open ? "Open for orders" : "Closed for orders";
-      winkelMeta.textContent = open
-        ? "Guests can order until 21:30"
-        : "Guests see your store but cannot order";
       if (melden) showToast(open ? "Your store takes orders again" : "Your store stopped taking orders");
     }
 
