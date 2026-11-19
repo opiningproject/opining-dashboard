@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=695" />
+  <link rel="stylesheet" href="styles.css?v=696" />
 </head>
 <body>
 
@@ -1984,15 +1984,16 @@
                   <option>The whole menu</option>
                 </select>
               </div>
-              <div class="field" data-disc-applies>
+              <div class="field" data-disc-applies data-disc-search>
                 <label class="label sr-only" for="disc-search">Search products</label>
                 <div class="withbtn">
                   <span class="psearch__field">
                     <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
                     <input id="disc-search" type="search" placeholder="Search products" />
                   </span>
-                  <button class="btn btn--soft btn--sm" type="button">Browse</button>
+                  <button class="btn btn--soft btn--sm" type="button" id="disc-browse">Browse</button>
                 </div>
+                <ul class="picked" id="disc-picked" hidden></ul>
               </div>
             </div>
 
@@ -6849,6 +6850,34 @@
       </div>
     </div>
   </div>
+  <!-- Kiezen waarop een korting slaat. Het venster gaat open zodra je in het
+       zoekveld op de pagina een letter typt, met die letter er al in: wie
+       begint te zoeken hoeft niet eerst een knop te vinden. Browse opent
+       hetzelfde venster, dan zonder zoekterm. -->
+  <div class="dialog" id="pick-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card dialog__card--wide" role="dialog" aria-modal="true" aria-labelledby="pick-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="pick-title">Add products</h2>
+      </div>
+      <div class="pick__search">
+        <span class="psearch__field">
+          <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+          <input id="pick-search" type="search" placeholder="Search products" aria-label="Search products" />
+        </span>
+      </div>
+      <div class="dialog__body pickbody">
+        <div class="pickhead"><span id="pick-col">Product</span><span id="pick-col2">Price</span></div>
+        <ul class="picklines" id="pick-list"></ul>
+        <p class="pick__empty" id="pick-empty" hidden>Nothing matches what you typed.</p>
+      </div>
+      <div class="dialog__foot pick__foot">
+        <span class="pick__count" id="pick-count">0 selected</span>
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="pick-add" disabled>Add</button>
+      </div>
+    </div>
+  </div>
   <!-- Wat voor korting het wordt, vragen we voor het formulier: elke soort
        heeft zijn eigen velden. De regels openen hetzelfde aanmaakscherm,
        met data-disc-type erbij zodat het de juiste kaarten laat zien. -->
@@ -7988,6 +8017,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=695"></script>
+  <script src="app.js?v=696"></script>
 </body>
 </html>

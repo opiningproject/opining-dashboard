@@ -1518,6 +1518,181 @@
       if (knop) discView.dataset.discMethod = knop.dataset.method;
     });
 
+    /* ---- Kiezen waarop de korting slaat --------------------------------
+       Typen in het zoekveld opent het venster met diezelfde letters erin;
+       zo hoef je niet twee keer te beginnen. Wat je aantikt en toevoegt
+       komt onder het zoekveld te staan, met een kruisje om het weer weg te
+       halen. */
+    var pickVenster = document.getElementById("pick-dialog");
+    var pickZoek    = document.getElementById("pick-search");
+    var pickLijst   = document.getElementById("pick-list");
+    var pickLeeg    = document.getElementById("pick-empty");
+    var pickTitel   = document.getElementById("pick-title");
+    var pickTel     = document.getElementById("pick-count");
+    var pickAdd     = document.getElementById("pick-add");
+    var pickKop     = document.getElementById("pick-col");
+    var pickKop2    = document.getElementById("pick-col2");
+    var discZoek    = document.getElementById("disc-search");
+    var discGekozen = document.getElementById("disc-picked");
+    var discApplies = document.getElementById("disc-applies");
+
+    var PICK_PRODUCTEN = [
+      { naam: "Pistachio Velvet Latte", meta: "€ 4,50" },
+      { naam: "White Chocolate", meta: "€ 3,80" },
+      { naam: "Green Special", meta: "€ 4,20" },
+      { naam: "Iced Protein Matcha", meta: "€ 4,80" },
+      { naam: "Vanille Protein Matcha", meta: "€ 4,80" },
+      { naam: "Cappuccino", meta: "€ 3,20" },
+      { naam: "Flat White", meta: "€ 3,40" },
+      { naam: "Cold Brew", meta: "€ 3,90" },
+      { naam: "Iced Latte", meta: "€ 3,60" },
+      { naam: "Chicken Sandwich", meta: "€ 6,50" },
+      { naam: "Mozarella Sandwich", meta: "€ 5,90" },
+      { naam: "Mozzarella Sandwich with Pesto", meta: "€ 6,20" }
+    ];
+
+    var PICK_CATEGORIEEN = [
+      { naam: "Protein Beverages", meta: "5 products" },
+      { naam: "Sandwiches", meta: "4 products" },
+      { naam: "Hot Coffee", meta: "6 products" },
+      { naam: "Cold Coffee", meta: "4 products" },
+      { naam: "Seasonal specials", meta: "3 products" }
+    ];
+
+    function pickCategorie() { return discApplies.value === "Specific categories"; }
+    function pickWoord() { return pickCategorie() ? "categories" : "products"; }
+
+    function pickRegel(r, klas) {
+      var li = document.createElement("li");
+      li.className = klas;
+      li.dataset.naam = r.naam;
+      li.dataset.meta = r.meta;
+      return li;
+    }
+
+    function pickTeken(vorm) {
+      var teken = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      teken.setAttribute("class", "icon");
+      teken.setAttribute("aria-hidden", "true");
+      var gebruik = document.createElementNS("http://www.w3.org/2000/svg", "use");
+      gebruik.setAttribute("href", "#" + vorm);
+      teken.appendChild(gebruik);
+      return teken;
+    }
+
+    function pickDuim(klas) {
+      var vak = document.createElement("span");
+      vak.className = "prod__thumb " + klas;
+      vak.appendChild(pickTeken("i-image"));
+      return vak;
+    }
+
+    function pickVul() {
+      var bron = pickCategorie() ? PICK_CATEGORIEEN : PICK_PRODUCTEN;
+      var tekst = pickZoek.value.trim().toLowerCase();
+      pickLijst.textContent = "";
+      var aantal = 0;
+      bron.forEach(function (r) {
+        if (tekst && r.naam.toLowerCase().indexOf(tekst) < 0) return;
+        aantal++;
+        var li = pickRegel(r, "pickrow");
+        var vink = document.createElement("label");
+        vink.className = "pickrow__pick";
+        var vak = document.createElement("input");
+        vak.type = "checkbox";
+        var naam = document.createElement("span");
+        naam.className = "sr-only";
+        naam.textContent = r.naam;
+        vink.appendChild(vak);
+        vink.appendChild(naam);
+        var titel = document.createElement("span");
+        titel.className = "pickrow__name";
+        titel.textContent = r.naam;
+        var meta = document.createElement("span");
+        meta.className = "pickrow__meta";
+        meta.textContent = r.meta;
+        li.appendChild(vink);
+        li.appendChild(pickDuim("pickrow__thumb"));
+        li.appendChild(titel);
+        li.appendChild(meta);
+        pickLijst.appendChild(li);
+      });
+      pickLeeg.hidden = aantal > 0;
+      zetPickTel();
+    }
+
+    function zetPickTel() {
+      var aan = pickLijst.querySelectorAll("input:checked").length;
+      pickTel.textContent = aan + " " + pickWoord() + " selected";
+      pickAdd.disabled = aan === 0;
+    }
+
+    function pickOpen(tekst) {
+      var cat = pickCategorie();
+      pickTitel.textContent = cat ? "Add categories" : "Add products";
+      pickZoek.placeholder = cat ? "Search categories" : "Search products";
+      pickKop.textContent = cat ? "Category" : "Product";
+      pickKop2.textContent = cat ? "Products" : "Price";
+      pickZoek.value = tekst || "";
+      pickVul();
+      pickVenster.hidden = false;
+      pickZoek.focus();
+      var n = pickZoek.value.length;
+      try { pickZoek.setSelectionRange(n, n); } catch (f) {}
+    }
+
+    function wisGekozen() {
+      discGekozen.textContent = "";
+      discGekozen.hidden = true;
+    }
+
+    /* De eerste letter is genoeg: het venster neemt het over. */
+    discZoek.addEventListener("input", function () {
+      if (!discZoek.value) return;
+      pickOpen(discZoek.value);
+    });
+
+    document.getElementById("disc-browse").addEventListener("click", function () {
+      pickOpen(discZoek.value);
+    });
+
+    pickZoek.addEventListener("input", pickVul);
+    pickLijst.addEventListener("change", zetPickTel);
+
+    pickAdd.addEventListener("click", function () {
+      [].forEach.call(pickLijst.querySelectorAll(".pickrow"), function (li) {
+        if (!li.querySelector("input").checked) return;
+        if (discGekozen.querySelector('[data-naam="' + li.dataset.naam.replace(/"/g, "") + '"]')) return;
+        var rij = pickRegel({ naam: li.dataset.naam, meta: li.dataset.meta }, "picked__row");
+        var titel = document.createElement("span");
+        titel.className = "pickrow__name";
+        titel.textContent = li.dataset.naam;
+        var meta = document.createElement("span");
+        meta.className = "pickrow__meta";
+        meta.textContent = li.dataset.meta;
+        var weg = document.createElement("button");
+        weg.className = "icon-btn picked__del";
+        weg.type = "button";
+        weg.setAttribute("aria-label", "Remove " + li.dataset.naam);
+        weg.appendChild(pickTeken("i-close"));
+        rij.appendChild(pickDuim("pickrow__thumb"));
+        rij.appendChild(titel);
+        rij.appendChild(meta);
+        rij.appendChild(weg);
+        discGekozen.appendChild(rij);
+      });
+      discGekozen.hidden = !discGekozen.children.length;
+      discZoek.value = "";
+      pickVenster.hidden = true;
+    });
+
+    discGekozen.addEventListener("click", function (e) {
+      var weg = e.target.closest(".picked__del");
+      if (!weg) return;
+      weg.closest(".picked__row").remove();
+      discGekozen.hidden = !discGekozen.children.length;
+    });
+
     document.getElementById("disc-generate").addEventListener("click", function () {
       codeTeller++;
       document.getElementById("disc-code").value = codeBlok(8, codeTeller);
@@ -1525,6 +1700,13 @@
 
     discView.addEventListener("change", function (e) {
       if (e.target.id === "disc-kind") discUnit.textContent = e.target.value === "pct" ? "%" : "€";
+      /* Voor de hele kaart hoef je niets te kiezen, dus dan valt het zoeken
+         weg. Wissel je tussen producten en categorieen, dan klopt wat je al
+         gekozen had niet meer. */
+      if (e.target.id === "disc-applies") {
+        discView.dataset.discScope = e.target.value === "The whole menu" ? "all" : "some";
+        wisGekozen();
+      }
       if (e.target.name === "disc-min") discView.dataset.discMin = e.target.value;
       if (e.target.id === "disc-cap") discView.dataset.discCap = e.target.checked ? "on" : "off";
       if (e.target.id === "disc-hasend") discView.dataset.discEnd = e.target.checked ? "on" : "off";

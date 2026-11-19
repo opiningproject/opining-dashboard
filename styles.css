@@ -2709,19 +2709,20 @@ select.input {
 
 /* Selectievakje op één regel, zonder de radio-opmaak van .choice. */
 .choice--plain { margin-top: 14px; padding: 0; }
-.choice--plain input {
+.choice--plain input, .pickrow input {
   appearance: none;
   width: 20px; height: 20px; flex: 0 0 auto;
   border: 1.5px solid var(--border-strong);
   border-radius: var(--r-sm);
   transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
-.choice--plain input:checked {
+.choice--plain input:checked, .pickrow input:checked {
   border-color: var(--accent);
   background: var(--accent)
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><path d='m5 12.5 4.5 4.5L19 7'/></svg>") center / 13px no-repeat;
 }
-.choice--plain input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.choice--plain input:focus-visible,
+.pickrow input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* Codes lezen beter in een vaste breedte. */
 .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .01em; }
@@ -3542,6 +3543,39 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 [data-disc-min="items"] [data-when-min="items"],
 [data-disc-cap="on"] [data-when-cap] { display: flex; margin-top: 16px; }
 [data-disc-end="on"] [data-when-end] { display: grid; margin-top: 16px; }
+
+/* Kiezen uit een lijst in een venster: bovenin zoeken, daaronder de rijen
+   met een vinkje ervoor, en onderin hoeveel je er aangetikt hebt. De kop
+   blijft staan terwijl de lijst eronder schuift. */
+.pick__search { flex: 0 0 auto; padding: 0 22px 14px; }
+.pickbody { padding: 0; }
+.pickhead {
+  position: sticky; top: 0; z-index: 1;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 8px 22px;
+  border-block: 1px solid var(--border);
+  background: var(--gray-25);
+  font-size: var(--fs-sm); color: var(--text-muted);
+}
+.pickrow { display: flex; align-items: center; gap: 14px; padding: 10px 22px; cursor: pointer; }
+.pickrow + .pickrow { border-top: 1px solid var(--border); }
+.pickrow:hover { background: var(--gray-50); }
+.pickrow__pick { display: flex; flex: 0 0 auto; }
+.pickrow__thumb { width: 36px; height: 36px; }
+.pickrow__thumb .icon { width: 18px; height: 18px; }
+.pickrow__name { min-width: 0; font-size: var(--fs-md); color: var(--text-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pickrow__meta { margin-left: auto; font-size: var(--fs-sm); color: var(--text-muted); white-space: nowrap; }
+.pick__empty { padding: 24px 22px; font-size: var(--fs-md); color: var(--text-muted); }
+.pick__foot { align-items: center; padding-top: 16px; border-top: 1px solid var(--border); }
+.pick__count { margin-right: auto; font-size: var(--fs-sm); color: var(--text-muted); }
+
+/* Wat gekozen is staat onder het zoekveld: anders moet je het venster weer
+   openen om te zien waar de korting op slaat. */
+.picked { margin-top: 12px; border: 1px solid var(--border); border-radius: var(--r-md); }
+.picked__row { display: flex; align-items: center; gap: 14px; padding: 8px 12px; }
+.picked__row + .picked__row { border-top: 1px solid var(--border); }
+.picked__del { flex: 0 0 auto; margin-left: 10px; }
+[data-disc-scope="all"] [data-disc-search] { display: none; }
 
 /* Het label links, de verwijzing ernaast rechts op dezelfde regel: zo staat
    "Generate random code" niet onder het veld dat hij vult. */
