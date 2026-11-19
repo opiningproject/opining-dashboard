@@ -3544,6 +3544,33 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 [data-disc-cap="on"] [data-when-cap] { display: flex; margin-top: 16px; }
 [data-disc-end="on"] [data-when-end] { display: grid; margin-top: 16px; }
 
+/* Samengaan met andere kortingen. De knop in de kaartkop opent een lijstje
+   met wat mag; wat je aanvinkt komt als regel in het vak eronder te staan,
+   met het kruisje om het weer uit te zetten. Zolang er niets aanstaat zegt
+   het vak dat deze korting alleen geldt. */
+.combo__menu { min-width: 300px; max-width: 340px; padding: 14px 16px; }
+.combo__menutitle { margin-bottom: 10px; font-size: var(--fs-md); font-weight: 600; color: var(--text-strong); }
+.combo__opt { align-items: flex-start; gap: 12px; margin-top: 0; padding: 8px 0; }
+.combo__opt > span { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.combo__opt b { font-size: var(--fs-md); font-weight: 500; }
+.combo__opt > span > span { font-size: var(--fs-sm); font-weight: 400; color: var(--text-muted); line-height: 1.4; }
+
+.combo__box { margin-top: 14px; padding: 4px 16px; border: 1px solid var(--border); border-radius: var(--r-md); }
+.combo__lead { padding: 12px 0; font-size: var(--fs-md); color: var(--text); }
+/* Elke regel draagt zijn eigen streep boven zich: zo staat er ook een lijn
+   tussen de zin en de eerste regel, en blijft het kloppen als er een regel
+   wegvalt. */
+.combo__row { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border); }
+.combo__icon { color: var(--text-muted); }
+.combo__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.combo__text b { font-size: var(--fs-md); font-weight: 500; color: var(--text-strong); }
+.combo__text > span { font-size: var(--fs-sm); color: var(--text-muted); }
+.combo__count { margin-left: auto; font-variant-numeric: tabular-nums; }
+.combo__del { flex: 0 0 auto; }
+/* Staat er niets aan, dan is er niets om op te sommen, en andersom. */
+[data-combos="none"] [data-combo-lead="some"],
+[data-combos="some"] [data-combo-lead="none"] { display: none; }
+
 /* Kiezen uit een lijst in een venster: bovenin zoeken, daaronder de rijen
    met een vinkje ervoor, en onderin hoeveel je er aangetikt hebt. De kop
    blijft staan terwijl de lijst eronder schuift. */

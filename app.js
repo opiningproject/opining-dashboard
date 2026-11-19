@@ -1693,6 +1693,33 @@
       discGekozen.hidden = !discGekozen.children.length;
     });
 
+    /* ---- Samengaan met andere kortingen --------------------------------
+       Het menu in de kaartkop zegt wat mag; het vak eronder zegt wat dat
+       oplevert. Het kruisje op een regel doet hetzelfde als het vinkje
+       weghalen, zodat je niet eerst het menu hoeft te openen. */
+    var comboKaart = discView.querySelector("[data-combos]");
+
+    function zetCombos() {
+      var aan = 0;
+      comboKaart.querySelectorAll("[data-combo]").forEach(function (vak) {
+        var regel = comboKaart.querySelector('[data-combo-row="' + vak.dataset.combo + '"]');
+        regel.hidden = !vak.checked;
+        if (vak.checked) aan++;
+      });
+      comboKaart.dataset.combos = aan ? "some" : "none";
+    }
+
+    comboKaart.addEventListener("change", function (e) {
+      if (e.target.dataset.combo) zetCombos();
+    });
+
+    comboKaart.addEventListener("click", function (e) {
+      var weg = e.target.closest("[data-combo-off]");
+      if (!weg) return;
+      comboKaart.querySelector('[data-combo="' + weg.dataset.comboOff + '"]').checked = false;
+      zetCombos();
+    });
+
     document.getElementById("disc-generate").addEventListener("click", function () {
       codeTeller++;
       document.getElementById("disc-code").value = codeBlok(8, codeTeller);

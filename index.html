@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=696" />
+  <link rel="stylesheet" href="styles.css?v=697" />
 </head>
 <body>
 
@@ -2037,9 +2037,78 @@
               <label class="choice choice--plain"><input type="checkbox" id="disc-once" /><span>Limit to one use per customer</span></label>
             </div>
 
-            <div class="card">
-              <h2 class="card__title">Combinations</h2>
-              <p class="card__sub">This discount won&rsquo;t combine with other product, order or delivery discounts in the same cart.</p>
+            <div class="card" data-combos="none">
+              <div class="card__headrow">
+                <h2 class="card__title">Combinations</h2>
+                <span class="sort">
+                  <button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Edit combinations">
+                    <svg class="icon" aria-hidden="true"><use href="#i-plus-circle"/></svg>
+                  </button>
+                  <div class="sort__menu combo__menu" role="group" aria-label="Combinations" hidden>
+                    <p class="combo__menutitle">Allow this discount to combine with other discounts</p>
+          <label class="choice choice--plain combo__opt">
+            <input type="checkbox" data-combo="product" />
+            <span>
+              <b>Product discounts</b>
+              <span>Multiple can apply per order &middot; One per product (best value wins)</span>
+            </span>
+          </label>
+          <label class="choice choice--plain combo__opt">
+            <input type="checkbox" data-combo="order" />
+            <span>
+              <b>Order discounts</b>
+              <span>Multiple can apply per order</span>
+            </span>
+          </label>
+          <label class="choice choice--plain combo__opt">
+            <input type="checkbox" data-combo="delivery" />
+            <span>
+              <b>Delivery discounts</b>
+              <span>Only one can apply per order (best value wins)</span>
+            </span>
+          </label>
+                  </div>
+                </span>
+              </div>
+              <div class="combo__box">
+                <p class="combo__lead" data-combo-lead="none">This discount won&rsquo;t combine with other product, order or delivery discounts in the same cart.</p>
+                <p class="combo__lead" data-combo-lead="some">This discount can be combined with the following discounts in the same cart:</p>
+                <ul class="combo__list">
+                <li class="combo__row" data-combo-row="product" hidden>
+                  <svg class="icon combo__icon" aria-hidden="true"><use href="#i-discount"/></svg>
+                  <span class="combo__text">
+                    <b>Product discounts</b>
+                    <span>Multiple can apply per order &middot; One per product (best value wins)</span>
+                  </span>
+                  <span class="badge badge--muted combo__count">6</span>
+                  <button class="icon-btn combo__del" type="button" data-combo-off="product" aria-label="Do not combine with product discounts">
+                    <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                  </button>
+                </li>
+                <li class="combo__row" data-combo-row="order" hidden>
+                  <svg class="icon combo__icon" aria-hidden="true"><use href="#i-bag"/></svg>
+                  <span class="combo__text">
+                    <b>Order discounts</b>
+                    <span>Multiple can apply per order</span>
+                  </span>
+                  <span class="badge badge--muted combo__count">2</span>
+                  <button class="icon-btn combo__del" type="button" data-combo-off="order" aria-label="Do not combine with order discounts">
+                    <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                  </button>
+                </li>
+                <li class="combo__row" data-combo-row="delivery" hidden>
+                  <svg class="icon combo__icon" aria-hidden="true"><use href="#i-delivery"/></svg>
+                  <span class="combo__text">
+                    <b>Delivery discounts</b>
+                    <span>Only one can apply per order (best value wins)</span>
+                  </span>
+                  <span class="badge badge--muted combo__count">1</span>
+                  <button class="icon-btn combo__del" type="button" data-combo-off="delivery" aria-label="Do not combine with delivery discounts">
+                    <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
+                  </button>
+                </li>
+                </ul>
+              </div>
             </div>
 
             <div class="card">
@@ -8017,6 +8086,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=696"></script>
+  <script src="app.js?v=697"></script>
 </body>
 </html>
