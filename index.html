@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=670" />
+  <link rel="stylesheet" href="styles.css?v=671" />
 </head>
 <body>
 
@@ -326,9 +326,6 @@
             </div>
             <!-- Paginagebonden bediening op de titelregel; app.js toont het
                  blok waarvan data-tools gelijk is aan de actieve pagina. -->
-            <div class="page-head__tools" data-tools="loyalty" hidden>
-              <span class="chip chip--info"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>Always active</span>
-            </div>
             <div class="page-head__tools" data-tools="customers" hidden>
               <button class="btn btn--ghost page-head__action" type="button">
                 <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export
@@ -898,54 +895,61 @@
           <!-- ---------- VIEW: loyalty ---------- -->
           <section class="view" data-view="loyalty" hidden>
 
-            <div class="notice notice--locked" id="loyalty-rule">
-              <p class="notice__bar">
-                <svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>
-                Customer automatically earns 1 point per 0,01 EUR spend. Always starts with 0 points.
-                <button class="icon-btn notice__close" type="button" aria-label="Dismiss this rule"
-                        data-dismiss="loyalty-rule">
-                  <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
-                </button>
-              </p>
-              <div class="notice__body">
-                This rule is <b>fixed</b> to keep the loyalty program <b>simple and predictable.</b>
+            <!-- Wat vastligt staat als gewone regel bovenaan en niet meer in een
+                 balk die je kunt wegklikken: het is geen mededeling van vandaag
+                 maar hoe het programma werkt. -->
+            <div class="card">
+              <h3 class="card__title">How points are earned</h3>
+              <div class="rows">
+                <div class="row row--static">
+                  <svg class="icon row__icon" aria-hidden="true"><use href="#i-coin"/></svg>
+                  <span class="row__text">
+                    <span class="row__title">1 point per &euro; 0,01 spent</span>
+                    <span class="row__meta">Every customer starts at zero. This rule is fixed, so the programme stays the same for everyone.</span>
+                  </span>
+                </div>
               </div>
             </div>
 
             <div class="card">
-              <h2 class="card__title">Points redemption value</h2>
+              <h3 class="card__title">Points redemption value</h3>
               <p class="card__sub">How much of the order value should points be worth?</p>
 
-              <fieldset class="choices choices--valued">
-                <legend class="sr-only">Points redemption value</legend>
-                <label class="choice">
+              <!-- Dezelfde rijen als elders waar je er een uit kiest: het gekozen
+                   percentage draagt het woord Current. -->
+              <div class="rows">
+                <label class="pick pick--val">
                   <input type="radio" name="redemption" value="3" />
-                  <span class="choice__value">3%</span>
-                  <span>Low reward, High Margin</span>
+                  <span class="pick__name">3%</span>
+                  <span class="pick__desc">Low reward, high margin</span>
+                  <span class="pick__meta">Current</span>
                 </label>
-                <label class="choice">
+                <label class="pick pick--val">
                   <input type="radio" name="redemption" value="5" />
-                  <span class="choice__value">5%</span>
-                  <span>Standard Reward</span>
+                  <span class="pick__name">5%</span>
+                  <span class="pick__desc">Standard reward</span>
+                  <span class="pick__meta">Current</span>
                 </label>
-                <label class="choice">
+                <label class="pick pick--val">
                   <input type="radio" name="redemption" value="10" checked />
-                  <span class="choice__value">10%</span>
-                  <span>Generous Reward</span>
+                  <span class="pick__name">10%</span>
+                  <span class="pick__desc">Generous reward</span>
+                  <span class="pick__meta">Current</span>
                 </label>
-                <label class="choice">
+                <label class="pick pick--val">
                   <input type="radio" name="redemption" value="15" />
-                  <span class="choice__value">15%</span>
-                  <span>High Reward</span>
+                  <span class="pick__name">15%</span>
+                  <span class="pick__desc">High reward</span>
+                  <span class="pick__meta">Current</span>
                 </label>
-              </fieldset>
+              </div>
 
-              <p class="hint hint--spaced">Customers receive this % back as a discount when redeeming points.</p>
+              <p class="hint hint--spaced">Customers receive this percentage back as a discount when they redeem points.</p>
             </div>
 
             <div class="card">
-              <h2 class="card__title"><span id="loyalty-pct">10%</span> Preview</h2>
-              <p class="card__sub">This overview shows the number of points needed per reward and the corresponding discount value.</p>
+              <h3 class="card__title"><span id="loyalty-pct">10%</span> preview</h3>
+              <p class="card__sub">What a customer needs to save for each reward, and what it is worth.</p>
 
               <ul class="tiles" id="loyalty-tiles">
                 <li class="tile">
@@ -966,7 +970,7 @@
                 </li>
               </ul>
 
-              <p class="hint hint--spaced">We&rsquo;ve set this up for you to ensure a simple, predictable, and high-performing loyalty program.</p>
+              <p class="hint hint--spaced">Set up this way to keep the programme simple and predictable.</p>
             </div>
           </section>
 
@@ -7884,6 +7888,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=670"></script>
+  <script src="app.js?v=671"></script>
 </body>
 </html>

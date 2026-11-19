@@ -1975,28 +1975,10 @@ select.input {
    8g. LOYALTY
    ========================================================================== */
 
-/* Vaste, niet-instelbare regel. Bruin i.p.v. rood: dit is geen fout maar een
-   grens van het systeem. */
-.notice--locked .notice__bar { background: #8a6410; }
-.notice__close {
-  margin-left: auto;
-  width: 32px; height: 32px;
-  color: rgba(255, 255, 255, .8);
-}
-.notice__close:hover { background: rgba(255, 255, 255, .16); color: #fff; }
-.notice__close .icon { width: 17px; height: 17px; }
-.notice__body b { font-weight: 600; color: var(--text-strong); }
-
-/* Keuzelijst met een waarde vóór het label. Vaste kolombreedte, anders
-   staan de omschrijvingen niet onder elkaar. */
-.choices--valued .choice { gap: 14px; }
-.choice__value {
-  flex: 0 0 auto;
-  min-width: 34px;
-  font-weight: 500;
-  color: var(--text-strong);
-  font-variant-numeric: tabular-nums;
-}
+/* Kiezen uit percentages: het getal staat in een vaste kolom, anders beginnen
+   de omschrijvingen ernaast niet op dezelfde lijn. */
+.pick--val .pick__name { min-width: 42px; font-variant-numeric: tabular-nums; }
+.pick__desc { font-size: var(--fs-md); color: var(--text); }
 
 .hint--spaced { margin-top: 18px; }
 
