@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=689" />
+  <link rel="stylesheet" href="styles.css?v=691" />
 </head>
 <body>
 
@@ -102,6 +102,7 @@
     <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 11.1v5.1M12 7.8h.01"/></symbol>
     <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.6" y="6.4" width="14.6" height="9.4" rx="2"/><circle cx="9.9" cy="11.1" r="2.1"/><path d="M6.6 19.2h10.1a4 4 0 0 0 4-4V9.5"/></symbol>
     <symbol id="i-coin" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="8.8"/><path d="M12 6.9l1.45 2.85 2.85 1.45-2.85 1.45L12 15.5l-1.45-2.85L7.7 11.2l2.85-1.45z" fill="#fff"/></symbol>
+    <symbol id="i-delivery" viewBox="0 0 24 24"><rect x="2.6" y="5" width="10.4" height="10.4" rx="1.4"/><path d="M13 8.8h3.4l3 3.1v3.5h-6.4"/><circle cx="6.9" cy="17.3" r="1.75"/><circle cx="16.6" cy="17.3" r="1.75"/></symbol>
     <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5.4 8.4h13.2l-1 11a1.6 1.6 0 0 1-1.6 1.45H8a1.6 1.6 0 0 1-1.6-1.45zM8.9 8.4V6.6a3.1 3.1 0 0 1 6.2 0v1.8"/></symbol>
     <symbol id="i-chargeback" viewBox="0 0 24 24"><rect x="3.4" y="6" width="17.2" height="13" rx="2"/><path d="M14.4 12.5H8.6M11 9.9l-2.6 2.6L11 15.1"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M13.4 4.6h6v6M19.4 4.6 11.6 12.4M17.4 14v4.4a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 18.4V8.2a1.6 1.6 0 0 1 1.6-1.6H10"/></symbol>
@@ -1898,9 +1899,9 @@
           </section>
 
           <!-- ---------- VIEW: automatische korting aanmaken ---------- -->
-          <section class="view" data-view="discount-new" hidden>
-            <div class="card">
-              <h2 class="card__title">What gets the discount</h2>
+          <section class="view" data-view="discount-new" data-disc-type="products" hidden>
+            <div class="card" data-disc-card="scope">
+              <h2 class="card__title" id="disc-scope-title">What gets the discount</h2>
               <fieldset class="choices">
                 <legend class="sr-only">Scope of the discount</legend>
                 <label class="choice"><input type="radio" name="disc-scope" checked /><span>One product</span></label>
@@ -1919,8 +1920,34 @@
               </div>
             </div>
 
-            <div class="card">
-              <h2 class="card__title">Discount</h2>
+            <div class="card" data-disc-card="gets">
+              <h2 class="card__title">What the customer gets</h2>
+              <div class="field">
+                <label class="label" for="disc-gets">Product</label>
+                <select class="input" id="disc-gets">
+                  <option>Cola 1,5L &mdash; &euro; 3,20</option>
+                  <option>French fries &mdash; &euro; 3,50</option>
+                  <option>Tiramisu &mdash; &euro; 6,00</option>
+                  <option>Margherita pizza &mdash; &euro; 11,50</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="card" data-disc-card="orders">
+              <h2 class="card__title">Which orders</h2>
+              <fieldset class="choices">
+                <legend class="sr-only">Which orders the discount applies to</legend>
+                <label class="choice"><input type="radio" name="disc-min" checked /><span>Every order</span></label>
+                <label class="choice"><input type="radio" name="disc-min" /><span>Orders over an amount</span></label>
+              </fieldset>
+              <div class="field">
+                <label class="label" for="disc-minimum">Minimum order amount</label>
+                <span class="affix affix--pre"><span class="affix__sym" aria-hidden="true">&euro;</span><input class="input" id="disc-minimum" type="number" value="20" min="0" step="1" disabled /></span>
+              </div>
+            </div>
+
+            <div class="card" data-disc-card="value">
+              <h2 class="card__title" id="disc-value-title">Discount</h2>
               <fieldset class="choices">
                 <legend class="sr-only">Type of discount</legend>
                 <label class="choice"><input type="radio" name="disc-kind" value="pct" checked /><span>Percentage off</span></label>
@@ -1931,7 +1958,7 @@
                   <label class="label" for="disc-value">Amount off</label>
                   <span class="affix affix--post"><input class="input" id="disc-value" type="number" value="10" min="1" step="1" /><span class="affix__sym" aria-hidden="true" id="disc-unit">%</span></span>
                 </div>
-                <div class="field">
+                <div class="field" data-disc-price>
                   <span class="label">New price</span>
                   <p class="pricepreview"><s id="disc-was">&euro; 3,50</s> <b id="disc-now">&euro; 3,15</b></p>
                 </div>
@@ -6754,6 +6781,54 @@
       </div>
     </div>
   </div>
+  <!-- Wat voor korting het wordt, vragen we voor het formulier: elke soort
+       heeft zijn eigen velden. De regels openen hetzelfde aanmaakscherm,
+       met data-disc-type erbij zodat het de juiste kaarten laat zien. -->
+  <div class="dialog" id="disctype-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="disctype-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="disctype-title">Select discount type</h2>
+      </div>
+      <div class="dialog__body picklist">
+        <button class="row" type="button" data-dialog-close data-open-view="discount-new" data-view-title="Amount off products" data-disc-type="products">
+          <svg class="icon row__icon" aria-hidden="true"><use href="#i-discount"/></svg>
+          <span class="row__text">
+            <span class="row__title">Amount off products</span>
+            <span class="row__meta">Discount specific products or categories</span>
+          </span>
+          <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+        </button>
+        <button class="row" type="button" data-dialog-close data-open-view="discount-new" data-view-title="Buy X get Y" data-disc-type="bxgy">
+          <svg class="icon row__icon" aria-hidden="true"><use href="#i-discount"/></svg>
+          <span class="row__text">
+            <span class="row__title">Buy X get Y</span>
+            <span class="row__meta">Give a second product free or cheaper</span>
+          </span>
+          <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+        </button>
+        <button class="row" type="button" data-dialog-close data-open-view="discount-new" data-view-title="Amount off order" data-disc-type="order">
+          <svg class="icon row__icon" aria-hidden="true"><use href="#i-bag"/></svg>
+          <span class="row__text">
+            <span class="row__title">Amount off order</span>
+            <span class="row__meta">Discount the total order amount</span>
+          </span>
+          <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+        </button>
+        <button class="row" type="button" data-dialog-close data-open-view="discount-new" data-view-title="Free delivery" data-disc-type="delivery">
+          <svg class="icon row__icon" aria-hidden="true"><use href="#i-delivery"/></svg>
+          <span class="row__text">
+            <span class="row__title">Free delivery</span>
+            <span class="row__meta">Offer free delivery on an order</span>
+          </span>
+          <svg class="icon row__caret" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+        </button>
+      </div>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+      </div>
+    </div>
+  </div>
   <!-- Eén vraagvenster voor weghalen op de menukaart: een groep of een
        categorie. app.js zet de titel, de zin en de knop erin. Zonder knop
        om te verwijderen is het een melding: dan staat er alleen OK. -->
@@ -7845,6 +7920,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=689"></script>
+  <script src="app.js?v=691"></script>
 </body>
 </html>

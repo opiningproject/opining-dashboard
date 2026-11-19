@@ -3505,6 +3505,37 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .dialog__acts { display: flex; align-items: center; gap: 2px; }
 .dialog__acts .sort[hidden] { display: none; }
 
+/* Een venster waarin je kiest wat je gaat maken: regels van rand tot rand,
+   met een streepje ertussen, zoals in de instellingen. De omschrijving mag
+   hier over twee regels, want afkappen laat juist het verschil tussen de
+   soorten weg. */
+.dialog__body.picklist { padding: 0; }
+.picklist .row { position: relative; border-top: 0; padding-inline: 22px; }
+.picklist .row::before,
+.picklist .row:last-child::after {
+  content: ""; position: absolute; left: 22px; right: 22px;
+  border-top: 1px solid var(--border);
+}
+.picklist .row::before { top: 0; }
+.picklist .row:last-child::after { bottom: 0; }
+.picklist .row__meta { overflow: visible; white-space: normal; }
+
+/* Vier soorten korting, gekozen bij Create discount. Elke soort vraagt om
+   andere velden, dus de kaarten die er niet bij horen vallen weg. */
+[data-disc-card] { display: none; }
+[data-disc-type="products"] [data-disc-card="scope"],
+[data-disc-type="bxgy"] [data-disc-card="scope"],
+[data-disc-type="bxgy"] [data-disc-card="gets"],
+[data-disc-type="order"] [data-disc-card="orders"],
+[data-disc-type="delivery"] [data-disc-card="orders"],
+[data-disc-type="products"] [data-disc-card="value"],
+[data-disc-type="bxgy"] [data-disc-card="value"],
+[data-disc-type="order"] [data-disc-card="value"] { display: block; }
+/* De nieuwe prijs hoort bij één product; bij een hele bestelling is er
+   geen prijs om naast te zetten. */
+[data-disc-type]:not([data-disc-type="products"]) [data-disc-price] { display: none; }
+[data-disc-type]:not([data-disc-type="products"]) .field-row { grid-template-columns: minmax(0, 1fr); }
+
 /* Een stand in een venster: in woorden links, de schakelaar rechts, met een
    streep eronder omdat eronder het veld staat dat erbij hoort. */
 .archrow {

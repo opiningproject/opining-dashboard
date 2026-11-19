@@ -1486,6 +1486,34 @@
   if (discView) {
     var discProduct = document.getElementById("disc-product");
     var discValue   = document.getElementById("disc-value");
+    var discScopeT  = document.getElementById("disc-scope-title");
+    var discValueT  = document.getElementById("disc-value-title");
+    var DISC_KOPPEN = {
+      products: { scope: "What gets the discount", value: "Discount" },
+      bxgy:     { scope: "What the customer buys", value: "What they get off" },
+      order:    { scope: "What gets the discount", value: "Discount" },
+      delivery: { scope: "What gets the discount", value: "Discount" }
+    };
+
+    /* De keuze uit het venster bepaalt welke kaarten er staan en hoe ze
+       heten. De kaarten zelf staan al in de pagina; CSS laat per soort de
+       juiste zien. */
+    document.addEventListener("click", function (e) {
+      var keuze = e.target.closest("#disctype-dialog [data-disc-type]");
+      if (!keuze) return;
+      var soort = keuze.dataset.discType;
+      discView.dataset.discType = soort;
+      discScopeT.textContent = DISC_KOPPEN[soort].scope;
+      discValueT.textContent = DISC_KOPPEN[soort].value;
+    });
+
+    /* Een drempelbedrag hoort bij "orders over een bedrag"; staat de keuze
+       op elke bestelling, dan valt er niets in te vullen. */
+    var discMin = document.getElementById("disc-minimum");
+    discView.addEventListener("change", function (e) {
+      if (e.target.name !== "disc-min") return;
+      discMin.disabled = [].indexOf.call(discView.querySelectorAll('input[name="disc-min"]'), e.target) === 0;
+    });
     var discUnit    = document.getElementById("disc-unit");
     var discWas     = document.getElementById("disc-was");
     var discNow     = document.getElementById("disc-now");
@@ -3439,7 +3467,7 @@
     products:       { label: "Add product",   zacht: false },
     choices:        { label: "Add group",     zacht: false },
     categories:     { label: "Add category", zacht: false },
-    discounts:      { label: "Create discount", zacht: false, opent: "discount-new" },
+    discounts:      { label: "Create discount", zacht: false, venster: "disctype-dialog" },
     vouchers:       { label: "Create voucher",  zacht: false, opent: "voucher-new" },
     "email-campaigns": { label: "New campaign", zacht: false, opent: "campaign-new" },
     "online-store": { label: "View store",    zacht: false }
@@ -3481,6 +3509,10 @@
       delete pageAction.dataset.openView;
       delete pageAction.dataset.viewTitle;
     }
+    /* Een actie die eerst een vraag stelt opent een venster; de keuze daarin
+       opent het scherm. */
+    if (actie.venster) pageAction.dataset.dialog = actie.venster;
+    else delete pageAction.dataset.dialog;
     pageAction.classList.toggle("btn--soft", actie.zacht);
     pageAction.classList.toggle("btn--primary", !actie.zacht);
   }
