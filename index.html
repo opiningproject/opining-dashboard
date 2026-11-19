@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=664" />
+  <link rel="stylesheet" href="styles.css?v=665" />
 </head>
 <body>
 
@@ -362,15 +362,27 @@
                  verandert: hiermee stopt en start het aannemen van
                  bestellingen. -->
             <div class="card taking" id="store-open">
-              <label class="taking__row">
+              <div class="taking__row">
                 <svg class="icon" aria-hidden="true"><use href="#i-store"/></svg>
                 <b data-store-state>Open for orders</b>
-                <span class="switch taking__switch">
+                <!-- Drie standen in een regel vragen om uitleg; die staat achter
+                     het vraagteken in plaats van eronder. -->
+                <span class="explain">
+                  <button class="explain__icon" type="button" aria-label="What do open, paused and closed mean?" aria-describedby="explain-store">
+                    <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+                  </button>
+                  <span class="explain__pop" id="explain-store" role="tooltip">
+                    <b>Open, paused or closed</b>
+                    Your opening hours decide whether guests can order at all. Within those hours the switch is yours: leave it on and orders come in, turn it off to pause while the kitchen catches up.
+                    <span class="explain__sum">Outside your hours the store is closed and the switch waits until you open again.</span>
+                  </span>
+                </span>
+                <label class="switch taking__switch">
                   <input type="checkbox" id="store-switch" checked />
                   <span class="switch__track" aria-hidden="true"></span>
                   <span class="sr-only">Take orders</span>
-                </span>
-              </label>
+                </label>
+              </div>
             </div>
 
             <!-- De cijfers waar de zaak op draait. Deze kaart staat er vanaf de
@@ -7884,6 +7896,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=664"></script>
+  <script src="app.js?v=665"></script>
 </body>
 </html>

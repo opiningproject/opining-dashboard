@@ -3486,24 +3486,66 @@
   }
 
   /* ---- De deur open of dicht ---------------------------------------------
-     Met deze schakelaar neemt de winkel wel of geen bestellingen meer aan.
-     Dicht is geen ramp maar wel iets wat je moet zien: de regel zegt het in
-     woorden, want een schakelaar alleen lees je over het hoofd. */
+     Drie standen, en maar een ervan kies je zelf. Buiten de openingstijden is
+     de winkel dicht: dan valt er niets aan te zetten en wacht de schakelaar
+     tot je weer opengaat. Binnen die tijden bepaalt de schakelaar of er
+     bestellingen binnenkomen of dat het even pauze is, bijvoorbeeld als de
+     keuken moet bijkomen. */
   var winkelSchakelaar = document.getElementById("store-switch");
 
   if (winkelSchakelaar) {
     var winkelKaart = document.getElementById("store-open");
     var winkelStand = winkelKaart.querySelector("[data-store-state]");
+    var DAGEN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-    function zetWinkel(open, melden) {
-      winkelStand.textContent = open ? "Open for orders" : "Closed for orders";
-      if (melden) showToast(open ? "Your store takes orders again" : "Your store stopped taking orders");
+    /* De openingstijden van vandaag staan op de instellingenpagina. Elke dag
+       kan meer dan een blok hebben; het is open zolang de klok in een ervan
+       valt. Staat de dag uit, dan is er niets open. */
+    function binnenOpeningstijd() {
+      var nu = new Date();
+      var dag = DAGEN[nu.getDay()];
+      var rij = null;
+      document.querySelectorAll('[data-hours="delivery"] .hrow').forEach(function (r) {
+        var kop = r.querySelector(".rev__title");
+        if (kop && kop.textContent.trim() === dag) rij = r;
+      });
+      /* Zonder tijden op de pagina gaan we ervan uit dat er open is; een
+         prototype hoort niet dicht te zitten omdat er iets ontbreekt. */
+      if (!rij || rij.classList.contains("is-off")) return !rij;
+
+      var minuten = nu.getHours() * 60 + nu.getMinutes();
+      var open = false;
+      rij.querySelectorAll(".shift").forEach(function (blokje) {
+        var velden = blokje.querySelectorAll(".time");
+        if (velden.length !== 2) return;
+        var van = inMinuten(velden[0].value);
+        var tot = inMinuten(velden[1].value);
+        if (van === null || tot === null) return;
+        /* Een blok dat over middernacht loopt eindigt de volgende dag. */
+        if (tot <= van) tot += 24 * 60;
+        if (minuten >= van && minuten < tot) open = true;
+      });
+      return open;
     }
 
-    winkelSchakelaar.addEventListener("change", function () {
-      zetWinkel(winkelSchakelaar.checked, true);
-    });
-    zetWinkel(winkelSchakelaar.checked, false);
+    function zetWinkel(melden) {
+      var open = binnenOpeningstijd();
+      winkelKaart.classList.toggle("is-gesloten", !open);
+      winkelSchakelaar.disabled = !open;
+      var stand = !open ? "Closed" : (winkelSchakelaar.checked ? "Open for orders" : "Orders paused");
+      winkelStand.textContent = stand;
+      if (melden) {
+        showToast(winkelSchakelaar.checked
+          ? "Your store takes orders again"
+          : "Orders paused. Guests see your store but cannot order");
+      }
+    }
+
+    winkelSchakelaar.addEventListener("change", function () { zetWinkel(true); });
+    zetWinkel(false);
+    /* De klok loopt door; zonder dit zou de winkel pas bij de volgende
+       paginawissel dichtgaan. */
+    setInterval(function () { zetWinkel(false); }, 30000);
   }
 
   /* ---- Een bezorger erbij ------------------------------------------------
