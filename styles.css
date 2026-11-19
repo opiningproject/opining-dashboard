@@ -3520,21 +3520,37 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .picklist .row:last-child::after { bottom: 0; }
 .picklist .row__meta { overflow: visible; white-space: normal; }
 
-/* Vier soorten korting, gekozen bij Create discount. Elke soort vraagt om
-   andere velden, dus de kaarten die er niet bij horen vallen weg. */
+/* Vier soorten korting, gekozen bij Create discount. Het meeste van het
+   scherm is voor alle vier gelijk; alleen de kaarten hieronder wisselen.
+   Gratis bezorging is zelf de korting en heeft dus geen bedrag. */
 [data-disc-card] { display: none; }
-[data-disc-type="products"] [data-disc-card="scope"],
-[data-disc-type="bxgy"] [data-disc-card="scope"],
-[data-disc-type="bxgy"] [data-disc-card="gets"],
-[data-disc-type="order"] [data-disc-card="orders"],
-[data-disc-type="delivery"] [data-disc-card="orders"],
 [data-disc-type="products"] [data-disc-card="value"],
+[data-disc-type="bxgy"] [data-disc-card="buys"],
+[data-disc-type="bxgy"] [data-disc-card="gets"],
 [data-disc-type="bxgy"] [data-disc-card="value"],
 [data-disc-type="order"] [data-disc-card="value"] { display: block; }
-/* De nieuwe prijs hoort bij één product; bij een hele bestelling is er
-   geen prijs om naast te zetten. */
-[data-disc-type]:not([data-disc-type="products"]) [data-disc-price] { display: none; }
-[data-disc-type]:not([data-disc-type="products"]) .field-row { grid-template-columns: minmax(0, 1fr); }
+/* Kiezen waarop de korting slaat hoort bij losse producten; bij een hele
+   bestelling of de bezorging valt er niets te kiezen. */
+[data-disc-type]:not([data-disc-type="products"]) [data-disc-applies] { display: none; }
+
+/* Twee knoppen naast elkaar als één strook: met of zonder code, een
+   drempelbedrag of niet. De velden die bij een keuze horen staan er pas
+   als die keuze gemaakt is. */
+.card__title + .seg { margin-top: 14px; }
+.seg + .field, .seg + .hint { margin-top: 16px; }
+[data-when-method], [data-when-min], [data-when-cap], [data-when-end] { display: none; }
+[data-disc-method="code"] [data-when-method="code"] { display: flex; }
+[data-disc-method="auto"] [data-when-method="auto"] { display: block; }
+[data-disc-min="amount"] [data-when-min="amount"],
+[data-disc-min="items"] [data-when-min="items"],
+[data-disc-cap="on"] [data-when-cap] { display: flex; margin-top: 16px; }
+[data-disc-end="on"] [data-when-end] { display: grid; margin-top: 16px; }
+
+/* Het label links, de verwijzing ernaast rechts op dezelfde regel: zo staat
+   "Generate random code" niet onder het veld dat hij vult. */
+.label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.label-row .linkbtn { margin-top: 0; text-decoration: none; }
+.label-row .linkbtn:hover { text-decoration: underline; }
 
 /* Een stand in een venster: in woorden links, de schakelaar rechts, met een
    streep eronder omdat eronder het veld staat dat erbij hoort. */

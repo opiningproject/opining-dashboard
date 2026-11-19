@@ -1480,78 +1480,55 @@
 
   var codeTeller = 0;
 
-  /* ---- Automatische korting: de nieuwe prijs volgt de invoer -------------- */
+  /* ---- Korting aanmaken ---------------------------------------------------
+     Het scherm is voor alle vier de soorten hetzelfde; de keuze uit het
+     venster zet alleen welke kaarten erbij horen. Verder staat hier wat de
+     ene keuze met de andere doet: een code of vanzelf, een drempelbedrag,
+     een maximum aantal keren en een einddatum. */
   var discView = document.querySelector('[data-view="discount-new"]');
 
   if (discView) {
-    var discProduct = document.getElementById("disc-product");
-    var discValue   = document.getElementById("disc-value");
-    var discScopeT  = document.getElementById("disc-scope-title");
-    var discValueT  = document.getElementById("disc-value-title");
+    var discUnit  = document.getElementById("disc-unit");
+    var discValueT = document.getElementById("disc-value-title");
+
+    /* Bij Buy X get Y gaat de korting over wat de klant erbij krijgt, niet
+       over de hele bestelling; de kop zegt dat dan ook. */
     var DISC_KOPPEN = {
-      products: { scope: "What gets the discount", value: "Discount" },
-      bxgy:     { scope: "What the customer buys", value: "What they get off" },
-      order:    { scope: "What gets the discount", value: "Discount" },
-      delivery: { scope: "What gets the discount", value: "Discount" }
+      products: "Discount value",
+      bxgy:     "Discounted value",
+      order:    "Discount value",
+      delivery: "Discount value"
     };
 
-    /* De keuze uit het venster bepaalt welke kaarten er staan en hoe ze
-       heten. De kaarten zelf staan al in de pagina; CSS laat per soort de
-       juiste zien. */
     document.addEventListener("click", function (e) {
       var keuze = e.target.closest("#disctype-dialog [data-disc-type]");
       if (!keuze) return;
       var soort = keuze.dataset.discType;
       discView.dataset.discType = soort;
-      discScopeT.textContent = DISC_KOPPEN[soort].scope;
-      discValueT.textContent = DISC_KOPPEN[soort].value;
+      discValueT.textContent = DISC_KOPPEN[soort];
+      /* Een korting gaat in vanaf vandaag tenzij je iets anders kiest; een leeg
+         datumveld zegt niet wanneer hij begint. */
+      var nu = new Date();
+      document.getElementById("disc-start").value =
+        nu.getFullYear() + "-" + ("0" + (nu.getMonth() + 1)).slice(-2) + "-" + ("0" + nu.getDate()).slice(-2);
     });
 
-    /* Een drempelbedrag hoort bij "orders over een bedrag"; staat de keuze
-       op elke bestelling, dan valt er niets in te vullen. */
-    var discMin = document.getElementById("disc-minimum");
+    discView.addEventListener("click", function (e) {
+      var knop = e.target.closest("[data-method]");
+      if (knop) discView.dataset.discMethod = knop.dataset.method;
+    });
+
+    document.getElementById("disc-generate").addEventListener("click", function () {
+      codeTeller++;
+      document.getElementById("disc-code").value = codeBlok(8, codeTeller);
+    });
+
     discView.addEventListener("change", function (e) {
-      if (e.target.name !== "disc-min") return;
-      discMin.disabled = [].indexOf.call(discView.querySelectorAll('input[name="disc-min"]'), e.target) === 0;
+      if (e.target.id === "disc-kind") discUnit.textContent = e.target.value === "pct" ? "%" : "€";
+      if (e.target.name === "disc-min") discView.dataset.discMin = e.target.value;
+      if (e.target.id === "disc-cap") discView.dataset.discCap = e.target.checked ? "on" : "off";
+      if (e.target.id === "disc-hasend") discView.dataset.discEnd = e.target.checked ? "on" : "off";
     });
-    var discUnit    = document.getElementById("disc-unit");
-    var discWas     = document.getElementById("disc-was");
-    var discNow     = document.getElementById("disc-now");
-
-    function euro(n) { return "€ " + n.toFixed(2).replace(".", ","); }
-
-    /* Het scherm toont de korting én de prijs die eruit volgt; die mogen niet
-       uiteenlopen, dus wordt de prijs berekend in plaats van ingetypt. */
-    function toonPrijs() {
-      var prijs = Number(discProduct.selectedOptions[0].dataset.price);
-      var soort = discView.querySelector('input[name="disc-kind"]:checked').value;
-      var waarde = Number(discValue.value) || 0;
-      var nieuw = soort === "pct" ? prijs * (1 - waarde / 100) : prijs - waarde;
-      discWas.textContent = euro(prijs);
-      discNow.textContent = euro(Math.max(nieuw, 0));
-      discUnit.textContent = soort === "pct" ? "%" : "€";
-    }
-
-    discView.addEventListener("input", toonPrijs);
-    discView.addEventListener("change", function (e) {
-      toonPrijs();
-      /* Dagen horen bij "alleen op bepaalde dagen", data bij "tussen twee
-         datums"; de rest staat uit zodat het scherm niet meer belooft dan
-         de gekozen planning waarmaakt. */
-      if (e.target.name === "disc-when") {
-        var keuze = [].indexOf.call(discView.querySelectorAll('input[name="disc-when"]'), e.target);
-        document.getElementById("disc-days").disabled = keuze !== 1;
-        document.getElementById("disc-start").disabled = keuze !== 2;
-        document.getElementById("disc-end").disabled = keuze !== 2;
-      }
-      /* Eén product kiezen kan alleen bij de eerste optie. */
-      if (e.target.name === "disc-scope") {
-        var s = [].indexOf.call(discView.querySelectorAll('input[name="disc-scope"]'), e.target);
-        discProduct.disabled = s !== 0;
-      }
-    });
-
-    toonPrijs();
   }
 
   /* ---- Voucher: kortingscode voor de checkout ----------------------------- */
@@ -5532,7 +5509,10 @@
      onder de rij, met een duim die meebeweegt. Het vakje eromheen wordt hier
      gebouwd, zodat de HTML gewoon een <div class="tabs"> blijft.
      ======================================================================== */
-  document.querySelectorAll(".tabs").forEach(function (tabs) {
+  /* Een strook van twee knoppen in een kaart schuift nooit; die krijgt dus
+     geen indicator en ook geen vak eromheen, anders staat de kaart ineens
+     met een vreemde afstand naar het veld eronder. */
+  document.querySelectorAll(".tabs:not(.seg)").forEach(function (tabs) {
     var vak = document.createElement("div");
     vak.className = "tabsbox";
     tabs.parentNode.insertBefore(vak, tabs);

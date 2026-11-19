@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=691" />
+  <link rel="stylesheet" href="styles.css?v=694" />
 </head>
 <body>
 
@@ -1898,101 +1898,170 @@
             </div>
           </section>
 
-          <!-- ---------- VIEW: automatische korting aanmaken ---------- -->
-          <section class="view" data-view="discount-new" data-disc-type="products" hidden>
-            <div class="card" data-disc-card="scope">
-              <h2 class="card__title" id="disc-scope-title">What gets the discount</h2>
-              <fieldset class="choices">
-                <legend class="sr-only">Scope of the discount</legend>
-                <label class="choice"><input type="radio" name="disc-scope" checked /><span>One product</span></label>
-                <label class="choice"><input type="radio" name="disc-scope" /><span>A whole category</span></label>
-                <label class="choice"><input type="radio" name="disc-scope" /><span>Several products</span></label>
-              </fieldset>
-              <div class="field">
-                <label class="label" for="disc-product">Product</label>
-                <select class="input" id="disc-product">
-                  <option data-price="3.50">French fries &mdash; &euro; 3,50</option>
-                  <option data-price="11.50">Margherita pizza &mdash; &euro; 11,50</option>
-                  <option data-price="6.00">Tiramisu &mdash; &euro; 6,00</option>
-                  <option data-price="3.20">Cola 1,5L &mdash; &euro; 3,20</option>
-                  <option data-price="24.00">Family bucket &mdash; &euro; 24,00</option>
-                </select>
+          <!-- ---------- VIEW: korting aanmaken ----------
+               Een scherm voor alle vier de soorten uit het keuzevenster. Wat
+               ze delen -- hoe de korting wordt toegepast, voor wie hij geldt,
+               vanaf welk bedrag, hoe vaak en wanneer -- staat er altijd; wat
+               per soort verschilt staat in de kaarten met data-disc-card. -->
+          <section class="view" data-view="discount-new" data-disc-type="products" data-disc-method="code" data-disc-min="none" data-disc-cap="off" data-disc-end="off" hidden>
+            <div class="card">
+              <h2 class="card__title">Method</h2>
+              <div class="tabs seg">
+                <button class="tab is-active" type="button" data-method="code">Discount code</button>
+                <button class="tab" type="button" data-method="auto">Automatic discount</button>
+              </div>
+              <div class="field" data-when-method="code">
+                <span class="label-row">
+                  <label class="label" for="disc-code">Discount code</label>
+                  <button class="linkbtn" type="button" id="disc-generate">Generate random code</button>
+                </span>
+                <input class="input mono" id="disc-code" type="text" value="SUMMER10" />
+                <p class="hint">Customers must enter this code at checkout.</p>
+              </div>
+              <p class="hint" data-when-method="auto">Customers see this discount in their cart on their own, without typing a code.</p>
+            </div>
+
+            <div class="card" data-disc-card="buys">
+              <h2 class="card__title">Customer buys</h2>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="disc-buyqty">Quantity</label>
+                  <input class="input" id="disc-buyqty" type="number" value="1" min="1" />
+                </div>
+                <div class="field">
+                  <label class="label" for="disc-buyprod">Product</label>
+                  <select class="input" id="disc-buyprod">
+                    <option>French fries &mdash; &euro; 3,50</option>
+                    <option>Margherita pizza &mdash; &euro; 11,50</option>
+                    <option>Tiramisu &mdash; &euro; 6,00</option>
+                    <option>Cola 1,5L &mdash; &euro; 3,20</option>
+                    <option>Family bucket &mdash; &euro; 24,00</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             <div class="card" data-disc-card="gets">
-              <h2 class="card__title">What the customer gets</h2>
-              <div class="field">
-                <label class="label" for="disc-gets">Product</label>
-                <select class="input" id="disc-gets">
-                  <option>Cola 1,5L &mdash; &euro; 3,20</option>
-                  <option>French fries &mdash; &euro; 3,50</option>
-                  <option>Tiramisu &mdash; &euro; 6,00</option>
-                  <option>Margherita pizza &mdash; &euro; 11,50</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="card" data-disc-card="orders">
-              <h2 class="card__title">Which orders</h2>
-              <fieldset class="choices">
-                <legend class="sr-only">Which orders the discount applies to</legend>
-                <label class="choice"><input type="radio" name="disc-min" checked /><span>Every order</span></label>
-                <label class="choice"><input type="radio" name="disc-min" /><span>Orders over an amount</span></label>
-              </fieldset>
-              <div class="field">
-                <label class="label" for="disc-minimum">Minimum order amount</label>
-                <span class="affix affix--pre"><span class="affix__sym" aria-hidden="true">&euro;</span><input class="input" id="disc-minimum" type="number" value="20" min="0" step="1" disabled /></span>
+              <h2 class="card__title">Customer gets</h2>
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="disc-getqty">Quantity</label>
+                  <input class="input" id="disc-getqty" type="number" value="1" min="1" />
+                </div>
+                <div class="field">
+                  <label class="label" for="disc-gets">Product</label>
+                  <select class="input" id="disc-gets">
+                    <option>French fries &mdash; &euro; 3,50</option>
+                    <option>Margherita pizza &mdash; &euro; 11,50</option>
+                    <option>Tiramisu &mdash; &euro; 6,00</option>
+                    <option>Cola 1,5L &mdash; &euro; 3,20</option>
+                    <option>Family bucket &mdash; &euro; 24,00</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             <div class="card" data-disc-card="value">
-              <h2 class="card__title" id="disc-value-title">Discount</h2>
-              <fieldset class="choices">
-                <legend class="sr-only">Type of discount</legend>
-                <label class="choice"><input type="radio" name="disc-kind" value="pct" checked /><span>Percentage off</span></label>
-                <label class="choice"><input type="radio" name="disc-kind" value="fix" /><span>Fixed amount off</span></label>
-              </fieldset>
+              <h2 class="card__title" id="disc-value-title">Discount value</h2>
               <div class="field-row">
                 <div class="field">
-                  <label class="label" for="disc-value">Amount off</label>
+                  <label class="label sr-only" for="disc-kind">Kind of discount</label>
+                  <select class="input" id="disc-kind">
+                    <option value="pct">Percentage</option>
+                    <option value="fix">Fixed amount</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label class="label sr-only" for="disc-value">Amount off</label>
                   <span class="affix affix--post"><input class="input" id="disc-value" type="number" value="10" min="1" step="1" /><span class="affix__sym" aria-hidden="true" id="disc-unit">%</span></span>
                 </div>
-                <div class="field" data-disc-price>
-                  <span class="label">New price</span>
-                  <p class="pricepreview"><s id="disc-was">&euro; 3,50</s> <b id="disc-now">&euro; 3,15</b></p>
+              </div>
+              <div class="field" data-disc-applies>
+                <label class="label" for="disc-applies">Applies to</label>
+                <select class="input" id="disc-applies">
+                  <option>Specific products</option>
+                  <option>Specific categories</option>
+                  <option>The whole menu</option>
+                </select>
+              </div>
+              <div class="field" data-disc-applies>
+                <label class="label sr-only" for="disc-search">Search products</label>
+                <div class="withbtn">
+                  <span class="psearch__field">
+                    <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                    <input id="disc-search" type="search" placeholder="Search products" />
+                  </span>
+                  <button class="btn btn--soft btn--sm" type="button">Browse</button>
                 </div>
               </div>
             </div>
 
             <div class="card">
-              <h2 class="card__title">When it runs</h2>
+              <h2 class="card__title">Eligibility</h2>
+              <div class="field">
+                <label class="label sr-only" for="disc-who">Who can use it</label>
+                <select class="input" id="disc-who">
+                  <option>All customers</option>
+                  <option>Returning customers</option>
+                  <option>Specific customers</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Minimum purchase requirements</h2>
               <fieldset class="choices">
-                <legend class="sr-only">Schedule</legend>
-                <label class="choice"><input type="radio" name="disc-when" checked /><span>Always, until I stop it</span></label>
-                <label class="choice"><input type="radio" name="disc-when" /><span>Only on certain days</span></label>
-                <label class="choice"><input type="radio" name="disc-when" /><span>Between two dates</span></label>
+                <legend class="sr-only">Minimum purchase requirements</legend>
+                <label class="choice"><input type="radio" name="disc-min" value="none" checked /><span>No minimum requirements</span></label>
+                <label class="choice"><input type="radio" name="disc-min" value="amount" /><span>Minimum purchase amount (&euro;)</span></label>
+                <label class="choice"><input type="radio" name="disc-min" value="items" /><span>Minimum quantity of items</span></label>
               </fieldset>
+              <div class="field" data-when-min="amount">
+                <label class="label sr-only" for="disc-minimum">Minimum purchase amount</label>
+                <span class="affix affix--pre"><span class="affix__sym" aria-hidden="true">&euro;</span><input class="input" id="disc-minimum" type="number" placeholder="0,00" step="0.01" /></span>
+              </div>
+              <div class="field" data-when-min="items">
+                <label class="label sr-only" for="disc-items">Minimum quantity of items</label>
+                <input class="input" id="disc-items" type="number" value="2" min="1" />
+              </div>
+            </div>
 
-              <fieldset class="days" id="disc-days" disabled>
-                <legend class="label">Days</legend>
-                <label class="day"><input type="checkbox" /><span>Mon</span></label>
-                <label class="day"><input type="checkbox" /><span>Tue</span></label>
-                <label class="day"><input type="checkbox" /><span>Wed</span></label>
-                <label class="day"><input type="checkbox" /><span>Thu</span></label>
-                <label class="day"><input type="checkbox" /><span>Fri</span></label>
-                <label class="day"><input type="checkbox" /><span>Sat</span></label>
-                <label class="day"><input type="checkbox" /><span>Sun</span></label>
-              </fieldset>
+            <div class="card">
+              <h2 class="card__title">Maximum discount uses</h2>
+              <label class="choice choice--plain"><input type="checkbox" id="disc-cap" /><span>Limit number of times this discount can be used in total</span></label>
+              <div class="field" data-when-cap>
+                <label class="label sr-only" for="disc-captotal">Total uses</label>
+                <input class="input" id="disc-captotal" type="number" value="100" min="1" />
+              </div>
+              <label class="choice choice--plain"><input type="checkbox" id="disc-once" /><span>Limit to one use per customer</span></label>
+            </div>
 
+            <div class="card">
+              <h2 class="card__title">Combinations</h2>
+              <p class="card__sub">This discount won&rsquo;t combine with other product, order or delivery discounts in the same cart.</p>
+            </div>
+
+            <div class="card">
+              <h2 class="card__title">Schedule</h2>
               <div class="field-row">
                 <div class="field">
-                  <label class="label" for="disc-start">Starts</label>
-                  <input class="input" id="disc-start" type="date" disabled />
+                  <label class="label" for="disc-start">Start date</label>
+                  <input class="input" id="disc-start" type="date" />
                 </div>
                 <div class="field">
-                  <label class="label" for="disc-end">Ends</label>
-                  <input class="input" id="disc-end" type="date" disabled />
+                  <label class="label" for="disc-starttime">Start time</label>
+                  <input class="input" id="disc-starttime" type="time" value="19:00" />
+                </div>
+              </div>
+              <label class="choice choice--plain"><input type="checkbox" id="disc-hasend" /><span>Set an end date</span></label>
+              <div class="field-row" data-when-end>
+                <div class="field">
+                  <label class="label" for="disc-end">End date</label>
+                  <input class="input" id="disc-end" type="date" />
+                </div>
+                <div class="field">
+                  <label class="label" for="disc-endtime">End time</label>
+                  <input class="input" id="disc-endtime" type="time" value="23:59" />
                 </div>
               </div>
             </div>
@@ -2002,7 +2071,6 @@
               <button class="btn btn--primary" type="button" data-created="Discount created">Create discount</button>
             </div>
           </section>
-
           <!-- ---------- VIEW: vouchers (kortingscodes voor de checkout) ---------- -->
           <section class="view" data-view="vouchers" hidden>
 
@@ -7920,6 +7988,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=691"></script>
+  <script src="app.js?v=694"></script>
 </body>
 </html>
