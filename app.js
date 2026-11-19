@@ -3496,7 +3496,6 @@
     var winkelStand = winkelKaart.querySelector("[data-store-state]");
 
     function zetWinkel(open, melden) {
-      winkelKaart.classList.toggle("is-dicht", !open);
       winkelStand.textContent = open ? "Open for orders" : "Closed for orders";
       if (melden) showToast(open ? "Your store takes orders again" : "Your store stopped taking orders");
     }

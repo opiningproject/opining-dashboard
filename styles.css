@@ -635,8 +635,6 @@ select.input {
 .taking__row > .icon { flex: 0 0 auto; width: 20px; height: 20px; color: var(--text-muted); }
 .taking__row b { font-weight: 600; }
 .taking__switch { margin-left: auto; flex: 0 0 auto; }
-/* Dicht: de regel zegt het ook zonder de schakelaar te lezen. */
-#store-open.is-dicht .taking__row > .icon, #store-open.is-dicht b { color: var(--danger); }
 .taking__open .icon { width: 20px; height: 20px; color: var(--text-muted); }
 .taking__open b { font-weight: 600; }
 .taking__open:hover { color: var(--accent); }
