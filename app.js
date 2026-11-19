@@ -3439,9 +3439,9 @@
     products:       { label: "Add product",   zacht: false },
     choices:        { label: "Add group",     zacht: false },
     categories:     { label: "Add category", zacht: false },
-    discounts:      { label: "Create discount", icon: "i-plus", zacht: false, opent: "discount-new" },
-    vouchers:       { label: "Create voucher",  icon: "i-plus", zacht: false, opent: "voucher-new" },
-    "email-campaigns": { label: "New campaign", icon: "i-plus", zacht: false, opent: "campaign-new" },
+    discounts:      { label: "Create discount", zacht: false, opent: "discount-new" },
+    vouchers:       { label: "Create voucher",  zacht: false, opent: "voucher-new" },
+    "email-campaigns": { label: "New campaign", zacht: false, opent: "campaign-new" },
     "online-store": { label: "View store",    zacht: false }
   };
 

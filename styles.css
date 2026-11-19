@@ -1764,6 +1764,21 @@ select.input {
 
 /* Tweeregelige cel: titel met een toelichting eronder. */
 .cell { display: flex; flex-direction: column; gap: 2px; }
+/* Op de marketingpagina's leest een rij op een regel: wat erbij hoort staat
+   er grijs achter in plaats van eronder. Twee regels per rij maakt van een
+   lijst van tien een lap van twintig. */
+[data-view="discounts"] .cell,
+[data-view="vouchers"] .cell,
+[data-view="email-campaigns"] .cell {
+  flex-direction: row; align-items: baseline; gap: 8px;
+}
+[data-view="discounts"] .table--list .cell__title,
+[data-view="vouchers"] .table--list .cell__title,
+[data-view="email-campaigns"] .table--list .cell__title { white-space: nowrap; }
+/* Wanneer een korting loopt en waarvoor een code geldt zijn een paar woorden;
+   die horen op een regel te staan, niet in drieen gebroken. */
+[data-view="discounts"] .table--list td:nth-child(3),
+[data-view="vouchers"] .table--list td:nth-child(3) { white-space: nowrap; }
 .cell__title { font-weight: 500; color: var(--text-strong); }
 .cell__meta { font-size: var(--fs-sm); color: var(--text-muted); }
 /* Eén keuze uit een korte lijst: de hele regel is de knop, en het rondje
