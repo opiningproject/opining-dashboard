@@ -1768,17 +1768,14 @@ select.input {
    er grijs achter in plaats van eronder. Twee regels per rij maakt van een
    lijst van tien een lap van twintig. */
 [data-view="discounts"] .cell,
-[data-view="vouchers"] .cell,
 [data-view="email-campaigns"] .cell {
   flex-direction: row; align-items: baseline; gap: 8px;
 }
 [data-view="discounts"] .table--list .cell__title,
-[data-view="vouchers"] .table--list .cell__title,
 [data-view="email-campaigns"] .table--list .cell__title { white-space: nowrap; }
 /* Wanneer een korting loopt en waarvoor een code geldt zijn een paar woorden;
    die horen op een regel te staan, niet in drieen gebroken. */
-[data-view="discounts"] .table--list td:nth-child(3),
-[data-view="vouchers"] .table--list td:nth-child(3) { white-space: nowrap; }
+[data-view="discounts"] .table--list td:nth-child(3) { white-space: nowrap; }
 .cell__title { font-weight: 500; color: var(--text-strong); }
 .cell__meta { font-size: var(--fs-sm); color: var(--text-muted); }
 /* Eén keuze uit een korte lijst: de hele regel is de knop, en het rondje
@@ -2658,18 +2655,13 @@ select.input {
 .table--list th:last-child,  .table--list td:last-child  { padding-right: 20px; }
 .table--list td:nth-child(3) { white-space: normal; }
 .table--list .cell__title { white-space: normal; }
-/* Kortingen: wie hem mag gebruiken met een poppetje ervoor, en waarmee hij
-   samengaat als drie tekens -- gerechten, bestelling, bezorging. Donker is
-   ja, licht is nee; de tooltip zegt het in woorden. Gebruikt staat rechts. */
+/* Kortingen: wie hem mag gebruiken met een poppetje ervoor; Gebruikt staat
+   rechts. */
 .table--disc .cell { flex-direction: column; align-items: flex-start; gap: 2px; }
 .table--disc td:first-child { min-width: 200px; }
 .table--disc td:nth-child(5) { white-space: normal; min-width: 110px; }
-.table--disc .cell__meta { white-space: normal; }
 .dwho { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .dwho .icon { width: 16px; height: 16px; color: var(--text-muted); }
-.dcombo { display: inline-flex; align-items: center; gap: 8px; }
-.dcombo .icon { width: 17px; height: 17px; color: var(--gray-300); }
-.dcombo .icon.is-on { color: var(--text); }
 .table--disc .num { text-align: right; font-variant-numeric: tabular-nums; }
 /* De kortingenlijst blijft op elk scherm een tabel: op een telefoon schuif
    je hem opzij, net als de klantenlijst, in plaats van dat de regels op

@@ -1740,26 +1740,6 @@
     });
   }
 
-  /* ---- Voucher: kortingscode voor de checkout ----------------------------- */
-  var vouGen = document.getElementById("vou-generate");
-
-  if (vouGen) {
-    vouGen.addEventListener("click", function () {
-      codeTeller++;
-      document.getElementById("vou-code").value = codeBlok(8, codeTeller);
-    });
-
-    var vouView = document.querySelector('[data-view="voucher-new"]');
-    vouView.addEventListener("change", function (e) {
-      if (e.target.name !== "vou-kind") return;
-      /* Gratis bezorging heeft geen bedrag; het veld hoort dan uit te staan. */
-      var soort = e.target.value;
-      var veld = document.getElementById("vou-value");
-      veld.disabled = soort === "del";
-      document.getElementById("vou-unit").textContent = soort === "fix" ? "€" : "%";
-    });
-  }
-
   var campAudience = document.getElementById("camp-audience");
   if (campAudience) {
     /* Het aantal ontvangers staat op twee plekken; die mogen niet uiteenlopen. */
@@ -3658,7 +3638,6 @@
     choices:        { label: "Add group",     zacht: false },
     categories:     { label: "Add category", zacht: false },
     discounts:      { label: "Create discount", zacht: false, venster: "disctype-dialog" },
-    vouchers:       { label: "Create voucher",  zacht: false, opent: "voucher-new" },
     "email-campaigns": { label: "New campaign", zacht: false, opent: "campaign-new" },
     "online-store": { label: "View store",    zacht: false }
   };

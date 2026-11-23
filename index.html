@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=706" />
+  <link rel="stylesheet" href="styles.css?v=707" />
 </head>
 <body>
 
@@ -95,7 +95,7 @@
     <symbol id="i-dots" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="4.7" cy="10" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="15.3" cy="10" r="1.15"/></symbol>
     <symbol id="i-archive" viewBox="0 0 24 24"><rect x="3.2" y="4" width="17.6" height="4.6" rx="1.3"/><path d="M5.2 8.6v10.2a1.3 1.3 0 0 0 1.3 1.3h11a1.3 1.3 0 0 0 1.3-1.3V8.6M9.9 12.3h4.2"/></symbol>
     <symbol id="i-loyalty" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.4l1.55 3.05L16.6 12l-3.05 1.55L12 16.6l-1.55-3.05L7.4 12l3.05-1.55z"/></symbol>
-    <symbol id="i-discount" viewBox="0 0 24 24"><path d="M12.7 3.2H5.5a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l6.9 6.9a2 2 0 0 0 2.8 0l6.5-6.5a2 2 0 0 0 0-2.8l-6.9-6.9a2 2 0 0 0-1.4-.6Z"/><path d="m9.3 12.6 4-4"/><circle cx="9.2" cy="8.6" r=".9"/><circle cx="13.3" cy="12.7" r=".9"/></symbol>
+    <symbol id="i-discount" viewBox="0 0 24 24"><path d="M12.00 3.00 L13.99 4.56 L16.50 4.21 L17.44 6.56 L19.79 7.50 L19.44 10.01 L21.00 12.00 L19.44 13.99 L19.79 16.50 L17.44 17.44 L16.50 19.79 L13.99 19.44 L12.00 21.00 L10.01 19.44 L7.50 19.79 L6.56 17.44 L4.21 16.50 L4.56 13.99 L3.00 12.00 L4.56 10.01 L4.21 7.50 L6.56 6.56 L7.50 4.21 L10.01 4.56Z"/><path d="m9.4 14.6 5.2-5.2"/><circle cx="9.7" cy="9.7" r=".9" fill="currentColor"/><circle cx="14.3" cy="14.3" r=".9" fill="currentColor"/></symbol>
     <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3.4 8.6V6.4a1.4 1.4 0 0 1 1.4-1.4h14.4a1.4 1.4 0 0 1 1.4 1.4v2.2a2.6 2.6 0 0 0 0 5.2v3.8a1.4 1.4 0 0 1-1.4 1.4H4.8a1.4 1.4 0 0 1-1.4-1.4v-3.8a2.6 2.6 0 0 0 0-5.2Z"/><path d="M14 8.4v1.8M14 13.8v1.8"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.2" y="5.2" width="17.6" height="13.6" rx="2"/><path d="m3.9 6.6 8.1 6 8.1-6"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.6" y="10.4" width="14.8" height="9.4" rx="2"/><path d="M8.3 10.4V7.7a3.7 3.7 0 0 1 7.4 0v2.7"/></symbol>
@@ -249,7 +249,6 @@
               </button>
               <div class="nav__sub" id="marketing-sub"><ul class="nav__sub-list">
                 <li><a class="nav__item nav__sub-item" href="#" data-page="discounts" data-title="Discounts" data-icon="i-discount"><span>Discounts</span></a></li>
-                <li><a class="nav__item nav__sub-item" href="#" data-page="vouchers" data-title="Vouchers" data-icon="i-ticket"><span>Vouchers</span></a></li>
                 <li><a class="nav__item nav__sub-item" href="#" data-page="loyalty" data-title="Loyalty" data-icon="i-loyalty"><span>Loyalty</span></a></li>
                 <li><a class="nav__item nav__sub-item" href="#" data-page="email-campaigns" data-title="Email campaigns" data-icon="i-mail"><span>Email campaigns</span></a></li>
               </ul></div>
@@ -1844,7 +1843,7 @@
               <div class="table-wrap">
                 <table class="table table--disc">
                   <thead>
-                    <tr><th>Title</th><th>Status</th><th>Method</th><th>Eligibility</th><th>Type</th><th>Combinations</th><th class="num">Used</th></tr>
+                    <tr><th>Title</th><th>Status</th><th>Method</th><th>Eligibility</th><th>Type</th><th class="num">Used</th></tr>
                   </thead>
                   <tbody>
                     <tr>
@@ -1853,7 +1852,6 @@
                       <td>Automatic</td>
                       <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
                       <td>Amount off products</td>
-                      <td><span class="dcombo" title="Combines with product discounts" aria-label="Combines with product discounts"><svg class="icon is-on" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
                       <td class="num">214</td>
                     </tr>
                     <tr>
@@ -1862,7 +1860,6 @@
                       <td>Code</td>
                       <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
                       <td>Amount off products</td>
-                      <td><span class="dcombo" title="Combines with product discounts, order discounts" aria-label="Combines with product discounts, order discounts"><svg class="icon is-on" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon is-on" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
                       <td class="num">168</td>
                     </tr>
                     <tr>
@@ -1871,7 +1868,6 @@
                       <td>Automatic</td>
                       <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>Returning customers</span></td>
                       <td>Amount off products</td>
-                      <td><span class="dcombo" title="Does not combine with other discounts" aria-label="Does not combine with other discounts"><svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
                       <td class="num">96</td>
                     </tr>
                     <tr>
@@ -1880,7 +1876,6 @@
                       <td>Automatic</td>
                       <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
                       <td>Buy X get Y</td>
-                      <td><span class="dcombo" title="Combines with delivery discounts" aria-label="Combines with delivery discounts"><svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon is-on" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
                       <td class="num">71</td>
                     </tr>
                     <tr>
@@ -1889,7 +1884,6 @@
                       <td>Code</td>
                       <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
                       <td>Free delivery</td>
-                      <td><span class="dcombo" title="Combines with product discounts, order discounts" aria-label="Combines with product discounts, order discounts"><svg class="icon is-on" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon is-on" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
                       <td class="num">43</td>
                     </tr>
                     <tr>
@@ -1898,7 +1892,6 @@
                       <td>Code</td>
                       <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>Specific customers</span></td>
                       <td>Amount off order</td>
-                      <td><span class="dcombo" title="Combines with delivery discounts" aria-label="Combines with delivery discounts"><svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon is-on" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
                       <td class="num">0</td>
                     </tr>
                     <tr>
@@ -1907,7 +1900,6 @@
                       <td>Automatic</td>
                       <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
                       <td>Amount off products</td>
-                      <td><span class="dcombo" title="Does not combine with other discounts" aria-label="Does not combine with other discounts"><svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
                       <td class="num">302</td>
                     </tr>
 
@@ -2160,184 +2152,6 @@
               <button class="btn btn--primary" type="button" data-created="Discount created">Create discount</button>
             </div>
           </section>
-          <!-- ---------- VIEW: vouchers (kortingscodes voor de checkout) ---------- -->
-          <section class="view" data-view="vouchers" hidden>
-
-            <div class="panel">
-              <div class="panel__head">
-                <div class="tabs">
-                  <button class="tab is-active" type="button">All <span class="tab__count">5</span></button>
-                  <button class="tab" type="button">Active <span class="tab__count">3</span></button>
-                  <button class="tab" type="button">Scheduled <span class="tab__count">1</span></button>
-                  <button class="tab" type="button">Expired <span class="tab__count">1</span></button>
-                </div>
-                <button class="icon-btn panel__tool" type="button" aria-label="Search and filter vouchers">
-                  <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
-                </button>
-                <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Discount type:Percentage|Fixed amount|Free delivery;Conditions:Minimum order|First order only;Status:Active|Scheduled|Expired">
-                  <div class="psearch__top">
-                    <span class="psearch__field">
-                      <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
-                      <input type="search" placeholder="search" aria-label="Search this list" />
-                    </span>
-                    <button class="psearch__cancel" type="button">Cancel</button>
-                  </div>
-                  <div class="psearch__filters">
-                    <div class="fadd">
-                      <button class="btn btn--ghost btn--sm psearch__filter" type="button" aria-haspopup="true" aria-expanded="false">
-                        Add filter <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                      </button>
-                      <div class="fmenu" role="menu" hidden></div>
-                    </div>
-                  <button class="fclear" type="button" hidden>Clear All</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="table-wrap">
-                <table class="table table--list">
-                  <thead>
-                    <tr><th>Code</th><th>Discount</th><th>Conditions</th><th>Used</th><th>Valid</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><span class="cell"><span class="cell__title mono">WELCOME10</span><span class="cell__meta">Welcome offer</span></span></td>
-                      <td>10% off</td>
-                      <td>First order only</td>
-                      <td>128 <span class="cell__meta">of &infin;</span></td>
-                      <td>No end date</td>
-                      <td><span class="badge badge--active">Active</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for WELCOME10"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
-                    </tr>
-                    <tr>
-                      <td><span class="cell"><span class="cell__title mono">FAMILY5</span><span class="cell__meta">Family deal</span></span></td>
-                      <td>&euro; 5,00 off</td>
-                      <td>From &euro; 35,00</td>
-                      <td>41 <span class="cell__meta">of 500</span></td>
-                      <td>Until 30 Sep</td>
-                      <td><span class="badge badge--active">Active</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for FAMILY5"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
-                    </tr>
-                    <tr>
-                      <td><span class="cell"><span class="cell__title mono">FREEDEL</span><span class="cell__meta">Free delivery week</span></span></td>
-                      <td>Free delivery</td>
-                      <td>From &euro; 20,00</td>
-                      <td>210 <span class="cell__meta">of 250</span></td>
-                      <td>Until 31 Aug</td>
-                      <td><span class="badge badge--active">Active</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for FREEDEL"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
-                    </tr>
-                    <tr>
-                      <td><span class="cell"><span class="cell__title mono">AUTUMN15</span><span class="cell__meta">Autumn menu</span></span></td>
-                      <td>15% off</td>
-                      <td>Drinks only</td>
-                      <td>0 <span class="cell__meta">of 300</span></td>
-                      <td>From 1 Sep</td>
-                      <td><span class="badge badge--draft">Scheduled</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for AUTUMN15"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
-                    </tr>
-                    <tr>
-                      <td><span class="cell"><span class="cell__title mono">SUMMER15</span><span class="cell__meta">Summer special</span></span></td>
-                      <td>15% off</td>
-                      <td>No minimum</td>
-                      <td>302 <span class="cell__meta">of 300</span></td>
-                      <td>Ended 31 Jul</td>
-                      <td><span class="badge badge--muted">Expired</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for SUMMER15"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </section>
-
-          <!-- ---------- VIEW: voucher aanmaken ---------- -->
-          <section class="view" data-view="voucher-new" hidden>
-            <div class="card">
-              <h2 class="card__title">Code</h2>
-              <div class="field">
-                <label class="label" for="vou-code">What customers type at checkout</label>
-                <div class="withbtn">
-                  <input class="input mono" id="vou-code" type="text" value="WELCOME10" />
-                  <button class="btn btn--ghost btn--sm" type="button" id="vou-generate">Generate</button>
-                </div>
-                <p class="hint">Generated codes avoid characters that are easy to misread.</p>
-              </div>
-              <div class="field">
-                <label class="label" for="vou-name">Internal name</label>
-                <input class="input" id="vou-name" type="text" placeholder="Welcome offer" />
-                <p class="hint">Only you see this, in the list and in reports.</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2 class="card__title">Discount</h2>
-              <fieldset class="choices">
-                <legend class="sr-only">Type of discount</legend>
-                <label class="choice"><input type="radio" name="vou-kind" value="pct" checked /><span>Percentage off the order</span></label>
-                <label class="choice"><input type="radio" name="vou-kind" value="fix" /><span>Fixed amount off the order</span></label>
-                <label class="choice"><input type="radio" name="vou-kind" value="del" /><span>Free delivery</span></label>
-              </fieldset>
-              <div class="field">
-                <label class="label" for="vou-value">Amount off</label>
-                <span class="affix affix--post"><input class="input" id="vou-value" type="number" value="10" min="1" step="1" /><span class="affix__sym" aria-hidden="true" id="vou-unit">%</span></span>
-              </div>
-            </div>
-
-            <div class="card">
-              <h2 class="card__title">Conditions</h2>
-              <div class="field-row">
-                <div class="field">
-                  <label class="label" for="vou-min">Minimum order value</label>
-                  <span class="affix affix--pre"><span class="affix__sym" aria-hidden="true">&euro;</span><input class="input" id="vou-min" type="number" placeholder="0,00" step="0.01" /></span>
-                </div>
-                <div class="field">
-                  <label class="label" for="vou-applies">Applies to</label>
-                  <select class="input" id="vou-applies">
-                    <option>The whole order</option>
-                    <option>One category</option>
-                    <option>Selected products</option>
-                  </select>
-                </div>
-              </div>
-              <label class="choice choice--plain">
-                <input type="checkbox" id="vou-first" />
-                <span>First order only</span>
-              </label>
-            </div>
-
-            <div class="card">
-              <h2 class="card__title">Limits and validity</h2>
-              <div class="field-row">
-                <div class="field">
-                  <label class="label" for="vou-total">Total uses</label>
-                  <input class="input" id="vou-total" type="number" placeholder="Unlimited" />
-                </div>
-                <div class="field">
-                  <label class="label" for="vou-per">Uses per customer</label>
-                  <input class="input" id="vou-per" type="number" value="1" min="1" />
-                </div>
-              </div>
-              <div class="field-row">
-                <div class="field">
-                  <label class="label" for="vou-start">Valid from</label>
-                  <input class="input" id="vou-start" type="date" />
-                </div>
-                <div class="field">
-                  <label class="label" for="vou-end">Valid until</label>
-                  <input class="input" id="vou-end" type="date" />
-                  <p class="hint">Leave empty to keep it running.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="formfoot">
-              <button class="btn btn--ghost" type="button" data-back-view>Discard</button>
-              <button class="btn btn--primary" type="button" data-created="Voucher code created">Create voucher</button>
-            </div>
-          </section>
-
           <!-- ---------- VIEW: email campaigns ---------- -->
           <section class="view" data-view="email-campaigns" hidden>
             <div class="panel">
@@ -8105,6 +7919,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=706"></script>
+  <script src="app.js?v=707"></script>
 </body>
 </html>
