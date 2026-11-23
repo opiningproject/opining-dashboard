@@ -2660,6 +2660,10 @@ select.input {
 .table--disc td:first-child { min-width: 200px; }
 .table--disc td:nth-child(5) { white-space: normal; min-width: 110px; }
 .table--disc .num { text-align: right; font-variant-numeric: tabular-nums; }
+/* Een segment heeft een naam die te lang is voor deze kolom; er staat
+   alleen Segment met het teken ervoor, de naam zit in de tooltip. */
+.dseg { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.dseg .icon { width: 16px; height: 16px; color: var(--text); }
 /* De kortingenlijst blijft op elk scherm een tabel: op een telefoon schuif
    je hem opzij, net als de klantenlijst, in plaats van dat de regels op
    elkaar gestapeld worden. */

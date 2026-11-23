@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=717" />
+  <link rel="stylesheet" href="styles.css?v=718" />
 </head>
 <body>
 
@@ -98,6 +98,8 @@
     <symbol id="i-discount" viewBox="0 0 24 24"><path d="M12.00 3.00 L13.99 4.56 L16.50 4.21 L17.44 6.56 L19.79 7.50 L19.44 10.01 L21.00 12.00 L19.44 13.99 L19.79 16.50 L17.44 17.44 L16.50 19.79 L13.99 19.44 L12.00 21.00 L10.01 19.44 L7.50 19.79 L6.56 17.44 L4.21 16.50 L4.56 13.99 L3.00 12.00 L4.56 10.01 L4.21 7.50 L6.56 6.56 L7.50 4.21 L10.01 4.56Z"/><path d="m9.4 14.6 5.2-5.2"/><circle cx="9.7" cy="9.7" r=".9" fill="currentColor"/><circle cx="14.3" cy="14.3" r=".9" fill="currentColor"/></symbol>
     <!-- Een cadeautje: koop er een paar, krijg er een bij. -->
     <symbol id="i-gift" viewBox="0 0 24 24"><rect x="2.4" y="7.6" width="19.2" height="4.6" rx="1.1"/><path d="M4.1 12.2v7.3a1.7 1.7 0 0 0 1.7 1.7h12.4a1.7 1.7 0 0 0 1.7-1.7v-7.3"/><path d="M12 7.6v13.6"/><path d="M12 7.6C10.4 3.9 6.6 3.3 6.6 5.6c0 1.7 2.7 2 5.4 2Z"/><path d="M12 7.6c1.6-3.7 5.4-4.3 5.4-2 0 1.7-2.7 2-5.4 2Z"/></symbol>
+    <!-- Een poppetje met filterstreepjes: een klantsegment. -->
+    <symbol id="i-segment" viewBox="0 0 24 24"><circle cx="9.5" cy="7.5" r="3.6"/><path d="M3 20c0-3.6 2.9-6.3 6.5-6.3 1.3 0 2.5.3 3.5.9"/><path d="M15 15h6.5"/><path d="M16.6 17.8h3.3"/><path d="M17.9 20.6h.7"/></symbol>
     <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3.4 8.6V6.4a1.4 1.4 0 0 1 1.4-1.4h14.4a1.4 1.4 0 0 1 1.4 1.4v2.2a2.6 2.6 0 0 0 0 5.2v3.8a1.4 1.4 0 0 1-1.4 1.4H4.8a1.4 1.4 0 0 1-1.4-1.4v-3.8a2.6 2.6 0 0 0 0-5.2Z"/><path d="M14 8.4v1.8M14 13.8v1.8"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.2" y="5.2" width="17.6" height="13.6" rx="2"/><path d="m3.9 6.6 8.1 6 8.1-6"/></symbol>
     <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.6" y="10.4" width="14.8" height="9.4" rx="2"/><path d="M8.3 10.4V7.7a3.7 3.7 0 0 1 7.4 0v2.7"/></symbol>
@@ -1822,7 +1824,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status:Active|Scheduled|Expired;Method:Code|Automatic;Type:Amount off products|Buy X get Y|Amount off order|Free delivery;Eligibility:All|Returning|New|Specific">
+                <div class="psearch" data-filters="Status:Active|Scheduled|Expired;Method:Code|Automatic;Type:Amount off products|Buy X get Y|Amount off order|Free delivery;Eligibility:All|Returning|Segment|Specific">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -1892,7 +1894,7 @@
                       <td><span class="cell"><span class="cell__title">WELCOME5</span></span></td>
                       <td><span class="badge badge--sched">Scheduled</span></td>
                       <td>Code</td>
-                      <td>New</td>
+                      <td><span class="dseg" title="Customer segment: Customers who haven't purchased"><svg class="icon" aria-hidden="true"><use href="#i-segment"/></svg>Segment</span></td>
                       <td>Amount off order</td>
                       <td class="num">0</td>
                     </tr>
@@ -2016,7 +2018,7 @@
                 <select class="input" id="disc-who">
                   <option>All customers</option>
                   <option>Returning customers</option>
-                  <option>New customers</option>
+                  <option>Customer segments</option>
                   <option>Specific customers</option>
                 </select>
               </div>
@@ -7921,6 +7923,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=717"></script>
+  <script src="app.js?v=718"></script>
 </body>
 </html>
