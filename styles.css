@@ -2662,7 +2662,8 @@ select.input {
    samengaat als drie tekens -- gerechten, bestelling, bezorging. Donker is
    ja, licht is nee; de tooltip zegt het in woorden. Gebruikt staat rechts. */
 .table--disc .cell { flex-direction: column; align-items: flex-start; gap: 2px; }
-.table--disc td:first-child { min-width: 240px; }
+.table--disc td:first-child { min-width: 200px; }
+.table--disc td:nth-child(5) { white-space: normal; min-width: 110px; }
 .table--disc .cell__meta { white-space: normal; }
 .dwho { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .dwho .icon { width: 16px; height: 16px; color: var(--text-muted); }
