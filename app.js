@@ -1727,13 +1727,9 @@
 
     discView.addEventListener("change", function (e) {
       if (e.target.id === "disc-kind") discUnit.textContent = e.target.value === "pct" ? "%" : "€";
-      /* Voor de hele kaart hoef je niets te kiezen, dus dan valt het zoeken
-         weg. Wissel je tussen producten en categorieen, dan klopt wat je al
+      /* Wissel je tussen producten en categorieen, dan klopt wat je al
          gekozen had niet meer. */
-      if (e.target.id === "disc-applies") {
-        discView.dataset.discScope = e.target.value === "The whole menu" ? "all" : "some";
-        wisGekozen();
-      }
+      if (e.target.id === "disc-applies") wisGekozen();
       if (e.target.name === "disc-min") discView.dataset.discMin = e.target.value;
       if (e.target.id === "disc-cap") discView.dataset.discCap = e.target.checked ? "on" : "off";
       if (e.target.id === "disc-hasend") discView.dataset.discEnd = e.target.checked ? "on" : "off";

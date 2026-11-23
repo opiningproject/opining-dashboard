@@ -3633,7 +3633,6 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .picked__row { display: flex; align-items: center; gap: 14px; padding: 8px 12px; }
 .picked__row + .picked__row { border-top: 1px solid var(--border); }
 .picked__del { flex: 0 0 auto; margin-left: 10px; }
-[data-disc-scope="all"] [data-disc-search] { display: none; }
 
 /* Het label links, de verwijzing ernaast rechts op dezelfde regel: zo staat
    "Generate random code" niet onder het veld dat hij vult. */
