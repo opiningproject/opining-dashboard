@@ -2671,6 +2671,15 @@ select.input {
 .dcombo .icon { width: 17px; height: 17px; color: var(--gray-300); }
 .dcombo .icon.is-on { color: var(--text); }
 .table--disc .num { text-align: right; font-variant-numeric: tabular-nums; }
+/* De kortingenlijst blijft op elk scherm een tabel: op een telefoon schuif
+   je hem opzij, net als de klantenlijst, in plaats van dat de regels op
+   elkaar gestapeld worden. */
+.table--disc th, .table--disc td { padding-left: 10px; padding-right: 10px; }
+.table--disc th:first-child, .table--disc td:first-child { padding-left: 20px; }
+.table--disc th:last-child, .table--disc td:last-child { padding-right: 20px; }
+@media (max-width: 900px) {
+  .table--disc td, .table--disc .cell__meta, .table--disc td:nth-child(5) { white-space: nowrap; }
+}
 
 .formfoot { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
 /* Kleine lettertjes links, de knop rechts: je leest waar je voor tekent op
