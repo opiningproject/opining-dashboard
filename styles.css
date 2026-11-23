@@ -3549,7 +3549,8 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
    drempelbedrag of niet. De velden die bij een keuze horen staan er pas
    als die keuze gemaakt is. */
 .card__title + .seg { margin-top: 14px; }
-.seg + .field, .seg + .hint { margin-top: 16px; }
+/* Ook als er een verborgen veld tussen de tabs en de uitleg staat. */
+.seg + .field, .seg + .hint, .seg ~ .hint { margin-top: 16px; }
 [data-when-method], [data-when-min], [data-when-cap], [data-when-end] { display: none; }
 [data-disc-method="code"] [data-when-method="code"] { display: flex; }
 [data-disc-method="auto"] [data-when-method="auto"] { display: block; }
