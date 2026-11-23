@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=711" />
+  <link rel="stylesheet" href="styles.css?v=712" />
 </head>
 <body>
 
@@ -1820,7 +1820,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status:Active|Scheduled|Expired;Method:Code|Automatic;Type:Amount off products|Buy X get Y|Amount off order|Free delivery;Eligibility:All customers|Returning customers|Specific customers">
+                <div class="psearch" data-filters="Status:Active|Scheduled|Expired;Method:Code|Automatic;Type:Amount off products|Buy X get Y|Amount off order|Free delivery;Eligibility:All|Returning|New">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -1850,7 +1850,7 @@
                       <td><span class="cell"><span class="cell__title">French fries</span></span></td>
                       <td><span class="badge badge--active">Active</span></td>
                       <td>Automatic</td>
-                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
+                      <td>All</td>
                       <td>Amount off products</td>
                       <td class="num">214</td>
                     </tr>
@@ -1858,7 +1858,7 @@
                       <td><span class="cell"><span class="cell__title">PIZZA2</span></span></td>
                       <td><span class="badge badge--active">Active</span></td>
                       <td>Code</td>
-                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
+                      <td>All</td>
                       <td>Amount off products</td>
                       <td class="num">168</td>
                     </tr>
@@ -1866,7 +1866,7 @@
                       <td><span class="cell"><span class="cell__title">Drinks</span></span></td>
                       <td><span class="badge badge--active">Active</span></td>
                       <td>Automatic</td>
-                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>Returning customers</span></td>
+                      <td>Returning</td>
                       <td>Amount off products</td>
                       <td class="num">96</td>
                     </tr>
@@ -1874,7 +1874,7 @@
                       <td><span class="cell"><span class="cell__title">Family bucket</span></span></td>
                       <td><span class="badge badge--active">Active</span></td>
                       <td>Automatic</td>
-                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
+                      <td>All</td>
                       <td>Buy X get Y</td>
                       <td class="num">71</td>
                     </tr>
@@ -1882,7 +1882,7 @@
                       <td><span class="cell"><span class="cell__title">FREEDELIVERY</span></span></td>
                       <td><span class="badge badge--active">Active</span></td>
                       <td>Code</td>
-                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
+                      <td>All</td>
                       <td>Free delivery</td>
                       <td class="num">43</td>
                     </tr>
@@ -1890,7 +1890,7 @@
                       <td><span class="cell"><span class="cell__title">WELCOME5</span></span></td>
                       <td><span class="badge badge--sched">Scheduled</span></td>
                       <td>Code</td>
-                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>Specific customers</span></td>
+                      <td>New</td>
                       <td>Amount off order</td>
                       <td class="num">0</td>
                     </tr>
@@ -1898,7 +1898,7 @@
                       <td><span class="cell"><span class="cell__title">Cola 1,5L</span></span></td>
                       <td><span class="badge badge--muted">Expired</span></td>
                       <td>Automatic</td>
-                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
+                      <td>All</td>
                       <td>Amount off products</td>
                       <td class="num">302</td>
                     </tr>
@@ -2015,7 +2015,7 @@
                 <select class="input" id="disc-who">
                   <option>All customers</option>
                   <option>Returning customers</option>
-                  <option>Specific customers</option>
+                  <option>New customers</option>
                 </select>
               </div>
             </div>
@@ -7919,6 +7919,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=711"></script>
+  <script src="app.js?v=712"></script>
 </body>
 </html>

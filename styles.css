@@ -2655,13 +2655,10 @@ select.input {
 .table--list th:last-child,  .table--list td:last-child  { padding-right: 20px; }
 .table--list td:nth-child(3) { white-space: normal; }
 .table--list .cell__title { white-space: normal; }
-/* Kortingen: wie hem mag gebruiken met een poppetje ervoor; Gebruikt staat
-   rechts. */
+/* Kortingen: Gebruikt staat rechts. */
 .table--disc .cell { flex-direction: column; align-items: flex-start; gap: 2px; }
 .table--disc td:first-child { min-width: 200px; }
 .table--disc td:nth-child(5) { white-space: normal; min-width: 110px; }
-.dwho { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
-.dwho .icon { width: 16px; height: 16px; color: var(--text-muted); }
 .table--disc .num { text-align: right; font-variant-numeric: tabular-nums; }
 /* De kortingenlijst blijft op elk scherm een tabel: op een telefoon schuif
    je hem opzij, net als de klantenlijst, in plaats van dat de regels op
