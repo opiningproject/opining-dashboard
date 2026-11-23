@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=700" />
+  <link rel="stylesheet" href="styles.css?v=701" />
 </head>
 <body>
 
@@ -1812,15 +1812,16 @@
             <div class="panel">
               <div class="panel__head">
                 <div class="tabs">
-                  <button class="tab is-active" type="button">All <span class="tab__count">6</span></button>
-                  <button class="tab" type="button">Running <span class="tab__count">5</span></button>
-                  <button class="tab" type="button">Ended <span class="tab__count">1</span></button>
+                  <button class="tab is-active" type="button">All <span class="tab__count">7</span></button>
+                  <button class="tab" type="button">Active <span class="tab__count">5</span></button>
+                  <button class="tab" type="button">Scheduled <span class="tab__count">1</span></button>
+                  <button class="tab" type="button">Expired <span class="tab__count">1</span></button>
                 </div>
                 <button class="icon-btn panel__tool" type="button" aria-label="Search and filter discounts">
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Discount type:Percentage|Fixed amount;Applies to:One product|Category;Status:Running|Ended">
+                <div class="psearch" data-filters="Status:Active|Scheduled|Expired;Method:Code|Automatic;Type:Amount off products|Buy X get Y|Amount off order|Free delivery;Eligibility:All customers|Returning customers|Specific customers">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -1841,59 +1842,82 @@
               </div>
 
               <div class="table-wrap">
-                <table class="table table--list">
+                <table class="table table--list table--disc">
                   <thead>
-                    <tr><th>Applies to</th><th>Discount</th><th>When</th><th>Orders</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr>
+                    <tr><th>Title</th><th>Status</th><th>Method</th><th>Eligibility</th><th>Type</th><th>Combinations</th><th class="num">Used</th><th><span class="sr-only">Actions</span></th></tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">French fries</span><span class="cell__meta">Sides</span></span></td>
-                      <td><span class="cell"><span class="cell__title">10% off</span><span class="cell__meta"><span class="wasnow"><s>&euro; 3,50</s> &euro; 3,15</span></span></span></td>
-                      <td>Always</td>
-                      <td>214</td>
-                      <td><span class="badge badge--active">Running</span></td>
+                      <td><span class="cell"><span class="cell__title">French fries</span><span class="cell__meta">10% off French fries &middot; Always</span></span></td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td>Automatic</td>
+                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
+                      <td>Amount off products</td>
+                      <td><span class="dcombo" title="Combines with product discounts" aria-label="Combines with product discounts"><svg class="icon is-on" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
+                      <td class="num">214</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for French fries discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">Margherita pizza</span><span class="cell__meta">Pizza</span></span></td>
-                      <td><span class="cell"><span class="cell__title">&euro; 2,00 off</span><span class="cell__meta"><span class="wasnow"><s>&euro; 11,50</s> &euro; 9,50</span></span></span></td>
-                      <td>Always</td>
-                      <td>168</td>
-                      <td><span class="badge badge--active">Running</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Margherita pizza discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                      <td><span class="cell"><span class="cell__title">PIZZA2</span><span class="cell__meta">&euro; 2,00 off Margherita pizza &middot; Applies once per order</span></span></td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td>Code</td>
+                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
+                      <td>Amount off products</td>
+                      <td><span class="dcombo" title="Combines with product discounts, order discounts" aria-label="Combines with product discounts, order discounts"><svg class="icon is-on" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon is-on" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
+                      <td class="num">168</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for PIZZA2 discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">Drinks</span><span class="cell__meta">Whole category &middot; 14 items</span></span></td>
-                      <td><span class="cell"><span class="cell__title">15% off</span><span class="cell__meta"><span class="cell__meta">Varies per item</span></span></span></td>
-                      <td>Mon&ndash;Thu</td>
-                      <td>96</td>
-                      <td><span class="badge badge--active">Running</span></td>
+                      <td><span class="cell"><span class="cell__title">Drinks</span><span class="cell__meta">15% off all drinks &middot; Mon&ndash;Thu</span></span></td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td>Automatic</td>
+                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>Returning customers</span></td>
+                      <td>Amount off products</td>
+                      <td><span class="dcombo" title="Does not combine with other discounts" aria-label="Does not combine with other discounts"><svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
+                      <td class="num">96</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Drinks discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">Tiramisu</span><span class="cell__meta">Desserts</span></span></td>
-                      <td><span class="cell"><span class="cell__title">&euro; 1,00 off</span><span class="cell__meta"><span class="wasnow"><s>&euro; 6,00</s> &euro; 5,00</span></span></span></td>
-                      <td>Until 31 Aug</td>
-                      <td>43</td>
-                      <td><span class="badge badge--active">Running</span></td>
-                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Tiramisu discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
-                    </tr>
-                    <tr>
-                      <td><span class="cell"><span class="cell__title">Family bucket</span><span class="cell__meta">Deals</span></span></td>
-                      <td><span class="cell"><span class="cell__title">20% off</span><span class="cell__meta"><span class="wasnow"><s>&euro; 24,00</s> &euro; 19,20</span></span></span></td>
-                      <td>Tuesdays</td>
-                      <td>71</td>
-                      <td><span class="badge badge--active">Running</span></td>
+                      <td><span class="cell"><span class="cell__title">Family bucket</span><span class="cell__meta">Buy 2 buckets, get 1 free &middot; Tuesdays</span></span></td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td>Automatic</td>
+                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
+                      <td>Buy X get Y</td>
+                      <td><span class="dcombo" title="Combines with delivery discounts" aria-label="Combines with delivery discounts"><svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon is-on" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
+                      <td class="num">71</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Family bucket discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
                     <tr>
-                      <td><span class="cell"><span class="cell__title">Cola 1,5L</span><span class="cell__meta">Drinks</span></span></td>
-                      <td><span class="cell"><span class="cell__title">5% off</span><span class="cell__meta"><span class="wasnow"><s>&euro; 3,20</s> &euro; 3,04</span></span></span></td>
-                      <td>Ended 1 Aug</td>
-                      <td>302</td>
-                      <td><span class="badge badge--muted">Ended</span></td>
+                      <td><span class="cell"><span class="cell__title">FREEDELIVERY</span><span class="cell__meta">Free delivery on orders from &euro; 30</span></span></td>
+                      <td><span class="badge badge--active">Active</span></td>
+                      <td>Code</td>
+                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
+                      <td>Free delivery</td>
+                      <td><span class="dcombo" title="Combines with product discounts, order discounts" aria-label="Combines with product discounts, order discounts"><svg class="icon is-on" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon is-on" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
+                      <td class="num">43</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for FREEDELIVERY discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">WELCOME5</span><span class="cell__meta">&euro; 5,00 off orders from &euro; 25 &middot; Starts 1 Dec</span></span></td>
+                      <td><span class="badge badge--sched">Scheduled</span></td>
+                      <td>Code</td>
+                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>Specific customers</span></td>
+                      <td>Amount off order</td>
+                      <td><span class="dcombo" title="Combines with delivery discounts" aria-label="Combines with delivery discounts"><svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon is-on" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
+                      <td class="num">0</td>
+                      <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for WELCOME5 discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cell"><span class="cell__title">Cola 1,5L</span><span class="cell__meta">5% off Cola 1,5L &middot; Ended 1 Aug</span></span></td>
+                      <td><span class="badge badge--muted">Expired</span></td>
+                      <td>Automatic</td>
+                      <td><span class="dwho"><svg class="icon" aria-hidden="true"><use href="#i-customers"/></svg>All customers</span></td>
+                      <td>Amount off products</td>
+                      <td><span class="dcombo" title="Does not combine with other discounts" aria-label="Does not combine with other discounts"><svg class="icon" aria-hidden="true"><use href="#i-menu-item"/></svg><svg class="icon" aria-hidden="true"><use href="#i-bag"/></svg><svg class="icon" aria-hidden="true"><use href="#i-deliverers"/></svg></span></td>
+                      <td class="num">302</td>
                       <td><span class="rowact"><button class="icon-btn" type="button" aria-label="Actions for Cola 1,5L discount"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button></span></td>
                     </tr>
+
                   </tbody>
                 </table>
               </div>
@@ -8088,6 +8112,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=700"></script>
+  <script src="app.js?v=701"></script>
 </body>
 </html>

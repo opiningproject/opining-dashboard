@@ -2658,6 +2658,16 @@ select.input {
 .table--list th:last-child,  .table--list td:last-child  { padding-right: 20px; }
 .table--list td:nth-child(3) { white-space: normal; }
 .table--list .cell__title { white-space: normal; }
+/* Kortingen: wie hem mag gebruiken met een poppetje ervoor, en waarmee hij
+   samengaat als drie tekens -- gerechten, bestelling, bezorging. Donker is
+   ja, licht is nee; de tooltip zegt het in woorden. Gebruikt staat rechts. */
+.table--disc .cell__meta { white-space: normal; }
+.dwho { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.dwho .icon { width: 16px; height: 16px; color: var(--text-muted); }
+.dcombo { display: inline-flex; align-items: center; gap: 8px; }
+.dcombo .icon { width: 17px; height: 17px; color: var(--gray-300); }
+.dcombo .icon.is-on { color: var(--text); }
+.table--disc .num { text-align: right; font-variant-numeric: tabular-nums; }
 
 .formfoot { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
 /* Kleine lettertjes links, de knop rechts: je leest waar je voor tekent op
