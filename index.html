@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=712" />
+  <link rel="stylesheet" href="styles.css?v=713" />
 </head>
 <body>
 
@@ -1820,7 +1820,7 @@
                   <svg class="icon icon--wide" aria-hidden="true"><use href="#i-search-filter"/></svg>
                 </button>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Status:Active|Scheduled|Expired;Method:Code|Automatic;Type:Amount off products|Buy X get Y|Amount off order|Free delivery;Eligibility:All|Returning|New">
+                <div class="psearch" data-filters="Status:Active|Scheduled|Expired;Method:Code|Automatic;Type:Amount off products|Buy X get Y|Amount off order|Free delivery;Eligibility:All|Returning|New|Specific">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -2016,6 +2016,7 @@
                   <option>All customers</option>
                   <option>Returning customers</option>
                   <option>New customers</option>
+                  <option>Specific customers</option>
                 </select>
               </div>
             </div>
@@ -7919,6 +7920,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=712"></script>
+  <script src="app.js?v=713"></script>
 </body>
 </html>
