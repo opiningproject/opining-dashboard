@@ -2297,19 +2297,20 @@
   var loyaltyView = document.querySelector('[data-view="loyalty"]');
 
   if (loyaltyView) {
-    /* Beloningen zijn vaste bedragen; alleen het benodigde puntenaantal
-       schaalt mee. 1 punt = 0,01 EUR, dus punten = bedrag / percentage. */
-    var BELONINGEN = [2.5, 5, 10, 15];
+    /* De puntenaantallen liggen vast; wat ze waard zijn volgt het percentage.
+       1 punt per 0,01 EUR besteed, dus 2.500 punten is 25 EUR besteed, en
+       bij 3% levert dat 0,75 EUR korting op. */
+    var PUNTEN = [2500, 5000, 10000, 15000];
     var pctLabel = document.getElementById("loyalty-pct");
     var tegels   = document.getElementById("loyalty-tiles");
 
     function toonVoorbeeld(pct) {
       pctLabel.textContent = pct + "%";
       tegels.querySelectorAll(".tile").forEach(function (tegel, i) {
-        var euro = BELONINGEN[i];
-        var punten = Math.round(euro / (pct / 100) * 100);
+        var punten = PUNTEN[i];
+        var euro = punten * 0.01 * pct / 100;
         tegel.querySelector(".tile__value").textContent =
-          "€ " + euro.toFixed(2).replace(".00", "").replace(".", ",");
+          "€ " + euro.toFixed(2).replace(".", ",");
         tegel.querySelector(".tile__meta").firstChild.nodeValue =
           punten.toLocaleString("nl-NL") + " ";
       });
@@ -2319,6 +2320,9 @@
       if (e.target.name === "redemption") toonVoorbeeld(Number(e.target.value));
       markUnsaved("Loyalty");
     });
+    /* Bij het laden al volgens de keuze die aanstaat. */
+    var gekozenPct = loyaltyView.querySelector('input[name="redemption"]:checked');
+    if (gekozenPct) toonVoorbeeld(Number(gekozenPct.value));
 
   }
 
