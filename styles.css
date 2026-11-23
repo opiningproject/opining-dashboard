@@ -2717,6 +2717,25 @@ select.input {
 
 .withbtn { display: flex; align-items: center; gap: 10px; }
 .withbtn .input { min-width: 0; }
+/* Het zoekveld naast Browse is een gewoon invoerveld in een formulier: wit,
+   met dezelfde rand, hoogte en letter als de velden erboven. Alleen de
+   voorbeeldtekst is grijs. Het grijze vlak zonder rand hoort bij het
+   zoeken in een lijst, niet hier. */
+.withbtn .psearch__field input {
+  height: 32px;
+  padding: 0 10px 0 32px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  font-size: var(--fs-sm);
+  color: var(--text-strong);
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.withbtn .psearch__field input::placeholder { color: var(--text-muted); }
+.withbtn .psearch__field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.withbtn .psearch__icon { left: 10px; width: 16px; height: 16px; }
+@media (pointer: coarse) {
+  .withbtn .psearch__field input { font-size: 16px; }
+}
 
 /* Selectievakje op één regel, zonder de radio-opmaak van .choice. */
 .choice--plain { margin-top: 14px; padding: 0; }
