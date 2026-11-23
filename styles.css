@@ -3636,6 +3636,10 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .picked { margin-top: 12px; border: 1px solid var(--border); border-radius: var(--r-md); }
 .picked__row { display: flex; align-items: center; gap: 14px; padding: 8px 12px; }
 .picked__row + .picked__row { border-top: 1px solid var(--border); }
+/* Segmenten in het venster: de hele regel is het vinkje. Onder het veld
+   staat een gekozen segment met zijn teken ervoor. */
+.segs li + li .pickrow { border-top: 1px solid var(--border); }
+.picked__row > .icon { width: 18px; height: 18px; flex: 0 0 auto; color: var(--text-muted); }
 .picked__del { flex: 0 0 auto; margin-left: 10px; }
 
 /* Het label links, de verwijzing ernaast rechts op dezelfde regel: zo staat

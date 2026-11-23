@@ -1693,6 +1693,131 @@
       discGekozen.hidden = !discGekozen.children.length;
     });
 
+    /* ---- Klantsegmenten ------------------------------------------------
+       Kies je Customer segments bij Eligibility, dan komt er een zoekveld
+       met Browse. Typen of Browse opent het venster met de segmenten; wat
+       je aanvinkt en toevoegt staat eronder, met een kruisje om het weg te
+       halen. Al toegevoegde segmenten staan in het venster al aangevinkt. */
+    var SEGMENTEN = [
+      { naam: "Customers who haven’t ordered", meta: "12 customers" },
+      { naam: "Customers who ordered more than once", meta: "118 customers" },
+      { naam: "Customers who ordered in the last 30 days", meta: "64 customers" },
+      { naam: "Customers who haven’t ordered in 90 days", meta: "41 customers" },
+      { naam: "Email subscribers", meta: "203 customers" },
+      { naam: "Customers who ordered at least once", meta: "187 customers" }
+    ];
+    var segWie     = document.getElementById("disc-who");
+    var segVeld    = discView.querySelector("[data-seg-field]");
+    var segZoekPag = document.getElementById("seg-search");
+    var segGekozen = document.getElementById("seg-picked");
+    var segVenster = document.getElementById("seg-dialog");
+    var segZoek    = document.getElementById("seg-zoek");
+    var segLijst   = document.getElementById("seg-list");
+    var segLeeg    = document.getElementById("seg-empty");
+    var segTel     = document.getElementById("seg-count");
+    var segAdd     = document.getElementById("seg-add");
+
+    function segAl() {
+      return [].map.call(segGekozen.querySelectorAll(".picked__row"), function (r) { return r.dataset.naam; });
+    }
+
+    function segVul() {
+      var tekst = segZoek.value.trim().toLowerCase();
+      var al = segAl();
+      segLijst.textContent = "";
+      var aantal = 0;
+      SEGMENTEN.forEach(function (s) {
+        if (tekst && s.naam.toLowerCase().indexOf(tekst) < 0) return;
+        aantal++;
+        var li = document.createElement("li");
+        var regel = document.createElement("label");
+        regel.className = "pickrow";
+        var vak = document.createElement("input");
+        vak.type = "checkbox";
+        vak.value = s.naam;
+        vak.checked = al.indexOf(s.naam) !== -1;
+        var naam = document.createElement("span");
+        naam.className = "pickrow__name";
+        naam.textContent = s.naam;
+        var meta = document.createElement("span");
+        meta.className = "pickrow__meta";
+        meta.textContent = s.meta;
+        regel.appendChild(vak);
+        regel.appendChild(naam);
+        regel.appendChild(meta);
+        li.appendChild(regel);
+        segLijst.appendChild(li);
+      });
+      segLeeg.hidden = aantal > 0;
+      zetSegTel();
+    }
+
+    function zetSegTel() {
+      var aan = segLijst.querySelectorAll("input:checked").length;
+      segTel.textContent = aan + (aan === 1 ? " customer segment selected" : " customer segments selected");
+      segAdd.disabled = aan === 0;
+    }
+
+    function segOpen(tekst) {
+      segZoek.value = tekst || "";
+      segVul();
+      segVenster.hidden = false;
+      segZoek.focus();
+    }
+
+    segWie.addEventListener("change", function () {
+      segVeld.hidden = segWie.value !== "Customer segments";
+      if (!segVeld.hidden && !segAl().length) segOpen("");
+    });
+    segZoekPag.addEventListener("input", function () {
+      if (segZoekPag.value) segOpen(segZoekPag.value);
+    });
+    document.getElementById("seg-browse").addEventListener("click", function () { segOpen(segZoekPag.value); });
+    segZoek.addEventListener("input", segVul);
+    segLijst.addEventListener("change", zetSegTel);
+
+    /* Toevoegen zet de lijst onder het veld gelijk aan wat aangevinkt is:
+       wat je uitvinkt gaat er dus ook weer af. */
+    segAdd.addEventListener("click", function () {
+      var aan = [].map.call(segLijst.querySelectorAll("input:checked"), function (v) { return v.value; });
+      var uit = [].map.call(segLijst.querySelectorAll("input:not(:checked)"), function (v) { return v.value; });
+      segGekozen.querySelectorAll(".picked__row").forEach(function (r) {
+        if (uit.indexOf(r.dataset.naam) !== -1) r.remove();
+      });
+      var al = segAl();
+      aan.forEach(function (naam) {
+        if (al.indexOf(naam) !== -1) return;
+        var s = SEGMENTEN.filter(function (x) { return x.naam === naam; })[0];
+        var rij = pickRegel(s, "picked__row");
+        rij.appendChild(pickTeken("i-segment"));
+        var titel = document.createElement("span");
+        titel.className = "pickrow__name";
+        titel.textContent = s.naam;
+        var meta = document.createElement("span");
+        meta.className = "pickrow__meta";
+        meta.textContent = s.meta;
+        var weg = document.createElement("button");
+        weg.className = "icon-btn picked__del";
+        weg.type = "button";
+        weg.setAttribute("aria-label", "Remove " + s.naam);
+        weg.appendChild(pickTeken("i-close"));
+        rij.appendChild(titel);
+        rij.appendChild(meta);
+        rij.appendChild(weg);
+        segGekozen.appendChild(rij);
+      });
+      segGekozen.hidden = !segGekozen.children.length;
+      segZoekPag.value = "";
+      segVenster.hidden = true;
+    });
+
+    segGekozen.addEventListener("click", function (e) {
+      var weg = e.target.closest(".picked__del");
+      if (!weg) return;
+      weg.closest(".picked__row").remove();
+      segGekozen.hidden = !segGekozen.children.length;
+    });
+
     /* ---- Samengaan met andere kortingen --------------------------------
        Het menu in de kaartkop zegt wat mag; het vak eronder zegt wat dat
        oplevert. Het kruisje op een regel doet hetzelfde als het vinkje

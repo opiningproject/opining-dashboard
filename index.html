@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=718" />
+  <link rel="stylesheet" href="styles.css?v=719" />
 </head>
 <body>
 
@@ -2021,6 +2021,19 @@
                   <option>Customer segments</option>
                   <option>Specific customers</option>
                 </select>
+              </div>
+              <!-- Bij Customer segments kies je welke: typen of Browse opent het
+                   venster met de segmenten, wat je toevoegt staat eronder. -->
+              <div class="field" data-seg-field hidden>
+                <label class="label sr-only" for="seg-search">Search customer segments</label>
+                <div class="withbtn">
+                  <span class="psearch__field">
+                    <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+                    <input id="seg-search" type="search" placeholder="Search customer segments" />
+                  </span>
+                  <button class="btn btn--soft btn--sm" type="button" id="seg-browse">Browse</button>
+                </div>
+                <ul class="picked" id="seg-picked" hidden></ul>
               </div>
             </div>
 
@@ -6784,6 +6797,32 @@
       </div>
     </div>
   </div>
+  <!-- Klantsegmenten kiezen voor een korting: zoeken, aanvinken, toevoegen.
+       Een segment is een groep klanten die iets gemeen heeft, zoals wie nog
+       nooit besteld heeft. -->
+  <div class="dialog" id="seg-dialog" hidden>
+    <div class="dialog__scrim" data-dialog-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="seg-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="seg-title">Add customer segments</h2>
+      </div>
+      <div class="pick__search">
+        <span class="psearch__field">
+          <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
+          <input id="seg-zoek" type="search" placeholder="Search customer segments" aria-label="Search customer segments" />
+        </span>
+      </div>
+      <div class="dialog__body pickbody">
+        <ul class="picklines segs" id="seg-list"></ul>
+        <p class="pick__empty" id="seg-empty" hidden>Nothing matches what you typed.</p>
+      </div>
+      <div class="dialog__foot pick__foot">
+        <span class="pick__count" id="seg-count">0 customer segments selected</span>
+        <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="seg-add" disabled>Add</button>
+      </div>
+    </div>
+  </div>
   <!-- Wat voor korting het wordt, vragen we voor het formulier: elke soort
        heeft zijn eigen velden. De regels openen hetzelfde aanmaakscherm,
        met data-disc-type erbij zodat het de juiste kaarten laat zien. -->
@@ -7923,6 +7962,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=718"></script>
+  <script src="app.js?v=719"></script>
 </body>
 </html>
