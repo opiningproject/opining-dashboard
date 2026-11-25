@@ -3924,6 +3924,118 @@
       merk.textContent = aan ? "Active" : "Offline";
     }
 
+    /* ---- De kas van een bezorger ---------------------------------------
+       Hij krijgt wisselgeld mee, haalt contant op bij de deur en stort dat
+       tussendoor af. Wat hij nog bij zich heeft is die som, en die rekenen
+       we hier uit in plaats van hem te laten rekenen. De contante omzet
+       komt uit de kolom van vandaag; afstorten mag meer dan een keer. */
+    var riderFloat = document.getElementById("rider-float");
+    var riderCashSom = document.getElementById("rider-cashsum");
+    var riderDrops = document.getElementById("rider-drops");
+    var riderDropAdd = document.getElementById("rider-drop-add");
+    var riderHand = document.getElementById("rider-hand");
+    var MAX_DROPS = 3;
+
+    function bedragUit(tekst) {
+      /* "€ 2.980,40" is een bedrag met punten als duizendtal en een komma
+         als scheiding; Number() maakt daar niets van. */
+      var kaal = String(tekst).replace(/[^0-9.,-]/g, "").split(".").join("").split(",").join(".");
+      return Number(kaal) || 0;
+    }
+
+    function euroTekst(n) {
+      return "€ " + n.toFixed(2).replace(".", ",");
+    }
+
+    function telKas() {
+      var op = bedragUit(riderCashSom.textContent) + (Number(riderFloat.value) || 0);
+      riderDrops.querySelectorAll("input").forEach(function (veld) {
+        op -= Number(veld.value) || 0;
+      });
+      riderHand.textContent = euroTekst(Math.max(op, 0));
+    }
+
+    function dropErbij(waarde) {
+      var n = riderDrops.children.length + 1;
+      var rij = document.createElement("div");
+      rij.className = "cash__row";
+      var naam = document.createElement("label");
+      naam.className = "cash__name";
+      naam.setAttribute("for", "rider-drop-" + n);
+      naam.textContent = "Drop-off " + n;
+      var vak = document.createElement("span");
+      vak.className = "affix affix--pre cash__veld";
+      vak.innerHTML = '<span class="affix__sym" aria-hidden="true">&euro;</span>';
+      var veld = document.createElement("input");
+      veld.className = "input";
+      veld.id = "rider-drop-" + n;
+      veld.type = "number";
+      veld.min = "0";
+      veld.step = "0.5";
+      veld.value = waarde || "";
+      vak.appendChild(veld);
+      rij.appendChild(naam);
+      rij.appendChild(vak);
+      riderDrops.appendChild(rij);
+      riderDropAdd.hidden = riderDrops.children.length >= MAX_DROPS;
+    }
+
+    riderDropAdd.addEventListener("click", function () {
+      if (riderDrops.children.length >= MAX_DROPS) return;
+      dropErbij("");
+      riderDrops.lastElementChild.querySelector("input").focus();
+    });
+
+    document.getElementById("rider-cash").addEventListener("input", telKas);
+
+    /* ---- Zijn bestellingen in het archief -------------------------------
+       In plaats van zelf een lijst in het venster te bouwen sturen we je
+       naar het archief met het filter al aangezet: daar staat alles al,
+       met zoeken, sorteren en de bestelling zelf erachter. */
+    function naarArchief(naam) {
+      riderVenster.hidden = true;
+      var nav = document.querySelector('.nav__item[data-page="archive"]');
+      if (nav) nav.click();
+      var kop = document.querySelector('[data-view="archive"] .panel__head');
+      if (!kop) return;
+      var psearch = kop.querySelector(".psearch");
+      kop.classList.add("is-searching");
+      /* Een vorige keuze zou ernaast blijven staan en samen filteren. */
+      psearch.querySelectorAll(".fchip").forEach(function (chip) { chip.remove(); });
+
+      var filter = leesFilters(psearch).filter(function (f) { return f.naam === "Deliverer"; })[0];
+      if (filter) {
+        var chip = chipVanFilter(filter);
+        psearch.querySelector(".fadd").before(chip);
+        chip.querySelectorAll(".fopt input").forEach(function (keuze) {
+          if (keuze.nextElementSibling.textContent.trim() === naam) keuze.checked = true;
+        });
+        syncChip(chip);
+      }
+      vulFilterMenu(psearch);
+      syncClearAll(psearch);
+      pasPaneelFilter(kop);
+    }
+
+    document.getElementById("rider-view").addEventListener("click", function () {
+      if (riderRij) naarArchief(riderRij.cells[0].textContent.trim());
+    });
+
+    /* ---- De kleur van een bezorger in het archief ------------------------
+       Het merkje bij een bestelling draagt zijn kleur, zodat je in de lijst
+       ziet van wie hij was zonder elke naam te lezen. */
+    function kleurArchief() {
+      var kleuren = {};
+      document.querySelectorAll('[data-view="deliverers"] tbody tr').forEach(function (rij) {
+        if (rij.dataset.kleur) kleuren[rij.cells[0].textContent.trim()] = rij.dataset.kleur;
+      });
+      document.querySelectorAll('[data-view="archive"] tbody .badge').forEach(function (merk) {
+        var kleur = kleuren[merk.textContent.trim()];
+        if (kleur) merk.dataset.kleur = kleur;
+        else merk.removeAttribute("data-kleur");
+      });
+    }
+
     function riderOpen(rij) {
       riderRij = rij;
       riderNaam.value = rij ? rij.cells[0].textContent.trim() : "";
@@ -3936,6 +4048,25 @@
       document.getElementById("rider-duty").hidden = !rij;
       document.getElementById("rider-on").value =
         !rij || rij.dataset.on !== "no" ? "yes" : "no";
+      document.getElementById("rider-colour").hidden = !rij;
+      document.getElementById("rider-cash").hidden = !rij;
+      document.getElementById("rider-view").hidden = !rij;
+
+      riderVenster.querySelectorAll('[name="rider-kleur"]').forEach(function (keuze) {
+        keuze.checked = !!rij && keuze.value === rij.dataset.kleur;
+      });
+
+      /* De kas gaat over vandaag, wat de lijst erboven ook laat zien: wat
+         hij bij zich heeft is van vandaag en niet van deze maand. */
+      riderDrops.textContent = "";
+      riderDropAdd.hidden = false;
+      if (rij) {
+        riderCashSom.textContent = (rij.cells[3].dataset.cash || "").split("|")[0] || "€ 0,00";
+        riderFloat.value = rij.dataset.float || "50";
+        (rij.dataset.drops ? rij.dataset.drops.split("|") : []).forEach(dropErbij);
+        if (!riderDrops.children.length) dropErbij("");
+        telKas();
+      }
       riderFout(riderNaam, riderNaamFout, false);
       riderFout(riderTel, riderTelFout, false);
       riderVenster.hidden = false;
@@ -3987,6 +4118,16 @@
         riderRij.cells[0].textContent = naam;
         riderRij.cells[1].textContent = tel;
         zetRijStand(riderRij, document.getElementById("rider-on").value === "yes");
+
+      var gekozen = riderVenster.querySelector('[name="rider-kleur"]:checked');
+        if (gekozen) riderRij.dataset.kleur = gekozen.value;
+        else delete riderRij.dataset.kleur;
+        riderRij.dataset.float = riderFloat.value;
+        riderRij.dataset.drops = [].map.call(riderDrops.querySelectorAll("input"), function (v) {
+          return v.value;
+        }).filter(Boolean).join("|");
+
+        kleurArchief();
         telBezorgers();
         riderVenster.hidden = true;
         showToast(naam + " updated");
@@ -4077,6 +4218,7 @@
 
     zetPeriode();
     telBezorgers();
+    kleurArchief();
 
   }
 

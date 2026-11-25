@@ -615,6 +615,48 @@ select.input {
   background-size: 16px;
 }
 
+/* Een kleur per bezorger. Dezelfde twee tinten dragen het bolletje in het
+   venster en het merkje in het archief, zodat je ze aan elkaar herkent. */
+[data-kleur="blue"]   { --kl-bg: #dbeafe; --kl-tx: #1d4ed8; }
+[data-kleur="teal"]   { --kl-bg: #ccfbf1; --kl-tx: #0f766e; }
+[data-kleur="green"]  { --kl-bg: #dcfce7; --kl-tx: #15803d; }
+[data-kleur="amber"]  { --kl-bg: #fef3c7; --kl-tx: #b45309; }
+[data-kleur="pink"]   { --kl-bg: #fce7f3; --kl-tx: #be185d; }
+[data-kleur="purple"] { --kl-bg: #ede9fe; --kl-tx: #6d28d9; }
+.badge[data-kleur] { background: var(--kl-bg); color: var(--kl-tx); }
+
+.kleuren { display: flex; flex-wrap: wrap; gap: 10px; }
+.kleur { position: relative; display: block; cursor: pointer; }
+.kleur input { position: absolute; opacity: 0; width: 0; height: 0; }
+.kleur__dot {
+  display: block; width: 26px; height: 26px;
+  border-radius: var(--r-full);
+  background: var(--kl-bg);
+  box-shadow: inset 0 0 0 1px rgba(18, 22, 28, .08);
+}
+/* De gekozen kleur krijgt een ring met een witte tussenruimte, zodat hij
+   opvalt zonder dat de kleur zelf verandert. */
+.kleur input:checked + .kleur__dot { box-shadow: inset 0 0 0 1px rgba(18, 22, 28, .08), 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--text-strong); }
+.kleur input:focus-visible + .kleur__dot { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+/* De kas van een bezorger: wat hij meekreeg, wat hij contant ophaalde, wat
+   hij afstortte, en wat hij dus nog bij zich heeft. Een vak met regels in
+   plaats van losse velden, want het is een som en geen formulier. */
+.cash { border: 1px solid var(--border-strong); border-radius: var(--r-md); padding: 4px 12px 12px; }
+.cash__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 42px; }
+.cash__row + .cash__row, .cash__drops + .cash__row { border-top: 1px solid var(--border); }
+.cash__drops .cash__row:first-child { border-top: 1px solid var(--border); }
+.cash__name { font-size: var(--fs-sm); color: var(--text); }
+.cash__val { font-size: var(--fs-sm); color: var(--text-strong); font-variant-numeric: tabular-nums; }
+.cash__row--tot { border-top: 1px solid var(--border-strong) !important; }
+.cash__row--tot .cash__name, .cash__row--tot .cash__val { font-weight: 600; color: var(--text-strong); }
+.cash__veld { flex: 0 0 auto; width: 104px; }
+.cash__veld .input { height: 30px; text-align: right; }
+.cash__add { margin-top: 10px; }
+.cash__drops:empty + .cash__add { margin-top: 0; }
+/* Bekijk zijn bestellingen staat links, los van bewaren en afbreken. */
+.rider__view { margin-right: auto; }
+
 .switch { display: inline-flex; align-items: center; cursor: pointer; }
 .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
 .switch__track { position: relative; width: 36px; height: 20px; border-radius: var(--r-full); background: var(--gray-300); transition: background var(--dur) var(--ease); }
