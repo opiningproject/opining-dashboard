@@ -4021,21 +4021,6 @@
       if (riderRij) naarArchief(riderRij.cells[0].textContent.trim());
     });
 
-    /* ---- De kleur van een bezorger in het archief ------------------------
-       Het merkje bij een bestelling draagt zijn kleur, zodat je in de lijst
-       ziet van wie hij was zonder elke naam te lezen. */
-    function kleurArchief() {
-      var kleuren = {};
-      document.querySelectorAll('[data-view="deliverers"] tbody tr').forEach(function (rij) {
-        if (rij.dataset.kleur) kleuren[rij.cells[0].textContent.trim()] = rij.dataset.kleur;
-      });
-      document.querySelectorAll('[data-view="archive"] tbody .badge').forEach(function (merk) {
-        var kleur = kleuren[merk.textContent.trim()];
-        if (kleur) merk.dataset.kleur = kleur;
-        else merk.removeAttribute("data-kleur");
-      });
-    }
-
     function riderOpen(rij) {
       riderRij = rij;
       riderNaam.value = rij ? rij.cells[0].textContent.trim() : "";
@@ -4048,13 +4033,8 @@
       document.getElementById("rider-duty").hidden = !rij;
       document.getElementById("rider-on").value =
         !rij || rij.dataset.on !== "no" ? "yes" : "no";
-      document.getElementById("rider-colour").hidden = !rij;
       document.getElementById("rider-cash").hidden = !rij;
       document.getElementById("rider-view").hidden = !rij;
-
-      riderVenster.querySelectorAll('[name="rider-kleur"]').forEach(function (keuze) {
-        keuze.checked = !!rij && keuze.value === rij.dataset.kleur;
-      });
 
       /* De kas gaat over vandaag, wat de lijst erboven ook laat zien: wat
          hij bij zich heeft is van vandaag en niet van deze maand. */
@@ -4119,15 +4099,11 @@
         riderRij.cells[1].textContent = tel;
         zetRijStand(riderRij, document.getElementById("rider-on").value === "yes");
 
-      var gekozen = riderVenster.querySelector('[name="rider-kleur"]:checked');
-        if (gekozen) riderRij.dataset.kleur = gekozen.value;
-        else delete riderRij.dataset.kleur;
         riderRij.dataset.float = riderFloat.value;
         riderRij.dataset.drops = [].map.call(riderDrops.querySelectorAll("input"), function (v) {
           return v.value;
         }).filter(Boolean).join("|");
 
-        kleurArchief();
         telBezorgers();
         riderVenster.hidden = true;
         showToast(naam + " updated");
@@ -4218,7 +4194,6 @@
 
     zetPeriode();
     telBezorgers();
-    kleurArchief();
 
   }
 
