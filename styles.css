@@ -1438,6 +1438,12 @@ select.input {
 .page-head { flex-wrap: wrap; row-gap: 12px; }
 .page-head__tools { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 .page-head__tools .input { width: auto; min-width: 168px; height: 36px; }
+/* Op een smal scherm duwt een knopnaam van twee woorden de hele bediening
+   naar een eigen regel, met een halflege titelregel erboven. Het tweede
+   woord staat er dan al: je kijkt naar de lijst met bezorgers. */
+@media (max-width: 420px) {
+  .page-head__tools .btn__long { display: none; }
+}
 .page-head__tools .icon { width: 16px; height: 16px; }
 
 /* Melding met gekleurde kop en een actie eronder. Kop en romp zitten in
