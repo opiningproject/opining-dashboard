@@ -3891,9 +3891,11 @@
     setInterval(function () { zetWinkel(false); }, 30000);
   }
 
-  /* ---- Een bezorger erbij ------------------------------------------------
-     De knop rechtsboven op de bezorgerspagina opent een venster met twee
-     velden. Opslaan zet hem onderaan de lijst, nog zonder ritten. */
+  /* ---- Een bezorger erbij, of een bestaande aanpassen --------------------
+     De knop rechtsboven opent een leeg venster met twee velden; een rij in
+     de lijst opent datzelfde venster met zijn naam en nummer erin. Een
+     nummer verandert nu eenmaal vaker dan dat er iemand bij komt, en een
+     tweede venster voor dezelfde twee velden zou niets toevoegen. */
   var riderVenster = document.getElementById("rider-dialog");
 
   if (riderVenster) {
@@ -3902,6 +3904,9 @@
     var riderNaamFout = document.getElementById("rider-name-error");
     var riderTelFout = document.getElementById("rider-phone-error");
     var riderKnop = document.getElementById("rider-save");
+    var riderTitel = document.getElementById("rider-title");
+    /* De rij die openstaat, of niets als er iemand bij komt. */
+    var riderRij = null;
 
     function riderFout(veld, melding, aan) {
       melding.hidden = !aan;
@@ -3913,13 +3918,28 @@
       paar[0].addEventListener("input", function () { riderFout(paar[0], paar[1], false); });
     });
 
-    document.getElementById("rider-add").addEventListener("click", function () {
-      riderNaam.value = "";
-      riderTel.value = "";
+    function riderOpen(rij) {
+      riderRij = rij;
+      riderNaam.value = rij ? rij.cells[0].textContent.trim() : "";
+      riderTel.value = rij ? rij.cells[1].textContent.trim() : "";
+      riderTitel.textContent = rij ? "Edit deliverer" : "Add deliverer";
+      riderKnop.textContent = rij ? "Save" : "Add deliverer";
       riderFout(riderNaam, riderNaamFout, false);
       riderFout(riderTel, riderTelFout, false);
       riderVenster.hidden = false;
       zetCursor(riderNaam);
+    }
+
+    document.getElementById("rider-add").addEventListener("click", function () {
+      riderOpen(null);
+    });
+
+    /* Een rij opent zichzelf. De schakelaar in de laatste kolom niet: die
+       doet al iets anders, en meeliften zou hem onbruikbaar maken. */
+    document.addEventListener("click", function (e) {
+      var rij = e.target.closest('[data-view="deliverers"] tbody tr');
+      if (!rij || e.target.closest(".switch")) return;
+      riderOpen(rij);
     });
 
     riderKnop.addEventListener("click", function () {
@@ -3929,6 +3949,19 @@
       riderFout(riderTel, riderTelFout, !tel);
       if (!naam) { riderNaam.focus(); return; }
       if (!tel) { riderTel.focus(); return; }
+
+      /* Een bestaande bezorger houdt zijn ritten en zijn stand; alleen de
+         twee velden uit het venster gaan erover. */
+      if (riderRij) {
+        riderRij.cells[0].textContent = naam;
+        riderRij.cells[1].textContent = tel;
+        var stand = riderRij.querySelector("[data-rider-on]");
+        riderRij.querySelector(".sr-only").textContent =
+          naam + (stand && stand.checked ? " is on duty" : " is off duty");
+        riderVenster.hidden = true;
+        showToast(naam + " updated");
+        return;
+      }
 
       var lijst = document.querySelector('[data-view="deliverers"] tbody');
       var rij = document.createElement("tr");
@@ -3986,8 +4019,10 @@
       var schakelaar = e.target.closest("[data-rider-on]");
       if (!schakelaar) return;
       var naam = schakelaar.closest("tr").cells[0].textContent.trim();
+      var zin = naam + (schakelaar.checked ? " is on duty" : " is off duty");
+      schakelaar.closest("label").querySelector(".sr-only").textContent = zin;
       telBezorgers();
-      showToast(naam + (schakelaar.checked ? " is on duty" : " is off duty"));
+      showToast(zin);
     });
   }
 
