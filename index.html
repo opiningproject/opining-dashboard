@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=733" />
+  <link rel="stylesheet" href="styles.css?v=736" />
 </head>
 <body>
 
@@ -819,7 +819,7 @@
                   </div>
                 </div>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Payment:iDEAL|Visa|Mastercard|PayPal|Cash;Order type:Delivery|Takeaway;Deliverer:Youssef Amrani|Nina Bakker|Ruben de Wit|Emma Post|Tarik Yildiz">
+                <div class="psearch" data-filters="Date=Today|Yesterday|Last 7 days|Last 30 days|Custom date;Payment:iDEAL|Visa|Mastercard|PayPal|Cash;Order type:Delivery|Takeaway;Deliverer:Youssef Amrani|Nina Bakker|Ruben de Wit|Emma Post|Tarik Yildiz">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -6807,6 +6807,34 @@
       </div>
     </div>
   </div>
+  <!-- Een eigen periode voor het archief. De tabs erboven dekken de gewone
+       gevallen; dit venster is voor een bereik dat daar niet bij zit. Het
+       gaat open zodra je Custom date aanvinkt in het filter. -->
+  <div class="dialog" id="daterange-dialog" hidden>
+    <div class="dialog__scrim" data-reeks-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="daterange-title">
+      <div class="dialog__head">
+        <h2 class="dialog__title" id="daterange-title">Custom date</h2>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label class="label" for="daterange-from">From</label>
+          <input class="input" id="daterange-from" type="date" />
+        </div>
+        <div class="field">
+          <label class="label" for="daterange-to">To</label>
+          <input class="input" id="daterange-to" type="date" />
+        </div>
+      </div>
+      <p class="field__error" id="daterange-error" hidden>
+        <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Pick a start date and an end date, with the start first.
+      </p>
+      <div class="dialog__foot">
+        <button class="btn btn--ghost" type="button" data-reeks-close>Cancel</button>
+        <button class="btn btn--primary" type="button" id="daterange-go">Apply</button>
+      </div>
+    </div>
+  </div>
   <!-- Kiezen waarop een korting slaat. Het venster gaat open zodra je in het
        zoekveld op de pagina een letter typt, met die letter er al in: wie
        begint te zoeken hoeft niet eerst een knop te vinden. Browse opent
@@ -8000,6 +8028,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=733"></script>
+  <script src="app.js?v=736"></script>
 </body>
 </html>

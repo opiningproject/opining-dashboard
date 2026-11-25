@@ -758,6 +758,19 @@
   /* De meeste filters kijken naar de tekst van een regel. Een bedragklasse of
      een termijn staat daar niet in: die rekent met wat de regel aan gegevens
      draagt. Een filter zonder regel hieronder blijft gewoon op tekst zoeken. */
+  /* Hele dagen tussen vandaag en een datum: 0 is vandaag, 1 is gisteren.
+     Met uren rekenen zou een bestelling van gisteravond vandaag noemen. */
+  function dagenGeleden(datum) {
+    var nu = new Date();
+    var a = new Date(nu.getFullYear(), nu.getMonth(), nu.getDate());
+    var b = new Date(datum.getFullYear(), datum.getMonth(), datum.getDate());
+    return Math.round((a - b) / 86400000);
+  }
+
+  /* Het zelfgekozen bereik achter "Custom date"; null zolang je er geen
+     hebt gekozen. Er is er maar een tegelijk, dus hij staat hier. */
+  var archiefReeks = null;
+
   var FILTERREGELS = {
     /* Een bezorger staat aan of uit; dat staat op zijn rij en nergens in de
        tekst, dus de tab kan er niet naar zoeken. */
@@ -811,6 +824,22 @@
       if (waarde.indexOf("last 30") !== -1) return d <= 30;
       if (waarde.indexOf("last 90") !== -1) return d <= 90;
       return d <= 365;
+    },
+    /* Wanneer een bestelling bezorgd is. De rij draagt hoeveel minuten dat
+       geleden is; daar maken we een datum van en tellen we hele dagen mee,
+       want "gisteren" gaat over de dag en niet over 24 uur. Een eigen
+       bereik staat in archiefReeks en heeft geen vast woord, dus alles wat
+       geen bekende periode is valt daarop terug. */
+    Date: function (rij, waarde) {
+      var minuten = Number(rij.dataset.ago);
+      if (isNaN(minuten)) return false;
+      var datum = new Date(Date.now() - minuten * 60000);
+      if (waarde.indexOf("yesterday") !== -1) return dagenGeleden(datum) === 1;
+      if (waarde.indexOf("today") !== -1) return dagenGeleden(datum) === 0;
+      if (waarde.indexOf("last 7") !== -1) return dagenGeleden(datum) <= 7;
+      if (waarde.indexOf("last 30") !== -1) return dagenGeleden(datum) <= 30;
+      if (!archiefReeks) return true;
+      return datum >= archiefReeks.van && datum <= archiefReeks.tot;
     },
     "Order type": function (rij, waarde) {
       var afhalen = rij.cells[2].textContent.trim() === "Takeaway";
@@ -975,6 +1004,101 @@
     syncChip(vink.closest(".fchip"));
     pasPaneelFilter(vink.closest(".panel__head"));
   });
+
+  /* ---- Een eigen periode kiezen -----------------------------------------
+     "Custom date" is geen waarde maar een vraag; aanvinken opent daarom een
+     venster met twee datums. Pas na Apply staat er een periode, en dan
+     draagt de keuze hem ook als tekst, zodat de chip zegt waarop je kijkt
+     in plaats van dat je het nog moet kiezen. */
+  var reeksVenster = document.getElementById("daterange-dialog");
+
+  if (reeksVenster) {
+    var reeksVan = document.getElementById("daterange-from");
+    var reeksTot = document.getElementById("daterange-to");
+    var reeksFout = document.getElementById("daterange-error");
+    var reeksKeuze = null;
+
+    var MAAND = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    function reeksTekst(van, tot) {
+      var zelfdeJaar = van.getFullYear() === tot.getFullYear();
+      var jaar = new Date().getFullYear();
+      function kort(d, metJaar) {
+        return d.getDate() + " " + MAAND[d.getMonth()] +
+               (metJaar && d.getFullYear() !== jaar ? " " + d.getFullYear() : "");
+      }
+      /* Een dag vergelijken we op de dag zelf: tot draagt er het einde van
+         de avond bij zich, dus de klokstand loopt uiteen. */
+      if (van.toDateString() === tot.toDateString()) return kort(van, true);
+      return kort(van, !zelfdeJaar) + " – " + kort(tot, true);
+    }
+
+    function reeksDatum(waarde) {
+      var deel = (waarde || "").split("-");
+      if (deel.length !== 3) return null;
+      var d = new Date(Number(deel[0]), Number(deel[1]) - 1, Number(deel[2]));
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function reeksSluit(herstel) {
+      if (herstel && reeksKeuze && !reeksKeuze.dataset.reeks) {
+        /* Afbreken zonder dat er eerder een periode stond laat het vinkje
+           niet aan: er is dan niets om op te filteren. */
+        reeksKeuze.checked = false;
+        syncChip(reeksKeuze.closest(".fchip"));
+        pasPaneelFilter(reeksKeuze.closest(".panel__head"));
+      }
+      reeksVenster.hidden = true;
+      reeksKeuze = null;
+    }
+
+    /* Deze luisteraar staat na die hierboven, dus de chip is al bijgewerkt. */
+    document.addEventListener("change", function (e) {
+      var keuze = e.target.closest(".fchip__menu input");
+      if (!keuze || !keuze.checked) return;
+      var naam = keuze.nextElementSibling;
+      var eigen = keuze.dataset.reeks ||
+                  naam.textContent.trim().toLowerCase() === "custom date";
+      if (!eigen) return;
+      reeksKeuze = keuze;
+      reeksFout.hidden = true;
+      reeksVenster.hidden = false;
+      zetCursor(reeksVan);
+    });
+
+    document.addEventListener("click", function (e) {
+      if (e.target.closest("[data-reeks-close]")) { reeksSluit(true); return; }
+
+      /* Een keuze die al aanstaat geeft geen change meer, en juist dan wil je
+         het venster weer open: om een andere periode te kiezen. */
+      var weer = e.target.closest(".fchip__menu input");
+      if (weer && weer.dataset.reeks) {
+        reeksKeuze = weer;
+        reeksFout.hidden = true;
+        reeksVenster.hidden = false;
+        zetCursor(reeksVan);
+        return;
+      }
+
+      if (!e.target.closest("#daterange-go")) return;
+
+      var van = reeksDatum(reeksVan.value);
+      var tot = reeksDatum(reeksTot.value);
+      if (!van || !tot || van > tot) { reeksFout.hidden = false; return; }
+      /* Tot en met: de hele einddag telt mee. */
+      tot = new Date(tot.getFullYear(), tot.getMonth(), tot.getDate(), 23, 59, 59);
+      archiefReeks = { van: van, tot: tot };
+
+      if (reeksKeuze) {
+        reeksKeuze.dataset.reeks = "ja";
+        reeksKeuze.nextElementSibling.textContent = reeksTekst(van, tot);
+        syncChip(reeksKeuze.closest(".fchip"));
+        pasPaneelFilter(reeksKeuze.closest(".panel__head"));
+      }
+      reeksSluit(false);
+    });
+  }
 
   function sluitPaneelZoek(kop) {
     kop.classList.remove("is-searching");
