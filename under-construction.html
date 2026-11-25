@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Email campaigns — Opining</title>
+  <!--
+    Een plek om naartoe te wijzen zolang een pagina nog niet ontworpen is.
+    Het dashboard wordt pagina voor pagina gedaan; wat nog niet aan de beurt
+    is geweest heeft geen ontwerp om op te bouwen, en een half ontwerp
+    nabouwen kost twee keer werk.
+
+    De naam staat in ?page= , zodat dezelfde pagina voor elk scherm dient
+    dat nog wacht:
+      under-construction.html
+      under-construction.html?page=Email%20campaigns
+      under-construction.html?page=Loyalty
+  -->
+  <link rel="stylesheet" href="styles.css?v=719" />
+  <style>
+    /* Deze pagina staat los van het dashboard: geen menu, geen kopbalk, alleen
+       de melding. De opmaak hieronder is alles wat daarvoor nodig is; de
+       kleuren, het lettertype en de kaart komen uit styles.css, zodat dit
+       niet uit de pas gaat lopen met de rest. */
+    .uc {
+      display: flex; flex-direction: column; gap: 20px;
+      width: 100%; max-width: 760px;
+      margin: 0 auto; padding: 48px 20px 64px;
+    }
+    .uc__head { display: flex; align-items: center; gap: 10px; }
+    .uc__crumb { font-size: var(--fs-md); color: var(--text-muted); }
+    .uc__title { font-size: 22px; font-weight: 600; letter-spacing: -.01em; color: var(--text-strong); }
+    /* De kaart leest als een alinea, niet als een foutmelding: er is niets
+       misgegaan, het is alleen nog niet zover. */
+    .uc__card { gap: 10px; }
+    .uc__lead { max-width: 46ch; font-size: var(--fs-md); color: var(--text); }
+    .uc__note { max-width: 46ch; font-size: var(--fs-sm); color: var(--text-muted); }
+    .uc__acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 14px; }
+    @media (max-width: 600px) {
+      .uc { padding: 28px 16px 48px; }
+      .uc__title { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="uc">
+    <div class="uc__head">
+      <span class="uc__crumb" id="uc-crumb">Marketing</span>
+      <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.72" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;color:var(--text-muted)">
+        <path d="m9.5 5.5 6.5 6.5-6.5 6.5" />
+      </svg>
+      <h1 class="uc__title" id="uc-title">Email campaigns</h1>
+    </div>
+
+    <div class="card card--empty uc__card">
+      <!-- Een pagina die nog wordt ingedeeld: een kader met de indeling er nog
+           maar half in. -->
+      <svg class="empty__icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3.2" y="4.2" width="17.6" height="15.6" rx="2.2" />
+        <path d="M3.2 9.3h17.6" />
+        <path d="M9.1 9.3v10.5" />
+        <path d="M12.4 13h5.1" stroke-dasharray="2.2 2.2" />
+        <path d="M12.4 16.3h3.1" stroke-dasharray="2.2 2.2" />
+      </svg>
+
+      <h2 class="card__title">This page is still being designed</h2>
+      <p class="uc__lead">
+        The Opining dashboard is being designed page by page, and
+        <b id="uc-name">Email campaigns</b> hasn&rsquo;t had its turn yet.
+      </p>
+      <p class="uc__note">
+        Please use this placeholder where that page would go. The finished
+        design will land in the prototype first, and you&rsquo;ll hear from us
+        when it&rsquo;s ready to build.
+      </p>
+
+      <div class="uc__acts">
+        <a class="btn btn--soft" href="index.html">Open the prototype</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    /* Dezelfde pagina voor elk scherm dat nog wacht: ?page=Loyalty zet de naam
+       op drie plekken tegelijk. Via textContent, zodat wat er in de adresbalk
+       staat tekst blijft en geen opmaak wordt. */
+    (function () {
+      var vraag = new URLSearchParams(location.search);
+
+      function schoon(sleutel) {
+        var waarde = vraag.get(sleutel);
+        return waarde ? waarde.trim().slice(0, 60) : "";
+      }
+
+      var naam = schoon("page");
+      if (naam) {
+        document.getElementById("uc-title").textContent = naam;
+        document.getElementById("uc-name").textContent = naam;
+        document.title = naam + " — Opining";
+      }
+
+      /* Het kruimelpad zegt waar de pagina hangt. Zonder ?section= blijft
+         Marketing staan, want daar hoort Email campaigns. */
+      var deel = schoon("section");
+      if (deel) document.getElementById("uc-crumb").textContent = deel;
+    })();
+  </script>
+
+</body>
+</html>
