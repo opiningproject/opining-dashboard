@@ -4083,11 +4083,10 @@
       riderRij = rij;
       riderNaam.value = rij ? rij.cells[0].textContent.trim() : "";
       riderTel.value = rij ? rij.cells[1].textContent.trim() : "";
-      riderTitel.textContent = rij ? "Edit deliverer" : "Add deliverer";
+      /* Zijn eigen naam boven zijn eigen gegevens; wie er nog niet is heeft
+         er nog geen, dus dan staat er wat je aan het doen bent. */
+      riderTitel.textContent = rij ? rij.cells[0].textContent.trim() : "Add deliverer";
       riderKnop.textContent = rij ? "Save" : "Add deliverer";
-      /* Bij iemand die er nog niet is valt er niets weg te halen, en staat
-         hij vanzelf aan zodra hij in de lijst komt. */
-      document.getElementById("rider-more").hidden = !rij;
       document.getElementById("rider-duty").hidden = !rij;
       document.getElementById("rider-on").value =
         !rij || rij.dataset.on !== "no" ? "yes" : "no";
@@ -4102,32 +4101,10 @@
     document.getElementById("rider-add").addEventListener("click", function () {
       riderOpen(null);
     });
-
-    /* Een rij opent zichzelf. De schakelaar in de laatste kolom niet: die
-       doet al iets anders, en meeliften zou hem onbruikbaar maken. */
+    /* Een rij opent zichzelf. */
     document.addEventListener("click", function (e) {
       var rij = e.target.closest('[data-view="deliverers"] tbody tr');
-      if (rij) { riderOpen(rij); return; }
-
-      /* Weghalen gaat met een vraag ertussen: de ritten die iemand al heeft
-         gereden blijven in de cijfers staan, maar uit de lijst is uit de
-         lijst. Het venster gaat eerst dicht, anders staan er twee over
-         elkaar. */
-      var weg = e.target.closest("[data-rider-del]");
-      if (!weg || !riderRij) return;
-      var dood = riderRij;
-      var naam = dood.cells[0].textContent.trim();
-      riderVenster.hidden = true;
-      vraag({
-        titel: "Delete deliverer?",
-        tekst: naam + " will be removed from the list. Deliveries already made stay in your reports.",
-        knop: "Delete",
-        actie: function () {
-          dood.remove();
-          
-          showToast(naam + " deleted");
-        }
-      });
+      if (rij) riderOpen(rij);
     });
 
     riderKnop.addEventListener("click", function () {
@@ -4143,6 +4120,7 @@
       if (riderRij) {
         riderRij.cells[0].textContent = naam;
         riderRij.cells[1].textContent = tel;
+        riderTitel.textContent = naam;
         zetRijStand(riderRij, document.getElementById("rider-on").value === "yes");
         
         riderVenster.hidden = true;

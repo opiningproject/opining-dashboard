@@ -615,8 +615,6 @@ select.input {
   background-size: 16px;
 }
 
-/* Bekijk zijn bestellingen staat links, los van bewaren en afbreken. */
-.rider__view { margin-right: auto; }
 
 .switch { display: inline-flex; align-items: center; cursor: pointer; }
 .switch input { position: absolute; opacity: 0; width: 0; height: 0; }
