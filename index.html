@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=726" />
+  <link rel="stylesheet" href="styles.css?v=727" />
 </head>
 <body>
 
@@ -6607,12 +6607,10 @@
           <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Phone can&rsquo;t be blank.
         </p>
       </div>
-      <label class="archrow archrow--na" id="rider-duty" hidden>
-        <span class="archrow__text">On duty</span>
-        <span class="switch">
-          <input type="checkbox" id="rider-on" />
-          <span class="switch__track" aria-hidden="true"></span>
-        </span>
+      <label class="switch dayopen dayopen--na" id="rider-duty" hidden>
+        <span class="dayopen__label" data-rider-state>On duty</span>
+        <input type="checkbox" id="rider-on" />
+        <span class="switch__track" aria-hidden="true"></span>
       </label>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
@@ -7980,6 +7978,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=726"></script>
+  <script src="app.js?v=727"></script>
 </body>
 </html>

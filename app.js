@@ -3924,6 +3924,15 @@
       merk.textContent = aan ? "Active" : "Offline";
     }
 
+    /* Het woord in het vak zegt de stand zelf, net als Open of Closed bij een
+       openingsdag: dan hoef je niet aan de schakelaar af te lezen wat er is
+       gekozen. */
+    var riderStaat = document.querySelector("[data-rider-state]");
+    function zetDutyWoord(aan) { riderStaat.textContent = aan ? "On duty" : "Off duty"; }
+    document.getElementById("rider-on").addEventListener("change", function (e) {
+      zetDutyWoord(e.target.checked);
+    });
+
     function riderOpen(rij) {
       riderRij = rij;
       riderNaam.value = rij ? rij.cells[0].textContent.trim() : "";
@@ -3934,7 +3943,9 @@
          hij vanzelf aan zodra hij in de lijst komt. */
       document.getElementById("rider-more").hidden = !rij;
       document.getElementById("rider-duty").hidden = !rij;
-      document.getElementById("rider-on").checked = !rij || rij.dataset.on !== "no";
+      var staatAan = !rij || rij.dataset.on !== "no";
+      document.getElementById("rider-on").checked = staatAan;
+      zetDutyWoord(staatAan);
       riderFout(riderNaam, riderNaamFout, false);
       riderFout(riderTel, riderTelFout, false);
       riderVenster.hidden = false;

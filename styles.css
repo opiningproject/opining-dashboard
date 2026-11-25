@@ -3686,13 +3686,9 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   cursor: pointer;
 }
 .archrow__text { font-size: var(--fs-md); color: var(--text-strong); }
-/* Dezelfde regel, maar onder de velden in plaats van erboven: dan hoort de
-   streep aan de bovenkant. */
-.archrow--na {
-  padding-bottom: 0; margin-bottom: 0;
-  padding-top: 16px; margin-top: 18px;
-  border-bottom: 0; border-top: 1px solid var(--border);
-}
+/* Hetzelfde vak als bij een openingsdag, maar onder de velden in plaats van
+   erboven: de ruimte hoort dan aan de bovenkant. */
+.dayopen--na { margin-top: 18px; margin-bottom: 0; }
 
 /* ---- Een bestelling opengeslagen ----------------------------------------
    Links wie het is, rechts wanneer het moet: twee lijsten naast elkaar, elk
