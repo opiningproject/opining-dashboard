@@ -1300,7 +1300,13 @@ select.input {
 /* Een wikkel die horizontaal schuift is ook verticaal een venster, en knipt
    een openstaand menu af. De wikkel ruimer maken zou het schuiven slopen, dus
    krijgt zo'n menu een vaste plek in het venster; app.js rekent die uit. */
-.sort__menu.sort__menu--vast { position: fixed; inset: auto; }
+/* Niet alleen het sorteermenu loopt tegen die rand aan: de twee filtermenu's
+   in een paneelkop ook. Elk van die drie zet zelf position: absolute, en een
+   van hen staat verderop in dit bestand; vandaar twee klassen per selector,
+   zodat de volgorde er niet toe doet. */
+.sort__menu.sort__menu--vast,
+.fchip__menu.sort__menu--vast,
+.fmenu.sort__menu--vast { position: fixed; inset: auto; }
 .table { width: 100%; border-collapse: collapse; font-size: var(--fs-md); }
 .table th {
   background: var(--gray-50);

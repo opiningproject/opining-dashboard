@@ -230,8 +230,6 @@
 
   pageCrumb.addEventListener("click", backToList);
 
-
-
   /* ---- Knoppen op de titelregel op een klein scherm ------------------------
      Twee knoppen naast een paginatitel passen op een telefoon niet. De
      hoofdactie blijft staan, de rest verhuist naar een menu achter drie
@@ -590,17 +588,20 @@
      omlijnde lijst met ronde hoeken — wordt door dat vak afgesneden. Het komt
      daarom los in het venster te hangen, met de rechterkant onder de knop. Valt
      het onderaan buiten beeld, dan klapt het boven de knop open. */
-  function zetMenuVast(knop, menu) {
+  function zetMenuVast(knop, menu, naarLinks) {
     menu.classList.remove("sort__menu--vast");
     menu.style.top = menu.style.left = "";
-    if (!menu.closest(".table-wrap, .paybox, .gmore")) return;
+    if (!menu.closest(".table-wrap, .paybox, .gmore, .panel--scroll")) return;
 
     /* Eerst losmaken, dan meten: zolang hij in de cel hangt knijpt de tabel
        hem smal, en dan klopt de berekende plek niet. */
     menu.classList.add("sort__menu--vast");
     var k = knop.getBoundingClientRect();
     var m = menu.getBoundingClientRect();
-    var links = Math.min(Math.max(8, k.right - m.width), innerWidth - m.width - 8);
+    /* Een menu bij een knop rechts in beeld lijnt rechts uit; een filter in
+       de kop hangt onder zijn eigen chip en dus links. */
+    var wil = naarLinks ? k.left : k.right - m.width;
+    var links = Math.min(Math.max(8, wil), innerWidth - m.width - 8);
     var boven = k.bottom + 6;
     if (boven + m.height > innerHeight - 8) boven = Math.max(8, k.top - 6 - m.height);
     menu.style.left = Math.round(links) + "px";
@@ -659,7 +660,6 @@
       menu.appendChild(knop);
     });
   }
-
 
   /* ---- Wat het filter overlaat -------------------------------------------
      Zoekwoord en aangevinkte waarden samen bepalen welke rijen blijven staan.
@@ -1089,6 +1089,11 @@
     if (!vink) return;
     var chip = vink.closest(".fchip");
     syncChip(chip);
+    /* Custom maakt het menu langer of korter; een menu dat op een vaste plek
+       hangt moet dan opnieuw gemeten worden, anders valt het van het scherm. */
+    if (!vink.dataset.grens) {
+      zetMenuVast(chip.querySelector(".fchip__label"), chip.querySelector(".fchip__menu"), true);
+    }
     pasPaneelFilter(chip.closest(".panel__head"));
   });
 
@@ -1157,6 +1162,7 @@
       sluitFilterMenus(dicht ? m2 : null);
       m2.hidden = !dicht;
       label2.setAttribute("aria-expanded", String(dicht));
+      if (dicht) zetMenuVast(label2, m2, true);
       return;
     }
 
@@ -1299,6 +1305,7 @@
       sluitFilterMenus(wasDicht ? m : null);
       m.hidden = !wasDicht;
       toevoegen.setAttribute("aria-expanded", String(wasDicht));
+      if (wasDicht) zetMenuVast(toevoegen, m, true);
       return;
     }
 
@@ -1314,6 +1321,7 @@
          open in plaats van dat je er nog eens op moet klikken. */
       nieuw.querySelector(".fchip__menu").hidden = false;
       nieuw.querySelector(".fchip__label").setAttribute("aria-expanded", "true");
+      zetMenuVast(nieuw.querySelector(".fchip__label"), nieuw.querySelector(".fchip__menu"), true);
       syncClearAll(blok);
       pasPaneelFilter(blok.closest(".panel__head"));
       return;
@@ -1444,7 +1452,6 @@
       if (e.key === "Escape" && !exportVenster.hidden) sluitExport();
     });
   }
-
 
   /* ---- Een domein kopen ---------------------------------------------------
      De knop Buy staat bij een naam in de lijst; de afrekenpagina neemt die
@@ -3549,8 +3556,6 @@
     vak.querySelector(".odlg__prodbody").hidden = !open;
   }
 
-
-
   function openBestelling(rij) {
     var b = leesBestelling(rij);
     huidigeBestelling = b;
@@ -3823,7 +3828,6 @@
       openPageSub("customer", e.detail.cells[1].textContent.trim());
     });
   })();
-
 
   /* ---- Acties achter de drie puntjes in het bestelvenster -------------
      Naar de klant (ook via de naam bovenaan): zijn profiel uit de
@@ -4120,7 +4124,7 @@
         knop: "Delete",
         actie: function () {
           dood.remove();
-          telBezorgers();
+          
           showToast(naam + " deleted");
         }
       });
@@ -4140,7 +4144,7 @@
         riderRij.cells[0].textContent = naam;
         riderRij.cells[1].textContent = tel;
         zetRijStand(riderRij, document.getElementById("rider-on").value === "yes");
-        telBezorgers();
+        
         riderVenster.hidden = true;
         showToast(naam + " updated");
         return;
@@ -4156,25 +4160,10 @@
       rij.cells[0].textContent = naam;
       rij.cells[1].textContent = tel;
       lijst.appendChild(rij);
-      telBezorgers();
+      
       riderVenster.hidden = true;
       showToast(naam + " added");
     });
-
-    /* Hoeveel er aan en uit staan; de tabs erboven zeggen het. */
-    function telBezorgers() {
-      var rijen = [].slice.call(document.querySelectorAll('[data-view="deliverers"] tbody tr'));
-      var aan = rijen.filter(function (rij) {
-        return rij.dataset.on !== "no";
-      }).length;
-      var zet = function (naam, n) {
-        var el = document.querySelector('[data-rider-tab="' + naam + '"]');
-        if (el) el.textContent = n;
-      };
-      zet("all", rijen.length);
-      zet("available", aan);
-      zet("offline", rijen.length - aan);
-    }
 
     /* Ritten en opgehaald geld gaan over een periode; elke cel draagt de vier
        standen bij zich, gescheiden door een streep. */
@@ -4229,8 +4218,7 @@
     });
 
     zetPeriode();
-    telBezorgers();
-
+    
   }
 
   /* Groepen waarvan de ouder alleen open- en dichtklapt: er bestaat geen
@@ -4422,7 +4410,6 @@
     }
     overlay.scrollTop = 0;
   }
-
 
   /* ---- De betaalpagina heeft twee gezichten -------------------------------
      Voor het versturen van de aanvraag staat er reclame; zodra die verstuurd
@@ -5059,7 +5046,6 @@
       if (terug) terug.checked = true;
     });
   });
-
 
   /* ---- Gegevens bijwerken na een afwijzing --------------------------------
      Dezelfde controlestap, maar dan als opdracht: wat klopt er niet en welk
@@ -6075,7 +6061,6 @@
     table.herpagineer = render;
     render();
   });
-
 
   /* ========================================================================
      9. TABSTREEP — laat zien dat er meer tabs zijn dan er passen
@@ -7408,7 +7393,6 @@
       cel.appendChild(vak);
     }
 
-
     /* Op een smal scherm passen drie losse knoppen niet naast de naam, en
        zweven bestaat er niet. Daar wordt het een knop Actions met een menu.
        We bouwen dat menu uit de knoppen die er al staan, zodat er maar een
@@ -7573,7 +7557,6 @@
       var dns = e.target.closest("[data-domain-dns]");
       if (dns) openDomeinPagina(dns.closest("tr"));
     });
-
 
   }
 
@@ -8510,7 +8493,6 @@
     });
   }
 
-
   /* ---- De samenvatting volgt wat er is ingevuld ----------------------------
      De blokken in stap 7 stonden vol met voorbeeldtekst. Ze lezen nu uit de
      velden van stap 1 en 2, zodat de ondernemer zijn eigen gegevens terugziet
@@ -8564,7 +8546,6 @@
         stand.className = "badge " + (mist ? "badge--pending" : "badge--active") + " u-normal";
       });
     }
-
 
     /* Wat de zaak doet, ook hier te wijzigen. De keuzelijst wordt gevuld
        vanuit stap 2, zodat de categorieen op een plek staan en niet uit elkaar
@@ -9073,8 +9054,6 @@
     document.addEventListener("upload-stand", zetStuk);
     zetRij();
   })();
-
-
 
   /* ---- Setup-guide en de cijfers op het dashboard -------------------------
      De gids klapt open en dicht aan zijn kop en vouwt zichzelf op zodra alle
@@ -9991,7 +9970,6 @@
     toon();
     zetGids();
   })();
-
 
   /* ---- Een gerecht bewerken ----------------------------------------------
      Je komt hier door op een regel in de menukaart te klikken. Naam en
