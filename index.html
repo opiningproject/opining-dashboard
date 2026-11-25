@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=736" />
+  <link rel="stylesheet" href="styles.css?v=740" />
 </head>
 <body>
 
@@ -690,7 +690,7 @@
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. De
                      chips perken ook in op wat een bestelling wel draagt maar
                      niet toont: of de tijd vastligt, en hoe er betaald is. -->
-                <div class="psearch" data-filters="Order type:Delivery|Collection;Status:New|Kitchen|Outgoing;Time:Scheduled|ASAP;Payment:iDEAL|Visa|Mastercard|PayPal|Cash">
+                <div class="psearch" data-filters="Order type:Delivery|Collection;Status:New|Kitchen|Outgoing;Time:Scheduled|ASAP;Payment=Paid online|Cash">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -819,7 +819,7 @@
                   </div>
                 </div>
                 <!-- Zoekstand: vervangt de tabs zolang hij openstaat. -->
-                <div class="psearch" data-filters="Date=Today|Yesterday|Last 7 days|Last 30 days|Custom date;Payment:iDEAL|Visa|Mastercard|PayPal|Cash;Order type:Delivery|Takeaway;Deliverer:Youssef Amrani|Nina Bakker|Ruben de Wit|Emma Post|Tarik Yildiz">
+                <div class="psearch" data-filters="Date=Today|Yesterday|Last 7 days|Last 30 days|Last 90 days|Last Year|Custom;Payment=Paid online|Cash;Order type:Delivery|Takeaway;Deliverer:Youssef Amrani|Nina Bakker|Ruben de Wit|Emma Post|Tarik Yildiz">
                   <div class="psearch__top">
                     <span class="psearch__field">
                       <svg class="icon psearch__icon" aria-hidden="true"><use href="#i-search"/></svg>
@@ -6614,25 +6614,6 @@
           <option value="no">Offline</option>
         </select>
       </div>
-      <div class="field" id="rider-cash" hidden>
-        <span class="label">Cash today</span>
-        <div class="cash">
-          <div class="cash__row">
-            <label class="cash__name" for="rider-float">Float</label>
-            <span class="affix affix--pre cash__veld"><span class="affix__sym" aria-hidden="true">&euro;</span><input class="input" id="rider-float" type="number" value="50" min="0" step="0.5" /></span>
-          </div>
-          <div class="cash__row">
-            <span class="cash__name">Cash orders</span>
-            <span class="cash__val" id="rider-cashsum">&euro; 0,00</span>
-          </div>
-          <div class="cash__drops" id="rider-drops"></div>
-          <button class="linkbtn cash__add" type="button" id="rider-drop-add">Add drop-off</button>
-          <div class="cash__row cash__row--tot">
-            <span class="cash__name">Cash in hand</span>
-            <b class="cash__val" id="rider-hand">&euro; 0,00</b>
-          </div>
-        </div>
-      </div>
       <div class="dialog__foot">
         <button class="btn btn--ghost rider__view" type="button" id="rider-view" hidden>View orders</button>
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
@@ -6804,34 +6785,6 @@
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
         <button class="btn btn--primary" type="button" id="cnew-save">Add choice</button>
-      </div>
-    </div>
-  </div>
-  <!-- Een eigen periode voor het archief. De tabs erboven dekken de gewone
-       gevallen; dit venster is voor een bereik dat daar niet bij zit. Het
-       gaat open zodra je Custom date aanvinkt in het filter. -->
-  <div class="dialog" id="daterange-dialog" hidden>
-    <div class="dialog__scrim" data-reeks-close></div>
-    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="daterange-title">
-      <div class="dialog__head">
-        <h2 class="dialog__title" id="daterange-title">Custom date</h2>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label class="label" for="daterange-from">From</label>
-          <input class="input" id="daterange-from" type="date" />
-        </div>
-        <div class="field">
-          <label class="label" for="daterange-to">To</label>
-          <input class="input" id="daterange-to" type="date" />
-        </div>
-      </div>
-      <p class="field__error" id="daterange-error" hidden>
-        <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Pick a start date and an end date, with the start first.
-      </p>
-      <div class="dialog__foot">
-        <button class="btn btn--ghost" type="button" data-reeks-close>Cancel</button>
-        <button class="btn btn--primary" type="button" id="daterange-go">Apply</button>
       </div>
     </div>
   </div>
@@ -8028,6 +7981,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=736"></script>
+  <script src="app.js?v=740"></script>
 </body>
 </html>

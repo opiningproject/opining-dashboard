@@ -615,21 +615,6 @@ select.input {
   background-size: 16px;
 }
 
-/* De kas van een bezorger: wat hij meekreeg, wat hij contant ophaalde, wat
-   hij afstortte, en wat hij dus nog bij zich heeft. Een vak met regels in
-   plaats van losse velden, want het is een som en geen formulier. */
-.cash { border: 1px solid var(--border-strong); border-radius: var(--r-md); padding: 4px 12px 12px; }
-.cash__row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 42px; }
-.cash__row + .cash__row, .cash__drops + .cash__row { border-top: 1px solid var(--border); }
-.cash__drops .cash__row:first-child { border-top: 1px solid var(--border); }
-.cash__name { font-size: var(--fs-sm); color: var(--text); }
-.cash__val { font-size: var(--fs-sm); color: var(--text-strong); font-variant-numeric: tabular-nums; }
-.cash__row--tot { border-top: 1px solid var(--border-strong) !important; }
-.cash__row--tot .cash__name, .cash__row--tot .cash__val { font-weight: 600; color: var(--text-strong); }
-.cash__veld { flex: 0 0 auto; width: 104px; }
-.cash__veld .input { height: 30px; text-align: right; }
-.cash__add { margin-top: 10px; }
-.cash__drops:empty + .cash__add { margin-top: 0; }
 /* Bekijk zijn bestellingen staat links, los van bewaren en afbreken. */
 .rider__view { margin-right: auto; }
 
@@ -1615,6 +1600,14 @@ select.input {
   border-color: var(--accent);
   background: var(--accent) url("data:image/svg+xml;utf8,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27white%27 stroke-width=%273%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27><path d=%27m5 12.5 4.5 4.5L19 7%27/></svg>") center / 12px no-repeat;
 }
+/* Een eigen periode staat in dezelfde lijst en niet in een venster
+   erbovenop: kies je Custom, dan wordt de lijst langer met de twee datums
+   eronder. Zolang je iets anders kiest staan ze er niet. */
+.fdate { display: none; padding: 6px 4px 2px; }
+.fchip.is-eigen .fdate { display: block; }
+.fdate__naam { display: block; margin: 8px 0 6px; font-size: var(--fs-sm); font-weight: 500; color: var(--text-strong); }
+.fdate .input { width: 100%; }
+
 .fchip__clear { margin-top: 4px; align-self: flex-start; padding: 4px; font-size: var(--fs-sm); color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 
 /* Alles wissen staat naast de knoppen, niet ertussen. */

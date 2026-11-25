@@ -484,6 +484,28 @@
       optie.querySelector("span").textContent = waarde;
       menu.appendChild(optie);
     });
+    /* Een periode die je zelf kiest past in geen enkel rijtje, dus daar
+       horen twee datums bij. Ze staan in dezelfde lijst en niet in een
+       venster erbovenop: de lijst wordt er gewoon langer van. */
+    if (filter.waarden.indexOf("Custom") >= 0) {
+      var eigen = document.createElement("div");
+      eigen.className = "fdate";
+      [["Starting", "van"], ["Ending", "tot"]].forEach(function (paar) {
+        var naam = document.createElement("label");
+        naam.className = "fdate__naam";
+        naam.setAttribute("for", "fdate-" + paar[1] + "-" + groep);
+        naam.textContent = paar[0];
+        var veld = document.createElement("input");
+        veld.className = "input";
+        veld.type = "date";
+        veld.id = "fdate-" + paar[1] + "-" + groep;
+        veld.dataset.grens = paar[1];
+        eigen.appendChild(naam);
+        eigen.appendChild(veld);
+      });
+      menu.appendChild(eigen);
+    }
+
     var leeg = document.createElement("button");
     leeg.type = "button";
     leeg.className = "fchip__clear";
@@ -513,8 +535,23 @@
     var label = chip.querySelector(".fchip__waarde");
     var weg = chip.querySelector(".fchip__x");
 
+    /* Of de eigen periode aanstaat bepalen we hier, want deze functie loopt
+       ook bij Clear en bij het kruisje op de chip. Alleen een chip met
+       datumvelden raakt het bereik aan; een ander filter laat het met rust. */
+    if (chip.querySelector("[data-grens]")) {
+      var eigenAan = aan.some(function (w) { return w.toLowerCase() === "custom"; });
+      chip.classList.toggle("is-eigen", eigenAan);
+      if (!eigenAan) chip.querySelectorAll("[data-grens]").forEach(function (veld) { veld.value = ""; });
+      archiefReeks = eigenAan ? reeksVanChip(chip) : null;
+    }
+
+    /* Bij een zelfgekozen periode staat er niet "Custom" maar waar je naar
+       kijkt. Zolang er nog geen twee datums zijn blijft het woord staan. */
+    var eigenReeks = chip.classList.contains("is-eigen") && reeksVanChip(chip);
+
     /* Meer dan twee wordt te lang voor een chip; dan telt hij de rest op. */
-    label.textContent = !aan.length ? naam
+    label.textContent = eigenReeks ? reeksTekst(eigenReeks.van, eigenReeks.tot)
+      : !aan.length ? naam
       : aan.length <= 2 ? aan.join(", ")
       : aan.slice(0, 1).join("") + " +" + (aan.length - 1);
 
@@ -758,6 +795,45 @@
   /* De meeste filters kijken naar de tekst van een regel. Een bedragklasse of
      een termijn staat daar niet in: die rekent met wat de regel aan gegevens
      draagt. Een filter zonder regel hieronder blijft gewoon op tekst zoeken. */
+  /* ---- Een periode die je zelf kiest -------------------------------------
+     De twee velden staan onder in dezelfde lijst, zichtbaar zodra Custom
+     aanstaat. Zodra er een begin en een eind in staan filtert hij mee en
+     draagt de chip het bereik in plaats van het woord Custom. */
+  var MAAND = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+               "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  function reeksDatum(waarde) {
+    var deel = (waarde || "").split("-");
+    if (deel.length !== 3) return null;
+    var d = new Date(Number(deel[0]), Number(deel[1]) - 1, Number(deel[2]));
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  /* Het bereik van een chip, of niets zolang het niet compleet of omgekeerd
+     is: half ingevuld filteren zou de lijst leegmaken terwijl je nog bezig
+     bent. */
+  function reeksVanChip(chip) {
+    var vanVeld = chip.querySelector('[data-grens="van"]');
+    var totVeld = chip.querySelector('[data-grens="tot"]');
+    if (!vanVeld || !totVeld) return null;
+    var van = reeksDatum(vanVeld.value);
+    var tot = reeksDatum(totVeld.value);
+    if (!van || !tot || van > tot) return null;
+    /* Tot en met: de hele einddag telt mee. */
+    return { van: van, tot: new Date(tot.getFullYear(), tot.getMonth(), tot.getDate(), 23, 59, 59) };
+  }
+
+  /* Verdwijnt de chip met de datums, dan hoort het bereik ook te vervallen;
+     anders blijft hij hangen voor de volgende keer dat je Custom kiest. */
+  function vergeetReeks(chip) {
+    if (chip && chip.querySelector("[data-grens]")) archiefReeks = null;
+  }
+
+  function reeksTekst(van, tot) {
+    function kort(d) { return d.getDate() + " " + MAAND[d.getMonth()] + " " + d.getFullYear(); }
+    return van.toDateString() === tot.toDateString() ? kort(van) : kort(van) + " – " + kort(tot);
+  }
+
   /* Hele dagen tussen vandaag en een datum: 0 is vandaag, 1 is gisteren.
      Met uren rekenen zou een bestelling van gisteravond vandaag noemen. */
   function dagenGeleden(datum) {
@@ -767,8 +843,8 @@
     return Math.round((a - b) / 86400000);
   }
 
-  /* Het zelfgekozen bereik achter "Custom date"; null zolang je er geen
-     hebt gekozen. Er is er maar een tegelijk, dus hij staat hier. */
+  /* Het zelfgekozen bereik; null zolang het niet compleet is. Er is er maar
+     een tegelijk, dus hij staat hier. */
   var archiefReeks = null;
 
   var FILTERREGELS = {
@@ -838,8 +914,18 @@
       if (waarde.indexOf("today") !== -1) return dagenGeleden(datum) === 0;
       if (waarde.indexOf("last 7") !== -1) return dagenGeleden(datum) <= 7;
       if (waarde.indexOf("last 30") !== -1) return dagenGeleden(datum) <= 30;
+      if (waarde.indexOf("last 90") !== -1) return dagenGeleden(datum) <= 90;
+      if (waarde.indexOf("last year") !== -1) return dagenGeleden(datum) <= 365;
+      /* Custom zonder twee datums perkt nog niets in. */
       if (!archiefReeks) return true;
       return datum >= archiefReeks.van && datum <= archiefReeks.tot;
+    },
+    /* Hoe er betaald is. Welke kaart of welke app maakt voor de keuken niets
+       uit; of het geld al binnen is wel, want daar hangt aan of de bezorger
+       nog moet afrekenen aan de deur. */
+    Payment: function (rij, waarde) {
+      var contant = (rij.dataset.method || "").toLowerCase() === "cash";
+      return waarde.indexOf("cash") !== -1 ? contant : !contant;
     },
     "Order type": function (rij, waarde) {
       var afhalen = rij.cells[2].textContent.trim() === "Takeaway";
@@ -1001,110 +1087,16 @@
   document.addEventListener("change", function (e) {
     var vink = e.target.closest(".fchip__menu input");
     if (!vink) return;
-    syncChip(vink.closest(".fchip"));
-    pasPaneelFilter(vink.closest(".panel__head"));
+    var chip = vink.closest(".fchip");
+    syncChip(chip);
+    pasPaneelFilter(chip.closest(".panel__head"));
   });
-
-  /* ---- Een eigen periode kiezen -----------------------------------------
-     "Custom date" is geen waarde maar een vraag; aanvinken opent daarom een
-     venster met twee datums. Pas na Apply staat er een periode, en dan
-     draagt de keuze hem ook als tekst, zodat de chip zegt waarop je kijkt
-     in plaats van dat je het nog moet kiezen. */
-  var reeksVenster = document.getElementById("daterange-dialog");
-
-  if (reeksVenster) {
-    var reeksVan = document.getElementById("daterange-from");
-    var reeksTot = document.getElementById("daterange-to");
-    var reeksFout = document.getElementById("daterange-error");
-    var reeksKeuze = null;
-
-    var MAAND = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                 "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    function reeksTekst(van, tot) {
-      var zelfdeJaar = van.getFullYear() === tot.getFullYear();
-      var jaar = new Date().getFullYear();
-      function kort(d, metJaar) {
-        return d.getDate() + " " + MAAND[d.getMonth()] +
-               (metJaar && d.getFullYear() !== jaar ? " " + d.getFullYear() : "");
-      }
-      /* Een dag vergelijken we op de dag zelf: tot draagt er het einde van
-         de avond bij zich, dus de klokstand loopt uiteen. */
-      if (van.toDateString() === tot.toDateString()) return kort(van, true);
-      return kort(van, !zelfdeJaar) + " – " + kort(tot, true);
-    }
-
-    function reeksDatum(waarde) {
-      var deel = (waarde || "").split("-");
-      if (deel.length !== 3) return null;
-      var d = new Date(Number(deel[0]), Number(deel[1]) - 1, Number(deel[2]));
-      return isNaN(d.getTime()) ? null : d;
-    }
-
-    function reeksSluit(herstel) {
-      if (herstel && reeksKeuze && !reeksKeuze.dataset.reeks) {
-        /* Afbreken zonder dat er eerder een periode stond laat het vinkje
-           niet aan: er is dan niets om op te filteren. */
-        reeksKeuze.checked = false;
-        syncChip(reeksKeuze.closest(".fchip"));
-        pasPaneelFilter(reeksKeuze.closest(".panel__head"));
-      }
-      reeksVenster.hidden = true;
-      reeksKeuze = null;
-    }
-
-    /* Deze luisteraar staat na die hierboven, dus de chip is al bijgewerkt. */
-    document.addEventListener("change", function (e) {
-      var keuze = e.target.closest(".fchip__menu input");
-      if (!keuze || !keuze.checked) return;
-      var naam = keuze.nextElementSibling;
-      var eigen = keuze.dataset.reeks ||
-                  naam.textContent.trim().toLowerCase() === "custom date";
-      if (!eigen) return;
-      reeksKeuze = keuze;
-      reeksFout.hidden = true;
-      reeksVenster.hidden = false;
-      zetCursor(reeksVan);
-    });
-
-    document.addEventListener("click", function (e) {
-      if (e.target.closest("[data-reeks-close]")) { reeksSluit(true); return; }
-
-      /* Een keuze die al aanstaat geeft geen change meer, en juist dan wil je
-         het venster weer open: om een andere periode te kiezen. */
-      var weer = e.target.closest(".fchip__menu input");
-      if (weer && weer.dataset.reeks) {
-        reeksKeuze = weer;
-        reeksFout.hidden = true;
-        reeksVenster.hidden = false;
-        zetCursor(reeksVan);
-        return;
-      }
-
-      if (!e.target.closest("#daterange-go")) return;
-
-      var van = reeksDatum(reeksVan.value);
-      var tot = reeksDatum(reeksTot.value);
-      if (!van || !tot || van > tot) { reeksFout.hidden = false; return; }
-      /* Tot en met: de hele einddag telt mee. */
-      tot = new Date(tot.getFullYear(), tot.getMonth(), tot.getDate(), 23, 59, 59);
-      archiefReeks = { van: van, tot: tot };
-
-      if (reeksKeuze) {
-        reeksKeuze.dataset.reeks = "ja";
-        reeksKeuze.nextElementSibling.textContent = reeksTekst(van, tot);
-        syncChip(reeksKeuze.closest(".fchip"));
-        pasPaneelFilter(reeksKeuze.closest(".panel__head"));
-      }
-      reeksSluit(false);
-    });
-  }
 
   function sluitPaneelZoek(kop) {
     kop.classList.remove("is-searching");
     kop.querySelector(".psearch input[type='search']").value = "";
     /* Chips horen bij deze zoekbeurt; bij afbreken vervallen ze met de rest. */
-    kop.querySelectorAll(".fchip").forEach(function (c) { c.remove(); });
+    kop.querySelectorAll(".fchip").forEach(function (c) { vergeetReeks(c); c.remove(); });
     sluitFilterMenus();
     syncClearAll(kop.querySelector(".psearch"));
     pasPaneelFilter(kop);
@@ -1148,6 +1140,7 @@
     var weg = e.target.closest(".fchip__x");
     if (weg) {
       var blok0 = weg.closest(".psearch");
+      vergeetReeks(weg.closest(".fchip"));
       weg.closest(".fchip").remove();
       syncClearAll(blok0);
       pasPaneelFilter(blok0.closest(".panel__head"));
@@ -1174,6 +1167,7 @@
       var chip2 = leegmaken.closest(".fchip");
       var kop2 = chip2.closest(".panel__head");
       var blok2 = chip2.closest(".psearch");
+      vergeetReeks(chip2);
       chip2.remove();
       syncClearAll(blok2);
       pasPaneelFilter(kop2);
@@ -1183,7 +1177,7 @@
     var alles = e.target.closest(".fclear");
     if (alles) {
       var blok1 = alles.closest(".psearch");
-      blok1.querySelectorAll(".fchip").forEach(function (c) { c.remove(); });
+      blok1.querySelectorAll(".fchip").forEach(function (c) { vergeetReeks(c); c.remove(); });
       syncClearAll(blok1);
       pasPaneelFilter(blok1.closest(".panel__head"));
       return;
@@ -4048,70 +4042,6 @@
       merk.textContent = aan ? "Active" : "Offline";
     }
 
-    /* ---- De kas van een bezorger ---------------------------------------
-       Hij krijgt wisselgeld mee, haalt contant op bij de deur en stort dat
-       tussendoor af. Wat hij nog bij zich heeft is die som, en die rekenen
-       we hier uit in plaats van hem te laten rekenen. De contante omzet
-       komt uit de kolom van vandaag; afstorten mag meer dan een keer. */
-    var riderFloat = document.getElementById("rider-float");
-    var riderCashSom = document.getElementById("rider-cashsum");
-    var riderDrops = document.getElementById("rider-drops");
-    var riderDropAdd = document.getElementById("rider-drop-add");
-    var riderHand = document.getElementById("rider-hand");
-    var MAX_DROPS = 3;
-
-    function bedragUit(tekst) {
-      /* "€ 2.980,40" is een bedrag met punten als duizendtal en een komma
-         als scheiding; Number() maakt daar niets van. */
-      var kaal = String(tekst).replace(/[^0-9.,-]/g, "").split(".").join("").split(",").join(".");
-      return Number(kaal) || 0;
-    }
-
-    function euroTekst(n) {
-      return "€ " + n.toFixed(2).replace(".", ",");
-    }
-
-    function telKas() {
-      var op = bedragUit(riderCashSom.textContent) + (Number(riderFloat.value) || 0);
-      riderDrops.querySelectorAll("input").forEach(function (veld) {
-        op -= Number(veld.value) || 0;
-      });
-      riderHand.textContent = euroTekst(Math.max(op, 0));
-    }
-
-    function dropErbij(waarde) {
-      var n = riderDrops.children.length + 1;
-      var rij = document.createElement("div");
-      rij.className = "cash__row";
-      var naam = document.createElement("label");
-      naam.className = "cash__name";
-      naam.setAttribute("for", "rider-drop-" + n);
-      naam.textContent = "Drop-off " + n;
-      var vak = document.createElement("span");
-      vak.className = "affix affix--pre cash__veld";
-      vak.innerHTML = '<span class="affix__sym" aria-hidden="true">&euro;</span>';
-      var veld = document.createElement("input");
-      veld.className = "input";
-      veld.id = "rider-drop-" + n;
-      veld.type = "number";
-      veld.min = "0";
-      veld.step = "0.5";
-      veld.value = waarde || "";
-      vak.appendChild(veld);
-      rij.appendChild(naam);
-      rij.appendChild(vak);
-      riderDrops.appendChild(rij);
-      riderDropAdd.hidden = riderDrops.children.length >= MAX_DROPS;
-    }
-
-    riderDropAdd.addEventListener("click", function () {
-      if (riderDrops.children.length >= MAX_DROPS) return;
-      dropErbij("");
-      riderDrops.lastElementChild.querySelector("input").focus();
-    });
-
-    document.getElementById("rider-cash").addEventListener("input", telKas);
-
     /* ---- Zijn bestellingen in het archief -------------------------------
        In plaats van zelf een lijst in het venster te bouwen sturen we je
        naar het archief met het filter al aangezet: daar staat alles al,
@@ -4157,20 +4087,8 @@
       document.getElementById("rider-duty").hidden = !rij;
       document.getElementById("rider-on").value =
         !rij || rij.dataset.on !== "no" ? "yes" : "no";
-      document.getElementById("rider-cash").hidden = !rij;
       document.getElementById("rider-view").hidden = !rij;
 
-      /* De kas gaat over vandaag, wat de lijst erboven ook laat zien: wat
-         hij bij zich heeft is van vandaag en niet van deze maand. */
-      riderDrops.textContent = "";
-      riderDropAdd.hidden = false;
-      if (rij) {
-        riderCashSom.textContent = (rij.cells[3].dataset.cash || "").split("|")[0] || "€ 0,00";
-        riderFloat.value = rij.dataset.float || "50";
-        (rij.dataset.drops ? rij.dataset.drops.split("|") : []).forEach(dropErbij);
-        if (!riderDrops.children.length) dropErbij("");
-        telKas();
-      }
       riderFout(riderNaam, riderNaamFout, false);
       riderFout(riderTel, riderTelFout, false);
       riderVenster.hidden = false;
@@ -4222,12 +4140,6 @@
         riderRij.cells[0].textContent = naam;
         riderRij.cells[1].textContent = tel;
         zetRijStand(riderRij, document.getElementById("rider-on").value === "yes");
-
-        riderRij.dataset.float = riderFloat.value;
-        riderRij.dataset.drops = [].map.call(riderDrops.querySelectorAll("input"), function (v) {
-          return v.value;
-        }).filter(Boolean).join("|");
-
         telBezorgers();
         riderVenster.hidden = true;
         showToast(naam + " updated");
