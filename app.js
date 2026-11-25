@@ -130,6 +130,24 @@
     document.dispatchEvent(new CustomEvent("chart-herteken"));
   }
 
+  /* ---- Een pagina die nog niet ontworpen is -----------------------------
+     We doen het dashboard pagina voor pagina. Wat nog geen ontwerp heeft
+     kun je beter niet half nabouwen, dus ?wip=email-campaigns zet die ene
+     pagina op "under construction". De rest van het dashboard blijft
+     gewoon werken: het menu, de titel en het icoon staan er nog, alleen de
+     inhoud en de knop erboven vallen weg. Meer dan een pagina mag ook, met
+     komma's ertussen. */
+  var WIP = (function () {
+    var waarde = new URLSearchParams(location.search).get("wip") ||
+                 new URLSearchParams(location.hash.slice(1)).get("wip") || "";
+    var lijst = {};
+    waarde.split(",").forEach(function (naam) {
+      naam = naam.trim();
+      if (naam) lijst[naam] = true;
+    });
+    return lijst;
+  })();
+
   function showPage(page, title, icon) {
     /* Een stand die je niet hebt bewaard geldt niet, en de balk hoort niet mee
        naar de volgende pagina. Het gerechtblok zet hem zelf terug. */
@@ -3805,6 +3823,8 @@
     else delete pageAction.dataset.dialog;
     pageAction.classList.toggle("btn--soft", actie.zacht);
     pageAction.classList.toggle("btn--primary", !actie.zacht);
+    /* Niets om aan toe te voegen zolang de pagina niet af is. */
+    if (WIP[page]) pageAction.hidden = true;
   }
 
   /* ---- De deur open of dicht ---------------------------------------------
@@ -10201,6 +10221,78 @@
       nieuwGerecht = false;
       bewaarKnop.dataset.created = naam + " added to your menu";
     });
+  })();
+
+  /* ========================================================================
+     WIP — pagina's die nog op hun ontwerp wachten
+     Dit staat achteraan omdat het de pagina ook meteen opent, en daarvoor
+     moeten de menuknoppen al luisteren.
+     ======================================================================== */
+  (function () {
+    var namen = Object.keys(WIP);
+    if (!namen.length) return;
+
+    function bouwVak() {
+      var kaart = document.createElement("div");
+      kaart.className = "card card--empty wip";
+
+      var teken = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      teken.setAttribute("class", "empty__icon");
+      teken.setAttribute("aria-hidden", "true");
+      teken.setAttribute("viewBox", "0 0 24 24");
+      teken.setAttribute("fill", "none");
+      teken.setAttribute("stroke", "currentColor");
+      teken.setAttribute("stroke-linecap", "round");
+      teken.setAttribute("stroke-linejoin", "round");
+      /* Een kader met de indeling er nog maar half in. */
+      [
+        "M5.4 4.2h13.2a2.2 2.2 0 0 1 2.2 2.2v11.2a2.2 2.2 0 0 1-2.2 2.2H5.4a2.2 2.2 0 0 1-2.2-2.2V6.4a2.2 2.2 0 0 1 2.2-2.2z",
+        "M3.2 9.3h17.6",
+        "M9.1 9.3v10.5"
+      ].forEach(function (d) {
+        var pad = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        pad.setAttribute("d", d);
+        teken.appendChild(pad);
+      });
+      [["M12.4 13h5.1"], ["M12.4 16.3h3.1"]].forEach(function (p) {
+        var pad = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        pad.setAttribute("d", p[0]);
+        pad.setAttribute("stroke-dasharray", "2.2 2.2");
+        teken.appendChild(pad);
+      });
+
+      var kop = document.createElement("h2");
+      kop.className = "card__title";
+      kop.textContent = "Under construction";
+
+      var regel = document.createElement("p");
+      regel.className = "wip__note";
+      regel.textContent = "This page hasn’t been designed yet. It will appear here once it has.";
+
+      kaart.appendChild(teken);
+      kaart.appendChild(kop);
+      kaart.appendChild(regel);
+      return kaart;
+    }
+
+    namen.forEach(function (naam) {
+      var view = document.querySelector('[data-view="' + naam + '"]');
+      if (!view) return;
+      view.dataset.wip = "";
+      view.appendChild(bouwVak());
+    });
+
+    /* Erheen, zodat de link meteen op de goede pagina uitkomt. Een subpagina
+       zit in een dichtgeklapte groep; die gaat alleen open als je de ouder
+       aanklikt, dus hier zetten we hem zelf open. */
+    var knop = document.querySelector('.nav__item[data-page="' + namen[0] + '"]');
+    if (!knop) return;
+    knop.click();
+    var groep = knop.closest('.nav__group');
+    if (!groep) return;
+    groep.classList.add('is-open');
+    var ouder = groep.querySelector('.nav__parent');
+    if (ouder) ouder.setAttribute('aria-expanded', 'true');
   })();
 
 })();

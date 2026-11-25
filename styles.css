@@ -361,6 +361,12 @@ legend { padding: 0; }
 .card__title--info { display: flex; align-items: center; gap: 8px; }
 .card--empty { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 56px 24px; text-align: center; }
 .empty__icon { width: 30px; height: 30px; stroke-width: 1.147; color: var(--text-muted); margin-bottom: 4px; }
+/* Een pagina die nog op zijn ontwerp wacht. De rest van het dashboard doet
+   het gewoon; alleen hier staat een leeg vak, even hoog als de lijst die er
+   komt, zodat de pagina niet in elkaar zakt. */
+.view[data-wip] > *:not(.wip) { display: none; }
+.wip { justify-content: center; min-height: 340px; }
+.wip__note { max-width: 42ch; font-size: var(--fs-md); color: var(--text-muted); }
 
 .tasks { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: var(--fs-md); color: var(--text); }
 .tasks__ring {
