@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=725" />
+  <link rel="stylesheet" href="styles.css?v=726" />
 </head>
 <body>
 
@@ -1641,40 +1641,40 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr data-on="yes">
                       <td>Youssef Amrani</td>
                       <td>+31 6 1452 2453</td>
                       <td data-rides="12|58|241|1180">12</td>
                       <td data-cash="&euro; 148,50|&euro; 705,25|&euro; 2.980,40|&euro; 14.210,75">&euro; 148,50</td>
-                      <td><label class="switch"><input type="checkbox" data-rider-on checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Youssef Amrani is on duty</span></label></td>
+                      <td><span class="badge badge--active">Active</span></td>
                     </tr>
-                    <tr>
+                    <tr data-on="yes">
                       <td>Nina Bakker</td>
                       <td>+31 6 2298 1174</td>
                       <td data-rides="9|44|198|905">9</td>
                       <td data-cash="&euro; 96,25|&euro; 512,80|&euro; 2.244,15|&euro; 10.868,30">&euro; 96,25</td>
-                      <td><label class="switch"><input type="checkbox" data-rider-on checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Nina Bakker is on duty</span></label></td>
+                      <td><span class="badge badge--active">Active</span></td>
                     </tr>
-                    <tr>
+                    <tr data-on="yes">
                       <td>Ruben de Wit</td>
                       <td>+31 6 3841 5502</td>
                       <td data-rides="8|39|176|842">8</td>
                       <td data-cash="&euro; 72,00|&euro; 388,45|&euro; 1.903,60|&euro; 9.517,05">&euro; 72,00</td>
-                      <td><label class="switch"><input type="checkbox" data-rider-on checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Ruben de Wit is on duty</span></label></td>
+                      <td><span class="badge badge--active">Active</span></td>
                     </tr>
-                    <tr>
+                    <tr data-on="yes">
                       <td>Emma Post</td>
                       <td>+31 6 5567 9930</td>
                       <td data-rides="6|31|142|588">6</td>
                       <td data-cash="&euro; 41,80|&euro; 254,60|&euro; 1.188,95|&euro; 5.942,20">&euro; 41,80</td>
-                      <td><label class="switch"><input type="checkbox" data-rider-on checked /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Emma Post is on duty</span></label></td>
+                      <td><span class="badge badge--active">Active</span></td>
                     </tr>
-                    <tr>
+                    <tr data-on="no">
                       <td>Tarik Yildiz</td>
                       <td>+31 6 7712 4408</td>
                       <td data-rides="3|17|88|396">3</td>
                       <td data-cash="&euro; 18,90|&euro; 131,70|&euro; 702,35|&euro; 3.480,90">&euro; 18,90</td>
-                      <td><label class="switch"><input type="checkbox" data-rider-on /><span class="switch__track" aria-hidden="true"></span><span class="sr-only">Tarik Yildiz is on duty</span></label></td>
+                      <td><span class="badge badge--muted">Offline</span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -6607,6 +6607,13 @@
           <svg class="icon" aria-hidden="true"><use href="#i-warning"/></svg>Phone can&rsquo;t be blank.
         </p>
       </div>
+      <label class="archrow archrow--na" id="rider-duty" hidden>
+        <span class="archrow__text">On duty</span>
+        <span class="switch">
+          <input type="checkbox" id="rider-on" />
+          <span class="switch__track" aria-hidden="true"></span>
+        </span>
+      </label>
       <div class="dialog__foot">
         <button class="btn btn--ghost" type="button" data-dialog-close>Cancel</button>
         <button class="btn btn--primary" type="button" id="rider-save">Add deliverer</button>
@@ -7973,6 +7980,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=725"></script>
+  <script src="app.js?v=726"></script>
 </body>
 </html>

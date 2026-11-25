@@ -759,11 +759,10 @@
      een termijn staat daar niet in: die rekent met wat de regel aan gegevens
      draagt. Een filter zonder regel hieronder blijft gewoon op tekst zoeken. */
   var FILTERREGELS = {
-    /* Een bezorger staat aan of uit; dat staat in de schakelaar in zijn rij
-       en nergens in de tekst, dus de tab kan er niet naar zoeken. */
+    /* Een bezorger staat aan of uit; dat staat op zijn rij en nergens in de
+       tekst, dus de tab kan er niet naar zoeken. */
     Duty: function (rij, waarde) {
-      var aan = rij.querySelector("[data-rider-on]");
-      var rijdt = !aan || aan.checked;
+      var rijdt = rij.dataset.on !== "no";
       return waarde.indexOf("offline") !== -1 ? !rijdt : rijdt;
     },
     "Total orders": function (rij, waarde) {
@@ -3380,8 +3379,7 @@
     if (!keuze) return;
     var namen = [];
     document.querySelectorAll('[data-view="deliverers"] tbody tr').forEach(function (rij) {
-      var aan = rij.querySelector("[data-rider-on]");
-      if (aan && !aan.checked) return;
+      if (rij.dataset.on === "no") return;
       namen.push(rij.cells[0].textContent.trim());
     });
     if (gekozen && namen.indexOf(gekozen) < 0) namen.unshift(gekozen);
@@ -3918,14 +3916,25 @@
       paar[0].addEventListener("input", function () { riderFout(paar[0], paar[1], false); });
     });
 
+    /* De stand staat op de rij; het merkje in de laatste cel laat hem zien. */
+    function zetRijStand(rij, aan) {
+      rij.dataset.on = aan ? "yes" : "no";
+      var merk = rij.cells[rij.cells.length - 1].querySelector(".badge");
+      merk.className = "badge " + (aan ? "badge--active" : "badge--muted");
+      merk.textContent = aan ? "Active" : "Offline";
+    }
+
     function riderOpen(rij) {
       riderRij = rij;
       riderNaam.value = rij ? rij.cells[0].textContent.trim() : "";
       riderTel.value = rij ? rij.cells[1].textContent.trim() : "";
       riderTitel.textContent = rij ? "Edit deliverer" : "Add deliverer";
       riderKnop.textContent = rij ? "Save" : "Add deliverer";
-      /* Bij iemand die er nog niet is valt er niets weg te halen. */
+      /* Bij iemand die er nog niet is valt er niets weg te halen, en staat
+         hij vanzelf aan zodra hij in de lijst komt. */
       document.getElementById("rider-more").hidden = !rij;
+      document.getElementById("rider-duty").hidden = !rij;
+      document.getElementById("rider-on").checked = !rij || rij.dataset.on !== "no";
       riderFout(riderNaam, riderNaamFout, false);
       riderFout(riderTel, riderTelFout, false);
       riderVenster.hidden = false;
@@ -3940,7 +3949,7 @@
        doet al iets anders, en meeliften zou hem onbruikbaar maken. */
     document.addEventListener("click", function (e) {
       var rij = e.target.closest('[data-view="deliverers"] tbody tr');
-      if (rij && !e.target.closest(".switch")) { riderOpen(rij); return; }
+      if (rij) { riderOpen(rij); return; }
 
       /* Weghalen gaat met een vraag ertussen: de ritten die iemand al heeft
          gereden blijven in de cijfers staan, maar uit de lijst is uit de
@@ -3976,9 +3985,8 @@
       if (riderRij) {
         riderRij.cells[0].textContent = naam;
         riderRij.cells[1].textContent = tel;
-        var stand = riderRij.querySelector("[data-rider-on]");
-        riderRij.querySelector(".sr-only").textContent =
-          naam + (stand && stand.checked ? " is on duty" : " is off duty");
+        zetRijStand(riderRij, document.getElementById("rider-on").checked);
+        telBezorgers();
         riderVenster.hidden = true;
         showToast(naam + " updated");
         return;
@@ -3986,15 +3994,13 @@
 
       var lijst = document.querySelector('[data-view="deliverers"] tbody');
       var rij = document.createElement("tr");
+      rij.dataset.on = "yes";
       rij.innerHTML = "<td></td><td></td>" +
         '<td data-rides="0|0|0|0">0</td>' +
         '<td data-cash="&euro; 0,00|&euro; 0,00|&euro; 0,00|&euro; 0,00">&euro; 0,00</td>' +
-        '<td><label class="switch"><input type="checkbox" data-rider-on checked />' +
-        '<span class="switch__track" aria-hidden="true"></span>' +
-        '<span class="sr-only"></span></label></td>';
+        '<td><span class="badge badge--active">Active</span></td>';
       rij.cells[0].textContent = naam;
       rij.cells[1].textContent = tel;
-      rij.querySelector(".sr-only").textContent = naam + " is on duty";
       lijst.appendChild(rij);
       telBezorgers();
       riderVenster.hidden = true;
@@ -4005,8 +4011,7 @@
     function telBezorgers() {
       var rijen = [].slice.call(document.querySelectorAll('[data-view="deliverers"] tbody tr'));
       var aan = rijen.filter(function (rij) {
-        var s = rij.querySelector("[data-rider-on]");
-        return !s || s.checked;
+        return rij.dataset.on !== "no";
       }).length;
       var zet = function (naam, n) {
         var el = document.querySelector('[data-rider-tab="' + naam + '"]');
@@ -4068,17 +4073,6 @@
     zetPeriode();
     telBezorgers();
 
-    /* Aan of uit geldt meteen: wie uit staat valt uit de keuzelijst bij een
-       bestelling, en de tellers boven de lijst lopen mee. */
-    document.addEventListener("change", function (e) {
-      var schakelaar = e.target.closest("[data-rider-on]");
-      if (!schakelaar) return;
-      var naam = schakelaar.closest("tr").cells[0].textContent.trim();
-      var zin = naam + (schakelaar.checked ? " is on duty" : " is off duty");
-      schakelaar.closest("label").querySelector(".sr-only").textContent = zin;
-      telBezorgers();
-      showToast(zin);
-    });
   }
 
   /* Groepen waarvan de ouder alleen open- en dichtklapt: er bestaat geen
