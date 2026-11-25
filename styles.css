@@ -3686,9 +3686,22 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   cursor: pointer;
 }
 .archrow__text { font-size: var(--fs-md); color: var(--text-strong); }
-/* Hetzelfde vak als bij een openingsdag, maar onder de velden in plaats van
-   erboven: de ruimte hoort dan aan de bovenkant. */
-.dayopen--na { margin-top: 18px; margin-bottom: 0; }
+/* Een stand als veld: hetzelfde vak als de invoervelden erboven, met het
+   woord links en de schakelaar rechts. Zo staat hij in dezelfde kolom en
+   onder zijn eigen label, net als de rest van het formulier. */
+.fieldswitch {
+  justify-content: space-between; gap: 12px;
+  width: 100%; height: 32px; padding: 0 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--bg-surface);
+  font-size: var(--fs-sm); color: var(--text);
+  transition: border-color var(--dur) var(--ease);
+}
+.fieldswitch:hover { border-color: var(--gray-500); }
+@media (pointer: coarse) {
+  .fieldswitch { font-size: 16px; }
+}
 
 /* ---- Een bestelling opengeslagen ----------------------------------------
    Links wie het is, rechts wanneer het moet: twee lijsten naast elkaar, elk

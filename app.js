@@ -3924,11 +3924,11 @@
       merk.textContent = aan ? "Active" : "Offline";
     }
 
-    /* Het woord in het vak zegt de stand zelf, net als Open of Closed bij een
-       openingsdag: dan hoef je niet aan de schakelaar af te lezen wat er is
-       gekozen. */
+    /* Het woord in het vak zegt de stand zelf, met dezelfde twee woorden als
+       het merkje in de lijst: dan hoef je niet aan de schakelaar af te lezen
+       wat er is gekozen. */
     var riderStaat = document.querySelector("[data-rider-state]");
-    function zetDutyWoord(aan) { riderStaat.textContent = aan ? "On duty" : "Off duty"; }
+    function zetDutyWoord(aan) { riderStaat.textContent = aan ? "Active" : "Offline"; }
     document.getElementById("rider-on").addEventListener("change", function (e) {
       zetDutyWoord(e.target.checked);
     });
