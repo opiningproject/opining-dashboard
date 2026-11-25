@@ -4072,13 +4072,17 @@
       riderPaneelOpen(false);
     });
 
-    /* Ergens anders klikken of Escape sluit het paneel, net als bij de
-       cijfers. De knop zelf valt binnen het blok en sluit dus niet mee. */
+    /* Ergens anders klikken of Escape sluit het paneel. Het donkere vlak
+       hoort daarbij, en dat is een ::before van de kiezer zelf: een klik
+       erop landt dus op .dpick. Daarom kijken we naar het paneel en de knop
+       en niet naar de kiezer als geheel -- anders sluit hij nooit. */
     document.addEventListener("click", function (e) {
-      if (!riderRange.contains(e.target)) riderPaneelOpen(false);
+      if (riderPaneel.hidden) return;
+      if (riderPaneel.contains(e.target) || riderPeriodeKnop.contains(e.target)) return;
+      riderPaneelOpen(false);
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") riderPaneelOpen(false);
+      if (e.key === "Escape" && !riderPaneel.hidden) riderPaneelOpen(false);
     });
 
     zetPeriode();
