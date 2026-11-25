@@ -241,7 +241,7 @@
   document.querySelectorAll(".page-head__tools").forEach(function (tools) {
     /* Een blok met een keuzeveld laat zich niet in een menu vouwen; dat vult
        op mobiel toch al zijn eigen regel. */
-    if (tools.querySelector("select")) return;
+    if (tools.querySelector("select, .dpick")) return;
 
     /* Een knop die alleen een menu opent is zelf geen actie; de regels in dat
        menu zijn dat wel, dus die gaan los mee. Wat zo'n knop bij elkaar hield
@@ -3924,6 +3924,8 @@
       riderTel.value = rij ? rij.cells[1].textContent.trim() : "";
       riderTitel.textContent = rij ? "Edit deliverer" : "Add deliverer";
       riderKnop.textContent = rij ? "Save" : "Add deliverer";
+      /* Bij iemand die er nog niet is valt er niets weg te halen. */
+      document.getElementById("rider-more").hidden = !rij;
       riderFout(riderNaam, riderNaamFout, false);
       riderFout(riderTel, riderTelFout, false);
       riderVenster.hidden = false;
@@ -3938,8 +3940,27 @@
        doet al iets anders, en meeliften zou hem onbruikbaar maken. */
     document.addEventListener("click", function (e) {
       var rij = e.target.closest('[data-view="deliverers"] tbody tr');
-      if (!rij || e.target.closest(".switch")) return;
-      riderOpen(rij);
+      if (rij && !e.target.closest(".switch")) { riderOpen(rij); return; }
+
+      /* Weghalen gaat met een vraag ertussen: de ritten die iemand al heeft
+         gereden blijven in de cijfers staan, maar uit de lijst is uit de
+         lijst. Het venster gaat eerst dicht, anders staan er twee over
+         elkaar. */
+      var weg = e.target.closest("[data-rider-del]");
+      if (!weg || !riderRij) return;
+      var dood = riderRij;
+      var naam = dood.cells[0].textContent.trim();
+      riderVenster.hidden = true;
+      vraag({
+        titel: "Delete deliverer?",
+        tekst: naam + " will be removed from the list. Deliveries already made stay in your reports.",
+        knop: "Delete",
+        actie: function () {
+          dood.remove();
+          telBezorgers();
+          showToast(naam + " deleted");
+        }
+      });
     });
 
     riderKnop.addEventListener("click", function () {
@@ -3998,10 +4019,14 @@
 
     /* Ritten en opgehaald geld gaan over een periode; elke cel draagt de vier
        standen bij zich, gescheiden door een streep. */
-    var riderPeriode = document.getElementById("rider-period");
+    var riderRange = document.getElementById("rider-range");
+    var riderPeriodeKnop = riderRange.querySelector(".dpick__btn");
+    var riderPaneel = riderRange.querySelector(".dpick__panel");
+    var riderLabel = riderRange.querySelector(".dpick__label");
+    var riderPeriodeNr = 0;
 
     function zetPeriode() {
-      var i = Number(riderPeriode.value) || 0;
+      var i = riderPeriodeNr;
       document.querySelectorAll('[data-view="deliverers"] [data-rides], [data-view="deliverers"] [data-cash]')
         .forEach(function (cel) {
           var standen = (cel.dataset.rides || cel.dataset.cash).split("|");
@@ -4009,7 +4034,37 @@
         });
     }
 
-    riderPeriode.addEventListener("change", zetPeriode);
+    function riderPaneelOpen(open) {
+      riderRange.classList.toggle("is-open", open);
+      riderPaneel.hidden = !open;
+      riderPeriodeKnop.setAttribute("aria-expanded", String(open));
+    }
+
+    riderPeriodeKnop.addEventListener("click", function () {
+      riderPaneelOpen(riderPaneel.hidden);
+    });
+
+    riderRange.addEventListener("click", function (e) {
+      var keuze = e.target.closest("[data-period]");
+      if (!keuze) return;
+      riderPeriodeNr = Number(keuze.dataset.period) || 0;
+      riderRange.querySelectorAll(".dpick__preset").forEach(function (p) {
+        p.classList.toggle("is-active", p === keuze);
+      });
+      riderLabel.textContent = keuze.textContent;
+      zetPeriode();
+      riderPaneelOpen(false);
+    });
+
+    /* Ergens anders klikken of Escape sluit het paneel, net als bij de
+       cijfers. De knop zelf valt binnen het blok en sluit dus niet mee. */
+    document.addEventListener("click", function (e) {
+      if (!riderRange.contains(e.target)) riderPaneelOpen(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") riderPaneelOpen(false);
+    });
+
     zetPeriode();
     telBezorgers();
 

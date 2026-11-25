@@ -3046,6 +3046,11 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .dpick__preset.is-active { background: var(--gray-150); color: var(--text-strong); font-weight: 500; }
 .dpick__sep { height: 1px; margin: 6px 10px; background: var(--border); }
 
+/* Een kiezer met alleen snelkeuzes: zonder tweede kolom ernaast hoort de
+   scheidingsrand en de grijze rug er niet bij. En omdat hij rechts op de
+   titelregel staat, hangt zijn paneel aan die kant. */
+.dpick--list .dpick__presets { border-right: 0; background: var(--bg-surface); }
+.dpick--right .dpick__panel { left: auto; right: 0; }
 .dpick__main { padding: 14px; }
 /* De keuzelijst is het mobiele alternatief voor de kolom hiernaast. */
 .dpick__native { display: none; }
@@ -3136,6 +3141,14 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
   /* De periode staat linksonder, naast de knoppen. */
   .dpick__foot { padding-bottom: 4px; }
 }
+
+/* De kiezer met alleen snelkeuzes houdt die lijst ook op een smal scherm:
+   er zit geen kalender achter om op terug te vallen, dus zonder de lijst
+   blijft er niets over. Hij blijft daarom onder zijn eigen knop hangen in
+   plaats van over de volle breedte te gaan. */
+.dpick--list { position: relative; }
+.dpick--list .dpick__presets { display: flex; }
+.dpick--list .dpick__panel { left: auto; right: 0; width: auto; }
 
 /* ---- Waartegen de cijfers worden afgezet -------------------------------
    Een eigen knop naast de periodekiezer, met dezelfde vorm. Custom schuift

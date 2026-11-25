@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=722" />
+  <link rel="stylesheet" href="styles.css?v=724" />
 </head>
 <body>
 
@@ -341,13 +341,21 @@
                  de knop ernaast. Een eigen blok, want twee dingen naast de
                  titel passen niet in die ene actieknop. -->
             <div class="page-head__tools" data-tools="deliverers" hidden>
-              <label class="sr-only" for="rider-period">Period</label>
-              <select class="input" id="rider-period">
-                <option value="0">Today</option>
-                <option value="1">This week</option>
-                <option value="2">This month</option>
-                <option value="3">All time</option>
-              </select>
+              <div class="dpick dpick--list dpick--right" id="rider-range">
+                <button class="dpick__btn" type="button" aria-haspopup="dialog" aria-expanded="false">
+                  <svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg>
+                  <span class="dpick__label">Today</span>
+                  <svg class="icon dpick__caret" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                </button>
+                <div class="dpick__panel" role="dialog" aria-label="Choose a period" hidden>
+                  <div class="dpick__presets">
+                    <button class="dpick__preset is-active" type="button" data-period="0">Today</button>
+                    <button class="dpick__preset" type="button" data-period="1">This week</button>
+                    <button class="dpick__preset" type="button" data-period="2">This month</button>
+                    <button class="dpick__preset" type="button" data-period="3">All time</button>
+                  </div>
+                </div>
+              </div>
               <button class="btn btn--primary page-head__action" type="button" id="rider-add">Add deliverer</button>
             </div>
             <div class="page-head__tools" data-tools="finance" hidden>
@@ -6581,6 +6589,9 @@
     <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="rider-title">
       <div class="dialog__head">
         <h2 class="dialog__title" id="rider-title">Add deliverer</h2>
+        <span class="dialog__acts">
+          <span class="sort" id="rider-more" hidden><button class="icon-btn sort__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="More actions"><svg class="icon" aria-hidden="true"><use href="#i-dots"/></svg></button><span class="sort__menu sort__menu--kort" role="menu" hidden><button class="sort__item sort__item--danger" type="button" role="menuitem" data-rider-del><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>Delete deliverer</button></span></span>
+        </span>
       </div>
       <div class="field">
         <label class="label" for="rider-name">Name</label>
@@ -7962,6 +7973,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=722"></script>
+  <script src="app.js?v=724"></script>
 </body>
 </html>
