@@ -1255,7 +1255,13 @@ select.input {
 .stepper__unit { font-size: var(--fs-md); color: var(--text-muted); }
 
 .swatch { display: flex; align-items: center; gap: 10px; position: relative; }
-.swatch__chip { position: absolute; left: 12px; width: 16px; height: 16px; border-radius: 4px; background: var(--accent); }
+/* Een randje om het vierkantje: zonder dat verdwijnt wit in het witte veld,
+   en wit is de stand waarin een blok gewoon op de pagina staat. */
+.swatch__chip {
+  position: absolute; left: 12px; width: 16px; height: 16px;
+  border-radius: 4px; background: var(--accent);
+  box-shadow: inset 0 0 0 1px rgba(18, 22, 28, .14);
+}
 .swatch .input { padding-left: 38px; }
 
 .preview { padding: 24px; border-radius: var(--r-md); background: var(--gray-50); }
