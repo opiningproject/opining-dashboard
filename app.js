@@ -1642,12 +1642,20 @@
       delivery: "Discount value"
     };
 
+    /* Welke soort het is staat in de kaarten die erbij horen en in de kop
+       van de waardekaart; verder is het scherm voor alle vier hetzelfde. */
+    function zetDiscSoort(soort) {
+      discView.dataset.discType = soort;
+      discValueT.textContent = DISC_KOPPEN[soort];
+    }
+
     document.addEventListener("click", function (e) {
       var keuze = e.target.closest("#disctype-dialog [data-disc-type]");
       if (!keuze) return;
       var soort = keuze.dataset.discType;
-      discView.dataset.discType = soort;
-      discValueT.textContent = DISC_KOPPEN[soort];
+      zetDiscSoort(soort);
+      discBewaar.textContent = "Create discount";
+      discBewaar.dataset.created = "Discount created";
       /* Een korting gaat in vanaf vandaag tenzij je iets anders kiest; een leeg
          datumveld zegt niet wanneer hij begint. */
       var nu = new Date();
@@ -1985,6 +1993,46 @@
       if (!weg) return;
       comboKaart.querySelector('[data-combo="' + weg.dataset.comboOff + '"]').checked = false;
       zetCombos();
+    });
+
+    /* ---- Een bestaande korting openen ----------------------------------
+       Hetzelfde scherm als bij aanmaken, maar gevuld met wat er al staat.
+       De soort en de methode leest hij uit de rij; de titel staat in het
+       kruimelpad en de knop onderaan bewaart in plaats van aan te maken. */
+    var DISC_SOORTEN = {
+      "amount off products": "products",
+      "buy x get y": "bxgy",
+      "amount off order": "order",
+      "free delivery": "delivery"
+    };
+
+    var discBewaar = discView.querySelector("[data-created]");
+
+    document.addEventListener("click", function (e) {
+      var rij = e.target.closest('[data-view="discounts"] tbody tr');
+      if (!rij) return;
+
+      var titel = rij.cells[0].textContent.trim();
+      var methode = rij.cells[2].textContent.trim().toLowerCase();
+      var soort = DISC_SOORTEN[rij.cells[4].textContent.trim().toLowerCase()] || "products";
+
+      zetDiscSoort(soort);
+      var stand = methode === "code" ? "code" : "auto";
+      discView.dataset.discMethod = stand;
+      /* De strook bovenin wijst de stand aan; die volgt niet vanzelf uit het
+         kenmerk op de pagina. */
+      discView.querySelectorAll("[data-method]").forEach(function (knop) {
+        knop.classList.toggle("is-active", knop.dataset.method === stand);
+      });
+      /* Een korting die vanzelf geldt heeft geen code; het veld van de
+         vorige korting zou er anders in blijven staan. */
+      document.getElementById("disc-code").value = methode === "code" ? titel : "";
+
+      /* Bewerken maakt niets aan, dus de knop zegt wat hij doet. */
+      discBewaar.textContent = "Save discount";
+      discBewaar.dataset.created = titel + " updated";
+
+      openPageSub("discount-new", titel);
     });
 
     document.getElementById("disc-generate").addEventListener("click", function () {

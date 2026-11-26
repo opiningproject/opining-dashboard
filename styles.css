@@ -1318,7 +1318,7 @@ select.input {
 .table tbody tr { transition: background var(--dur) var(--ease); }
 /* Ook een rij in het archief slaat zijn bestelling open. */
 .table--archive tbody tr, .table--corders tbody tr,
-.table--riders tbody tr { cursor: pointer; }
+.table--riders tbody tr, .table--disc tbody tr { cursor: pointer; }
 /* De schakelaar in de laatste kolom is zijn eigen knop: daar klik je de rij
    niet mee open. */
 .table--riders .switch { cursor: pointer; }
