@@ -2223,7 +2223,10 @@
        aanpak als bij een gerecht. */
     storeView.querySelectorAll(".langtabs").forEach(function (knoppen) {
       var kaart = knoppen.closest("[data-store-view]");
-      var velden = [].slice.call(kaart.querySelectorAll(".field .input"));
+      /* Niet elk veld in zo'n kaart heeft twee talen: een bestemming of een
+         kleurcode is in het Nederlands hetzelfde. Die dragen data-zelfde en
+         blijven hier buiten. */
+      var velden = [].slice.call(kaart.querySelectorAll(".field .input:not([data-zelfde])"));
       if (!velden.length) return;
 
       var taal = "en";
