@@ -1856,6 +1856,36 @@
       { naam: "Email subscribers", meta: "203 customers" },
       { naam: "Customers who ordered at least once", meta: "187 customers" }
     ];
+    var KLANTEN = [
+      { naam: "Thomas Jefferson", meta: "4 orders" },
+      { naam: "Sanne de Vries", meta: "9 orders" },
+      { naam: "Mo El Amrani", meta: "2 orders" },
+      { naam: "Lisa Bakker", meta: "14 orders" },
+      { naam: "Kevin Groot", meta: "1 order" },
+      { naam: "Fatima Yilmaz", meta: "7 orders" },
+      { naam: "Daan Visser", meta: "3 orders" },
+      { naam: "Iris Smit", meta: "21 orders" },
+      { naam: "Bram Hendriks", meta: "5 orders" },
+      { naam: "Noor Willemse", meta: "11 orders" }
+    ];
+
+    /* Twee keuzes uit Eligibility werken hetzelfde: een zoekveld met Browse,
+       een venster met aanvinkbare regels, en wat je toevoegt eronder. Alleen
+       de lijst, de woorden en het teken verschillen, dus die staan hier en
+       de rest van de code leest ze op. */
+    var KIEZERS = {
+      "Customer segments": {
+        bron: SEGMENTEN, teken: "i-segment",
+        titel: "Add customer segments", zoek: "Search customer segments",
+        een: "customer segment", meer: "customer segments"
+      },
+      "Specific customers": {
+        bron: KLANTEN, teken: "i-customers",
+        titel: "Add customers", zoek: "Search customers",
+        een: "customer", meer: "customers"
+      }
+    };
+
     var segWie     = document.getElementById("disc-who");
     var segVeld    = discView.querySelector("[data-seg-field]");
     var segZoekPag = document.getElementById("seg-search");
@@ -1871,12 +1901,18 @@
       return [].map.call(segGekozen.querySelectorAll(".picked__row"), function (r) { return r.dataset.naam; });
     }
 
+    /* Welke van de twee je aan het kiezen bent, of niets bij All en
+       Returning: dan valt er niemand aan te wijzen. */
+    function segSoort() { return KIEZERS[segWie.value] || null; }
+
     function segVul() {
+      var soort = segSoort();
+      if (!soort) return;
       var tekst = segZoek.value.trim().toLowerCase();
       var al = segAl();
       segLijst.textContent = "";
       var aantal = 0;
-      SEGMENTEN.forEach(function (s) {
+      soort.bron.forEach(function (s) {
         if (tekst && s.naam.toLowerCase().indexOf(tekst) < 0) return;
         aantal++;
         var li = document.createElement("li");
@@ -1903,12 +1939,18 @@
     }
 
     function zetSegTel() {
+      var soort = segSoort();
       var aan = segLijst.querySelectorAll("input:checked").length;
-      segTel.textContent = aan + (aan === 1 ? " customer segment selected" : " customer segments selected");
+      segTel.textContent = aan + " " + (aan === 1 ? soort.een : soort.meer) + " selected";
       segAdd.disabled = aan === 0;
     }
 
     function segOpen(tekst) {
+      var soort = segSoort();
+      if (!soort) return;
+      document.getElementById("seg-title").textContent = soort.titel;
+      segZoek.placeholder = soort.zoek;
+      segZoek.setAttribute("aria-label", soort.zoek);
       segZoek.value = tekst || "";
       segVul();
       segVenster.hidden = false;
@@ -1916,8 +1958,17 @@
     }
 
     segWie.addEventListener("change", function () {
-      segVeld.hidden = segWie.value !== "Customer segments";
-      if (!segVeld.hidden && !segAl().length) segOpen("");
+      var soort = segSoort();
+      segVeld.hidden = !soort;
+      /* Van segmenten naar losse klanten overstappen laat een lijst staan
+         die over iets anders ging. */
+      segGekozen.textContent = "";
+      segGekozen.hidden = true;
+      segZoekPag.value = "";
+      if (!soort) return;
+      segZoekPag.placeholder = soort.zoek;
+      segZoekPag.setAttribute("aria-label", soort.zoek);
+      segOpen("");
     });
     segZoekPag.addEventListener("input", function () {
       if (segZoekPag.value) segOpen(segZoekPag.value);
@@ -1934,12 +1985,13 @@
       segGekozen.querySelectorAll(".picked__row").forEach(function (r) {
         if (uit.indexOf(r.dataset.naam) !== -1) r.remove();
       });
+      var soort = segSoort();
       var al = segAl();
       aan.forEach(function (naam) {
         if (al.indexOf(naam) !== -1) return;
-        var s = SEGMENTEN.filter(function (x) { return x.naam === naam; })[0];
+        var s = soort.bron.filter(function (x) { return x.naam === naam; })[0];
         var rij = pickRegel(s, "picked__row");
-        rij.appendChild(pickTeken("i-segment"));
+        rij.appendChild(pickTeken(soort.teken));
         var titel = document.createElement("span");
         titel.className = "pickrow__name";
         titel.textContent = s.naam;
