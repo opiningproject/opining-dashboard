@@ -2151,7 +2151,24 @@
   var storeNav  = storeView && storeView.querySelector(".store__nav");
 
   if (storeNav) {
+    /* Het oog verbergt een sectie op de site zonder hem hier weg te gooien:
+       je houdt de tekst en de afbeelding, ze staan alleen even niet op de
+       voorpagina. Daarom staat het oog in de regel en niet in de kaart. */
     storeNav.addEventListener("click", function (e) {
+      var oog = e.target.closest("[data-store-eye]");
+      if (oog) {
+        e.preventDefault();
+        var regel = oog.closest(".store__row");
+        var uit = !regel.classList.contains("is-uit");
+        regel.classList.toggle("is-uit", uit);
+        oog.setAttribute("aria-pressed", String(uit));
+        oog.querySelector("use").setAttribute("href", uit ? "#i-eye-off" : "#i-eye");
+        var naam = regel.querySelector(".nav__item span").textContent;
+        oog.setAttribute("aria-label", (uit ? "Show " : "Hide ") + naam);
+        showToast(naam + (uit ? " hidden on your store" : " shown on your store"));
+        return;
+      }
+
       var item = e.target.closest("[data-store]");
       if (!item) return;
       e.preventDefault();

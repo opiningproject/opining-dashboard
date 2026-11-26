@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=742" />
+  <link rel="stylesheet" href="styles.css?v=743" />
 </head>
 <body>
 
@@ -136,6 +136,11 @@
     <symbol id="i-code" viewBox="0 0 24 24"><path d="m8.6 8.4-4 3.6 4 3.6M15.4 8.4l4 3.6-4 3.6M13.4 5.4l-2.8 13.2"/></symbol>
     <symbol id="i-dots-v" viewBox="0 0 20 20" fill="currentColor" stroke="none"><circle cx="10" cy="4.7" r="1.15"/><circle cx="10" cy="10" r="1.15"/><circle cx="10" cy="15.3" r="1.15"/></symbol>
     <symbol id="i-eye" viewBox="0 0 20 20"><path d="M2.4 10S5.3 4.8 10 4.8 17.6 10 17.6 10 14.7 15.2 10 15.2 2.4 10 2.4 10Z"/><circle cx="10" cy="10" r="2.5"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 20 20">
+      <use href="#i-eye" x="0" y="0" width="20" height="20"/>
+      <path stroke="var(--icon-halo, #fff)" stroke-width="3.4" d="M4.3 15.7 15.7 4.3"/>
+      <path d="M4.3 15.7 15.7 4.3"/>
+    </symbol>
     <symbol id="i-palette" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.3"/><circle cx="10" cy="6.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="6.6" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="13.4" cy="9.4" r="1.05" fill="currentColor" stroke="none"/><circle cx="10" cy="13" r="1.05" fill="currentColor" stroke="none"/></symbol>
     <symbol id="i-layout" viewBox="0 0 20 20"><rect x="2.7" y="4.4" width="14.6" height="11.2" rx="2"/><path d="M2.7 9.2h14.6M7.6 9.2v6.4"/></symbol>
     <symbol id="i-faq" viewBox="0 0 20 20"><rect x="2.7" y="3.4" width="10.6" height="8.4" rx="2"/><path d="M6.7 14.4v1.2a1 1 0 0 0 1 1h6.9l2.7 2v-8.4a1 1 0 0 0-1-1h-1.9"/></symbol>
@@ -3004,14 +3009,31 @@
                   <svg class="icon" aria-hidden="true"><use href="#i-image"/></svg><span>Logo and favicon</span></a>
                 <a class="nav__item" href="#" data-store="brand">
                   <svg class="icon" aria-hidden="true"><use href="#i-palette"/></svg><span>Brand colors</span></a>
-                <a class="nav__item" href="#" data-store="img1">
-                  <svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg><span>Images with text 1</span></a>
-                <a class="nav__item" href="#" data-store="img2">
-                  <svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg><span>Images with text 2</span></a>
-                <a class="nav__item" href="#" data-store="faq">
-                  <svg class="icon" aria-hidden="true"><use href="#i-faq"/></svg><span>Faq</span></a>
-                <a class="nav__item" href="#" data-store="socials">
-                  <svg class="icon" aria-hidden="true"><use href="#i-socials"/></svg><span>Socials</span></a>
+                <span class="store__row" data-store-row="img1">
+                  <a class="nav__item" href="#" data-store="img1">
+                    <svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg><span>Images with text 1</span></a>
+                  <button class="icon-btn store__eye" type="button" data-store-eye="img1" aria-pressed="false" aria-label="Hide Images with text 1"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></button>
+                </span>
+                <span class="store__row" data-store-row="img2">
+                  <a class="nav__item" href="#" data-store="img2">
+                    <svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg><span>Images with text 2</span></a>
+                  <button class="icon-btn store__eye" type="button" data-store-eye="img2" aria-pressed="false" aria-label="Hide Images with text 2"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></button>
+                </span>
+                <span class="store__row" data-store-row="img3">
+                  <a class="nav__item" href="#" data-store="img3">
+                    <svg class="icon" aria-hidden="true"><use href="#i-layout"/></svg><span>Images with text 3</span></a>
+                  <button class="icon-btn store__eye" type="button" data-store-eye="img3" aria-pressed="false" aria-label="Hide Images with text 3"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></button>
+                </span>
+                <span class="store__row" data-store-row="faq">
+                  <a class="nav__item" href="#" data-store="faq">
+                    <svg class="icon" aria-hidden="true"><use href="#i-faq"/></svg><span>Faq</span></a>
+                  <button class="icon-btn store__eye" type="button" data-store-eye="faq" aria-pressed="false" aria-label="Hide Faq"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></button>
+                </span>
+                <span class="store__row" data-store-row="socials">
+                  <a class="nav__item" href="#" data-store="socials">
+                    <svg class="icon" aria-hidden="true"><use href="#i-socials"/></svg><span>Socials</span></a>
+                  <button class="icon-btn store__eye" type="button" data-store-eye="socials" aria-pressed="false" aria-label="Hide Socials"><svg class="icon" aria-hidden="true"><use href="#i-eye"/></svg></button>
+                </span>
               </aside>
 
               <div class="store__main">
@@ -3157,6 +3179,40 @@
                   <div class="field">
                     <label class="label" for="img2-text">Text</label>
                     <textarea class="input" id="img2-text" rows="4" data-nl="Bestel online, kies uw ophaaltijd en we hebben alles voor u klaarstaan wanneer u aankomt. Snel en veilig online betalen voor een soepel en eenvoudig afhalen.">Order ahead and pick it up whenever you like. No queue, no waiting, just walk in and collect.</textarea>
+                  </div>
+                </div>
+
+                <div class="card" data-store-view="img3" hidden>
+                  <div class="srow">
+                    <span class="label">Image</span>
+                    <div class="drop drop--beeld">
+                      <input type="file" hidden accept="image/png,image/jpeg,image/svg+xml,image/webp" aria-label="Image for the third text section" />
+                      <div class="drop__empty">
+                        <button class="btn btn--soft btn--sm" type="button" data-beeld-kies>Select</button>
+                        <p class="drop__hint">PNG, JPG, SVG or WebP, up to 5 MB</p>
+                      </div>
+                      <div class="drop__beeld" hidden>
+                        <img alt="" />
+                        <span class="drop__name"></span>
+                        <span class="drop__acties">
+                          <button class="link link--btn" type="button" data-beeld-kies>Replace</button>
+                          <button class="link link--btn" type="button" data-beeld-weg>Remove</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <hr class="rule" />
+                  <div class="chips langtabs" role="group" aria-label="Language">
+                    <button class="chip is-active" type="button" data-lang="en" aria-pressed="true">English</button>
+                    <button class="chip" type="button" data-lang="nl" aria-pressed="false">Nederlands</button>
+                  </div>
+                  <div class="field">
+                    <label class="label" for="img3-heading">Heading</label>
+                    <input class="input" id="img3-heading" type="text" value="Catering" data-nl="Catering" />
+                  </div>
+                  <div class="field">
+                    <label class="label" for="img3-text">Text</label>
+                    <textarea class="input" id="img3-text" rows="4" data-nl="Een feest, een vergadering of een verjaardag: vertel ons voor hoeveel mensen en wanneer, dan zetten we een menu voor u klaar.">Having people over? Tell us how many and when, and we will put a menu together for the whole group.</textarea>
                   </div>
                 </div>
 
@@ -7984,6 +8040,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=742"></script>
+  <script src="app.js?v=743"></script>
 </body>
 </html>

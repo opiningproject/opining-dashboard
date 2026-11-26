@@ -1155,6 +1155,22 @@ select.input {
   background: var(--bg-surface);
 }
 .store__nav .nav__item { padding: 11px 12px; }
+/* Een sectie van de voorpagina kun je verbergen. Het oog hangt rechts in de
+   regel en komt op zodra je erover gaat; bij een verborgen sectie blijft hij
+   staan, want dan zegt hij iets. */
+.store__row { position: relative; display: block; }
+.store__nav .store__row .nav__item { padding-right: 44px; }
+.store__eye {
+  position: absolute; right: 7px; top: 50%; transform: translateY(-50%);
+  width: 28px; height: 28px;
+  opacity: 0; transition: opacity var(--dur) var(--ease);
+}
+.store__row:hover .store__eye,
+.store__eye:focus-visible,
+.store__row.is-uit .store__eye { opacity: 1; }
+/* Verborgen: de naam zegt nog wat er staat, maar hij telt even niet mee. */
+.store__row.is-uit .nav__item span { color: var(--text-muted); }
+.store__row.is-uit .nav__item .icon { color: var(--border-strong); }
 /* Ruimte tussen twee kaarten die allebei te zien zijn. Een verborgen kaart
    telt niet mee: anders begint elke sectie behalve de eerste lager dan de
    navigatie ernaast. */
