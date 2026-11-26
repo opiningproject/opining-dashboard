@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=743" />
+  <link rel="stylesheet" href="styles.css?v=746" />
 </head>
 <body>
 
@@ -3098,7 +3098,7 @@
                     <label class="label" for="brand-color">Brand Color</label>
                     <span class="swatch">
                       <span class="swatch__chip" id="brand-chip"></span>
-                      <input class="input" id="brand-color" type="text" value="#006241" />
+                      <input class="input" id="brand-color" type="text" value="#006241" data-kleur />
                     </span>
                   </div>
                   <p class="label">Preview</p>
@@ -3111,6 +3111,13 @@
                 </div>
 
                 <div class="card" data-store-view="img1" hidden>
+                  <div class="srow">
+                    <label class="label" for="img1-color">Section color</label>
+                    <span class="swatch">
+                      <span class="swatch__chip"></span>
+                      <input class="input" id="img1-color" type="text" value="#FCEBCF" data-kleur />
+                    </span>
+                  </div>
                   <div class="srow">
                     <span class="label">Image</span>
                     <div class="drop drop--beeld">
@@ -3150,6 +3157,13 @@
 
                 <div class="card" data-store-view="img2" hidden>
                   <div class="srow">
+                    <label class="label" for="img2-color">Section color</label>
+                    <span class="swatch">
+                      <span class="swatch__chip"></span>
+                      <input class="input" id="img2-color" type="text" value="#FCEBCF" data-kleur />
+                    </span>
+                  </div>
+                  <div class="srow">
                     <span class="label">Image</span>
                     <div class="drop drop--beeld">
                       <input type="file" hidden accept="image/png,image/jpeg,image/svg+xml,image/webp" aria-label="Image for the second text section" />
@@ -3183,6 +3197,13 @@
                 </div>
 
                 <div class="card" data-store-view="img3" hidden>
+                  <div class="srow">
+                    <label class="label" for="img3-color">Section color</label>
+                    <span class="swatch">
+                      <span class="swatch__chip"></span>
+                      <input class="input" id="img3-color" type="text" value="#FCEBCF" data-kleur />
+                    </span>
+                  </div>
                   <div class="srow">
                     <span class="label">Image</span>
                     <div class="drop drop--beeld">
@@ -8040,6 +8061,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=743"></script>
+  <script src="app.js?v=746"></script>
 </body>
 </html>

@@ -2178,16 +2178,34 @@
       });
     });
 
+    /* Het vierkantje voor een kleurveld laat zien wat erin staat, ook bij het
+       openen: een veld met een code erin en een vierkantje in een andere
+       kleur spreken elkaar tegen. */
+    storeView.querySelectorAll("[data-kleur]").forEach(function (veld) {
+      var chip = veld.previousElementSibling;
+      function toonKleur() {
+        var kleur = veld.value.trim();
+        if (!/^#[0-9a-f]{3,8}$/i.test(kleur)) return;
+        chip.style.background = kleur;
+      }
+      veld.addEventListener("input", toonKleur);
+      toonKleur();
+    });
+
     /* Merkkleur meteen doorvoeren in de voorbeeldknop. */
     var brandInput = document.getElementById("brand-color");
     var brandChip  = document.getElementById("brand-chip");
     var brandBtn   = document.getElementById("brand-preview-btn");
-    brandInput.addEventListener("input", function () {
+    function toonMerkkleur() {
       var kleur = brandInput.value.trim();
       if (!/^#[0-9a-f]{3,8}$/i.test(kleur)) return;
       brandChip.style.background = kleur;
       brandBtn.style.background = kleur;
-    });
+    }
+    brandInput.addEventListener("input", toonMerkkleur);
+    /* Ook bij het openen: anders staat de knop in de voorbeeldkaart in een
+       andere kleur dan het veld erboven zegt. */
+    toonMerkkleur();
 
     /* De sliders en hun getalvelden houden elkaar bij. */
     storeView.querySelectorAll(".srow").forEach(function (rij) {
