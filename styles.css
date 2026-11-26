@@ -1804,6 +1804,13 @@ select.input {
 }
 [data-view="discounts"] .table--list .cell__title,
 [data-view="email-campaigns"] .table--list .cell__title { white-space: nowrap; }
+/* De naam van een campagne mag een regel vullen maar niet de hele tabel
+   opeten; voorbij die breedte is hij toch wel te herkennen en eindigt hij
+   op drie puntjes. */
+[data-view="email-campaigns"] .table--list td:first-child { max-width: 220px; }
+[data-view="email-campaigns"] .table--list .cell__title {
+  display: block; overflow: hidden; text-overflow: ellipsis;
+}
 /* Wanneer een korting loopt en waarvoor een code geldt zijn een paar woorden;
    die horen op een regel te staan, niet in drieen gebroken. */
 [data-view="discounts"] .table--list td:nth-child(3) { white-space: nowrap; }
