@@ -3624,7 +3624,7 @@ textarea.input { height: auto; padding: 8px 10px; line-height: 1.5; resize: vert
 .seg + .field, .seg + .hint, .seg ~ .hint { margin-top: 16px; }
 [data-when-method], [data-when-min], [data-when-cap], [data-when-end] { display: none; }
 [data-disc-method="code"] [data-when-method="code"] { display: flex; }
-[data-disc-method="auto"] [data-when-method="auto"] { display: block; }
+[data-disc-method="auto"] [data-when-method="auto"] { display: flex; }
 [data-disc-min="amount"] [data-when-min="amount"],
 [data-disc-min="items"] [data-when-min="items"],
 [data-disc-cap="on"] [data-when-cap] { display: flex; margin-top: 16px; }

@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Opining — Dashboard</title>
   <!-- ?v bumpen bij elke wijziging: Safari houdt styles.css anders dagen vast. -->
-  <link rel="stylesheet" href="styles.css?v=740" />
+  <link rel="stylesheet" href="styles.css?v=742" />
 </head>
 <body>
 
@@ -1951,7 +1951,11 @@
                 <input class="input mono" id="disc-code" type="text" value="SUMMER10" />
                 <p class="hint">Customers must enter this code at checkout.</p>
               </div>
-              <p class="hint" data-when-method="auto">Customers see this discount in their cart on their own, without typing a code.</p>
+              <div class="field" data-when-method="auto">
+                <label class="label" for="disc-title">Title</label>
+                <input class="input" id="disc-title" type="text" placeholder="e.g. Autumn deal" />
+                <p class="hint">Customers will see this in their cart and at checkout.</p>
+              </div>
             </div>
 
             <div class="card" data-disc-card="buys">
@@ -7980,6 +7984,6 @@
     </button>
   </div>
 
-  <script src="app.js?v=740"></script>
+  <script src="app.js?v=742"></script>
 </body>
 </html>

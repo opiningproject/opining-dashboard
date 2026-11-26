@@ -1656,6 +1656,9 @@
       zetDiscSoort(soort);
       discBewaar.textContent = "Create discount";
       discBewaar.dataset.created = "Discount created";
+      discRij = null;
+      discTitel.value = "";
+      discCode.value = "";
       /* Een korting gaat in vanaf vandaag tenzij je iets anders kiest; een leeg
          datumveld zegt niet wanneer hij begint. */
       var nu = new Date();
@@ -2059,11 +2062,31 @@
     };
 
     var discBewaar = discView.querySelector("[data-created]");
+    var discTitel = document.getElementById("disc-title");
+    var discCode = document.getElementById("disc-code");
+    /* De rij die openstaat, of niets als je er een aanmaakt. */
+    var discRij = null;
+
+    /* Waar een korting aan te herkennen is: zijn code, of zijn naam als hij
+       vanzelf geldt. Dat is ook wat er in de eerste kolom van de lijst
+       staat, dus bewaren schrijft het daarheen terug. */
+    function discNaam() {
+      var veld = discView.dataset.discMethod === "code" ? discCode : discTitel;
+      return veld.value.trim();
+    }
+
+    discBewaar.addEventListener("click", function () {
+      var naam = discNaam();
+      if (!naam) return;
+      if (discRij) discRij.querySelector(".cell__title").textContent = naam;
+      discBewaar.dataset.created = naam + (discRij ? " updated" : " created");
+    });
 
     document.addEventListener("click", function (e) {
       var rij = e.target.closest('[data-view="discounts"] tbody tr');
       if (!rij) return;
 
+      discRij = rij;
       var titel = rij.cells[0].textContent.trim();
       var methode = rij.cells[2].textContent.trim().toLowerCase();
       var soort = DISC_SOORTEN[rij.cells[4].textContent.trim().toLowerCase()] || "products";
@@ -2076,9 +2099,10 @@
       discView.querySelectorAll("[data-method]").forEach(function (knop) {
         knop.classList.toggle("is-active", knop.dataset.method === stand);
       });
-      /* Een korting die vanzelf geldt heeft geen code; het veld van de
-         vorige korting zou er anders in blijven staan. */
-      document.getElementById("disc-code").value = methode === "code" ? titel : "";
+      /* De naam staat in de code of in het titelveld, nooit in allebei; het
+         andere veld leegmaken, anders blijft de vorige korting erin staan. */
+      discCode.value = methode === "code" ? titel : "";
+      discTitel.value = methode === "code" ? "" : titel;
 
       /* Bewerken maakt niets aan, dus de knop zegt wat hij doet. */
       discBewaar.textContent = "Save discount";
