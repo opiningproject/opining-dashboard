@@ -1165,9 +1165,16 @@ select.input {
   width: 28px; height: 28px;
   opacity: 0; transition: opacity var(--dur) var(--ease);
 }
-.store__row:hover .store__eye,
+/* Het oog hoort bij de sectie die openstaat, bij een verborgen sectie, en
+   bij toetsenbordgebruik. Aanwijzen telt alleen mee op een apparaat met een
+   muis: op een telefoon zou de eerste tik het oog tevoorschijn halen in
+   plaats van de sectie te openen, en moest je twee keer tikken. */
 .store__eye:focus-visible,
-.store__row.is-uit .store__eye { opacity: 1; }
+.store__row.is-uit .store__eye,
+.store__nav .nav__item.is-active + .store__eye { opacity: 1; }
+@media (hover: hover) {
+  .store__row:hover .store__eye { opacity: 1; }
+}
 /* Verborgen: de naam zegt nog wat er staat, maar hij telt even niet mee. */
 .store__row.is-uit .nav__item span { color: var(--text-muted); }
 .store__row.is-uit .nav__item .icon { color: var(--border-strong); }
